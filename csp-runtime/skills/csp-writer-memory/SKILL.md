@@ -1,5 +1,5 @@
 ---
-name: writer-memory
+name: csp-writer-memory
 description: Agentic memory system for writers - track characters, relationships, scenes, and themes
 argument-hint: "init|char|rel|scene|query|validate|synopsis|status|export [args]"
 level: 7
@@ -19,31 +19,31 @@ Writer Memory maintains context across Claude sessions for fiction writers. It t
 - **Scenes (장면)**: Cut composition (컷구성), narration tone, emotional tags
 - **Themes (테마)**: Emotional themes (정서테마), authorial intent
 
-All data persists in `.writer-memory/memory.json` for git-friendly collaboration.
+All data persists in `.csp-writer-memory/memory.json` for git-friendly collaboration.
 
 ## Commands
 
 | Command | Action |
 |---------|--------|
-| `/code-skills-package:writer-memory init <project-name>` | Initialize new project memory |
-| `/code-skills-package:writer-memory status` | Show memory overview (character count, scene count, etc) |
-| `/code-skills-package:writer-memory char add <name>` | Add new character |
-| `/code-skills-package:writer-memory char <name>` | View character details |
-| `/code-skills-package:writer-memory char update <name> <field> <value>` | Update character field |
-| `/code-skills-package:writer-memory char list` | List all characters |
-| `/code-skills-package:writer-memory rel add <char1> <char2> <type>` | Add relationship |
-| `/code-skills-package:writer-memory rel <char1> <char2>` | View relationship |
-| `/code-skills-package:writer-memory rel update <char1> <char2> <event>` | Add relationship event |
-| `/code-skills-package:writer-memory scene add <title>` | Add new scene |
-| `/code-skills-package:writer-memory scene <id>` | View scene details |
-| `/code-skills-package:writer-memory scene list` | List all scenes |
-| `/code-skills-package:writer-memory theme add <name>` | Add theme |
-| `/code-skills-package:writer-memory world set <field> <value>` | Set world attribute |
-| `/code-skills-package:writer-memory query <question>` | Query memory naturally (Korean supported) |
-| `/code-skills-package:writer-memory validate <character> <dialogue>` | Check if dialogue matches character tone |
-| `/code-skills-package:writer-memory synopsis` | Generate emotion-focused synopsis |
-| `/code-skills-package:writer-memory export` | Export full memory as readable markdown |
-| `/code-skills-package:writer-memory backup` | Create manual backup |
+| `/csp-writer-memory init <project-name>` | Initialize new project memory |
+| `/csp-writer-memory status` | Show memory overview (character count, scene count, etc) |
+| `/csp-writer-memory char add <name>` | Add new character |
+| `/csp-writer-memory char <name>` | View character details |
+| `/csp-writer-memory char update <name> <field> <value>` | Update character field |
+| `/csp-writer-memory char list` | List all characters |
+| `/csp-writer-memory rel add <char1> <char2> <type>` | Add relationship |
+| `/csp-writer-memory rel <char1> <char2>` | View relationship |
+| `/csp-writer-memory rel update <char1> <char2> <event>` | Add relationship event |
+| `/csp-writer-memory scene add <title>` | Add new scene |
+| `/csp-writer-memory scene <id>` | View scene details |
+| `/csp-writer-memory scene list` | List all scenes |
+| `/csp-writer-memory theme add <name>` | Add theme |
+| `/csp-writer-memory world set <field> <value>` | Set world attribute |
+| `/csp-writer-memory query <question>` | Query memory naturally (Korean supported) |
+| `/csp-writer-memory validate <character> <dialogue>` | Check if dialogue matches character tone |
+| `/csp-writer-memory synopsis` | Generate emotion-focused synopsis |
+| `/csp-writer-memory export` | Export full memory as readable markdown |
+| `/csp-writer-memory backup` | Create manual backup |
 
 ## Memory Types
 
@@ -64,12 +64,12 @@ Tracks individual character attributes essential for consistent portrayal:
 
 **Example:**
 ```
-/writer-memory char add 새랑
-/writer-memory char update 새랑 arc "체념 -> 욕망자각 -> 선택"
-/writer-memory char update 새랑 tone "담백, 현재충실, 감정억제"
-/writer-memory char update 새랑 speechLevel "해체"
-/writer-memory char update 새랑 keywords "그냥, 뭐, 괜찮아"
-/writer-memory char update 새랑 taboo "사랑해, 보고싶어"
+/csp-writer-memory char add 새랑
+/csp-writer-memory char update 새랑 arc "체념 -> 욕망자각 -> 선택"
+/csp-writer-memory char update 새랑 tone "담백, 현재충실, 감정억제"
+/csp-writer-memory char update 새랑 speechLevel "해체"
+/csp-writer-memory char update 새랑 keywords "그냥, 뭐, 괜찮아"
+/csp-writer-memory char update 새랑 taboo "사랑해, 보고싶어"
 ```
 
 ### 세계관 메모리 (World Memory)
@@ -99,10 +99,10 @@ Captures the dynamic between characters over time:
 
 **Example:**
 ```
-/writer-memory rel add 새랑 해랑 romantic
-/writer-memory rel update 새랑 해랑 "첫 키스 - 새랑 회피"
-/writer-memory rel update 새랑 해랑 "해랑 고백 거절당함"
-/writer-memory rel update 새랑 해랑 "새랑 먼저 손 잡음"
+/csp-writer-memory rel add 새랑 해랑 romantic
+/csp-writer-memory rel update 새랑 해랑 "첫 키스 - 새랑 회피"
+/csp-writer-memory rel update 새랑 해랑 "해랑 고백 거절당함"
+/csp-writer-memory rel update 새랑 해랑 "새랑 먼저 손 잡음"
 ```
 
 ### 장면 메모리 (Scene Memory)
@@ -184,7 +184,7 @@ The `/validate` command checks if dialogue matches a character's established voi
 
 **Example:**
 ```
-/writer-memory validate 새랑 "사랑해, 해랑아. 너무 보고싶었어."
+/csp-writer-memory validate 새랑 "사랑해, 해랑아. 너무 보고싶었어."
 ```
 Output:
 ```
@@ -206,20 +206,20 @@ Natural language queries against memory, with full Korean support.
 ### Example Queries
 
 ```
-/writer-memory query "새랑은 이 상황에서 뭐라고 할까?"
-/writer-memory query "규리의 현재 감정 상태는?"
-/writer-memory query "해랑과 새랑의 관계는 어디까지 왔나?"
-/writer-memory query "이 장면의 정서적 분위기는?"
-/writer-memory query "새랑이 먼저 연락하는 게 맞아?"
-/writer-memory query "해랑이 화났을 때 말투는?"
+/csp-writer-memory query "새랑은 이 상황에서 뭐라고 할까?"
+/csp-writer-memory query "규리의 현재 감정 상태는?"
+/csp-writer-memory query "해랑과 새랑의 관계는 어디까지 왔나?"
+/csp-writer-memory query "이 장면의 정서적 분위기는?"
+/csp-writer-memory query "새랑이 먼저 연락하는 게 맞아?"
+/csp-writer-memory query "해랑이 화났을 때 말투는?"
 ```
 
 The system synthesizes answers from all relevant memory types.
 
 ## Behavior
 
-1. **On Init**: Creates `.writer-memory/memory.json` with project metadata and empty collections
-2. **Auto-Backup**: Changes are backed up before modification to `.writer-memory/backups/`
+1. **On Init**: Creates `.csp-writer-memory/memory.json` with project metadata and empty collections
+2. **Auto-Backup**: Changes are backed up before modification to `.csp-writer-memory/backups/`
 3. **Korean-First**: Emotion vocabulary uses Korean terms throughout
 4. **Session Loading**: Memory is loaded on session start for immediate context
 5. **Git-Friendly**: JSON formatted for clean diffs and collaboration
@@ -260,53 +260,53 @@ Synopsis generation aggregates:
 
 ```
 # Initialize project
-/writer-memory init 봄의 끝자락
+/csp-writer-memory init 봄의 끝자락
 
 # Add characters
-/writer-memory char add 새랑
-/writer-memory char update 새랑 arc "체념 -> 욕망자각 -> 선택"
-/writer-memory char update 새랑 tone "담백, 현재충실"
-/writer-memory char update 새랑 speechLevel "해체"
+/csp-writer-memory char add 새랑
+/csp-writer-memory char update 새랑 arc "체념 -> 욕망자각 -> 선택"
+/csp-writer-memory char update 새랑 tone "담백, 현재충실"
+/csp-writer-memory char update 새랑 speechLevel "해체"
 
-/writer-memory char add 해랑
-/writer-memory char update 해랑 arc "확신 -> 동요 -> 기다림"
-/writer-memory char update 해랑 tone "직진, 솔직"
-/writer-memory char update 해랑 speechLevel "반말"
+/csp-writer-memory char add 해랑
+/csp-writer-memory char update 해랑 arc "확신 -> 동요 -> 기다림"
+/csp-writer-memory char update 해랑 tone "직진, 솔직"
+/csp-writer-memory char update 해랑 speechLevel "반말"
 
 # Establish relationship
-/writer-memory rel add 새랑 해랑 romantic
-/writer-memory rel update 새랑 해랑 "첫 만남 - 해랑 일방적 호감"
-/writer-memory rel update 새랑 해랑 "새랑 거절"
-/writer-memory rel update 새랑 해랑 "재회 - 새랑 내적 동요"
+/csp-writer-memory rel add 새랑 해랑 romantic
+/csp-writer-memory rel update 새랑 해랑 "첫 만남 - 해랑 일방적 호감"
+/csp-writer-memory rel update 새랑 해랑 "새랑 거절"
+/csp-writer-memory rel update 새랑 해랑 "재회 - 새랑 내적 동요"
 
 # Set world
-/writer-memory world set setting "서울, 현대, 20대 후반 직장인"
-/writer-memory world set atmosphere "도시의 건조함 속 미묘한 온기"
+/csp-writer-memory world set setting "서울, 현대, 20대 후반 직장인"
+/csp-writer-memory world set atmosphere "도시의 건조함 속 미묘한 온기"
 
 # Add themes
-/writer-memory theme add "포기하지 않는 사랑"
-/writer-memory theme add "자기 보호의 벽"
+/csp-writer-memory theme add "포기하지 않는 사랑"
+/csp-writer-memory theme add "자기 보호의 벽"
 
 # Add scene
-/writer-memory scene add "옥상 재회"
+/csp-writer-memory scene add "옥상 재회"
 
 # Query for writing
-/writer-memory query "새랑은 이별 장면에서 어떤 톤으로 말할까?"
+/csp-writer-memory query "새랑은 이별 장면에서 어떤 톤으로 말할까?"
 
 # Validate dialogue
-/writer-memory validate 새랑 "해랑아, 그만하자."
+/csp-writer-memory validate 새랑 "해랑아, 그만하자."
 
 # Generate synopsis
-/writer-memory synopsis
+/csp-writer-memory synopsis
 
 # Export for reference
-/writer-memory export
+/csp-writer-memory export
 ```
 
 ### Quick Character Check
 
 ```
-/writer-memory char 새랑
+/csp-writer-memory char 새랑
 ```
 
 Output:
@@ -408,7 +408,7 @@ Output:
 ## File Structure
 
 ```
-.writer-memory/
+.csp-writer-memory/
 ├── memory.json          # Main memory file
 ├── backups/             # Auto-backups before changes
 │   ├── memory-2024-01-15-090000.json
@@ -429,9 +429,9 @@ Output:
 ## Troubleshooting
 
 **Memory not loading?**
-- Check `.writer-memory/memory.json` exists
+- Check `.csp-writer-memory/memory.json` exists
 - Verify JSON syntax is valid
-- Run `/writer-memory status` to diagnose
+- Run `/csp-writer-memory status` to diagnose
 
 **Validation too strict?**
 - Review taboo list for unintended entries

@@ -2,7 +2,7 @@
  * memory-manager.ts
  *
  * Core memory management module for the Writer Memory System.
- * Handles all CRUD operations for .writer-memory/ storage.
+ * Handles all CRUD operations for .csp-writer-memory/ storage.
  *
  * This is a REFERENCE IMPLEMENTATION that Claude reads when the skill
  * is activated. Written as real, runnable TypeScript with proper types,
@@ -201,7 +201,7 @@ export interface ValidationResult {
 // Constants
 // ---------------------------------------------------------------------------
 
-const MEMORY_DIR = ".writer-memory";
+const MEMORY_DIR = ".csp-writer-memory";
 const MEMORY_FILE = "memory.json";
 const BACKUP_DIR = "backups";
 const MAX_BACKUPS = 20;
@@ -266,7 +266,7 @@ export function formatKoreanDate(iso: string): string {
 
 /**
  * Create a fresh WriterMemory structure for a new project.
- * Also ensures the .writer-memory/ directory tree exists on disk.
+ * Also ensures the .csp-writer-memory/ directory tree exists on disk.
  *
  * @param projectName - e.g. "이별의 온도"
  * @param genre - e.g. "멜로 / 성장 드라마"
@@ -336,7 +336,7 @@ export function loadMemory(): WriterMemory | null {
     const parsed = JSON.parse(raw) as WriterMemory;
     return parsed;
   } catch (err) {
-    console.error(`[writer-memory] Failed to load memory from ${memPath}:`, err);
+    console.error(`[csp-writer-memory] Failed to load memory from ${memPath}:`, err);
     return null;
   }
 }
@@ -380,7 +380,7 @@ export function saveMemory(memory: WriterMemory): boolean {
 
     return true;
   } catch (err) {
-    console.error(`[writer-memory] Failed to save memory to ${memPath}:`, err);
+    console.error(`[csp-writer-memory] Failed to save memory to ${memPath}:`, err);
     return false;
   }
 }
@@ -409,7 +409,7 @@ export function createBackup(memory: WriterMemory): string {
 
     return backupFile;
   } catch (err) {
-    console.error("[writer-memory] Failed to create backup:", err);
+    console.error("[csp-writer-memory] Failed to create backup:", err);
     return "";
   }
 }
