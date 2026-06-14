@@ -1,0 +1,244 @@
+{
+  "skill_name": "csp-full",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "帮我做一个 habit tracking 的 app，就是那种每天记录习惯然后看 streak 的",
+      "eval_name": "极简输入-solo模式",
+      "expected_output": "激活 P0 需求澄清（因为输入模糊），引导用户澄清核心功能，然后走完整全流程（P0→P8），产出 PRD、技术设计、实现代码和部署。",
+      "assertions": [
+        {
+          "name": "triggers_csp_full",
+          "description": "应触发 csp-full skill（匹配'帮我做一个'关键词）",
+          "check": "should_trigger"
+        },
+        {
+          "name": "activates_phase_0",
+          "description": "应激活 P0 需求澄清阶段（输入<50字且模糊）",
+          "check": "contains_phase_0"
+        },
+        {
+          "name": "detects_solo_mode",
+          "description": "未指定模式时应使用 solo 模式",
+          "check": "mode_solo"
+        },
+        {
+          "name": "produces_intake",
+          "description": "P0 产出 .csp/full/intake.md",
+          "check": "file_exists:.csp/full/intake.md"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "full workflow: 为我们的 SaaS 产品添加团队协功能，支持多成员、角色权限、团队账单。当前技术栈是 Next.js + PostgreSQL + Stripe。",
+      "eval_name": "中等输入-企业模式",
+      "expected_output": "企业模式下执行完整流程，包含 PM 角色、审批门控（PRD审批、技术设计审批、发布审批）、威胁建模、多角色审查。",
+      "assertions": [
+        {
+          "name": "triggers_csp_full",
+          "description": "应触发 csp-full skill（匹配'full workflow'关键词）",
+          "check": "should_trigger"
+        },
+        {
+          "name": "uses_enterprise_mode",
+          "description": "应使用企业模式（--mode enterprise 参数指定）",
+          "check": "mode_enterprise"
+        },
+        {
+          "name": "includes_approval_gates",
+          "description": "企业模式应包含审批门控检查",
+          "check": "contains_approval_gate"
+        },
+        {
+          "name": "produces_threat_model",
+          "description": "应产出威胁建模文档",
+          "check": "file_exists:.csp/full/THREAT-MODEL.md"
+        },
+        {
+          "name": "detects_tech_stack",
+          "description": "应检测到 Next.js + PostgreSQL + Stripe 技术栈",
+          "check": "contains_stack:next.js,postgresql,stripe"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "用 FastAPI + React + PostgreSQL 构建一个完整的博客平台，需要：用户注册登录、文章 CRUD、评论系统、标签分类、全文搜索、RSS 输出。部署到 AWS。",
+      "eval_name": "详细输入-全栈新产品",
+      "expected_output": "输入足够详细，跳过 P0 需求澄清，直接从 P1 PRD 开始。技术栈明确（FastAPI + React + PostgreSQL），subagent 应选择对应的 reviewer。全流程到 P8。",
+      "assertions": [
+        {
+          "name": "triggers_csp_full",
+          "description": "应触发 csp-full skill（匹配'构建一个完整'关键词）",
+          "check": "should_trigger"
+        },
+        {
+          "name": "skips_phase_0",
+          "description": "输入详细时应跳过 P0 需求澄清",
+          "check": "skips_phase_0"
+        },
+        {
+          "name": "starts_from_phase_1",
+          "description": "应从 P1 PRD 开始",
+          "check": "starts_at_phase:1"
+        },
+        {
+          "name": "selects_fastapi_agent",
+          "description": "应选择 FastAPI/Python 专项 subagent",
+          "check": "selects_agent:fastapi-reviewer"
+        },
+        {
+          "name": "reaches_phase_8",
+          "description": "应执行到 P8 运维监控阶段",
+          "check": "reaches_phase:8"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "我们的电商系统需要添加一个优惠券功能，用户可以在 checkout 时输入优惠码获得折扣。已有 Django + PostgreSQL 代码库。",
+      "eval_name": "brownfield-新功能",
+      "expected_output": "已有代码库新功能，跳过 P0，P1 轻量（只定义优惠券用户故事），P2 轻量（数据模型 + API），然后 P3→P6。不需要 P7 发布审批和 P8 运维。",
+      "assertions": [
+        {
+          "name": "triggers_csp_full",
+          "description": "brownfield 新功能应触发 csp-full",
+          "check": "should_trigger"
+        },
+        {
+          "name": "detects_brownfield",
+          "description": "应检测到已有代码库（brownfield）",
+          "check": "context:brownfield"
+        },
+        {
+          "name": "lightweight_prd",
+          "description": "应使用轻量版 PRD（仅用户故事 + 验收标准）",
+          "check": "prd_mode:lightweight"
+        },
+        {
+          "name": "skips_p8_ops",
+          "description": "已有系统新功能，可跳过 P8 运维",
+          "check": "skips_phase:8"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "prompt": "fix: 用户登录页面在 Safari 浏览器上样式错乱，其他浏览器正常。代码在 frontend/src/components/Login.tsx",
+      "eval_name": "bug修复-快速通道",
+      "expected_output": "检测到 bug 修复，触发快速通道：跳过 P0/P1/P2/P3/P7/P8，直接诊断 → 修复 → 测试 → 提交。",
+      "assertions": [
+        {
+          "name": "triggers_csp_full",
+          "description": "bug 修复也应触发 csp-full（走快速通道）",
+          "check": "should_trigger"
+        },
+        {
+          "name": "fast_track_bug_fix",
+          "description": "应走 bug fix 快速通道",
+          "check": "fast_track:bug-fix"
+        },
+        {
+          "name": "skips_most_phases",
+          "description": "应跳过 P0/P1/P2/P3/P7/P8",
+          "check": "skips_phases:0,1,2,3,7,8"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "prompt": "csp-full --mode solo --milestones MVP,v1: 做一个 AI 驱动的简历优化工具，用户上传简历后 AI 给出改进建议。MVP 只支持单文件上传和基础建议，v1 添加批量上传和行业模板。",
+      "eval_name": "多轮迭代-solo模式",
+      "expected_output": "两个里程碑：MVP（单文件 + 基础建议）→ v1（批量 + 模板）。MVP 完成后自动进入 v1 增量开发。每个里程碑走完整全流程。",
+      "assertions": [
+        {
+          "name": "triggers_csp_full",
+          "description": "应触发 csp-full skill（匹配'csp-full'关键词）",
+          "check": "should_trigger"
+        },
+        {
+          "name": "solo_mode_flagged",
+          "description": "应使用 solo 模式（--mode solo 参数指定）",
+          "check": "mode_solo"
+        },
+        {
+          "name": "multi_milestone",
+          "description": "应识别 MVP 和 v1 两个里程碑",
+          "check": "milestone_count:2"
+        },
+        {
+          "name": "auto_iterate",
+          "description": "MVP 完成后应自动进入 v1",
+          "check": "auto_iterate:true"
+        },
+        {
+          "name": "archives_milestone",
+          "description": "MVP 产出应归档到 .csp/full/milestones/vMVP/",
+          "check": "file_exists:.csp/full/milestones/vMVP/PRD.md"
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "prompt": "帮我把用户认证从 session-based 迁移到 JWT + refresh token，保持 API 兼容。",
+      "eval_name": "技术重构",
+      "expected_output": "检测到重构任务，跳过 P0/P1，P2 轻量（认证方案设计），P3 任务分解（注意兼容性），P4 实施，P5 测试（回归测试重要），P6 审查。不需要 P7/P8。",
+      "assertions": [
+        {
+          "name": "triggers_csp_full",
+          "description": "重构任务应触发 csp-full",
+          "check": "should_trigger"
+        },
+        {
+          "name": "detects_refactor",
+          "description": "应检测到重构/迁移任务",
+          "check": "context:refactor"
+        },
+        {
+          "name": "skips_p0_p1",
+          "description": "应跳过 P0 和 P1（重构不需要需求澄清和 PRD）",
+          "check": "skips_phases:0,1"
+        },
+        {
+          "name": "lightweight_p2",
+          "description": "应使用轻量版技术设计（仅认证方案）",
+          "check": "p2_mode:lightweight"
+        },
+        {
+          "name": "skips_p7_p8",
+          "description": "重构不需要发布和运维，跳过 P7/P8",
+          "check": "skips_phases:7,8"
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "prompt": "做一个内部工具：监控我们的 50 个 API endpoint 的延迟和错误率，有 dashboard 和告警。技术栈不限，能快速上线就行。",
+      "eval_name": "模糊输入-推荐技术栈",
+      "expected_output": "输入模糊但方向明确（监控 dashboard），触发 P0 轻量澄清，技术栈推荐默认（Solo 模式推荐 Next.js + SQLite + Vercel），全流程到 P8。",
+      "assertions": [
+        {
+          "name": "triggers_csp_full",
+          "description": "模糊产品需求应触发 csp-full",
+          "check": "should_trigger"
+        },
+        {
+          "name": "activates_phase_0",
+          "description": "应激活 P0 轻量澄清",
+          "check": "contains_phase_0"
+        },
+        {
+          "name": "recommends_default_stack",
+          "description": "应推荐默认技术栈（'能快速上线'暗示 MVP 心态）",
+          "check": "recommends_stack:true"
+        },
+        {
+          "name": "solo_mode_auto",
+          "description": "未指定模式且'快速上线'→ 自动选择 solo 模式",
+          "check": "mode_solo"
+        }
+      ]
+    }
+  ]
+}

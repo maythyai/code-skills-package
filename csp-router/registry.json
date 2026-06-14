@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "total_skills": 465,
+  "total_skills": 466,
   "shards": [],
   "skills": [
     {
@@ -7127,6 +7127,72 @@
         "csp-spec-driven-development"
       ],
       "priority": 8
+    },
+    {
+      "name": "csp-full",
+      "description": "Full lifecycle product delivery workflow, from idea to production. Supports enterprise and solo modes with dynamic DAG routing and multi-milestone iteration.",
+      "layer": 2,
+      "category": "workflow",
+      "triggers": {
+        "keywords": [
+          "full workflow",
+          "full pipeline",
+          "csp-full",
+          "端到端",
+          "全流程",
+          "全链路",
+          "从需求到发布",
+          "从想法到产品",
+          "从概念到上线",
+          "从0到1",
+          "从零开始",
+          "从零搭建",
+          "从0开始",
+          "build me a product",
+          "build me an app",
+          "build me a tool",
+          "build me a platform",
+          "build from scratch",
+          "ship a feature",
+          "ship a product",
+          "MVP to production",
+          "from scratch to production",
+          "complete pipeline",
+          "end to end",
+          "end-to-end delivery",
+          "idea to product",
+          "create a complete",
+          "enterprise workflow",
+          "product lifecycle",
+          "多轮迭代",
+          "完整交付",
+          "一站式",
+          "帮我做一个",
+          "帮我搭建",
+          "帮我构建",
+          "帮我开发一个",
+          "搭建一个完整的",
+          "构建一个完整",
+          "开发一个完整",
+          "做一个产品",
+          "做一个平台",
+          "做一个系统",
+          "新建一个应用",
+          "新建一个产品"
+        ],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-workflow/skills/csp-full/SKILL.md",
+      "deps": [
+        "csp-brainstorming",
+        "csp-spec-driven-development",
+        "csp-tdd",
+        "csp-code-review",
+        "csp-verification"
+      ],
+      "priority": 5
     }
   ]
 }

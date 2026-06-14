@@ -61,6 +61,7 @@ L4  csp-runtime   — autopilot, ralph, wiki, remember, self-improve (~20 skills
 |----------|-------------|
 | Clarify requirements | `csp-interview-me` → `csp-brainstorming` → `csp-spec-driven-development` |
 | New feature | `csp-spec-phase` → `csp-discuss-phase` → `csp-plan-phase` → `csp-execute-phase` → `csp-tdd` → `csp-code-review` → `csp-verification` → `csp-ship` |
+| **Full lifecycle** (idea → product) | `csp-full` — 自动编排需求→PRD→设计→开发→测试→审查→发布→运维 |
 | Bug fix | `csp-debug` → `csp-implement` → `csp-tdd` → `csp-verification` |
 | Code review | `csp-code-review` + language-specific reviewer |
 | Onboard project | `csp-explore` → `csp-map-codebase` → `csp-understand-architecture` |

@@ -1,7 +1,7 @@
 # Skills, Agents & Scripts 综合索引
 
-> 生成时间：2026-06-11
-> 扫描来源：`开源项目参考/` 下 5 个项目
+> 生成时间：2026-06-14
+> 扫描来源：`开源项目参考/` 下 5 个项目 + CSP 新增 skills/agents
 > 目的：为后续项目整合提供去重合并依据
 
 ---
@@ -401,6 +401,47 @@
 | `change-artifacts/` templates | CSP/workflow | Templates | proposal/spec/design/tasks | ✅ 保留 |
 | Delta Specs | CSP 概念 | 模式 | ADDED/MODIFIED/REMOVED 增量合并 | ✅ 保留（brownfield） |
 | Artifact DAG | CSP 概念 | 架构 | proposal → CSPEC → design → tasks | ✅ 并入 GSD 阶段链 |
+
+### 17. AI 工程 (AI/LLM Engineering)
+
+| 名称 | 来源 | 类型 | 描述 | 合并建议 |
+|------|------|------|------|----------|
+| `csp-rag-architecture` | csp-patterns/skills | Skill | RAG 架构模式（chunking、embedding、向量数据库、hybrid search、reranking、evaluation） | ✅ 保留（独特） |
+| `csp-llm-app-development` | csp-patterns/skills | Skill | LLM 应用开发（prompt 管理、function calling、streaming、multi-model routing、guardrails） | ✅ 保留（独特） |
+| `csp-vllm-serving` | csp-patterns/skills | Skill | vLLM 推理部署（Docker 部署、continuous batching、tensor parallelism、量化、K8s 扩展） | ✅ 保留（独特） |
+| `csp-prompt-engineering` | csp-patterns/skills | Skill | Prompt 工程化（模板管理、版本控制、评测、prompt 模式库、安全护栏） | ✅ 保留（独特） |
+| `csp-rag-architect` | csp-patterns/agents | Agent | RAG 架构设计审查 | ✅ 保留（独特） |
+| `csp-llm-app-reviewer` | csp-patterns/agents | Agent | LLM 应用代码审查 | ✅ 保留（独特） |
+
+### 18. DevOps/基础设施 (Infrastructure & Data)
+
+| 名称 | 来源 | 类型 | 描述 | 合并建议 |
+|------|------|------|------|----------|
+| `csp-data-pipeline-patterns` | csp-patterns/skills | Skill | 数据管道（Airflow、dbt、数据质量检查、ODPS/MaxCompute、CDC） | ✅ 保留（独特） |
+| `csp-cicd-pipelines` | csp-patterns/skills | Skill | CI/CD 管道（GitHub Actions、GitLab CI、matrix builds、caching、monorepo） | ✅ 保留（独特） |
+| `csp-infrastructure-as-code` | csp-patterns/skills | Skill | 基础设施即代码（Terraform、Pulumi、GitOps、secrets 管理） | ✅ 保留（独特） |
+| `csp-kubernetes-patterns` | csp-patterns/skills | Skill | Kubernetes（Deployment/Service/Ingress、HPA/VPA、Helm、Kustomize、多集群） | ✅ 保留（独特） |
+| `csp-cloud-platform-patterns` | csp-patterns/skills | Skill | 云平台模式（AWS/GCP/Azure serverless、managed DB、CDN、成本优化） | ✅ 保留（独特） |
+| `csp-data-pipeline-reviewer` | csp-patterns/agents | Agent | 数据管道审查 | ✅ 保留（独特） |
+
+### 19. 重构/遗留系统 (Refactoring & Legacy)
+
+| 名称 | 来源 | 类型 | 描述 | 合并建议 |
+|------|------|------|------|----------|
+| `csp-refactoring-strategies` | csp-patterns/skills | Skill | 大规模重构策略（Strangler Fig、Branch by Abstraction、Parallel Run） | ✅ 保留（独特） |
+| `csp-tech-debt-assessment` | csp-patterns/skills | Skill | 技术债务评估（代码异味、复杂度度量、依赖健康度、优先级排序） | ✅ 保留（独特） |
+| `csp-legacy-modernization` | csp-workflow/skills | Workflow | 遗留系统现代化工作流（评估→规划→分阶段迁移→验证） | ✅ 保留（独特） |
+
+### 20. 移动端 (Mobile Development)
+
+| 名称 | 来源 | 类型 | 描述 | 合并建议 |
+|------|------|------|------|----------|
+| `csp-react-native-patterns` | csp-patterns/skills | Skill | React Native（导航、状态管理、原生桥接、新架构、Expo） | ✅ 保留（独特） |
+| `csp-mobile-performance` | csp-patterns/skills | Skill | 移动端性能优化（启动优化、内存管理、滚动性能、包体积、电量） | ✅ 保留（独特） |
+| `csp-cross-platform-strategy` | csp-patterns/skills | Skill | 跨平台策略（RN vs Flutter vs Native 选型、代码共享、平台适配） | ✅ 保留（独特） |
+| `csp-react-native-build-resolver` | csp-patterns/agents | Agent | React Native 构建错误修复 | ✅ 保留（独特） |
+| `csp-react-native-reviewer` | csp-patterns/agents | Agent | React Native 代码审查 | ✅ 保留（独特） |
+| `csp-mobile-performance-auditor` | csp-patterns/agents | Agent | 移动端性能审计 | ✅ 保留（独特） |
 
 ---
 
