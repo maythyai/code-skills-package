@@ -3,7 +3,7 @@
 <div align="center">
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
-[![v0.2](https://img.shields.io/badge/version-0.2-green)](./ARCHITECTURE.md)
+[![v0.3](https://img.shields.io/badge/version-0.3-green)](./ARCHITECTURE.md)
 
 **Unified AI Programming Skills · 18 Platforms · 15+ Languages**
 
