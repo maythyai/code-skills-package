@@ -7,7 +7,7 @@
 
 **Unified AI Programming Skills · 18 Platforms · 15+ Languages**
 
-Integrates 5 open-source AI coding projects into a layered, auto-routing framework.
+Integrates capabilities from multiple open-source AI coding projects into a layered, auto-routing framework.
 
 [Quick Start](#quick-start) · [Architecture](#architecture) · [Usage](#usage) · [中文文档](./README_zh.md)
 
@@ -15,7 +15,7 @@ Integrates 5 open-source AI coding projects into a layered, auto-routing framewo
 
 ---
 
-CSP (Code Skills Package) consolidates the capabilities of 5 open-source AI programming projects — ECC, GSD, OMC, Superpowers, and spec-kit — into a layered architecture with automatic skill routing, on-demand loading, and spec-driven workflows. Instead of loading all skills upfront, CSP loads only what each task requires, keeping token usage between ~500–1,500 per task.
+CSP (Code Skills Package) consolidates the capabilities of multiple open-source AI programming projects into a layered architecture with automatic skill routing, on-demand loading, and spec-driven workflows. Instead of loading all skills upfront, CSP loads only what each task requires, keeping token usage between ~500–1,500 per task.
 
 ## Quick Start
 
@@ -74,7 +74,8 @@ Use CSP (Code Skills Package) skills. When given a task, route to the appropriat
 | Input | Result |
 |-------|--------|
 | `"Do a code review"` | Loads `csp-code-review` + language-specific reviewer |
-| `"Plan and implement user auth"` | Runs brainstorming → spec → plan → execute → tdd → review → verify → ship |
+| `"Plan and implement user auth"` | brainstorming → spec → plan → execute → tdd → review → verify → ship |
+| `"Build me a complete habit tracking app"` | csp-full: intake → PRD → design → dev → test → review → ship → ops |
 | `"There's a bug in this Django project"` | Loads `csp-debug` + `csp-django-patterns` |
 
 ### Slash Commands
@@ -139,6 +140,13 @@ CSP uses a 5-layer architecture. Only the router (L0) loads at session start; re
 4. Skills execute in sequence, producing structured outputs (REVIEW.md, PLAN.md, etc.)
 
 ## Common Workflows
+
+### Full Lifecycle (Idea → Product)
+
+```
+"Build me a complete habit tracking app"
+  → csp-full: intake → PRD → design → parallel dev → test → review → ship → ops
+```
 
 ### Feature Development
 
@@ -235,14 +243,14 @@ Recipe priority: user-defined → built-in (`csp-router/recipes.yaml`) → route
 
 [MIT License](./LICENSE)
 
-All 5 integrated projects use the MIT license.
+All integrated projects use the MIT license.
 
 ## Acknowledgments
 
-| Project | Role |
-|---------|------|
-| [ECC (Elegant Claude Code)](https://github.com/burningion/video-editing-ai) | Skill library |
-| [GSD (Get Shit Done)](https://github.com/benjiwoss/get-shit-done) | Project management |
-| [OMC (Oh My Claude Code)](https://github.com/ruvcode/oh-my-claudecode) | Runtime enhancement |
-| [Superpowers](https://github.com/SimpleVibe/Superpowers) | Meta-skills |
-| [spec-kit](https://github.com/microsoft/spec-kit) | Spec-driven development |
+CSP integrates capabilities from the following open-source projects:
+
+- [ECC](https://github.com/burningion/video-editing-ai) — Skill library
+- [GSD](https://github.com/benjiwoss/get-shit-done) — Project management
+- [OMC](https://github.com/ruvcode/oh-my-claudecode) — Runtime enhancement
+- [Superpowers](https://github.com/SimpleVibe/Superpowers) — Meta-skills
+- [spec-kit](https://github.com/microsoft/spec-kit) — Spec-driven development

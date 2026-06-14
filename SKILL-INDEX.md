@@ -1,7 +1,7 @@
 # Skills, Agents & Scripts 综合索引
 
 > 生成时间：2026-06-14
-> 扫描来源：`开源项目参考/` 下 5 个项目 + CSP 新增 skills/agents
+> 扫描来源：`开源项目参考/` 下多个项目 + CSP 新增 skills/agents
 > 目的：为后续项目整合提供去重合并依据
 
 ---

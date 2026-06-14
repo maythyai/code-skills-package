@@ -7,7 +7,7 @@
 
 **统一 AI 编程技能 · 18 个平台 · 15+ 语言**
 
-整合 5 个开源 AI 编程项目为分层自动路由框架。
+整合多个开源 AI 编程项目为分层自动路由框架。
 
 [快速开始](#快速开始) · [架构](#架构) · [使用方式](#使用方式) · [English](./README.md)
 
@@ -15,7 +15,7 @@
 
 ---
 
-CSP（Code Skills Package）将 5 个开源 AI 编程项目（ECC、GSD、OMC、Superpowers、spec-kit）的能力整合为分层架构，支持自动路由、按需加载和规范驱动的工作流。每个任务仅加载所需的 skill，token 消耗控制在 ~500–1,500 之间。
+CSP（Code Skills Package）将多个开源 AI 编程项目（ECC、GSD、OMC、Superpowers、spec-kit）的能力整合为分层架构，支持自动路由、按需加载和规范驱动的工作流。每个任务仅加载所需的 skill，token 消耗控制在 ~500–1,500 之间。
 
 ## 快速开始
 
@@ -100,7 +100,7 @@ cp -r code-skills-package/ ~/.csp/
 
 ## 架构
 
-CSP 采用五层架构。仅路由器（L0）在会话启动时加载，其余层级按需加载。
+CSP 采用分层架构。仅路由器（L0）在会话启动时加载，其余层级按需加载。
 
 ```
 ┌─────────────────────────────────────────────────────────┐
@@ -236,14 +236,14 @@ Recipe 优先级：用户自定义 → 内置（`csp-router/recipes.yaml`）→ 
 
 [MIT License](./LICENSE)
 
-CSP 整合的 5 个项目均采用 MIT 许可证。
+CSP 整合的项目均采用 MIT 许可证。
 
 ## 鸣谢
 
-| 项目 | 作用 |
-|------|------|
-| [ECC (Elegant Claude Code)](https://github.com/burningion/video-editing-ai) | Skill 库 |
-| [GSD (Get Shit Done)](https://github.com/benjiwoss/get-shit-done) | 项目管理 |
-| [OMC (Oh My Claude Code)](https://github.com/ruvcode/oh-my-claudecode) | 运行时增强 |
-| [Superpowers](https://github.com/SimpleVibe/Superpowers) | 元技能 |
-| [spec-kit](https://github.com/microsoft/spec-kit) | 规范驱动开发 |
+CSP 整合了以下开源项目：
+
+- [ECC](https://github.com/burningion/video-editing-ai) — Skill 库
+- [GSD](https://github.com/benjiwoss/get-shit-done) — 项目管理
+- [OMC](https://github.com/ruvcode/oh-my-claudecode) — 运行时增强
+- [Superpowers](https://github.com/SimpleVibe/Superpowers) — 元技能
+- [spec-kit](https://github.com/microsoft/spec-kit) — 规范驱动开发
