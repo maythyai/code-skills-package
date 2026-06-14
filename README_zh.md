@@ -7,7 +7,7 @@
 
 **统一 AI 编程技能 · 18 个平台 · 15+ 语言**
 
-整合 6 个开源 AI 编程项目为分层自动路由框架。
+整合 5 个开源 AI 编程项目为分层自动路由框架。
 
 [快速开始](#快速开始) · [架构](#架构) · [使用方式](#使用方式) · [English](./README.md)
 
@@ -15,7 +15,7 @@
 
 ---
 
-CSP（Code Skills Package）将 6 个开源 AI 编程项目（ECC、GSD、OMC、Superpowers、BMAD、spec-kit）的能力整合为分层架构，支持自动路由、按需加载和规范驱动的工作流。每个任务仅加载所需的 skill，token 消耗控制在 ~500–1,500 之间。
+CSP（Code Skills Package）将 5 个开源 AI 编程项目（ECC、GSD、OMC、Superpowers、spec-kit）的能力整合为分层架构，支持自动路由、按需加载和规范驱动的工作流。每个任务仅加载所需的 skill，token 消耗控制在 ~500–1,500 之间。
 
 ## 快速开始
 
@@ -236,7 +236,7 @@ Recipe 优先级：用户自定义 → 内置（`csp-router/recipes.yaml`）→ 
 
 [MIT License](./LICENSE)
 
-CSP 整合的 6 个项目均采用 MIT 许可证。
+CSP 整合的 5 个项目均采用 MIT 许可证。
 
 ## 鸣谢
 
@@ -246,5 +246,4 @@ CSP 整合的 6 个项目均采用 MIT 许可证。
 | [GSD (Get Shit Done)](https://github.com/benjiwoss/get-shit-done) | 项目管理 |
 | [OMC (Oh My Claude Code)](https://github.com/ruvcode/oh-my-claudecode) | 运行时增强 |
 | [Superpowers](https://github.com/SimpleVibe/Superpowers) | 元技能 |
-| [BMAD](https://github.com/bmad-code-org/BMAD-METHOD) | 专业化 agent |
 | [spec-kit](https://github.com/microsoft/spec-kit) | 规范驱动开发 |

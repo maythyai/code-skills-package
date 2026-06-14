@@ -7,7 +7,7 @@
 
 **Unified AI Programming Skills · 18 Platforms · 15+ Languages**
 
-Integrates 6 open-source AI coding projects into a layered, auto-routing framework.
+Integrates 5 open-source AI coding projects into a layered, auto-routing framework.
 
 [Quick Start](#quick-start) · [Architecture](#architecture) · [Usage](#usage) · [中文文档](./README_zh.md)
 
@@ -15,7 +15,7 @@ Integrates 6 open-source AI coding projects into a layered, auto-routing framewo
 
 ---
 
-CSP (Code Skills Package) consolidates the capabilities of 6 open-source AI programming projects — ECC, GSD, OMC, Superpowers, BMAD, spec-kit — into a layered architecture with automatic skill routing, on-demand loading, and spec-driven workflows. Instead of loading all skills upfront, CSP loads only what each task requires, keeping token usage between ~500–1,500 per task.
+CSP (Code Skills Package) consolidates the capabilities of 5 open-source AI programming projects — ECC, GSD, OMC, Superpowers, and spec-kit — into a layered architecture with automatic skill routing, on-demand loading, and spec-driven workflows. Instead of loading all skills upfront, CSP loads only what each task requires, keeping token usage between ~500–1,500 per task.
 
 ## Quick Start
 
@@ -230,13 +230,12 @@ Recipe priority: user-defined → built-in (`csp-router/recipes.yaml`) → route
 |----------|-------------|
 | [ARCHITECTURE.md](./ARCHITECTURE.md) | Architecture design (13 core principles) |
 | [SKILL-INDEX.md](./SKILL-INDEX.md) | Complete skill/agent index |
-| [README_zh.md](./README_zh.md) | 中文文档 |
 
 ## License
 
 [MIT License](./LICENSE)
 
-All 6 integrated projects use the MIT license.
+All 5 integrated projects use the MIT license.
 
 ## Acknowledgments
 
@@ -246,5 +245,4 @@ All 6 integrated projects use the MIT license.
 | [GSD (Get Shit Done)](https://github.com/benjiwoss/get-shit-done) | Project management |
 | [OMC (Oh My Claude Code)](https://github.com/ruvcode/oh-my-claudecode) | Runtime enhancement |
 | [Superpowers](https://github.com/SimpleVibe/Superpowers) | Meta-skills |
-| [BMAD](https://github.com/bmad-code-org/BMAD-METHOD) | Specialized agents |
 | [spec-kit](https://github.com/microsoft/spec-kit) | Spec-driven development |

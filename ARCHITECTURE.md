@@ -1975,7 +1975,7 @@ CSP 提供统一的 slash command 前缀 `/csp-`,**不保留**任何原始项目
 - [x] 项目根目录创建
 - [x] SKILL-INDEX.md 生成
 - [x] ARCHITECTURE.md 定稿（含十三章核心设计原则）
-- [x] SKILL-INDEX.md 覆盖率审计（6 个参考项目全量核对，2026-06-11）
+- [x] SKILL-INDEX.md 覆盖率审计（5 个参考项目全量核对，2026-06-11）
 - [x] CLAUDE.md 主入口创建（路由说明 + 安装指引）
 - [x] 目录骨架创建（csp-router/ csp-meta/ csp-workflow/ csp-meta/skills/spec-driven-development/ csp-patterns/ csp-runtime/ shared/）
 - [x] csp-router 实现（registry.json + triggers.yaml + SKILL.md）
@@ -2100,7 +2100,7 @@ CSP 提供三种使用方式，覆盖从新手到专家的全部用户画像：
 执行：输出 REVIEW.md
 ```
 
-**安装即用：** `./install.sh` 一键部署到 6 个平台，无需任何配置。
+**安装即用：** `./install.sh` 一键部署到 18 个平台，无需任何配置。
 
 ---
 

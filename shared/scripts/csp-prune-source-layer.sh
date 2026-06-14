@@ -5,7 +5,7 @@
 #   ./shared/scripts/csp-prune-source-layer.sh --dry-run   # 仅报告
 #   ./shared/scripts/csp-prune-source-layer.sh --apply     # 执行（需确认）
 #
-# 当前支持: 检测 openspec/csp-spec 残留引用
+# 当前支持: 检测 csp-spec 残留引用
 
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
@@ -14,7 +14,7 @@ cd "$ROOT"
 DRY=true
 [[ "${1:-}" == "--apply" ]] && DRY=false
 
-PATTERNS='OpenSpec|openspec|opsx:|csp-spec/'
+PATTERNS='opsx:|csp-spec/'
 
 echo "=== CSP Source Layer Prune Scan ==="
 echo "Root: $ROOT"

@@ -402,58 +402,6 @@
 | Delta Specs | CSP 概念 | 模式 | ADDED/MODIFIED/REMOVED 增量合并 | ✅ 保留（brownfield） |
 | Artifact DAG | CSP 概念 | 架构 | proposal → CSPEC → design → tasks | ✅ 并入 GSD 阶段链 |
 
-### 17.### 17. 专业化AI代理系统 (Specialized AI Agent System) — BMAD
-
-| 名称 | 来源 | 类型 | 描述 | 合并建议 |
-|------|------|------|------|----------|
-| **核心代理 (Core Agents)** | | | | |
-| `bmad-agent-analyst` | BMAD | Agent | 业务分析师 (Mary) - 运用战略分析和证据验证 | ✅ 借鉴整合 |
-| `bmad-agent-pm` | BMAD | Agent | 产品经理 (John) - 关注用户价值和业务需求 | ✅ 借鉴整合 |
-| `bmad-agent-architect` | BMAD | Agent | 系统架构师 (Winston) - 稳定性和业务价值导向 | ✅ 借鉴整合 |
-| `bmad-agent-dev` | BMAD | Agent | 软件工程师 (Amelia) - 测试先行和精确实现 | ✅ 借鉴整合 |
-| `bmad-agent-ux-designer` | BMAD | Agent | UX设计师 (Sally) - 用户体验和边缘案例平衡 | ✅ 借鉴整合 |
-| `bmad-agent-tech-writer` | BMAD | Agent | 技术作家 (Paige) - 结构化文档和清晰表达 | ✅ 借鉴整合 |
-| **核心工具 (Core Tools)** | | | | |
-| `bmad-help` | BMAD | Skill | 智能帮助系统 - 指导下一步行动 | ✅ 借鉴整合 |
-| `bmad-spec` | BMAD | Skill | SPEC规范生成 - 将任意输入转为标准化合同 | ✅ 借鉴整合 |
-| `bmad-party-mode` | BMAD | Skill | 多代理协作模式 - 多专家视角讨论 | ✅ 借鉴整合 |
-| `bmad-brainstorming` | BMAD | Workflow | 结构化头脑风暴 - 创意技术引导 | ✅ 借鉴整合 |
-| **审查工具 (Review Tools)** | | | | |
-| `bmad-review-adversarial-general` | BMAD | Skill | 对抗性审查 - 消极视角寻找问题 | ✅ 借鉴整合 |
-| `bmad-review-edge-case-hunter` | BMAD | Skill | 边缘案例探测 - 路径追踪未处理边界 | ✅ 借鉴整合 |
-| `bmad-editorial-review-prose` | BMAD | Skill | 文字编辑审查 - 通信清晰度优化 | ✅ 借鉴整合 |
-| `bmad-editorial-review-structure` | BMAD | Skill | 结构编辑审查 - 组织和流程优化 | ✅ 借鉴整合 |
-| **文档工具 (Documentation Tools)** | | | | |
-| `bmad-shard-doc` | BMAD | Skill | 文档分片 - 按标题分割大型文档 | ✅ 借鉴整合 |
-| `bmad-index-docs` | BMAD | Skill | 文档索引 - 自动生成目录和链接 | ✅ 借鉴整合 |
-| `bmad-advanced-elicitation` | BMAD | Skill | 高级内容提炼 - 多角度迭代改进 | ✅ 借鉴整合 |
-| **四阶段工作流 (Four-Phase Workflow)** | | | | |
-| `bmad-analysis-phase` | BMAD | Workflow | 分析阶段 - 探索问题空间和验证想法 | ✅ 借鉴整合 |
-| `bmad-planning-phase` | BMAD | Workflow | 规划阶段 - 定义构建内容和目标用户 | ✅ 借鉴整合 |
-| `bmad-solutioning-phase` | BMAD | Workflow | 解决方案设计 - 技术决策和任务分解 | ✅ 借鉴整合 |
-| `bmad-implementation-phase` | BMAD | Workflow | 实现阶段 - 逐个故事实现 | ✅ 借鉴整合 |
-| **快速开发 (Quick Development)** | | | | |
-| `bmad-quick-dev` | BMAD | Workflow | 快速开发流程 - 意图澄清→规划→实施→审查 | ✅ 借鉴整合 |
-| `bmad-sprint-planning` | BMAD | Workflow | 冲刺规划 - 初始化跟踪和周期管理 | ✅ 借鉴整合 |
-| `bmad-dev-story` | BMAD | Workflow | 故事开发 - 实现单个用户故事 | ✅ 借鉴整合 |
-| `bmad-code-review` | BMAD | Workflow | 代码审查 - 验证实现质量 | ✅ 借鉴整合 |
-| `bmad-sprint-status` | BMAD | Workflow | 冲刺状态 - 进度和故事状态跟踪 | ✅ 借鉴整合 |
-| `bmad-retrospective` | BMAD | Workflow | 回顾会议 - 经验教训总结 | ✅ 借鉴整合 |
-| `bmad-investigate` | BMAD | Workflow | 调查分析 - 证据分级的故障分析 | ✅ 借鉴整合 |
-| **模块系统 (Module System)** | | | | |
-| `bmad-builder` | BMAD | Module | BMAD构建器 - 创建自定义代理和工作流 | ✅ 借鉴整合 |
-| `bmad-test-architect` | BMAD | Module | 测试架构师 - 企业级测试策略 | ✅ 借鉴整合 |
-| `bmad-creative-suite` | BMAD | Module | 创意智能套件 - 头脑风暴和设计思维 | ✅ 借鉴整合 |
-| `bmad-game-dev-studio` | BMAD | Module | 游戏开发工作室 - Unity/Unreal/Godot支持 | ✅ 借鉴整合 |
-| **核心概念/能力** | | | | |
-| Specialized AI Agents | BMAD | 概念 | 专业化代理角色和人格特质 | ✅ 借鉴整合 |
-| Four-Phase Development | BMAD | 方法论 | analysis → planning → solutioning → implementation | ✅ 借鉴整合 |
-| Adversarial Review | BMAD | 技术 | 对抗性审查方法和消极视角 | ✅ 借鉴整合 |
-| Edge Case Detection | BMAD | 技术 | 系统化边界条件分析 | ✅ 借鉴整合 |
-| Structured Brainstorming | BMAD | 方法论 | 引导式创意生成技术 | ✅ 借鉴整合 |
-| Modular Architecture | BMAD | 架构 | 可扩展模块系统 | ✅ 借鉴整合 |
-| Quick Dev Flow | BMAD | 方法论 | 快速迭代开发流程 | ✅ 借鉴整合 |
-
 ---
 
 ## Hooks & Scripts 索引

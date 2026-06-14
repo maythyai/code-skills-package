@@ -22,7 +22,7 @@
 
 ## 简介
 
-CSP (Code Skills Package) 是一个将 6 个开源 AI 编程辅助项目的精华整合为一体化解决方案的编程技能包。它提供自动路由、分层加载、规范驱动的开发工作流。
+CSP (Code Skills Package) 是一个将 5 个开源 AI 编程辅助项目的精华整合为一体化解决方案的编程技能包。它提供自动路由、分层加载、规范驱动的开发工作流。
 
 **核心优势:**
 - **自动路由**: 用自然语言描述任务,系统自动选择最匹配的 skill 组合
@@ -428,10 +428,10 @@ csp-debug@1.5.0
 - **完整架构设计**: [ARCHITECTURE.md](./ARCHITECTURE.md)
 - **Skill 索引**: [SKILL-INDEX.md](./SKILL-INDEX.md)
 - **迁移映射表**: [MIGRATION.md](./MIGRATION.md)
-- **来源项目**: `开源项目参考/` 目录包含 6 个原始项目
+- **来源项目**: `开源项目参考/` 目录包含 5 个原始项目
 
 ---
 
 ## 许可证
 
-CSP 整合的 6 个项目均采用 MIT 或 Apache 2.0 许可证。具体见各项目原始 LICENSE 文件。
+CSP 整合的 5 个项目均采用 MIT 许可证。具体见各项目原始 LICENSE 文件。
