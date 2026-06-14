@@ -1,0 +1,323 @@
+# csp-router/triggers.yaml — 触发词规则库
+# 路由器通过此文件进行关键词→skill 匹配
+
+# ─── 触发词倒排索引 ───
+trigger_index:
+  "review":
+    skills: [csp-code-review, csp-requesting-code-review]
+    weight: 50
+  "审查":
+    skills: [csp-code-review]
+    weight: 50
+  "CR":
+    skills: [csp-code-review]
+    weight: 40
+  "debug":
+    skills: [csp-debug, csp-systematic-debugging, csp-debug-session]
+    weight: 50
+  "调试":
+    skills: [csp-debug, csp-systematic-debugging]
+    weight: 50
+  "错误":
+    skills: [csp-debug]
+    weight: 40
+  "报错":
+    skills: [csp-debug]
+    weight: 40
+  "崩溃":
+    skills: [csp-debug]
+    weight: 40
+  "bug":
+    skills: [csp-debug]
+    weight: 45
+  "修复":
+    skills: [csp-debug]
+    weight: 40
+  "plan":
+    skills: [csp-plan-phase, csp-writing-plans]
+    weight: 50
+  "规划":
+    skills: [csp-plan-phase]
+    weight: 50
+  "计划":
+    skills: [csp-plan-phase, csp-writing-plans]
+    weight: 45
+  "设计":
+    skills: [csp-plan-phase, csp-brainstorming]
+    weight: 40
+  "test":
+    skills: [csp-tdd, csp-e2e-testing]
+    weight: 45
+  "测试":
+    skills: [csp-tdd]
+    weight: 45
+  "verify":
+    skills: [csp-verify-phase]
+    weight: 50
+  "验证":
+    skills: [csp-verify-phase]
+    weight: 50
+  "ship":
+    skills: [csp-ship]
+    weight: 50
+  "发布":
+    skills: [csp-ship]
+    weight: 50
+  "deploy":
+    skills: [csp-ship]
+    weight: 45
+  "部署":
+    skills: [csp-ship]
+    weight: 45
+  "propose":
+    skills: [csp-plan-phase, csp-spec-phase, csp-spec-driven-development]
+    weight: 50
+  "apply":
+    skills: [csp-execute-phase, csp-implementation-phase]
+    weight: 50
+  "security":
+    skills: [csp-security-review, csp-secure-phase]
+    weight: 50
+  "安全":
+    skills: [csp-security-review]
+    weight: 50
+  "explore":
+    skills: [csp-explore, csp-map-codebase]
+    weight: 45
+  "探索":
+    skills: [csp-explore]
+    weight: 45
+  "探索项目":
+    skills: [csp-explore, csp-map-codebase]
+    weight: 45
+  "理解代码":
+    skills: [csp-explore, csp-map-codebase]
+    weight: 40
+  "refactor":
+    skills: [csp-code-review, csp-plan-phase]
+    weight: 40
+  "重构":
+    skills: [csp-code-review, csp-plan-phase]
+    weight: 40
+  "优化结构":
+    skills: [csp-code-review, csp-plan-phase]
+    weight: 35
+  "优化":
+    skills: [csp-performance-optimizer]
+    weight: 40
+  "性能":
+    skills: [csp-performance-optimizer]
+    weight: 40
+  "csp-agents":
+    skills: [csp-help]
+    weight: 50
+  "party mode":
+    skills: [csp-party-mode]
+    weight: 50
+  "多角色协作":
+    skills: [csp-party-mode]
+    weight: 50
+  "多代理":
+    skills: [csp-party-mode]
+    weight: 45
+  "spec":
+    skills: [csp-spec-contract, csp-spec-driven-development]
+    weight: 50
+  "specification":
+    skills: [csp-spec-contract, csp-spec-driven-development]
+    weight: 50
+  "规范":
+    skills: [csp-spec-contract, csp-spec-driven-development]
+    weight: 50
+  "契约":
+    skills: [csp-spec-contract]
+    weight: 45
+  "contract":
+    skills: [csp-spec-contract]
+    weight: 45
+  "brainstorm":
+    skills: [csp-brainstorming, csp-brainstorming]
+    weight: 50
+  "头脑风暴":
+    skills: [csp-brainstorming]
+    weight: 50
+  "发散":
+    skills: [csp-brainstorming]
+    weight: 40
+  "脑暴":
+    skills: [csp-brainstorming]
+    weight: 45
+  "ideate":
+    skills: [csp-brainstorming]
+    weight: 45
+  "quick dev":
+    skills: [csp-quick-dev]
+    weight: 50
+  "prototype":
+    skills: [csp-quick-dev, csp-rapid-prototype]
+    weight: 45
+  "原型":
+    skills: [csp-quick-dev, csp-rapid-prototype]
+    weight: 45
+  "快速验证":
+    skills: [csp-rapid-prototype]
+    weight: 40
+  "MVP":
+    skills: [csp-quick-dev]
+    weight: 45
+  "rapid":
+    skills: [csp-quick-dev]
+    weight: 40
+  "adversarial review":
+    skills: [csp-review-adversarial]
+    weight: 50
+  "challenge":
+    skills: [csp-review-adversarial]
+    weight: 45
+  "edge cases":
+    skills: [csp-review-edge-case]
+    weight: 50
+  "boundary conditions":
+    skills: [csp-review-edge-case]
+    weight: 50
+  "editorial review":
+    skills: [csp-review-editorial-prose, csp-review-editorial-structure]
+    weight: 50
+  "proofread":
+    skills: [csp-review-editorial-prose]
+    weight: 45
+  "shard":
+    skills: [csp-shard-doc]
+    weight: 50
+  "split document":
+    skills: [csp-shard-doc]
+    weight: 45
+  "index":
+    skills: [csp-index-docs]
+    weight: 40
+  "table of contents":
+    skills: [csp-index-docs]
+    weight: 45
+  "elicit":
+    skills: [csp-advanced-elicitation]
+    weight: 50
+  "extract":
+    skills: [csp-advanced-elicitation]
+    weight: 45
+  "structure":
+    skills: [csp-advanced-elicitation, csp-review-editorial-structure]
+    weight: 40
+  "analyze":
+    skills: [csp-analysis-phase]
+    weight: 45
+  "explore opportunity":
+    skills: [csp-analysis-phase]
+    weight: 50
+  "validate idea":
+    skills: [csp-analysis-phase]
+    weight: 50
+  "requirements":
+    skills: [csp-planning-phase, csp-interview-me]
+    weight: 50
+  "需求":
+    skills: [csp-planning-phase, csp-interview-me]
+    weight: 50
+  "PRD":
+    skills: [csp-planning-phase]
+    weight: 50
+  "用户故事":
+    skills: [csp-planning-phase]
+    weight: 50
+  "user stories":
+    skills: [csp-planning-phase]
+    weight: 50
+  "architecture":
+    skills: [csp-solutioning-phase, csp-plan-phase]
+    weight: 50
+  "架构":
+    skills: [csp-solutioning-phase, csp-plan-phase]
+    weight: 50
+  "设计":
+    skills: [csp-solutioning-phase, csp-plan-phase, csp-brainstorming]
+    weight: 45
+  "create stories":
+    skills: [csp-solutioning-phase]
+    weight: 50
+  "实现":
+    skills: [csp-implementation-phase, csp-implement]
+    weight: 50
+  "implement":
+    skills: [csp-implementation-phase, csp-implement]
+    weight: 50
+  "编码":
+    skills: [csp-implementation-phase, csp-implement]
+    weight: 45
+  "code":
+    skills: [csp-implementation-phase, csp-implement]
+    weight: 45
+  "开发":
+    skills: [csp-implementation-phase, csp-implement]
+    weight: 45
+  "build":
+    skills: [csp-implementation-phase, csp-implement]
+    weight: 45
+  "添加功能":
+    skills: [csp-implementation-phase, csp-implement]
+    weight: 45
+  "添加":
+    skills: [csp-implementation-phase, csp-implement]
+    weight: 40
+  "创建":
+    skills: [csp-implementation-phase, csp-implement]
+    weight: 40
+
+# ─── 技术栈探测规则 ───
+stack_rules:
+  python:
+    files: ["pyproject.toml", "setup.py", "requirements.txt", "Pipfile"]
+    reviewers: ["csp-python-reviewer", "csp-django-reviewer", "csp-fastapi-reviewer"]
+    testers: ["csp-python-testing"]
+    build_resolvers: ["csp-django-build-resolver"]
+    patterns: ["csp-python-patterns", "csp-django-patterns", "csp-fastapi-patterns"]
+
+  rust:
+    files: ["Cargo.toml"]
+    reviewers: ["csp-rust-reviewer"]
+    testers: ["csp-rust-testing"]
+    build_resolvers: ["csp-rust-build-resolver"]
+    patterns: ["csp-rust-patterns"]
+
+  golang:
+    files: ["go.mod"]
+    reviewers: ["csp-go-reviewer"]
+    testers: ["csp-golang-testing"]
+    build_resolvers: ["csp-go-build-resolver"]
+    patterns: ["csp-golang-patterns"]
+
+  typescript:
+    files: ["tsconfig.json", "package.json"]
+    reviewers: ["csp-typescript-reviewer", "csp-react-reviewer"]
+    testers: ["csp-react-testing"]
+    build_resolvers: ["csp-react-build-resolver"]
+    patterns: ["csp-react-patterns", "csp-nextjs-turbopack", "csp-frontend-patterns"]
+
+  java:
+    files: ["pom.xml", "build.gradle"]
+    reviewers: ["csp-java-reviewer", "csp-kotlin-reviewer"]
+    testers: []
+    build_resolvers: ["csp-java-build-resolver", "csp-kotlin-build-resolver"]
+    patterns: ["csp-springboot-patterns", "csp-kotlin-patterns"]
+
+  swift:
+    files: ["*.xcodeproj", "Package.swift"]
+    reviewers: ["csp-swift-reviewer"]
+    testers: []
+    build_resolvers: ["csp-swift-build-resolver"]
+    patterns: ["csp-swift-actor-persistence"]
+
+  cpp:
+    files: ["CMakeLists.txt", "Makefile"]
+    reviewers: ["csp-cpp-reviewer"]
+    testers: ["csp-cpp-testing"]
+    build_resolvers: ["csp-cpp-build-resolver"]
+    patterns: ["csp-cpp-coding-standards"]

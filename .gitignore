@@ -1,0 +1,48 @@
+# Dependencies
+node_modules/
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# OS
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# Editor
+.idea/
+.vscode/
+*.code-workspace
+*.sublime-*
+
+# Build
+dist/
+build/
+*.pyc
+__pycache__/
+*.egg-info/
+
+# Planning artifacts (generated per-session)
+.planning/
+*.planning/
+开源项目参考/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Session state
+.claude/sessions/
+.claude/settings.local.json
+
+# Temp
+tmp/
+.cache/
+*.tmp
