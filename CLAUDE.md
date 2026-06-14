@@ -1,6 +1,6 @@
 # CSP — Code Skills Package
 
-Unified AI coding skills from 5 open-source projects with auto-routing, lazy loading, and spec-driven workflows. MIT licensed.
+Unified AI coding skills from multiple open-source projects with auto-routing, lazy loading, and spec-driven workflows. MIT licensed.
 
 ## Install
 
@@ -47,13 +47,13 @@ Then just describe tasks: "review this code", "plan and build auth", "fix this D
 
 ```
 L0  csp-router    — task classification + skill selection (always loaded, ~800 tokens)
-L1  csp-meta      — methodology: brainstorming, TDD, debugging, spec-driven (~17 skills)
-L2  csp-workflow  — project lifecycle: plan → execute → verify → ship (93 workflows)
-L3  csp-patterns  — language/framework patterns, reviewers, build-resolvers (~200 skills)
-L4  csp-runtime   — autopilot, ralph, wiki, remember, self-improve (~20 skills)
+L1  csp-meta      — methodology: brainstorming, TDD, debugging, spec-driven (~22 skills)
+L2  csp-workflow  — project lifecycle: plan → execute → verify → ship (94 workflows)
+L3  csp-patterns  — language/framework patterns, reviewers, build-resolvers (~90 skills + ~86 agents)
+L4  csp-runtime   — autopilot, ralph, wiki, remember, self-improve (~37 skills)
 ```
 
-**Key features:** auto-routing · lazy loading (~500-1500 tokens/task vs 12K full) · spec-driven · 10+ language stacks
+**Key features:** auto-routing · lazy loading (~500-1500 tokens/task vs 12K full) · spec-driven · 15+ language stacks · AI/LLM · DevOps · mobile
 
 ## Common Flows
 
@@ -65,6 +65,10 @@ L4  csp-runtime   — autopilot, ralph, wiki, remember, self-improve (~20 skills
 | Bug fix | `csp-debug` → `csp-implement` → `csp-tdd` → `csp-verification` |
 | Code review | `csp-code-review` + language-specific reviewer |
 | Onboard project | `csp-explore` → `csp-map-codebase` → `csp-understand-architecture` |
+| AI/LLM app | `csp-rag-architecture` + `csp-llm-app-development` + `csp-prompt-engineering` |
+| DevOps setup | `csp-cicd-pipelines` + `csp-kubernetes-patterns` + `csp-infrastructure-as-code` |
+| Legacy modernization | `csp-tech-debt-assessment` → `csp-refactoring-strategies` → `csp-legacy-modernization` |
+| Mobile dev | `csp-react-native-patterns` + `csp-mobile-performance` + `csp-cross-platform-strategy` |
 
 ## Custom Recipes
 
