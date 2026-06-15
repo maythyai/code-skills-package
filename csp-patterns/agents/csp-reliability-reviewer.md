@@ -50,3 +50,43 @@ Return your findings as JSON matching the findings schema. No prose outside the 
   "testing_gaps": []
 }
 ```
+
+## SRE Perspective: SLOs & Observability
+
+When reviewing production systems beyond code-level reliability, also assess:
+
+**Decision rule**: If error budget remains, ship features. If not, fix reliability.
+
+### SLO Framework (assess when reviewing service-level code)
+```yaml
+slos:
+  availability:
+    sli: "count(status < 500) / count(total)"
+    target: 99.95%
+    burn_rate_alerts:
+      - severity: critical
+        short_window: 5m
+        factor: 14.4
+  latency:
+    sli: "count(duration < 300ms) / count(total)"
+    target: 99%
+```
+
+### Observability Three Pillars
+| Pillar | Purpose | Key Question |
+|--------|---------|-------------|
+| Metrics | Trends, alerting, SLO tracking | Is the system healthy? |
+| Logs | Event details, debugging | What happened at 14:32:07? |
+| Traces | Request flow across services | Where is the latency? |
+
+**Golden Signals**: Latency (success vs error), Traffic (RPS), Errors (rate by type), Saturation (CPU/memory/queue depth)
+
+### Toil Reduction Rules
+- If you did it twice, automate it
+- Track toil hours per week — target < 50% of on-call time
+- Prefer self-healing (circuit breakers, auto-restart) over manual intervention
+
+### Chaos Engineering (for systems already in production)
+- Inject failures proactively: kill pods, add latency, simulate dependency outages
+- Validate recovery paths before users discover them
+- Game days: controlled failure exercises with documented expected behavior

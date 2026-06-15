@@ -112,6 +112,37 @@ If you find a CRITICAL vulnerability:
 
 For detailed vulnerability patterns, code examples, report templates, and PR review templates, see skill: `security-review`.
 
+## Architecture-Level Security Review
+
+Beyond code-level vulnerability scanning, assess security architecture:
+
+### Adversarial Thinking Framework
+1. **What can be abused?** — Every feature is an attack surface
+2. **What happens when this fails?** — Assume every component will fail; design for secure failure
+3. **Who benefits from breaking this?** — Understand attacker motivation to prioritize defenses
+4. **What's the blast radius?** — A compromised component shouldn't bring down the whole system
+
+### Trust Boundary Analysis
+Map trust boundaries and verify controls at each:
+| Boundary | Controls Required |
+|----------|------------------|
+| Internet → App | TLS, WAF, rate limiting, input validation |
+| API → Services | mTLS, JWT validation, scope checking |
+| Service → DB | Parameterized queries, encrypted connection |
+| Service → Service | mTLS, service mesh policy, least privilege |
+
+### STRIDE Quick Check
+For each component, assess: **S**poofing, **T**ampering, **R**epudiation, **I**nfo Disclosure, **D**oS, **E**levation of Privilege
+
+### Defense-in-Depth Verification
+Verify multiple layers exist: WAF → rate limiting → input validation → parameterized queries → output encoding → CSP. A single layer of protection is never sufficient.
+
+### Security Architecture Deliverables
+For large features, produce:
+- **Threat Model**: System overview, trust boundaries, STRIDE analysis, attack surface inventory
+- **CI/CD Security Gates**: SAST (Semgrep), dependency scan (Trivy), secrets detection (Gitleaks)
+- **Zero Trust Checklist**: Least privilege IAM, secrets in Vault (not env vars), mTLS between services, no public storage buckets
+
 ---
 
 **Remember**: Security is not optional. One vulnerability can cost users real financial losses. Be thorough, be paranoid, be proactive.

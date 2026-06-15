@@ -247,3 +247,4 @@ CSP 整合了以下开源项目：
 - [OMC](https://github.com/ruvcode/oh-my-claudecode) — 运行时增强
 - [Superpowers](https://github.com/SimpleVibe/Superpowers) — 元技能
 - [spec-kit](https://github.com/microsoft/spec-kit) — 规范驱动开发
+- [Agency-Agents](https://github.com/msitarzewski/agency-agents) — Specialized AI agents

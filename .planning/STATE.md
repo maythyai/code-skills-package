@@ -57,10 +57,19 @@
 - Strategy Anchor
 
 ### Agency-Agents Integration (New → planned for v0.5.0)
-- Integrate 232 specialized agents from Agency-Agents project
-- Focus on Engineering Division agents (Frontend Dev, Backend Arch, Code Reviewer, etc.)
-- MCP Builder agent for extended MCP server capabilities
-- Maintain CSP's auto-routing and lazy-loading architecture
+- **Status**: Planning Phase Complete
+- **Progress**: Detailed implementation plan created (IMPLEMENTATION_PLAN_AGENCY_AGENTS.md)
+- **Phases**: 
+  1. Engineering Division agents (Frontend Dev, Backend Arch, Code Reviewer, etc.) - High Priority
+  2. Testing Division agents (Evidence Collector, API Tester, etc.) - Medium Priority  
+  3. Specialized Division agents (MCP Builder, Codebase Onboarding Engineer, etc.) - Medium Priority
+- **Deliverables**:
+  - csp-agency-frontend-developer, csp-agency-backend-architect, csp-agency-code-reviewer
+  - csp-agency-software-architect, csp-agency-devops-automator
+  - csp-agency-evidence-collector, csp-agency-api-tester
+  - csp-agency-mcp-builder, csp-agency-codebase-onboarding-engineer
+- **Integration**: Maintain CSP's auto-routing and lazy-loading architecture
+- **Timeline**: Planned for v0.5.0 milestone
 
 ---
 

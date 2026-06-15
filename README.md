@@ -3,7 +3,7 @@
 <div align="center">
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
-[![v0.3](https://img.shields.io/badge/version-0.3-green)](./ARCHITECTURE.md)
+[![v0.4.0](https://img.shields.io/badge/version-0.4.0-green)](./ARCHITECTURE.md)
 
 **Unified AI Programming Skills · 18 Platforms · 15+ Languages**
 
@@ -183,12 +183,23 @@ CSP uses a 5-layer architecture. Only the router (L0) loads at session start; re
   → csp-explore → csp-map-codebase → architecture map
 ```
 
-### Specialized Agent Integration
+### Specialized Agents
 
 ```
-"Use specialized frontend expertise"
-  → csp-agency-integration → leverage specialized agents from agency-agents
-  → e.g., Frontend Developer, UI Designer, Backend Architect, Code Reviewer, etc.
+"Production incident management"
+  → csp-incident-commander → severity classification, structured response, post-mortems
+
+"Design a multi-agent AI pipeline"
+  → csp-multi-agent-architect → topology selection, failure modes, HITL gating
+
+"Build a data pipeline"
+  → csp-data-engineer → ETL/ELT design, lakehouse architecture, data quality
+
+"Create an MCP server"
+  → csp-mcp-builder → tool interface design, agent integration, testing
+
+"Minimal bug fix"
+  → csp-minimal-change-engineer → surgical diffs, scope discipline, no creep
 ```
 
 ## Version Locking
@@ -262,3 +273,4 @@ CSP integrates capabilities from the following open-source projects:
 - [OMC](https://github.com/ruvcode/oh-my-claudecode) — Runtime enhancement
 - [Superpowers](https://github.com/SimpleVibe/Superpowers) — Meta-skills
 - [spec-kit](https://github.com/microsoft/spec-kit) — Spec-driven development
+- [Agency-Agents](https://github.com/msitarzewski/agency-agents) — Specialized AI agents
