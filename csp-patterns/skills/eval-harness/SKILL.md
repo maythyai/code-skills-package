@@ -2,6 +2,12 @@
 name: eval-harness
 description: Formal evaluation framework for Claude Code sessions implementing eval-driven development (EDD) principles
 allowed-tools: Read, Write, Edit, Bash, Grep, Glob
+layer: 4
+category: patterns
+----
+name: eval-harness
+description: Formal evaluation framework for Claude Code sessions implementing eval-driven development (EDD) principles
+allowed-tools: Read, Write, Edit, Bash, Grep, Glob
 ---
 
 # Eval Harness Skill

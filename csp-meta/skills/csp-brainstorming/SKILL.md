@@ -5,73 +5,10 @@ description: >
   Combines structured divergent-convergent ideation with interactive design dialogue.
   Use before any creative work — creating features, building components, adding functionality,
   or modifying behavior. Includes idea refinement, assumption surfacing, and approach exploration.
-csp-layer: 1-meta
-csp-source: merged(CSP+agent-skills)
----
-
-# Brainstorming
-
-Help turn ideas into fully formed designs and specs through natural collaborative dialogue. Combines structured divergent-convergent ideation with interactive design exploration.
-
-## HARD GATE
-
-Do NOT invoke any implementation skill, write any code, scaffold any project, or take any implementation action until you have presented a design and the user has approved it. This applies to EVERY project regardless of perceived simplicity.
-
-## Anti-Pattern: "This Is Too Simple To Need A Design"
-
-Every project goes through this process. "Simple" projects are where unexamined assumptions cause the most wasted work. The design can be short (a few sentences for truly simple projects), but you MUST present it and get approval.
-
-## When to Use
-
-**Always before:**
-- Creating features or building components
-- Adding functionality or modifying behavior
-- Starting a new project or sub-project
-- Refining a vague idea into something buildable
-
-**Trigger phrases:** "Let's brainstorm", "I have an idea", "Help me design", "Refine this idea", "Ideate on", "Stress-test my plan"
-
-## Checklist
-
-Complete in order:
-
-1. **Explore project context** — check files, docs, recent commits
-2. **Offer visual companion** (if visual questions ahead)
-3. **Ask clarifying questions** — one at a time
-4. **Propose 2-3 approaches** — with trade-offs and recommendation
-5. **Present design** — get user approval
-6. **Write design doc** — save and commit
-7. **Spec self-review** — check for placeholders, contradictions, ambiguity
-8. **User reviews written spec** — get approval
-9. **Transition to implementation** — invoke writing-plans skill
-
-## Process
-
-### Phase 1: Understand & Expand (Divergent)
-
-**Goal:** Take the raw idea and open it up.
-
-1. **Restate the idea** as a crisp "How Might We" problem statement.
-
-2. **Ask 3-5 sharpening questions** — no more:
-   - Who is this for, specifically?
-   - What does success look like?
-   - What are the real constraints?
-   - What's been tried before?
-   - Why now?
-
-3. **Generate 5-8 idea variations** using these lenses:
-   - **Inversion:** "What if we did the opposite?"
-   - **Constraint removal:** "What if budget/time/tech weren't factors?"
-   - **Audience shift:** "What if this were for [different user]?"
-   - **Combination:** "What if we merged this with [adjacent idea]?"
-   - **Simplification:** "What's the version that's 10x simpler?"
-   - **10x version:** "What would this look like at massive scale?"
-
-**For deeper exploration, apply one of these structured frameworks:**
-
-| Framework | Best For | How |
-|-----------|----------|-----|
+layer: 1
+origin: merged(CSP+agent-skills)
+category: meta
+-----------|----------|-----|
 | **SCAMPER** | Transform existing solutions | Substitute, Combine, Adapt, Modify/Magnify, Put to other uses, Eliminate, Rearrange/Reverse |
 | **Six Thinking Hats** | Multi-perspective decisions | White (facts), Red (intuition), Black (caution), Yellow (optimism), Green (creativity), Blue (process) |
 | **Reverse Brainstorming** | Troubleshooting | "How could we cause this problem?" then reverse each cause into a solution |

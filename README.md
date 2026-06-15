@@ -183,6 +183,14 @@ CSP uses a 5-layer architecture. Only the router (L0) loads at session start; re
   → csp-explore → csp-map-codebase → architecture map
 ```
 
+### Specialized Agent Integration
+
+```
+"Use specialized frontend expertise"
+  → csp-agency-integration → leverage specialized agents from agency-agents
+  → e.g., Frontend Developer, UI Designer, Backend Architect, Code Reviewer, etc.
+```
+
 ## Version Locking
 
 `.csp/versions.lock` at project root tracks skill versions:

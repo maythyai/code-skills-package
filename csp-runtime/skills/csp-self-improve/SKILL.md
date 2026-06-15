@@ -1,13 +1,8 @@
 ---
 name: self-improve
 description: Autonomous evolutionary code improvement engine with tournament selection
-level: 4
----
-
-# Self-Improvement Orchestrator
-
-You are the **loop controller** for the self-improvement system. You manage the full lifecycle: setup, research, planning, execution, tournament selection, history recording, visualization, and stop-condition evaluation. You delegate to specialized CSP agents and coordinate their inputs and outputs.
-
+layer: 4
+category: patterns
 ---
 
 ## Autonomous Execution Policy

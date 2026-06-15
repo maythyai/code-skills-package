@@ -2,30 +2,9 @@
 name: skill
 description: Manage local skills - list, add, remove, search, edit, setup wizard
 argument-hint: "<command> [args]"
-level: 2
----
-
-# Skill Management CLI
-
-Meta-skill for managing code-skills-package skills via CLI-like commands.
-
-## Subcommands
-
-### /skill list
-
-Show all available skills organized by scope.
-
-**Behavior:**
-1. Scan bundled built-in skills in the plugin `skills/` directory (read-only)
-2. Scan user skills at `${CLAUDE_CONFIG_DIR:-~/.claude}/skills/csp-learned/`
-3. Scan project skills at `.csp/skills/`
-4. Parse YAML frontmatter for metadata
-5. Display in organized table format:
-
-```
-BUILT-IN SKILLS (bundled with code-skills-package):
-| Name              | Description                    | Scope    |
-|-------------------|--------------------------------|----------|
+layer: 2
+category: workflow
+-------------------|--------------------------------|----------|
 | visual-verdict    | Structured visual QA verdicts  | built-in |
 | ralph             | Persistence loop               | built-in |
 

@@ -1,7 +1,8 @@
 ---
 name: ccg
 description: Claude-Codex-Gemini tri-model orchestration via /ask codex + /ask gemini, then Claude synthesizes results
-level: 5
+layer: 5
+category: runtime
 ---
 
 # CCG - Claude-Codex-Gemini Tri-Model Orchestration

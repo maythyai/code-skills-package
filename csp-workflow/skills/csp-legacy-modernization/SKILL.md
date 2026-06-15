@@ -8,72 +8,9 @@ description: >
   Use when modernizing a legacy system or planning a major migration.
 metadata:
   origin: CSP
----
-
-# Legacy Modernization Workflow
-
-Structured workflow for modernizing legacy systems with minimal risk. Covers the full lifecycle from assessment through verification, with specific guidance for common migration scenarios and anti-patterns to avoid.
-
-## When to Activate
-
-- Planning a migration from a legacy system to a modern architecture
-- Upgrading an old framework version that requires significant code changes
-- Migrating from a monolith to microservices (or vice versa)
-- Upgrading database technology or schema
-- Modernizing API interfaces (REST versioning, GraphQL adoption)
-- Replacing an end-of-life technology stack
-
-**When NOT to activate:**
-- Simple dependency version bumps (use standard upgrade procedures)
-- Greenfield projects with no legacy code
-- Performance optimization of an existing system (use profiling-driven approaches)
-- When the business case for modernization has not been established
-
-## Core Principles
-
-### 1. Never Do a Big Bang Rewrite
-
-Big bang rewrites fail at an alarming rate. They take longer than expected, introduce new bugs, and deliver no value until completion. Always prefer incremental migration.
-
-### 2. Deliver Value Continuously
-
-Every migration step should deliver tangible value — improved performance, new capabilities, reduced maintenance burden — not just "getting closer to the new system."
-
-### 3. Keep the Old System Running
-
-The legacy system must remain operational throughout the migration. Users should not notice the transition.
-
-### 4. Verify Equivalence at Every Step
-
-Each migration step must be verified against the legacy system's behavior. Characterization tests are your safety net.
-
-## Phase 1: Assessment
-
-### Codebase Audit
-
-**Goal:** Understand what exists, how it works, and what state it is in.
-
-```bash
-# Size and structure analysis
-find src/ -name '*.ts' -o -name '*.js' | xargs wc -l | sort -rn | head -20
-cloc src/  # Lines of code by language
-
-# Dependency analysis
-npm outdated
-npm audit
-npx depcheck
-
-# Complexity analysis
-npx complexity-report src/
-
-# Test coverage assessment
-npm test -- --coverage
-```
-
-**Assessment checklist:**
-
-| Area | What to Measure | Tool |
-|------|----------------|------|
+layer: 2
+category: workflow
+------|----------------|------|
 | **Code volume** | Total LOC, files, modules | cloc, find |
 | **Complexity** | Cyclomatic complexity, cognitive complexity | complexity-report, radon |
 | **Test coverage** | Line/branch coverage, missing critical paths | jest --coverage, istanbul |

@@ -1,8 +1,8 @@
 # Skills, Agents & Scripts 综合索引
 
 > 生成时间：2026-06-14
-> 扫描来源：`开源项目参考/` 下多个项目 + CSP 新增 skills/agents
-> 目的：为后续项目整合提供去重合并依据
+> 版本：v0.4.0 — 质量巩固与工程化
+> 状态：重叠已消除，迁移已完成，安装器已增强
 
 ---
 
@@ -222,7 +222,7 @@
 
 | 名称 | 来源 | 类型 | 描述 | 合并建议 |
 |------|------|------|------|----------|
-| `frontend-patterns` | ECC/.kiro+.agents | Skill | 前端模式 | ✅ 保留 |
+| `frontend-patterns` | ECC/.kiro+.agents | Skill | 前端模式 (React 内容已分离至 react-patterns) | ✅ 保留 |
 | `frontend-slides` | ECC/.cursor+.agents | Skill | HTML 演示 | ✅ 保留（独特） |
 | `react-patterns` | ECC/.kiro | Skill | React 模式 | ✅ 保留 |
 | `nextjs-turbopack` | ECC/.kiro+.cursor+.agents | Skill | Next.js+Turbo | ✅ 保留 |
@@ -238,7 +238,7 @@
 
 | 名称 | 来源 | 描述 |
 |------|------|------|
-| `backend-patterns` | ECC/.kiro+.agents | 后端架构 |
+| `backend-patterns` | ECC/.kiro+.agents | 后端架构 (含 api-design 合并) |
 | `django-patterns` | ECC/.kiro | Django |
 | `fastapi-patterns` | ECC/.kiro | FastAPI |
 | `nestjs-patterns` | ECC/.kiro | NestJS |
@@ -254,7 +254,7 @@
 | `deployment-patterns` | ECC/.kiro | 部署 |
 | `mcp-server-patterns` | ECC/.kiro+.cursor+.agents | MCP 服务器 |
 | `database-migrations` | ECC/.kiro | 数据库迁移 |
-| `api-design` | ECC/.kiro+.agents | REST API 设计 |
+| `api-design` | ECC/.kiro+.agents | ❌ 已合并入 `backend-patterns` |
 | `coding-standards` | ECC/.kiro+.agents | 通用编码标准 |
 | `cpp-coding-standards` | ECC/.kiro | C++ 标准 |
 | `java-coding-standards` | ECC/.kiro | Java 标准 |

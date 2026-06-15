@@ -13,28 +13,8 @@ triggers:
   - "configure slack"
   - "setup slack"
   - "slack webhook"
-level: 2
----
-
-# Configure Notifications
-
-Set up CSP notification integrations so you're alerted when sessions end, need input, or complete background tasks.
-
-## Routing
-
-Detect which provider the user wants based on their request or argument:
-- If the trigger or argument contains "telegram" → follow the **Telegram** section
-- If the trigger or argument contains "discord" → follow the **Discord** section
-- If the trigger or argument contains "slack" → follow the **Slack** section
-- If no provider is specified, use AskUserQuestion:
-
-**Question:** "Which notification service would you like to configure?"
-
-**Options:**
-1. **Telegram** - Bot token + chat ID. Works on mobile and desktop.
-2. **Discord** - Webhook or bot token + channel ID.
-3. **Slack** - Incoming webhook URL.
-
+layer: 2
+category: workflow
 ---
 
 ## Telegram Setup
@@ -770,14 +750,12 @@ All notification platforms require activation via CLI flags per session:
 - `csp --discord` — Activates Discord notifications (sets `CSP_DISCORD=1`)
 - `csp --slack` — Activates Slack notifications (sets `CSP_SLACK=1`)
 - `csp --webhook` — Activates webhook notifications (sets `CSP_WEBHOOK=1`)
-- `csp --openclaw` — Activates OpenClaw gateway integration (sets `CSP_OPENCLAW=1`)
 
 Without these flags, configured platforms remain dormant. This prevents unwanted notifications during development while keeping configuration persistent.
 
 **Examples:**
 - `csp --telegram --discord` — Telegram + Discord active
 - `csp --telegram --slack --webhook` — Telegram + Slack + Webhook active
-- `csp --telegram --openclaw` — Telegram + OpenClaw active
 - `csp` — No notifications sent (all platforms require explicit activation)
 
 ---

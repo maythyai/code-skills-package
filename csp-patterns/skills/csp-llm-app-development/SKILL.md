@@ -3,6 +3,13 @@ name: csp-llm-app-development
 description: Production LLM application development patterns covering prompt engineering, function calling, streaming, multi-model routing, guardrails, context management, structured output, error handling, and cost optimization. Use when building, reviewing, or hardening applications that call LLM APIs.
 metadata:
   origin: CSP
+layer: 4
+category: patterns
+----
+name: csp-llm-app-development
+description: Production LLM application development patterns covering prompt engineering, function calling, streaming, multi-model routing, guardrails, context management, structured output, error handling, and cost optimization. Use when building, reviewing, or hardening applications that call LLM APIs.
+metadata:
+  origin: CSP
 ---
 
 # LLM Application Development

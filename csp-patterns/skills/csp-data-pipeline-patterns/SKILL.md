@@ -3,6 +3,13 @@ name: csp-data-pipeline-patterns
 description: Production data pipeline patterns covering Airflow DAG design, dbt transformations, data quality checks, incremental processing, idempotent pipelines, schema evolution, data lineage, ODPS/MaxCompute, data lake/warehouse patterns, and CDC with Debezium. Use when designing, building, or debugging data pipelines.
 metadata:
   origin: CSP
+layer: 4
+category: patterns
+----
+name: csp-data-pipeline-patterns
+description: Production data pipeline patterns covering Airflow DAG design, dbt transformations, data quality checks, incremental processing, idempotent pipelines, schema evolution, data lineage, ODPS/MaxCompute, data lake/warehouse patterns, and CDC with Debezium. Use when designing, building, or debugging data pipelines.
+metadata:
+  origin: CSP
 ---
 
 # Data Pipeline Patterns

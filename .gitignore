@@ -26,6 +26,7 @@ __pycache__/
 
 # Planning artifacts (generated per-session)
 .planning/
+.planning/*
 *.planning/
 开源项目参考/
 

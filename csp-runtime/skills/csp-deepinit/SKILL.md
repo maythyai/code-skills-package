@@ -1,54 +1,9 @@
 ---
 name: deepinit
 description: Deep codebase initialization with hierarchical AGENTS.md documentation
-level: 4
----
-
-# Deep Init Skill
-
-Creates comprehensive, hierarchical AGENTS.md documentation across the entire codebase.
-
-## Core Concept
-
-AGENTS.md files serve as **AI-readable documentation** that helps agents understand:
-- What each directory contains
-- How components relate to each other
-- Special instructions for working in that area
-- Dependencies and relationships
-
-## Hierarchical Tagging System
-
-Every AGENTS.md (except root) includes a parent reference tag:
-
-```markdown
-<!-- Parent: ../AGENTS.md -->
-```
-
-This creates a navigable hierarchy:
-```
-/AGENTS.md                          ← Root (no parent tag)
-├── src/AGENTS.md                   ← <!-- Parent: ../AGENTS.md -->
-│   ├── src/components/AGENTS.md    ← <!-- Parent: ../AGENTS.md -->
-│   └── src/utils/AGENTS.md         ← <!-- Parent: ../AGENTS.md -->
-└── docs/AGENTS.md                  ← <!-- Parent: ../AGENTS.md -->
-```
-
-## AGENTS.md Template
-
-```markdown
-<!-- Parent: {relative_path_to_parent}/AGENTS.md -->
-<!-- Generated: {timestamp} | Updated: {timestamp} -->
-
-# {Directory Name}
-
-## Purpose
-{One-paragraph description of what this directory contains and its role}
-
-## Key Files
-{List each significant file with a one-line description}
-
-| File | Description |
-|------|-------------|
+layer: 4
+category: patterns
+------|-------------|
 | `file.ts` | Brief description of purpose |
 
 ## Subdirectories

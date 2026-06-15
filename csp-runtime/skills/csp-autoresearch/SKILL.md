@@ -2,7 +2,8 @@
 name: autoresearch
 description: Stateful single-mission improvement loop with strict evaluator contract, markdown decision logs, and max-runtime stop behavior
 argument-hint: "[--mission-dir <path>] [--max-runtime <duration>] [--cron <spec>] [--resume <run-id>]"
-level: 4
+layer: 4
+category: patterns
 ---
 
 <Purpose>

@@ -7,60 +7,9 @@ description: >
   adding functionality.
 metadata:
   origin: CSP
----
-
-# /search-first — Research Before You Code
-
-Systematizes the "search for existing solutions before implementing" workflow.
-
-## Trigger
-
-Use this skill when:
-- Starting a new feature that likely has existing solutions
-- Adding a dependency or integration
-- The user asks "add X functionality" and you're about to write code
-- Before creating a new utility, helper, or abstraction
-
-## Scope and Approval Rules
-
-Default to read-only research: inspect the repo, package metadata, docs, and public examples before recommending a dependency or integration. Do not install packages, configure MCP servers, publish artifacts, open PRs, or make external write actions from this skill unless the user has explicitly approved that action in the current task.
-
-When a candidate requires credentials, paid services, network writes, or project-wide config changes, return a recommendation and approval checkpoint instead of applying it directly.
-
-## Workflow
-
-```
-┌─────────────────────────────────────────────┐
-│  1. NEED ANALYSIS                           │
-│     Define what functionality is needed      │
-│     Identify language/framework constraints  │
-├─────────────────────────────────────────────┤
-│  2. PARALLEL SEARCH (researcher agent)      │
-│     ┌──────────┐ ┌──────────┐ ┌──────────┐  │
-│     │  npm /   │ │  MCP /   │ │  GitHub / │  │
-│     │  PyPI    │ │  Skills  │ │  Web      │  │
-│     └──────────┘ └──────────┘ └──────────┘  │
-├─────────────────────────────────────────────┤
-│  3. EVALUATE                                │
-│     Score candidates (functionality, maint, │
-│     community, docs, license, deps)         │
-├─────────────────────────────────────────────┤
-│  4. DECIDE                                  │
-│     ┌─────────┐  ┌──────────┐  ┌─────────┐  │
-│     │  Adopt  │  │  Extend  │  │  Build   │  │
-│     │ as-is   │  │  /Wrap   │  │  Custom  │  │
-│     └─────────┘  └──────────┘  └─────────┘  │
-├─────────────────────────────────────────────┤
-│  5. APPROVAL CHECKPOINT / IMPLEMENT         │
-│     Recommend package / MCP / custom code   │
-│     Apply only after explicit approval      │
-└─────────────────────────────────────────────┘
-```
-
-## Decision Matrix
-
-| Signal | Action |
-|--------|--------|
+layer: 4
+category: patterns
+--------|--------|
 | Exact match, well-maintained, MIT/Apache | **Adopt** — recommend the package and request approval before install or config changes |
 | Partial match, good foundation | **Extend** — recommend the package plus a thin wrapper, then wait for approval before applying |
 | Multiple weak matches | **Compose** — propose 2-3 small packages and the integration plan before installing anything |

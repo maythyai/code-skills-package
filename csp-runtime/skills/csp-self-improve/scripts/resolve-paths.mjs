@@ -3,7 +3,16 @@
 import { existsSync, mkdirSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
-import { resolveOmcStateRoot } from '../../../scripts/lib/state-root.mjs';
+
+/**
+ * Resolve the CSP state root directory.
+ * Falls back to .csp/ in the project root.
+ */
+function resolveCspStateRoot(projectRoot) {
+  const cspDir = join(projectRoot, '.csp');
+  if (existsSync(cspDir)) return cspDir;
+  return cspDir; // Return even if not yet created (will be created by ensureDirs)
+}
 
 const DEFAULT_TOPIC_SLUG = 'default';
 const TOPICS_DIR = 'topics';
@@ -129,9 +138,9 @@ function ensureDirs(paths) {
   }
 }
 
-export async function resolveSelfImprovePaths({ projectRoot = process.cwd(), topic = '', slug = '', sessionId = '' } = {}) {
+export function resolveSelfImprovePaths({ projectRoot = process.cwd(), topic = '', slug = '', sessionId = '' } = {}) {
   const resolvedProjectRoot = resolve(projectRoot);
-  const omcRoot = await resolveOmcStateRoot(resolvedProjectRoot);
+  const omcRoot = resolveCspStateRoot(resolvedProjectRoot);
   const baseRoot = join(omcRoot, 'self-improve');
   const explicitSlug = slugify(slug || topic);
   const legacyLayout = hasLegacyLayout(baseRoot);
@@ -188,7 +197,7 @@ async function main() {
     return;
   }
 
-  const paths = await resolveSelfImprovePaths({
+  const paths = resolveSelfImprovePaths({
     projectRoot: args.projectRoot,
     topic: args.topic,
     slug: args.slug,

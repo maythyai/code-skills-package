@@ -2,34 +2,9 @@
 name: django-patterns
 description: Django architecture patterns, REST API design with DRF, ORM best practices, caching, signals, middleware, and production-grade Django apps.
 origin: CSP
----
-
-# Django Development Patterns
-
-Production-grade Django architecture patterns for scalable, maintainable applications.
-
-## When to Activate
-
-- Building Django web applications
-- Designing Django REST Framework APIs
-- Working with Django ORM and models
-- Setting up Django project structure
-- Implementing caching, signals, middleware
-
-## Core Principles
-
-1. **Split settings** — Separate dev/prod/test settings for environment-specific configuration
-2. **Custom QuerySets** — Reusable query methods via QuerySet managers
-3. **Service Layer** — Business logic separation from views
-4. **ViewSet patterns** — REST API endpoints with DRF
-5. **Cache first** — Cache expensive operations at view, template, or low-level
-6. **Signals** — Event-driven actions for decoupled logic
-7. **Middleware** — Request/response processing pipeline
-
-## Quick Reference
-
-| Pattern | Description |
-|---------|-------------|
+layer: 4
+category: patterns
+---------|-------------|
 | Split settings | Separate dev/prod/test settings |
 | Custom QuerySet | Reusable query methods |
 | Service Layer | Business logic separation |

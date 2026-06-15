@@ -4,20 +4,12 @@ description: >
   Strategic planning with optional interview, consensus (Planner/Architect/Critic),
   and review modes. Auto-detects whether to interview the user or plan directly.
   Unified entry point replacing ralplan alias. Use before implementing any non-trivial work.
-csp-layer: 5-runtime
-csp-source: merged(CSP)
+layer: 5
+origin: merged(CSP)
 aliases: [ralplan]
 triggers: ["plan", "plan this", "let's plan", "ralplan", "review this plan"]
----
-
-# Plan
-
-Create comprehensive, actionable work plans through intelligent interaction. Auto-detects whether to interview the user (broad requests) or plan directly (detailed requests).
-
-## Modes
-
-| Mode | Trigger | Behavior |
-|------|---------|----------|
+category: runtime
+------|---------|----------|
 | **Interview** | Default for broad requests | Interactive requirements gathering |
 | **Direct** | `--direct`, or detailed request | Skip interview, generate plan directly |
 | **Consensus** | `--consensus`, "ralplan" | Planner → Architect → Critic loop with RALPLAN-DR |

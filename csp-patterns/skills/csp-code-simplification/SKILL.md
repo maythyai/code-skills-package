@@ -5,77 +5,10 @@ description: >
   Combines five simplification principles, dead-code detection tools (knip, depcheck, ts-prune),
   and AI slop cleanup workflow. Use when refactoring for clarity, removing unused code,
   or cleaning bloated AI-generated implementations.
-csp-layer: 4-patterns
-csp-source: merged(agent-skills+CSP)
----
-
-# Code Simplification
-
-Simplify code by reducing complexity while preserving exact behavior. Covers three scopes: **clarity simplification** (readability), **dead code removal** (unused exports/deps/files), and **AI slop cleanup** (bloated AI-generated code).
-
-## When to Use
-
-- Code works but is harder to read, maintain, or extend than it should be
-- After a feature is working and tests pass, but implementation feels heavy
-- Need to remove unused code, exports, dependencies, or duplicates
-- Cleaning up AI-generated code that feels bloated, repetitive, or over-abstracted
-- During code review when readability or complexity issues are flagged
-- When refactoring code written under time pressure
-
-**When NOT to use:**
-- Code is already clean and readable
-- You don't understand what the code does yet — comprehend first
-- Performance-critical and the "simpler" version would be measurably slower
-- About to rewrite the module entirely
-- During active feature development or right before production deployment
-
-## The Five Principles
-
-### 1. Preserve Behavior Exactly
-All inputs, outputs, side effects, error behavior, and edge cases must remain identical.
-
-### 2. Follow Project Conventions
-Read CLAUDE.md / project conventions. Match the project's style for imports, naming, error handling, types.
-
-### 3. Prefer Clarity Over Cleverness
-Explicit code beats compact code when the compact version requires a mental pause.
-
-```typescript
-// UNCLEAR: Dense ternary chain
-const label = isNew ? 'New' : isUpdated ? 'Updated' : isArchived ? 'Archived' : 'Active';
-
-// CLEAR: Readable mapping
-function getStatusLabel(item: Item): string {
-  if (item.isNew) return 'New';
-  if (item.isUpdated) return 'Updated';
-  if (item.isArchived) return 'Archived';
-  return 'Active';
-}
-```
-
-### 4. Maintain Balance
-Watch for over-simplification: inlining too aggressively, combining unrelated logic, removing abstractions that exist for extensibility.
-
-### 5. Scope to What Changed
-Default to simplifying recently modified code. Avoid drive-by refactors of unrelated code.
-
-## The Simplification Process
-
-### Step 1: Understand Before Touching (Chesterton's Fence)
-
-Before changing or removing anything:
-- What is this code's responsibility?
-- What calls it? What does it call?
-- What are the edge cases and error paths?
-- Are there tests that define the expected behavior?
-- Check git blame for original context
-
-### Step 2: Identify Opportunities
-
-**Structural complexity:**
-
-| Pattern | Simplification |
-|---------|----------------|
+layer: 4
+origin: merged(agent-skills+CSP)
+category: patterns
+---------|----------------|
 | Deep nesting (3+ levels) | Extract conditions into guard clauses |
 | Long functions (50+ lines) | Split into focused functions |
 | Nested ternaries | Replace with if/else or lookup objects |
@@ -207,6 +140,22 @@ def process(data):
 - Removing error handling because "it makes the code cleaner"
 - Simplifying code you don't fully understand
 - Batching many simplifications into one large commit
+
+## Agent Output Format
+
+When operating as an agent, the code simplifier produces structured output:
+
+### Files Simplified
+- `path/to/file.ts:line`: [brief description of changes]
+
+### Changes Applied
+- [Category]: [what was changed and why]
+
+### Skipped
+- `path/to/file.ts`: [reason no changes were needed]
+
+### Verification
+- Diagnostics: [N errors, M warnings per file]
 
 ## Verification
 

@@ -7,65 +7,9 @@ description: >
   and Expo vs bare workflow decisions. Use for React Native project architecture and implementation.
 metadata:
   origin: CSP
----
-
-# React Native Patterns
-
-Comprehensive patterns and best practices for React Native development. Covers navigation, state management, native modules, performance optimization, OTA updates, testing, and the transition to the New Architecture (Fabric + TurboModules).
-
-## When to Activate
-
-- Starting a new React Native project or choosing between Expo and bare workflow
-- Implementing navigation patterns in a React Native app
-- Setting up state management for a React Native codebase
-- Building or integrating native modules
-- Optimizing React Native app performance
-- Migrating to the New Architecture (Fabric + TurboModules)
-- Setting up testing infrastructure for React Native
-- Configuring OTA updates and deployment pipelines
-
-**When NOT to activate:**
-- Pure web React projects (use `csp-react-patterns` instead)
-- Flutter projects (use Flutter-specific skills)
-- Native-only iOS or Android development
-- React Native projects under 100 lines with no complexity concerns
-
-## Core Principles
-
-### 1. Platform Awareness First
-
-React Native is not "write once, run everywhere" — it is "learn once, write everywhere." Always consider platform differences.
-
-```typescript
-import { Platform, StyleSheet } from 'react-native';
-
-// Use Platform.select for divergent behavior
-const styles = StyleSheet.create({
-  container: {
-    paddingTop: Platform.select({ ios: 44, android: 24 }),
-    // Safe area on iOS, status bar on Android
-  },
-});
-
-// Use platform-specific files for entirely different implementations
-// DatePicker.ios.tsx — uses @react-native-community/datetimepicker
-// DatePicker.android.tsx — uses native dialog
-// DatePicker.tsx — web fallback
-```
-
-### 2. Prefer Expo Unless You Have a Specific Reason Not To
-
-Expo's managed workflow handles native complexity so you can focus on your app. Go bare only when you need:
-- Custom native modules not available as Expo packages
-- Full control over native build configuration
-- Integration with proprietary SDKs requiring native code
-
-## Expo vs Bare Workflow
-
-### Decision Matrix
-
-| Factor | Expo (Managed) | Bare Workflow |
-|--------|---------------|---------------|
+layer: 4
+category: patterns
+--------|---------------|---------------|
 | Setup time | Minutes | Hours to days |
 | Native modules | Via config plugins + EAS | Full control |
 | OTA updates | Expo Updates built-in | CodePush or custom |

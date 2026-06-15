@@ -4,6 +4,59 @@ All notable changes to CSP will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [0.4.0] — 2026-06-14
+
+### 质量巩固与工程化
+
+基于 v0.3 思辨分析，不开发 plugin 系统，聚焦项目质量巩固。
+
+#### Phase 1: Skill 重叠合并 ✅
+- 11 组 skill 重叠中 7 组已在初始迁移完成
+- 5 个 registry 条目标记 deprecated（path: null）
+- 删除废弃文件（csp-code-simplifier agent）
+- B 级边界调整：api-design 合并、frontend React 分离、interview 交叉引用
+- 更新 registry/triggers/SKILL-INDEX/CLAUDE.md 同步
+
+#### Phase 2: 核心技能迁移 ✅
+- **Registry 一致性审计**: 30 个未注册 skill 添加到 registry，3 个 MISSING 路径标记 deprecated，创建 `shared/scripts/audit-registry.js`
+- **Frontmatter 标准化**: 145 个 SKILL.md 统一格式（csp-layer → layer, level → layer, csp-source → origin），修复 11 个损坏的 frontmatter
+- **OMC 依赖清理**: 移除 `resolve-paths.mjs` 对 OMC `state-root.mjs` 外部依赖，移除 `--openclaw` CLI 标志
+- **结果**: 497 skills (489 active, 8 deprecated), 0 missing paths, 99.3% frontmatter compliance
+
+#### Phase 3: 安装器优化 ✅
+- **--stacks <list>**: 按技术栈过滤安装（python, typescript, rust, go, java, kotlin, swift, cpp, react, django, spring, fastapi, postgres, docker, kubernetes, ai, mobile, devops, security, testing, frontend）
+- **--layers <list>**: 按层级选择性安装（router, meta, workflow, patterns, runtime）
+- **--minimal**: 仅安装 router + meta 层（<20% 总量）
+- **--dry-run**: 预览安装内容而不实际执行
+- **向后兼容**: 无参数调用行为与 v0.3 一致
+- 版本号升级到 0.4.0
+
+#### Phase 4: 自定义技能创作工具 ✅
+- **csp-skill-creator**: 交互式 skill 创建向导（注册为 runtime skill）
+- **shared/templates/SKILL-TEMPLATE.md**: 标准化 SKILL.md 模板
+- **docs/CONTRIBUTING.md**: 完整贡献指南（fork → 创建 → 测试 → PR）
+- **docs/SKILL-AUTHORING.md**: Skill 编写最佳实践
+
+#### Phase 5: 质量审计与文档更新 ✅
+- registry.json 与文件系统零差异（0 missing paths）
+- ARCHITECTURE.md 更新为 v0.4.0
+- SKILL-INDEX.md 更新版本和状态
+- CLAUDE.md 更新安装命令和版本号
+- CHANGELOG.md 记录所有变更项
+
+### 统计指标
+
+| 指标 | v0.3 | v0.4.0 |
+|------|------|--------|
+| Total Skills | 466 | 498 (490 active, 8 deprecated) |
+| Registry Missing Paths | 3 | 0 |
+| Frontmatter Compliance | ~70% | 99.3% |
+| OMC 内部依赖 | 2 个文件 | 0 |
+| 安装选项 | 基础 | 20+ (stacks/layers/dry-run/minimal) |
+| Skill 创作工具 | 无 | skill-creator + 模板 + 指南 |
+
+---
+
 ## [0.3.0] - 2026-06-14
 
 ### Added

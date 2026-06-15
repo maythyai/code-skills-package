@@ -1,25 +1,9 @@
 ---
 name: csp-compound
 description: "Document a recently solved problem to compound your team's knowledge. Captures solutions in docs/solutions/ with YAML frontmatter for searchability. Use after fixing bugs or establishing patterns."
----
-
-# /csp-compound
-
-Document solved problems to compound team knowledge. Each documented solution makes the next occurrence take minutes instead of research time.
-
-## Usage
-
-```bash
-/csp-compound                            # Document the most recent fix
-/csp-compound mode:headless              # Non-interactive run for automations
-```
-
-## Mode Detection
-
-Check `$ARGUMENTS` for `mode:headless` token.
-
-| Mode | When | Behavior |
-|------|------|----------|
+layer: 2
+category: workflow
+------|------|----------|
 | **Interactive** (default) | No mode token | Ask Full vs Lightweight, ask about session history (Full only), prompt for Discoverability Check consent |
 | **Headless** | `mode:headless` in arguments | No blocking questions. Run Full without session history. Apply Discoverability Check silently. |
 

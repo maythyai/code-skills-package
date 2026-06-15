@@ -7,69 +7,9 @@ description: >
   or planning debt reduction initiatives.
 metadata:
   origin: CSP
----
-
-# Technical Debt Assessment
-
-Systematic identification, measurement, and prioritization of technical debt to create actionable reduction roadmaps. Covers detection across code, architecture, and dependencies, with frameworks for communicating debt impact to both engineering and business stakeholders.
-
-## When to Activate
-
-- Assessing overall codebase health before a major initiative
-- Planning a debt reduction sprint or quarter
-- Evaluating a codebase during due diligence or acquisition
-- After a period of rapid feature development to assess accumulated debt
-- When the team reports increasing friction in development velocity
-- Before starting a refactoring effort to identify highest-impact targets
-- When stakeholders need data-driven justification for debt reduction investment
-
-**When NOT to activate:**
-- During active incident response (fix the fire first)
-- For trivial codebases under 1000 lines
-- When the team already has a current debt assessment
-- Right before a production release (assessment without action is demoralizing)
-
-## Core Principles
-
-### 1. Debt Is a Financial Metaphor — Use It
-
-Technical debt has principal (the cost to fix now) and interest (the ongoing cost of not fixing). Like financial debt, some debt is strategic (mortgage to buy a house) and some is reckless (credit card at 25% APR).
-
-### 2. Measure Before You Manage
-
-You cannot reduce what you cannot measure. Establish baselines, track trends, and set targets.
-
-### 3. Prioritize Ruthlessly
-
-Not all debt matters equally. Focus on debt that:
-- Blocks current or planned feature work
-- Causes frequent production incidents
-- Consumes disproportionate maintenance effort
-- Has the highest interest rate (compound cost)
-
-### 4. Communicate in Business Terms
-
-Engineers understand refactoring. Stakeholders understand risk, cost, and velocity. Translate debt into business impact.
-
-## Debt Identification
-
-### Code-Level Smells
-
-**Detection approach:** Use static analysis tools combined with manual review.
-
-```bash
-# Automated detection
-npx eslint . --max-warnings 0              # Lint violations
-npx complexity-report src/                  # Complexity analysis
-npx depcheck                                # Unused dependencies
-npx knip                                    # Dead code detection
-sonar-scanner                               # SonarQube analysis
-```
-
-**Code smell categories and detection:**
-
-| Category | Indicators | Detection Method |
-|----------|-----------|------------------|
+layer: 4
+category: patterns
+----------|-----------|------------------|
 | **Complexity** | Cyclomatic complexity > 15, cognitive complexity > 20 | complexity-report, SonarQube |
 | **Duplication** | Duplicated blocks > 10 lines | jscpd, SonarQube |
 | **Dead code** | Unused exports, unreachable branches | knip, ts-prune, ts-unused-exports |

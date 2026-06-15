@@ -2,24 +2,9 @@
 name: django-security
 description: Django security best practices, authentication, authorization, CSRF protection, SQL injection prevention, XSS prevention, and secure deployment configurations.
 origin: CSP
----
-
-# Django Security Best Practices
-
-Comprehensive security guidelines for Django applications to protect against common vulnerabilities.
-
-## When to Activate
-
-- Setting up Django authentication and authorization
-- Implementing user permissions and roles
-- Configuring production security settings
-- Reviewing Django application for security issues
-- Deploying Django applications to production
-
-## Quick Security Checklist
-
-| Check | Description |
-|-------|-------------|
+layer: 4
+category: patterns
+-------|-------------|
 | `DEBUG = False` | Never run with DEBUG in production |
 | HTTPS only | Force SSL, secure cookies |
 | Strong secrets | Use environment variables for SECRET_KEY |

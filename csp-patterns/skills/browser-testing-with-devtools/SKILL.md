@@ -1,53 +1,10 @@
 ---
 name: csp-browser-testing-with-devtools
 description: Tests in real browsers via Chrome DevTools MCP. Use when building or debugging anything that runs in a browser. Use when you need to inspect the DOM, capture console errors, analyze network requests, profile performance, or verify visual output with real runtime data. Requires the chrome-devtools MCP server to be configured.
-csp-layer: 4-patterns
-csp-source: agent-skills
----
-
-# Browser Testing with DevTools
-
-## Overview
-
-Use Chrome DevTools MCP to give your agent eyes into the browser. This bridges the gap between static code analysis and live browser execution — the agent can see what the user sees, inspect the DOM, read console logs, analyze network requests, and capture performance data. Instead of guessing what's happening at runtime, verify it.
-
-## When to Use
-
-- Building or modifying anything that renders in a browser
-- Debugging UI issues (layout, styling, interaction)
-- Diagnosing console errors or warnings
-- Analyzing network requests and API responses
-- Profiling performance (Core Web Vitals, paint timing, layout shifts)
-- Verifying that a fix actually works in the browser
-- Automated UI testing through the agent
-
-**When NOT to use:** Backend-only changes, CLI tools, or code that doesn't run in a browser.
-
-## Setting Up Chrome DevTools MCP
-
-### Installation
-
-Add the following to your project's `.mcp.json` or Claude Code settings:
-
-```json
-{
-  "mcpServers": {
-    "chrome-devtools": {
-      "command": "npx",
-      "args": ["-y", "chrome-devtools-mcp@latest", "--autoConnect"]
-    }
-  }
-}
-```
-
-`-y` skips the npx install confirmation. `--autoConnect` connects automatically to a running Chrome instance (or launches one) — recommended for most users.
-
-### Available Tools
-
-Chrome DevTools MCP provides these capabilities:
-
-| Tool | What It Does | When to Use |
-|------|-------------|-------------|
+layer: 4
+origin: agent-skills
+category: patterns
+------|-------------|-------------|
 | **Screenshot** | Captures the current page state | Visual verification, before/after comparisons |
 | **DOM Inspection** | Reads the live DOM tree | Verify component rendering, check structure |
 | **Console Logs** | Retrieves console output (log, warn, error) | Diagnose errors, verify logging |

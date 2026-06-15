@@ -4,82 +4,10 @@ description: >
   Test-Driven Development: write failing test first, minimal code to pass, then refactor.
   Enforces Red-Green-Refactor cycle with 80%+ coverage across unit, integration, and E2E tests.
   Use when implementing any feature, fixing bugs, or refactoring code.
-csp-layer: 1-meta
-csp-source: merged(CSP+agent-skills)
----
-
-# Test-Driven Development (TDD)
-
-## Overview
-
-Write the test first. Watch it fail. Write minimal code to pass.
-
-**Core principle:** If you didn't watch the test fail, you don't know if it tests the right thing.
-
-**The Iron Law:** NO PRODUCTION CODE WITHOUT A FAILING TEST FIRST.
-
-Write code before the test? Delete it. Start over. No exceptions — don't keep it as "reference", don't "adapt" it. Delete means delete.
-
-## When to Use
-
-**Always:**
-- New features
-- Bug fixes
-- Refactoring
-- Behavior changes
-- Adding API endpoints
-
-**Exceptions (ask your human partner):**
-- Throwaway prototypes
-- Generated code
-- Configuration files
-
-## Red-Green-Refactor Cycle
-
-### RED — Write Failing Test
-
-Write one minimal test showing what should happen.
-
-```typescript
-test('retries failed operations 3 times', async () => {
-  let attempts = 0;
-  const operation = () => {
-    attempts++;
-    if (attempts < 3) throw new Error('fail');
-    return 'success';
-  };
-  const result = await retryOperation(operation);
-  expect(result).toBe('success');
-  expect(attempts).toBe(3);
-});
-```
-
-**Requirements:** One behavior, clear name, real code (mocks only if unavoidable).
-
-### Verify RED — Watch It Fail (MANDATORY)
-
-```bash
-npm test path/to/test.test.ts
-```
-
-Confirm: test fails (not errors), failure message is expected, fails because feature missing.
-
-### GREEN — Minimal Code
-
-Write simplest code to pass the test. Don't add features, refactor other code, or "improve" beyond the test.
-
-### Verify GREEN — Watch It Pass (MANDATORY)
-
-Confirm: test passes, other tests still pass, output pristine.
-
-### REFACTOR — Clean Up
-
-After green only: remove duplication, improve names, extract helpers. Keep tests green, don't add behavior.
-
-## Test Types
-
-| Type | What to Test | When |
-|------|-------------|------|
+layer: 1
+origin: merged(CSP+agent-skills)
+category: meta
+------|-------------|------|
 | **Unit** | Individual functions, component logic, pure helpers | Always |
 | **Integration** | API endpoints, database operations, service interactions | Always |
 | **E2E** | Critical user flows (Playwright/Cypress) | Critical paths |

@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "total_skills": 466,
+  "total_skills": 498,
   "shards": [],
   "skills": [
     {
@@ -2279,9 +2279,10 @@
         "context": []
       },
       "stack_detection": false,
-      "path": "csp-patterns/skills/api-design/SKILL.md",
+      "path": null,
       "deps": [],
-      "priority": 10
+      "priority": 10,
+      "deprecated": true
     },
     {
       "name": "csp-article-writing",
@@ -3734,9 +3735,10 @@
         "context": []
       },
       "stack_detection": false,
-      "path": "csp-runtime/agents/csp-code-simplifier.md",
+      "path": null,
       "deps": [],
-      "priority": 10
+      "priority": 10,
+      "deprecated": true
     },
     {
       "name": "csp-comment-analyzer",
@@ -4424,9 +4426,10 @@
         "context": []
       },
       "stack_detection": false,
-      "path": "csp-patterns/agents/csp-refactor-cleaner.md",
+      "path": null,
       "deps": [],
-      "priority": 10
+      "priority": 10,
+      "deprecated": true
     },
     {
       "name": "csp-rust-build-resolver",
@@ -4544,9 +4547,10 @@
         "context": []
       },
       "stack_detection": false,
-      "path": "csp-patterns/agents/csp-tdd-guide.md",
+      "path": null,
       "deps": [],
-      "priority": 10
+      "priority": 10,
+      "deprecated": true
     },
     {
       "name": "csp-type-design-analyzer",
@@ -4709,9 +4713,10 @@
         "context": []
       },
       "stack_detection": false,
-      "path": "csp-patterns/commands/csp-guide.md",
+      "path": null,
       "deps": [],
-      "priority": 10
+      "priority": 10,
+      "deprecated": true
     },
     {
       "name": "csp-evolve",
@@ -5834,9 +5839,10 @@
         "context": []
       },
       "stack_detection": false,
-      "path": "csp-runtime/skills/csp-ai-slop-cleaner/SKILL.md",
+      "path": null,
       "deps": [],
-      "priority": 10
+      "priority": 10,
+      "deprecated": true
     },
     {
       "name": "csp-ask",
@@ -6104,9 +6110,10 @@
         "context": []
       },
       "stack_detection": false,
-      "path": "csp-runtime/skills/csp-teams/SKILL.md",
+      "path": null,
       "deps": [],
-      "priority": 10
+      "priority": 10,
+      "deprecated": true
     },
     {
       "name": "csp-plan-advisor",
@@ -6164,9 +6171,10 @@
         "context": []
       },
       "stack_detection": false,
-      "path": "csp-runtime/skills/csp-ralplan/SKILL.md",
+      "path": null,
       "deps": [],
-      "priority": 10
+      "priority": 10,
+      "deprecated": true
     },
     {
       "name": "csp-release",
@@ -7193,6 +7201,490 @@
         "csp-verification"
       ],
       "priority": 5
+    },
+    {
+      "name": "csp-cicd-pipelines",
+      "description": "CI/CD pipeline patterns for GitHub Actions, GitLab CI, and Jenkins",
+      "layer": 4,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/csp-cicd-pipelines/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-cloud-platform-patterns",
+      "description": "Cloud platform patterns for AWS, GCP, and Azure",
+      "layer": 4,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/csp-cloud-platform-patterns/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-cross-platform-strategy",
+      "description": "Cross-platform mobile development strategy with Flutter and React Native",
+      "layer": 4,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/csp-cross-platform-strategy/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-data-pipeline-patterns",
+      "description": "Data pipeline patterns for ETL, streaming, and batch processing",
+      "layer": 4,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/csp-data-pipeline-patterns/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-infrastructure-as-code",
+      "description": "Infrastructure as Code patterns with Terraform, Pulumi, and CDK",
+      "layer": 4,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/csp-infrastructure-as-code/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-kubernetes-patterns",
+      "description": "Kubernetes deployment, service, and Helm chart patterns",
+      "layer": 4,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/csp-kubernetes-patterns/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-llm-app-development",
+      "description": "LLM application development patterns",
+      "layer": 4,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/csp-llm-app-development/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-mobile-performance",
+      "description": "Mobile app performance optimization patterns",
+      "layer": 4,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/csp-mobile-performance/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-prompt-engineering",
+      "description": "Prompt engineering best practices and patterns",
+      "layer": 4,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/csp-prompt-engineering/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-rag-architecture",
+      "description": "RAG (Retrieval Augmented Generation) architecture patterns",
+      "layer": 4,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/csp-rag-architecture/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-react-native-patterns",
+      "description": "React Native development patterns and best practices",
+      "layer": 4,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/csp-react-native-patterns/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-refactoring-strategies",
+      "description": "Refactoring strategies for legacy code modernization",
+      "layer": 4,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/csp-refactoring-strategies/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-tech-debt-assessment",
+      "description": "Technical debt assessment and prioritization",
+      "layer": 4,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/csp-tech-debt-assessment/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-vllm-serving",
+      "description": "vLLM serving patterns for LLM inference",
+      "layer": 4,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/csp-vllm-serving/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-omc-teams",
+      "description": "Team coordination and management skill",
+      "layer": 5,
+      "category": "runtime",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-runtime/skills/csp-omc-teams/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "compound-learning",
+      "description": "Compound engineering learning and feedback loop",
+      "layer": 2,
+      "category": "workflow",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-workflow/skills/compound-learning/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "compound-refresh",
+      "description": "Compound engineering refresh cycle",
+      "layer": 2,
+      "category": "workflow",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-workflow/skills/compound-refresh/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "multi-review",
+      "description": "Multi-reviewer code review workflow",
+      "layer": 2,
+      "category": "workflow",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-workflow/skills/multi-review/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "shipping-and-launch",
+      "description": "Product shipping and launch workflow",
+      "layer": 2,
+      "category": "workflow",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-workflow/skills/shipping-and-launch/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "product-pulse",
+      "description": "Product health monitoring workflow",
+      "layer": 2,
+      "category": "workflow",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-workflow/skills/product-pulse/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "strategy",
+      "description": "Strategic planning workflow",
+      "layer": 2,
+      "category": "workflow",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-workflow/skills/strategy/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "deprecation-and-migration",
+      "description": "Deprecation and migration workflow",
+      "layer": 2,
+      "category": "workflow",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-workflow/skills/deprecation-and-migration/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-legacy-modernization",
+      "description": "Legacy system modernization strategies",
+      "layer": 2,
+      "category": "workflow",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-workflow/skills/csp-legacy-modernization/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-context-engineering",
+      "description": "Context engineering patterns for AI coding workflows",
+      "layer": 1,
+      "category": "meta",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-meta/skills/context-engineering/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-using-skills",
+      "description": "Guide to using CSP skills effectively",
+      "layer": 1,
+      "category": "meta",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-meta/skills/csp-using-skills/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-doc-review",
+      "description": "Document review skill for structured documents",
+      "layer": 1,
+      "category": "meta",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-meta/skills/doc-review/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-doubt-driven-development",
+      "description": "Doubt-driven development methodology",
+      "layer": 1,
+      "category": "meta",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-meta/skills/doubt-driven-development/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-interview-me",
+      "description": "Interactive interviewer for design and code review",
+      "layer": 1,
+      "category": "meta",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-meta/skills/interview-me/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-source-driven-development",
+      "description": "Source-driven development methodology",
+      "layer": 1,
+      "category": "meta",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-meta/skills/source-driven-development/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-browser-testing-with-devtools",
+      "description": "Browser testing patterns with Chrome/Edge DevTools",
+      "layer": 4,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/browser-testing-with-devtools/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-observability-and-instrumentation",
+      "description": "Observability and instrumentation patterns",
+      "layer": 4,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/observability-and-instrumentation/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-skill-creator",
+      "description": "Interactive skill creation wizard — guides users through creating new CSP skills with templates and validation",
+      "layer": 5,
+      "category": "runtime",
+      "triggers": {
+        "keywords": [
+          "create skill",
+          "new skill",
+          "skill creator"
+        ],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-runtime/skills/csp-skill-creator/SKILL.md",
+      "deps": [],
+      "priority": 10
     }
   ]
 }

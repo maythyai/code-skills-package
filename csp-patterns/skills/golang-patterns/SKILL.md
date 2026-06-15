@@ -8,6 +8,18 @@ description: >
 metadata:
   origin: CSP
   globs: ["**/*.go", "**/go.mod", "**/go.sum"]
+layer: 4
+category: patterns
+----
+name: golang-patterns
+description: >
+  Go-specific design patterns and best practices including functional options,
+  small interfaces, dependency injection, concurrency patterns, error handling,
+  and package organization. Use when working with Go code to apply idiomatic
+  Go patterns.
+metadata:
+  origin: CSP
+  globs: ["**/*.go", "**/go.mod", "**/go.sum"]
 ---
 
 # Go Patterns

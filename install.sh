@@ -13,7 +13,7 @@ set -eo pipefail
 #   ./install.sh --list                 List detected platforms
 #   ./install.sh --help                 Show help
 
-readonly VERSION="0.3.0"
+readonly VERSION="0.4.0"
 readonly SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 readonly PROJECT_DIR="$(pwd)"
 
@@ -122,6 +122,97 @@ resolve_alias() {
     qoder)                                  echo "qoder" ;;
     *) echo "" ;;
   esac
+}
+
+# ─── Stack-to-Skill Mapping ──────────────────────────────────────────
+# Maps user-friendly stack names to actual skill directories.
+# Uses case-based lookup for bash 3.2 compatibility (no associative arrays).
+
+resolve_stack_skills() {
+  local input="$1"
+  local result=""
+  local known_stacks=""
+  IFS=',' read -ra stacks <<< "$input"
+  for stack in "${stacks[@]}"; do
+    stack=$(echo "$stack" | tr -d ' ')
+    local lower
+    lower=$(echo "$stack" | tr '[:upper:]' '[:lower:]')
+    local skills=""
+    case "$lower" in
+      python|py)
+        skills="python-patterns python-testing django-patterns django-security fastapi-patterns pytorch-patterns mle-workflow"
+        ;;
+      typescript|ts|tsx|javascript|js)
+        skills="react-patterns react-testing nextjs-turbopack frontend-patterns bun-runtime dmux-workflows nestjs-patterns"
+        ;;
+      rust)
+        skills="rust-patterns rust-testing"
+        ;;
+      go|golang)
+        skills="golang-patterns golang-testing"
+        ;;
+      java)
+        skills="java-coding-standards springboot-patterns springboot-security jpa-patterns"
+        ;;
+      kotlin)
+        skills="kotlin-patterns kotlin-testing"
+        ;;
+      swift)
+        skills="swift-actor-persistence swift-protocol-di-testing"
+        ;;
+      cpp|c++)
+        skills="cpp-coding-standards cpp-testing"
+        ;;
+      react)
+        skills="react-patterns react-testing frontend-patterns"
+        ;;
+      django)
+        skills="django-patterns django-security"
+        ;;
+      spring)
+        skills="springboot-patterns springboot-security jpa-patterns"
+        ;;
+      fastapi)
+        skills="fastapi-patterns"
+        ;;
+      postgres)
+        skills="postgres-patterns database-migrations"
+        ;;
+      docker)
+        skills="docker-patterns"
+        ;;
+      kubernetes|k8s|ks)
+        skills="csp-kubernetes-patterns"
+        ;;
+      ai|ml)
+        skills="csp-rag-architecture csp-llm-app-development csp-prompt-engineering csp-vllm-serving agent-introspection-debugging agentic-engineering eval-harness mcp-server-patterns"
+        ;;
+      mobile)
+        skills="csp-react-native-patterns csp-mobile-performance csp-cross-platform-strategy"
+        ;;
+      devops)
+        skills="csp-cicd-pipelines csp-cloud-platform-patterns csp-infrastructure-as-code csp-kubernetes-patterns csp-deployment docker-patterns"
+        ;;
+      security)
+        skills="security-review security"
+        ;;
+      testing)
+        skills="testing e2e-testing react-testing python-testing rust-testing cpp-testing golang-testing kotlin-testing"
+        ;;
+      frontend)
+        skills="frontend-patterns frontend-slides react-patterns react-testing nextjs-turbopack bun-runtime"
+        ;;
+      *)
+        echo "  ⚠️  未知技术栈: $stack" >&2
+        echo "  可用: python typescript rust go java kotlin swift cpp react django spring fastapi postgres docker kubernetes ai mobile devops security testing frontend" >&2
+        ;;
+    esac
+    if [ -n "$skills" ]; then
+      result="$result $skills"
+    fi
+  done
+  # Deduplicate
+  echo "$result" | tr ' ' '\n' | sed '/^$/d' | sort -u | tr '\n' ' '
 }
 
 # ─── Utility Functions ─────────────────────────────────────────────
@@ -546,16 +637,54 @@ EOF
 
 install_skills_to() {
   local target_dir="$1"
+  local stack_skills="$2"   # space-separated list of allowed skill dirs (empty = all)
+  local dry_run="$3"        # "true" or ""
   local total=0
   mkdir -p "$target_dir"
   for layer in $CSP_LAYERS; do
     local src="$SCRIPT_DIR/$layer"
     [ -d "$src" ] || continue
-    copy_dir "$src" "$target_dir/$layer"
-    local n
-    n=$(find "$target_dir/$layer" -name "SKILL.md" -type f 2>/dev/null | wc -l | tr -d ' ')
-    total=$((total + n))
+
+    if [ -z "$stack_skills" ]; then
+      # No stack filter: copy entire layer
+      [ "$dry_run" = "true" ] || copy_dir "$src" "$target_dir/$layer"
+      local n
+      n=$(find "$src" -name "SKILL.md" -type f 2>/dev/null | wc -l | tr -d ' ')
+      total=$((total + n))
+    else
+      # Stack filter: only copy matching skill dirs
+      local layer_total=0
+      for skill_dir in "$src"/*/; do
+        [ -d "$skill_dir" ] || continue
+        local dir_name
+        dir_name=$(basename "$skill_dir")
+        # Check if this skill is in the allowed list
+        if echo " $stack_skills " | grep -q " $dir_name "; then
+          [ "$dry_run" = "true" ] || cp -R "$skill_dir" "$target_dir/$layer/"
+          local n
+          n=$(find "$skill_dir" -name "SKILL.md" -type f 2>/dev/null | wc -l | tr -d ' ')
+          layer_total=$((layer_total + n))
+          total=$((total + n))
+        fi
+      done
+      # Also copy non-skill subdirectories (commands, agents, etc.)
+      [ "$dry_run" = "true" ] || {
+        for subdir in "$src"/*/; do
+          [ -d "$subdir" ] || continue
+          local dir_name
+          dir_name=$(basename "$subdir")
+          if ! echo " $stack_skills " | grep -q " $dir_name "; then
+            # Check if it has a SKILL.md — if not, it's a sub-file (commands/agents/etc), copy it
+            if [ ! -f "$subdir/SKILL.md" ]; then
+              cp -R "$subdir" "$target_dir/$layer/" 2>/dev/null || true
+            fi
+          fi
+        done
+      }
+    fi
   done
+  # Clean up .DS_Store
+  find "$target_dir" -name '.DS_Store' -delete 2>/dev/null || true
   echo "$total"
 }
 
@@ -729,7 +858,7 @@ do_uninstall() {
 show_help() {
   cat <<'HELP'
 
-  CSP v0.3.0 — Code Skills Package 多平台安装器
+  CSP v0.4.0 — Code Skills Package 多平台安装器
 
   用法：
     ./install.sh                        自动检测并安装（项目级）
@@ -740,13 +869,29 @@ show_help() {
     ./install.sh --help                 显示帮助
     ./install.sh --version              显示版本
 
+  选择安装（新增 v0.4.0）：
+    ./install.sh --stacks <list>        按技术栈过滤安装（如 python,typescript）
+    ./install.sh --layers <list>        按层级选择性安装（如 router,meta）
+    ./install.sh --minimal              仅安装 router + meta 层（最小可用集）
+    ./install.sh --dry-run              预览安装内容而不实际执行
+
   支持的平台（18 个）：
     claude-code, cursor, copilot-cli, hermes-agent, windsurf, kiro,
     gemini-cli, codex, aider, trae, vscode, deerflow, opencode,
     openclaw, qwen-code, antigravity, claw-code, qoder
 
+  可用技术栈：
+    python, typescript/javascript, rust, go/golang, java, kotlin,
+    swift, cpp/c++, react, django, spring, fastapi, postgres,
+    docker, kubernetes/k8s, ai/ml, mobile, devops, security,
+    testing, frontend
+
   示例：
     ./install.sh                        # 自动检测当前项目的 AI 工具
+    ./install.sh --stacks python        # 仅安装 Python 相关 skills
+    ./install.sh --layers router,meta   # 仅安装路由和元技能层
+    ./install.sh --minimal              # 最小安装（router + meta）
+    ./install.sh --dry-run --stacks ai  # 预览 AI 相关 skills
     ./install.sh --platform trae        # 为 Trae 安装
     ./install.sh --platform cursor --global  # 全局安装到 Cursor
     ./install.sh --uninstall            # 卸载
@@ -768,6 +913,10 @@ main() {
   local platform=""
   local use_global=false
   local force=false
+  local stacks=""
+  local layers=""
+  local minimal=false
+  local dry_run=false
 
   while [ $# -gt 0 ]; do
     case "$1" in
@@ -791,6 +940,24 @@ main() {
         ;;
       --force|-f)
         force=true
+        shift
+        ;;
+      --stacks|-s)
+        stacks="${2:-}"
+        [ -z "$stacks" ] && { echo "❌ $1 需要参数（如 --stacks python,typescript）"; exit 1; }
+        shift 2
+        ;;
+      --layers)
+        layers="${2:-}"
+        [ -z "$layers" ] && { echo "❌ $1 需要参数（如 --layers router,meta）"; exit 1; }
+        shift 2
+        ;;
+      --minimal|-m)
+        minimal=true
+        shift
+        ;;
+      --dry-run|-n)
+        dry_run=true
         shift
         ;;
       --help|-h)
@@ -852,12 +1019,213 @@ main() {
     exit 1
   fi
 
+  # Resolve layer filter
+  local layer_filter=""
+  if [ "$minimal" = "true" ]; then
+    layer_filter="csp-router csp-meta"
+  elif [ -n "$layers" ]; then
+    layer_filter=""
+    IFS=',' read -ra layer_arr <<< "$layers"
+    for l in "${layer_arr[@]}"; do
+      l=$(echo "$l" | tr -d ' ')
+      case "$l" in
+        router|0)     layer_filter="$layer_filter csp-router" ;;
+        meta|1)       layer_filter="$layer_filter csp-meta" ;;
+        workflow|2)   layer_filter="$layer_filter csp-workflow" ;;
+        patterns|3|4) layer_filter="$layer_filter csp-patterns" ;;
+        runtime|4|5)  layer_filter="$layer_filter csp-runtime" ;;
+        *)            echo "  ⚠️  未知层级: $l (可用: router, meta, workflow, patterns, runtime)" >&2 ;;
+      esac
+    done
+    layer_filter=$(echo "$layer_filter" | sed 's/^ *//')
+  fi
+
+  # Resolve stack filter to skill directory names
+  local stack_filter=""
+  if [ -n "$stacks" ]; then
+    stack_filter=$(resolve_stack_skills "$stacks")
+  fi
+
+  # Show header
   echo ""
   echo "  CSP v${VERSION} — Code Skills Package 安装器"
   echo ""
-  echo "  源: $(count_all_csp_skills) skills（五层架构）"
+
+  local total_all
+  total_all=$(count_all_csp_skills)
+
+  if [ "$dry_run" = "true" ]; then
+    echo "  模式: 预览 (dry-run)"
+  fi
+  if [ -n "$layer_filter" ]; then
+    echo "  层级: $layer_filter"
+  fi
+  if [ -n "$stack_filter" ]; then
+    echo "  技术栈: $stacks"
+    echo "  匹配 skills: $(echo $stack_filter | wc -w | tr -d ' ') 个"
+  fi
+  echo "  源: $total_all skills（五层架构）"
   echo "  目标: $base_dir"
   echo ""
+
+  # Dry-run: show what would be installed
+  if [ "$dry_run" = "true" ]; then
+    echo "  ─── 安装预览 ───────────────────────────────────"
+    echo ""
+    for layer in $CSP_LAYERS; do
+      # Skip layers not in filter
+      if [ -n "$layer_filter" ]; then
+        echo "$layer_filter" | grep -qw "$layer" || continue
+      fi
+      local src="$SCRIPT_DIR/$layer"
+      [ -d "$src" ] || continue
+
+      # Determine skill dirs: $src/skills/ if exists, else $src/
+      local skill_root="$src"
+      [ -d "$src/skills" ] && skill_root="$src/skills"
+
+      local n
+      n=$(find "$src" -name "SKILL.md" -type f 2>/dev/null | wc -l | tr -d ' ')
+      local status="✅"
+
+      if [ -n "$stack_filter" ]; then
+        local matched=0
+        for skill_dir in "$skill_root"/*/; do
+          [ -d "$skill_dir" ] || continue
+          local dir_name
+          dir_name=$(basename "$skill_dir")
+          [ -f "$skill_dir/SKILL.md" ] || continue
+          if echo " $stack_filter " | grep -q " $dir_name "; then
+            matched=$((matched + 1))
+          fi
+        done
+        if [ "$matched" -lt "$n" ] && [ "$matched" -gt 0 ]; then
+          n=$matched
+        elif [ "$matched" -eq 0 ] && [ "$layer" = "csp-patterns" ]; then
+          n=0
+          status="⚠️ "
+        fi
+      fi
+      echo "  $status $layer: $n skills"
+    done
+    echo ""
+    echo "  以上为安装预览。实际运行请去掉 --dry-run。"
+    echo ""
+    exit 0
+  fi
+
+  # Install with filters
+  install_for_platform_filtered() {
+    local slug="$1"
+    local base_dir="$2"
+    local layer_filter="$3"
+    local stack_filter="$4"
+    local name; name=$(platform_name "$slug")
+    local dir; dir=$(platform_dir "$slug")
+    local target_dir="$base_dir/$dir"
+
+    local skill_count
+    skill_count=$(install_skills_to_filtered "$target_dir" "$layer_filter" "$stack_filter")
+    echo "  ✅ $name: ${skill_count} skills → $target_dir"
+
+    # Generate platform-specific bootstrap
+    local bootstrap_content
+    bootstrap_content=$(generate_bootstrap_for "$slug")
+    [ -z "$bootstrap_content" ] && return
+
+    case "$slug" in
+      claude-code|copilot-cli)
+        append_bootstrap_to_file "$base_dir/CLAUDE.md" "$bootstrap_content"
+        ;;
+      gemini-cli)
+        append_bootstrap_to_file "$base_dir/GEMINI.md" "$bootstrap_content"
+        ;;
+      hermes-agent)
+        append_bootstrap_to_file "$base_dir/HERMES.md" "$bootstrap_content"
+        ;;
+      aider)
+        append_bootstrap_to_file "$base_dir/CONVENTIONS.md" "$bootstrap_content"
+        ;;
+      windsurf)
+        append_bootstrap_to_file "$base_dir/.windsurfrules" "$bootstrap_content"
+        ;;
+      trae)
+        mkdir -p "$base_dir/.trae/rules"
+        echo "$bootstrap_content" > "$base_dir/.trae/rules/csp.md"
+        echo "  ✅ Trae: bootstrap rule → .trae/rules/csp.md"
+        ;;
+      qoder)
+        mkdir -p "$base_dir/.qoder/rules"
+        echo "$bootstrap_content" > "$base_dir/.qoder/rules/csp.md"
+        echo "  ✅ Qoder: bootstrap rule → .qoder/rules/csp.md"
+        ;;
+      antigravity)
+        mkdir -p "$base_dir/.antigravity"
+        echo "$bootstrap_content" > "$base_dir/.antigravity/rules.md"
+        echo "  ✅ Antigravity: bootstrap rule → .antigravity/rules.md"
+        ;;
+      kiro)
+        mkdir -p "$base_dir/.kiro/steering"
+        echo "$bootstrap_content" > "$base_dir/.kiro/steering/csp.md"
+        echo "  ✅ Kiro: bootstrap steering → .kiro/steering/csp.md"
+        ;;
+      vscode)
+        mkdir -p "$base_dir/.github"
+        append_bootstrap_to_file "$base_dir/.github/copilot-instructions.md" "$bootstrap_content"
+        ;;
+    esac
+  }
+
+  # Layer-aware + stack-aware install
+  install_skills_to_filtered() {
+    local target_dir="$1"
+    local layer_filter="$2"
+    local stack_filter="$3"
+    mkdir -p "$target_dir"
+    for layer in $CSP_LAYERS; do
+      # Skip layers not in filter
+      if [ -n "$layer_filter" ]; then
+        echo "$layer_filter" | grep -qw "$layer" || continue
+      fi
+      local src="$SCRIPT_DIR/$layer"
+      [ -d "$src" ] || continue
+
+      if [ -z "$stack_filter" ] || [ "$layer" != "csp-patterns" ]; then
+        # No stack filter, or non-patterns layer: copy entire layer
+        copy_dir "$src" "$target_dir/$layer"
+      else
+        # Stack filter on csp-patterns:
+        # 1. Copy non-skill subdirectories (agents, commands, references, etc.)
+        # 2. Find and copy only matching skill dirs (containing SKILL.md)
+        mkdir -p "$target_dir/$layer"
+        for subdir in "$src"/*/; do
+          [ -d "$subdir" ] || continue
+          local subdir_name
+          subdir_name=$(basename "$subdir")
+          # Skip the skills/ container dir — we copy individual skills below
+          [ "$subdir_name" = "skills" ] && continue
+          [ -f "$subdir/SKILL.md" ] && continue
+          cp -R "$subdir" "$target_dir/$layer/" 2>/dev/null || true
+        done
+        # Find all skill dirs and filter by stack
+        find "$src" -name "SKILL.md" -type f 2>/dev/null | while read -r skill_file; do
+          local skill_dir
+          skill_dir=$(dirname "$skill_file")
+          local dir_name
+          dir_name=$(basename "$skill_dir")
+          if echo " $stack_filter " | grep -q " $dir_name "; then
+            local rel_path
+            rel_path=$(echo "$skill_dir" | sed "s|^$src/||")
+            local dest_dir="$target_dir/$layer/$rel_path"
+            mkdir -p "$dest_dir"
+            cp -R "$skill_dir"/* "$dest_dir/" 2>/dev/null || true
+          fi
+        done
+      fi
+    done
+    find "$target_dir" -name '.DS_Store' -delete 2>/dev/null || true
+    find "$target_dir" -name "SKILL.md" -type f 2>/dev/null | wc -l | tr -d ' '
+  }
 
   # Explicit platform
   if [ "$mode" = "platform" ]; then
@@ -870,7 +1238,7 @@ main() {
       echo "        openclaw qwen-code antigravity claw-code qoder"
       exit 1
     fi
-    install_for_platform "$slug" "$base_dir"
+    install_for_platform_filtered "$slug" "$base_dir" "$layer_filter" "$stack_filter"
     echo ""
     echo "  安装完成！重启 AI 编程工具即可生效。"
     echo ""
@@ -884,7 +1252,7 @@ main() {
 
   if [ -n "$detected" ]; then
     echo "$detected" | while read -r slug; do
-      install_for_platform "$slug" "$base_dir"
+      install_for_platform_filtered "$slug" "$base_dir" "$layer_filter" "$stack_filter"
     done
     installed=$(echo "$detected" | wc -l | tr -d ' ')
   fi
@@ -898,7 +1266,7 @@ main() {
     echo ""
     echo "  默认安装到 Claude Code (.claude/skills/)..."
     echo ""
-    install_for_platform "claude-code" "$base_dir"
+    install_for_platform_filtered "claude-code" "$base_dir" "$layer_filter" "$stack_filter"
   fi
 
   echo ""

@@ -7,52 +7,9 @@ description: >
   development. Use when diagnosing or preventing mobile performance issues.
 metadata:
   origin: CSP
----
-
-# Mobile Performance Optimization
-
-Systematic approach to diagnosing and optimizing mobile app performance across iOS and Android. Covers startup time, memory, scrolling, bundle size, battery, and frame rate with platform-specific tools and techniques.
-
-## When to Activate
-
-- Users report slow app startup or laggy interactions
-- Profiling reveals memory leaks or excessive memory usage
-- Scroll performance is below 60fps on target devices
-- App bundle size exceeds store recommendations
-- Battery drain complaints from users
-- Before release to verify performance benchmarks
-- During code review when performance-sensitive patterns are introduced
-
-**When NOT to activate:**
-- Premature optimization before measuring actual performance
-- Desktop or web-only applications (use web performance skills)
-- Prototypes where performance is not yet a concern
-- When the root cause is server-side latency (optimize the API first)
-
-## Core Principles
-
-### 1. Measure Before Optimizing
-
-Never optimize without data. Profile first, optimize second, measure again.
-
-```
-Baseline → Profile → Identify bottleneck → Optimize → Measure → Repeat
-```
-
-### 2. Optimize for the Lowest-End Target Device
-
-Your developer phone is not your user's phone. Always test on the lowest-end device you support.
-
-### 3. Perceived Performance Matters as Much as Actual Performance
-
-A fast-feeling app with good loading states can outperform a technically faster app with poor UX.
-
-## Startup Optimization
-
-### Cold Start vs Warm Start
-
-| Type | Definition | Target |
-|------|-----------|--------|
+layer: 4
+category: patterns
+------|-----------|--------|
 | **Cold start** | App process not in memory; full initialization | < 500ms (iOS), < 1s (Android) |
 | **Warm start** | App process in memory but backgrounded | < 200ms |
 | **Hot start** | App already in foreground | Instant |

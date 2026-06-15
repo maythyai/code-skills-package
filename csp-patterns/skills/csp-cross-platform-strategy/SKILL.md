@@ -7,51 +7,9 @@ description: >
   Use when making cross-platform architecture decisions or evaluating technology choices.
 metadata:
   origin: CSP
----
-
-# Cross-Platform Strategy
-
-Framework and architecture decisions for building apps that run on multiple platforms. Covers technology selection, code sharing strategies, platform adaptation patterns, and the organizational implications of cross-platform development.
-
-## When to Activate
-
-- Choosing a cross-platform framework for a new project
-- Evaluating whether to migrate from native to cross-platform (or vice versa)
-- Designing code sharing architecture across platforms
-- Setting up CI/CD for multi-platform builds
-- Resolving platform-specific adaptation challenges
-- Planning team structure for cross-platform development
-
-**When NOT to activate:**
-- Single-platform projects (iOS-only or Android-only)
-- Web-only applications
-- When the decision has already been made and you need implementation patterns
-- Game development (use game engine-specific guidance)
-
-## Core Principles
-
-### 1. Start with the Product, Not the Technology
-
-The right platform choice depends on your product requirements, team skills, and business constraints — not on which framework is trending.
-
-### 2. Maximize Shared Logic, Minimize Shared UI
-
-Business logic and data layers are portable. UI is platform-specific by nature — forcing shared UI leads to uncanny-valley experiences.
-
-### 3. Respect Platform Conventions
-
-Users expect apps to feel native to their platform. An iOS app should feel like an iOS app; an Android app should feel like an Android app.
-
-### 4. Plan for Platform Divergence from Day One
-
-Every cross-platform project eventually hits a platform-specific requirement. Architect for this inevitability.
-
-## Platform Selection Decision Matrix
-
-### Technology Overview
-
-| Technology | Language | UI Approach | Best For | Team Skills |
-|-----------|----------|------------|---------|------------|
+layer: 4
+category: patterns
+-----------|----------|------------|---------|------------|
 | **React Native** | JavaScript/TypeScript | Native components via bridge | Apps with web team, complex native integrations | Web/JS developers |
 | **Flutter** | Dart | Custom rendering (Skia/Impeller) | Pixel-perfect cross-platform UI, animations | New to Dart OK |
 | **KMP (Kotlin Multiplatform)** | Kotlin | Platform-native UI (Compose Multiplatform optional) | Shared business logic, native UI | Android/Kotlin developers |

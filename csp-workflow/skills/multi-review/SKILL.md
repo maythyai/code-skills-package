@@ -1,47 +1,9 @@
 ---
 name: csp-multi-review
 description: "Structured code review using tiered persona agents, confidence-gated findings, and a merge/dedup pipeline. Use when comprehensive review is needed before creating a PR."
----
-
-## Headless Mode
-
-This skill supports `mode:headless` for non-interactive automation. See `shared/references/headless-mode-protocol.md` for the unified protocol.
-
-# Multi-Persona Code Review
-
-Reviews code changes using dynamically selected reviewer personas. Spawns parallel sub-agents that return structured JSON, then merges and deduplicates findings into a single report.
-
-## When to Use
-
-- Before creating a PR for significant changes
-- When changes touch high-risk domains (auth, payments, data mutations, external APIs)
-- When multiple reviewers would add value
-
-## Reviewer Personas
-
-**Always-on (every review):**
-- `csp-correctness-reviewer` — logic errors, edge cases, state bugs
-- `csp-testing-reviewer` — test coverage gaps, weak assertions
-- `csp-maintainability-reviewer` — coupling, complexity, naming, dead code
-- `csp-project-standards-reviewer` — CLAUDE.md and AGENTS.md compliance
-- `csp-code-reviewer` — our built-in comprehensive review
-
-**Conditional (per diff):**
-- `csp-security-reviewer` — auth, public endpoints, user input, permissions
-- `csp-performance-optimizer` — DB queries, data transforms, caching, async
-- `csp-adversarial-reviewer` — >=50 changed lines, or auth/payments/data mutations/external APIs
-- `csp-coherence-reviewer` — consistency between related changes
-
-**Stack-specific conditional:**
-- `csp-react-reviewer` — React/JSX changes
-- `csp-typescript-reviewer` — TypeScript changes
-- `csp-python-reviewer` — Python changes
-- `csp-database-reviewer` — database migrations, schema changes
-
-## Severity Scale
-
-| Level | Meaning | Action |
-|-------|---------|--------|
+layer: 2
+category: workflow
+-------|---------|--------|
 | **P0** | Critical breakage, exploitable vulnerability, data loss | Must fix before merge |
 | **P1** | High-impact defect likely hit in normal usage | Should fix |
 | **P2** | Moderate issue with meaningful downside | Fix if straightforward |

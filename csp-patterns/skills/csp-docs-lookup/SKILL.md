@@ -4,8 +4,9 @@ description: >
   Fetch up-to-date library and framework docs via Context7 MCP instead of training data.
   Use for setup questions, API references, code examples, or when the user names a framework.
   Combines skill methodology with agent execution capability.
-csp-layer: 4-patterns
-csp-source: merged(CSP)
+layer: 4
+origin: merged(CSP)
+category: patterns
 ---
 
 # Docs Lookup

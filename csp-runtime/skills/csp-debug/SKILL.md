@@ -1,6 +1,11 @@
 ---
 name: debug
 description: Diagnose the current CSP session or repo state using logs, traces, state, and focused reproduction
+layer: 2
+category: workflow
+----
+name: debug
+description: Diagnose the current CSP session or repo state using logs, traces, state, and focused reproduction
 ---
 
 # Debug

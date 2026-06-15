@@ -5,62 +5,10 @@ description: >
   Includes subagent-driven development (per-task dispatch with two-stage review)
   and parallel agent dispatch (independent problems solved concurrently).
   Use when executing implementation plans with independent tasks, or facing 2+ independent failures.
-csp-layer: 1-meta
-csp-source: merged(CSP)
----
-
-# Agent Teams
-
-Orchestrate multiple AI agents to execute plans efficiently. Two modes: **sequential dispatch** (plan execution with review gates) and **parallel dispatch** (independent problems solved concurrently).
-
-**Core principle:** Fresh agent per task with precisely crafted isolated context. Never inherit session history — construct exactly what the agent needs.
-
-## When to Use
-
-```
-Have implementation plan with tasks?
-├── Yes → Tasks mostly independent?
-│         ├── Yes → Sequential Agent Dispatch (per-task with review)
-│         └── No  → Manual execution
-└── No  → Multiple independent failures?
-          ├── Yes, independent → Parallel Dispatch
-          └── No, related → Single agent investigates
-```
-
-## Mode 1: Sequential Agent Dispatch (Plan Execution)
-
-Execute plan by dispatching fresh agent per task, with two-stage review after each: **spec compliance** first, then **code quality**.
-
-**Continuous execution:** Do not pause between tasks. The only reasons to stop: BLOCKED status, genuine ambiguity, or all tasks complete.
-
-### Process
-
-```
-Read plan → Extract all tasks → Create task list
-    │
-    ▼
-For each task:
-├── Dispatch implementer agent (with full task text + context)
-├── Agent asks questions? → Answer, re-dispatch
-├── Agent implements, tests, commits, self-reviews
-├── Dispatch spec reviewer agent → Spec compliant?
-│   ├── No → Agent fixes → re-review
-│   └── Yes ↓
-├── Dispatch code quality reviewer → Approved?
-│   ├── No → Agent fixes → re-review
-│   └── Yes → Mark task complete
-└── More tasks? → Continue
-    │
-    ▼
-All done → Dispatch final code reviewer for entire implementation
-```
-
-### Model Selection
-
-Use the least powerful model that handles each role:
-
-| Task Type | Signals | Model |
-|-----------|---------|-------|
+layer: 1
+origin: merged(CSP)
+category: meta
+-----------|---------|-------|
 | Mechanical | 1-2 files, clear spec | Fast/cheap |
 | Integration | Multi-file, debugging | Standard |
 | Architecture/Review | Design judgment, broad understanding | Most capable |

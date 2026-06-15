@@ -1,65 +1,9 @@
 ---
 name: skill-optimizer
 description: Use when collecting user feedback on skill behavior, identifying skill coverage gaps, or optimizing existing skills based on real usage patterns. Also triggers when user says "this skill doesn't handle X", "skill X missed", "make skill X better", or "optimize skills".
----
-
-# Skill Optimizer
-
-## Overview
-
-**Skill Optimizer** makes skills self-evolving by collecting usage feedback, identifying coverage gaps, and applying targeted optimizations.
-
-**Core principle:** Skills should improve from every interaction. User corrections and feedback become permanent skill improvements.
-
-**The feedback loop:**
-```
-User interaction → Collect signals → Analyze gaps → Generate optimizations → Apply or PR
-```
-
-## When to Use
-
-**Triggered by:**
-- User corrects skill behavior: "这个 skill 没有处理 X", "skill X 漏掉了"
-- User requests optimization: "优化一下 skills", "让 skill 更懂我"
-- Post-task review: task completed but skill behavior was suboptimal
-- Explicit invocation: "检查 skill 使用情况", "review skill coverage"
-- New skill creation testing phase (as part of writing-skills RED-GREEN cycle)
-
-**Don't use for:**
-- Writing brand new skills from scratch (use writing-skills instead)
-- One-off bug fixes in application code
-- General code review (use code-review)
-
-## The Three Pillars
-
-### Pillar 1: Feedback Collection (Listen)
-
-Collect signals from the current and recent sessions:
-
-**Direct feedback signals:**
-- User corrections: "不要这样做", "应该那样做", "stop doing X"
-- User approvals: "这样对了", "perfect", "keep doing that"
-- User frustrations: "怎么又...", "还是没改对", "说了多少次"
-- Workarounds: user manually fixing what skill should have handled
-
-**Implicit feedback signals:**
-- Skill was invoked but user rejected the approach
-- Skill output required manual correction
-- User had to give instructions the skill should have known
-- Tool calls failed that the skill should have prevented
-
-**Session transcript mining:**
-- Search conversation for skill invocations
-- Check if skill-compliant behavior was achieved
-- Note any deviations and user reactions
-
-### Pillar 2: Gap Analysis (Think)
-
-Map collected signals to skill coverage:
-
-**Gap types:**
-| Gap Type | Symptom | Fix Strategy |
-|----------|---------|-------------|
+layer: 1
+category: meta
+----------|---------|-------------|
 | **Missing trigger** | Skill should have activated but didn't | Add trigger words to description |
 | **Missing rule** | Skill activated but wrong behavior | Add specific rule/red flag |
 | **Missing context** | Skill didn't account for project-specific pattern | Add project-aware section |

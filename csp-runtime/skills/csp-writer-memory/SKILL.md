@@ -2,29 +2,8 @@
 name: csp-writer-memory
 description: Agentic memory system for writers - track characters, relationships, scenes, and themes
 argument-hint: "init|char|rel|scene|query|validate|synopsis|status|export [args]"
-level: 7
----
-
-# Writer Memory - Agentic Memory System for Writers
-
-Persistent memory system designed for creative writers, with first-class support for Korean storytelling workflows.
-
-## Overview
-
-Writer Memory maintains context across Claude sessions for fiction writers. It tracks:
-
-- **Characters (캐릭터)**: Emotional arcs (감정궤도), attitudes (태도), dialogue tone (대사톤), speech levels
-- **World (세계관)**: Settings, rules, atmosphere, constraints
-- **Relationships (관계)**: Character dynamics and evolution over time
-- **Scenes (장면)**: Cut composition (컷구성), narration tone, emotional tags
-- **Themes (테마)**: Emotional themes (정서테마), authorial intent
-
-All data persists in `.csp-writer-memory/memory.json` for git-friendly collaboration.
-
-## Commands
-
-| Command | Action |
-|---------|--------|
+layer: 7
+---------|--------|
 | `/csp-writer-memory init <project-name>` | Initialize new project memory |
 | `/csp-writer-memory status` | Show memory overview (character count, scene count, etc) |
 | `/csp-writer-memory char add <name>` | Add new character |

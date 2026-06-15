@@ -1,50 +1,10 @@
 ---
 name: csp-observability-and-instrumentation
 description: Instruments code so production behavior is visible and diagnosable. Use when adding logging, metrics, tracing, or alerting. Use when shipping any feature that runs in production and you need evidence it works. Use when production issues are reported but you can't tell what happened from the available data.
-csp-layer: 4-patterns
-csp-source: agent-skills
----
-
-# Observability and Instrumentation
-
-## Overview
-
-Code you can't observe is code you can't operate. Observability is the ability to answer "what is the system doing and why?" from the outside, using the telemetry the code emits. Instrumentation is not a post-launch add-on — it's written alongside the feature, the same way tests are. If a feature ships without telemetry, the first user-reported bug becomes archaeology instead of a query.
-
-## When to Use
-
-- Building any feature that will run in production
-- Adding a new service, endpoint, background job, or external integration
-- A production incident took too long to diagnose ("we couldn't tell what happened")
-- Setting up or reviewing alerting rules
-- Reviewing a PR that adds I/O, retries, queues, or cross-service calls
-
-**NOT for:**
-- Diagnosing a failure happening right now — use the `csp-debugging-and-error-recovery` skill (observability is what makes that skill fast next time)
-- Profiling and optimizing measured slowness — use the `csp-performance-optimization` skill
-- Launch-day monitoring checklists and rollback triggers — see the `csp-shipping-and-launch` skill; this skill covers the instrumentation that feeds them
-
-## Process
-
-### 1. Define "working" before instrumenting
-
-Telemetry without a question is noise. Before adding any instrumentation, write down 2–4 questions an on-call engineer will ask about this feature:
-
-```
-FEATURE: checkout payment retry
-QUESTIONS ON-CALL WILL ASK:
-1. What fraction of payments succeed on first attempt vs after retry?
-2. When a payment fails permanently, why? (provider error? timeout? validation?)
-3. Is the payment provider slower than usual?
-→ Every signal below must help answer one of these.
-```
-
-If you can't name the questions, you're not ready to instrument — you'll log everything and learn nothing.
-
-### 2. Pick the right signal for each question
-
-| Signal | Answers | Cost profile | Example |
-|---|---|---|---|
+layer: 4
+origin: agent-skills
+category: patterns
+---|---|---|---|
 | **Structured log** | "What happened in this specific case?" | Per-event; grows with traffic | `payment_failed` with provider error code |
 | **Metric** | "How often / how fast, in aggregate?" | Fixed per series; cheap to query | p99 latency of provider calls |
 | **Trace** | "Where did time go across services?" | Per-request; usually sampled | One slow checkout, broken down by hop |

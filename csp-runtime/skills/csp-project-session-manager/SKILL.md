@@ -2,29 +2,9 @@
 name: project-session-manager
 description: Worktree-first dev environment manager for issues, PRs, and features with optional tmux sessions
 aliases: [psm]
-level: 2
----
-
-# Project Session Manager (PSM) Skill
-
-`psm` is the compatibility alias for this canonical skill entrypoint.
-
-> **Quick Start (worktree-first):** Start with `csp teleport` when you want an isolated issue/PR/feature worktree before adding any tmux/session orchestration:
-> ```bash
-> csp teleport #123          # Create worktree for issue/PR
-> csp teleport my-feature    # Create worktree for feature
-> csp teleport list          # List worktrees
-> ```
-> See [Teleport Command](#teleport-command) below for details.
-
-Automate isolated development environments using git worktrees and tmux sessions with Claude Code. Enables parallel work across multiple tasks, projects, and repositories.
-
-Canonical slash command: `/code-skills-package:project-session-manager` (alias: `/code-skills-package:psm`).
-
-## Commands
-
-| Command | Description | Example |
-|---------|-------------|---------|
+layer: 2
+category: workflow
+---------|-------------|---------|
 | `review <ref>` | PR review session | `/psm review csp#123` |
 | `fix <ref>` | Issue fix session | `/psm fix csp#42` |
 | `feature <proj> <name>` | Feature development | `/psm feature csp add-webhooks` |

@@ -1,19 +1,7 @@
 ---
 name: learner
 description: Extract a learned skill from the current conversation
-level: 7
----
-
-# Learner Skill
-
-> Deprecated compatibility alias: use `/code-skills-package:skillify` for new skill extraction workflows. This file remains for internal implementation/history and compatibility.
-
-This is a Level 7 (self-improving) skill. It has two distinct sections:
-- **Expertise**: Domain knowledge about what makes a good skill. Updated automatically as patterns are discovered.
-- **Workflow**: Stable extraction procedure. Rarely changes.
-
-Only the Expertise section should be updated during improvement cycles.
-
+layer: 7
 ---
 
 ## Expertise

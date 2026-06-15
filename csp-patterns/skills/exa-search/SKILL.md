@@ -1,48 +1,9 @@
 ---
 name: exa-search
 description: Neural search via Exa MCP for web, code, and company research. Use when the user needs web search, code examples, company intel, people lookup, or AI-powered deep research with Exa's neural search engine.
----
-
-# Exa Search
-
-Neural search for web content, code, companies, and people via the Exa MCP server.
-
-## When to Activate
-
-- User needs current web information or news
-- Searching for code examples, API docs, or technical references
-- Researching companies, competitors, or market players
-- Finding professional profiles or people in a domain
-- Running background research for any development task
-- User says "search for", "look up", "find", or "what's the latest on"
-
-## MCP Requirement
-
-Exa MCP server must be configured. Add to `~/.claude.json`:
-
-```json
-"exa-web-search": {
-  "command": "npx",
-  "args": ["-y", "exa-mcp-server"],
-  "env": { "EXA_API_KEY": "YOUR_EXA_API_KEY_HERE" }
-}
-```
-
-Get an API key at [exa.ai](https://exa.ai).
-
-## Core Tools
-
-### web_search_exa
-General web search for current information, news, or facts.
-
-```
-web_search_exa(query: "latest AI developments 2026", numResults: 5)
-```
-
-**Parameters:**
-
-| Param | Type | Default | Notes |
-|-------|------|---------|-------|
+layer: 4
+category: patterns
+-------|------|---------|-------|
 | `query` | string | required | Search query |
 | `numResults` | number | 8 | Number of results |
 

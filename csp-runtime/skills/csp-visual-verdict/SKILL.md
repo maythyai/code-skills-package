@@ -1,7 +1,8 @@
 ---
 name: visual-verdict
 description: Structured visual QA verdict for screenshot-to-reference comparisons
-level: 2
+layer: 2
+category: workflow
 ---
 
 <Purpose>

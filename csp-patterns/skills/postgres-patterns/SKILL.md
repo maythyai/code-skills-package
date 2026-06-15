@@ -7,26 +7,9 @@ description: >
 metadata:
   origin: CSP
   credit: Supabase team (MIT License)
----
-
-# PostgreSQL Patterns
-
-Quick reference for PostgreSQL best practices. For detailed guidance, use the `database-reviewer` agent.
-
-## When to Activate
-
-- Writing SQL queries or migrations
-- Designing database schemas
-- Troubleshooting slow queries
-- Implementing Row Level Security
-- Setting up connection pooling
-
-## Quick Reference
-
-### Index Cheat Sheet
-
-| Query Pattern | Index Type | Example |
-|--------------|------------|---------|
+layer: 4
+category: patterns
+--------------|------------|---------|
 | `WHERE col = value` | B-tree (default) | `CREATE INDEX idx ON t (col)` |
 | `WHERE col > value` | B-tree | `CREATE INDEX idx ON t (col)` |
 | `WHERE a = x AND b > y` | Composite | `CREATE INDEX idx ON t (a, b)` |

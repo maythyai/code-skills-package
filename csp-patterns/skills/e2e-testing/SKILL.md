@@ -4,6 +4,14 @@ description: >
   Playwright E2E testing patterns, Page Object Model, configuration, CI/CD integration, artifact management, and flaky test strategies.
 metadata:
   origin: CSP
+layer: 4
+category: patterns
+----
+name: e2e-testing
+description: >
+  Playwright E2E testing patterns, Page Object Model, configuration, CI/CD integration, artifact management, and flaky test strategies.
+metadata:
+  origin: CSP
 ---
 
 # E2E Testing Patterns

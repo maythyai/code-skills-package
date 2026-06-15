@@ -1,37 +1,10 @@
 ---
 name: csp-spec-driven-development
 description: CSP-native spec-driven methodology integrated with CSP phase workflows. Use when formalizing requirements before implementation, managing brownfield requirement deltas, or verifying artifact-to-code alignment. Triggers on "spec-driven", "规范驱动", "write spec before code", "delta requirements".
-csp-layer: 1-meta
-csp-source: csp-native
----
-
-# Spec-Driven Development (CSP)
-
-## Overview
-
-CSP treats specifications as the contract between intent and implementation — but routes them through the **CSP phase workflow** (`.planning/`) rather than a separate tooling layer. Specs live where phases live; verification uses the same gates as `/csp-verify-phase`.
-
-**Core principle:** Write falsifiable requirements before code. Verify implementation against those requirements in three dimensions — not just "tests pass."
-
-## When to Use
-
-- Starting a feature that needs explicit requirements before planning
-- Brownfield changes where existing behavior must be preserved or migrated
-- AI-assisted implementation where artifact drift is a risk
-- User asks for "spec first", "规范驱动", or formal change proposals
-
-**When NOT to use:**
-
-- Trivial one-line fixes (use `/csp-quick` or direct implementation)
-- Exploratory spikes (use `/csp-spike` first, spec afterward if validated)
-- Pure documentation updates with no behavioral contract
-
-## CSP Workflow Mapping
-
-Artifact chains are absorbed into CSP phases — no external spec tooling layer:
-
-| Intent | CSP Command | Primary Artifact |
-|--------|-------------|------------------|
+layer: 1
+origin: csp-native
+category: meta
+--------|-------------|------------------|
 | Clarify what to build | `/csp-spec-phase` | `{phase}-CSPEC.md` |
 | Discuss how to build | `/csp-discuss-phase` | Discussion notes → PLAN inputs |
 | Plan implementation | `/csp-plan-phase` | `{phase}-PLAN.md` + tasks |

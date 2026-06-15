@@ -1,7 +1,8 @@
 ---
 name: mcp-setup
 description: Configure popular MCP servers for enhanced agent capabilities
-level: 2
+layer: 2
+category: workflow
 ---
 
 # MCP Setup

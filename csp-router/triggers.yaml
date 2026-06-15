@@ -136,7 +136,7 @@ trigger_index:
     skills: [csp-spec-contract]
     weight: 45
   "brainstorm":
-    skills: [csp-brainstorming, csp-brainstorming]
+    skills: [csp-brainstorming]
     weight: 50
   "头脑风暴":
     skills: [csp-brainstorming]
@@ -255,6 +255,24 @@ trigger_index:
   "code":
     skills: [csp-implementation-phase, csp-implement]
     weight: 45
+  "api":
+    skills: [csp-backend-patterns]
+    weight: 45
+  "REST":
+    skills: [csp-backend-patterns]
+    weight: 40
+  "API design":
+    skills: [csp-backend-patterns]
+    weight: 45
+  "backend":
+    skills: [csp-backend-patterns]
+    weight: 45
+  "simplify":
+    skills: [csp-code-simplification]
+    weight: 45
+  "简化代码":
+    skills: [csp-code-simplification]
+    weight: 40
   "开发":
     skills: [csp-implementation-phase, csp-implement]
     weight: 45

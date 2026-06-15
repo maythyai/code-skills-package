@@ -6,6 +6,16 @@ description: >
   setting up containerized development environments or reviewing Docker configurations.
 metadata:
   origin: CSP
+layer: 4
+category: patterns
+----
+name: docker-patterns
+description: >
+  Docker and Docker Compose patterns for local development, container security,
+  networking, volume strategies, and multi-service orchestration. Use when
+  setting up containerized development environments or reviewing Docker configurations.
+metadata:
+  origin: CSP
 ---
 
 # Docker Patterns

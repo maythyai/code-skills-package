@@ -2,6 +2,12 @@
 name: wiki
 description: LLM Wiki — persistent markdown knowledge base that compounds across sessions (Karpathy model)
 triggers: ["wiki", "wiki this", "wiki add", "wiki lint", "wiki query"]
+layer: 5
+category: runtime
+----
+name: wiki
+description: LLM Wiki — persistent markdown knowledge base that compounds across sessions (Karpathy model)
+triggers: ["wiki", "wiki this", "wiki add", "wiki lint", "wiki query"]
 ---
 
 # Wiki

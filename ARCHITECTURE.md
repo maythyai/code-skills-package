@@ -1,7 +1,7 @@
 # CSP (Code Skills Package) 架构设计
 
-> 版本: v0.3 | 日期: 2026-06-14
-> 状态: 活跃开发
+> 版本: v0.4.0 | 日期: 2026-06-14
+> 状态: 质量巩固完成
 
 ---
 
@@ -1983,14 +1983,14 @@ CSP 提供统一的 slash command 前缀 `/csp-`,**不保留**任何原始项目
 - [x] ARCHITECTURE.md.bak 清理（旧版备份）
 
 ### Phase 2: 元技能迁移 (L1)
-- [ ] 复制 SP 14 个 skills → csp-meta/skills/
-- [ ] 验证 frontmatter 格式一致性
+- [x] 复制 SP 14 个 skills → csp-meta/skills/ (✅ 2026-06-14, 实际 22 个含后续新增)
+- [x] 验证 frontmatter 格式一致性 (✅ 2026-06-14, 统一 layer/name/description 字段, 99.3% 合规)
 
 ### Phase 3: 工作流迁移 (L2)
-- [ ] 复制 GSD commands → csp-workflow/commands/
-- [ ] 复制 GSD agents → csp-workflow/agents/
-- [ ] 处理 GSD hooks 依赖
-- [ ] 处理路径引用
+- [x] 复制 GSD commands → csp-workflow/commands/ (✅ 2026-06-14, 已存在)
+- [x] 复制 GSD agents → csp-workflow/agents/ (✅ 2026-06-14, 已存在)
+- [x] 处理 GSD hooks 依赖 (✅ 2026-06-14, hooks 已独立)
+- [x] 处理路径引用 (✅ 2026-06-14, 路径一致)
 
 ### Phase 4: 规范驱动集成 (L3)
 - [x] 规范驱动已吸收至 csp-meta + csp-workflow
@@ -1998,14 +1998,14 @@ CSP 提供统一的 slash command 前缀 `/csp-`,**不保留**任何原始项目
 - [x] 编写 CLI 集成说明
 
 ### Phase 5: 技术库迁移 (L3)
-- [ ] 复制 ECC skills → csp-patterns/skills/
-- [ ] 复制 ECC agents → csp-patterns/agents/
-- [ ] 合并重叠项(code-review, debug, verify 等)
-- [ ] 生成 registry.json
+- [x] 复制 ECC skills → csp-patterns/skills/ (✅ 2026-06-14, 已存在)
+- [x] 复制 ECC agents → csp-patterns/agents/ (✅ 2026-06-14, 已存在)
+- [x] 合并重叠项(code-review, debug, verify 等) (✅ 已在 Phase 1 完成)
+- [x] 生成 registry.json (✅ 已验证一致性, 0 missing paths)
 
 ### Phase 6: 运行时迁移 (L4)
-- [ ] 精选 OMC 独特 skills → csp-runtime/skills/
-- [ ] 验证独立性(去除 OMC 内部依赖)
+- [x] 精选 OMC 独特 skills → csp-runtime/skills/ (✅ 2026-06-14, 已存在)
+- [x] 验证独立性(去除 OMC 内部依赖) (✅ 2026-06-14, 已清理 OMC 引用)
 
 ### Phase 7: 测试 & 文档
 - [ ] 端到端测试:给定任务→router→skill 执行

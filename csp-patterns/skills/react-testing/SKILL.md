@@ -2,42 +2,9 @@
 name: react-testing
 description: React component testing with React Testing Library, Vitest/Jest, MSW for network mocking, accessibility assertions with axe, and the decision boundary between component tests and Playwright/Cypress end-to-end runs. Use when writing or fixing tests for React components, hooks, or pages.
 origin: CSP
----
-
-# React Testing
-
-Comprehensive React testing patterns for behavior-focused component tests, custom hook tests, accessibility assertions, and network-level mocking.
-
-## When to Activate
-
-- Writing tests for React components, custom hooks, or pages
-- Adding test coverage to legacy untested components
-- Migrating from Enzyme or class-component-era patterns to React Testing Library
-- Setting up Vitest or Jest for a new React project
-- Mocking HTTP requests in tests
-- Asserting accessibility violations
-- Deciding which tests belong in RTL vs Playwright Component Testing vs full E2E
-
-## Core Principle
-
-Test what the user sees and does, not implementation details.
-
-A test should:
-
-- Render the component with the same providers it has in production
-- Interact with it via accessible queries (role, label) and `userEvent`
-- Assert visible output and observable side effects (callback fired, request sent)
-
-A test should NOT:
-
-- Inspect component state, props passed to children, or which hooks were called
-- Mock React itself or framework hooks
-- Assert on the number of renders or DOM structure beyond what affects users
-
-## Library Choice
-
-| Runner | When | Note |
-|---|---|---|
+layer: 4
+category: patterns
+---|---|---|
 | **Vitest** | Vite, Remix, modern setups | Faster, native ESM, Jest-compatible API |
 | **Jest** | Next.js, CRA, established repos | Default for many React projects |
 | **Playwright Component Testing** | Real browser engine needed | Use when JSDOM lacks the required feature |

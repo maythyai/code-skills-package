@@ -4,6 +4,14 @@ description: >
   Universal coding standards, best practices, and patterns for TypeScript, JavaScript, React, and Node.js development.
 metadata:
   origin: CSP
+layer: 4
+category: patterns
+----
+name: coding-standards
+description: >
+  Universal coding standards, best practices, and patterns for TypeScript, JavaScript, React, and Node.js development.
+metadata:
+  origin: CSP
 ---
 
 # Coding Standards & Best Practices

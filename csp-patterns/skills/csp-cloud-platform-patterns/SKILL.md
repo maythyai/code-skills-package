@@ -7,6 +7,17 @@ description: >
   optimizing cloud-native architectures on any major cloud provider.
 metadata:
   origin: CSP
+layer: 4
+category: patterns
+----
+name: csp-cloud-platform-patterns
+description: >
+  Cloud platform patterns for AWS, GCP, and Azure including serverless,
+  containers, managed databases, event-driven architectures, CDN, DNS,
+  multi-region deployment, and cost optimization. Use when designing or
+  optimizing cloud-native architectures on any major cloud provider.
+metadata:
+  origin: CSP
 ---
 
 # Cloud Platform Patterns
