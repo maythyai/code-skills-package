@@ -35,7 +35,7 @@ version: 0.1.0
 ## 4. 输出激活列表
 
 最多激活 5 个 skill,按层级排序:
-L1(meta) → L2(workflow) → L3(spec) → L4(patterns) → L5(runtime)
+L1(meta) → L2(workflow) → L3(spec) → L4(patterns) → L4(runtime)
 
 ## 5. 路由决策输出
 

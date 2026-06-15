@@ -21,44 +21,31 @@ CSP（Code Skills Package）将多个开源 AI 编程项目（ECC、GSD、OMC、
 
 ### 安装
 
+**更多完整命令参考：** [docs/INSTALL.md](./docs/INSTALL.md)
+
 ```bash
 # 自动检测 AI 工具并安装
 ./install.sh
 
+# 全局安装
+./install.sh --platform cursor --global
+
 # 指定平台安装（支持 18 个平台）
 ./install.sh --platform claude-code
 ./install.sh --platform cursor
-./install.sh --platform copilot-cli
-./install.sh --platform hermes-agent
-./install.sh --platform windsurf
-./install.sh --platform kiro
-./install.sh --platform gemini-cli
-./install.sh --platform codex
-./install.sh --platform aider
 ./install.sh --platform trae
-./install.sh --platform vscode
-./install.sh --platform deerflow
-./install.sh --platform opencode
-./install.sh --platform openclaw
-./install.sh --platform qwen-code
-./install.sh --platform antigravity
-./install.sh --platform claw-code
-./install.sh --platform qoder
 
-# 全局安装
-./install.sh --platform trae --global
+# 安装到任意目标目录（无需克隆本项目）
+./install.sh --platform cursor --target /path/to/your/project
+
+# 一行远程安装（无需克隆本项目）
+curl -fsSL https://github.com/CS-cs/code-skills-package/archive/refs/heads/master.tar.gz | tar xz -C /tmp && bash /tmp/code-skills-package-master/install.sh --platform cursor --target /path/to/your/project && rm -rf /tmp/code-skills-package-master
 
 # 卸载
 ./install.sh --uninstall
 
 # 列出检测到的平台
 ./install.sh --list
-```
-
-**手动复制：**
-
-```bash
-cp -r code-skills-package/ ~/.csp/
 ```
 
 ## 使用方式

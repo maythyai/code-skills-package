@@ -6,12 +6,13 @@ set -eo pipefail
 # Compatible with bash 3.2+ (macOS default).
 #
 # Usage:
-#   ./install.sh                        Auto-detect and install (project-level)
-#   ./install.sh --platform <name>      Install for specific platform
-#   ./install.sh --global               Install globally (~/.xxx/skills/)
-#   ./install.sh --uninstall            Remove CSP from current project
-#   ./install.sh --list                 List detected platforms
-#   ./install.sh --help                 Show help
+#   ./install.sh                            Auto-detect and install (project-level)
+#   ./install.sh --platform <name>          Install for specific platform
+#   ./install.sh --target <dir>             Install into specified directory
+#   ./install.sh --global                   Install globally (~/.xxx/skills/)
+#   ./install.sh --uninstall                Remove CSP from current project
+#   ./install.sh --list                     List detected platforms
+#   ./install.sh --help                     Show help
 
 readonly VERSION="0.5.0"
 readonly SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -685,7 +686,17 @@ install_skills_to() {
   done
   # Clean up .DS_Store
   find "$target_dir" -name '.DS_Store' -delete 2>/dev/null || true
-  echo "$total"
+
+  # Count only CSP layer SKILL.md files for accurate reporting
+  local count=0
+  for layer in $CSP_LAYERS; do
+    if [ -d "$target_dir/$layer" ]; then
+      local layer_count
+      layer_count=$(find "$target_dir/$layer" -name "SKILL.md" -type f 2>/dev/null | wc -l | tr -d ' ')
+      count=$((count + layer_count))
+    fi
+  done
+  echo "$count"
 }
 
 generate_bootstrap_for() {
@@ -863,6 +874,7 @@ show_help() {
   用法：
     ./install.sh                        自动检测并安装（项目级）
     ./install.sh --platform <name>      指定平台安装
+    ./install.sh --target <dir>         安装到指定目录（无需克隆本项目）
     ./install.sh --global               安装到全局（~/.xxx/skills/）
     ./install.sh --uninstall            卸载当前目录的 CSP
     ./install.sh --list                 列出检测到的平台
@@ -874,6 +886,9 @@ show_help() {
     ./install.sh --layers <list>        按层级选择性安装（如 router,meta）
     ./install.sh --minimal              仅安装 router + meta 层（最小可用集）
     ./install.sh --dry-run              预览安装内容而不实际执行
+
+  一行远程安装（无需克隆本项目）：
+    cd /path/to/project && curl -fsSL https://github.com/CS-cs/code-skills-package/archive/refs/heads/master.tar.gz | tar xz --strip-components=1 -C /tmp/csp-install && bash /tmp/csp-install/install.sh --platform cursor && rm -rf /tmp/csp-install
 
   支持的平台（18 个）：
     claude-code, cursor, copilot-cli, hermes-agent, windsurf, kiro,
@@ -917,6 +932,7 @@ main() {
   local layers=""
   local minimal=false
   local dry_run=false
+  local target_dir=""
 
   while [ $# -gt 0 ]; do
     case "$1" in
@@ -924,6 +940,11 @@ main() {
         mode="platform"
         platform="${2:-}"
         [ -z "$platform" ] && { echo "❌ $1 需要参数"; exit 1; }
+        shift 2
+        ;;
+      --target|--dir|-d)
+        target_dir="${2:-}"
+        [ -z "$target_dir" ] && { echo "❌ $1 需要参数"; exit 1; }
         shift 2
         ;;
       --global|-g)
@@ -973,7 +994,15 @@ main() {
     esac
   done
 
-  local base_dir="$PROJECT_DIR"
+  # Resolve target directory
+  local base_dir
+  if [ -n "$target_dir" ]; then
+    # Resolve relative path to absolute
+    mkdir -p "$target_dir" 2>/dev/null || true
+    base_dir="$(cd "$target_dir" 2>/dev/null && pwd)" || { echo "❌ 无法访问目录: $target_dir"; exit 1; }
+  else
+    base_dir="$PROJECT_DIR"
+  fi
   $use_global && base_dir="$HOME"
 
   # Uninstall
@@ -1224,7 +1253,17 @@ main() {
       fi
     done
     find "$target_dir" -name '.DS_Store' -delete 2>/dev/null || true
-    find "$target_dir" -name "SKILL.md" -type f 2>/dev/null | wc -l | tr -d ' '
+
+    # Count only CSP layer SKILL.md files, not pre-existing ones
+    local count=0
+    for layer in $CSP_LAYERS; do
+      if [ -d "$target_dir/$layer" ]; then
+        local layer_count
+        layer_count=$(find "$target_dir/$layer" -name "SKILL.md" -type f 2>/dev/null | wc -l | tr -d ' ')
+        count=$((count + layer_count))
+      fi
+    done
+    echo "$count"
   }
 
   # Explicit platform

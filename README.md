@@ -28,22 +28,13 @@ CSP (Code Skills Package) consolidates the capabilities of multiple open-source 
 # Install for a specific platform (18 supported)
 ./install.sh --platform claude-code
 ./install.sh --platform cursor
-./install.sh --platform copilot-cli
-./install.sh --platform hermes-agent
-./install.sh --platform windsurf
-./install.sh --platform kiro
-./install.sh --platform gemini-cli
-./install.sh --platform codex
-./install.sh --platform aider
-./install.sh --platform trae
-./install.sh --platform vscode
-./install.sh --platform deerflow
-./install.sh --platform opencode
-./install.sh --platform openclaw
-./install.sh --platform qwen-code
-./install.sh --platform antigravity
-./install.sh --platform claw-code
-./install.sh --platform qoder
+./install.sh --platform tra
+
+# Install into any target directory (no need to clone this project here)
+./install.sh --platform cursor --target /path/to/your/project
+
+# Remote one-line install (no clone required)
+curl -fsSL https://github.com/CS-cs/code-skills-package/archive/refs/heads/master.tar.gz | tar xz -C /tmp && bash /tmp/code-skills-package-master/install.sh --platform cursor --target /path/to/your/project && rm -rf /tmp/code-skills-package-master
 
 # Global install
 ./install.sh --platform trae --global
@@ -55,11 +46,7 @@ CSP (Code Skills Package) consolidates the capabilities of multiple open-source 
 ./install.sh --list
 ```
 
-**Manual copy:**
-
-```bash
-cp -r code-skills-package/ ~/.csp/
-```
+**Full command reference:** [docs/INSTALL.md](./docs/INSTALL.md)
 
 ## Usage
 
