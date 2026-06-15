@@ -1,6 +1,12 @@
 ---
-name: csharp-reviewer
-description: Expert C# code reviewer specializing in .NET conventions, async patterns, security, nullable reference types, and performance. Use for all C# code changes. MUST BE USED for C# projects.
+name: csp-csharp-reviewer
+description: >
+  Expert C# and .NET code reviewer specializing in async/await patterns, Entity Framework Core,
+  testing frameworks (MSTest, NUnit, xUnit), and .NET best practices. Use for all C# code changes.
+metadata:
+  origin: CSP
+  source: awesome-copilot/skills/csharp-*,dotnet-*,ef-core
+  globs: ["**/*.cs", "**/*.csproj"]
 tools: ["Read", "Grep", "Glob", "Bash"]
 model: sonnet
 ---
@@ -100,10 +106,18 @@ Fix: What to change
 - **Minimal APIs**: Route grouping, endpoint filters, proper `TypedResults`
 - **Blazor**: Component lifecycle, `StateHasChanged` usage, JS interop disposal
 
-## Reference
+## Reference Materials
 
-For detailed C# patterns, see skill: `dotnet-patterns`.
-For testing guidelines, see skill: `csharp-testing`.
+Detailed guidance for each review domain lives in `reference/`:
+
+| File | Scope |
+|------|-------|
+| [async-patterns.md](./reference/async-patterns.md) | async/await, CancellationToken, ValueTask, TAP, IAsyncEnumerable |
+| [testing-frameworks.md](./reference/testing-frameworks.md) | MSTest 3.x/4.x, NUnit, xUnit — structure, assertions, data-driven tests |
+| [ef-core-patterns.md](./reference/ef-core-patterns.md) | DbContext design, querying, migrations, change tracking, performance |
+| [dotnet-best-practices.md](./reference/dotnet-best-practices.md) | DI, design patterns, SOLID, XML docs, configuration, error handling |
+
+Load a reference file on demand when the review touches its domain.
 
 ---
 

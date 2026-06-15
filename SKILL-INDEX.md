@@ -1,8 +1,8 @@
 # Skills, Agents & Scripts 综合索引
 
-> 生成时间：2026-06-14
-> 版本：v0.4.0 — 质量巩固与工程化
-> 状态：重叠已消除，迁移已完成，安装器已增强
+> 生成时间：2026-06-15
+> 版本：v0.5.0 — awesome-copilot skills 深度融入
+> 状态：awesome-copilot TIER 1/2/3 全部融入，reference 按需加载架构
 
 ---
 
@@ -442,6 +442,50 @@
 | `csp-react-native-build-resolver` | csp-patterns/agents | Agent | React Native 构建错误修复 | ✅ 保留（独特） |
 | `csp-react-native-reviewer` | csp-patterns/agents | Agent | React Native 代码审查 | ✅ 保留（独特） |
 | `csp-mobile-performance-auditor` | csp-patterns/agents | Agent | 移动端性能审计 | ✅ 保留（独特） |
+
+### 21. awesome-copilot 融入 (v0.5.0 新增)
+
+> 来源：[awesome-copilot](https://github.com/github/awesome-copilot/skills) — 356 个 skills 中精选 TIER 1/2/3 共 ~40 个融入 CSP
+> 设计原则：核心内容进 SKILL.md（80-120 行），细节知识进 `reference/` 子目录按需加载
+
+#### 21.1 新建 Skills（8 个）
+
+| 名称 | 来源 awesome-copilot | 描述 | Reference 文件 |
+|------|---------------------|------|---------------|
+| `csp-refactorer` | refactor, refactor-plan, refactor-method-complexity-reduce, review-and-refactor | 外科式重构 agent：规划→复杂度降低→执行→验证 | `refactor-workflows.md`, `complexity-reduction.md` |
+| `csp-sql-reviewer` | sql-code-review, sql-optimization | SQL 查询和 schema 审查 | `sql-review-checklist.md`, `sql-optimization-patterns.md` |
+| `csp-postgres-optimizer` | postgresql-code-review, postgresql-optimization | PostgreSQL 性能调优（EXPLAIN、索引、分区、vacuum） | `pg-optimization-deep-dive.md`, `pg-query-tuning.md` |
+| `csp-ruff-fixer` | ruff-recursive-fix | Python Ruff 迭代式 lint 修复（safe→unsafe→manual + noqa 决策） | `ruff-rules-reference.md` |
+| `csp-codeql-analyst` | codeql, secret-scanning | CodeQL 静态分析 + 密钥扫描 + SARIF 解释 | `codeql-queries.md`, `secret-scanning-patterns.md` |
+| `csp-react-version-patterns` | react18-*, react19-*, react-*（12 个） | React 18/19 版本特性 + 迁移指南（Enzyme→RTL、Class→Hooks） | `react18-patterns.md`, `react19-patterns.md`, `migration-recipes.md` |
+| `csp-git-conventions` | conventional-commit, conventional-branch, git-commit | Git 工作流约定（提交消息、分支命名、PR 卫生） | — |
+| `csp-spec-adr` | create-specification, create-implementation-plan, create-architectural-decision-record, prd | 轻量级 spec/ADR/impl-plan/PRD 编写器 | `templates.md` |
+| `csp-code-tour-guide` | code-tour, mentoring-juniors, add-educational-comments | VS Code CodeTour + 苏格拉底式辅导（20 个 persona） | `tour-personas.md` |
+| `csp-api-codegen` | openapi-to-application-code, typespec-create-api-plugin, typespec-api-operations | OpenAPI/TypeSpec → 应用代码生成 | `openapi-codegen.md`, `typespec-patterns.md` |
+| `webapp-testing` | webapp-testing | 端到端 Web 应用测试（Cypress/Playwright/Puppeteer） | `e2e-strategies.md` |
+
+#### 21.2 新建 Agents（2 个）
+
+| 名称 | 来源 awesome-copilot | 描述 | Reference 文件 |
+|------|---------------------|------|---------------|
+| `csp-springboot-reviewer` | java-junit, java-springboot, kotlin-springboot, spring-boot-testing | Java/Kotlin Spring Boot 审查 agent | `junit-patterns.md`, `spring-testing.md`, `kotlin-spring.md` |
+| `csp-incident-response` | data-breach-blast-radius | 安全事件响应（泄露影响评估、合规、事后分析） | `data-breach-response.md` |
+
+#### 21.3 增强的现有 Skills/Agents（11 个）
+
+| 名称 | 增强内容 | Reference 新增 |
+|------|---------|---------------|
+| `csp-security-reviewer` | 增加 STRIDE-A 威胁建模 + 数据泄露影响评估章节 | — |
+| `csp-csharp-reviewer` | 转为目录结构，增加 4 个 reference 文件 | `async-patterns.md`, `testing-frameworks.md`, `ef-core-patterns.md`, `dotnet-best-practices.md` |
+| `csp-mcp-builder` | 增加 9 语言 MCP server 模板 + .NET/PHP/Copilot Studio + 部署指南 | `language-templates.md`, `additional-languages.md` |
+| `csp-project-standards-reviewer` | 转为目录结构，增加标准提取 + 代码典范识别 | `standards-extraction.md`, `code-exemplars.md` |
+| `csp-incident-commander` | 增加数据泄露响应章节 | `data-breach-response.md` |
+| `csp-e2e-runner` | 增加 Playwright 代码片段 | `playwright-snippets.md` |
+| `react-patterns` | 增加高级 UI patterns（premium/container-presentation/audit grep） | `advanced-ui-patterns.md` |
+| `python-testing` | 增加 pytest 覆盖率深度指南 | `pytest-coverage-deep-dive.md` |
+| `react-testing` | 增加 Jest 高级模式 | `jest-advanced-patterns.md` |
+| `csp-cicd-pipelines` | 增加 GitHub Actions 规范 + CI/CD 最佳实践 | `github-actions-specification.md`, `cicd-best-practices.md` |
+| `csp-project-standards-reviewer` | 从现有代码提炼规范 + 代码典范识别 | `standards-extraction.md`, `code-exemplars.md` |
 
 ---
 

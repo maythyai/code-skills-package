@@ -143,6 +143,104 @@ For large features, produce:
 - **CI/CD Security Gates**: SAST (Semgrep), dependency scan (Trivy), secrets detection (Gitleaks)
 - **Zero Trust Checklist**: Least privilege IAM, secrets in Vault (not env vars), mTLS between services, no public storage buckets
 
+## Threat Modeling (STRIDE-A Methodology)
+
+Perform systematic threat modeling for architectural security assessment:
+
+### STRIDE-A Framework
+Apply **STRIDE + Abuse** to every component and data flow:
+
+| Threat | Question | Controls |
+|--------|----------|----------|
+| **S**poofing | Can identity be faked? | MFA, certificate pinning, JWT validation |
+| **T**ampering | Can data be modified? | Signatures, checksums, TLS, immutable logs |
+| **R**epudiation | Can actions be denied? | Audit logs, digital signatures, timestamps |
+| **I**nfo Disclosure | Can data leak? | Encryption, access control, data minimization |
+| **D**enial of Service | Can service be disrupted? | Rate limiting, circuit breakers, auto-scaling |
+| **E**levation of Privilege | Can permissions escalate? | Least privilege, RBAC, sandboxing |
+| **A**buse | Can features be misused? | Business logic validation, anomaly detection |
+
+### Threat Modeling Workflow
+
+1. **Architecture Decomposition** — Map all components, data stores, external entities, and trust boundaries
+2. **Data Flow Diagram (DFD)** — Visualize how data moves through the system (use Mermaid)
+3. **Trust Boundary Identification** — Mark every boundary where data crosses security zones
+4. **STRIDE-A Analysis** — Apply each threat category to every DFD element
+5. **Prioritization** — Rank threats by: `Risk = Likelihood × Impact × Exposure`
+6. **Mitigation Mapping** — Link each threat to existing or required controls
+
+### Deliverables for Large Features
+- **Architecture Overview** (component diagram + DFD)
+- **STRIDE-A Heatmap** (threat coverage matrix per component)
+- **Prioritized Findings** (with CVSS 4.0 scores and CWE mappings)
+- **Executive Summary** (non-technical risk overview for leadership)
+
+### Incremental Threat Modeling
+When updating an existing threat model:
+- Load previous report as baseline
+- Detect what changed in code since baseline
+- Generate diff: **new threats**, **resolved threats**, **persistent threats**
+- Update STRIDE heatmap with status annotations
+
+## Data Breach Blast Radius Assessment
+
+Quantify business and regulatory impact of potential data exposure:
+
+### Sensitivity Tier Classification
+
+| Tier | Data Type | Examples | Multiplier |
+|------|-----------|----------|------------|
+| **T1** | Catastrophic | Biometrics, health records, financial credentials, passwords | ×5 |
+| **T2** | Critical | Full name + address + DOB, payment card PAN, SSN, passport | ×4 |
+| **T3** | High | Email + hashed password, phone, geolocation, device fingerprints | ×3 |
+| **T4** | Elevated | First name, email only, city-level location, usage analytics | ×2 |
+| **T5** | Standard | Non-personal config, public content, anonymized aggregates | ×1 |
+
+### Blast Radius Calculation
+
+```
+Blast Radius Score = Data Tier × Exposure Likelihood × Population Scale × Data Completeness
+```
+
+**Population Scale Estimation:**
+- SaaS product: 10K–1M users
+- Internal tool: 100–10K users
+- Consumer app: 100K–10M users
+- Apply multiplier if breach exposes: minors (×2), health data (×3), financial credentials (×5)
+
+### Regulatory Impact Matrix
+
+| Regulation | Jurisdiction Triggers | Max Fine | Notification Timeline |
+|------------|----------------------|----------|----------------------|
+| **GDPR** | EU users, EUR currency, EU datacenters | €20M or 4% global revenue | 72 hours |
+| **CCPA** | California residents, US `.com`, Stripe US | $7,500 per intentional violation | "Most expedient time possible" |
+| **HIPAA** | Health records, ICD codes, FHIR resources | $1.9M per violation category | 60 days (if >500 affected) |
+| **LGPD** | Brazilian users, BRL currency, CPF fields | 2% revenue (max R$50M) | "Reasonable time" |
+
+### Exposure Vector Analysis
+
+Scan for data exposure points:
+- **Public APIs** without authentication
+- **Missing authorization** (IDOR/BOLA vulnerabilities)
+- **Overly broad responses** (returning more fields than needed)
+- **CORS misconfigurations**
+- **Public storage buckets** (S3, Azure Blob, GCS)
+- **Logging PII** to stdout/stderr in containers
+- **Error messages** containing sensitive data
+- **Debug endpoints** active in production
+
+### Blast Radius Report Structure
+
+1. **Executive Summary** (2–3 paragraphs, no jargon)
+2. **Sensitive Data Inventory** (table: all PII/PHI/financial fields)
+3. **Data Flow Map** (Mermaid diagram showing data movement)
+4. **Top 5 Exposure Vectors** (ranked by blast radius score)
+5. **Regulatory Blast Radius Table** (per-jurisdiction impact)
+6. **Financial Impact Estimate** (realistic range with assumptions stated)
+7. **Hardening Roadmap** (prioritized by: `(Impact × Severity) / Effort`)
+
+> **Note:** Financial figures are planning estimates. Regulatory fine maximums are law-sourced (GDPR Art. 83, CCPA § 1798.155, HIPAA 45 CFR § 160.404). Always consult legal counsel for formal guidance.
+
 ---
 
 **Remember**: Security is not optional. One vulnerability can cost users real financial losses. Be thorough, be paranoid, be proactive.

@@ -3,7 +3,7 @@
 <div align="center">
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
-[![v0.2](https://img.shields.io/badge/version-0.2-green)](./ARCHITECTURE.md)
+[![v0.5.0](https://img.shields.io/badge/version-0.5.0-green)](./ARCHITECTURE.md)
 
 **统一 AI 编程技能 · 18 个平台 · 15+ 语言**
 
@@ -248,3 +248,4 @@ CSP 整合了以下开源项目：
 - [Superpowers](https://github.com/SimpleVibe/Superpowers) — 元技能
 - [spec-kit](https://github.com/microsoft/spec-kit) — 规范驱动开发
 - [Agency-Agents](https://github.com/msitarzewski/agency-agents) — Specialized AI agents
+- [awesome-copilot](https://github.com/github/awesome-copilot) — GitHub Copilot skills & agents

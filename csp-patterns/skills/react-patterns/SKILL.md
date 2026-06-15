@@ -99,6 +99,16 @@ This skill is router-agnostic. The patterns above work with React Router, TanSta
 - **React Native**: Platform-specific patterns differ enough to warrant a separate `react-native-patterns` skill (not present yet)
 - **Remix**: Loader/action conventions overlap with RSC but follow Remix docs
 
+## Advanced UI Patterns
+
+For premium frontend craftsmanship, Container/Presentation architecture, and React migration audit automation, see [reference/advanced-ui-patterns.md](reference/advanced-ui-patterns.md):
+
+- Visual identity archetypes (editorial brutalism, organic fluidity, cinematic pacing)
+- Motion design system (scroll-driven narratives, magnetic components, micro-interactions)
+- Typography and texture (fluid `clamp()` scales, variable fonts, atmospheric grain)
+- Container/Presentation pattern (`ui` vs `features` classification and file structure)
+- React audit grep patterns for React 18.3.1 and React 19 migration scans
+
 ## Related
 
 - Rules: [rules/react/](../../rules/react/) — coding-style, hooks, patterns, security, testing

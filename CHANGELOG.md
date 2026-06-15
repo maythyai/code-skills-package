@@ -4,7 +4,67 @@ All notable changes to CSP will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
-## [0.4.0] — 2026-06-14
+## [0.5.0] — 2026-06-15
+
+### awesome-copilot Skills 深度融入
+
+从 [awesome-copilot](https://github.com/github/awesome-copilot) 356 个 skills 中精选 TIER 1/2/3 共 ~40 个融入 CSP，采用"核心 SKILL.md + reference 按需加载"架构。
+
+#### Added
+
+**新建 Skills（8 个）**
+- `csp-refactorer` — 外科式重构（规划→复杂度降低→执行→验证）
+- `csp-sql-reviewer` + `csp-postgres-optimizer` — SQL/PostgreSQL 审查与性能调优
+- `csp-ruff-fixer` — Python Ruff 迭代式 lint 修复
+- `csp-codeql-analyst` — CodeQL 静态分析 + 密钥扫描
+- `csp-react-version-patterns` — React 18/19 版本特性 + 迁移指南
+- `csp-git-conventions` — Git 工作流约定（提交消息、分支命名、PR 卫生）
+- `csp-spec-adr` — 轻量级 spec/ADR/impl-plan/PRD 编写器
+- `csp-code-tour-guide` — VS Code CodeTour + 苏格拉底式辅导（20 个 persona）
+- `csp-api-codegen` — OpenAPI/TypeSpec → 应用代码生成
+- `webapp-testing` — 端到端 Web 应用测试（Cypress/Playwright/Puppeteer）
+
+**新建 Agents（2 个）**
+- `csp-springboot-reviewer` — Java/Kotlin Spring Boot 审查
+- `csp-incident-response` — 安全事件响应（数据泄露影响评估）
+
+**增强的现有 Skills/Agents（11 个，新增 46 个 reference 文件）**
+- `csp-security-reviewer` + STRIDE-A 威胁建模 + 数据泄露影响评估
+- `csp-csharp-reviewer` 转为目录结构 + 4 个 reference（async/testing/EF Core/best practices）
+- `csp-mcp-builder` + 9 语言 MCP server 模板 + .NET/PHP/Copilot Studio + 部署指南
+- `csp-project-standards-reviewer` 转为目录结构 + 标准提取 + 代码典范识别
+- `csp-incident-commander` + 数据泄露响应章节
+- `csp-e2e-runner` + Playwright 代码片段
+- `react-patterns` + 高级 UI patterns（premium/container-presentation/audit grep）
+- `python-testing` + pytest 覆盖率深度指南
+- `react-testing` + Jest 高级模式
+- `csp-cicd-pipelines` + GitHub Actions 规范 + CI/CD 最佳实践
+
+**总计**: 11 个新 skill/agent + 11 个增强 + 46 个新 reference 文件（~8,000+ 行新增内容）
+
+#### Design Decisions
+
+- **按需加载架构**: 每个 SKILL.md 控制在 80-120 行，细节知识拆入 `reference/` 子目录按需加载，token 开销最小化
+- **去重策略**: 与现有 `csp-refactoring-strategies`、`csp-database-reviewer`、`react-patterns` 等无重叠，形成策略层 vs 实操层的互补
+- **跳过类别**: Power Platform / Azure / AWS / GTM / 3D 游戏 / Linux triage 等 niche skills 不纳入（见 TIER 4 报告）
+
+#### Documentation
+
+- `SKILL-INDEX.md` 新增 Section 21（awesome-copilot 融入）
+- `CLAUDE.md` 版本号升级到 v0.5.0，L3 patterns 计数更新
+- `README.md` / `README_zh.md` Acknowledgments 新增 awesome-copilot 来源
+
+### 统计指标
+
+| 指标 | v0.4.0 | v0.5.0 |
+|------|--------|--------|
+| Total Skills | 498 | ~510+ |
+| L3 Patterns Skills | ~90 | ~100+ |
+| L3 Patterns Agents | ~95 | ~100+ |
+| Reference 文件 | ~50 | ~96+ |
+| awesome-copilot 融入 | 0 | ~40 |
+
+---
 
 ### 质量巩固与工程化
 

@@ -77,6 +77,12 @@ You are **MCP Builder** — you create custom tools that make AI agents actually
 - New developers can add a tool in under 15 minutes
 - Server starts in <2 seconds, responds to tool calls in <500ms (excluding external API)
 
-## Reference
+## Reference Materials
 
-For TypeScript and Python MCP server code examples, client configuration, multi-transport patterns, and authentication flows, see `reference/` directory.
+Load these files on demand:
+
+| File | When to load |
+|------|--------------|
+| `reference/code-examples.md` | TypeScript/Python MCP server code examples, client config, multi-transport, auth flows |
+| `reference/language-templates.md` | Go, Rust, Java, Kotlin, Ruby, Swift MCP server skeletons and cross-language checklist |
+| `reference/additional-languages.md` | .NET/C#, PHP templates, Copilot Studio integration, deployment and management |

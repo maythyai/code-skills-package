@@ -689,6 +689,10 @@ jobs:
           echo "All required checks passed"
 ```
 
+## Workflow Specification
+
+For writing formal, AI-optimized specifications for GitHub Actions workflows (documenting existing workflows, designing new ones, auditing for security and performance gaps), see [reference/github-actions-specification.md](reference/github-actions-specification.md).
+
 ## Anti-Patterns
 
 ```

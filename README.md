@@ -3,7 +3,7 @@
 <div align="center">
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
-[![v0.4.0](https://img.shields.io/badge/version-0.4.0-green)](./ARCHITECTURE.md)
+[![v0.5.0](https://img.shields.io/badge/version-0.5.0-green)](./ARCHITECTURE.md)
 
 **Unified AI Programming Skills · 18 Platforms · 15+ Languages**
 
@@ -274,3 +274,4 @@ CSP integrates capabilities from the following open-source projects:
 - [Superpowers](https://github.com/SimpleVibe/Superpowers) — Meta-skills
 - [spec-kit](https://github.com/microsoft/spec-kit) — Spec-driven development
 - [Agency-Agents](https://github.com/msitarzewski/agency-agents) — Specialized AI agents
+- [awesome-copilot](https://github.com/github/awesome-copilot) — GitHub Copilot skills & agents
