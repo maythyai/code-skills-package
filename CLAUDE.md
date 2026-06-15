@@ -2,43 +2,6 @@
 
 Unified AI coding skills from multiple open-source projects with auto-routing, lazy loading, and spec-driven workflows. MIT licensed.
 
-## Install
-
-```bash
-./install.sh                        # auto-detect platform
-./install.sh --platform claude-code # specify platform
-./install.sh --platform cursor
-./install.sh --platform copilot-cli
-./install.sh --platform hermes-agent
-./install.sh --platform windsurf
-./install.sh --platform kiro
-./install.sh --platform gemini-cli
-./install.sh --platform codex
-./install.sh --platform aider
-./install.sh --platform trae
-./install.sh --platform vscode
-./install.sh --platform deerflow
-./install.sh --platform opencode
-./install.sh --platform openclaw
-./install.sh --platform qwen-code
-./install.sh --platform antigravity
-./install.sh --platform claw-code
-./install.sh --platform qoder
-./install.sh --platform <name> --global  # global install
-./install.sh --stacks python,typescript  # stack-filtered install
-./install.sh --layers router,meta        # layer-selective install
-./install.sh --minimal                   # router + meta only (<20%)
-./install.sh --dry-run                   # preview without changes
-./install.sh --uninstall
-./install.sh --list                 # list detected platforms
-```
-
-## Usage
-
-**Slash commands** — `/csp-plan` `/csp-debug` `/csp-review` `/csp-test` `/csp-ship` `/csp-spec-phase` `/csp-execute-phase` `/csp-verify` `/csp-search <query>`
-
-**Direct invoke** — `Load csp-react-reviewer for this code`
-
 ## Architecture
 
 ```
@@ -51,9 +14,9 @@ L4  csp-runtime   — autopilot, ralph, wiki, remember, self-improve (~37 skills
 
 ## Docs
 
-- [ARCHITECTURE.md](./ARCHITECTURE.md) — full architecture design
-- [SKILL-INDEX.md](./SKILL-INDEX.md) — complete skill index
-- [MIGRATION.md](./MIGRATION.md) — source-to-CSP mapping
+- [ARCHITECTURE.md](./docs/ARCHITECTURE.md) — full architecture design
+- [SKILL-INDEX.md](./docs/SKILL-INDEX.md) — complete skill index
+- [USER-GUIDE.md](./docs/USER-GUIDE.md) — user guide
 
 ## License
 

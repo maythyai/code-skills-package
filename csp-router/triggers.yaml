@@ -339,3 +339,1056 @@ stack_rules:
     testers: ["csp-cpp-testing"]
     build_resolvers: ["csp-cpp-build-resolver"]
     patterns: ["csp-cpp-coding-standards"]
+
+
+# ─── Auto-generated triggers (missing skills) ───
+  "Agent":
+    skills: [csp-agent-teams]
+    weight: 45
+  "Agent团队":
+    skills: [csp-agent-teams]
+    weight: 45
+  "agent teams":
+    skills: [csp-agent-teams]
+    weight: 40
+  "上下文":
+    skills: [csp-context-engineering]
+    weight: 45
+  "工程":
+    skills: [csp-context-engineering]
+    weight: 45
+  "context":
+    skills: [csp-context-engineering]
+    weight: 40
+  "context engineering":
+    skills: [csp-context-engineering]
+    weight: 40
+  "csp-doc-review":
+    skills: [csp-doc-review]
+    weight: 40
+  "doc":
+    skills: [csp-doc-review]
+    weight: 40
+  "质疑":
+    skills: [csp-doubt-driven-development]
+    weight: 45
+  "逆向审查":
+    skills: [csp-doubt-driven-development]
+    weight: 45
+  "csp-doubt-driven-development":
+    skills: [csp-doubt-driven-development]
+    weight: 40
+  "development":
+    skills: [csp-doubt-driven-development]
+    weight: 40
+  "csp-source-driven-development":
+    skills: [csp-source-driven-development]
+    weight: 40
+  "使用":
+    skills: [csp-using-skills]
+    weight: 45
+  "使用方法":
+    skills: [csp-using-skills]
+    weight: 45
+  "csp-using-skills":
+    skills: [csp-using-skills]
+    weight: 40
+  "skills":
+    skills: [csp-using-skills]
+    weight: 40
+  "质量验证":
+    skills: [csp-verification]
+    weight: 45
+  "csp-verification":
+    skills: [csp-verification]
+    weight: 40
+  "verification":
+    skills: [csp-verification]
+    weight: 40
+  "executing":
+    skills: [executing-plans]
+    weight: 40
+  "executing plans":
+    skills: [executing-plans]
+    weight: 40
+  "分支清理":
+    skills: [finishing-a-development-branch]
+    weight: 45
+  "完成":
+    skills: [finishing-a-development-branch]
+    weight: 45
+  "branch":
+    skills: [finishing-a-development-branch]
+    weight: 40
+  "receiving":
+    skills: [receiving-code-review]
+    weight: 40
+  "requesting":
+    skills: [requesting-code-review]
+    weight: 40
+  "性能优化":
+    skills: [skill-optimizer]
+    weight: 45
+  "optimizer":
+    skills: [skill-optimizer]
+    weight: 40
+  "skill":
+    skills: [skill-optimizer]
+    weight: 40
+  "排错":
+    skills: [systematic-debugging]
+    weight: 45
+  "debugging":
+    skills: [systematic-debugging]
+    weight: 40
+  "systematic":
+    skills: [systematic-debugging]
+    weight: 40
+  "Git":
+    skills: [using-git-worktrees]
+    weight: 45
+  "using":
+    skills: [using-git-worktrees]
+    weight: 40
+  "写作":
+    skills: [writing-plans]
+    weight: 45
+  "编写":
+    skills: [writing-plans]
+    weight: 45
+  "plans":
+    skills: [writing-plans]
+    weight: 40
+  "writing":
+    skills: [writing-plans]
+    weight: 40
+  "技能":
+    skills: [writing-skills]
+    weight: 45
+  "工作流":
+    skills: [csp-compound]
+    weight: 45
+  "compound":
+    skills: [csp-compound]
+    weight: 40
+  "csp-compound":
+    skills: [csp-compound]
+    weight: 40
+  "上下文刷新":
+    skills: [csp-compound-refresh]
+    weight: 45
+  "刷新":
+    skills: [csp-compound-refresh]
+    weight: 45
+  "compound refresh":
+    skills: [csp-compound-refresh]
+    weight: 40
+  "废弃":
+    skills: [csp-deprecation-and-migration]
+    weight: 45
+  "and":
+    skills: [csp-deprecation-and-migration]
+    weight: 40
+  "csp-deprecation-and-migration":
+    skills: [csp-deprecation-and-migration]
+    weight: 40
+  "全流程":
+    skills: [csp-full]
+    weight: 45
+  "完整开发":
+    skills: [csp-full]
+    weight: 45
+  "csp-full":
+    skills: [csp-full]
+    weight: 40
+  "full":
+    skills: [csp-full]
+    weight: 40
+  "现代化":
+    skills: [csp-legacy-modernization]
+    weight: 45
+  "csp-legacy-modernization":
+    skills: [csp-legacy-modernization]
+    weight: 40
+  "legacy":
+    skills: [csp-legacy-modernization]
+    weight: 40
+  "多人":
+    skills: [csp-multi-review]
+    weight: 45
+  "csp-multi-review":
+    skills: [csp-multi-review]
+    weight: 40
+  "multi":
+    skills: [csp-multi-review]
+    weight: 40
+  "产品健康度":
+    skills: [csp-product-pulse]
+    weight: 45
+  "csp-product-pulse":
+    skills: [csp-product-pulse]
+    weight: 40
+  "product":
+    skills: [csp-product-pulse]
+    weight: 40
+  "上线":
+    skills: [csp-shipping-and-launch]
+    weight: 45
+  "csp-shipping-and-launch":
+    skills: [csp-shipping-and-launch]
+    weight: 40
+  "战略":
+    skills: [csp-strategy]
+    weight: 45
+  "csp-strategy":
+    skills: [csp-strategy]
+    weight: 40
+  "strategy":
+    skills: [csp-strategy]
+    weight: 40
+  "agent introspection debugging":
+    skills: [agent-introspection-debugging]
+    weight: 40
+  "agent sort":
+    skills: [agent-sort]
+    weight: 40
+  "agentic":
+    skills: [agentic-engineering]
+    weight: 40
+  "agentic engineering":
+    skills: [agentic-engineering]
+    weight: 40
+  "文章":
+    skills: [article-writing]
+    weight: 45
+  "article":
+    skills: [article-writing]
+    weight: 40
+  "article writing":
+    skills: [article-writing]
+    weight: 40
+  "autonomous":
+    skills: [autonomous-loops]
+    weight: 40
+  "autonomous loops":
+    skills: [autonomous-loops]
+    weight: 40
+  "后端":
+    skills: [backend-patterns]
+    weight: 45
+  "后端开发":
+    skills: [backend-patterns]
+    weight: 45
+  "backend patterns":
+    skills: [backend-patterns]
+    weight: 40
+  "品牌声音":
+    skills: [brand-voice]
+    weight: 45
+  "品牌语调":
+    skills: [brand-voice]
+    weight: 45
+  "brand":
+    skills: [brand-voice]
+    weight: 40
+  "brand voice":
+    skills: [brand-voice]
+    weight: 40
+  "bun":
+    skills: [bun-runtime]
+    weight: 40
+  "bun runtime":
+    skills: [bun-runtime]
+    weight: 40
+  "标准":
+    skills: [coding-standards]
+    weight: 45
+  "项目标准":
+    skills: [coding-standards]
+    weight: 45
+  "coding":
+    skills: [coding-standards]
+    weight: 40
+  "coding standards":
+    skills: [coding-standards]
+    weight: 40
+  "内容引擎":
+    skills: [content-engine]
+    weight: 45
+  "内容生成":
+    skills: [content-engine]
+    weight: 45
+  "content":
+    skills: [content-engine]
+    weight: 40
+  "content engine":
+    skills: [content-engine]
+    weight: 40
+  "内容哈希":
+    skills: [content-hash-cache-pattern]
+    weight: 45
+  "最佳实践":
+    skills: [content-hash-cache-pattern]
+    weight: 45
+  "cache":
+    skills: [content-hash-cache-pattern]
+    weight: 40
+  "cpp":
+    skills: [cpp-coding-standards]
+    weight: 40
+  "单元测试":
+    skills: [cpp-testing]
+    weight: 45
+  "cpp testing":
+    skills: [cpp-testing]
+    weight: 40
+  "跨平台":
+    skills: [crosspost]
+    weight: 45
+  "跨端":
+    skills: [crosspost]
+    weight: 45
+  "crosspost":
+    skills: [crosspost]
+    weight: 40
+  "agentic identity trust":
+    skills: [csp-agentic-identity-trust]
+    weight: 40
+  "API生成":
+    skills: [csp-api-codegen]
+    weight: 45
+  "代码生成":
+    skills: [csp-api-codegen]
+    weight: 45
+  "api codegen":
+    skills: [csp-api-codegen]
+    weight: 40
+  "api tester":
+    skills: [csp-api-tester]
+    weight: 40
+  "browser":
+    skills: [csp-browser-testing-with-devtools]
+    weight: 40
+  "browser testing with devtools":
+    skills: [csp-browser-testing-with-devtools]
+    weight: 40
+  "CI/CD":
+    skills: [csp-cicd-pipelines]
+    weight: 45
+  "持续集成":
+    skills: [csp-cicd-pipelines]
+    weight: 45
+  "cicd":
+    skills: [csp-cicd-pipelines]
+    weight: 40
+  "cicd pipelines":
+    skills: [csp-cicd-pipelines]
+    weight: 40
+  "云平台":
+    skills: [csp-cloud-platform-patterns]
+    weight: 45
+  "cloud":
+    skills: [csp-cloud-platform-patterns]
+    weight: 40
+  "cloud platform patterns":
+    skills: [csp-cloud-platform-patterns]
+    weight: 40
+  "导览":
+    skills: [csp-code-tour-guide]
+    weight: 45
+  "项目导览":
+    skills: [csp-code-tour-guide]
+    weight: 45
+  "code tour guide":
+    skills: [csp-code-tour-guide]
+    weight: 40
+  "CodeQL":
+    skills: [csp-codeql-analyst]
+    weight: 45
+  "静态分析":
+    skills: [csp-codeql-analyst]
+    weight: 45
+  "analyst":
+    skills: [csp-codeql-analyst]
+    weight: 40
+  "策略":
+    skills: [csp-cross-platform-strategy]
+    weight: 45
+  "cross":
+    skills: [csp-cross-platform-strategy]
+    weight: 40
+  "cross platform strategy":
+    skills: [csp-cross-platform-strategy]
+    weight: 40
+  "C#":
+    skills: [csp-csharp-reviewer]
+    weight: 45
+  "csharp":
+    skills: [csp-csharp-reviewer]
+    weight: 40
+  "csharp reviewer":
+    skills: [csp-csharp-reviewer]
+    weight: 40
+  "代理":
+    skills: [csp-data-engineer]
+    weight: 45
+  "csp-data-engineer":
+    skills: [csp-data-engineer]
+    weight: 40
+  "data":
+    skills: [csp-data-engineer]
+    weight: 40
+  "模式":
+    skills: [csp-data-pipeline-patterns]
+    weight: 45
+  "csp-data-pipeline-patterns":
+    skills: [csp-data-pipeline-patterns]
+    weight: 40
+  "csp-deployment":
+    skills: [csp-deployment]
+    weight: 40
+  "deployment":
+    skills: [csp-deployment]
+    weight: 40
+  "文档":
+    skills: [csp-docs-lookup]
+    weight: 45
+  "文档查找":
+    skills: [csp-docs-lookup]
+    weight: 45
+  "csp-docs-lookup":
+    skills: [csp-docs-lookup]
+    weight: 40
+  "docs":
+    skills: [csp-docs-lookup]
+    weight: 40
+  "csp-document-generator":
+    skills: [csp-document-generator]
+    weight: 40
+  "document":
+    skills: [csp-document-generator]
+    weight: 40
+  "版本控制":
+    skills: [csp-git-conventions]
+    weight: 45
+  "conventions":
+    skills: [csp-git-conventions]
+    weight: 40
+  "csp-git-conventions":
+    skills: [csp-git-conventions]
+    weight: 40
+  "commander":
+    skills: [csp-incident-commander]
+    weight: 40
+  "csp-incident-commander":
+    skills: [csp-incident-commander]
+    weight: 40
+  "IaC":
+    skills: [csp-infrastructure-as-code]
+    weight: 45
+  "基础设施":
+    skills: [csp-infrastructure-as-code]
+    weight: 45
+  "csp-infrastructure-as-code":
+    skills: [csp-infrastructure-as-code]
+    weight: 40
+  "K8s":
+    skills: [csp-kubernetes-patterns]
+    weight: 45
+  "Kubernetes":
+    skills: [csp-kubernetes-patterns]
+    weight: 45
+  "csp-kubernetes-patterns":
+    skills: [csp-kubernetes-patterns]
+    weight: 40
+  "app":
+    skills: [csp-llm-app-development]
+    weight: 40
+  "csp-llm-app-development":
+    skills: [csp-llm-app-development]
+    weight: 40
+  "构建":
+    skills: [csp-mcp-builder]
+    weight: 45
+  "编译":
+    skills: [csp-mcp-builder]
+    weight: 45
+  "builder":
+    skills: [csp-mcp-builder]
+    weight: 40
+  "csp-mcp-builder":
+    skills: [csp-mcp-builder]
+    weight: 40
+  "change":
+    skills: [csp-minimal-change-engineer]
+    weight: 40
+  "csp-minimal-change-engineer":
+    skills: [csp-minimal-change-engineer]
+    weight: 40
+  "移动开发":
+    skills: [csp-mobile-performance]
+    weight: 45
+  "移动端":
+    skills: [csp-mobile-performance]
+    weight: 45
+  "csp-mobile-performance":
+    skills: [csp-mobile-performance]
+    weight: 40
+  "mobile":
+    skills: [csp-mobile-performance]
+    weight: 40
+  "csp-model-qa":
+    skills: [csp-model-qa]
+    weight: 40
+  "model":
+    skills: [csp-model-qa]
+    weight: 40
+  "architect":
+    skills: [csp-multi-agent-architect]
+    weight: 40
+  "csp-observability-and-instrumentation":
+    skills: [csp-observability-and-instrumentation]
+    weight: 40
+  "PostgreSQL":
+    skills: [csp-postgres-optimizer]
+    weight: 45
+  "Postgres":
+    skills: [csp-postgres-optimizer]
+    weight: 45
+  "csp-postgres-optimizer":
+    skills: [csp-postgres-optimizer]
+    weight: 40
+  "csp-project-standards-reviewer":
+    skills: [csp-project-standards-reviewer]
+    weight: 40
+  "project":
+    skills: [csp-project-standards-reviewer]
+    weight: 40
+  "csp-prompt-engineer":
+    skills: [csp-prompt-engineer]
+    weight: 40
+  "engineer":
+    skills: [csp-prompt-engineer]
+    weight: 40
+  "csp-prompt-engineering":
+    skills: [csp-prompt-engineering]
+    weight: 40
+  "engineering":
+    skills: [csp-prompt-engineering]
+    weight: 40
+  "csp-rag-architecture":
+    skills: [csp-rag-architecture]
+    weight: 40
+  "Native":
+    skills: [csp-react-native-patterns]
+    weight: 45
+  "React":
+    skills: [csp-react-native-patterns]
+    weight: 45
+  "csp-react-native-patterns":
+    skills: [csp-react-native-patterns]
+    weight: 40
+  "React开发":
+    skills: [csp-react-version-patterns]
+    weight: 45
+  "csp-react-version-patterns":
+    skills: [csp-react-version-patterns]
+    weight: 40
+  "patterns":
+    skills: [csp-react-version-patterns]
+    weight: 40
+  "代码重构":
+    skills: [csp-refactorer]
+    weight: 45
+  "csp-refactorer":
+    skills: [csp-refactorer]
+    weight: 40
+  "refactorer":
+    skills: [csp-refactorer]
+    weight: 40
+  "csp-refactoring-strategies":
+    skills: [csp-refactoring-strategies]
+    weight: 40
+  "refactoring":
+    skills: [csp-refactoring-strategies]
+    weight: 40
+  "Python格式化":
+    skills: [csp-ruff-fixer]
+    weight: 45
+  "Ruff":
+    skills: [csp-ruff-fixer]
+    weight: 45
+  "csp-ruff-fixer":
+    skills: [csp-ruff-fixer]
+    weight: 40
+  "fixer":
+    skills: [csp-ruff-fixer]
+    weight: 40
+  "ADR":
+    skills: [csp-spec-adr]
+    weight: 45
+  "csp-spec-adr":
+    skills: [csp-spec-adr]
+    weight: 40
+  "Spring":
+    skills: [csp-springboot-reviewer]
+    weight: 45
+  "csp-springboot-reviewer":
+    skills: [csp-springboot-reviewer]
+    weight: 40
+  "reviewer":
+    skills: [csp-springboot-reviewer]
+    weight: 40
+  "SQL":
+    skills: [csp-sql-reviewer]
+    weight: 45
+  "csp-sql-reviewer":
+    skills: [csp-sql-reviewer]
+    weight: 40
+  "债务评估":
+    skills: [csp-tech-debt-assessment]
+    weight: 45
+  "技术债":
+    skills: [csp-tech-debt-assessment]
+    weight: 45
+  "assessment":
+    skills: [csp-tech-debt-assessment]
+    weight: 40
+  "csp-tech-debt-assessment":
+    skills: [csp-tech-debt-assessment]
+    weight: 40
+  "csp-test-engineer":
+    skills: [csp-test-engineer]
+    weight: 40
+  "csp-vllm-serving":
+    skills: [csp-vllm-serving]
+    weight: 40
+  "serving":
+    skills: [csp-vllm-serving]
+    weight: 40
+  "auditor":
+    skills: [csp-web-performance-auditor]
+    weight: 40
+  "csp-web-performance-auditor":
+    skills: [csp-web-performance-auditor]
+    weight: 40
+  "csp-workflow-architect":
+    skills: [csp-workflow-architect]
+    weight: 40
+  "数据库":
+    skills: [database-migrations]
+    weight: 45
+  "数据库迁移":
+    skills: [database-migrations]
+    weight: 45
+  "database":
+    skills: [database-migrations]
+    weight: 40
+  "database migrations":
+    skills: [database-migrations]
+    weight: 40
+  "优先搜索":
+    skills: [deep-research]
+    weight: 45
+  "搜索":
+    skills: [deep-research]
+    weight: 45
+  "deep":
+    skills: [deep-research]
+    weight: 40
+  "deep research":
+    skills: [deep-research]
+    weight: 40
+  "django":
+    skills: [django-patterns]
+    weight: 40
+  "django patterns":
+    skills: [django-patterns]
+    weight: 40
+  "安全审查":
+    skills: [django-security]
+    weight: 45
+  "django security":
+    skills: [django-security]
+    weight: 40
+  "流程":
+    skills: [dmux-workflows]
+    weight: 45
+  "dmux":
+    skills: [dmux-workflows]
+    weight: 40
+  "dmux workflows":
+    skills: [dmux-workflows]
+    weight: 40
+  "Docker":
+    skills: [docker-patterns]
+    weight: 45
+  "容器化":
+    skills: [docker-patterns]
+    weight: 45
+  "docker patterns":
+    skills: [docker-patterns]
+    weight: 40
+  "E2E":
+    skills: [e2e-testing]
+    weight: 45
+  "e2e testing":
+    skills: [e2e-testing]
+    weight: 40
+  "eval":
+    skills: [eval-harness]
+    weight: 40
+  "eval harness":
+    skills: [eval-harness]
+    weight: 40
+  "claude":
+    skills: [everything-claude-code]
+    weight: 40
+  "exa":
+    skills: [exa-search]
+    weight: 40
+  "exa search":
+    skills: [exa-search]
+    weight: 40
+  "fal":
+    skills: [fal-ai-media]
+    weight: 40
+  "fal ai media":
+    skills: [fal-ai-media]
+    weight: 40
+  "fastapi":
+    skills: [fastapi-patterns]
+    weight: 40
+  "fastapi patterns":
+    skills: [fastapi-patterns]
+    weight: 40
+  "前端":
+    skills: [frontend-patterns]
+    weight: 45
+  "前端开发":
+    skills: [frontend-patterns]
+    weight: 45
+  "frontend":
+    skills: [frontend-patterns]
+    weight: 40
+  "frontend patterns":
+    skills: [frontend-patterns]
+    weight: 40
+  "frontend slides":
+    skills: [frontend-slides]
+    weight: 40
+  "Go":
+    skills: [golang-patterns]
+    weight: 45
+  "Golang":
+    skills: [golang-patterns]
+    weight: 45
+  "golang patterns":
+    skills: [golang-patterns]
+    weight: 40
+  "golang testing":
+    skills: [golang-testing]
+    weight: 40
+  "investor":
+    skills: [investor-materials]
+    weight: 40
+  "investor materials":
+    skills: [investor-materials]
+    weight: 40
+  "investor outreach":
+    skills: [investor-outreach]
+    weight: 40
+  "java":
+    skills: [java-coding-standards]
+    weight: 40
+  "jpa":
+    skills: [jpa-patterns]
+    weight: 40
+  "jpa patterns":
+    skills: [jpa-patterns]
+    weight: 40
+  "kotlin":
+    skills: [kotlin-patterns]
+    weight: 40
+  "kotlin patterns":
+    skills: [kotlin-patterns]
+    weight: 40
+  "kotlin testing":
+    skills: [kotlin-testing]
+    weight: 40
+  "market":
+    skills: [market-research]
+    weight: 40
+  "market research":
+    skills: [market-research]
+    weight: 40
+  "mcp":
+    skills: [mcp-server-patterns]
+    weight: 40
+  "mcp server patterns":
+    skills: [mcp-server-patterns]
+    weight: 40
+  "mle":
+    skills: [mle-workflow]
+    weight: 40
+  "mle workflow":
+    skills: [mle-workflow]
+    weight: 40
+  "nestjs":
+    skills: [nestjs-patterns]
+    weight: 40
+  "nestjs patterns":
+    skills: [nestjs-patterns]
+    weight: 40
+  "nextjs":
+    skills: [nextjs-turbopack]
+    weight: 40
+  "nextjs turbopack":
+    skills: [nextjs-turbopack]
+    weight: 40
+  "capability":
+    skills: [product-capability]
+    weight: 40
+  "Python":
+    skills: [python-patterns]
+    weight: 45
+  "Python开发":
+    skills: [python-patterns]
+    weight: 45
+  "python testing":
+    skills: [python-testing]
+    weight: 40
+  "pytorch":
+    skills: [pytorch-patterns]
+    weight: 40
+  "react testing":
+    skills: [react-testing]
+    weight: 40
+  "rust":
+    skills: [rust-patterns]
+    weight: 40
+  "rust testing":
+    skills: [rust-testing]
+    weight: 40
+  "first":
+    skills: [search-first]
+    weight: 40
+  "search":
+    skills: [search-first]
+    weight: 40
+  "Spring Boot":
+    skills: [springboot-patterns]
+    weight: 45
+  "springboot":
+    skills: [springboot-patterns]
+    weight: 40
+  "compact":
+    skills: [strategic-compact]
+    weight: 40
+  "strategic":
+    skills: [strategic-compact]
+    weight: 40
+  "actor":
+    skills: [swift-actor-persistence]
+    weight: 40
+  "persistence":
+    skills: [swift-actor-persistence]
+    weight: 40
+  "protocol":
+    skills: [swift-protocol-di-testing]
+    weight: 40
+  "swift":
+    skills: [swift-protocol-di-testing]
+    weight: 40
+  "editing":
+    skills: [video-editing]
+    weight: 40
+  "video":
+    skills: [video-editing]
+    weight: 40
+  "Web应用":
+    skills: [webapp-testing]
+    weight: 45
+  "Web测试":
+    skills: [webapp-testing]
+    weight: 45
+  "testing":
+    skills: [webapp-testing]
+    weight: 40
+  "webapp":
+    skills: [webapp-testing]
+    weight: 40
+  "x api":
+    skills: [x-api]
+    weight: 40
+  "运行时":
+    skills: [ask]
+    weight: 45
+  "ask":
+    skills: [ask]
+    weight: 40
+  "autopilot":
+    skills: [autopilot]
+    weight: 40
+  "autoresearch":
+    skills: [autoresearch]
+    weight: 40
+  "cancel":
+    skills: [cancel]
+    weight: 40
+  "ccg":
+    skills: [ccg]
+    weight: 40
+  "configure":
+    skills: [configure-notifications]
+    weight: 40
+  "configure notifications":
+    skills: [configure-notifications]
+    weight: 40
+  "csp-doctor":
+    skills: [csp-doctor]
+    weight: 40
+  "doctor":
+    skills: [csp-doctor]
+    weight: 40
+  "csp-plan":
+    skills: [csp-plan]
+    weight: 40
+  "csp-reference":
+    skills: [csp-reference]
+    weight: 40
+  "reference":
+    skills: [csp-reference]
+    weight: 40
+  "技能管理":
+    skills: [csp-skill-creator]
+    weight: 45
+  "creator":
+    skills: [csp-skill-creator]
+    weight: 40
+  "csp-skill-creator":
+    skills: [csp-skill-creator]
+    weight: 40
+  "csp-teams":
+    skills: [csp-teams]
+    weight: 40
+  "teams":
+    skills: [csp-teams]
+    weight: 40
+  "csp-writer-memory":
+    skills: [csp-writer-memory]
+    weight: 40
+  "memory":
+    skills: [csp-writer-memory]
+    weight: 40
+  "deep dive":
+    skills: [deep-dive]
+    weight: 40
+  "访谈":
+    skills: [deep-interview]
+    weight: 45
+  "deep interview":
+    skills: [deep-interview]
+    weight: 40
+  "deepinit":
+    skills: [deepinit]
+    weight: 40
+  "工程上下文":
+    skills: [external-context]
+    weight: 45
+  "external":
+    skills: [external-context]
+    weight: 40
+  "hud":
+    skills: [hud]
+    weight: 40
+  "learner":
+    skills: [learner]
+    weight: 40
+  "提醒":
+    skills: [local-build-reminder]
+    weight: 45
+  "本地":
+    skills: [local-build-reminder]
+    weight: 45
+  "local":
+    skills: [local-build-reminder]
+    weight: 40
+  "mcp setup":
+    skills: [mcp-setup]
+    weight: 40
+  "manager":
+    skills: [project-session-manager]
+    weight: 40
+  "ralph":
+    skills: [ralph]
+    weight: 40
+  "release":
+    skills: [release]
+    weight: 40
+  "记住":
+    skills: [remember]
+    weight: 45
+  "记忆":
+    skills: [remember]
+    weight: 45
+  "remember":
+    skills: [remember]
+    weight: 40
+  "scicsp":
+    skills: [scicsp]
+    weight: 40
+  "改进":
+    skills: [self-improve]
+    weight: 45
+  "自我":
+    skills: [self-improve]
+    weight: 45
+  "improve":
+    skills: [self-improve]
+    weight: 40
+  "self":
+    skills: [self-improve]
+    weight: 40
+  "setup":
+    skills: [setup]
+    weight: 40
+  "skillify":
+    skills: [skillify]
+    weight: 40
+  "team":
+    skills: [team]
+    weight: 40
+  "trace":
+    skills: [trace]
+    weight: 40
+  "目标设定":
+    skills: [ultragoal]
+    weight: 45
+  "终极目标":
+    skills: [ultragoal]
+    weight: 45
+  "ultragoal":
+    skills: [ultragoal]
+    weight: 40
+  "ultraqa":
+    skills: [ultraqa]
+    weight: 40
+  "ultrawork":
+    skills: [ultrawork]
+    weight: 40
+  "裁决":
+    skills: [visual-verdict]
+    weight: 45
+  "verdict":
+    skills: [visual-verdict]
+    weight: 40
+  "visual":
+    skills: [visual-verdict]
+    weight: 40
+  "Wiki":
+    skills: [wiki]
+    weight: 45
+  "知识库":
+    skills: [wiki]
+    weight: 45

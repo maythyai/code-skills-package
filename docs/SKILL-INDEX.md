@@ -471,7 +471,7 @@
 | `csp-springboot-reviewer` | java-junit, java-springboot, kotlin-springboot, spring-boot-testing | Java/Kotlin Spring Boot 审查 agent | `junit-patterns.md`, `spring-testing.md`, `kotlin-spring.md` |
 | `csp-incident-response` | data-breach-blast-radius | 安全事件响应（泄露影响评估、合规、事后分析） | `data-breach-response.md` |
 
-#### 21.3 增强的现有 Skills/Agents（11 个）
+#### 21.3 Skills/Agents（11 个）
 
 | 名称 | 增强内容 | Reference 新增 |
 |------|---------|---------------|

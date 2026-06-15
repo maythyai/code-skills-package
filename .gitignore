@@ -42,8 +42,12 @@ npm-debug.log*
 # Session state
 .claude/sessions/
 .claude/settings.local.json
+.claude/
 
 # Temp
 tmp/
 .cache/
 *.tmp
+
+# Generated output from scripts/
+scripts/descriptions_output.json

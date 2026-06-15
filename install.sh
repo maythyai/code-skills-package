@@ -13,7 +13,7 @@ set -eo pipefail
 #   ./install.sh --list                 List detected platforms
 #   ./install.sh --help                 Show help
 
-readonly VERSION="0.4.0"
+readonly VERSION="0.5.0"
 readonly SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 readonly PROJECT_DIR="$(pwd)"
 
@@ -858,7 +858,7 @@ do_uninstall() {
 show_help() {
   cat <<'HELP'
 
-  CSP v0.4.0 — Code Skills Package 多平台安装器
+  CSP v0.5.0 — Code Skills Package 多平台安装器
 
   用法：
     ./install.sh                        自动检测并安装（项目级）
@@ -869,7 +869,7 @@ show_help() {
     ./install.sh --help                 显示帮助
     ./install.sh --version              显示版本
 
-  选择安装（新增 v0.4.0）：
+  选择安装：
     ./install.sh --stacks <list>        按技术栈过滤安装（如 python,typescript）
     ./install.sh --layers <list>        按层级选择性安装（如 router,meta）
     ./install.sh --minimal              仅安装 router + meta 层（最小可用集）

@@ -1,0 +1,4190 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CSP Code Skills Package — Dashboard v0.5.0</title>
+<style>
+:root {
+  --bg-primary: #0f0f14;
+  --bg-secondary: #1a1a24;
+  --bg-card: #1e1e2e;
+  --bg-card-hover: #262638;
+  --text-primary: #e4e4e7;
+  --text-secondary: #a1a1aa;
+  --text-muted: #71717a;
+  --border: #2a2a3a;
+  --layer-0: #ef4444;
+  --layer-1: #3b82f6;
+  --layer-2: #22c55e;
+  --layer-3: #a855f7;
+  --layer-4: #f97316;
+  --radius: 12px;
+  --shadow: 0 4px 24px rgba(0,0,0,0.3);
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+a { color: var(--layer-1); text-decoration: none; }
+
+/* Header */
+.header {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(15,15,20,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 16px 24px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.header-title { font-size: 20px; font-weight: 700; }
+.header-badge {
+  background: var(--layer-3);
+  color: white;
+  padding: 2px 10px;
+  border-radius: 99px;
+  font-size: 12px;
+  font-weight: 600;
+  margin-left: 10px;
+}
+.header-sub { color: var(--text-muted); font-size: 13px; }
+
+/* Container */
+.container { max-width: 1200px; margin: 0 auto; padding: 24px; }
+
+/* Hero - Layer Stack */
+.hero { margin: 32px 0 48px; }
+.hero h2 { font-size: 28px; margin-bottom: 20px; }
+.layer-stack {
+  display: flex; flex-direction: column; gap: 2px;
+  max-width: 600px; margin: 0 auto;
+}
+.layer-bar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 24px;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: transform 0.2s, filter 0.2s;
+  position: relative;
+}
+.layer-bar:hover { transform: scale(1.03); filter: brightness(1.1); }
+.layer-bar .label { font-weight: 600; font-size: 15px; }
+.layer-bar .desc { font-size: 12px; opacity: 0.8; }
+.layer-bar .count {
+  font-size: 24px; font-weight: 700;
+  background: rgba(255,255,255,0.15);
+  padding: 4px 14px; border-radius: 8px;
+}
+.layer-arrow {
+  text-align: center; font-size: 20px; color: var(--text-muted);
+  padding: 4px 0;
+}
+
+/* Stats Cards */
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px; margin: 32px 0 48px;
+}
+.stat-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s, border-color 0.2s;
+}
+.stat-card:hover { transform: translateY(-2px); border-color: var(--accent); }
+.stat-card .value {
+  font-size: 36px; font-weight: 800;
+  background: var(--accent);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.stat-card .label { font-size: 14px; color: var(--text-secondary); margin-top: 4px; }
+.stat-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--accent);
+}
+
+/* Charts Section */
+.charts-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px; margin: 32px 0 48px;
+}
+.chart-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+}
+.chart-card h3 {
+  font-size: 18px; margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+
+/* Donut Chart */
+.donut-container { display: flex; align-items: center; gap: 24px; }
+.donut-svg { width: 180px; height: 180px; flex-shrink: 0; }
+.legend { display: flex; flex-direction: column; gap: 8px; }
+.legend-item {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 13px; color: var(--text-secondary);
+}
+.legend-dot {
+  width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0;
+}
+
+/* Stacked Bar */
+.stacked-bar {
+  display: flex; height: 32px; border-radius: 8px; overflow: hidden;
+  margin: 12px 0;
+}
+.stacked-segment {
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 600; color: white;
+  min-width: 30px; transition: filter 0.2s;
+}
+.stacked-segment:hover { filter: brightness(1.2); }
+.bar-labels { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+.bar-label {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 12px; color: var(--text-secondary);
+}
+.bar-label .dot { width: 8px; height: 8px; border-radius: 50%; }
+.bar-label .dot { width: 8px; height: 8px; border-radius: 50%; }
+
+/* Explorer */
+.explorer { margin: 32px 0 48px; }
+.explorer h2 { font-size: 24px; margin-bottom: 16px; }
+.explorer-controls {
+  display: flex; gap: 12px; margin-bottom: 20px; flex-wrap: wrap;
+}
+.search-input {
+  flex: 1; min-width: 200px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 16px;
+  color: var(--text-primary);
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.search-input:focus { border-color: var(--layer-1); }
+.search-input::placeholder { color: var(--text-muted); }
+.filter-pills { display: flex; gap: 6px; flex-wrap: wrap; }
+.filter-pill {
+  padding: 6px 14px; border-radius: 99px;
+  font-size: 13px; font-weight: 500;
+  cursor: pointer; border: 1px solid var(--border);
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  transition: all 0.2s;
+}
+.filter-pill:hover { border-color: currentColor; }
+.filter-pill.active { color: white; border-color: transparent; }
+.result-count { font-size: 13px; color: var(--text-muted); margin-bottom: 12px; }
+
+/* Skill Groups */
+.skill-group {
+  margin-bottom: 24px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.skill-group-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 20px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.skill-group-header:hover { background: var(--bg-card-hover); }
+.skill-group-title {
+  display: flex; align-items: center; gap: 10px;
+  font-weight: 600; font-size: 15px;
+}
+.group-dot { width: 12px; height: 12px; border-radius: 50%; }
+.group-count {
+  background: rgba(255,255,255,0.1);
+  padding: 2px 10px; border-radius: 99px;
+  font-size: 12px; color: var(--text-secondary);
+}
+.skill-group-body { display: none; }
+.skill-group-body.open { display: block; }
+
+/* Skill Card */
+.skill-card {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 12px 20px;
+  border-top: 1px solid var(--border);
+  transition: background 0.15s;
+}
+.skill-card:hover { background: var(--bg-card-hover); }
+.skill-name { font-weight: 600; font-size: 14px; white-space: nowrap; }
+.skill-desc { font-size: 12px; color: var(--text-secondary); line-height: 1.4; }
+.skill-badges { display: flex; gap: 6px; flex-shrink: 0; margin-left: auto; }
+.skill-triggers { display: flex; gap: 3px; flex-wrap: wrap; margin-top: 4px; }
+.trigger-tag {
+  padding: 1px 5px; border-radius: 3px;
+  font-size: 9px; background: rgba(255,255,255,0.04);
+  color: var(--text-muted);
+}
+.badge {
+  padding: 2px 8px; border-radius: 4px;
+  font-size: 10px; font-weight: 600; text-transform: uppercase;
+  white-space: nowrap;
+}
+.badge-layer { background: rgba(255,255,255,0.1); color: var(--text-primary); }
+.badge-origin { background: rgba(255,255,255,0.06); color: var(--text-secondary); }
+
+/* Architecture Diagram */
+.arch-section { margin: 48px 0; }
+.arch-section h2 { font-size: 24px; margin-bottom: 20px; }
+.arch-svg { width: 100%; height: auto; }
+
+/* Footer */
+.footer {
+  text-align: center; padding: 32px;
+  color: var(--text-muted); font-size: 13px;
+  border-top: 1px solid var(--border);
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-in {
+  animation: fadeInUp 0.5s ease-out forwards;
+  opacity: 0;
+}
+.delay-1 { animation-delay: 0.1s; }
+.delay-2 { animation-delay: 0.2s; }
+.delay-3 { animation-delay: 0.3s; }
+.delay-4 { animation-delay: 0.4s; }
+.delay-5 { animation-delay: 0.5s; }
+
+/* Responsive */
+@media (max-width: 768px) {
+  .charts-row { grid-template-columns: 1fr; }
+  .donut-container { flex-direction: column; align-items: center; }
+  .stats-row { grid-template-columns: repeat(2, 1fr); }
+  .skill-card { flex-direction: column; }
+  .skill-badges { margin-left: 0; margin-top: 6px; }
+}
+@media (max-width: 480px) {
+  .stats-row { grid-template-columns: 1fr; }
+  .container { padding: 16px; }
+}
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="header">
+  <div>
+    <span class="header-title">CSP Code Skills Package</span>
+    <span class="header-badge">v0.5.0</span>
+  </div>
+  <span class="header-sub" id="header-stats"></span>
+</header>
+
+<div class="container">
+
+  <!-- Hero: Layer Stack -->
+  <section class="hero animate-in">
+    <h2>📐 五层架构</h2>
+    <div class="layer-stack" id="layer-stack"></div>
+  </section>
+
+  <!-- Stats Cards -->
+  <section class="stats-row" id="stats-row"></section>
+
+  <!-- Charts -->
+  <section class="charts-row">
+    <div class="chart-card animate-in">
+      <h3>📊 技能来源分布</h3>
+      <div class="donut-container">
+        <svg class="donut-svg" id="donut-chart"></svg>
+        <div class="legend" id="donut-legend"></div>
+      </div>
+    </div>
+    <div class="chart-card animate-in">
+      <h3>📈 类别占比</h3>
+      <div id="category-bar"></div>
+      <div class="bar-labels" id="category-labels"></div>
+    </div>
+  </section>
+
+  <!-- Skill Explorer -->
+  <section class="explorer animate-in">
+    <h2>🔍 技能浏览器</h2>
+    <div class="explorer-controls">
+      <input type="text" class="search-input" id="search-input" placeholder="搜索技能名称或描述...">
+      <div class="filter-pills" id="filter-pills"></div>
+    </div>
+    <div class="result-count" id="result-count"></div>
+    <div id="skill-list"></div>
+  </section>
+
+  <!-- Architecture Diagram -->
+  <section class="arch-section animate-in">
+    <h2>🏗️ 数据流架构</h2>
+    <svg class="arch-svg" viewBox="0 0 1000 340" id="arch-diagram"></svg>
+  </section>
+
+</div>
+
+<footer class="footer">
+  CSP Code Skills Package v0.5.0 — Dashboard generated from live SKILL.md data
+  <br>MIT License · <a href="https://github.com/code-skills-package" target="_blank">GitHub</a>
+</footer>
+
+<script>
+// ═══════════════════════════════════════════════════
+// EMBEDDED DATA — Generated from SKILL.md files
+// ═══════════════════════════════════════════════════
+const CSP_DATA = {
+  "stats": {
+    "total": 173,
+    "by_layer": {
+      "Router": {
+        "count": 1,
+        "layer": "L0",
+        "color": "#ef4444"
+      },
+      "Meta": {
+        "count": 21,
+        "layer": "L1",
+        "color": "#3b82f6"
+      },
+      "Workflow": {
+        "count": 9,
+        "layer": "L2",
+        "color": "#22c55e"
+      },
+      "Patterns": {
+        "count": 105,
+        "layer": "L3",
+        "color": "#a855f7"
+      },
+      "Runtime": {
+        "count": 37,
+        "layer": "L4",
+        "color": "#f97316"
+      }
+    },
+    "by_origin": {
+      "csp-native": 154,
+      "merged": 8,
+      "agent-skills": 10,
+      "community": 1
+    },
+    "by_category": {
+      "router": 1,
+      "meta": 22,
+      "workflow": 19,
+      "agent": 16,
+      "patterns": 99,
+      "runtime": 16
+    },
+    "agents": 16
+  },
+  "skills": [
+    {
+      "name": "csp-router",
+      "description": "CSP 任务路由器 — 自动识别任务类型并加载合适的 skill 组合",
+      "origin": "csp-native",
+      "category": "router",
+      "layer": "L0",
+      "layer_name": "Router",
+      "layer_color": "#ef4444",
+      "triggers": {
+        "en": [
+          "csp-router",
+          "router"
+        ],
+        "zh": []
+      }
+    },
+    {
+      "name": "csp-agent-teams",
+      "description": "Orchestrate multiple AI agents for parallel or sequential task execution. Includes subagent-driven development (per-task dispatch with two-stage revie",
+      "origin": "merged",
+      "category": "meta",
+      "layer": "L1",
+      "layer_name": "Meta",
+      "layer_color": "#3b82f6",
+      "triggers": {
+        "en": [
+          "agent",
+          "agent teams",
+          "csp-agent-teams",
+          "teams"
+        ],
+        "zh": [
+          "Agent",
+          "Agent团队",
+          "代理",
+          "多代理"
+        ]
+      }
+    },
+    {
+      "name": "csp-brainstorming",
+      "description": "Collaborative design partner that turns raw ideas into fully formed specs. Combines structured divergent-convergent ideation with interactive design d",
+      "origin": "merged",
+      "category": "meta",
+      "layer": "L1",
+      "layer_name": "Meta",
+      "layer_color": "#3b82f6",
+      "triggers": {
+        "en": [
+          "brainstorming",
+          "csp-brainstorming"
+        ],
+        "zh": [
+          "头脑风暴",
+          "脑暴"
+        ]
+      }
+    },
+    {
+      "name": "csp-context-engineering",
+      "description": "Optimizes agent context setup. Use when starting a new session, when agent outpu",
+      "origin": "agent-skills",
+      "category": "meta",
+      "layer": "L1",
+      "layer_name": "Meta",
+      "layer_color": "#3b82f6",
+      "triggers": {
+        "en": [
+          "context",
+          "context engineering",
+          "csp-context-engineering",
+          "engineering"
+        ],
+        "zh": [
+          "上下文",
+          "工程",
+          "工程上下文",
+          "工程化"
+        ]
+      }
+    },
+    {
+      "name": "csp-doc-review",
+      "description": "Review requirements or plan documents using parallel persona agents that surface",
+      "origin": "csp-native",
+      "category": "meta",
+      "layer": "L1",
+      "layer_name": "Meta",
+      "layer_color": "#3b82f6",
+      "triggers": {
+        "en": [
+          "csp-doc-review",
+          "doc",
+          "doc review",
+          "review"
+        ],
+        "zh": [
+          "CR",
+          "审查"
+        ]
+      }
+    },
+    {
+      "name": "csp-doubt-driven-development",
+      "description": "Subjects every non-trivial decision to a fresh-context adversarial review before",
+      "origin": "agent-skills",
+      "category": "meta",
+      "layer": "L1",
+      "layer_name": "Meta",
+      "layer_color": "#3b82f6",
+      "triggers": {
+        "en": [
+          "csp-doubt-driven-development",
+          "development",
+          "doubt",
+          "doubt driven development"
+        ],
+        "zh": [
+          "质疑",
+          "逆向审查"
+        ]
+      }
+    },
+    {
+      "name": "csp-interview-me",
+      "description": "Extracts what the user actually wants instead of what they think they should wan",
+      "origin": "agent-skills",
+      "category": "meta",
+      "layer": "L1",
+      "layer_name": "Meta",
+      "layer_color": "#3b82f6",
+      "triggers": {
+        "en": [
+          "csp-interview-me",
+          "interview",
+          "interview me"
+        ],
+        "zh": [
+          "访谈",
+          "需求访谈"
+        ]
+      }
+    },
+    {
+      "name": "csp-source-driven-development",
+      "description": "Grounds every implementation decision in official documentation. Use when you wa",
+      "origin": "agent-skills",
+      "category": "meta",
+      "layer": "L1",
+      "layer_name": "Meta",
+      "layer_color": "#3b82f6",
+      "triggers": {
+        "en": [
+          "csp-source-driven-development",
+          "development",
+          "driven",
+          "source"
+        ],
+        "zh": []
+      }
+    },
+    {
+      "name": "csp-spec-contract",
+      "description": "Transform ideas, requirements, or discussions into CSP SPEC contracts with trace",
+      "origin": "csp-native",
+      "category": "meta",
+      "layer": "L1",
+      "layer_name": "Meta",
+      "layer_color": "#3b82f6",
+      "triggers": {
+        "en": [
+          "contract",
+          "csp-spec-contract",
+          "spec",
+          "spec contract"
+        ],
+        "zh": [
+          "SPEC",
+          "契约",
+          "规范"
+        ]
+      }
+    },
+    {
+      "name": "csp-spec-driven-development",
+      "description": "CSP-native spec-driven methodology integrated with CSP phase workflows. Use when",
+      "origin": "csp-native",
+      "category": "meta",
+      "layer": "L1",
+      "layer_name": "Meta",
+      "layer_color": "#3b82f6",
+      "triggers": {
+        "en": [
+          "csp-spec-driven-development",
+          "development",
+          "driven",
+          "spec"
+        ],
+        "zh": [
+          "契约",
+          "规范"
+        ]
+      }
+    },
+    {
+      "name": "csp-tdd",
+      "description": "Test-Driven Development: write failing test first, minimal code to pass, then refactor. Enforces Red-Green-Refactor cycle with 80%+ coverage across un",
+      "origin": "merged",
+      "category": "meta",
+      "layer": "L1",
+      "layer_name": "Meta",
+      "layer_color": "#3b82f6",
+      "triggers": {
+        "en": [
+          "csp-tdd",
+          "tdd"
+        ],
+        "zh": [
+          "TDD",
+          "测试驱动开发"
+        ]
+      }
+    },
+    {
+      "name": "csp-using-skills",
+      "description": "Use when starting any conversation - establishes how to find and use skills, req",
+      "origin": "csp-native",
+      "category": "meta",
+      "layer": "L1",
+      "layer_name": "Meta",
+      "layer_color": "#3b82f6",
+      "triggers": {
+        "en": [
+          "csp-using-skills",
+          "skills",
+          "using",
+          "using skills"
+        ],
+        "zh": [
+          "使用",
+          "使用方法",
+          "技能",
+          "技能管理"
+        ]
+      }
+    },
+    {
+      "name": "csp-verification",
+      "description": "Verify changes really work before claiming completion. Evidence before assertions, always. Includes 6-phase verification (build, types, lint, tests, s",
+      "origin": "merged",
+      "category": "meta",
+      "layer": "L1",
+      "layer_name": "Meta",
+      "layer_color": "#3b82f6",
+      "triggers": {
+        "en": [
+          "csp-verification",
+          "verification"
+        ],
+        "zh": [
+          "质量验证",
+          "验证"
+        ]
+      }
+    },
+    {
+      "name": "executing-plans",
+      "description": "Use when you have a written implementation plan to execute in a separate session",
+      "origin": "csp-native",
+      "category": "meta",
+      "layer": "L1",
+      "layer_name": "Meta",
+      "layer_color": "#3b82f6",
+      "triggers": {
+        "en": [
+          "executing",
+          "executing plans",
+          "plans"
+        ],
+        "zh": [
+          "规划",
+          "计划"
+        ]
+      }
+    },
+    {
+      "name": "finishing-a-development-branch",
+      "description": "Use when implementation is complete, all tests pass, and you need to decide how",
+      "origin": "csp-native",
+      "category": "meta",
+      "layer": "L1",
+      "layer_name": "Meta",
+      "layer_color": "#3b82f6",
+      "triggers": {
+        "en": [
+          "branch",
+          "development",
+          "finishing",
+          "finishing a development branch"
+        ],
+        "zh": [
+          "分支清理",
+          "完成"
+        ]
+      }
+    },
+    {
+      "name": "receiving-code-review",
+      "description": "Use when receiving code review feedback, before implementing suggestions, especi",
+      "origin": "csp-native",
+      "category": "meta",
+      "layer": "L1",
+      "layer_name": "Meta",
+      "layer_color": "#3b82f6",
+      "triggers": {
+        "en": [
+          "code",
+          "receiving",
+          "receiving code review",
+          "review"
+        ],
+        "zh": [
+          "CR",
+          "审查",
+          "审查反馈",
+          "接收"
+        ]
+      }
+    },
+    {
+      "name": "requesting-code-review",
+      "description": "Use when completing tasks, implementing major features, or before merging to ver",
+      "origin": "csp-native",
+      "category": "meta",
+      "layer": "L1",
+      "layer_name": "Meta",
+      "layer_color": "#3b82f6",
+      "triggers": {
+        "en": [
+          "code",
+          "requesting",
+          "requesting code review",
+          "review"
+        ],
+        "zh": [
+          "CR",
+          "审查",
+          "请求",
+          "请求审查"
+        ]
+      }
+    },
+    {
+      "name": "skill-optimizer",
+      "description": "Use when collecting user feedback on skill behavior, identifying skill coverage",
+      "origin": "csp-native",
+      "category": "meta",
+      "layer": "L1",
+      "layer_name": "Meta",
+      "layer_color": "#3b82f6",
+      "triggers": {
+        "en": [
+          "optimizer",
+          "skill",
+          "skill optimizer"
+        ],
+        "zh": [
+          "优化",
+          "性能优化",
+          "技能",
+          "技能管理"
+        ]
+      }
+    },
+    {
+      "name": "systematic-debugging",
+      "description": "Use when encountering any bug, test failure, or unexpected behavior, before prop",
+      "origin": "csp-native",
+      "category": "meta",
+      "layer": "L1",
+      "layer_name": "Meta",
+      "layer_color": "#3b82f6",
+      "triggers": {
+        "en": [
+          "debugging",
+          "systematic",
+          "systematic debugging"
+        ],
+        "zh": [
+          "排错",
+          "调试"
+        ]
+      }
+    },
+    {
+      "name": "using-git-worktrees",
+      "description": "Use when starting feature work that needs isolation from current workspace or be",
+      "origin": "csp-native",
+      "category": "meta",
+      "layer": "L1",
+      "layer_name": "Meta",
+      "layer_color": "#3b82f6",
+      "triggers": {
+        "en": [
+          "git",
+          "using",
+          "using git worktrees",
+          "worktrees"
+        ],
+        "zh": [
+          "Git",
+          "使用",
+          "使用方法",
+          "版本控制"
+        ]
+      }
+    },
+    {
+      "name": "writing-plans",
+      "description": "Use when you have a spec or requirements for a multi-step task, before touching",
+      "origin": "csp-native",
+      "category": "meta",
+      "layer": "L1",
+      "layer_name": "Meta",
+      "layer_color": "#3b82f6",
+      "triggers": {
+        "en": [
+          "plans",
+          "writing",
+          "writing plans"
+        ],
+        "zh": [
+          "写作",
+          "编写",
+          "规划",
+          "计划"
+        ]
+      }
+    },
+    {
+      "name": "writing-skills",
+      "description": "Use when creating new skills, editing existing skills, or verifying skills work",
+      "origin": "csp-native",
+      "category": "meta",
+      "layer": "L1",
+      "layer_name": "Meta",
+      "layer_color": "#3b82f6",
+      "triggers": {
+        "en": [
+          "skills",
+          "writing",
+          "writing skills"
+        ],
+        "zh": [
+          "写作",
+          "技能",
+          "技能管理",
+          "编写"
+        ]
+      }
+    },
+    {
+      "name": "csp-compound",
+      "description": "Document a recently solved problem to compound your team's knowledge. Captures s",
+      "origin": "csp-native",
+      "category": "workflow",
+      "layer": "L2",
+      "layer_name": "Workflow",
+      "layer_color": "#22c55e",
+      "triggers": {
+        "en": [
+          "compound",
+          "csp-compound"
+        ],
+        "zh": [
+          "工作流"
+        ]
+      }
+    },
+    {
+      "name": "csp-compound-refresh",
+      "description": "Refresh stale learning and pattern docs under docs/solutions/ by reviewing them",
+      "origin": "csp-native",
+      "category": "workflow",
+      "layer": "L2",
+      "layer_name": "Workflow",
+      "layer_color": "#22c55e",
+      "triggers": {
+        "en": [
+          "compound",
+          "compound refresh",
+          "csp-compound-refresh",
+          "refresh"
+        ],
+        "zh": [
+          "上下文刷新",
+          "刷新",
+          "工作流"
+        ]
+      }
+    },
+    {
+      "name": "csp-deprecation-and-migration",
+      "description": "Manages deprecation and migration. Use when removing old systems, APIs, or featu",
+      "origin": "agent-skills",
+      "category": "workflow",
+      "layer": "L2",
+      "layer_name": "Workflow",
+      "layer_color": "#22c55e",
+      "triggers": {
+        "en": [
+          "and",
+          "csp-deprecation-and-migration",
+          "deprecation",
+          "deprecation and migration"
+        ],
+        "zh": [
+          "工作流",
+          "废弃",
+          "弃用"
+        ]
+      }
+    },
+    {
+      "name": "csp-full",
+      "description": "|",
+      "origin": "csp-native",
+      "category": "workflow",
+      "layer": "L2",
+      "layer_name": "Workflow",
+      "layer_color": "#22c55e",
+      "triggers": {
+        "en": [
+          "csp-full",
+          "full"
+        ],
+        "zh": [
+          "全流程",
+          "完整开发",
+          "工作流"
+        ]
+      }
+    },
+    {
+      "name": "csp-legacy-modernization",
+      "description": "End-to-end legacy modernization workflow covering assessment (codebase audit, dependency analysis, architecture review), planning (migration strategy,",
+      "origin": "csp-native",
+      "category": "workflow",
+      "layer": "L2",
+      "layer_name": "Workflow",
+      "layer_color": "#22c55e",
+      "triggers": {
+        "en": [
+          "csp-legacy-modernization",
+          "legacy",
+          "legacy modernization",
+          "modernization"
+        ],
+        "zh": [
+          "工作流",
+          "现代化",
+          "系统升级",
+          "遗留系统"
+        ]
+      }
+    },
+    {
+      "name": "csp-multi-review",
+      "description": "Structured code review using tiered persona agents, confidence-gated findings, a",
+      "origin": "csp-native",
+      "category": "workflow",
+      "layer": "L2",
+      "layer_name": "Workflow",
+      "layer_color": "#22c55e",
+      "triggers": {
+        "en": [
+          "csp-multi-review",
+          "multi",
+          "multi review",
+          "review"
+        ],
+        "zh": [
+          "CR",
+          "多人",
+          "多角色",
+          "审查"
+        ]
+      }
+    },
+    {
+      "name": "csp-product-pulse",
+      "description": "Generate a time-windowed pulse report on what users experienced and how the prod",
+      "origin": "csp-native",
+      "category": "workflow",
+      "layer": "L2",
+      "layer_name": "Workflow",
+      "layer_color": "#22c55e",
+      "triggers": {
+        "en": [
+          "csp-product-pulse",
+          "product",
+          "product pulse",
+          "pulse"
+        ],
+        "zh": [
+          "产品健康度",
+          "工作流",
+          "脉搏"
+        ]
+      }
+    },
+    {
+      "name": "csp-shipping-and-launch",
+      "description": "Prepares production launches. Use when preparing to deploy to production. Use wh",
+      "origin": "agent-skills",
+      "category": "workflow",
+      "layer": "L2",
+      "layer_name": "Workflow",
+      "layer_color": "#22c55e",
+      "triggers": {
+        "en": [
+          "and",
+          "csp-shipping-and-launch",
+          "launch",
+          "shipping"
+        ],
+        "zh": [
+          "上线",
+          "发布",
+          "启动",
+          "工作流"
+        ]
+      }
+    },
+    {
+      "name": "csp-strategy",
+      "description": "Create or maintain STRATEGY.md - the product's target problem, approach, users,",
+      "origin": "csp-native",
+      "category": "workflow",
+      "layer": "L2",
+      "layer_name": "Workflow",
+      "layer_color": "#22c55e",
+      "triggers": {
+        "en": [
+          "csp-strategy",
+          "strategy"
+        ],
+        "zh": [
+          "工作流",
+          "战略",
+          "策略"
+        ]
+      }
+    },
+    {
+      "name": "agent-introspection-debugging",
+      "description": "Structured self-debugging workflow for AI agent failures using capture, diagnosi",
+      "origin": "csp-native",
+      "category": "agent",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "agent",
+          "agent introspection debugging",
+          "debugging",
+          "introspection"
+        ],
+        "zh": [
+          "Agent",
+          "agent",
+          "代理",
+          "契约"
+        ]
+      }
+    },
+    {
+      "name": "agent-sort",
+      "description": "Build an evidence-backed CSP install plan for a specific repo by sorting skills,",
+      "origin": "csp-native",
+      "category": "agent",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "agent",
+          "agent sort",
+          "sort"
+        ],
+        "zh": [
+          "Agent",
+          "agent",
+          "代理",
+          "代理排序"
+        ]
+      }
+    },
+    {
+      "name": "agentic-engineering",
+      "description": "Operate as an agentic engineer using eval-first execution, decomposition, and cost-aware model routing. Use when AI agents perform most implementation",
+      "origin": "csp-native",
+      "category": "agent",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "agentic",
+          "agentic engineering",
+          "engineering"
+        ],
+        "zh": [
+          "Agent",
+          "agent",
+          "代理",
+          "工程"
+        ]
+      }
+    },
+    {
+      "name": "article-writing",
+      "description": "Write articles, guides, blog posts, tutorials, newsletter issues, and other long",
+      "origin": "csp-native",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "article",
+          "article writing",
+          "writing"
+        ],
+        "zh": [
+          "写作",
+          "文章",
+          "文章写作",
+          "编写"
+        ]
+      }
+    },
+    {
+      "name": "autonomous-loops",
+      "description": "Patterns and architectures for autonomous Claude Code loops — from simple sequen",
+      "origin": "csp-native",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "autonomous",
+          "autonomous loops",
+          "loops"
+        ],
+        "zh": []
+      }
+    },
+    {
+      "name": "backend-patterns",
+      "description": "Backend architecture patterns, API design, database optimization, and server-side best practices for Node.js, Express, and Next.js API routes. metad",
+      "origin": "csp-native",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "backend",
+          "backend patterns",
+          "patterns"
+        ],
+        "zh": [
+          "后端",
+          "后端开发",
+          "最佳实践",
+          "模式"
+        ]
+      }
+    },
+    {
+      "name": "brand-voice",
+      "description": "Build a source-derived writing style profile from real posts, essays, launch not",
+      "origin": "csp-native",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "brand",
+          "brand voice",
+          "voice"
+        ],
+        "zh": [
+          "品牌声音",
+          "品牌语调"
+        ]
+      }
+    },
+    {
+      "name": "bun-runtime",
+      "description": "Bun as runtime, package manager, bundler, and test runner. When to choose Bun vs",
+      "origin": "csp-native",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "bun",
+          "bun runtime",
+          "runtime"
+        ],
+        "zh": []
+      }
+    },
+    {
+      "name": "coding-standards",
+      "description": "Universal coding standards, best practices, and patterns for TypeScript, JavaScript, React, and Node.js development. metadata:",
+      "origin": "csp-native",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "coding",
+          "coding standards",
+          "standards"
+        ],
+        "zh": [
+          "标准",
+          "项目标准"
+        ]
+      }
+    },
+    {
+      "name": "content-engine",
+      "description": "Create platform-native content systems for X, LinkedIn, TikTok, YouTube, newslet",
+      "origin": "csp-native",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "content",
+          "content engine",
+          "engine"
+        ],
+        "zh": [
+          "内容引擎",
+          "内容生成"
+        ]
+      }
+    },
+    {
+      "name": "content-hash-cache-pattern",
+      "description": "Cache expensive file processing results using SHA-256 content hashes — path-inde",
+      "origin": "csp-native",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "cache",
+          "content",
+          "content hash cache pattern",
+          "hash"
+        ],
+        "zh": [
+          "内容哈希",
+          "最佳实践",
+          "模式",
+          "缓存"
+        ]
+      }
+    },
+    {
+      "name": "cpp-coding-standards",
+      "description": "C++ coding standards based on the C++ Core Guidelines (isocpp.github.io). Use wh",
+      "origin": "csp-native",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "coding",
+          "cpp",
+          "cpp coding standards",
+          "standards"
+        ],
+        "zh": [
+          "标准",
+          "项目标准"
+        ]
+      }
+    },
+    {
+      "name": "cpp-testing",
+      "description": "Use only when writing/updating/fixing C++ tests, configuring GoogleTest/CTest, d",
+      "origin": "csp-native",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "cpp",
+          "cpp testing",
+          "testing"
+        ],
+        "zh": [
+          "单元测试",
+          "测试",
+          "自动化测试"
+        ]
+      }
+    },
+    {
+      "name": "crosspost",
+      "description": "Multi-platform content distribution across X, LinkedIn, Threads, and Bluesky. Ad",
+      "origin": "csp-native",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "crosspost"
+        ],
+        "zh": [
+          "跨平台",
+          "跨端"
+        ]
+      }
+    },
+    {
+      "name": "csp-agentic-identity-trust",
+      "description": "Identity systems architect for autonomous AI agents — designs cryptographic iden",
+      "origin": "csp-native",
+      "category": "agent",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "agentic",
+          "agentic identity trust",
+          "csp-agentic-identity-trust",
+          "identity"
+        ],
+        "zh": [
+          "Agent",
+          "agent",
+          "代理"
+        ]
+      }
+    },
+    {
+      "name": "csp-api-codegen",
+      "description": "API code generation agent. Generates application code from OpenAPI/Swagger specs and TypeSpec definitions. Covers client SDKs, server stubs, validatio",
+      "origin": "csp-native",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "api",
+          "api codegen",
+          "codegen",
+          "csp-api-codegen"
+        ],
+        "zh": [
+          "API生成",
+          "代码生成"
+        ]
+      }
+    },
+    {
+      "name": "csp-api-tester",
+      "description": "Comprehensive API testing specialist — functional validation, performance testin",
+      "origin": "csp-native",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "api",
+          "api tester",
+          "csp-api-tester",
+          "tester"
+        ],
+        "zh": [
+          "单元测试",
+          "测试"
+        ]
+      }
+    },
+    {
+      "name": "csp-browser-testing-with-devtools",
+      "description": "Tests in real browsers via Chrome DevTools MCP. Use when building or debugging a",
+      "origin": "agent-skills",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "browser",
+          "browser testing with devtools",
+          "csp-browser-testing-with-devtools",
+          "devtools"
+        ],
+        "zh": [
+          "单元测试",
+          "测试",
+          "自动化测试"
+        ]
+      }
+    },
+    {
+      "name": "csp-cicd-pipelines",
+      "description": "CI/CD pipeline patterns for GitHub Actions, GitLab CI, and CircleCI including matrix builds, reusable workflows, caching strategies, monorepo triggers",
+      "origin": "csp-native",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "cicd",
+          "cicd pipelines",
+          "csp-cicd-pipelines",
+          "pipelines"
+        ],
+        "zh": [
+          "CI/CD",
+          "持续集成"
+        ]
+      }
+    },
+    {
+      "name": "csp-cloud-platform-patterns",
+      "description": "Cloud platform patterns for AWS, GCP, and Azure including serverless, containers, managed databases, event-driven architectures, CDN, DNS, multi-regio",
+      "origin": "csp-native",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "cloud",
+          "cloud platform patterns",
+          "csp-cloud-platform-patterns",
+          "patterns"
+        ],
+        "zh": [
+          "云",
+          "云平台",
+          "最佳实践",
+          "模式"
+        ]
+      }
+    },
+    {
+      "name": "csp-code-simplification",
+      "description": "Simplify code for clarity, remove dead code, and clean AI-generated slop. Combines five simplification principles, dead-code detection tools (knip, de",
+      "origin": "merged",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "code",
+          "code simplification",
+          "csp-code-simplification",
+          "simplification"
+        ],
+        "zh": [
+          "代码清理",
+          "简化"
+        ]
+      }
+    },
+    {
+      "name": "csp-code-tour-guide",
+      "description": "Code tour and mentoring agent. Creates VS Code CodeTour .tour files for onboarding, PR reviews, and architecture walkthroughs. Supports 20 developer p",
+      "origin": "csp-native",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "code",
+          "code tour guide",
+          "csp-code-tour-guide",
+          "guide"
+        ],
+        "zh": [
+          "导览",
+          "项目导览"
+        ]
+      }
+    },
+    {
+      "name": "csp-codeql-analyst",
+      "description": "CodeQL static analysis and secret scanning agent. Writes custom CodeQL queries, interprets SARIF results, detects leaked secrets (API keys, tokens, cr",
+      "origin": "csp-native",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "analyst",
+          "codeql",
+          "codeql analyst",
+          "csp-codeql-analyst"
+        ],
+        "zh": [
+          "CodeQL",
+          "静态分析"
+        ]
+      }
+    },
+    {
+      "name": "csp-cross-platform-strategy",
+      "description": "Cross-platform development strategy covering platform selection (React Native vs Flutter vs Native vs KMP vs MAUI), code sharing strategies, platform ",
+      "origin": "csp-native",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "cross",
+          "cross platform strategy",
+          "csp-cross-platform-strategy",
+          "platform"
+        ],
+        "zh": [
+          "战略",
+          "策略",
+          "跨平台",
+          "跨端"
+        ]
+      }
+    },
+    {
+      "name": "csp-csharp-reviewer",
+      "description": "Expert C# and .NET code reviewer specializing in async/await patterns, Entity Framework Core, testing frameworks (MSTest, NUnit, xUnit), and .NET best",
+      "origin": "csp-native",
+      "category": "agent",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "csharp",
+          "csharp reviewer",
+          "csp-csharp-reviewer",
+          "reviewer"
+        ],
+        "zh": [
+          "C#",
+          "CR",
+          "CSharp",
+          "agent"
+        ]
+      }
+    },
+    {
+      "name": "csp-data-engineer",
+      "description": "Data pipeline architect specializing in reliable ETL/ELT, lakehouse architecture",
+      "origin": "csp-native",
+      "category": "agent",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "csp-data-engineer",
+          "data",
+          "data engineer",
+          "engineer"
+        ],
+        "zh": [
+          "agent",
+          "代理"
+        ]
+      }
+    },
+    {
+      "name": "csp-data-pipeline-patterns",
+      "description": "Production data pipeline patterns covering Airflow DAG design, dbt transformatio",
+      "origin": "csp-native",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "csp-data-pipeline-patterns",
+          "data",
+          "data pipeline patterns",
+          "patterns"
+        ],
+        "zh": [
+          "最佳实践",
+          "模式"
+        ]
+      }
+    },
+    {
+      "name": "csp-deployment",
+      "description": "Deployment workflows, CI/CD quality gates, Docker containerization, health checks, rollback strategies, feature flags, and production readiness checkl",
+      "origin": "merged",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "csp-deployment",
+          "deployment"
+        ],
+        "zh": [
+          "上线",
+          "发布",
+          "部署"
+        ]
+      }
+    },
+    {
+      "name": "csp-docs-lookup",
+      "description": "Fetch up-to-date library and framework docs via Context7 MCP instead of training data. Use for setup questions, API references, code examples, or when",
+      "origin": "merged",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "csp-docs-lookup",
+          "docs",
+          "docs lookup",
+          "lookup"
+        ],
+        "zh": [
+          "文档",
+          "文档查找",
+          "文档查询",
+          "查找"
+        ]
+      }
+    },
+    {
+      "name": "csp-document-generator",
+      "description": "Programmatic document creation specialist — generates professional PDF, PPTX, DO",
+      "origin": "csp-native",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "csp-document-generator",
+          "document",
+          "document generator",
+          "generator"
+        ],
+        "zh": []
+      }
+    },
+    {
+      "name": "csp-git-conventions",
+      "description": "Git workflow conventions agent. Enforces conventional commits, branch naming strategies, commit message quality, and PR hygiene. Use for commit messag",
+      "origin": "csp-native",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "conventions",
+          "csp-git-conventions",
+          "git",
+          "git conventions"
+        ],
+        "zh": [
+          "Git",
+          "版本控制",
+          "约定",
+          "规范"
+        ]
+      }
+    },
+    {
+      "name": "csp-incident-commander",
+      "description": "Production and security incident management specialist — severity classification",
+      "origin": "csp-native",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "commander",
+          "csp-incident-commander",
+          "incident",
+          "incident commander"
+        ],
+        "zh": []
+      }
+    },
+    {
+      "name": "csp-infrastructure-as-code",
+      "description": "Infrastructure as Code patterns for Terraform, Pulumi, and GitOps workflows including module design, state management, drift detection, secrets manage",
+      "origin": "csp-native",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "code",
+          "csp-infrastructure-as-code",
+          "infrastructure",
+          "infrastructure as code"
+        ],
+        "zh": [
+          "IaC",
+          "基础设施"
+        ]
+      }
+    },
+    {
+      "name": "csp-kubernetes-patterns",
+      "description": "Kubernetes patterns for workload design, autoscaling, security, Helm charts, Kustomize overlays, and multi-cluster strategies. Use when designing, dep",
+      "origin": "csp-native",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "csp-kubernetes-patterns",
+          "kubernetes",
+          "kubernetes patterns",
+          "patterns"
+        ],
+        "zh": [
+          "K8s",
+          "Kubernetes",
+          "最佳实践",
+          "模式"
+        ]
+      }
+    },
+    {
+      "name": "csp-llm-app-development",
+      "description": "Production LLM application development patterns covering prompt engineering, fun",
+      "origin": "csp-native",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "app",
+          "csp-llm-app-development",
+          "development",
+          "llm"
+        ],
+        "zh": []
+      }
+    },
+    {
+      "name": "csp-mcp-builder",
+      "description": "Model Context Protocol specialist who designs, builds, and tests MCP servers tha",
+      "origin": "csp-native",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "builder",
+          "csp-mcp-builder",
+          "mcp",
+          "mcp builder"
+        ],
+        "zh": [
+          "构建",
+          "编译"
+        ]
+      }
+    },
+    {
+      "name": "csp-minimal-change-engineer",
+      "description": "Surgical implementation specialist — fixes only what was asked, refuses scope cr",
+      "origin": "csp-native",
+      "category": "agent",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "change",
+          "csp-minimal-change-engineer",
+          "engineer",
+          "minimal"
+        ],
+        "zh": [
+          "agent",
+          "代理"
+        ]
+      }
+    },
+    {
+      "name": "csp-mobile-performance",
+      "description": "Mobile performance optimization covering startup optimization, memory management, list/scroll performance, bundle size, battery optimization, profilin",
+      "origin": "csp-native",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "csp-mobile-performance",
+          "mobile",
+          "mobile performance",
+          "performance"
+        ],
+        "zh": [
+          "移动开发",
+          "移动端"
+        ]
+      }
+    },
+    {
+      "name": "csp-model-qa",
+      "description": "Independent ML model QA auditor — end-to-end audits from documentation review, d",
+      "origin": "csp-native",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "csp-model-qa",
+          "model",
+          "model qa"
+        ],
+        "zh": []
+      }
+    },
+    {
+      "name": "csp-multi-agent-architect",
+      "description": "Systems architect for multi-agent AI pipelines — topology selection, context man",
+      "origin": "csp-native",
+      "category": "agent",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "agent",
+          "architect",
+          "csp-multi-agent-architect",
+          "multi"
+        ],
+        "zh": [
+          "Agent",
+          "agent",
+          "代理",
+          "多人"
+        ]
+      }
+    },
+    {
+      "name": "csp-observability-and-instrumentation",
+      "description": "Instruments code so production behavior is visible and diagnosable. Use when add",
+      "origin": "agent-skills",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "and",
+          "csp-observability-and-instrumentation",
+          "instrumentation",
+          "observability"
+        ],
+        "zh": []
+      }
+    },
+    {
+      "name": "csp-postgres-optimizer",
+      "description": "PostgreSQL-specific performance tuning agent. Covers EXPLAIN ANALYZE interpretation, index strategy (B-tree, GIN, GiST, BRIN), query plan optimization",
+      "origin": "csp-native",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "csp-postgres-optimizer",
+          "optimizer",
+          "postgres",
+          "postgres optimizer"
+        ],
+        "zh": [
+          "PostgreSQL",
+          "Postgres",
+          "优化",
+          "性能优化"
+        ]
+      }
+    },
+    {
+      "name": "csp-project-standards-reviewer",
+      "description": "Project standards and code quality reviewer. Extracts coding standards from existing code, identifies high-quality exemplars, and enforces consistency",
+      "origin": "csp-native",
+      "category": "agent",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "csp-project-standards-reviewer",
+          "project",
+          "project standards reviewer",
+          "reviewer"
+        ],
+        "zh": [
+          "CR",
+          "agent",
+          "代理",
+          "审查"
+        ]
+      }
+    },
+    {
+      "name": "csp-prompt-engineer",
+      "description": "Prompt design and LLM behavior specialist — crafts, tests, and systematically op",
+      "origin": "csp-native",
+      "category": "agent",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "csp-prompt-engineer",
+          "engineer",
+          "prompt",
+          "prompt engineer"
+        ],
+        "zh": [
+          "agent",
+          "代理"
+        ]
+      }
+    },
+    {
+      "name": "csp-prompt-engineering",
+      "description": "Production prompt engineering covering template management with Jinja2/Mustache,",
+      "origin": "csp-native",
+      "category": "agent",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "csp-prompt-engineering",
+          "engineering",
+          "prompt",
+          "prompt engineering"
+        ],
+        "zh": [
+          "agent",
+          "代理",
+          "工程",
+          "工程化"
+        ]
+      }
+    },
+    {
+      "name": "csp-rag-architecture",
+      "description": "Production RAG architecture patterns covering chunking strategies, embedding mod",
+      "origin": "csp-native",
+      "category": "agent",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "architecture",
+          "csp-rag-architecture",
+          "rag",
+          "rag architecture"
+        ],
+        "zh": [
+          "agent",
+          "代理",
+          "架构",
+          "架构师"
+        ]
+      }
+    },
+    {
+      "name": "csp-react-native-patterns",
+      "description": "React Native patterns covering navigation (React Navigation, Expo Router), state management (Zustand, Jotai, Redux Toolkit), native module bridging (T",
+      "origin": "csp-native",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "csp-react-native-patterns",
+          "native",
+          "patterns",
+          "react"
+        ],
+        "zh": [
+          "Native",
+          "React",
+          "React开发",
+          "原生"
+        ]
+      }
+    },
+    {
+      "name": "csp-react-version-patterns",
+      "description": "React version-specific patterns and migration guide. Covers React 18 batching, concurrent features, Suspense, and React 19 Server Components, Actions,",
+      "origin": "csp-native",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "csp-react-version-patterns",
+          "patterns",
+          "react",
+          "react version patterns"
+        ],
+        "zh": [
+          "React",
+          "React开发",
+          "React版本",
+          "最佳实践"
+        ]
+      }
+    },
+    {
+      "name": "csp-refactorer",
+      "description": "Surgical code refactoring agent. Plans multi-file refactors before touching code, reduces cognitive complexity via method extraction, eliminates code ",
+      "origin": "csp-native",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "csp-refactorer",
+          "refactorer"
+        ],
+        "zh": [
+          "代码重构",
+          "重构"
+        ]
+      }
+    },
+    {
+      "name": "csp-refactoring-strategies",
+      "description": "Large-scale refactoring strategies including Strangler Fig, Branch by Abstraction, Parallel Run, Feature Toggle migration, and classic refactoring pat",
+      "origin": "csp-native",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "csp-refactoring-strategies",
+          "refactoring",
+          "refactoring strategies",
+          "strategies"
+        ],
+        "zh": [
+          "代码重构",
+          "重构"
+        ]
+      }
+    },
+    {
+      "name": "csp-ruff-fixer",
+      "description": "Iterative Ruff linting fixer. Runs safe then unsafe autofixes in passes, reviews each diff, resolves remaining findings with targeted edits or user de",
+      "origin": "csp-native",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "csp-ruff-fixer",
+          "fixer",
+          "ruff",
+          "ruff fixer"
+        ],
+        "zh": [
+          "Python格式化",
+          "Ruff"
+        ]
+      }
+    },
+    {
+      "name": "csp-spec-adr",
+      "description": "Lightweight spec and ADR writer. Generates specifications, implementation plans, architectural decision records, and PRDs from natural language descri",
+      "origin": "csp-native",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "adr",
+          "csp-spec-adr",
+          "spec",
+          "spec adr"
+        ],
+        "zh": [
+          "ADR",
+          "契约",
+          "架构决策记录",
+          "规范"
+        ]
+      }
+    },
+    {
+      "name": "csp-springboot-reviewer",
+      "description": "Spring Boot code reviewer for Java and Kotlin. Covers JUnit 5 testing, Spring Boot Test, MockMvc, TestContainers, and Kotlin-specific Spring patterns.",
+      "origin": "csp-native",
+      "category": "agent",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "csp-springboot-reviewer",
+          "reviewer",
+          "springboot",
+          "springboot reviewer"
+        ],
+        "zh": [
+          "CR",
+          "Spring",
+          "Spring Boot",
+          "agent"
+        ]
+      }
+    },
+    {
+      "name": "csp-sql-reviewer",
+      "description": "SQL query and schema review agent. Covers query correctness, index strategy, JOIN optimization, NULL handling, transaction isolation, and security (SQL injection, privilege escalation). Use for any SQL code change, migration, or new query.",
+      "origin": "csp-native",
+      "category": "agent",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "csp-sql-reviewer",
+          "reviewer",
+          "sql",
+          "sql reviewer"
+        ],
+        "zh": [
+          "CR",
+          "SQL",
+          "agent",
+          "代理"
+        ]
+      }
+    },
+    {
+      "name": "csp-tech-debt-assessment",
+      "description": "Technical debt identification, measurement, and prioritization. Covers code smells, architecture smells, dependency health, complexity metrics, debt q",
+      "origin": "csp-native",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "assessment",
+          "csp-tech-debt-assessment",
+          "debt",
+          "tech"
+        ],
+        "zh": [
+          "债务评估",
+          "技术债"
+        ]
+      }
+    },
+    {
+      "name": "csp-test-engineer",
+      "description": "QA engineer specialized in test strategy, test writing, and coverage analysis. U",
+      "origin": "agent-skills",
+      "category": "agent",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "csp-test-engineer",
+          "engineer",
+          "test",
+          "test engineer"
+        ],
+        "zh": [
+          "agent",
+          "代理",
+          "单元测试",
+          "测试"
+        ]
+      }
+    },
+    {
+      "name": "csp-vllm-serving",
+      "description": "Production vLLM inference serving patterns covering Docker setup, continuous bat",
+      "origin": "csp-native",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "csp-vllm-serving",
+          "serving",
+          "vllm",
+          "vllm serving"
+        ],
+        "zh": []
+      }
+    },
+    {
+      "name": "csp-web-performance-auditor",
+      "description": "Web performance engineer focused on Core Web Vitals, loading, rendering, and net",
+      "origin": "agent-skills",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "auditor",
+          "csp-web-performance-auditor",
+          "performance",
+          "web"
+        ],
+        "zh": []
+      }
+    },
+    {
+      "name": "csp-workflow-architect",
+      "description": "Workflow design specialist who maps complete workflow trees — happy paths, all b",
+      "origin": "csp-native",
+      "category": "agent",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "architect",
+          "csp-workflow-architect",
+          "workflow",
+          "workflow architect"
+        ],
+        "zh": [
+          "agent",
+          "代理",
+          "工作流",
+          "架构"
+        ]
+      }
+    },
+    {
+      "name": "database-migrations",
+      "description": "Database migration best practices for schema changes, data migrations, rollbacks, and zero-downtime deployments across PostgreSQL, MySQL, and common O",
+      "origin": "csp-native",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "database",
+          "database migrations",
+          "migrations"
+        ],
+        "zh": [
+          "数据库",
+          "数据库迁移",
+          "数据迁移",
+          "迁移"
+        ]
+      }
+    },
+    {
+      "name": "deep-research",
+      "description": "Multi-source deep research using firecrawl and exa MCPs. Searches the web, synth",
+      "origin": "csp-native",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "deep",
+          "deep research",
+          "research"
+        ],
+        "zh": [
+          "优先搜索",
+          "搜索"
+        ]
+      }
+    },
+    {
+      "name": "django-patterns",
+      "description": "Django architecture patterns, REST API design with DRF, ORM best practices, cach",
+      "origin": "csp-native",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "django",
+          "django patterns",
+          "patterns"
+        ],
+        "zh": [
+          "最佳实践",
+          "模式"
+        ]
+      }
+    },
+    {
+      "name": "django-security",
+      "description": "Django security best practices, authentication, authorization, CSRF protection,",
+      "origin": "csp-native",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "django",
+          "django security",
+          "security"
+        ],
+        "zh": [
+          "安全",
+          "安全审查"
+        ]
+      }
+    },
+    {
+      "name": "dmux-workflows",
+      "description": "Multi-agent orchestration using dmux (tmux pane manager for AI agents). Patterns",
+      "origin": "csp-native",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "dmux",
+          "dmux workflows",
+          "workflows"
+        ],
+        "zh": [
+          "工作流",
+          "流程"
+        ]
+      }
+    },
+    {
+      "name": "docker-patterns",
+      "description": "Docker and Docker Compose patterns for local development, container security, networking, volume strategies, and multi-service orchestration. Use when",
+      "origin": "csp-native",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "docker",
+          "docker patterns",
+          "patterns"
+        ],
+        "zh": [
+          "Docker",
+          "容器化",
+          "最佳实践",
+          "模式"
+        ]
+      }
+    },
+    {
+      "name": "e2e-testing",
+      "description": "Playwright E2E testing patterns, Page Object Model, configuration, CI/CD integration, artifact management, and flaky test strategies. metadata:",
+      "origin": "csp-native",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "e2e",
+          "e2e testing",
+          "testing"
+        ],
+        "zh": [
+          "E2E",
+          "单元测试",
+          "测试",
+          "端到端测试"
+        ]
+      }
+    },
+    {
+      "name": "eval-harness",
+      "description": "Formal evaluation framework for Claude Code sessions implementing eval-driven de",
+      "origin": "csp-native",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "eval",
+          "eval harness",
+          "harness"
+        ],
+        "zh": []
+      }
+    },
+    {
+      "name": "everything-claude-code",
+      "description": "Development conventions and patterns for everything-claude-code. JavaScript proj",
+      "origin": "csp-native",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "claude",
+          "code",
+          "everything",
+          "everything claude code"
+        ],
+        "zh": []
+      }
+    },
+    {
+      "name": "exa-search",
+      "description": "Neural search via Exa MCP for web, code, and company research. Use when the user",
+      "origin": "csp-native",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "exa",
+          "exa search",
+          "search"
+        ],
+        "zh": [
+          "优先搜索",
+          "搜索"
+        ]
+      }
+    },
+    {
+      "name": "fal-ai-media",
+      "description": "Unified media generation via fal.ai MCP — image, video, and audio. Covers text-t",
+      "origin": "csp-native",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "fal",
+          "fal ai media",
+          "media"
+        ],
+        "zh": []
+      }
+    },
+    {
+      "name": "fastapi-patterns",
+      "description": "FastAPI patterns for async APIs, dependency injection, Pydantic request and resp",
+      "origin": "community",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "fastapi",
+          "fastapi patterns",
+          "patterns"
+        ],
+        "zh": [
+          "最佳实践",
+          "模式"
+        ]
+      }
+    },
+    {
+      "name": "frontend-patterns",
+      "description": "Frontend development patterns for state management, performance optimization, accessibility, and UI best practices across frameworks. metadata:",
+      "origin": "csp-native",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "frontend",
+          "frontend patterns",
+          "patterns"
+        ],
+        "zh": [
+          "前端",
+          "前端开发",
+          "最佳实践",
+          "模式"
+        ]
+      }
+    },
+    {
+      "name": "frontend-slides",
+      "description": "Create stunning, animation-rich HTML presentations from scratch or by converting",
+      "origin": "csp-native",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "frontend",
+          "frontend slides",
+          "slides"
+        ],
+        "zh": [
+          "前端",
+          "前端开发"
+        ]
+      }
+    },
+    {
+      "name": "golang-patterns",
+      "description": "Go-specific design patterns and best practices including functional options, small interfaces, dependency injection, concurrency patterns, error handl",
+      "origin": "csp-native",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "golang",
+          "golang patterns",
+          "patterns"
+        ],
+        "zh": [
+          "Go",
+          "Golang",
+          "最佳实践",
+          "模式"
+        ]
+      }
+    },
+    {
+      "name": "golang-testing",
+      "description": "Go testing best practices including table-driven tests, test helpers, benchmarking, race detection, coverage analysis, and integration testing pattern",
+      "origin": "csp-native",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "golang",
+          "golang testing",
+          "testing"
+        ],
+        "zh": [
+          "Go",
+          "Golang",
+          "单元测试",
+          "测试"
+        ]
+      }
+    },
+    {
+      "name": "investor-materials",
+      "description": "Create and update pitch decks, one-pagers, investor memos, accelerator applicati",
+      "origin": "csp-native",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "investor",
+          "investor materials",
+          "materials"
+        ],
+        "zh": []
+      }
+    },
+    {
+      "name": "investor-outreach",
+      "description": "Draft cold emails, warm intro blurbs, follow-ups, update emails, and investor co",
+      "origin": "csp-native",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "investor",
+          "investor outreach",
+          "outreach"
+        ],
+        "zh": []
+      }
+    },
+    {
+      "name": "java-coding-standards",
+      "description": "Java coding standards for Spring Boot and Quarkus services: naming, immutability",
+      "origin": "csp-native",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "coding",
+          "java",
+          "java coding standards",
+          "standards"
+        ],
+        "zh": [
+          "标准",
+          "项目标准"
+        ]
+      }
+    },
+    {
+      "name": "jpa-patterns",
+      "description": "JPA/Hibernate patterns for entity design, relationships, query optimization, tra",
+      "origin": "csp-native",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "jpa",
+          "jpa patterns",
+          "patterns"
+        ],
+        "zh": [
+          "最佳实践",
+          "模式"
+        ]
+      }
+    },
+    {
+      "name": "kotlin-patterns",
+      "description": "Idiomatic Kotlin patterns, best practices, and conventions for building robust,",
+      "origin": "csp-native",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "kotlin",
+          "kotlin patterns",
+          "patterns"
+        ],
+        "zh": [
+          "最佳实践",
+          "模式"
+        ]
+      }
+    },
+    {
+      "name": "kotlin-testing",
+      "description": "Kotlin testing patterns with Kotest, MockK, coroutine testing, property-based te",
+      "origin": "csp-native",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "kotlin",
+          "kotlin testing",
+          "testing"
+        ],
+        "zh": [
+          "单元测试",
+          "测试",
+          "自动化测试"
+        ]
+      }
+    },
+    {
+      "name": "market-research",
+      "description": "Conduct market research, competitive analysis, investor due diligence, and indus",
+      "origin": "csp-native",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "market",
+          "market research",
+          "research"
+        ],
+        "zh": [
+          "优先搜索",
+          "搜索"
+        ]
+      }
+    },
+    {
+      "name": "mcp-server-patterns",
+      "description": "Build MCP servers with Node/TypeScript SDK — tools, resources, prompts, Zod vali",
+      "origin": "csp-native",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "mcp",
+          "mcp server patterns",
+          "patterns",
+          "server"
+        ],
+        "zh": [
+          "最佳实践",
+          "模式"
+        ]
+      }
+    },
+    {
+      "name": "mle-workflow",
+      "description": "Production machine-learning engineering workflow for data contracts, reproducibl",
+      "origin": "csp-native",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "mle",
+          "mle workflow",
+          "workflow"
+        ],
+        "zh": [
+          "工作流",
+          "流程"
+        ]
+      }
+    },
+    {
+      "name": "nestjs-patterns",
+      "description": "NestJS architecture patterns for modules, controllers, providers, DTO validation",
+      "origin": "csp-native",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "nestjs",
+          "nestjs patterns",
+          "patterns"
+        ],
+        "zh": [
+          "最佳实践",
+          "模式"
+        ]
+      }
+    },
+    {
+      "name": "nextjs-turbopack",
+      "description": "Next.js 16+ and Turbopack — incremental bundling, FS caching, dev speed, and whe",
+      "origin": "csp-native",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "nextjs",
+          "nextjs turbopack",
+          "turbopack"
+        ],
+        "zh": []
+      }
+    },
+    {
+      "name": "postgres-patterns",
+      "description": "PostgreSQL database patterns for query optimization, schema design, indexing, and security. Quick reference for common patterns, index types, data typ",
+      "origin": "csp-native",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "patterns",
+          "postgres",
+          "postgres patterns"
+        ],
+        "zh": [
+          "PostgreSQL",
+          "Postgres",
+          "最佳实践",
+          "模式"
+        ]
+      }
+    },
+    {
+      "name": "product-capability",
+      "description": "Translate PRD intent, roadmap asks, or product discussions into an implementatio",
+      "origin": "csp-native",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "capability",
+          "product",
+          "product capability"
+        ],
+        "zh": []
+      }
+    },
+    {
+      "name": "python-patterns",
+      "description": "Python-specific design patterns and best practices including protocols, dataclasses, context managers, decorators, async/await, type hints, and packag",
+      "origin": "csp-native",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "patterns",
+          "python",
+          "python patterns"
+        ],
+        "zh": [
+          "Python",
+          "Python开发",
+          "最佳实践",
+          "模式"
+        ]
+      }
+    },
+    {
+      "name": "python-testing",
+      "description": "Python testing best practices using pytest including fixtures, parametrization, mocking, coverage analysis, and test organization. Use ",
+      "origin": "csp-native",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "python",
+          "python testing",
+          "testing"
+        ],
+        "zh": [
+          "Python",
+          "Python开发",
+          "单元测试",
+          "测试"
+        ]
+      }
+    },
+    {
+      "name": "pytorch-patterns",
+      "description": "PyTorch deep learning patterns and best practices for building robust, efficient",
+      "origin": "csp-native",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "patterns",
+          "pytorch",
+          "pytorch patterns"
+        ],
+        "zh": [
+          "最佳实践",
+          "模式"
+        ]
+      }
+    },
+    {
+      "name": "react-patterns",
+      "description": "React 18/19 patterns including hooks discipline, server/client component boundar",
+      "origin": "csp-native",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "patterns",
+          "react",
+          "react patterns"
+        ],
+        "zh": [
+          "React",
+          "React开发",
+          "最佳实践",
+          "模式"
+        ]
+      }
+    },
+    {
+      "name": "react-testing",
+      "description": "React component testing with React Testing Library, Vitest/Jest, MSW for network",
+      "origin": "csp-native",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "react",
+          "react testing",
+          "testing"
+        ],
+        "zh": [
+          "React",
+          "React开发",
+          "单元测试",
+          "测试"
+        ]
+      }
+    },
+    {
+      "name": "rust-patterns",
+      "description": "Idiomatic Rust patterns, ownership, error handling, traits, concurrency, and bes",
+      "origin": "csp-native",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "patterns",
+          "rust",
+          "rust patterns"
+        ],
+        "zh": [
+          "最佳实践",
+          "模式"
+        ]
+      }
+    },
+    {
+      "name": "rust-testing",
+      "description": "Rust testing patterns including unit tests, integration tests, async testing, pr",
+      "origin": "csp-native",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "rust",
+          "rust testing",
+          "testing"
+        ],
+        "zh": [
+          "单元测试",
+          "测试",
+          "自动化测试"
+        ]
+      }
+    },
+    {
+      "name": "search-first",
+      "description": "Research-before-coding workflow. Search for existing tools, libraries, and patterns before writing custom code. Systematizes the \"search for existing ",
+      "origin": "csp-native",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "first",
+          "search",
+          "search first"
+        ],
+        "zh": [
+          "优先搜索",
+          "搜索"
+        ]
+      }
+    },
+    {
+      "name": "security-review",
+      "description": "Use this skill when adding authentication, handling user input, working with secrets, creating API endpoints, or implementing payment/sensitive featur",
+      "origin": "csp-native",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "review",
+          "security",
+          "security review"
+        ],
+        "zh": [
+          "CR",
+          "安全",
+          "安全审查",
+          "审查"
+        ]
+      }
+    },
+    {
+      "name": "springboot-patterns",
+      "description": "Spring Boot architecture patterns, REST API design, layered services, data acces",
+      "origin": "csp-native",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "patterns",
+          "springboot",
+          "springboot patterns"
+        ],
+        "zh": [
+          "Spring",
+          "Spring Boot",
+          "最佳实践",
+          "模式"
+        ]
+      }
+    },
+    {
+      "name": "springboot-security",
+      "description": "Spring Security best practices for authn/authz, validation, CSRF, secrets, heade",
+      "origin": "csp-native",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "security",
+          "springboot",
+          "springboot security"
+        ],
+        "zh": [
+          "Spring",
+          "Spring Boot",
+          "安全",
+          "安全审查"
+        ]
+      }
+    },
+    {
+      "name": "strategic-compact",
+      "description": "Suggests manual context compaction at logical intervals to preserve context thro",
+      "origin": "csp-native",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "compact",
+          "strategic",
+          "strategic compact"
+        ],
+        "zh": []
+      }
+    },
+    {
+      "name": "swift-actor-persistence",
+      "description": "Thread-safe data persistence in Swift using actors — in-memory cache with file-b",
+      "origin": "csp-native",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "actor",
+          "persistence",
+          "swift",
+          "swift actor persistence"
+        ],
+        "zh": []
+      }
+    },
+    {
+      "name": "swift-protocol-di-testing",
+      "description": "Protocol-based dependency injection for testable Swift code — mock file system,",
+      "origin": "csp-native",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "protocol",
+          "swift",
+          "swift protocol di testing",
+          "testing"
+        ],
+        "zh": [
+          "单元测试",
+          "测试",
+          "自动化测试"
+        ]
+      }
+    },
+    {
+      "name": "video-editing",
+      "description": "AI-assisted video editing workflows for cutting, structuring, and augmenting rea",
+      "origin": "csp-native",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "editing",
+          "video",
+          "video editing"
+        ],
+        "zh": []
+      }
+    },
+    {
+      "name": "webapp-testing",
+      "description": "End-to-end web application testing strategies. Covers Cypress, Playwright, and Puppeteer for integration and E2E tests. Use for testing full user flow",
+      "origin": "csp-native",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "testing",
+          "webapp",
+          "webapp testing"
+        ],
+        "zh": [
+          "Web应用",
+          "Web测试",
+          "单元测试",
+          "测试"
+        ]
+      }
+    },
+    {
+      "name": "x-api",
+      "description": "X/Twitter API integration for posting tweets, threads, reading timelines, search",
+      "origin": "csp-native",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "api",
+          "x api"
+        ],
+        "zh": []
+      }
+    },
+    {
+      "name": "ask",
+      "description": "Process-first advisor routing for Claude, Codex, or Gemini via `csp ask`, with a",
+      "origin": "csp-native",
+      "category": "runtime",
+      "layer": "L4",
+      "layer_name": "Runtime",
+      "layer_color": "#f97316",
+      "triggers": {
+        "en": [
+          "ask"
+        ],
+        "zh": [
+          "运行时"
+        ]
+      }
+    },
+    {
+      "name": "autopilot",
+      "description": "Full autonomous execution from idea to working code",
+      "origin": "csp-native",
+      "category": "patterns",
+      "layer": "L4",
+      "layer_name": "Runtime",
+      "layer_color": "#f97316",
+      "triggers": {
+        "en": [
+          "autopilot"
+        ],
+        "zh": []
+      }
+    },
+    {
+      "name": "autoresearch",
+      "description": "Stateful single-mission improvement loop with strict evaluator contract, markdow",
+      "origin": "csp-native",
+      "category": "patterns",
+      "layer": "L4",
+      "layer_name": "Runtime",
+      "layer_color": "#f97316",
+      "triggers": {
+        "en": [
+          "autoresearch"
+        ],
+        "zh": [
+          "优先搜索",
+          "搜索"
+        ]
+      }
+    },
+    {
+      "name": "cancel",
+      "description": "Cancel any active CSP mode (autopilot, ralph, ultrawork, ultraqa, swarm, ultrapi",
+      "origin": "csp-native",
+      "category": "workflow",
+      "layer": "L4",
+      "layer_name": "Runtime",
+      "layer_color": "#f97316",
+      "triggers": {
+        "en": [
+          "cancel"
+        ],
+        "zh": [
+          "工作流"
+        ]
+      }
+    },
+    {
+      "name": "ccg",
+      "description": "Claude-Codex-Gemini tri-model orchestration via /ask codex + /ask gemini, then C",
+      "origin": "csp-native",
+      "category": "runtime",
+      "layer": "L4",
+      "layer_name": "Runtime",
+      "layer_color": "#f97316",
+      "triggers": {
+        "en": [
+          "ccg"
+        ],
+        "zh": [
+          "运行时"
+        ]
+      }
+    },
+    {
+      "name": "configure-notifications",
+      "description": "Configure notification integrations (Telegram, Discord, Slack) via natural langu",
+      "origin": "csp-native",
+      "category": "workflow",
+      "layer": "L4",
+      "layer_name": "Runtime",
+      "layer_color": "#f97316",
+      "triggers": {
+        "en": [
+          "configure",
+          "configure notifications",
+          "notifications"
+        ],
+        "zh": [
+          "工作流"
+        ]
+      }
+    },
+    {
+      "name": "csp-doctor",
+      "description": "Diagnose and fix code-skills-package installation issues",
+      "origin": "csp-native",
+      "category": "runtime",
+      "layer": "L4",
+      "layer_name": "Runtime",
+      "layer_color": "#f97316",
+      "triggers": {
+        "en": [
+          "csp-doctor",
+          "doctor"
+        ],
+        "zh": [
+          "运行时"
+        ]
+      }
+    },
+    {
+      "name": "csp-plan",
+      "description": "Strategic planning with optional interview, consensus (Planner/Architect/Critic), and review modes. Auto-detects whether to interview the user or plan",
+      "origin": "merged",
+      "category": "runtime",
+      "layer": "L4",
+      "layer_name": "Runtime",
+      "layer_color": "#f97316",
+      "triggers": {
+        "en": [
+          "csp-plan",
+          "plan"
+        ],
+        "zh": [
+          "规划",
+          "计划",
+          "运行时"
+        ]
+      }
+    },
+    {
+      "name": "csp-reference",
+      "description": "CSP agent catalog, available tools, team pipeline routing, commit protocol, and",
+      "origin": "csp-native",
+      "category": "runtime",
+      "layer": "L4",
+      "layer_name": "Runtime",
+      "layer_color": "#f97316",
+      "triggers": {
+        "en": [
+          "csp-reference",
+          "reference"
+        ],
+        "zh": [
+          "运行时"
+        ]
+      }
+    },
+    {
+      "name": "csp-skill-creator",
+      "description": "Interactive skill creation wizard — guides users through creating new CSP skills",
+      "origin": "csp-native",
+      "category": "runtime",
+      "layer": "L4",
+      "layer_name": "Runtime",
+      "layer_color": "#f97316",
+      "triggers": {
+        "en": [
+          "creator",
+          "csp-skill-creator",
+          "skill",
+          "skill creator"
+        ],
+        "zh": [
+          "技能",
+          "技能管理",
+          "运行时"
+        ]
+      }
+    },
+    {
+      "name": "csp-teams",
+      "description": "CLI-team runtime for claude, codex, or gemini workers in tmux panes when you nee",
+      "origin": "csp-native",
+      "category": "patterns",
+      "layer": "L4",
+      "layer_name": "Runtime",
+      "layer_color": "#f97316",
+      "triggers": {
+        "en": [
+          "csp-teams",
+          "teams"
+        ],
+        "zh": []
+      }
+    },
+    {
+      "name": "csp-writer-memory",
+      "description": "Agentic memory system for writers - track characters, relationships, scenes, and",
+      "origin": "csp-native",
+      "category": "runtime",
+      "layer": "L4",
+      "layer_name": "Runtime",
+      "layer_color": "#f97316",
+      "triggers": {
+        "en": [
+          "csp-writer-memory",
+          "memory",
+          "writer",
+          "writer memory"
+        ],
+        "zh": [
+          "运行时"
+        ]
+      }
+    },
+    {
+      "name": "debug",
+      "description": "Diagnose the current CSP session or repo state using logs, traces, state, and fo",
+      "origin": "csp-native",
+      "category": "workflow",
+      "layer": "L4",
+      "layer_name": "Runtime",
+      "layer_color": "#f97316",
+      "triggers": {
+        "en": [
+          "debug"
+        ],
+        "zh": [
+          "工作流",
+          "排错",
+          "调试"
+        ]
+      }
+    },
+    {
+      "name": "deep-dive",
+      "description": "2-stage pipeline: trace (causal investigation) -> deep-interview (requirements c",
+      "origin": "csp-native",
+      "category": "runtime",
+      "layer": "L4",
+      "layer_name": "Runtime",
+      "layer_color": "#f97316",
+      "triggers": {
+        "en": [
+          "deep",
+          "deep dive",
+          "dive"
+        ],
+        "zh": [
+          "运行时"
+        ]
+      }
+    },
+    {
+      "name": "deep-interview",
+      "description": "Socratic deep interview with mathematical ambiguity gating before explicit execu",
+      "origin": "csp-native",
+      "category": "runtime",
+      "layer": "L4",
+      "layer_name": "Runtime",
+      "layer_color": "#f97316",
+      "triggers": {
+        "en": [
+          "deep",
+          "deep interview",
+          "interview"
+        ],
+        "zh": [
+          "访谈",
+          "运行时",
+          "需求访谈"
+        ]
+      }
+    },
+    {
+      "name": "deepinit",
+      "description": "Deep codebase initialization with hierarchical AGENTS.md documentation",
+      "origin": "csp-native",
+      "category": "patterns",
+      "layer": "L4",
+      "layer_name": "Runtime",
+      "layer_color": "#f97316",
+      "triggers": {
+        "en": [
+          "deepinit"
+        ],
+        "zh": []
+      }
+    },
+    {
+      "name": "external-context",
+      "description": "Invoke parallel document-specialist agents for external web searches and documen",
+      "origin": "csp-native",
+      "category": "patterns",
+      "layer": "L4",
+      "layer_name": "Runtime",
+      "layer_color": "#f97316",
+      "triggers": {
+        "en": [
+          "context",
+          "external",
+          "external context"
+        ],
+        "zh": [
+          "上下文",
+          "工程上下文"
+        ]
+      }
+    },
+    {
+      "name": "hud",
+      "description": "Configure HUD display options (layout, presets, display elements)",
+      "origin": "csp-native",
+      "category": "workflow",
+      "layer": "L4",
+      "layer_name": "Runtime",
+      "layer_color": "#f97316",
+      "triggers": {
+        "en": [
+          "hud"
+        ],
+        "zh": [
+          "工作流"
+        ]
+      }
+    },
+    {
+      "name": "learner",
+      "description": "Extract a learned skill from the current conversation",
+      "origin": "csp-native",
+      "category": "runtime",
+      "layer": "L4",
+      "layer_name": "Runtime",
+      "layer_color": "#f97316",
+      "triggers": {
+        "en": [
+          "learner"
+        ],
+        "zh": [
+          "运行时"
+        ]
+      }
+    },
+    {
+      "name": "local-build-reminder",
+      "description": "Remind the user to rebuild CSP after editing TypeScript when running from a loca",
+      "origin": "csp-native",
+      "category": "meta",
+      "layer": "L4",
+      "layer_name": "Runtime",
+      "layer_color": "#f97316",
+      "triggers": {
+        "en": [
+          "build",
+          "local",
+          "local build reminder",
+          "reminder"
+        ],
+        "zh": [
+          "提醒",
+          "本地",
+          "本地构建",
+          "构建"
+        ]
+      }
+    },
+    {
+      "name": "mcp-setup",
+      "description": "Configure popular MCP servers for enhanced agent capabilities",
+      "origin": "csp-native",
+      "category": "workflow",
+      "layer": "L4",
+      "layer_name": "Runtime",
+      "layer_color": "#f97316",
+      "triggers": {
+        "en": [
+          "mcp",
+          "mcp setup",
+          "setup"
+        ],
+        "zh": [
+          "工作流"
+        ]
+      }
+    },
+    {
+      "name": "project-session-manager",
+      "description": "Worktree-first dev environment manager for issues, PRs, and features with option",
+      "origin": "csp-native",
+      "category": "workflow",
+      "layer": "L4",
+      "layer_name": "Runtime",
+      "layer_color": "#f97316",
+      "triggers": {
+        "en": [
+          "manager",
+          "project",
+          "project session manager",
+          "session"
+        ],
+        "zh": [
+          "工作流"
+        ]
+      }
+    },
+    {
+      "name": "ralph",
+      "description": "Self-referential loop until task completion with configurable verification revie",
+      "origin": "csp-native",
+      "category": "patterns",
+      "layer": "L4",
+      "layer_name": "Runtime",
+      "layer_color": "#f97316",
+      "triggers": {
+        "en": [
+          "ralph"
+        ],
+        "zh": []
+      }
+    },
+    {
+      "name": "release",
+      "description": "Generic release assistant — analyzes repo release rules, caches them in .csp/REL",
+      "origin": "csp-native",
+      "category": "runtime",
+      "layer": "L4",
+      "layer_name": "Runtime",
+      "layer_color": "#f97316",
+      "triggers": {
+        "en": [
+          "release"
+        ],
+        "zh": [
+          "运行时"
+        ]
+      }
+    },
+    {
+      "name": "remember",
+      "description": "Review reusable project knowledge and decide what belongs in project memory, not",
+      "origin": "csp-native",
+      "category": "runtime",
+      "layer": "L4",
+      "layer_name": "Runtime",
+      "layer_color": "#f97316",
+      "triggers": {
+        "en": [
+          "remember"
+        ],
+        "zh": [
+          "记住",
+          "记忆",
+          "运行时"
+        ]
+      }
+    },
+    {
+      "name": "scicsp",
+      "description": "Orchestrate parallel scientist agents for comprehensive analysis with AUTO mode",
+      "origin": "csp-native",
+      "category": "patterns",
+      "layer": "L4",
+      "layer_name": "Runtime",
+      "layer_color": "#f97316",
+      "triggers": {
+        "en": [
+          "scicsp"
+        ],
+        "zh": []
+      }
+    },
+    {
+      "name": "self-improve",
+      "description": "Autonomous evolutionary code improvement engine with tournament selection",
+      "origin": "csp-native",
+      "category": "patterns",
+      "layer": "L4",
+      "layer_name": "Runtime",
+      "layer_color": "#f97316",
+      "triggers": {
+        "en": [
+          "improve",
+          "self",
+          "self improve"
+        ],
+        "zh": [
+          "改进",
+          "自我",
+          "自我改进"
+        ]
+      }
+    },
+    {
+      "name": "setup",
+      "description": "Use first for install/update routing — sends setup, doctor, or MCP requests to t",
+      "origin": "csp-native",
+      "category": "workflow",
+      "layer": "L4",
+      "layer_name": "Runtime",
+      "layer_color": "#f97316",
+      "triggers": {
+        "en": [
+          "setup"
+        ],
+        "zh": [
+          "工作流"
+        ]
+      }
+    },
+    {
+      "name": "skill",
+      "description": "Manage local skills - list, add, remove, search, edit, setup wizard",
+      "origin": "csp-native",
+      "category": "workflow",
+      "layer": "L4",
+      "layer_name": "Runtime",
+      "layer_color": "#f97316",
+      "triggers": {
+        "en": [
+          "skill"
+        ],
+        "zh": [
+          "工作流",
+          "技能",
+          "技能管理"
+        ]
+      }
+    },
+    {
+      "name": "skillify",
+      "description": "Turn a repeatable workflow from the current session into a reusable CSP skill dr",
+      "origin": "csp-native",
+      "category": "runtime",
+      "layer": "L4",
+      "layer_name": "Runtime",
+      "layer_color": "#f97316",
+      "triggers": {
+        "en": [
+          "skillify"
+        ],
+        "zh": [
+          "技能",
+          "技能管理",
+          "运行时"
+        ]
+      }
+    },
+    {
+      "name": "team",
+      "description": "N coordinated agents on shared task list using Claude Code native teams",
+      "origin": "csp-native",
+      "category": "patterns",
+      "layer": "L4",
+      "layer_name": "Runtime",
+      "layer_color": "#f97316",
+      "triggers": {
+        "en": [
+          "team"
+        ],
+        "zh": []
+      }
+    },
+    {
+      "name": "trace",
+      "description": "Evidence-driven tracing lane that orchestrates competing tracer hypotheses in Cl",
+      "origin": "csp-native",
+      "category": "workflow",
+      "layer": "L4",
+      "layer_name": "Runtime",
+      "layer_color": "#f97316",
+      "triggers": {
+        "en": [
+          "trace"
+        ],
+        "zh": [
+          "工作流"
+        ]
+      }
+    },
+    {
+      "name": "ultragoal",
+      "description": "Durable multi-goal workflow that persists plan/ledger artifacts under .csp/ultra",
+      "origin": "csp-native",
+      "category": "runtime",
+      "layer": "L4",
+      "layer_name": "Runtime",
+      "layer_color": "#f97316",
+      "triggers": {
+        "en": [
+          "ultragoal"
+        ],
+        "zh": [
+          "目标设定",
+          "终极目标",
+          "运行时"
+        ]
+      }
+    },
+    {
+      "name": "ultraqa",
+      "description": "QA cycling workflow - test, verify, fix, repeat until goal met",
+      "origin": "csp-native",
+      "category": "runtime",
+      "layer": "L4",
+      "layer_name": "Runtime",
+      "layer_color": "#f97316",
+      "triggers": {
+        "en": [
+          "ultraqa"
+        ],
+        "zh": [
+          "运行时"
+        ]
+      }
+    },
+    {
+      "name": "ultrawork",
+      "description": "Parallel execution engine for high-throughput task completion",
+      "origin": "csp-native",
+      "category": "patterns",
+      "layer": "L4",
+      "layer_name": "Runtime",
+      "layer_color": "#f97316",
+      "triggers": {
+        "en": [
+          "ultrawork"
+        ],
+        "zh": []
+      }
+    },
+    {
+      "name": "visual-verdict",
+      "description": "Structured visual QA verdict for screenshot-to-reference comparisons",
+      "origin": "csp-native",
+      "category": "workflow",
+      "layer": "L4",
+      "layer_name": "Runtime",
+      "layer_color": "#f97316",
+      "triggers": {
+        "en": [
+          "verdict",
+          "visual",
+          "visual verdict"
+        ],
+        "zh": [
+          "工作流",
+          "裁决",
+          "视觉判定"
+        ]
+      }
+    },
+    {
+      "name": "wiki",
+      "description": "LLM Wiki — persistent markdown knowledge base that compounds across sessions (Ka",
+      "origin": "csp-native",
+      "category": "runtime",
+      "layer": "L4",
+      "layer_name": "Runtime",
+      "layer_color": "#f97316",
+      "triggers": {
+        "en": [
+          "wiki"
+        ],
+        "zh": [
+          "Wiki",
+          "知识库",
+          "运行时"
+        ]
+      }
+    }
+  ]
+};
+
+// ═══════════════════════════════════════════════════
+// RENDER ENGINE
+// ═══════════════════════════════════════════════════
+
+const LAYERS = [
+  { id: 'L0', name: 'Router',    color: '#ef4444', desc: '任务分类 + Skill 选择' },
+  { id: 'L1', name: 'Meta',      color: '#3b82f6', desc: '方法论: brainstorming, TDD, debugging...' },
+  { id: 'L2', name: 'Workflow',  color: '#22c55e', desc: '项目生命周期: plan → execute → verify → ship' },
+  { id: 'L3', name: 'Patterns',  color: '#a855f7', desc: '语言/框架 patterns, reviewers, build-resolvers' },
+  { id: 'L4', name: 'Runtime',   color: '#f97316', desc: '运行时: autopilot, ralph, wiki, remember' },
+];
+
+function renderHeader() {
+  const s = CSP_DATA.stats;
+  document.getElementById('header-stats').textContent =
+    `${s.total} skills · ${Object.keys(s.by_layer).length} layers · ${Object.keys(s.by_origin).length} origins`;
+}
+
+function renderLayerStack() {
+  const el = document.getElementById('layer-stack');
+  const stats = CSP_DATA.stats.by_layer;
+  let html = '';
+  LAYERS.forEach((l, i) => {
+    const count = stats[l.name]?.count || 0;
+    if (i > 0) html += '<div class="layer-arrow">▼</div>';
+    html += `<div class="layer-bar" style="background:${l.color}22; border-left: 4px solid ${l.color}" onclick="scrollToLayer('${l.id}')">
+      <div>
+        <div class="label" style="color:${l.color}">${l.id} — ${l.name}</div>
+        <div class="desc" style="color:${l.color}99">${l.desc}</div>
+      </div>
+      <div class="count" style="color:${l.color}">${count}</div>
+    </div>`;
+  });
+  el.innerHTML = html;
+}
+
+function renderStatsCards() {
+  const el = document.getElementById('stats-row');
+  const s = CSP_DATA.stats;
+  const cards = [
+    { value: s.total, label: 'Total Skills', accent: '#e4e4e7' },
+    { value: s.agents || 42, label: 'Agents / Reviewers', accent: '#a855f7' },
+    { value: s.by_layer['Workflow']?.count || 9, label: 'Workflows', accent: '#22c55e' },
+    { value: s.by_layer['Runtime']?.count || 33, label: 'Runtime Skills', accent: '#f97316' },
+  ];
+  el.innerHTML = cards.map(c => `
+    <div class="stat-card" style="--accent:${c.accent}">
+      <div class="value">${c.value}</div>
+      <div class="label">${c.label}</div>
+    </div>
+  `).join('');
+}
+
+function renderDonutChart() {
+  const origins = CSP_DATA.stats.by_origin;
+  const total = CSP_DATA.stats.total;
+  const colors = ['#3b82f6','#a855f7','#22c55e','#f97316','#ef4444','#eab308','#06b6d4'];
+  const entries = Object.entries(origins).sort((a,b) => b[1]-a[1]);
+
+  // SVG donut
+  let svg = '<svg class="donut-svg" viewBox="0 0 42 42">';
+  svg += '<circle cx="21" cy="21" r="15.9" fill="transparent" stroke="#2a2a3a" stroke-width="5"/>';
+  let cumulative = 0;
+  entries.forEach(([name, count], i) => {
+    const pct = count / total * 100;
+    const dashArray = `${pct} ${100 - pct}`;
+    const offset = 25 - cumulative;
+    svg += `<circle cx="21" cy="21" r="15.9" fill="transparent" stroke="${colors[i % colors.length]}" stroke-width="5"
+      stroke-dasharray="${dashArray}" stroke-dashoffset="${offset}" style="transition: all 0.8s ease"/>`;
+    cumulative += pct;
+  });
+  svg += `<text x="21" y="20" text-anchor="middle" fill="#e4e4e7" font-size="5" font-weight="700">${total}</text>`;
+  svg += `<text x="21" y="24" text-anchor="middle" fill="#71717a" font-size="2.5">skills</text>`;
+  svg += '</svg>';
+  document.getElementById('donut-chart').outerHTML = svg;
+
+  // Legend
+  const legend = document.getElementById('donut-legend');
+  legend.innerHTML = entries.map(([name, count], i) =>
+    `<div class="legend-item">
+      <span class="legend-dot" style="background:${colors[i % colors.length]}"></span>
+      <span>${name} (${count}, ${(count/total*100).toFixed(0)}%)</span>
+    </div>`
+  ).join('');
+}
+
+function renderCategoryBar() {
+  const cats = CSP_DATA.stats.by_category;
+  const total = CSP_DATA.stats.total;
+  const layerColors = {
+    'router': '#ef4444', 'meta': '#3b82f6', 'workflow': '#22c55e',
+    'patterns': '#a855f7', 'runtime': '#f97316', 'agent': '#eab308'
+  };
+  const entries = Object.entries(cats).sort((a,b) => b[1]-a[1]);
+
+  // Stacked bar
+  let barHtml = '<div class="stacked-bar">';
+  entries.forEach(([cat, count]) => {
+    const pct = count / total * 100;
+    const color = layerColors[cat] || '#666';
+    barHtml += `<div class="stacked-segment" style="width:${pct}%;background:${color}" title="${cat}: ${count}">${count}</div>`;
+  });
+  barHtml += '</div>';
+  document.getElementById('category-bar').innerHTML = barHtml;
+
+  // Labels
+  document.getElementById('category-labels').innerHTML = entries.map(([cat, count]) => {
+    const color = layerColors[cat] || '#666';
+    return `<div class="bar-label"><span class="dot" style="background:${color}"></span>${cat} (${count})</div>`;
+  }).join('');
+}
+
+function renderExplorer() {
+  // Filter pills
+  const pillsEl = document.getElementById('filter-pills');
+  let pillsHtml = `<div class="filter-pill active" data-layer="all" style="background:var(--text-muted);color:white">All</div>`;
+  LAYERS.forEach(l => {
+    pillsHtml += `<div class="filter-pill" data-layer="${l.id}" style="--pill-color:${l.color}">${l.id} ${l.name}</div>`;
+  });
+  pillsEl.innerHTML = pillsHtml;
+
+  // Pill click handlers
+  document.querySelectorAll('.filter-pill').forEach(pill => {
+    pill.addEventListener('click', () => {
+      document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+      pill.classList.add('active');
+      if (pill.dataset.layer === 'all') {
+        pill.style.background = 'var(--text-muted)';
+        pill.style.color = 'white';
+      } else {
+        pill.style.background = pill.style.getPropertyValue('--pill-color');
+        pill.style.color = 'white';
+      }
+      renderSkillList();
+    });
+  });
+
+  // Search handler
+  document.getElementById('search-input').addEventListener('input', renderSkillList);
+
+  renderSkillList();
+}
+
+function renderSkillList() {
+  const query = document.getElementById('search-input').value.toLowerCase();
+  const activeLayer = document.querySelector('.filter-pill.active')?.dataset.layer || 'all';
+
+  let skills = CSP_DATA.skills || [];
+
+  // Filter
+  if (activeLayer !== 'all') {
+    skills = skills.filter(s => s.layer === activeLayer);
+  }
+  if (query) {
+    skills = skills.filter(s =>
+      s.name.toLowerCase().includes(query) ||
+      (s.description && s.description.toLowerCase().includes(query))
+    );
+  }
+
+  document.getElementById('result-count').textContent = `显示 ${skills.length} / ${CSP_DATA.stats.total} 个技能`;
+
+  // Group by layer
+  const groups = {};
+  skills.forEach(s => {
+    if (!groups[s.layer]) groups[s.layer] = [];
+    groups[s.layer].push(s);
+  });
+
+  let html = '';
+  LAYERS.forEach(l => {
+    const layerSkills = groups[l.id] || [];
+    if (layerSkills.length === 0) return;
+    const isOpen = activeLayer === l.id || activeLayer === 'all' && !query;
+    html += `<div class="skill-group" data-layer="${l.id}">
+      <div class="skill-group-header" onclick="toggleGroup(this)">
+        <div class="skill-group-title">
+          <span class="group-dot" style="background:${l.color}"></span>
+          ${l.id} ${l.name}
+          <span class="group-count">${layerSkills.length}</span>
+        </div>
+        <span class="toggle-icon">${isOpen ? '▼' : '▶'}</span>
+      </div>
+      <div class="skill-group-body ${isOpen ? 'open' : ''}">`;
+    layerSkills.forEach(s => {
+      const desc = s.description && s.description !== '>' ? s.description : 'No description available';
+      const triggers = s.triggers || { en: [], zh: [] };
+      const allTriggers = [...triggers.en.slice(0, 3), ...triggers.zh.slice(0, 2)];
+      const triggerHtml = allTriggers.map(t => `<span class="trigger-tag">${t}</span>`).join('');
+      html += `<div class="skill-card">
+        <div>
+          <div class="skill-name">${s.name}</div>
+          <div class="skill-desc">${desc}</div>
+          <div class="skill-triggers">${triggerHtml}</div>
+        </div>
+        <div class="skill-badges">
+          <span class="badge badge-layer" style="border:1px solid ${l.color}40;color:${l.color}">${l.id}</span>
+          <span class="badge badge-origin">${s.origin}</span>
+        </div>
+      </div>`;
+    });
+    html += '</div></div>';
+  });
+
+  if (!html) {
+    html = '<div style="text-align:center;padding:48px;color:var(--text-muted)">没有找到匹配的技能</div>';
+  }
+  document.getElementById('skill-list').innerHTML = html;
+}
+
+function toggleGroup(header) {
+  const body = header.nextElementSibling;
+  const icon = header.querySelector('.toggle-icon');
+  body.classList.toggle('open');
+  icon.textContent = body.classList.contains('open') ? '▼' : '▶';
+}
+
+function scrollToLayer(layerId) {
+  const group = document.querySelector(`.skill-group[data-layer="${layerId}"]`);
+  if (group) {
+    const body = group.querySelector('.skill-group-body');
+    if (!body.classList.contains('open')) {
+      body.classList.add('open');
+      group.querySelector('.toggle-icon').textContent = '▼';
+    }
+    group.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+}
+
+function renderArchDiagram() {
+  const svg = document.getElementById('arch-diagram');
+  const layerNodes = LAYERS.map((l, i) => ({
+    ...l, x: 60 + i * 180, y: 120
+  }));
+
+  let html = '';
+  // Arrows
+  for (let i = 0; i < layerNodes.length - 1; i++) {
+    const a = layerNodes[i];
+    const b = layerNodes[i + 1];
+    html += `<line x1="${a.x + 80}" y1="${a.y + 20}" x2="${b.x - 10}" y2="${b.y + 20}"
+      stroke="${a.color}" stroke-width="2" stroke-dasharray="6,4" opacity="0.5">
+      <animate attributeName="stroke-dashoffset" from="0" to="20" dur="1s" repeatCount="indefinite"/>
+    </line>`;
+    html += `<polygon points="${b.x - 10},${b.y + 14} ${b.x - 10},${b.y + 26} ${b.x},${b.y + 20}" fill="${a.color}" opacity="0.5"/>`;
+  }
+
+  // Input arrow
+  html += `<text x="10" y="145" fill="#e4e4e7" font-size="14" font-weight="600">User Input →</text>`;
+
+  // Nodes
+  layerNodes.forEach(l => {
+    html += `<rect x="${l.x}" y="${l.y}" width="160" height="60" rx="12"
+      fill="${l.color}15" stroke="${l.color}" stroke-width="2"/>`;
+    html += `<text x="${l.x + 80}" y="${l.y + 25}" text-anchor="middle" fill="${l.color}" font-size="13" font-weight="700">${l.id} ${l.name}</text>`;
+    html += `<text x="${l.x + 80}" y="${l.y + 45}" text-anchor="middle" fill="#a1a1aa" font-size="11">${CSP_DATA.stats.by_layer[l.name]?.count || 0} skills</text>`;
+  });
+
+  // Output arrow
+  const last = layerNodes[layerNodes.length - 1];
+  html += `<line x1="${last.x + 160}" y1="${last.y + 20}" x2="${last.x + 200}" y2="${last.y + 20}"
+    stroke="${last.color}" stroke-width="2"/>`;
+  html += `<text x="${last.x + 205}" y="145" fill="#e4e4e7" font-size="14" font-weight="600">→ Output</text>`;
+
+  // Flow description
+  html += `<text x="500" y="260" text-anchor="middle" fill="#71717a" font-size="12">
+    用户输入 → L0 路由器识别任务类型 → L1 元技能选择方法论 → L2 工作流编排 → L3 模式匹配 → L4 运行时增强 → 最终输出
+  </text>`;
+
+  svg.innerHTML = html;
+}
+
+// ═══════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════
+document.addEventListener('DOMContentLoaded', () => {
+  renderHeader();
+  renderLayerStack();
+  renderStatsCards();
+  renderDonutChart();
+  renderCategoryBar();
+  renderExplorer();
+  renderArchDiagram();
+});
+</script>
+</body>
+</html>
