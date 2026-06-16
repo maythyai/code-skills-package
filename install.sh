@@ -21,6 +21,23 @@ readonly PROJECT_DIR="$(pwd)"
 # CSP 五层架构源目录
 readonly CSP_LAYERS="csp-router csp-meta csp-workflow csp-patterns csp-runtime"
 
+# ─── Remote Bootstrap ──────────────────────────────────────────────
+# Auto-detect: if layer dirs are missing, download full repo and re-exec.
+# Supports standalone file, pipe (curl|bash), and npm-installed scenarios.
+_has_layers=true
+for _l in $CSP_LAYERS; do
+  if [ ! -d "$SCRIPT_DIR/$_l" ]; then _has_layers=false; break; fi
+done
+if [ "$_has_layers" = "false" ]; then
+  _csp_tmp="$(mktemp -d)"
+  trap 'rm -rf "$_csp_tmp"' EXIT
+  _csp_branch="${CSP_BRANCH:-master}"
+  echo "  CSP: downloading full repo..." >&2
+  curl -fsSL "https://github.com/chensaics/code-skills-package/archive/refs/heads/${_csp_branch}.tar.gz" \
+    | tar xz -C "$_csp_tmp"
+  exec bash "$_csp_tmp/code-skills-package-${_csp_branch}/install.sh" "$@"
+fi
+
 # Sentinel markers
 readonly SENTINEL_BEGIN="<!-- csp-begin (do not edit between these markers) -->"
 readonly SENTINEL_END="<!-- csp-end -->"
@@ -888,7 +905,11 @@ show_help() {
     ./install.sh --dry-run              预览安装内容而不实际执行
 
   一行远程安装（无需克隆本项目）：
-    cd /path/to/project && curl -fsSL https://github.com/CS-cs/code-skills-package/archive/refs/heads/master.tar.gz | tar xz --strip-components=1 -C /tmp/csp-install && bash /tmp/csp-install/install.sh --platform cursor && rm -rf /tmp/csp-install
+    curl -fsSL https://raw.githubusercontent.com/chensaics/code-skills-package/master/install.sh | bash -s -- --platform cursor
+
+  npm 全局安装：
+    npm install -g code-skills-package
+    cd /your/project && csp-install --platform cursor
 
   支持的平台（18 个）：
     claude-code, cursor, copilot-cli, hermes-agent, windsurf, kiro,

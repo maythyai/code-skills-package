@@ -15,7 +15,7 @@
 
 ---
 
-CSP（Code Skills Package）将多个开源 AI 编程项目（ECC、GSD、OMC、Superpowers、spec-kit）的能力整合为分层架构，支持自动路由、按需加载和规范驱动的工作流。每个任务仅加载所需的 skill，token 消耗控制在 ~500–1,500 之间。
+CSP（Code Skills Package）将多个开源 AI 编程项目的能力整合为分层架构，支持自动路由技能、按需加载和组合工作流，以极低的token完成任务。
 
 ## 快速开始
 
@@ -39,10 +39,18 @@ CSP（Code Skills Package）将多个开源 AI 编程项目（ECC、GSD、OMC、
 ./install.sh --platform cursor --target /path/to/your/project
 
 # 一行远程安装（无需克隆本项目）
-curl -fsSL https://github.com/CS-cs/code-skills-package/archive/refs/heads/master.tar.gz | tar xz -C /tmp && bash /tmp/code-skills-package-master/install.sh --platform cursor --target /path/to/your/project && rm -rf /tmp/code-skills-package-master
+curl -fsSL https://raw.githubusercontent.com/chensaics/code-skills-package/master/install.sh | bash -s -- --platform cursor
+
+# 远程安装到指定目标目录
+curl -fsSL https://raw.githubusercontent.com/chensaics/code-skills-package/master/install.sh | bash -s -- --platform cursor --target /path/to/your/project
+
+# npm 全局安装
+npm install -g code-skills-package
+cd /your/project && csp-install --platform cursor
 
 # 卸载
 ./install.sh --uninstall
+./install.sh --uninstall --global
 
 # 列出检测到的平台
 ./install.sh --list

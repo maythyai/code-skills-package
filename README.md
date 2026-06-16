@@ -34,7 +34,14 @@ CSP (Code Skills Package) consolidates the capabilities of multiple open-source 
 ./install.sh --platform cursor --target /path/to/your/project
 
 # Remote one-line install (no clone required)
-curl -fsSL https://github.com/CS-cs/code-skills-package/archive/refs/heads/master.tar.gz | tar xz -C /tmp && bash /tmp/code-skills-package-master/install.sh --platform cursor --target /path/to/your/project && rm -rf /tmp/code-skills-package-master
+curl -fsSL https://raw.githubusercontent.com/chensaics/code-skills-package/master/install.sh | bash -s -- --platform cursor
+
+# Remote install to a specific target directory
+curl -fsSL https://raw.githubusercontent.com/chensaics/code-skills-package/master/install.sh | bash -s -- --platform cursor --target /path/to/your/project
+
+# npm global install
+npm install -g code-skills-package
+cd /your/project && csp-install --platform cursor
 
 # Global install
 ./install.sh --platform trae --global

@@ -4,8 +4,9 @@
 
 ## 前置条件
 
-- 克隆 CSP 仓库到本地：`git clone https://github.com/CS-cs/code-skills-package.git`
+- 克隆 CSP 仓库到本地：`git clone https://github.com/chensaics/code-skills-package.git`
 - 或通过一行命令远程安装（无需克隆）
+- 或通过 npm 全局安装
 
 ---
 
@@ -27,16 +28,46 @@
 
 ## 方式二：远程安装（无需克隆 CSP）
 
-用户没有克隆 CSP 项目时，可直接安装到任意项目目录：
+用户没有克隆 CSP 项目时，可通过一行命令直接安装（install.sh 会自动下载完整仓库）：
 
 ```bash
-# 安装到指定目标目录
-curl -fsSL https://github.com/CS-cs/code-skills-package/archive/refs/heads/master.tar.gz | tar xz -C /tmp && bash /tmp/code-skills-package-master/install.sh --platform cursor --target /path/to/your/project && rm -rf /tmp/code-skills-package-master
+# 自动检测平台并安装到当前目录
+cd /path/to/your/project
+curl -fsSL https://raw.githubusercontent.com/chensaics/code-skills-package/master/install.sh | bash -s --
+
+# 指定平台
+curl -fsSL https://raw.githubusercontent.com/chensaics/code-skills-package/master/install.sh | bash -s -- --platform cursor
+
+# 指定平台 + 目标目录
+curl -fsSL https://raw.githubusercontent.com/chensaics/code-skills-package/master/install.sh | bash -s -- --platform cursor --target /path/to/your/project
+
+# 按技术栈过滤
+curl -fsSL https://raw.githubusercontent.com/chensaics/code-skills-package/master/install.sh | bash -s -- --platform cursor --stacks python,typescript
+
+# 全局安装
+curl -fsSL https://raw.githubusercontent.com/chensaics/code-skills-package/master/install.sh | bash -s -- --platform cursor --global
 ```
+
+所有 `install.sh` 支持的参数都可以通过 `bash -s --` 传递给远程安装脚本。
 
 ---
 
-## 方式三：`--target` 参数
+## 方式三：npm 全局安装
+
+```bash
+npm install -g code-skills-package
+
+# 然后在任意项目中使用
+cd /path/to/your/project
+csp-install --platform cursor
+csp-install --platform claude-code --stacks python
+```
+
+npm 安装后提供 `csp-install` 命令，功能与 `install.sh` 完全一致。
+
+---
+
+## 方式四：`--target` 参数
 
 已克隆 CSP 项目时，可通过 `--target` 指定任意目标目录：
 
@@ -47,7 +78,7 @@ curl -fsSL https://github.com/CS-cs/code-skills-package/archive/refs/heads/maste
 
 ---
 
-## 方式四：全局安装
+## 方式五：全局安装
 
 安装到用户主目录（`~/.xxx/skills/`），所有项目可用：
 

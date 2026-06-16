@@ -1,0 +1,38 @@
+{
+  "name": "code-skills-package",
+  "version": "0.5.0",
+  "description": "Unified AI programming skills for 18 coding platforms — auto-routing, lazy loading, spec-driven workflows",
+  "bin": {
+    "csp-install": "./install.sh"
+  },
+  "files": [
+    "install.sh",
+    "csp-router",
+    "csp-meta",
+    "csp-workflow",
+    "csp-patterns",
+    "csp-runtime",
+    "README.md",
+    "README_zh.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "postinstall": "echo '' && echo '  CSP installed! Run in your project directory:' && echo '    cd /your/project && csp-install' && echo ''"
+  },
+  "keywords": [
+    "ai",
+    "coding",
+    "skills",
+    "claude-code",
+    "cursor",
+    "copilot",
+    "csp"
+  ],
+  "author": "chensaics",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/chensaics/code-skills-package.git"
+  },
+  "homepage": "https://github.com/chensaics/code-skills-package"
+}
