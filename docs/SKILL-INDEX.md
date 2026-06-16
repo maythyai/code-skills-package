@@ -397,6 +397,8 @@
 | `csp-planning-phase` | GSD/workflow | Command | 规划阶段：PRD + 用户故事 + SPEC | ✅ 保留 |
 | `csp-execute-phase` | GSD/workflow | Workflow | 按计划执行任务 | ✅ 保留 |
 | `csp-verify-phase` | GSD/workflow | Workflow | 目标反向 + 三维度验证 | ✅ 保留 |
+| `csp-hotfix` | CSP/workflow | Workflow | 热修复流程（跳过设计，直接修复+验证） | ✅ 保留 |
+| `csp-tweak` | CSP/workflow | Workflow | 微调流程（轻量级小改动，简化验证） | ✅ 保留 |
 | `artifact-verification.md` | CSP/workflow | Reference | completeness/correctness/coherence | ✅ 保留 |
 | `change-artifacts/` templates | CSP/workflow | Templates | proposal/spec/design/tasks | ✅ 保留 |
 | Delta Specs | CSP 概念 | 模式 | ADDED/MODIFIED/REMOVED 增量合并 | ✅ 保留（brownfield） |

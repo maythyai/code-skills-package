@@ -1392,3 +1392,33 @@ stack_rules:
   "知识库":
     skills: [wiki]
     weight: 45
+  "hotfix":
+    skills: [csp-hotfix]
+    weight: 50
+  "热修复":
+    skills: [csp-hotfix]
+    weight: 50
+  "紧急修复":
+    skills: [csp-hotfix]
+    weight: 50
+  "线上bug":
+    skills: [csp-hotfix]
+    weight: 50
+  "quick fix":
+    skills: [csp-hotfix]
+    weight: 45
+  "tweak":
+    skills: [csp-tweak]
+    weight: 50
+  "微调":
+    skills: [csp-tweak]
+    weight: 50
+  "小改":
+    skills: [csp-tweak]
+    weight: 45
+  "文案调整":
+    skills: [csp-tweak]
+    weight: 45
+  "配置修改":
+    skills: [csp-tweak]
+    weight: 45

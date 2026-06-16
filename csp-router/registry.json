@@ -7203,6 +7203,57 @@
       "priority": 5
     },
     {
+      "name": "csp-hotfix",
+      "description": "CSP 热修复工作流 — 快速修复线上 bug 的轻量级流程。跳过 design 阶段，直接进入 build，适用于紧急 bug 修复。",
+      "layer": 2,
+      "category": "workflow",
+      "triggers": {
+        "keywords": [
+          "hotfix",
+          "热修复",
+          "紧急修复",
+          "线上bug",
+          "生产问题",
+          "quick fix",
+          "csp-hotfix"
+        ],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-workflow/skills/csp-hotfix/SKILL.md",
+      "deps": [
+        "csp-tdd",
+        "csp-verification"
+      ],
+      "priority": 5
+    },
+    {
+      "name": "csp-tweak",
+      "description": "CSP 微调工作流 — 最轻量的变更流程，适用于文案调整、配置修改、文档更新等小改动。跳过 design 和完整的 build 阶段。",
+      "layer": 2,
+      "category": "workflow",
+      "triggers": {
+        "keywords": [
+          "tweak",
+          "微调",
+          "小改",
+          "文案调整",
+          "配置修改",
+          "minor change",
+          "csp-tweak"
+        ],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-workflow/skills/csp-tweak/SKILL.md",
+      "deps": [
+        "csp-verification"
+      ],
+      "priority": 5
+    },
+    {
       "name": "csp-cicd-pipelines",
       "description": "CI/CD pipeline patterns for GitHub Actions, GitLab CI, and Jenkins",
       "layer": 4,
