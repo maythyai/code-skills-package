@@ -17,6 +17,8 @@ L4  csp-runtime   — autopilot, ralph, wiki, remember, self-improve (~37 skills
 - [ARCHITECTURE.md](./docs/ARCHITECTURE.md) — full architecture design
 - [SKILL-INDEX.md](./docs/SKILL-INDEX.md) — complete skill index
 - [USER-GUIDE.md](./docs/USER-GUIDE.md) — user guide
+- [INSTALL.md](./docs/INSTALL.md) — installation guide
+- [UPDATE.md](./docs/UPDATE.md) — update guide
 
 ## License
 

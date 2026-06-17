@@ -21,7 +21,7 @@ CSP（Code Skills Package）将多个开源 AI 编程项目的能力整合为分
 
 ### 安装
 
-**更多完整命令参考：** [docs/INSTALL.md](./docs/INSTALL.md)
+**更多完整命令参考：** [docs/INSTALL.md](./docs/INSTALL.md) | [更新指南](./docs/UPDATE.md)
 
 ```bash
 # 自动检测 AI 工具并安装

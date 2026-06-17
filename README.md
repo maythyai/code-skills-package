@@ -53,7 +53,7 @@ cd /your/project && csp-install --platform cursor
 ./install.sh --list
 ```
 
-**Full command reference:** [docs/INSTALL.md](./docs/INSTALL.md)
+**Full command reference:** [docs/INSTALL.md](./docs/INSTALL.md) | [Update Guide](./docs/UPDATE.md)
 
 ## Usage
 
