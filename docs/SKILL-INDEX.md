@@ -216,6 +216,7 @@
 | `ingest-docs` | GSD | Workflow+Cmd | 文档摄入 | ✅ 保留 |
 | `remember` | OMC | Skill | 项目知识管理 | ✅ 保留（独特） |
 | `wiki` | OMC | Skill | 持久知识库 | ✅ 保留（独特） |
+| `csp-learning-loop` | CSP-native | Skill | 自动会话边界学习编排器，5 维度知识积累 | ✅ 保留（独特） |
 | `writer` | OMC/agents | Agent | 技术文档撰写 | 🔀 与 GSD doc-writer 合并 |
 
 ### 10. UI/前端

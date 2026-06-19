@@ -113,6 +113,7 @@ CSP uses a 5-layer architecture. Only the router (L0) loads at session start; re
 ├─────────────────────────────────────────────────────────┤
 │  L4  csp-runtime    Runtime (~300 tokens/skill)          │
 │     autopilot · knowledge management · self-improvement  │
+│     · continuous learning loop                           │
 └─────────────────────────────────────────────────────────┘
 ```
 

@@ -4,6 +4,24 @@ All notable changes to CSP will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [0.6.0] — 2026-06-18
+
+### 持续学习引擎
+
+新增 `csp-learning-loop` 技能，实现会话边界的自动知识提取与 5 维度智能积累。
+
+#### Added
+
+- `csp-learning-loop` — 自动会话边界学习编排器，提取并存储 5 个维度的知识：
+  - 项目核心信息（架构决策、技术栈、命名规范）
+  - 用户需求指令（任务模式、偏好工作流、常用命令）
+  - 开发者画像（编码风格、专长水平、工作习惯）
+  - 长期记忆（经验教训、历史决策、持久事实）
+  - 技能反馈（正面/负面信号、覆盖缺口）
+- `.csp/intel/` — 结构化智能存储目录，含 5 个维度文件 + 元数据 + 审计日志
+- 3 个 hook 脚本（Stop/PreCompact/SessionEnd）自动触发学习循环
+- 委托 csp-remember、csp-learner、skill-optimizer、csp-compound、csp-profile-user 执行提取
+
 ## [0.5.0] — 2026-06-15
 
 ### awesome-copilot Skills 深度融入

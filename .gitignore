@@ -52,3 +52,6 @@ tmp/
 
 # Generated output from scripts/
 scripts/descriptions_output.json
+
+# CSP Learning Loop intel (per-project, optional commit)
+.csp/intel/

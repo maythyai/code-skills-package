@@ -6025,6 +6025,21 @@
       "priority": 10
     },
     {
+      "name": "csp-learning-loop",
+      "description": "Automatic session-boundary learning orchestrator. Extracts and stores learnings across 5 dimensions (project core, user needs, developer profile, long-term memory, skill feedback). Delegates to csp-remember, csp-learner, skill-optimizer, csp-compound.",
+      "layer": 4,
+      "category": "runtime",
+      "triggers": {
+        "keywords": ["learning loop", "continuous learning", "intel", "session digest", "学习循环", "持续学习", "知识积累", "会话摘要"],
+        "file_patterns": [".csp/intel/*"],
+        "context": ["session_end", "pre_compact"]
+      },
+      "stack_detection": false,
+      "path": "csp-runtime/skills/csp-learning-loop/SKILL.md",
+      "deps": ["csp-remember", "csp-learner", "skill-optimizer", "csp-compound"],
+      "priority": 5
+    },
+    {
       "name": "csp-local-build-reminder",
       "description": "Remind the user to rebuild CSP after editing TypeScript when running from a local fork. Triggered automatically by the AI whenever it notices it (or the user) just changed a src/**/*.ts file in an CSP dev install.",
       "layer": 5,

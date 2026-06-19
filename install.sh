@@ -14,7 +14,7 @@ set -eo pipefail
 #   ./install.sh --list                     List detected platforms
 #   ./install.sh --help                     Show help
 
-readonly VERSION="0.5.0"
+readonly VERSION="0.6.0"
 readonly SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 readonly PROJECT_DIR="$(pwd)"
 
@@ -886,7 +886,7 @@ do_uninstall() {
 show_help() {
   cat <<'HELP'
 
-  CSP v0.5.0 — Code Skills Package 多平台安装器
+  CSP v0.6.0 — Code Skills Package 多平台安装器
 
   用法：
     ./install.sh                        自动检测并安装（项目级）

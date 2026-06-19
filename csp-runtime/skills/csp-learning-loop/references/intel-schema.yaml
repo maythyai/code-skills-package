@@ -1,0 +1,115 @@
+# .csp/intel/ Schema Specification
+# Version: 1.0
+# Used by csp-learning-loop to validate dimension files
+
+meta:
+  file: _meta.json
+  schema:
+    version: integer        # Schema version (currently 1)
+    schema_version: string  # Semver string "1.0"
+    created_at: string      # ISO-8601 timestamp
+    last_updated: string    # ISO-8601 timestamp
+    session_count: integer  # Total sessions that contributed
+    source_skills:          # Skills that feed into intel
+      - string
+    dimensions:
+      <dimension-key>:
+        entries: integer    # Number of entries in this dimension
+        last_touched: string # ISO-8601
+
+dimensions:
+  # Common frontmatter for all dimension files
+  frontmatter:
+    dimension: enum
+      - project-core
+      - user-needs
+      - developer-profile
+      - long-term-memory
+      - skill-feedback
+    updated_at: string      # ISO-8601
+    session_id: string      # Last-updating session identifier
+    confidence: float       # 0.0 - 1.0, aggregate of entries
+
+  # Dimension-specific entry schemas
+  project-core:
+    sections:
+      - Tech Stack
+      - Architecture Decisions
+      - Conventions
+      - Key Patterns
+    entry:
+      content: string       # The fact or decision
+      date: string          # ISO-8601 date
+      confidence: float     # 0.0 - 1.0
+      source: string        # Which skill produced this
+      rationale: string     # Optional: why this was decided
+
+  user-needs:
+    sections:
+      - Recurring Tasks
+      - Preferred Workflows
+      - Common Commands
+      - Explicit Preferences
+    entry:
+      content: string       # The pattern or preference
+      frequency: integer    # How many times observed
+      confidence: float
+      source: string
+      explicit: boolean     # User stated vs inferred
+
+  developer-profile:
+    sections:
+      - Coding Style
+      - Expertise Level
+      - Working Habits
+      - Communication Preferences
+    entry:
+      content: string
+      evidence_count: integer # Number of observations
+      confidence: float
+      source: string
+
+  long-term-memory:
+    sections:
+      - Lessons Learned
+      - Past Decisions
+      - Durable Facts
+      - Gotchas
+    entry:
+      content: string
+      date: string          # ISO-8601 date
+      source: string
+      confidence: float
+      context: string       # Brief context of when/why
+
+  skill-feedback:
+    sections:
+      - Positive Signals
+      - Negative Signals
+      - Missing Coverage
+      - Optimization Suggestions
+    entry:
+      content: string
+      date: string
+      skill_name: string    # Which skill this is about
+      gap_type: enum        # missing_trigger, missing_rule, missing_context, loophole, stale, bloat
+      severity: enum        # high, medium, low
+      source: string
+
+changelog:
+  file: changelog.jsonl
+  entry:
+    ts: string              # ISO-8601
+    session: string         # Session ID
+    dimension: string       # Which dimension was updated
+    action: enum            # append, merge, update, compress
+    entries_added: integer
+    entries_updated: integer
+    source: string          # Which skill triggered the update
+
+constraints:
+  max_tokens_per_dimension: 2000
+  max_entries_per_section: 50
+  confidence_decay_per_session: 0.02  # Entries not re-confirmed lose confidence
+  min_confidence_to_keep: 0.3          # Below this, entry is archived
+  dedup_threshold: 0.85                # Cosine similarity threshold for dedup

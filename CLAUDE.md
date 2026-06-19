@@ -1,4 +1,4 @@
-# CSP — Code Skills Package v0.5.0
+# CSP — Code Skills Package v0.6.0
 
 Unified AI coding skills from multiple open-source projects with auto-routing, lazy loading, and spec-driven workflows. MIT licensed.
 

@@ -165,6 +165,11 @@
             "type": "command",
             "command": "node \"$CLAUDE_PLUGIN_ROOT\"/scripts/run.cjs \"$CLAUDE_PLUGIN_ROOT\"/scripts/wiki-pre-compact.mjs",
             "timeout": 3
+          },
+          {
+            "type": "command",
+            "command": "node csp-runtime/skills/csp-learning-loop/scripts/learning-loop-precompact.mjs",
+            "timeout": 10
           }
         ]
       }
@@ -187,6 +192,11 @@
             "type": "command",
             "command": "node \"$CLAUDE_PLUGIN_ROOT\"/scripts/run.cjs \"$CLAUDE_PLUGIN_ROOT\"/scripts/code-simplifier.mjs",
             "timeout": 5
+          },
+          {
+            "type": "command",
+            "command": "node csp-runtime/skills/csp-learning-loop/scripts/learning-loop-delta.mjs",
+            "timeout": 15
           }
         ]
       }
@@ -204,6 +214,11 @@
             "type": "command",
             "command": "node \"$CLAUDE_PLUGIN_ROOT\"/scripts/run.cjs \"$CLAUDE_PLUGIN_ROOT\"/scripts/wiki-session-end.mjs",
             "timeout": 30
+          },
+          {
+            "type": "command",
+            "command": "node csp-runtime/skills/csp-learning-loop/scripts/learning-loop-session-end.mjs",
+            "timeout": 20
           }
         ]
       }
