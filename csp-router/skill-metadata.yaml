@@ -1,0 +1,262 @@
+# csp-router/skill-metadata.yaml
+# Auto-generated from SKILL.md v2 frontmatter
+# Used by confidence-router for fast metadata lookup
+# Regenerate: node scripts/build-skill-metadata.mjs
+
+version: 2.0
+generated_at: 2026-06-19T10:36:50.862Z
+skills:
+  csp-brainstorming:
+    phase: define
+    domain: architecture
+    role: specialist
+    scope: design
+    model: sonnet
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
+    related_skills:
+      - csp-plan-phase
+      - csp-spec-contract
+  csp-tdd:
+    phase: build
+    domain: testing
+    role: guardian
+    scope: implementation
+    model: sonnet
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
+    related_skills:
+      - csp-verification
+      - csp-code-review
+  spec-contract:
+    phase: define
+    domain: quality
+    role: guardian
+    scope: design
+    model: sonnet
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
+  spec-driven-development:
+    phase: build
+    domain: patterns
+    role: specialist
+    scope: implementation
+    model: sonnet
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
+  systematic-debugging:
+    phase: build
+    domain: quality
+    role: wizard
+    scope: implementation
+    model: sonnet
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
+  writing-plans:
+    phase: plan
+    domain: architecture
+    role: specialist
+    scope: design
+    model: sonnet
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
+  compound-learning:
+    phase: build
+    domain: quality
+    role: specialist
+    scope: implementation
+    model: sonnet
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
+  csp-explore:
+    phase: plan
+    domain: patterns
+    role: analyst
+    scope: analysis
+    model: sonnet
+    tools:
+      - Read
+      - Glob
+      - Grep
+      - WebFetch
+      - WebSearch
+  csp-implementation-phase:
+    phase: build
+    domain: patterns
+    role: specialist
+    scope: implementation
+    model: sonnet
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
+  csp-verify-phase:
+    phase: verify
+    domain: quality
+    role: guardian
+    scope: testing
+    model: sonnet
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
+  shipping-and-launch:
+    phase: ship
+    domain: devops
+    role: specialist
+    scope: implementation
+    model: sonnet
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
+  csp-code-review:
+    phase: review
+    domain: quality
+    role: reviewer
+    scope: review
+    model: sonnet
+    tools:
+      - Read
+      - Grep
+      - Glob
+  csp-performance-optimizer:
+    phase: build
+    domain: quality
+    role: specialist
+    scope: implementation
+    model: sonnet
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
+  csp-python-reviewer:
+    phase: review
+    domain: language
+    role: reviewer
+    scope: review
+    model: sonnet
+    tools:
+      - Read
+      - Grep
+      - Glob
+  csp-react-reviewer:
+    phase: review
+    domain: language
+    role: reviewer
+    scope: review
+    model: sonnet
+    tools:
+      - Read
+      - Grep
+      - Glob
+  e2e-testing:
+    phase: verify
+    domain: testing
+    role: specialist
+    scope: testing
+    model: sonnet
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
+  security-review:
+    phase: review
+    domain: security
+    role: reviewer
+    scope: review
+    model: sonnet
+    tools:
+      - Read
+      - Grep
+      - Glob
+  csp-debug:
+    phase: build
+    domain: quality
+    role: wizard
+    scope: implementation
+    model: sonnet
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
+  csp-hud:
+    role: "config-writer  # DOCUMENTATION ONLY - This skill writes to ~/.claude/ paths"
+    scope: "~/.claude/**  # DOCUMENTATION ONLY - Allowed write scope"
+  csp-learning-loop:
+    phase: ship
+    domain: quality
+    role: guardian
+    scope: analysis
+    model: sonnet
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
+  csp-plan:
+    phase: plan
+    domain: architecture
+    role: architect
+    scope: design
+    model: sonnet
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
+      - WebFetch
+      - WebSearch
