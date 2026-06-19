@@ -17,6 +17,11 @@
           },
           {
             "type": "command",
+            "command": "node shared/scripts/confidence-router.mjs",
+            "timeout": 3
+          },
+          {
+            "type": "command",
             "command": "node \"$CLAUDE_PLUGIN_ROOT\"/scripts/run.cjs \"$CLAUDE_PLUGIN_ROOT\"/scripts/skill-injector.mjs",
             "timeout": 3
           }

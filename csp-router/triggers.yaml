@@ -1446,3 +1446,60 @@ stack_rules:
   "intel":
     skills: [csp-learning-loop]
     weight: 40
+
+# ─── Intent Classification Patterns ───
+# Used by confidence-router for semantic intent matching
+intent_patterns:
+  implement_feature:
+    patterns: ["implement", "build", "create", "add", "develop", "实现", "开发", "添加", "创建"]
+    skills: [csp-implementation-phase, csp-implement, csp-tdd]
+    phase_hint: build
+    weight: 50
+
+  fix_bug:
+    patterns: ["fix", "debug", "resolve", "patch", "修复", "调试", "排错"]
+    skills: [csp-debug, csp-systematic-debugging]
+    phase_hint: build
+    weight: 50
+
+  design_architecture:
+    patterns: ["design", "architect", "structure", "plan", "设计", "架构", "规划"]
+    skills: [csp-plan-phase, csp-brainstorming, csp-solutioning-phase]
+    phase_hint: plan
+    weight: 50
+
+  review_code:
+    patterns: ["review", "audit", "check", "inspect", "审查", "审核", "检查"]
+    skills: [csp-code-review, csp-requesting-code-review]
+    phase_hint: review
+    weight: 50
+
+  optimize_performance:
+    patterns: ["optimize", "improve", "enhance", "speed up", "优化", "性能"]
+    skills: [csp-performance-optimizer]
+    phase_hint: build
+    weight: 45
+
+  write_tests:
+    patterns: ["test", "spec", "coverage", "测试", "覆盖率"]
+    skills: [csp-tdd, csp-e2e-testing, csp-test-engineer]
+    phase_hint: verify
+    weight: 45
+
+  deploy_release:
+    patterns: ["deploy", "release", "ship", "publish", "部署", "发布", "上线"]
+    skills: [csp-ship, csp-deployment]
+    phase_hint: ship
+    weight: 50
+
+  security_audit:
+    patterns: ["security", "vulnerability", "CVE", "安全", "漏洞"]
+    skills: [csp-security-review, csp-secure-phase]
+    phase_hint: review
+    weight: 50
+
+  explore_codebase:
+    patterns: ["explore", "understand", "navigate", "探索", "理解", "导览"]
+    skills: [csp-explore, csp-map-codebase, csp-code-tour-guide]
+    phase_hint: plan
+    weight: 45
