@@ -1,0 +1,71 @@
+# csp-router/state-config.yaml
+# State detection rules for the pre-router hook
+
+git:
+  command: "git status --porcelain --branch 2>/dev/null"
+  states:
+    clean:
+      pattern: "^$"
+      description: "Working tree clean"
+    dirty:
+      pattern: "^[ MADRCU?!]"
+      description: "Uncommitted changes"
+    conflict:
+      pattern: "^UU|^AA|^DD"
+      description: "Merge conflicts present"
+    detached:
+      pattern: "^## HEAD \\(no branch\\)"
+      description: "Detached HEAD state"
+
+tech_stack:
+  indicators:
+    python:
+      files: ["pyproject.toml", "setup.py", "requirements.txt", "Pipfile", "poetry.lock"]
+      confidence: 0.9
+    typescript:
+      files: ["tsconfig.json"]
+      confidence: 0.95
+    javascript:
+      files: ["package.json"]
+      confidence: 0.7
+    go:
+      files: ["go.mod"]
+      confidence: 0.95
+    rust:
+      files: ["Cargo.toml"]
+      confidence: 0.95
+    java:
+      files: ["pom.xml", "build.gradle", "build.gradle.kts"]
+      confidence: 0.9
+    swift:
+      files: ["Package.swift"]
+      confidence: 0.9
+      glob: ["*.xcodeproj"]
+    kotlin:
+      files: ["build.gradle.kts"]
+      confidence: 0.6
+    cpp:
+      files: ["CMakeLists.txt", "Makefile"]
+      confidence: 0.7
+
+phase:
+  signals:
+    planning:
+      files: [".planning/", "*.plan.md", "TODO.md", "ROADMAP.md"]
+      weight: 0.8
+    building:
+      files: ["src/", "lib/", "app/"]
+      weight: 0.6
+    testing:
+      files: ["tests/", "test/", "spec/", "__tests__/"]
+      weight: 0.7
+    deploying:
+      files: ["Dockerfile", "docker-compose.yml", ".github/workflows/", "k8s/"]
+      weight: 0.8
+    reviewing:
+      files: [".github/PULL_REQUEST_TEMPLATE.md", ".review/"]
+      weight: 0.5
+
+test_status:
+  command: "cat .test-results/latest.json 2>/dev/null || echo '{\"status\": \"unknown\"}'"
+  fallback: "unknown"
