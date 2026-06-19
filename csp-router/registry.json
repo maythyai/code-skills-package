@@ -2,6 +2,7 @@
   "version": "1.0",
   "total_skills": 498,
   "shards": [],
+  "skill_metadata": "skill-metadata.yaml",
   "skills": [
     {
       "name": "csp-brainstorming",
