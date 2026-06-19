@@ -4,6 +4,32 @@ All notable changes to CSP will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## v0.7.0 — 2026-06-19
+
+### 新增
+- `state-detector.mjs` — 状态感知前置 hook，自动检测 Git/技术栈/项目阶段/测试状态
+- `confidence-router.mjs` — 置信度评分路由器，三信号加权（关键词 40% + 意图 30% + 上下文 30%）
+- `SKILL.md v2` 规范 — 增加 phase/domain/role/model_rules/anti_rationalizations 等结构化字段
+- `skill-metadata.yaml` — V2 元数据集中注册表，供路由器快速查询
+- `SKPG (Skill Knowledge Graph)` — 轻量 JSON 知识图谱，建模技能关系/触发词/阶段/分类
+- `build-skpg.mjs` — SKPG 构建脚本，从 registry + metadata + SKILL.md 自动生成图谱
+- `validate-skill-v2.mjs` — SKILL.md v2 格式验证器
+- `intent_patterns` — triggers.yaml 新增意图分类模式
+
+### 增强
+- `csp-router` SKILL.md 升级到 v2，文档化新路由流水线
+- Top 20 高频技能升级到 v2 格式（phase/domain/role/anti_rationalizations）
+- `hooks-csp.json` 新增 state-detector 和 confidence-router hook
+
+### 统计
+| 指标 | v0.6.0 | v0.7.0 |
+|------|--------|--------|
+| Skills | 498 | 498 |
+| V2 Skills | 0 | 20 |
+| Hooks | 12 | 14 |
+| SKPG Nodes | 0 | 580+ |
+| SKPG Edges | 0 | 800+ |
+
 ## [0.6.0] — 2026-06-18
 
 ### 持续学习引擎

@@ -47,164 +47,164 @@
 
 ### 1. 代码审查 (Code Review)
 
-| 名称 | 来源 | 类型 | 描述 | 合并建议 |
-|------|------|------|------|----------|
-| `code-reviewer` | ECC/agents | Agent | 通用代码审查 | ✅ 保留为主 agent |
-| `code-reviewer` | OMC/agents | Agent | 严重度评级审查 | 🔀 合并入 ECC code-reviewer |
-| `gsd-code-reviewer` | GSD/agents | Agent | 生成 REVIEW.md | 🔀 合并，保留 REVIEW.md 输出格式 |
-| `code-simplifier` | ECC/agents | Agent | 代码简化 | ✅ 保留 |
-| `code-simplifier` | OMC/agents | Agent | 代码简化 | 🔀 与 ECC 合并 |
-| `code-review` | GSD | Workflow | 审查+修复流程 | ✅ 保留为主 workflow |
-| `code-review-fix` | GSD | Workflow | 修复审查发现 | ✅ 保留 |
-| `requesting-code-review` | SP | Skill | 请求审查方法论 | ✅ 保留为元技能 |
-| `receiving-code-review` | SP | Skill | 接收审查反馈方法论 | ✅ 保留为元技能 |
-| `cpp-reviewer` | ECC/agents | Agent | C++ 专项 | ✅ 保留 |
-| `csharp-reviewer` | ECC/agents | Agent | C# 专项 | ✅ 保留 |
-| `django-reviewer` | ECC/agents | Agent | Django 专项 | ✅ 保留 |
-| `fastapi-reviewer` | ECC/agents | Agent | FastAPI 专项 | ✅ 保留 |
-| `flutter-reviewer` | ECC/agents | Agent | Flutter 专项 | ✅ 保留 |
-| `fsharp-reviewer` | ECC/agents | Agent | F# 专项 | ✅ 保留 |
-| `go-reviewer` | ECC/agents | Agent | Go 专项 | ✅ 保留 |
-| `java-reviewer` | ECC/agents | Agent | Java 专项 | ✅ 保留 |
-| `kotlin-reviewer` | ECC/agents | Agent | Kotlin 专项 | ✅ 保留 |
-| `python-reviewer` | ECC/agents | Agent | Python 专项 | ✅ 保留 |
-| `react-reviewer` | ECC/agents | Agent | React 专项 | ✅ 保留 |
-| `rust-reviewer` | ECC/agents | Agent | Rust 专项 | ✅ 保留 |
-| `swift-reviewer` | ECC/agents | Agent | Swift 专项 | ✅ 保留 |
-| `typescript-reviewer` | ECC/agents | Agent | TypeScript 专项 | ✅ 保留 |
-| `php-reviewer` | ECC/agents | Agent | PHP 专项 | ✅ 保留 |
-| `security-reviewer` | ECC/agents | Agent | 安全审查 | ✅ 保留 |
-| `security-reviewer` | OMC/agents | Agent | 安全审查 | 🔀 合并入 ECC security-reviewer |
-| `critic` | OMC/agents | Agent | 多角度审查 | 🔀 功能与 code-reviewer 重叠 |
-| `comment-analyzer` | ECC/agents | Agent | 注释分析 | ✅ 保留（独特） |
-| `silent-failure-hunter` | ECC/agents | Agent | 静默失败检测 | ✅ 保留（独特） |
+| 名称 | 来源 | 类型 | 描述 | V2 | 合并建议 |
+|------|------|------|------|----|----------|
+| `code-reviewer` | ECC/agents | Agent | 通用代码审查 | — | ✅ 保留为主 agent |
+| `code-reviewer` | OMC/agents | Agent | 严重度评级审查 | — | 🔀 合并入 ECC code-reviewer |
+| `gsd-code-reviewer` | GSD/agents | Agent | 生成 REVIEW.md | — | 🔀 合并，保留 REVIEW.md 输出格式 |
+| `code-simplifier` | ECC/agents | Agent | 代码简化 | — | ✅ 保留 |
+| `code-simplifier` | OMC/agents | Agent | 代码简化 | — | 🔀 与 ECC 合并 |
+| `code-review` | GSD | Workflow | 审查+修复流程 | — | ✅ 保留为主 workflow |
+| `code-review-fix` | GSD | Workflow | 修复审查发现 | — | ✅ 保留 |
+| `requesting-code-review` | SP | Skill | 请求审查方法论 | — | ✅ 保留为元技能 |
+| `receiving-code-review` | SP | Skill | 接收审查反馈方法论 | — | ✅ 保留为元技能 |
+| `cpp-reviewer` | ECC/agents | Agent | C++ 专项 | — | ✅ 保留 |
+| `csharp-reviewer` | ECC/agents | Agent | C# 专项 | — | ✅ 保留 |
+| `django-reviewer` | ECC/agents | Agent | Django 专项 | — | ✅ 保留 |
+| `fastapi-reviewer` | ECC/agents | Agent | FastAPI 专项 | — | ✅ 保留 |
+| `flutter-reviewer` | ECC/agents | Agent | Flutter 专项 | — | ✅ 保留 |
+| `fsharp-reviewer` | ECC/agents | Agent | F# 专项 | — | ✅ 保留 |
+| `go-reviewer` | ECC/agents | Agent | Go 专项 | — | ✅ 保留 |
+| `java-reviewer` | ECC/agents | Agent | Java 专项 | — | ✅ 保留 |
+| `kotlin-reviewer` | ECC/agents | Agent | Kotlin 专项 | — | ✅ 保留 |
+| `python-reviewer` | ECC/agents | Agent | Python 专项 | — | ✅ 保留 |
+| `react-reviewer` | ECC/agents | Agent | React 专项 | — | ✅ 保留 |
+| `rust-reviewer` | ECC/agents | Agent | Rust 专项 | — | ✅ 保留 |
+| `swift-reviewer` | ECC/agents | Agent | Swift 专项 | — | ✅ 保留 |
+| `typescript-reviewer` | ECC/agents | Agent | TypeScript 专项 | — | ✅ 保留 |
+| `php-reviewer` | ECC/agents | Agent | PHP 专项 | — | ✅ 保留 |
+| `security-reviewer` | ECC/agents | Agent | 安全审查 | — | ✅ 保留 |
+| `security-reviewer` | OMC/agents | Agent | 安全审查 | — | 🔀 合并入 ECC security-reviewer |
+| `critic` | OMC/agents | Agent | 多角度审查 | — | 🔀 功能与 code-reviewer 重叠 |
+| `comment-analyzer` | ECC/agents | Agent | 注释分析 | — | ✅ 保留（独特） |
+| `silent-failure-hunter` | ECC/agents | Agent | 静默失败检测 | — | ✅ 保留（独特） |
 
 ### 2. 调试 (Debug)
 
-| 名称 | 来源 | 类型 | 描述 | 合并建议 |
-|------|------|------|------|----------|
-| `agent-introspection-debugging` | ECC/.agents | Skill | Agent 自省调试 | ✅ 保留（独特） |
-| `debugger` | OMC/agents | Agent | 根因分析 | 🔀 与 GSD debugger 合并 |
-| `gsd-debugger` | GSD/agents | Agent | 科学方法调试 | ✅ 保留为主 agent |
-| `gsd-debug-session-manager` | GSD/agents | Agent | 多轮调试管理 | ✅ 保留（独特架构） |
-| `debug` | OMC | Skill+Cmd | 会话调试 | 🔀 合并入统一 debug workflow |
-| `trace` | OMC | Skill | 证据驱动追踪 | 🔀 与 GSD forensics 合并 |
-| `tracer` | OMC/agents | Agent | 因果追踪 | 🔀 与 trace skill 合并 |
-| `systematic-debugging` | SP | Skill | 系统化调试方法论 | ✅ 保留为元技能 |
-| `debug` | GSD | Workflow+Cmd | 调试流程 | ✅ 保留为主 workflow |
-| `diagnose-issues` | GSD | Workflow | 问题诊断 | 🔀 与 debug 合并 |
-| `forensics` | GSD | Workflow | 取证分析 | ✅ 保留（独特） |
+| 名称 | 来源 | 类型 | 描述 | V2 | 合并建议 |
+|------|------|------|------|----|----------|
+| `agent-introspection-debugging` | ECC/.agents | Skill | Agent 自省调试 | — | ✅ 保留（独特） |
+| `debugger` | OMC/agents | Agent | 根因分析 | — | 🔀 与 GSD debugger 合并 |
+| `gsd-debugger` | GSD/agents | Agent | 科学方法调试 | — | ✅ 保留为主 agent |
+| `gsd-debug-session-manager` | GSD/agents | Agent | 多轮调试管理 | — | ✅ 保留（独特架构） |
+| `debug` | OMC | Skill+Cmd | 会话调试 | — | 🔀 合并入统一 debug workflow |
+| `trace` | OMC | Skill | 证据驱动追踪 | — | 🔀 与 GSD forensics 合并 |
+| `tracer` | OMC/agents | Agent | 因果追踪 | — | 🔀 与 trace skill 合并 |
+| `systematic-debugging` | SP | Skill | 系统化调试方法论 | — | ✅ 保留为元技能 |
+| `debug` | GSD | Workflow+Cmd | 调试流程 | — | ✅ 保留为主 workflow |
+| `diagnose-issues` | GSD | Workflow | 问题诊断 | — | 🔀 与 debug 合并 |
+| `forensics` | GSD | Workflow | 取证分析 | — | ✅ 保留（独特） |
 
 ### 3. 测试 / TDD
 
-| 名称 | 来源 | 类型 | 描述 | 合并建议 |
-|------|------|------|------|----------|
-| `tdd-workflow` | ECC/.kiro+.agents | Skill | TDD 工作流 | 🔀 与 SP TDD 合并 |
-| `test-driven-development` | SP | Skill | TDD 方法论 | ✅ 保留为元技能 |
-| `tdd-guide` | ECC/agents | Agent | TDD 指导 | 🔀 与 tdd-workflow 合并 |
-| `test-engineer` | OMC/agents | Agent | 测试策略 | 🔀 合并入 ECC tdd-guide |
-| `qa-tester` | OMC/agents | Agent | CLI 交互测试 | ✅ 保留（独特 tmux 方式） |
-| `e2e-testing` | ECC/.kiro | Skill | E2E 测试 | ✅ 保留 |
-| `e2e-runner` | ECC/agents | Agent | E2E 运行 | ✅ 保留 |
-| `cpp-testing` | ECC/.kiro | Skill | C++ 测试 | ✅ 保留 |
-| `golang-testing` | ECC/.kiro | Skill | Go 测试 | ✅ 保留 |
-| `kotlin-testing` | ECC/.kiro | Skill | Kotlin 测试 | ✅ 保留 |
-| `python-testing` | ECC/.kiro | Skill | Python 测试 | ✅ 保留 |
-| `react-testing` | ECC/.kiro | Skill | React 测试 | ✅ 保留 |
-| `rust-testing` | ECC/.kiro | Skill | Rust 测试 | ✅ 保留 |
-| `add-tests` | GSD | Workflow | 添加测试 | ✅ 保留（GSD 集成） |
-| `ultraqa` | OMC | Skill | QA 循环 | ✅ 保留（独特循环模式） |
+| 名称 | 来源 | 类型 | 描述 | V2 | 合并建议 |
+|------|------|------|------|----|----------|
+| `tdd-workflow` | ECC/.kiro+.agents | Skill | TDD 工作流 | — | 🔀 与 SP TDD 合并 |
+| `test-driven-development` | SP | Skill | TDD 方法论 | — | ✅ 保留为元技能 |
+| `tdd-guide` | ECC/agents | Agent | TDD 指导 | — | 🔀 与 tdd-workflow 合并 |
+| `test-engineer` | OMC/agents | Agent | 测试策略 | — | 🔀 合并入 ECC tdd-guide |
+| `qa-tester` | OMC/agents | Agent | CLI 交互测试 | — | ✅ 保留（独特 tmux 方式） |
+| `e2e-testing` | ECC/.kiro | Skill | E2E 测试 | — | ✅ 保留 |
+| `e2e-runner` | ECC/agents | Agent | E2E 运行 | — | ✅ 保留 |
+| `cpp-testing` | ECC/.kiro | Skill | C++ 测试 | — | ✅ 保留 |
+| `golang-testing` | ECC/.kiro | Skill | Go 测试 | — | ✅ 保留 |
+| `kotlin-testing` | ECC/.kiro | Skill | Kotlin 测试 | — | ✅ 保留 |
+| `python-testing` | ECC/.kiro | Skill | Python 测试 | — | ✅ 保留 |
+| `react-testing` | ECC/.kiro | Skill | React 测试 | — | ✅ 保留 |
+| `rust-testing` | ECC/.kiro | Skill | Rust 测试 | — | ✅ 保留 |
+| `add-tests` | GSD | Workflow | 添加测试 | — | ✅ 保留（GSD 集成） |
+| `ultraqa` | OMC | Skill | QA 循环 | — | ✅ 保留（独特循环模式） |
 
 ### 4. 规划 (Planning)
 
-| 名称 | 来源 | 类型 | 描述 | 合并建议 |
-|------|------|------|------|----------|
-| `gsd-planner` | GSD/agents | Agent | 阶段规划 | ✅ 保留为主 agent |
-| `gsd-plan-checker` | GSD/agents | Agent | 计划验证 | ✅ 保留 |
-| `gsd-roadmapper` | GSD/agents | Agent | 路线图生成 | ✅ 保留（独特） |
-| `plan-phase` | GSD | Workflow+Cmd | 规划阶段 | ✅ 保留（GSD 核心） |
-| `plan` | OMC | Skill | 策略规划+访谈 | 🔀 方法论合并入 GSD |
-| `ralplan` | OMC | Skill | 共识规划入口 | 🔀 模糊请求拦截合并 |
-| `planner` | OMC/agents | Agent | 策略规划顾问 | 🔀 与 GSD planner 合并 |
-| `analyst` | OMC/agents | Agent | 需求分析 | 🔀 与 GSD assumptions-analyzer 合并 |
-| `writing-plans` | SP | Skill | 计划撰写方法论 | ✅ 保留为元技能 |
-| `executing-plans` | SP | Skill | 计划执行方法论 | ✅ 保留为元技能 |
-| `sketch` | GSD | Workflow+Cmd | 快速草图 | ✅ 保留（独特） |
-| `spike` | GSD | Workflow+Cmd | 技术探查 | ✅ 保留（独特） |
-| `ultraplan-phase` | GSD | Workflow | 超级规划 | ✅ 保留 |
-| `discuss-phase` | GSD | Workflow | 讨论阶段 | ✅ 保留（独特） |
+| 名称 | 来源 | 类型 | 描述 | V2 | 合并建议 |
+|------|------|------|------|----|----------|
+| `gsd-planner` | GSD/agents | Agent | 阶段规划 | — | ✅ 保留为主 agent |
+| `gsd-plan-checker` | GSD/agents | Agent | 计划验证 | — | ✅ 保留 |
+| `gsd-roadmapper` | GSD/agents | Agent | 路线图生成 | — | ✅ 保留（独特） |
+| `plan-phase` | GSD | Workflow+Cmd | 规划阶段 | — | ✅ 保留（GSD 核心） |
+| `plan` | OMC | Skill | 策略规划+访谈 | — | 🔀 方法论合并入 GSD |
+| `ralplan` | OMC | Skill | 共识规划入口 | — | 🔀 模糊请求拦截合并 |
+| `planner` | OMC/agents | Agent | 策略规划顾问 | — | 🔀 与 GSD planner 合并 |
+| `analyst` | OMC/agents | Agent | 需求分析 | — | 🔀 与 GSD assumptions-analyzer 合并 |
+| `writing-plans` | SP | Skill | 计划撰写方法论 | — | ✅ 保留为元技能 |
+| `executing-plans` | SP | Skill | 计划执行方法论 | — | ✅ 保留为元技能 |
+| `sketch` | GSD | Workflow+Cmd | 快速草图 | — | ✅ 保留（独特） |
+| `spike` | GSD | Workflow+Cmd | 技术探查 | — | ✅ 保留（独特） |
+| `ultraplan-phase` | GSD | Workflow | 超级规划 | — | ✅ 保留 |
+| `discuss-phase` | GSD | Workflow | 讨论阶段 | — | ✅ 保留（独特） |
 
 ### 5. 研究 (Research)
 
-| 名称 | 来源 | 类型 | 描述 | 合并建议 |
-|------|------|------|------|----------|
-| `deep-research` | ECC/.kiro+.agents | Skill | 多源深度研究 | ✅ 保留（firecrawl+exa） |
-| `exa-search` | ECC/.agents | Skill | Exa 神经搜索 | ✅ 保留 |
-| `search-first` | ECC/.kiro | Skill | 搜索优先策略 | ✅ 保留 |
-| `gsd-project-researcher` | GSD/agents | Agent | 项目生态研究 | ✅ 保留（GSD 集成） |
-| `gsd-phase-researcher` | GSD/agents | Agent | 阶段实施研究 | ✅ 保留 |
-| `gsd-ai-researcher` | GSD/agents | Agent | AI 框架研究 | ✅ 保留 |
-| `gsd-domain-researcher` | GSD/agents | Agent | 业务领域研究 | ✅ 保留 |
-| `gsd-research-synthesizer` | GSD/agents | Agent | 研究综合 | ✅ 保留 |
-| `gsd-advisor-researcher` | GSD/agents | Agent | 灰色决策研究 | ✅ 保留 |
-| `autoresearch` | OMC | Skill | 状态化改进循环 | ✅ 保留（独特循环模式） |
-| `deep-dive` | OMC | Skill | 因果调查+需求结晶 | 🔀 调查部分与 forensics 合并 |
-| `deep-interview` | OMC | Skill | 苏格拉底访谈 | ✅ 保留（独特） |
-| `external-context` | OMC | Skill | 并行文档搜索 | 🔀 与 ECC documentation-lookup 合并 |
-| `document-specialist` | OMC/agents | Agent | 外部文档专家 | 🔀 与 ECC docs-lookup 合并 |
+| 名称 | 来源 | 类型 | 描述 | V2 | 合并建议 |
+|------|------|------|------|----|----------|
+| `deep-research` | ECC/.kiro+.agents | Skill | 多源深度研究 | — | ✅ 保留（firecrawl+exa） |
+| `exa-search` | ECC/.agents | Skill | Exa 神经搜索 | — | ✅ 保留 |
+| `search-first` | ECC/.kiro | Skill | 搜索优先策略 | — | ✅ 保留 |
+| `gsd-project-researcher` | GSD/agents | Agent | 项目生态研究 | — | ✅ 保留（GSD 集成） |
+| `gsd-phase-researcher` | GSD/agents | Agent | 阶段实施研究 | — | ✅ 保留 |
+| `gsd-ai-researcher` | GSD/agents | Agent | AI 框架研究 | — | ✅ 保留 |
+| `gsd-domain-researcher` | GSD/agents | Agent | 业务领域研究 | — | ✅ 保留 |
+| `gsd-research-synthesizer` | GSD/agents | Agent | 研究综合 | — | ✅ 保留 |
+| `gsd-advisor-researcher` | GSD/agents | Agent | 灰色决策研究 | — | ✅ 保留 |
+| `autoresearch` | OMC | Skill | 状态化改进循环 | — | ✅ 保留（独特循环模式） |
+| `deep-dive` | OMC | Skill | 因果调查+需求结晶 | — | 🔀 调查部分与 forensics 合并 |
+| `deep-interview` | OMC | Skill | 苏格拉底访谈 | — | ✅ 保留（独特） |
+| `external-context` | OMC | Skill | 并行文档搜索 | — | 🔀 与 ECC documentation-lookup 合并 |
+| `document-specialist` | OMC/agents | Agent | 外部文档专家 | — | 🔀 与 ECC docs-lookup 合并 |
 
 ### 6. 验证 (Verification)
 
-| 名称 | 来源 | 类型 | 描述 | 合并建议 |
-|------|------|------|------|----------|
-| `verification-loop` | ECC/.kiro+.agents | Skill | 综合验证系统 | 🔀 合并为统一验证层 |
-| `verification-before-completion` | SP | Skill | 完成前验证方法论 | ✅ 保留为元技能 |
-| `gsd-verifier` | GSD/agents | Agent | 目标回溯验证 | ✅ 保留（GSD 集成） |
-| `gsd-integration-checker` | GSD/agents | Agent | 跨阶段集成验证 | ✅ 保留 |
-| `gsd-nyquist-auditor` | GSD/agents | Agent | 覆盖率填充 | ✅ 保留（独特） |
-| `verify-work` | GSD | Workflow+Cmd | 工作验证 | ✅ 保留 |
-| `validate-phase` | GSD | Workflow+Cmd | 阶段验证 | ✅ 保留 |
-| `verify-phase` | GSD | Workflow | 阶段验证 | 🔀 与 validate-phase 合并 |
-| `verify` | OMC | Skill | 变更验证 | 🔀 合并入统一验证层 |
-| `visual-verdict` | OMC | Skill | 视觉 QA | ✅ 保留（独特） |
-| `verifier` | OMC/agents | Agent | 验证策略 | 🔀 与 GSD verifier 合并 |
+| 名称 | 来源 | 类型 | 描述 | V2 | 合并建议 |
+|------|------|------|------|----|----------|
+| `verification-loop` | ECC/.kiro+.agents | Skill | 综合验证系统 | — | 🔀 合并为统一验证层 |
+| `verification-before-completion` | SP | Skill | 完成前验证方法论 | — | ✅ 保留为元技能 |
+| `gsd-verifier` | GSD/agents | Agent | 目标回溯验证 | — | ✅ 保留（GSD 集成） |
+| `gsd-integration-checker` | GSD/agents | Agent | 跨阶段集成验证 | — | ✅ 保留 |
+| `gsd-nyquist-auditor` | GSD/agents | Agent | 覆盖率填充 | — | ✅ 保留（独特） |
+| `verify-work` | GSD | Workflow+Cmd | 工作验证 | — | ✅ 保留 |
+| `validate-phase` | GSD | Workflow+Cmd | 阶段验证 | — | ✅ 保留 |
+| `verify-phase` | GSD | Workflow | 阶段验证 | — | 🔀 与 validate-phase 合并 |
+| `verify` | OMC | Skill | 变更验证 | — | 🔀 合并入统一验证层 |
+| `visual-verdict` | OMC | Skill | 视觉 QA | — | ✅ 保留（独特） |
+| `verifier` | OMC/agents | Agent | 验证策略 | — | 🔀 与 GSD verifier 合并 |
 
 ### 7. 安全 (Security)
 
-| 名称 | 来源 | 类型 | 描述 | 合并建议 |
-|------|------|------|------|----------|
-| `security-review` | ECC/.kiro+.agents | Skill | 安全审查 | ✅ 保留为主 skill |
-| `security-reviewer` | ECC/agents | Agent | 安全审查 agent | ✅ 保留 |
-| `django-security` | ECC/.kiro | Skill | Django 安全 | ✅ 保留 |
-| `springboot-security` | ECC/.kiro | Skill | Spring Boot 安全 | ✅ 保留 |
-| `gsd-security-auditor` | GSD/agents | Agent | 安全审计 | ✅ 保留（GSD 集成） |
-| `secure-phase` | GSD | Workflow+Cmd | 安全阶段 | ✅ 保留 |
-| `security-reviewer` | OMC/agents | Agent | 安全漏洞检测 | 🔀 合并入 ECC security-reviewer |
+| 名称 | 来源 | 类型 | 描述 | V2 | 合并建议 |
+|------|------|------|------|----|----------|
+| `security-review` | ECC/.kiro+.agents | Skill | 安全审查 | — | ✅ 保留为主 skill |
+| `security-reviewer` | ECC/agents | Agent | 安全审查 agent | — | ✅ 保留 |
+| `django-security` | ECC/.kiro | Skill | Django 安全 | — | ✅ 保留 |
+| `springboot-security` | ECC/.kiro | Skill | Spring Boot 安全 | — | ✅ 保留 |
+| `gsd-security-auditor` | GSD/agents | Agent | 安全审计 | — | ✅ 保留（GSD 集成） |
+| `secure-phase` | GSD | Workflow+Cmd | 安全阶段 | — | ✅ 保留 |
+| `security-reviewer` | OMC/agents | Agent | 安全漏洞检测 | — | 🔀 合并入 ECC security-reviewer |
 
 ### 8. 自主执行 & Agent 编排
 
-| 名称 | 来源 | 类型 | 描述 | 合并建议 |
-|------|------|------|------|----------|
-| `autonomous-loops` | ECC/.kiro | Skill | 自主循环架构 | ✅ 保留（参考文档） |
-| `loop-operator` | ECC/agents | Agent | 自主循环运行 | ✅ 保留 |
-| `dmux-workflows` | ECC/.agents | Skill | 多 agent tmux 编排 | ✅ 保留（独特） |
-| `gsd-executor` | GSD/agents | Agent | 计划执行器 | ✅ 保留（GSD 核心） |
-| `autonomous` | GSD | Workflow+Cmd | 自主执行 | ✅ 保留 |
-| `autopilot` | OMC | Skill | 全自动执行 | ✅ 保留（独特 UI） |
-| `ralph` | OMC | Skill | 自指循环到完成 | ✅ 保留（独特） |
-| `ultrawork` | OMC | Skill | 并行执行引擎 | ✅ 保留 |
-| `team` | OMC | Skill | N agent 协调 | ✅ 保留 |
-| `omc-teams` | OMC | Skill | tmux 团队运行时 | 🔀 与 dmux-workflows 合并 |
-| `sciomc` | OMC | Skill | 并行科学家 agents | 🔀 与 team 合并 |
-| `dispatching-parallel-agents` | SP | Skill | 并行 agent 调度方法论 | ✅ 保留为元技能 |
-| `subagent-driven-development` | SP | Skill | 子 agent 驱动开发 | ✅ 保留为元技能 |
-| `executor` | OMC/agents | Agent | 任务执行 | 🔀 与 GSD executor 合并 |
-| `chief-of-staff` | ECC/agents | Agent | 通信参谋 | ✅ 保留（独特） |
+| 名称 | 来源 | 类型 | 描述 | V2 | 合并建议 |
+|------|------|------|------|----|----------|
+| `autonomous-loops` | ECC/.kiro | Skill | 自主循环架构 | — | ✅ 保留（参考文档） |
+| `loop-operator` | ECC/agents | Agent | 自主循环运行 | — | ✅ 保留 |
+| `dmux-workflows` | ECC/.agents | Skill | 多 agent tmux 编排 | — | ✅ 保留（独特） |
+| `gsd-executor` | GSD/agents | Agent | 计划执行器 | — | ✅ 保留（GSD 核心） |
+| `autonomous` | GSD | Workflow+Cmd | 自主执行 | — | ✅ 保留 |
+| `autopilot` | OMC | Skill | 全自动执行 | — | ✅ 保留（独特 UI） |
+| `ralph` | OMC | Skill | 自指循环到完成 | — | ✅ 保留（独特） |
+| `ultrawork` | OMC | Skill | 并行执行引擎 | — | ✅ 保留 |
+| `team` | OMC | Skill | N agent 协调 | — | ✅ 保留 |
+| `omc-teams` | OMC | Skill | tmux 团队运行时 | — | 🔀 与 dmux-workflows 合并 |
+| `sciomc` | OMC | Skill | 并行科学家 agents | — | 🔀 与 team 合并 |
+| `dispatching-parallel-agents` | SP | Skill | 并行 agent 调度方法论 | — | ✅ 保留为元技能 |
+| `subagent-driven-development` | SP | Skill | 子 agent 驱动开发 | — | ✅ 保留为元技能 |
+| `executor` | OMC/agents | Agent | 任务执行 | — | 🔀 与 GSD executor 合并 |
+| `chief-of-staff` | ECC/agents | Agent | 通信参谋 | — | ✅ 保留（独特） |
 
 ### 9. 文档处理
 
-| 名称 | 来源 | 类型 | 描述 | 合并建议 |
-|------|------|------|------|----------|
+| 名称 | 来源 | 类型 | 描述 | V2 | 合并建议 |
+|------|------|------|------|----|----------|
 | `documentation-lookup` | ECC/.cursor+.agents | Skill | Context7 文档查询 | ✅ 保留 |
 | `docs-lookup` | ECC/agents | Agent | 文档查询 agent | 🔀 与 documentation-lookup 合并 |
 | `doc-updater` | ECC/agents | Agent | 文档更新 | ✅ 保留 |
@@ -216,13 +216,13 @@
 | `ingest-docs` | GSD | Workflow+Cmd | 文档摄入 | ✅ 保留 |
 | `remember` | OMC | Skill | 项目知识管理 | ✅ 保留（独特） |
 | `wiki` | OMC | Skill | 持久知识库 | ✅ 保留（独特） |
-| `csp-learning-loop` | CSP-native | Skill | 自动会话边界学习编排器，5 维度知识积累 | ✅ 保留（独特） |
+| `csp-learning-loop` | CSP-native | Skill | 自动会话边界学习编排器，5 维度知识积累 | ✅ | ✅ 保留（独特） |
 | `writer` | OMC/agents | Agent | 技术文档撰写 | 🔀 与 GSD doc-writer 合并 |
 
 ### 10. UI/前端
 
-| 名称 | 来源 | 类型 | 描述 | 合并建议 |
-|------|------|------|------|----------|
+| 名称 | 来源 | 类型 | 描述 | V2 | 合并建议 |
+|------|------|------|------|----|----------|
 | `frontend-patterns` | ECC/.kiro+.agents | Skill | 前端模式 (React 内容已分离至 react-patterns) | ✅ 保留 |
 | `frontend-slides` | ECC/.cursor+.agents | Skill | HTML 演示 | ✅ 保留（独特） |
 | `react-patterns` | ECC/.kiro | Skill | React 模式 | ✅ 保留 |
@@ -390,16 +390,16 @@
 
 ### 16. 规范驱动开发 (Spec-Driven Development)
 
-| 名称 | 来源 | 类型 | 描述 | 合并建议 |
-|------|------|------|------|----------|
-| `csp-spec-driven-development` | CSP/meta | Skill | 规范驱动方法论 + delta specs + 工件 DAG | ✅ 保留（核心方法论） |
-| `csp-spec-contract` | CSP/meta | Skill | 输入 → SPEC 契约生成 | ✅ 保留 |
-| `csp-spec-phase` | GSD/workflow | Workflow | 苏格拉底访谈 + 模糊度评分 → CSPEC.md | ✅ 保留（需求澄清） |
-| `csp-planning-phase` | GSD/workflow | Command | 规划阶段：PRD + 用户故事 + SPEC | ✅ 保留 |
-| `csp-execute-phase` | GSD/workflow | Workflow | 按计划执行任务 | ✅ 保留 |
-| `csp-verify-phase` | GSD/workflow | Workflow | 目标反向 + 三维度验证 | ✅ 保留 |
-| `csp-hotfix` | CSP/workflow | Workflow | 热修复流程（跳过设计，直接修复+验证） | ✅ 保留 |
-| `csp-tweak` | CSP/workflow | Workflow | 微调流程（轻量级小改动，简化验证） | ✅ 保留 |
+| 名称 | 来源 | 类型 | 描述 | V2 | 合并建议 |
+|------|------|------|------|----|----------|
+| `csp-spec-driven-development` | CSP/meta | Skill | 规范驱动方法论 + delta specs + 工件 DAG | ✅ | ✅ 保留（核心方法论） |
+| `csp-spec-contract` | CSP/meta | Skill | 输入 → SPEC 契约生成 | ✅ | ✅ 保留 |
+| `csp-spec-phase` | GSD/workflow | Workflow | 苏格拉底访谈 + 模糊度评分 → CSPEC.md | ✅ | ✅ 保留（需求澄清） |
+| `csp-planning-phase` | GSD/workflow | Command | 规划阶段：PRD + 用户故事 + SPEC | ✅ | ✅ 保留 |
+| `csp-execute-phase` | GSD/workflow | Workflow | 按计划执行任务 | ✅ | ✅ 保留 |
+| `csp-verify-phase` | GSD/workflow | Workflow | 目标反向 + 三维度验证 | ✅ | ✅ 保留 |
+| `csp-hotfix` | CSP/workflow | Workflow | 热修复流程（跳过设计，直接修复+验证） | ✅ | ✅ 保留 |
+| `csp-tweak` | CSP/workflow | Workflow | 微调流程（轻量级小改动，简化验证） | ✅ | ✅ 保留 |
 | `artifact-verification.md` | CSP/workflow | Reference | completeness/correctness/coherence | ✅ 保留 |
 | `change-artifacts/` templates | CSP/workflow | Templates | proposal/spec/design/tasks | ✅ 保留 |
 | Delta Specs | CSP 概念 | 模式 | ADDED/MODIFIED/REMOVED 增量合并 | ✅ 保留（brownfield） |
@@ -407,41 +407,41 @@
 
 ### 17. AI 工程 (AI/LLM Engineering)
 
-| 名称 | 来源 | 类型 | 描述 | 合并建议 |
-|------|------|------|------|----------|
-| `csp-rag-architecture` | csp-patterns/skills | Skill | RAG 架构模式（chunking、embedding、向量数据库、hybrid search、reranking、evaluation） | ✅ 保留（独特） |
-| `csp-llm-app-development` | csp-patterns/skills | Skill | LLM 应用开发（prompt 管理、function calling、streaming、multi-model routing、guardrails） | ✅ 保留（独特） |
-| `csp-vllm-serving` | csp-patterns/skills | Skill | vLLM 推理部署（Docker 部署、continuous batching、tensor parallelism、量化、K8s 扩展） | ✅ 保留（独特） |
-| `csp-prompt-engineering` | csp-patterns/skills | Skill | Prompt 工程化（模板管理、版本控制、评测、prompt 模式库、安全护栏） | ✅ 保留（独特） |
-| `csp-rag-architect` | csp-patterns/agents | Agent | RAG 架构设计审查 | ✅ 保留（独特） |
-| `csp-llm-app-reviewer` | csp-patterns/agents | Agent | LLM 应用代码审查 | ✅ 保留（独特） |
+| 名称 | 来源 | 类型 | 描述 | V2 | 合并建议 |
+|------|------|------|------|----|----------|
+| `csp-rag-architecture` | csp-patterns/skills | Skill | RAG 架构模式（chunking、embedding、向量数据库、hybrid search、reranking、evaluation） | ✅ | ✅ 保留（独特） |
+| `csp-llm-app-development` | csp-patterns/skills | Skill | LLM 应用开发（prompt 管理、function calling、streaming、multi-model routing、guardrails） | ✅ | ✅ 保留（独特） |
+| `csp-vllm-serving` | csp-patterns/skills | Skill | vLLM 推理部署（Docker 部署、continuous batching、tensor parallelism、量化、K8s 扩展） | ✅ | ✅ 保留（独特） |
+| `csp-prompt-engineering` | csp-patterns/skills | Skill | Prompt 工程化（模板管理、版本控制、评测、prompt 模式库、安全护栏） | ✅ | ✅ 保留（独特） |
+| `csp-rag-architect` | csp-patterns/agents | Agent | RAG 架构设计审查 | ✅ | ✅ 保留（独特） |
+| `csp-llm-app-reviewer` | csp-patterns/agents | Agent | LLM 应用代码审查 | ✅ | ✅ 保留（独特） |
 
 ### 18. DevOps/基础设施 (Infrastructure & Data)
 
-| 名称 | 来源 | 类型 | 描述 | 合并建议 |
-|------|------|------|------|----------|
-| `csp-data-pipeline-patterns` | csp-patterns/skills | Skill | 数据管道（Airflow、dbt、数据质量检查、ODPS/MaxCompute、CDC） | ✅ 保留（独特） |
-| `csp-cicd-pipelines` | csp-patterns/skills | Skill | CI/CD 管道（GitHub Actions、GitLab CI、matrix builds、caching、monorepo） | ✅ 保留（独特） |
-| `csp-infrastructure-as-code` | csp-patterns/skills | Skill | 基础设施即代码（Terraform、Pulumi、GitOps、secrets 管理） | ✅ 保留（独特） |
-| `csp-kubernetes-patterns` | csp-patterns/skills | Skill | Kubernetes（Deployment/Service/Ingress、HPA/VPA、Helm、Kustomize、多集群） | ✅ 保留（独特） |
-| `csp-cloud-platform-patterns` | csp-patterns/skills | Skill | 云平台模式（AWS/GCP/Azure serverless、managed DB、CDN、成本优化） | ✅ 保留（独特） |
-| `csp-data-pipeline-reviewer` | csp-patterns/agents | Agent | 数据管道审查 | ✅ 保留（独特） |
+| 名称 | 来源 | 类型 | 描述 | V2 | 合并建议 |
+|------|------|------|------|----|----------|
+| `csp-data-pipeline-patterns` | csp-patterns/skills | Skill | 数据管道（Airflow、dbt、数据质量检查、ODPS/MaxCompute、CDC） | ✅ | ✅ 保留（独特） |
+| `csp-cicd-pipelines` | csp-patterns/skills | Skill | CI/CD 管道（GitHub Actions、GitLab CI、matrix builds、caching、monorepo） | ✅ | ✅ 保留（独特） |
+| `csp-infrastructure-as-code` | csp-patterns/skills | Skill | 基础设施即代码（Terraform、Pulumi、GitOps、secrets 管理） | ✅ | ✅ 保留（独特） |
+| `csp-kubernetes-patterns` | csp-patterns/skills | Skill | Kubernetes（Deployment/Service/Ingress、HPA/VPA、Helm、Kustomize、多集群） | ✅ | ✅ 保留（独特） |
+| `csp-cloud-platform-patterns` | csp-patterns/skills | Skill | 云平台模式（AWS/GCP/Azure serverless、managed DB、CDN、成本优化） | ✅ | ✅ 保留（独特） |
+| `csp-data-pipeline-reviewer` | csp-patterns/agents | Agent | 数据管道审查 | ✅ | ✅ 保留（独特） |
 
 ### 19. 重构/遗留系统 (Refactoring & Legacy)
 
-| 名称 | 来源 | 类型 | 描述 | 合并建议 |
-|------|------|------|------|----------|
-| `csp-refactoring-strategies` | csp-patterns/skills | Skill | 大规模重构策略（Strangler Fig、Branch by Abstraction、Parallel Run） | ✅ 保留（独特） |
-| `csp-tech-debt-assessment` | csp-patterns/skills | Skill | 技术债务评估（代码异味、复杂度度量、依赖健康度、优先级排序） | ✅ 保留（独特） |
-| `csp-legacy-modernization` | csp-workflow/skills | Workflow | 遗留系统现代化工作流（评估→规划→分阶段迁移→验证） | ✅ 保留（独特） |
+| 名称 | 来源 | 类型 | 描述 | V2 | 合并建议 |
+|------|------|------|------|----|----------|
+| `csp-refactoring-strategies` | csp-patterns/skills | Skill | 大规模重构策略（Strangler Fig、Branch by Abstraction、Parallel Run） | ✅ | ✅ 保留（独特） |
+| `csp-tech-debt-assessment` | csp-patterns/skills | Skill | 技术债务评估（代码异味、复杂度度量、依赖健康度、优先级排序） | ✅ | ✅ 保留（独特） |
+| `csp-legacy-modernization` | csp-workflow/skills | Workflow | 遗留系统现代化工作流（评估→规划→分阶段迁移→验证） | ✅ | ✅ 保留（独特） |
 
 ### 20. 移动端 (Mobile Development)
 
-| 名称 | 来源 | 类型 | 描述 | 合并建议 |
-|------|------|------|------|----------|
-| `csp-react-native-patterns` | csp-patterns/skills | Skill | React Native（导航、状态管理、原生桥接、新架构、Expo） | ✅ 保留（独特） |
-| `csp-mobile-performance` | csp-patterns/skills | Skill | 移动端性能优化（启动优化、内存管理、滚动性能、包体积、电量） | ✅ 保留（独特） |
-| `csp-cross-platform-strategy` | csp-patterns/skills | Skill | 跨平台策略（RN vs Flutter vs Native 选型、代码共享、平台适配） | ✅ 保留（独特） |
+| 名称 | 来源 | 类型 | 描述 | V2 | 合并建议 |
+|------|------|------|------|----|----------|
+| `csp-react-native-patterns` | csp-patterns/skills | Skill | React Native（导航、状态管理、原生桥接、新架构、Expo） | ✅ | ✅ 保留（独特） |
+| `csp-mobile-performance` | csp-patterns/skills | Skill | 移动端性能优化（启动优化、内存管理、滚动性能、包体积、电量） | ✅ | ✅ 保留（独特） |
+| `csp-cross-platform-strategy` | csp-patterns/skills | Skill | 跨平台策略（RN vs Flutter vs Native 选型、代码共享、平台适配） | ✅ | ✅ 保留（独特） |
 | `csp-react-native-build-resolver` | csp-patterns/agents | Agent | React Native 构建错误修复 | ✅ 保留（独特） |
 | `csp-react-native-reviewer` | csp-patterns/agents | Agent | React Native 代码审查 | ✅ 保留（独特） |
 | `csp-mobile-performance-auditor` | csp-patterns/agents | Agent | 移动端性能审计 | ✅ 保留（独特） |
@@ -455,39 +455,39 @@
 
 | 名称 | 来源 awesome-copilot | 描述 | Reference 文件 |
 |------|---------------------|------|---------------|
-| `csp-refactorer` | refactor, refactor-plan, refactor-method-complexity-reduce, review-and-refactor | 外科式重构 agent：规划→复杂度降低→执行→验证 | `refactor-workflows.md`, `complexity-reduction.md` |
-| `csp-sql-reviewer` | sql-code-review, sql-optimization | SQL 查询和 schema 审查 | `sql-review-checklist.md`, `sql-optimization-patterns.md` |
-| `csp-postgres-optimizer` | postgresql-code-review, postgresql-optimization | PostgreSQL 性能调优（EXPLAIN、索引、分区、vacuum） | `pg-optimization-deep-dive.md`, `pg-query-tuning.md` |
-| `csp-ruff-fixer` | ruff-recursive-fix | Python Ruff 迭代式 lint 修复（safe→unsafe→manual + noqa 决策） | `ruff-rules-reference.md` |
-| `csp-codeql-analyst` | codeql, secret-scanning | CodeQL 静态分析 + 密钥扫描 + SARIF 解释 | `codeql-queries.md`, `secret-scanning-patterns.md` |
-| `csp-react-version-patterns` | react18-*, react19-*, react-*（12 个） | React 18/19 版本特性 + 迁移指南（Enzyme→RTL、Class→Hooks） | `react18-patterns.md`, `react19-patterns.md`, `migration-recipes.md` |
-| `csp-git-conventions` | conventional-commit, conventional-branch, git-commit | Git 工作流约定（提交消息、分支命名、PR 卫生） | — |
-| `csp-spec-adr` | create-specification, create-implementation-plan, create-architectural-decision-record, prd | 轻量级 spec/ADR/impl-plan/PRD 编写器 | `templates.md` |
-| `csp-code-tour-guide` | code-tour, mentoring-juniors, add-educational-comments | VS Code CodeTour + 苏格拉底式辅导（20 个 persona） | `tour-personas.md` |
-| `csp-api-codegen` | openapi-to-application-code, typespec-create-api-plugin, typespec-api-operations | OpenAPI/TypeSpec → 应用代码生成 | `openapi-codegen.md`, `typespec-patterns.md` |
+| `csp-refactorer` | refactor, refactor-plan, refactor-method-complexity-reduce, review-and-refactor | 外科式重构 agent：规划→复杂度降低→执行→验证 | ✅ | `refactor-workflows.md`, `complexity-reduction.md` |
+| `csp-sql-reviewer` | sql-code-review, sql-optimization | SQL 查询和 schema 审查 | ✅ | `sql-review-checklist.md`, `sql-optimization-patterns.md` |
+| `csp-postgres-optimizer` | postgresql-code-review, postgresql-optimization | PostgreSQL 性能调优（EXPLAIN、索引、分区、vacuum） | ✅ | `pg-optimization-deep-dive.md`, `pg-query-tuning.md` |
+| `csp-ruff-fixer` | ruff-recursive-fix | Python Ruff 迭代式 lint 修复（safe→unsafe→manual + noqa 决策） | ✅ | `ruff-rules-reference.md` |
+| `csp-codeql-analyst` | codeql, secret-scanning | CodeQL 静态分析 + 密钥扫描 + SARIF 解释 | ✅ | `codeql-queries.md`, `secret-scanning-patterns.md` |
+| `csp-react-version-patterns` | react18-*, react19-*, react-*（12 个） | React 18/19 版本特性 + 迁移指南（Enzyme→RTL、Class→Hooks） | ✅ | `react18-patterns.md`, `react19-patterns.md`, `migration-recipes.md` |
+| `csp-git-conventions` | conventional-commit, conventional-branch, git-commit | Git 工作流约定（提交消息、分支命名、PR 卫生） | ✅ | — |
+| `csp-spec-adr` | create-specification, create-implementation-plan, create-architectural-decision-record, prd | 轻量级 spec/ADR/impl-plan/PRD 编写器 | ✅ | `templates.md` |
+| `csp-code-tour-guide` | code-tour, mentoring-juniors, add-educational-comments | VS Code CodeTour + 苏格拉底式辅导（20 个 persona） | ✅ | `tour-personas.md` |
+| `csp-api-codegen` | openapi-to-application-code, typespec-create-api-plugin, typespec-api-operations | OpenAPI/TypeSpec → 应用代码生成 | ✅ | `openapi-codegen.md`, `typespec-patterns.md` |
 | `webapp-testing` | webapp-testing | 端到端 Web 应用测试（Cypress/Playwright/Puppeteer） | `e2e-strategies.md` |
 
 #### 21.2 新建 Agents（2 个）
 
 | 名称 | 来源 awesome-copilot | 描述 | Reference 文件 |
 |------|---------------------|------|---------------|
-| `csp-springboot-reviewer` | java-junit, java-springboot, kotlin-springboot, spring-boot-testing | Java/Kotlin Spring Boot 审查 agent | `junit-patterns.md`, `spring-testing.md`, `kotlin-spring.md` |
-| `csp-incident-response` | data-breach-blast-radius | 安全事件响应（泄露影响评估、合规、事后分析） | `data-breach-response.md` |
+| `csp-springboot-reviewer` | java-junit, java-springboot, kotlin-springboot, spring-boot-testing | Java/Kotlin Spring Boot 审查 agent | ✅ | `junit-patterns.md`, `spring-testing.md`, `kotlin-spring.md` |
+| `csp-incident-response` | data-breach-blast-radius | 安全事件响应（泄露影响评估、合规、事后分析） | ✅ | `data-breach-response.md` |
 
 #### 21.3 Skills/Agents（11 个）
 
 | 名称 | 增强内容 | Reference 新增 |
 |------|---------|---------------|
-| `csp-security-reviewer` | 增加 STRIDE-A 威胁建模 + 数据泄露影响评估章节 | — |
-| `csp-csharp-reviewer` | 转为目录结构，增加 4 个 reference 文件 | `async-patterns.md`, `testing-frameworks.md`, `ef-core-patterns.md`, `dotnet-best-practices.md` |
-| `csp-mcp-builder` | 增加 9 语言 MCP server 模板 + .NET/PHP/Copilot Studio + 部署指南 | `language-templates.md`, `additional-languages.md` |
-| `csp-project-standards-reviewer` | 转为目录结构，增加标准提取 + 代码典范识别 | `standards-extraction.md`, `code-exemplars.md` |
-| `csp-incident-commander` | 增加数据泄露响应章节 | `data-breach-response.md` |
+| `csp-security-reviewer` | 增加 STRIDE-A 威胁建模 + 数据泄露影响评估章节 | ✅ | — |
+| `csp-csharp-reviewer` | 转为目录结构，增加 4 个 reference 文件 | ✅ | `async-patterns.md`, `testing-frameworks.md`, `ef-core-patterns.md`, `dotnet-best-practices.md` |
+| `csp-mcp-builder` | 增加 9 语言 MCP server 模板 + .NET/PHP/Copilot Studio + 部署指南 | ✅ | `language-templates.md`, `additional-languages.md` |
+| `csp-project-standards-reviewer` | 转为目录结构，增加标准提取 + 代码典范识别 | ✅ | `standards-extraction.md`, `code-exemplars.md` |
+| `csp-incident-commander` | 增加数据泄露响应章节 | ✅ | `data-breach-response.md` |
 | `csp-e2e-runner` | 增加 Playwright 代码片段 | `playwright-snippets.md` |
 | `react-patterns` | 增加高级 UI patterns（premium/container-presentation/audit grep） | `advanced-ui-patterns.md` |
 | `python-testing` | 增加 pytest 覆盖率深度指南 | `pytest-coverage-deep-dive.md` |
 | `react-testing` | 增加 Jest 高级模式 | `jest-advanced-patterns.md` |
-| `csp-cicd-pipelines` | 增加 GitHub Actions 规范 + CI/CD 最佳实践 | `github-actions-specification.md`, `cicd-best-practices.md` |
+| `csp-cicd-pipelines` | 增加 GitHub Actions 规范 + CI/CD 最佳实践 | ✅ | `github-actions-specification.md`, `cicd-best-practices.md` |
 | `csp-project-standards-reviewer` | 从现有代码提炼规范 + 代码典范识别 | `standards-extraction.md`, `code-exemplars.md` |
 
 ---

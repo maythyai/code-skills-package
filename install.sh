@@ -14,7 +14,7 @@ set -eo pipefail
 #   ./install.sh --list                     List detected platforms
 #   ./install.sh --help                     Show help
 
-readonly VERSION="0.6.0"
+readonly VERSION="0.7.0"
 readonly SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 readonly PROJECT_DIR="$(pwd)"
 

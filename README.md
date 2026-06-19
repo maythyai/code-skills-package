@@ -3,7 +3,7 @@
 <div align="center">
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
-[![v0.5.0](https://img.shields.io/badge/version-0.5.0-green)](./ARCHITECTURE.md)
+[![v0.7.0](https://img.shields.io/badge/version-0.7.0-green)](./ARCHITECTURE.md)
 
 **Unified AI Programming Skills · 18 Platforms · 15+ Languages**
 
@@ -133,6 +133,15 @@ CSP uses a 5-layer architecture. Only the router (L0) loads at session start; re
 2. Matching skills are selected from L1–L4 based on task type and tech stack
 3. Only the required skill files are loaded into context
 4. Skills execute in sequence, producing structured outputs (REVIEW.md, PLAN.md, etc.)
+
+## What's New in v0.7.0
+
+- **State-Aware Routing**: `state-detector.mjs` automatically detects Git/tech stack/project stage/test status
+- **Confidence-Based Router**: `confidence-router.mjs` uses weighted scoring (keywords 40% + intent 30% + context 30%) 
+- **SKILL.md v2 Specification**: Enhanced with phase/domain/role/model_rules/anti_rationalizations fields
+- **Skill Knowledge Graph (SKPG)**: Lightweight JSON graph modeling skill relationships/classifications
+- **Intent Pattern Recognition**: Advanced intent classification in triggers.yaml
+- **V2 Skill Upgrades**: Top 20 high-frequency skills upgraded to v2 format with structured metadata
 
 ## Common Workflows
 
