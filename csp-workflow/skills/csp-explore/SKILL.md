@@ -6,7 +6,7 @@ category: workflow
 version: "2.0.0"
 phase: plan
 domain: patterns
-role: analyst
+role: specialist
 scope: analysis
 model: sonnet
 tools: [Read, Glob, Grep, WebFetch, WebSearch]

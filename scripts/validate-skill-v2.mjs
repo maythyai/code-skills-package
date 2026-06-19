@@ -62,6 +62,31 @@ function parseSimpleYaml(text) {
 
     // If we have a value
     if (value) {
+      // Handle inline arrays: [item1, item2, ...]
+      if (value.startsWith('[') && value.endsWith(']')) {
+        const items = value.slice(1, -1).split(',').map(s => s.trim().replace(/^["']|["']$/g, '')).filter(Boolean);
+        if (indent > 0 && currentObj !== null) {
+          currentObj[key] = items;
+        } else {
+          result[key] = items;
+          currentKey = key;
+          currentArray = null;
+          currentObj = null;
+        }
+        continue;
+      }
+
+      // Handle multiline string indicator (>)
+      if (value === '>' || value === '|') {
+        inMultiline = true;
+        multilineKey = key;
+        multilineValue = [];
+        currentKey = key;
+        currentArray = null;
+        currentObj = null;
+        continue;
+      }
+
       // Remove quotes
       value = value.replace(/^["']|["']$/g, '');
 
