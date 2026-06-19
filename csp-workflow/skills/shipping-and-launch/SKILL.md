@@ -4,6 +4,14 @@ description: Prepares production launches. Use when preparing to deploy to produ
 layer: 2
 origin: agent-skills
 category: workflow
+version: "2.0.0"
+phase: ship
+domain: devops
+role: specialist
+scope: implementation
+model: sonnet
+tools: [Read, Write, Edit, Bash, Glob, Grep]
+---
 --------|-----------------|-------------------------------|-----------------|
 | Error rate | Within 10% of baseline | 10-100% above baseline | >2x baseline |
 | P95 latency | Within 20% of baseline | 20-50% above baseline | >50% above baseline |

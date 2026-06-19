@@ -15,6 +15,13 @@ triggers:
 stack_detection: false
 deps: ["csp-remember", "csp-learner", "skill-optimizer", "csp-compound"]
 priority: 5
+version: "2.0.0"
+phase: ship
+domain: quality
+role: guardian
+scope: analysis
+model: sonnet
+tools: [Read, Write, Edit, Bash, Glob, Grep]
 ---
 
 # CSP Learning Loop

@@ -8,6 +8,18 @@ description: >
 layer: 1
 origin: merged(CSP+agent-skills)
 category: meta
+version: "2.0.0"
+phase: define
+domain: architecture
+role: specialist
+scope: design
+model: sonnet
+tools: [Read, Write, Edit, Glob, Grep]
+related_skills: [csp-plan-phase, csp-spec-contract]
+anti_rationalizations:
+  "Let's just start coding": "Design first prevents rework. 30 min brainstorming saves 3 hours."
+  "I know what to build": "Assumptions are bugs waiting to happen. Surface them explicitly."
+---
 -----------|----------|-----|
 | **SCAMPER** | Transform existing solutions | Substitute, Combine, Adapt, Modify/Magnify, Put to other uses, Eliminate, Rearrange/Reverse |
 | **Six Thinking Hats** | Multi-perspective decisions | White (facts), Red (intuition), Black (caution), Yellow (optimism), Green (creativity), Blue (process) |

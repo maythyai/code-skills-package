@@ -3,6 +3,13 @@ name: writing-plans
 description: Use when you have a spec or requirements for a multi-step task, before touching code
 layer: 1
 category: meta
+version: "2.0.0"
+phase: plan
+domain: architecture
+role: specialist
+scope: design
+model: sonnet
+tools: [Read, Write, Edit, Glob, Grep]
 ---
 ```
 

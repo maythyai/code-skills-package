@@ -6,6 +6,13 @@ metadata:
   origin: CSP
 layer: 4
 category: patterns
+version: "2.0.0"
+phase: review
+domain: security
+role: reviewer
+scope: review
+model: sonnet
+tools: [Read, Grep, Glob]
 ---
 
 **Remember**: Security is not optional. One vulnerability can compromise the entire platform. When in doubt, err on the side of caution.

@@ -9,6 +9,13 @@ origin: merged(CSP)
 aliases: [ralplan]
 triggers: ["plan", "plan this", "let's plan", "ralplan", "review this plan"]
 category: runtime
+version: "2.0.0"
+phase: plan
+domain: architecture
+role: architect
+scope: design
+model: sonnet
+tools: [Read, Write, Edit, Glob, Grep, WebFetch, WebSearch]
 ------|---------|----------|
 | **Interview** | Default for broad requests | Interactive requirements gathering |
 | **Direct** | `--direct`, or detailed request | Skip interview, generate plan directly |
