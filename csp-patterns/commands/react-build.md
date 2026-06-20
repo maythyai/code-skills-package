@@ -183,5 +183,5 @@ The agent will stop and report if:
 ## Related
 
 - Agent: `agents/react-build-resolver.md`
-- Skills: `skills/react-patterns/`, `skills/frontend-patterns/`
+- Skills: `skills/csp-react-patterns/`, `skills/csp-frontend-patterns/`
 - Rules: `rules/react/coding-style.md`, `rules/react/patterns.md`

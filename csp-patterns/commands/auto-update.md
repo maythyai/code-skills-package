@@ -18,7 +18,7 @@ node "$CSP_ROOT/scripts/auto-update.js" --dry-run
 node "$CSP_ROOT/scripts/auto-update.js" --target cursor
 
 # Override the CSP repo root explicitly
-node "$CSP_ROOT/scripts/auto-update.js" --repo-root /path/to/everything-claude-code
+node "$CSP_ROOT/scripts/auto-update.js" --repo-root /path/to/csp-everything-claude-code
 ```
 
 ## Notes

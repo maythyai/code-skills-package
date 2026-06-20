@@ -48,7 +48,7 @@ category: runtime
 
 ```markdown
 ---
-name: <slug>
+name: csp-skill-creator
 description: <description>
 version: 0.1.0
 layer: <layer>

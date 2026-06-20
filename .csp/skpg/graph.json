@@ -22,7 +22,7 @@
       "metadata": {
         "layer": 1,
         "category": "meta",
-        "path": "csp-meta/skills/executing-plans/SKILL.md"
+        "path": "csp-meta/skills/csp-executing-plans/SKILL.md"
       }
     },
     "2bc93cb9b591": {
@@ -32,7 +32,7 @@
       "metadata": {
         "layer": 1,
         "category": "meta",
-        "path": "csp-meta/skills/finishing-a-development-branch/SKILL.md"
+        "path": "csp-meta/skills/csp-finishing-a-development-branch/SKILL.md"
       }
     },
     "04f79193d347": {
@@ -42,7 +42,7 @@
       "metadata": {
         "layer": 1,
         "category": "meta",
-        "path": "csp-meta/skills/receiving-code-review/SKILL.md"
+        "path": "csp-meta/skills/csp-receiving-code-review/SKILL.md"
       }
     },
     "bd8529dfd53d": {
@@ -52,7 +52,7 @@
       "metadata": {
         "layer": 1,
         "category": "meta",
-        "path": "csp-meta/skills/requesting-code-review/SKILL.md"
+        "path": "csp-meta/skills/csp-requesting-code-review/SKILL.md"
       }
     },
     "5b37ecd541b4": {
@@ -72,7 +72,7 @@
       "metadata": {
         "layer": 1,
         "category": "meta",
-        "path": "csp-meta/skills/systematic-debugging/SKILL.md"
+        "path": "csp-meta/skills/csp-systematic-debugging/SKILL.md"
       }
     },
     "3c187c080b19": {
@@ -95,7 +95,7 @@
       "metadata": {
         "layer": 1,
         "category": "meta",
-        "path": "csp-meta/skills/using-git-worktrees/SKILL.md"
+        "path": "csp-meta/skills/csp-using-git-worktrees/SKILL.md"
       }
     },
     "4d8ffb285e88": {
@@ -115,7 +115,7 @@
       "metadata": {
         "layer": 1,
         "category": "meta",
-        "path": "csp-meta/skills/writing-plans/SKILL.md"
+        "path": "csp-meta/skills/csp-writing-plans/SKILL.md"
       }
     },
     "3e6c5a67a97b": {
@@ -125,7 +125,7 @@
       "metadata": {
         "layer": 1,
         "category": "meta",
-        "path": "csp-meta/skills/writing-skills/SKILL.md"
+        "path": "csp-meta/skills/csp-writing-skills/SKILL.md"
       }
     },
     "4d4ed7186390": {
@@ -1507,7 +1507,7 @@
       "metadata": {
         "layer": 4,
         "category": "patterns",
-        "path": "csp-patterns/skills/agent-introspection-debugging/SKILL.md"
+        "path": "csp-patterns/skills/csp-agent-introspection-debugging/SKILL.md"
       }
     },
     "eda1a5b482da": {
@@ -1517,7 +1517,7 @@
       "metadata": {
         "layer": 4,
         "category": "patterns",
-        "path": "csp-patterns/skills/agent-sort/SKILL.md"
+        "path": "csp-patterns/skills/csp-agent-sort/SKILL.md"
       }
     },
     "11acdc3377a3": {
@@ -1527,7 +1527,7 @@
       "metadata": {
         "layer": 4,
         "category": "patterns",
-        "path": "csp-patterns/skills/agentic-engineering/SKILL.md"
+        "path": "csp-patterns/skills/csp-agentic-engineering/SKILL.md"
       }
     },
     "03551aa5cdbb": {
@@ -1547,7 +1547,7 @@
       "metadata": {
         "layer": 4,
         "category": "patterns",
-        "path": "csp-patterns/skills/article-writing/SKILL.md"
+        "path": "csp-patterns/skills/csp-article-writing/SKILL.md"
       }
     },
     "c6478897479a": {
@@ -1557,7 +1557,7 @@
       "metadata": {
         "layer": 4,
         "category": "patterns",
-        "path": "csp-patterns/skills/autonomous-loops/SKILL.md"
+        "path": "csp-patterns/skills/csp-autonomous-loops/SKILL.md"
       }
     },
     "716468930ff4": {
@@ -1567,7 +1567,7 @@
       "metadata": {
         "layer": 4,
         "category": "patterns",
-        "path": "csp-patterns/skills/backend-patterns/SKILL.md"
+        "path": "csp-patterns/skills/csp-backend-patterns/SKILL.md"
       }
     },
     "0e7af77a27d6": {
@@ -1577,7 +1577,7 @@
       "metadata": {
         "layer": 4,
         "category": "patterns",
-        "path": "csp-patterns/skills/brand-voice/SKILL.md"
+        "path": "csp-patterns/skills/csp-brand-voice/SKILL.md"
       }
     },
     "301bc9de0e6d": {
@@ -1587,7 +1587,7 @@
       "metadata": {
         "layer": 4,
         "category": "patterns",
-        "path": "csp-patterns/skills/bun-runtime/SKILL.md"
+        "path": "csp-patterns/skills/csp-bun-runtime/SKILL.md"
       }
     },
     "0a7ed682dea8": {
@@ -1597,7 +1597,7 @@
       "metadata": {
         "layer": 4,
         "category": "patterns",
-        "path": "csp-patterns/skills/coding-standards/SKILL.md"
+        "path": "csp-patterns/skills/csp-coding-standards/SKILL.md"
       }
     },
     "6faea05ab442": {
@@ -1607,7 +1607,7 @@
       "metadata": {
         "layer": 4,
         "category": "patterns",
-        "path": "csp-patterns/skills/content-engine/SKILL.md"
+        "path": "csp-patterns/skills/csp-content-engine/SKILL.md"
       }
     },
     "afa07873008e": {
@@ -1617,7 +1617,7 @@
       "metadata": {
         "layer": 4,
         "category": "patterns",
-        "path": "csp-patterns/skills/content-hash-cache-pattern/SKILL.md"
+        "path": "csp-patterns/skills/csp-content-hash-cache-pattern/SKILL.md"
       }
     },
     "972c26cdbe42": {
@@ -1627,7 +1627,7 @@
       "metadata": {
         "layer": 4,
         "category": "patterns",
-        "path": "csp-patterns/skills/cpp-coding-standards/SKILL.md"
+        "path": "csp-patterns/skills/csp-cpp-coding-standards/SKILL.md"
       }
     },
     "aea1e2b72df7": {
@@ -1637,7 +1637,7 @@
       "metadata": {
         "layer": 4,
         "category": "patterns",
-        "path": "csp-patterns/skills/cpp-testing/SKILL.md"
+        "path": "csp-patterns/skills/csp-cpp-testing/SKILL.md"
       }
     },
     "1aca9c0b7977": {
@@ -1647,7 +1647,7 @@
       "metadata": {
         "layer": 4,
         "category": "patterns",
-        "path": "csp-patterns/skills/crosspost/SKILL.md"
+        "path": "csp-patterns/skills/csp-crosspost/SKILL.md"
       }
     },
     "11c56decb5bf": {
@@ -2047,7 +2047,7 @@
       "metadata": {
         "layer": 4,
         "category": "patterns",
-        "path": "csp-patterns/skills/database-migrations/SKILL.md"
+        "path": "csp-patterns/skills/csp-database-migrations/SKILL.md"
       }
     },
     "643b68649749": {
@@ -2057,7 +2057,7 @@
       "metadata": {
         "layer": 4,
         "category": "patterns",
-        "path": "csp-patterns/skills/deep-research/SKILL.md"
+        "path": "csp-patterns/skills/csp-deep-research/SKILL.md"
       }
     },
     "61a220380626": {
@@ -2067,7 +2067,7 @@
       "metadata": {
         "layer": 4,
         "category": "patterns",
-        "path": "csp-patterns/skills/django-patterns/SKILL.md"
+        "path": "csp-patterns/skills/csp-django-patterns/SKILL.md"
       }
     },
     "fa4f6b06444a": {
@@ -2077,7 +2077,7 @@
       "metadata": {
         "layer": 4,
         "category": "patterns",
-        "path": "csp-patterns/skills/django-security/SKILL.md"
+        "path": "csp-patterns/skills/csp-django-security/SKILL.md"
       }
     },
     "1ef3df410769": {
@@ -2087,7 +2087,7 @@
       "metadata": {
         "layer": 4,
         "category": "patterns",
-        "path": "csp-patterns/skills/dmux-workflows/SKILL.md"
+        "path": "csp-patterns/skills/csp-dmux-workflows/SKILL.md"
       }
     },
     "f713341f88ca": {
@@ -2097,7 +2097,7 @@
       "metadata": {
         "layer": 4,
         "category": "patterns",
-        "path": "csp-patterns/skills/docker-patterns/SKILL.md"
+        "path": "csp-patterns/skills/csp-docker-patterns/SKILL.md"
       }
     },
     "254b9286a000": {
@@ -2107,7 +2107,7 @@
       "metadata": {
         "layer": 4,
         "category": "patterns",
-        "path": "csp-patterns/skills/e2e-testing/SKILL.md"
+        "path": "csp-patterns/skills/csp-e2e-testing/SKILL.md"
       }
     },
     "eba771885692": {
@@ -2117,7 +2117,7 @@
       "metadata": {
         "layer": 4,
         "category": "patterns",
-        "path": "csp-patterns/skills/eval-harness/SKILL.md"
+        "path": "csp-patterns/skills/csp-eval-harness/SKILL.md"
       }
     },
     "e0353622d2a2": {
@@ -2127,7 +2127,7 @@
       "metadata": {
         "layer": 4,
         "category": "patterns",
-        "path": "csp-patterns/skills/everything-claude-code/SKILL.md"
+        "path": "csp-patterns/skills/csp-everything-claude-code/SKILL.md"
       }
     },
     "cf39a8c23db0": {
@@ -2137,7 +2137,7 @@
       "metadata": {
         "layer": 4,
         "category": "patterns",
-        "path": "csp-patterns/skills/exa-search/SKILL.md"
+        "path": "csp-patterns/skills/csp-exa-search/SKILL.md"
       }
     },
     "73e5fe0300cb": {
@@ -2147,7 +2147,7 @@
       "metadata": {
         "layer": 4,
         "category": "patterns",
-        "path": "csp-patterns/skills/fal-ai-media/SKILL.md"
+        "path": "csp-patterns/skills/csp-fal-ai-media/SKILL.md"
       }
     },
     "9dbde516f469": {
@@ -2157,7 +2157,7 @@
       "metadata": {
         "layer": 4,
         "category": "patterns",
-        "path": "csp-patterns/skills/fastapi-patterns/SKILL.md"
+        "path": "csp-patterns/skills/csp-fastapi-patterns/SKILL.md"
       }
     },
     "c54eeaac4e99": {
@@ -2167,7 +2167,7 @@
       "metadata": {
         "layer": 4,
         "category": "patterns",
-        "path": "csp-patterns/skills/frontend-patterns/SKILL.md"
+        "path": "csp-patterns/skills/csp-frontend-patterns/SKILL.md"
       }
     },
     "398364b65753": {
@@ -2177,7 +2177,7 @@
       "metadata": {
         "layer": 4,
         "category": "patterns",
-        "path": "csp-patterns/skills/frontend-slides/SKILL.md"
+        "path": "csp-patterns/skills/csp-frontend-slides/SKILL.md"
       }
     },
     "abefed07753a": {
@@ -2187,7 +2187,7 @@
       "metadata": {
         "layer": 4,
         "category": "patterns",
-        "path": "csp-patterns/skills/investor-materials/SKILL.md"
+        "path": "csp-patterns/skills/csp-investor-materials/SKILL.md"
       }
     },
     "4bd8708cec58": {
@@ -2197,7 +2197,7 @@
       "metadata": {
         "layer": 4,
         "category": "patterns",
-        "path": "csp-patterns/skills/investor-outreach/SKILL.md"
+        "path": "csp-patterns/skills/csp-investor-outreach/SKILL.md"
       }
     },
     "1adec4906132": {
@@ -2207,7 +2207,7 @@
       "metadata": {
         "layer": 4,
         "category": "patterns",
-        "path": "csp-patterns/skills/java-coding-standards/SKILL.md"
+        "path": "csp-patterns/skills/csp-java-coding-standards/SKILL.md"
       }
     },
     "3e027ef0abd5": {
@@ -2217,7 +2217,7 @@
       "metadata": {
         "layer": 4,
         "category": "patterns",
-        "path": "csp-patterns/skills/jpa-patterns/SKILL.md"
+        "path": "csp-patterns/skills/csp-jpa-patterns/SKILL.md"
       }
     },
     "9d7c6add109b": {
@@ -2227,7 +2227,7 @@
       "metadata": {
         "layer": 4,
         "category": "patterns",
-        "path": "csp-patterns/skills/market-research/SKILL.md"
+        "path": "csp-patterns/skills/csp-market-research/SKILL.md"
       }
     },
     "d37bfbadec74": {
@@ -2237,7 +2237,7 @@
       "metadata": {
         "layer": 4,
         "category": "patterns",
-        "path": "csp-patterns/skills/mcp-server-patterns/SKILL.md"
+        "path": "csp-patterns/skills/csp-mcp-server-patterns/SKILL.md"
       }
     },
     "518bf6687ee5": {
@@ -2247,7 +2247,7 @@
       "metadata": {
         "layer": 4,
         "category": "patterns",
-        "path": "csp-patterns/skills/mle-workflow/SKILL.md"
+        "path": "csp-patterns/skills/csp-mle-workflow/SKILL.md"
       }
     },
     "b7004853cd42": {
@@ -2257,7 +2257,7 @@
       "metadata": {
         "layer": 4,
         "category": "patterns",
-        "path": "csp-patterns/skills/nestjs-patterns/SKILL.md"
+        "path": "csp-patterns/skills/csp-nestjs-patterns/SKILL.md"
       }
     },
     "d5a273b8d74e": {
@@ -2267,7 +2267,7 @@
       "metadata": {
         "layer": 4,
         "category": "patterns",
-        "path": "csp-patterns/skills/nextjs-turbopack/SKILL.md"
+        "path": "csp-patterns/skills/csp-nextjs-turbopack/SKILL.md"
       }
     },
     "a7bd8fb1cb5d": {
@@ -2277,7 +2277,7 @@
       "metadata": {
         "layer": 4,
         "category": "patterns",
-        "path": "csp-patterns/skills/postgres-patterns/SKILL.md"
+        "path": "csp-patterns/skills/csp-postgres-patterns/SKILL.md"
       }
     },
     "f84210158e31": {
@@ -2287,7 +2287,7 @@
       "metadata": {
         "layer": 4,
         "category": "patterns",
-        "path": "csp-patterns/skills/product-capability/SKILL.md"
+        "path": "csp-patterns/skills/csp-product-capability/SKILL.md"
       }
     },
     "f7178148309b": {
@@ -2297,7 +2297,7 @@
       "metadata": {
         "layer": 4,
         "category": "patterns",
-        "path": "csp-patterns/skills/pytorch-patterns/SKILL.md"
+        "path": "csp-patterns/skills/csp-pytorch-patterns/SKILL.md"
       }
     },
     "c4b318c761d0": {
@@ -2307,7 +2307,7 @@
       "metadata": {
         "layer": 4,
         "category": "patterns",
-        "path": "csp-patterns/skills/react-patterns/SKILL.md"
+        "path": "csp-patterns/skills/csp-react-patterns/SKILL.md"
       }
     },
     "91cb3703da8c": {
@@ -2317,7 +2317,7 @@
       "metadata": {
         "layer": 4,
         "category": "patterns",
-        "path": "csp-patterns/skills/react-testing/SKILL.md"
+        "path": "csp-patterns/skills/csp-react-testing/SKILL.md"
       }
     },
     "b02b1c87f4a2": {
@@ -2327,7 +2327,7 @@
       "metadata": {
         "layer": 4,
         "category": "patterns",
-        "path": "csp-patterns/skills/rust-patterns/SKILL.md"
+        "path": "csp-patterns/skills/csp-rust-patterns/SKILL.md"
       }
     },
     "8c0240292510": {
@@ -2337,7 +2337,7 @@
       "metadata": {
         "layer": 4,
         "category": "patterns",
-        "path": "csp-patterns/skills/rust-testing/SKILL.md"
+        "path": "csp-patterns/skills/csp-rust-testing/SKILL.md"
       }
     },
     "54173fe660b8": {
@@ -2347,7 +2347,7 @@
       "metadata": {
         "layer": 4,
         "category": "patterns",
-        "path": "csp-patterns/skills/search-first/SKILL.md"
+        "path": "csp-patterns/skills/csp-search-first/SKILL.md"
       }
     },
     "1fd378faa32f": {
@@ -2357,7 +2357,7 @@
       "metadata": {
         "layer": 4,
         "category": "patterns",
-        "path": "csp-patterns/skills/security-review/SKILL.md"
+        "path": "csp-patterns/skills/csp-security-review/SKILL.md"
       }
     },
     "cc3cdfe1b1d5": {
@@ -2367,7 +2367,7 @@
       "metadata": {
         "layer": 4,
         "category": "patterns",
-        "path": "csp-patterns/skills/springboot-patterns/SKILL.md"
+        "path": "csp-patterns/skills/csp-springboot-patterns/SKILL.md"
       }
     },
     "8b72d1598e70": {
@@ -2377,7 +2377,7 @@
       "metadata": {
         "layer": 4,
         "category": "patterns",
-        "path": "csp-patterns/skills/springboot-security/SKILL.md"
+        "path": "csp-patterns/skills/csp-springboot-security/SKILL.md"
       }
     },
     "0d464d6b91dd": {
@@ -2387,7 +2387,7 @@
       "metadata": {
         "layer": 4,
         "category": "patterns",
-        "path": "csp-patterns/skills/strategic-compact/SKILL.md"
+        "path": "csp-patterns/skills/csp-strategic-compact/SKILL.md"
       }
     },
     "6e75e713ebe1": {
@@ -2397,7 +2397,7 @@
       "metadata": {
         "layer": 4,
         "category": "patterns",
-        "path": "csp-patterns/skills/swift-actor-persistence/SKILL.md"
+        "path": "csp-patterns/skills/csp-swift-actor-persistence/SKILL.md"
       }
     },
     "392799ba3b76": {
@@ -2407,7 +2407,7 @@
       "metadata": {
         "layer": 4,
         "category": "patterns",
-        "path": "csp-patterns/skills/swift-protocol-di-testing/SKILL.md"
+        "path": "csp-patterns/skills/csp-swift-protocol-di-testing/SKILL.md"
       }
     },
     "9e3e8e8712f8": {
@@ -2417,7 +2417,7 @@
       "metadata": {
         "layer": 4,
         "category": "patterns",
-        "path": "csp-patterns/skills/video-editing/SKILL.md"
+        "path": "csp-patterns/skills/csp-video-editing/SKILL.md"
       }
     },
     "cd786ec61641": {
@@ -2427,7 +2427,7 @@
       "metadata": {
         "layer": 4,
         "category": "patterns",
-        "path": "csp-patterns/skills/x-api/SKILL.md"
+        "path": "csp-patterns/skills/csp-x-api/SKILL.md"
       }
     },
     "e0c583bc6486": {
@@ -4393,7 +4393,7 @@
       "metadata": {
         "layer": 1,
         "category": "meta",
-        "path": "csp-meta/skills/skill-optimizer/SKILL.md"
+        "path": "csp-meta/skills/csp-skill-optimizer/SKILL.md"
       }
     },
     "8b4bed029eb1": {
@@ -4596,7 +4596,7 @@
       "metadata": {
         "layer": 1,
         "category": "meta",
-        "path": "csp-meta/skills/spec-driven-development/SKILL.md"
+        "path": "csp-meta/skills/csp-spec-driven-development/SKILL.md"
       }
     },
     "3827da1ec890": {
@@ -4606,7 +4606,7 @@
       "metadata": {
         "layer": 1,
         "category": "meta",
-        "path": "csp-meta/skills/spec-contract/SKILL.md"
+        "path": "csp-meta/skills/csp-spec-contract/SKILL.md"
       }
     },
     "40489dfdce58": {
@@ -4799,7 +4799,7 @@
         "phase": "build",
         "domain": "quality",
         "role": "specialist",
-        "path": "csp-workflow/skills/compound-learning/SKILL.md"
+        "path": "csp-workflow/skills/csp-compound-learning/SKILL.md"
       }
     },
     "7ba8e7bad1e1": {
@@ -4809,7 +4809,7 @@
       "metadata": {
         "layer": 2,
         "category": "workflow",
-        "path": "csp-workflow/skills/compound-refresh/SKILL.md"
+        "path": "csp-workflow/skills/csp-compound-refresh/SKILL.md"
       }
     },
     "096be1bd6ec5": {
@@ -4819,7 +4819,7 @@
       "metadata": {
         "layer": 2,
         "category": "workflow",
-        "path": "csp-workflow/skills/multi-review/SKILL.md"
+        "path": "csp-workflow/skills/csp-multi-review/SKILL.md"
       }
     },
     "64aaad5dfdb5": {
@@ -4832,7 +4832,7 @@
         "phase": "ship",
         "domain": "devops",
         "role": "specialist",
-        "path": "csp-workflow/skills/shipping-and-launch/SKILL.md"
+        "path": "csp-workflow/skills/csp-shipping-and-launch/SKILL.md"
       }
     },
     "037a5a50ab4d": {
@@ -4842,7 +4842,7 @@
       "metadata": {
         "layer": 2,
         "category": "workflow",
-        "path": "csp-workflow/skills/product-pulse/SKILL.md"
+        "path": "csp-workflow/skills/csp-product-pulse/SKILL.md"
       }
     },
     "3e6c11b721dd": {
@@ -4852,7 +4852,7 @@
       "metadata": {
         "layer": 2,
         "category": "workflow",
-        "path": "csp-workflow/skills/strategy/SKILL.md"
+        "path": "csp-workflow/skills/csp-strategy/SKILL.md"
       }
     },
     "6ccc890c2dd8": {
@@ -4862,7 +4862,7 @@
       "metadata": {
         "layer": 2,
         "category": "workflow",
-        "path": "csp-workflow/skills/deprecation-and-migration/SKILL.md"
+        "path": "csp-workflow/skills/csp-deprecation-and-migration/SKILL.md"
       }
     },
     "cc4976e63742": {
@@ -4882,7 +4882,7 @@
       "metadata": {
         "layer": 1,
         "category": "meta",
-        "path": "csp-meta/skills/context-engineering/SKILL.md"
+        "path": "csp-meta/skills/csp-context-engineering/SKILL.md"
       }
     },
     "c5ebb7c6b940": {
@@ -4902,7 +4902,7 @@
       "metadata": {
         "layer": 1,
         "category": "meta",
-        "path": "csp-meta/skills/doc-review/SKILL.md"
+        "path": "csp-meta/skills/csp-doc-review/SKILL.md"
       }
     },
     "d2e76df3357b": {
@@ -4912,7 +4912,7 @@
       "metadata": {
         "layer": 1,
         "category": "meta",
-        "path": "csp-meta/skills/doubt-driven-development/SKILL.md"
+        "path": "csp-meta/skills/csp-doubt-driven-development/SKILL.md"
       }
     },
     "352980e82ca3": {
@@ -4922,7 +4922,7 @@
       "metadata": {
         "layer": 1,
         "category": "meta",
-        "path": "csp-meta/skills/interview-me/SKILL.md"
+        "path": "csp-meta/skills/csp-interview-me/SKILL.md"
       }
     },
     "4cec5d7b3356": {
@@ -4932,7 +4932,7 @@
       "metadata": {
         "layer": 1,
         "category": "meta",
-        "path": "csp-meta/skills/source-driven-development/SKILL.md"
+        "path": "csp-meta/skills/csp-source-driven-development/SKILL.md"
       }
     },
     "e580c3063a02": {
@@ -4942,7 +4942,7 @@
       "metadata": {
         "layer": 4,
         "category": "patterns",
-        "path": "csp-patterns/skills/browser-testing-with-devtools/SKILL.md"
+        "path": "csp-patterns/skills/csp-browser-testing-with-devtools/SKILL.md"
       }
     },
     "d42a20929685": {
@@ -4952,7 +4952,7 @@
       "metadata": {
         "layer": 4,
         "category": "patterns",
-        "path": "csp-patterns/skills/observability-and-instrumentation/SKILL.md"
+        "path": "csp-patterns/skills/csp-observability-and-instrumentation/SKILL.md"
       }
     },
     "428e0dd694c2": {

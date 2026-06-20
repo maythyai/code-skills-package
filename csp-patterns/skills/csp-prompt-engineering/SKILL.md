@@ -176,7 +176,7 @@ Respond as a JSON array of finding objects. Return an empty array if no issues f
 
 ```yaml
 # prompts/code-review/metadata.yaml
-name: code-review
+name: csp-prompt-engineering
 description: Code review prompt for diff analysis with structured findings
 owner: platform-team
 tags: [review, code-quality, security]

@@ -636,8 +636,8 @@ OMC 的独特能力保留：
 ### 规范驱动（已并入 Layer 1 Meta + Layer 2 Workflow）
 
 规范驱动不再是独立层：
-- **方法论** → `csp-meta/skills/spec-driven-development/`
-- **契约生成** → `csp-meta/skills/spec-contract/`
+- **方法论** → `csp-meta/skills/csp-spec-driven-development/`
+- **契约生成** → `csp-meta/skills/csp-spec-contract/`
 - **阶段工作流** → `spec-phase` → `discuss-phase` → `plan-phase` → `execute-phase` → `verify-phase`
 - **工件模板** → `csp-workflow/templates/change-artifacts/`
 - **Delta Specs** → ADDED/MODIFIED/REMOVED 增量规范（brownfield）

@@ -129,4 +129,4 @@ Recommendation: FAIL: Block merge until CRITICAL issue is fixed
 ## Related
 
 - Agent: `agents/cpp-reviewer.md`
-- Skills: `skills/cpp-coding-standards/`, `skills/cpp-testing/`
+- Skills: `skills/csp-cpp-coding-standards/`, `skills/csp-cpp-testing/`

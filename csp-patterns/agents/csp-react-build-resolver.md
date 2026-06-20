@@ -211,5 +211,5 @@ Final: `Build Status: SUCCESS | Errors Fixed: N | Files Modified: <list>` or `Bu
 
 - Agent: `react-reviewer` for code review after build is green
 - Rules: `rules/react/coding-style.md`, `rules/react/patterns.md`
-- Skills: `skills/react-patterns/`, `skills/frontend-patterns/`
+- Skills: `skills/csp-react-patterns/`, `skills/csp-frontend-patterns/`
 - Commands: `/react-build`, `/react-review`

@@ -30,7 +30,7 @@ Production-grade CI/CD patterns for modern software delivery pipelines.
 
 ```yaml
 # .github/workflows/ci.yml
-name: CI
+name: csp-cicd-pipelines
 
 on:
   push:

@@ -166,5 +166,5 @@ Recommendation: FAIL: Block merge until CRITICAL issue is fixed
 
 - Agent: `agents/react-reviewer.md`
 - Companion agent: `agents/typescript-reviewer.md` (run alongside for TSX/JSX PRs)
-- Skills: `skills/react-patterns/`, `skills/react-testing/`, `skills/accessibility/`
+- Skills: `skills/csp-react-patterns/`, `skills/csp-react-testing/`, `skills/accessibility/`
 - Rules: `rules/react/`

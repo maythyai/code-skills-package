@@ -285,7 +285,7 @@ terraform plan -detailed-exitcode
 ```
 
 ```yaml
-name: Drift Detection
+name: csp-infrastructure-as-code
 on:
   schedule:
     - cron: '0 */6 * * *'      # Every 6 hours

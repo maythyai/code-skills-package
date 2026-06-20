@@ -358,7 +358,7 @@ After shipping:
 
 ## Pre-Launch Checklist (agent-skills 增强)
 
-> 来源: agent-skills/shipping-and-launch
+> 来源: agent-skills/csp-shipping-and-launch
 
 ### Code Quality
 - [ ] All tests pass (unit, integration, e2e)

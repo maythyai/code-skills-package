@@ -264,7 +264,7 @@ sonar.qualityGate.newMaintainabilityRating=A
 
 ```yaml
 # .github/workflows/debt-check.yml
-name: Tech Debt Check
+name: csp-tech-debt-assessment
 on: [pull_request]
 jobs:
   debt-check:

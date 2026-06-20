@@ -94,5 +94,5 @@ await page.context().storageState({ path: "auth.json" });
 
 ## Related
 
-- [react-testing](../react-testing/SKILL.md)
+- [react-testing](../csp-react-testing/SKILL.md)
 - [e2e-strategies](./reference/e2e-strategies.md)
