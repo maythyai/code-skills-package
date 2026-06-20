@@ -4,7 +4,7 @@
 # Regenerate: node scripts/build-skill-metadata.mjs
 
 version: 2.0
-generated_at: 2026-06-20T10:32:56.596Z
+generated_at: 2026-06-20T12:34:35.975Z
 skills:
   csp-brainstorming:
     phase: define
@@ -19,6 +19,32 @@ skills:
     related_skills:
       - csp-plan-phase
       - csp-spec-contract
+  csp-mvp-scoping:
+    phase: define
+    domain: architecture
+    scope: design
+    tools:
+      - Read
+      - Write
+      - Glob
+      - Grep
+    related_skills:
+      - csp-scope-guard
+      - csp-strategy
+      - csp-brainstorming
+      - csp-plan-phase
+  csp-scope-guard:
+    phase: plan
+    domain: quality
+    scope: design
+    tools:
+      - Read
+      - Glob
+      - Grep
+    related_skills:
+      - csp-mvp-scoping
+      - csp-strategy
+      - csp-brainstorming
   csp-spec-contract:
     phase: define
     domain: quality
@@ -137,17 +163,6 @@ skills:
       - Read
       - Grep
       - Glob
-  csp-e2e-testing:
-    phase: verify
-    domain: testing
-    scope: testing
-    tools:
-      - Read
-      - Write
-      - Edit
-      - Bash
-      - Glob
-      - Grep
   csp-performance-optimizer:
     phase: build
     domain: quality

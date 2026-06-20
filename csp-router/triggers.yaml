@@ -288,6 +288,218 @@ trigger_index:
     skills: [csp-implementation-phase, csp-implement]
     weight: 40
 
+  # ─── Indie Developer Skills Triggers ───
+  "payment":
+    skills: [csp-payment-integration, csp-subscription-management]
+    weight: 50
+  "stripe":
+    skills: [csp-payment-integration]
+    weight: 50
+  "subscription":
+    skills: [csp-subscription-management]
+    weight: 45
+  "billing":
+    skills: [csp-subscription-management, csp-payment-integration]
+    weight: 45
+  "SEO":
+    skills: [csp-seo-engineering]
+    weight: 50
+  "analytics":
+    skills: [csp-user-analytics]
+    weight: 45
+  "PostHog":
+    skills: [csp-user-analytics]
+    weight: 45
+  "Mixpanel":
+    skills: [csp-user-analytics]
+    weight: 40
+  "email":
+    skills: [csp-email-systems]
+    weight: 45
+  "transactional email":
+    skills: [csp-email-systems]
+    weight: 50
+  "webhook":
+    skills: [csp-webhook-architecture]
+    weight: 50
+  "OAuth":
+    skills: [csp-oauth-integration]
+    weight: 50
+  "social login":
+    skills: [csp-oauth-integration]
+    weight: 45
+  "rate limit":
+    skills: [csp-api-governance]
+    weight: 45
+  "API key":
+    skills: [csp-api-governance]
+    weight: 45
+  "Vercel":
+    skills: [csp-platform-deploy]
+    weight: 50
+  "Railway":
+    skills: [csp-platform-deploy]
+    weight: 45
+  "Fly.io":
+    skills: [csp-platform-deploy]
+    weight: 45
+  "VPS":
+    skills: [csp-vps-deploy]
+    weight: 50
+  "nginx":
+    skills: [csp-vps-deploy]
+    weight: 45
+  "systemd":
+    skills: [csp-vps-deploy]
+    weight: 40
+  "monitoring":
+    skills: [csp-monitoring-alerting]
+    weight: 50
+  "Sentry":
+    skills: [csp-monitoring-alerting]
+    weight: 50
+  "alerting":
+    skills: [csp-monitoring-alerting]
+    weight: 45
+  "backup":
+    skills: [csp-db-backup]
+    weight: 50
+  "disaster recovery":
+    skills: [csp-db-backup]
+    weight: 50
+  "GDPR":
+    skills: [csp-privacy-compliance]
+    weight: 50
+  "privacy":
+    skills: [csp-privacy-compliance]
+    weight: 45
+  "consent":
+    skills: [csp-privacy-compliance]
+    weight: 40
+  "Core Web Vitals":
+    skills: [csp-frontend-performance]
+    weight: 50
+  "bundle size":
+    skills: [csp-frontend-performance]
+    weight: 45
+  "LCP":
+    skills: [csp-frontend-performance]
+    weight: 40
+  "caching":
+    skills: [csp-backend-performance]
+    weight: 45
+  "connection pool":
+    skills: [csp-backend-performance, csp-db-performance]
+    weight: 45
+  "index strategy":
+    skills: [csp-db-performance]
+    weight: 50
+  "EXPLAIN ANALYZE":
+    skills: [csp-db-performance]
+    weight: 50
+  "Playwright":
+    skills: [csp-e2e-testing]
+    weight: 50
+  "E2E test":
+    skills: [csp-e2e-testing]
+    weight: 50
+  "flaky test":
+    skills: [csp-e2e-testing]
+    weight: 45
+  "visual regression":
+    skills: [csp-visual-regression]
+    weight: 50
+  "Chromatic":
+    skills: [csp-visual-regression]
+    weight: 45
+  "mock":
+    skills: [csp-mock-strategies]
+    weight: 45
+  "MSW":
+    skills: [csp-mock-strategies]
+    weight: 50
+  "contract test":
+    skills: [csp-mock-strategies]
+    weight: 45
+  "i18n":
+    skills: [csp-i18n-frameworks]
+    weight: 50
+  "internationalization":
+    skills: [csp-i18n-frameworks]
+    weight: 50
+  "translation":
+    skills: [csp-i18n-frameworks, csp-locale-management]
+    weight: 45
+  "locale":
+    skills: [csp-locale-management]
+    weight: 50
+  "RTL":
+    skills: [csp-locale-management]
+    weight: 45
+  "monorepo":
+    skills: [csp-monorepo-tooling]
+    weight: 50
+  "Turborepo":
+    skills: [csp-monorepo-tooling]
+    weight: 50
+  "Nx":
+    skills: [csp-monorepo-tooling]
+    weight: 40
+  "npm publish":
+    skills: [csp-package-publishing]
+    weight: 50
+  "PyPI":
+    skills: [csp-package-publishing]
+    weight: 45
+  "changelog":
+    skills: [csp-changelog-management]
+    weight: 50
+  "changeset":
+    skills: [csp-changelog-management]
+    weight: 50
+  "release notes":
+    skills: [csp-changelog-management]
+    weight: 45
+  "file upload":
+    skills: [csp-file-storage]
+    weight: 50
+  "S3":
+    skills: [csp-file-storage]
+    weight: 50
+  "presigned URL":
+    skills: [csp-file-storage]
+    weight: 50
+  "scope creep":
+    skills: [csp-scope-guard]
+    weight: 50
+  "MVP":
+    skills: [csp-mvp-scoping]
+    weight: 50
+  "on-call":
+    skills: [csp-solo-oncall]
+    weight: 50
+  "incident":
+    skills: [csp-solo-oncall, csp-incident-commander]
+    weight: 50
+  "production issue":
+    skills: [csp-solo-oncall]
+    weight: 50
+  "tech debt":
+    skills: [csp-tech-debt-paydown]
+    weight: 50
+  "technical debt":
+    skills: [csp-tech-debt-paydown]
+    weight: 50
+  "refactor":
+    skills: [csp-tech-debt-paydown, csp-refactorer]
+    weight: 45
+  "rollback":
+    skills: [csp-indie-deploy-ops]
+    weight: 45
+  "zero-downtime":
+    skills: [csp-indie-deploy-ops, csp-db-migration]
+    weight: 45
+
 # ─── 技术栈探测规则 ───
 stack_rules:
   python:
@@ -1616,6 +1828,61 @@ intent_patterns:
     patterns: ["onboard", "getting.*started", "new.*developer", "codebase.*tour", "入门", "新人", "项目导览"]
     skills: [csp-code-tour-guide, csp-codebase-onboarding]
     phase_hint: plan
+    weight: 45
+
+  # ─── Indie Developer Intent Patterns ───
+  deploy_app:
+    patterns: ["deploy.*vercel", "deploy.*railway", "deploy.*fly", "deploy.*vps", "ship.*app", "go.*live", "部署.*应用"]
+    skills: [csp-platform-deploy, csp-vps-deploy, csp-indie-deploy-ops]
+    phase_hint: ship
+    weight: 50
+
+  integrate_payment:
+    patterns: ["payment.*integration", "add.*stripe", "accept.*payment", "billing.*setup", "支付.*集成", "收款"]
+    skills: [csp-payment-integration, csp-subscription-management]
+    phase_hint: build
+    weight: 50
+
+  setup_monitoring:
+    patterns: ["setup.*monitoring", "add.*sentry", "error.*tracking", "uptime.*check", "监控.*配置", "告警"]
+    skills: [csp-monitoring-alerting, csp-solo-oncall]
+    phase_hint: build
+    weight: 45
+
+  handle_i18n:
+    patterns: ["add.*language", "translate.*app", "i18n.*setup", "localization", "国际化", "多语言"]
+    skills: [csp-i18n-frameworks, csp-locale-management]
+    phase_hint: build
+    weight: 45
+
+  manage_monorepo:
+    patterns: ["setup.*monorepo", "turborepo.*config", "nx.*setup", "workspace.*setup", "monorepo.*结构"]
+    skills: [csp-monorepo-tooling, csp-package-publishing, csp-changelog-management]
+    phase_hint: plan
+    weight: 45
+
+  manage_scope:
+    patterns: ["scope.*creep", "feature.*creep", "cut.*scope", "mvp.*scope", "最小.*可行", "范围.*控制"]
+    skills: [csp-scope-guard, csp-mvp-scoping]
+    phase_hint: define
+    weight: 50
+
+  optimize_seo:
+    patterns: ["seo.*setup", "meta.*tags", "structured.*data", "sitemap.*generate", "core.*web.*vitals", "SEO.*优化"]
+    skills: [csp-seo-engineering, csp-frontend-performance]
+    phase_hint: build
+    weight: 45
+
+  handle_webhooks:
+    patterns: ["webhook.*handler", "webhook.*verify", "receive.*webhook", "send.*webhook", "webhook.*处理"]
+    skills: [csp-webhook-architecture, csp-api-governance]
+    phase_hint: build
+    weight: 45
+
+  backup_database:
+    patterns: ["backup.*database", "database.*backup", "restore.*database", "disaster.*recovery", "数据库.*备份"]
+    skills: [csp-db-backup, csp-db-migration]
+    phase_hint: build
     weight: 45
 
 # ─── SDD State-Aware Routing ───

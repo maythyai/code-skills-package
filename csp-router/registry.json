@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "total_skills": 538,
+  "total_skills": 568,
   "shards": [],
   "skill_metadata": "skill-metadata.yaml",
   "skills": [
@@ -125,6 +125,21 @@
       "priority": 10
     },
     {
+      "name": "csp-mvp-scoping",
+      "description": "Cut a product idea down to the smallest shippable version that validates the core hypothesis. Use when facing a long feature wishlist, when planning a new product or feature, or when scope needs to be reduced to ship within a deadline.",
+      "layer": 1,
+      "category": "meta",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-meta/skills/csp-mvp-scoping/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
       "name": "csp-party-mode",
       "description": "Multi-agent collaboration for complex problem-solving with specialized AI agents",
       "layer": 1,
@@ -166,6 +181,21 @@
       },
       "stack_detection": false,
       "path": "csp-meta/skills/csp-requesting-code-review/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-scope-guard",
+      "description": "Detect and resist scope creep during development. Use when a feature request triggers unplanned work, when \"while I'm here\" changes pile up, or when the current sprint/task is at risk of expanding beyond its original boundary.",
+      "layer": 1,
+      "category": "meta",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-meta/skills/csp-scope-guard/SKILL.md",
       "deps": [],
       "priority": 10
     },
@@ -3110,6 +3140,21 @@
       "priority": 10
     },
     {
+      "name": "csp-api-governance",
+      "description": "Governs public and internal APIs with rate limiting algorithms, API key management, usage metering, versioning strategies, error standardization, and monitoring for reliable API operations.",
+      "layer": 3,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/csp-api-governance/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
       "name": "csp-article-writing",
       "description": "Write articles, guides, blog posts, tutorials, newsletter issues, and other long-form content in a distinctive voice derived from supplied examples or brand guidance. Use when the user wants polished written content longer than a paragraph, especially when voice consistency, structure, and credibili",
       "layer": 3,
@@ -3155,6 +3200,21 @@
       "priority": 10
     },
     {
+      "name": "csp-backend-performance",
+      "description": "Diagnose and optimize backend application performance using profiling, caching layers, async processing, and scaling patterns. Use when APIs are slow, database queries bottleneck throughput, or services need to handle higher concurrency.",
+      "layer": 3,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/csp-backend-performance/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
       "name": "csp-brand-voice",
       "description": "Build a source-derived writing style profile from real posts, essays, launch notes, docs, or site copy, then reuse that profile across content, outreach, and social workflows. Use when the user wants voice consistency without generic AI writing tropes.",
       "layer": 3,
@@ -3196,6 +3256,21 @@
       },
       "stack_detection": false,
       "path": "csp-patterns/skills/csp-bun-runtime/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-changelog-management",
+      "description": "Generate changelogs and manage release notes using changesets, semantic-release, and conventional commits. Use when automating changelog generation, setting up release pipelines, coordinating monorepo versioning, or writing user-facing release notes.",
+      "layer": 3,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/csp-changelog-management/SKILL.md",
       "deps": [],
       "priority": 10
     },
@@ -3425,6 +3500,51 @@
       "priority": 10
     },
     {
+      "name": "csp-db-backup",
+      "description": "Implement automated database backup and point-in-time recovery for PostgreSQL and MySQL with encryption, verification, and disaster recovery runbooks.",
+      "layer": 3,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/csp-db-backup/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-db-migration",
+      "description": "Execute zero-downtime database schema migrations using expand-contract patterns, online schema changes, and safe deployment pipeline integration.",
+      "layer": 3,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/csp-db-migration/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-db-performance",
+      "description": "Diagnose and tune database performance using index strategies, query analysis, connection pooling, partitioning, and replication. Use when queries are slow, connections are exhausted, or database metrics indicate resource contention.",
+      "layer": 3,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/csp-db-performance/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
       "name": "csp-deep-research",
       "description": "Multi-source deep research using firecrawl and exa MCPs. Searches the web, synthesizes findings, and delivers cited reports with source attribution. Use when the user wants thorough research on any topic with evidence and citations.",
       "layer": 3,
@@ -3531,7 +3651,7 @@
     },
     {
       "name": "csp-e2e-testing",
-      "description": "Playwright E2E testing patterns, Page Object Model, configuration, CI/CD integration, artifact management, and flaky test strategies.",
+      "description": "Design, implement, and maintain end-to-end test suites for web applications using Playwright, Cypress, or Selenium. Use when building test automation from scratch, reducing flaky tests, or integrating E2E tests into CI pipelines.",
       "layer": 3,
       "category": "patterns",
       "triggers": {
@@ -3541,6 +3661,21 @@
       },
       "stack_detection": false,
       "path": "csp-patterns/skills/csp-e2e-testing/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-email-systems",
+      "description": "Integrates transactional and marketing email systems with provider setup, template rendering, deliverability configuration, bounce handling, and queue-based sending for reliable email delivery.",
+      "layer": 3,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/csp-email-systems/SKILL.md",
       "deps": [],
       "priority": 10
     },
@@ -3620,6 +3755,21 @@
       "priority": 10
     },
     {
+      "name": "csp-file-storage",
+      "description": "Design and implement file upload, storage, and processing architectures using S3, R2, and other object storage providers. Use when building file upload flows, configuring presigned URLs, setting up image processing pipelines, or optimizing storage costs and CDN delivery.",
+      "layer": 3,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/csp-file-storage/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
       "name": "csp-frontend-patterns",
       "description": "Frontend development patterns for state management, performance optimization, accessibility, and UI best practices across frameworks.",
       "layer": 3,
@@ -3631,6 +3781,21 @@
       },
       "stack_detection": false,
       "path": "csp-patterns/skills/csp-frontend-patterns/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-frontend-performance",
+      "description": "Diagnose and optimize frontend web application performance using Core Web Vitals, bundle analysis, code splitting, and framework-specific patterns. Use when pages feel slow, Lighthouse scores are low, or bundle sizes need reduction.",
+      "layer": 3,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/csp-frontend-performance/SKILL.md",
       "deps": [],
       "priority": 10
     },
@@ -3661,6 +3826,21 @@
       },
       "stack_detection": false,
       "path": "csp-patterns/skills/csp-git-conventions/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-i18n-frameworks",
+      "description": "Select, configure, and integrate internationalization frameworks for React, Next.js, and Vue applications. Use when setting up i18n for a new project, migrating between i18n libraries, or building a translation workflow pipeline.",
+      "layer": 3,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/csp-i18n-frameworks/SKILL.md",
       "deps": [],
       "priority": 10
     },
@@ -3770,6 +3950,21 @@
       "priority": 10
     },
     {
+      "name": "csp-locale-management",
+      "description": "Manage locale data, formatting, and layout patterns including Intl API usage, timezone handling, RTL support, pluralization rules, and locale-based routing. Use when implementing locale-specific formatting, content negotiation, or bidirectional text support in web applications.",
+      "layer": 3,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/csp-locale-management/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
       "name": "csp-market-research",
       "description": "Conduct market research, competitive analysis, investor due diligence, and industry intelligence with source attribution and decision-oriented summaries. Use when the user wants market sizing, competitor comparisons, fund research, technology scans, or research that informs business decisions.",
       "layer": 3,
@@ -3830,6 +4025,51 @@
       "priority": 10
     },
     {
+      "name": "csp-mock-strategies",
+      "description": "Design and implement test doubles, API mocks, and fixture management across unit, integration, and E2E testing layers. Use when setting up MSW handlers, deciding between mock types, implementing contract tests, or building type-safe mock helpers.",
+      "layer": 3,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/csp-mock-strategies/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-monitoring-alerting",
+      "description": "Set up error tracking, uptime monitoring, APM, log aggregation, and alerting pipelines using free-tier and low-cost observability tools.",
+      "layer": 3,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/csp-monitoring-alerting/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-monorepo-tooling",
+      "description": "Select, configure, and optimize monorepo tooling including Turborepo, Nx, pnpm workspaces, and Lerna for multi-package JavaScript/TypeScript projects. Use when setting up a monorepo, migrating from polyrepo, or optimizing build orchestration and CI pipelines for multi-package repositories.",
+      "layer": 3,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/csp-monorepo-tooling/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
       "name": "csp-nestjs-patterns",
       "description": "NestJS architecture patterns for modules, controllers, providers, DTO validation, guards, interceptors, config, and production-grade TypeScript backends.",
       "layer": 3,
@@ -3860,6 +4100,21 @@
       "priority": 10
     },
     {
+      "name": "csp-oauth-integration",
+      "description": "Implements OAuth 2.0 and OpenID Connect authentication flows including Authorization Code with PKCE, multi-provider identity, token management, session handling, and social login provider integration.",
+      "layer": 3,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/csp-oauth-integration/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
       "name": "csp-observability-and-instrumentation",
       "description": "Instruments code so production behavior is visible and diagnosable. Use when adding logging, metrics, tracing, or alerting. Use when shipping any feature that runs in production and you need evidence it works. Use when production issues are reported but you can't tell what happened from the availabl",
       "layer": 3,
@@ -3875,6 +4130,36 @@
       "priority": 10
     },
     {
+      "name": "csp-package-publishing",
+      "description": "Configure and automate package publishing workflows for npm, PyPI, and other registries including provenance, pre-release versioning, monorepo publishing, and security controls. Use when setting up CI-based publishing pipelines, managing pre-release channels, or securing registry access tokens.",
+      "layer": 3,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/csp-package-publishing/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-payment-integration",
+      "description": "Implements Stripe and LemonSqueezy payment integration patterns including checkout sessions, webhook handling, error recovery, and multi-currency support for SaaS and e-commerce applications.",
+      "layer": 3,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/csp-payment-integration/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
       "name": "csp-performance-optimizer",
       "description": "Performance optimization specialist for identifying bottlenecks, improving efficiency, and reducing resource consumption. Use when optimizing code or investigating performance issues.",
       "layer": 3,
@@ -3886,6 +4171,21 @@
       },
       "stack_detection": false,
       "path": "csp-patterns/skills/csp-performance-optimizer/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-platform-deploy",
+      "description": "Deploy web applications to modern PaaS platforms (Vercel, Netlify, Railway, Fly.io, Render) with optimal configuration for performance, cost, and developer experience.",
+      "layer": 3,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/csp-platform-deploy/SKILL.md",
       "deps": [],
       "priority": 10
     },
@@ -3916,6 +4216,21 @@
       },
       "stack_detection": false,
       "path": "csp-patterns/skills/csp-postgres-patterns/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-privacy-compliance",
+      "description": "Implement GDPR, CCPA, and privacy compliance features including consent management, data subject access requests, right to erasure, and data portability.",
+      "layer": 3,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/csp-privacy-compliance/SKILL.md",
       "deps": [],
       "priority": 10
     },
@@ -4175,6 +4490,21 @@
       "priority": 10
     },
     {
+      "name": "csp-seo-engineering",
+      "description": "Engineers technical SEO for web applications including meta tags, structured data, sitemaps, Core Web Vitals optimization, and rendering strategy selection for maximum search visibility.",
+      "layer": 3,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/csp-seo-engineering/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
       "name": "csp-spec-adr",
       "description": "Lightweight spec and ADR writer. Generates specifications, implementation plans, architectural decision records, and PRDs from natural language descriptions. Use when the team needs structured documentation without a heavy process tool.",
       "layer": 3,
@@ -4250,6 +4580,21 @@
       "priority": 10
     },
     {
+      "name": "csp-subscription-management",
+      "description": "Manages subscription lifecycle patterns including state machines, plan upgrades/downgrades, usage-based billing, dunning strategies, and feature gating for SaaS applications.",
+      "layer": 3,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/csp-subscription-management/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
       "name": "csp-swift-actor-persistence",
       "description": "Thread-safe data persistence in Swift using actors — in-memory cache with file-backed storage, eliminating data races by design.",
       "layer": 3,
@@ -4295,6 +4640,21 @@
       "priority": 10
     },
     {
+      "name": "csp-user-analytics",
+      "description": "Designs and implements user analytics systems including event taxonomy, platform integration, retention metrics, funnel tracking, A/B testing, and privacy-compliant data collection.",
+      "layer": 3,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/csp-user-analytics/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
       "name": "csp-video-editing",
       "description": "AI-assisted video editing workflows for cutting, structuring, and augmenting real footage. Covers the full pipeline from raw capture through FFmpeg, Remotion, ElevenLabs, fal.ai, and final polish in Descript or CapCut. Use when the user wants to edit video, cut footage, create vlogs, or build video ",
       "layer": 3,
@@ -4310,6 +4670,21 @@
       "priority": 10
     },
     {
+      "name": "csp-visual-regression",
+      "description": "Implement visual regression testing and UI change detection using Chromatic, Percy, Playwright screenshots, or BackstopJS. Use when UI changes need automated review, design system components need snapshot coverage, or visual diffs must block unapproved changes in CI.",
+      "layer": 3,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/csp-visual-regression/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
       "name": "csp-vllm-serving",
       "description": "Production vLLM inference serving patterns covering Docker setup, continuous batching, PagedAttention, tensor parallelism, OpenAI-compatible APIs, LoRA multiplexing, quantization, performance tuning, health checks, Kubernetes scaling, and multi-model serving. Use when deploying, optimizing, or opera",
       "layer": 3,
@@ -4321,6 +4696,36 @@
       },
       "stack_detection": false,
       "path": "csp-patterns/skills/csp-vllm-serving/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-vps-deploy",
+      "description": "Deploy and manage applications on VPS servers with Nginx reverse proxy, SSL, systemd services, and security hardening for solo developers.",
+      "layer": 3,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/csp-vps-deploy/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-webhook-architecture",
+      "description": "Designs webhook sending and receiving systems with signature verification, idempotent processing, reliable delivery with retries, management UIs, and monitoring for production-grade event-driven architectures.",
+      "layer": 3,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/csp-webhook-architecture/SKILL.md",
       "deps": [],
       "priority": 10
     },
@@ -7415,6 +7820,21 @@
       "priority": 10
     },
     {
+      "name": "csp-indie-deploy-ops",
+      "description": "End-to-end deployment workflow for independent developers covering pre-deploy checks, zero-downtime deployment, rollback, and post-deploy verification. Use when deploying a web application, API, or service to production.",
+      "layer": 2,
+      "category": "workflow",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-workflow/skills/csp-indie-deploy-ops/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
       "name": "csp-legacy-modernization",
       "description": "End-to-end legacy modernization workflow covering assessment (codebase audit, dependency analysis, architecture review), planning (migration strategy, risk assessment, timeline), execution (incremental migration, strangler fig, parallel run), verification (regression testing, performance comparison,",
       "layer": 2,
@@ -7490,6 +7910,21 @@
       "priority": 10
     },
     {
+      "name": "csp-solo-oncall",
+      "description": "Structured incident response workflow for solo developers and small teams. Use when a production issue is detected, when you're the only person on call, or when you need a calm, repeatable process for diagnosing and resolving live incidents.",
+      "layer": 2,
+      "category": "workflow",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-workflow/skills/csp-solo-oncall/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
       "name": "csp-strategy",
       "description": "Create or maintain STRATEGY.md - the product's target problem, approach, users, key metrics, and tracks of work. Use when starting a new product, updating direction, or when prompts like 'write our strategy', 'update the roadmap', 'what are we working on', or 'set up the strategy doc' come up. Also ",
       "layer": 2,
@@ -7501,6 +7936,21 @@
       },
       "stack_detection": false,
       "path": "csp-workflow/skills/csp-strategy/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-tech-debt-paydown",
+      "description": "Structured approach to identifying, prioritizing, and paying down technical debt. Use when the codebase has accumulated cruft, when velocity is declining, or when planning a refactoring sprint. Helps solo developers decide what to fix now vs later.",
+      "layer": 2,
+      "category": "workflow",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-workflow/skills/csp-tech-debt-paydown/SKILL.md",
       "deps": [],
       "priority": 10
     },
