@@ -1,380 +1,441 @@
-# CSP (Code Skills Package) 架构设计
+# CSP (Code Skills Package) Architecture Design
 
-> 版本: v0.4.0 | 日期: 2026-06-14
-> 状态: 质量巩固完成
-
----
-
-## 一、项目定位
-
-**CSP** (Code Skills Package) 是一个统一的编程技能包,将多个开源 AI 编程辅助项目的精华整合为一体化解决方案:
-
-| 来源项目 | 定位 | 整合角色 |
-|----------|------|----------|
-| **ECC** | 全平台 skill 库 | 技能内容主体 |
-| **GSD** | 项目管理框架 | 工作流骨架 |
-| **Runtime** | Claude Code 增强运行时 | 独特运行时能力 |
-| **Superpowers** | 元技能方法论 | 底层方法论 |
-| **spec-kit** | 规范驱动工具 | 方法论扩展 |
-
-### 核心原则
-
-1. **融合交集,保留独特** — 重叠部分合并为单一实现,独有能力原样保留
-2. **渐进式披露** — 用户无需一次性了解全部 skill,系统按需加载
-3. **Token 节约** — 索引常驻,正文懒加载,深度材料按需再加载
-4. **自动化路由** — 用户描述任务,系统自动选择最匹配的 skill 组合
-5. **统一命名空间** — 所有 skill 和命令均仅使用 `csp-` 前缀
-
-### 命名规范
-
-**强制规则**: CSP 项目中不存在双入口兼容或原始前缀保留。所有名称均使用短横线 `-` 连接。
-
-| 原始来源 | 原始前缀示例 | CSP 统一命名 |
-|---------|------------|------------|
-| ECC | `ecc:react-review` | `csp-react-review` |
-| GSD | `gsd:plan-phase`, `/gsd:debug` | `csp-plan-phase`, `/csp-debug` |
- **Runtime** | `runtime:autopilot` | `csp-autopilot` |
-| Superpowers | `sp:brainstorming` | `csp-brainstorming` |
-
-**实施要求**:
-- 迁移时将所有 skill 文件名、目录名、命令名统一添加 `csp-` 前缀
-- 所有连接符统一使用短横线 `-`,不使用冒号 `:`
-- 移除所有 `replaces` 字段(不再需要记录原始名称映射)
-- slash commands 统一使用 `/csp-xxx` 格式,不保留 `/gsd-`, `/csp-` 等
-- 文档和代码注释中不引用原始项目前缀
+> Version: v0.7.0 | Date: 2026-06-20
+> Status: State-aware routing + Confidence scoring + Skill Knowledge Graph enhancement
 
 ---
 
-## 二、五层架构
+## 1. Project Positioning
+
+**CSP** (Code Skills Package) is a unified programming skills package that integrates the essence of multiple open-source AI programming assistance projects into an integrated solution:
+
+### Core Principles
+
+1. **Merge Intersection, Preserve Unique** — Merge overlapping parts into a single implementation, preserve unique capabilities as-is
+2. **Progressive Disclosure** — Users don't need to learn all skills at once, system loads on demand
+3. **Token Conservation** — Index resident, content lazy loading, deep materials loaded on demand
+4. **Automated Routing** — User describes task, system automatically selects the most suitable skill combination
+5. **State Awareness** — Based on project state, development phase, technology stack to automatically adjust routing strategy
+6. **Unified Namespace** — All skills and commands use only the `csp-` prefix
+
+### Naming Convention
+
+**Mandatory Rule**: There are no dual-entry compatibility or original prefix retention in CSP projects. All names use hyphens `-` for connection.
+
+**Implementation Requirements**:
+- When migrating, unify all skill filenames, directory names, and command names with the `csp-` prefix
+- All connectors uniformly use hyphens `-`, not colons `:`
+- Slash commands uniformly use `/csp-xxx` format
+- Original project prefixes are not referenced in documentation and code comments
+
+---
+
+## 2. Five-Layer Architecture
 
 ```
 ┌─────────────────────────────────────────────────────┐
-│  Layer 0: csp-router  (常驻,~800 tokens)            │
-│  ─ 任务分类 + skill 选择 + 上下文探测                │
+│  Layer 0: csp-router  (Resident, ~800 tokens)     │
+│  ─ Task classification + skill selection + state awareness + context detection │
 ├─────────────────────────────────────────────────────┤
-│  Layer 1: csp-meta    (SP + 规范驱动元技能)          │
-│  ─ 方法论: brainstorming, TDD, spec-driven...       │
+│  Layer 1: csp-meta    (SP + Specification-driven meta skills) │
+│  ─ Methodologies: brainstorming, TDD, spec-driven... │
 ├─────────────────────────────────────────────────────┤
-│  Layer 2: csp-workflow (GSD 93 workflows 骨架)      │
-│  ─ 项目管理: plan → execute → verify → ship               │
+│  Layer 2: csp-workflow (GSD 93 workflows skeleton) │
+│  ─ Project management: plan → execute → verify → ship │
 ├─────────────────────────────────────────────────────┤
-│  Layer 3: csp-patterns (ECC 技术库 ~200 skills)     │
-│  ─ 语言/框架 patterns, reviewers, build-resolvers    │
+│  Layer 3: csp-patterns (ECC technology library ~200 skills) │
+│  ─ Language/framework patterns, reviewers, build-resolvers │
 ├─────────────────────────────────────────────────────┤
-│  Layer 4: csp-runtime (运行时独特能力 ~20 skills)     │
-│  ─ autopilot, ralph, wiki, remember, self-improve    │
+│  Layer 4: csp-runtime (Unique runtime capabilities ~20 skills) │
+│  ─ autopilot, ralph, wiki, remember, self-improve │
 └─────────────────────────────────────────────────────┘
 ```
 
-### 层级加载策略
+### Layer Loading Strategy
 
-| 层级 | 加载时机 | Token 成本 |
-|------|----------|-----------|
-| L0 router | **会话启动时永久加载** | ~800 |
-| L1 meta | router 识别需要方法论时加载 | ~300/skill |
-| L2 workflow | 用户触发项目管理流程时加载 | ~500/skill |
-| L3 patterns | router 识别技术栈后加载对应 skill | ~200-600/skill |
-| L4 runtime | 用户请求自主执行/知识管理时加载 | ~300/skill |
-
----
-
-## 三、目录结构
-
-```
-code-skills-package/
-├── CLAUDE.md                          # 主入口,路由说明 + 安装指引
-├── ARCHITECTURE.md                    # 本文件
-├── SKILL-INDEX.md                     # 完整 skill 索引(已有)
-│
-├── csp-router/                        # Layer 0: 路由器
-│   ├── SKILL.md                       # 路由逻辑
-│   ├── registry.json                  # skill 注册表(索引)
-│   └── triggers.yaml                  # 触发词规则库
-│
-├── csp-meta/                          # Layer 1: 元技能(SP)
-│   └── skills/
-│       ├── brainstorming/SKILL.md
-│       ├── test-driven-development/SKILL.md
-│       ├── systematic-debugging/SKILL.md
-│       ├── writing-plans/SKILL.md
-│       ├── executing-plans/SKILL.md
-│       ├── verification-before-completion/SKILL.md
-│       ├── writing-skills/SKILL.md
-│       ├── dispatching-parallel-agents/SKILL.md
-│       ├── subagent-driven-development/SKILL.md
-│       ├── using-git-worktrees/SKILL.md
-│       ├── finishing-a-development-branch/SKILL.md
-│       ├── requesting-code-review/SKILL.md
-│       └── receiving-code-review/SKILL.md
-│
-├── csp-workflow/                      # Layer 2: 工作流(GSD)
-│   ├── commands/                      # slash commands
-│   │   ├── csp-plan-phase.md
-│   │   ├── csp-execute-phase.md
-│   │   ├── csp-verify-phase.md
-│   │   ├── csp-debug.md
-│   │   ├── csp-new-project.md
-│   │   ├── csp-ship.md
-│   │   └── ...
-│   ├── agents/                        # workflow agents
-│   │   ├── csp-planner.md
-│   │   ├── csp-executor.md
-│   │   ├── csp-verifier.md
-│   │   ├── csp-debugger.md
-│   │   ├── csp-debug-session-manager.md
-│   │   ├── csp-explorer.md
-│   │   ├── csp-codebase-mapper.md
-│   │   └── ...
-│   └── workflows/                     # 多步骤工作流定义
-│       ├── csp-code-review.md
-│       ├── csp-ui-phase.md
-│       ├── csp-secure-phase.md
-│       └── ...
-│
-├── csp-patterns/                      # Layer 3: 技术库(ECC)
-│   ├── skills/                        # 按领域组织
-│   │   ├── code-review/               # 通用代码审查
-│   │   │   └── SKILL.md
-│   │   ├── reviewers/                 # 语言专项审查
-│   │   │   ├── python-reviewer.md
-│   │   │   ├── go-reviewer.md
-│   │   │   ├── rust-reviewer.md
-│   │   │   └── ...
-│   │   ├── build-resolvers/           # 构建错误修复
-│   │   │   ├── python-build-resolver.md
-│   │   │   └── ...
-│   │   ├── testing/                   # 测试相关
-│   │   │   ├── tdd-workflow.md
-│   │   │   ├── python-testing.md
-│   │   │   └── ...
-│   │   ├── security/                  # 安全相关
-│   │   │   ├── security-review.md
-│   │   │   ├── django-security.md
-│   │   │   └── ...
-│   │   ├── backend-patterns/          # 后端模式
-│   │   │   ├── django-patterns.md
-│   │   │   ├── fastapi-patterns.md
-│   │   │   └── ...
-│   │   ├── frontend-patterns/         # 前端模式
-│   │   │   ├── react-patterns.md
-│   │   │   ├── nextjs-turbopack.md
-│   │   │   └── ...
-│   │   └── content/                   # 内容/营销(ECC独有)
-│   │       ├── article-writing.md
-│   │       ├── brand-voice.md
-│   │       └── ...
-│   └── agents/                        # 技术 agents
-│       ├── code-reviewer.md           # 统一代码审查 agent
-│       ├── code-simplifier.md
-│       ├── security-reviewer.md
-│       └── ...
-│
-├── csp-runtime/                       # Layer 4: 运行时
-│   └── skills/
-│       ├── autopilot/SKILL.md
-│       ├── ralph/SKILL.md
-│       ├── ultrawork/SKILL.md
-│       ├── remember/SKILL.md
-│       ├── wiki/SKILL.md
-│       ├── deep-interview/SKILL.md
-│       ├── ai-slop-cleaner/SKILL.md
-│       ├── self-improve/SKILL.md
-│       └── ...
-│
-├── shared/                            # 共享资源
-│   ├── hooks/                         # 统一 hooks 配置
-│   │   └── hooks.json
-│   ├── scripts/                       # 共享脚本
-│   │   └── lib/
-│   └── templates/                     # 通用模板
-│
-└── MIGRATION.md                       # 来源→CSP 映射表
-```
+| Layer | Loading Time | Token Cost |
+|------|--------------|-----------|
+| L0 router | **Permanently loaded at session start** | ~800 |
+| L1 meta | Loaded when router identifies need for methodology | ~300/skill |
+| L2 workflow | Loaded when user triggers project management process | ~500/skill |
+| L3 patterns | Loaded after router identifies tech stack | ~200-600/skill |
+| L4 runtime | Loaded when user requests autonomous execution/knowledge management | ~300/skill |
 
 ---
 
-## 四、Skill 注册表 (registry.json)
+## 3. Skill Knowledge Graph (SKPG)
 
-每个 skill 在注册表中有一条记录,是路由器进行匹配的核心数据结构:
+### 3.1 Overview
+
+Skill Knowledge & Practice Graph is a graph structure representing relationships between skills, used for:
+- Dependency analysis: Determine prerequisite dependencies between skills
+- Impact analysis: When modifying a skill, analyze other affected skills
+- Path finding: Find the best path from one skill to another
+- Recommendation system: Recommend related skills based on current skill
+
+### 3.2 Graph Structure
 
 ```json
 {
-  "name": "csp-code-review",
-  "description": "通用代码审查:正确性、安全性、性能、可维护性",
-  "layer": 4,
-  "category": "review",
-  "triggers": {
-    "keywords": ["review", "审查", "code review", "CR", "看看代码"],
-    "file_patterns": ["*.diff", "*.patch"],
-    "context": ["post-commit", "pre-merge", "PR"]
+  "nodes": {
+    "csp-code-review": {
+      "name": "csp-code-review",
+      "type": "review",
+      "domain": "code-quality",
+      "dependencies": ["csp-tdd"],
+      "dependsOn": ["csp-spec-contract"],
+      "similar": ["csp-multi-review", "csp-security-review"]
+    }
   },
-  "stack_detection": false,
-  "path": "csp-patterns/skills/code-review/SKILL.md",
-  "deps": [],
-  "priority": 10
+  "edges": [
+    {
+      "from": "csp-code-review",
+      "to": "csp-tdd",
+      "type": "depends",
+      "weight": 0.8
+    }
+  ]
 }
 ```
 
-### 注册表字段说明
+### 3.3 Graph Applications
 
-| 字段 | 用途 |
-|------|------|
-| `name` | 统一名称(无来源前缀) |
-| `description` | 短描述(≤80字,进索引) |
-| `layer` | 所属层级(0-5) |
-| `category` | 功能分类(review/debug/test/plan/spec/pattern/runtime) |
-| `triggers.keywords` | 触发关键词列表 |
-| `triggers.file_patterns` | 文件模式触发 |
-| `triggers.context` | 上下文触发(如 post-commit) |
-| `stack_detection` | 是否需要探测项目技术栈 |
-| `path` | SKILL.md 相对路径 |
-| `deps` | 依赖的其他 skill |
-| `replaces` | 合并前的旧名称列表 |
-| `priority` | 同 category 内的优先级(数字越小越优先) |
+- **Dependency Checking**: Check if prerequisites are satisfied before activating skills
+- **Smart Recommendations**: Recommend related skills based on graph structure
+- **Conflict Detection**: Detect mutually exclusive skill combinations
+- **Path Optimization**: Plan optimal skill execution paths for complex tasks
 
 ---
 
-## 五、自动路由器 (csp-router)
+## 4. Skill Registry (registry.json)
 
-### 工作流程
+Each skill has one record in the registry, which is the core data structure for router matching:
 
 ```
-用户输入任务描述
+Reference: docs/SKILL-SPEC-v2.md
+```
+
+### Registry Field Descriptions
+
+| Field | Purpose |
+|------|---------|
+| `name` | Unified name (no source prefix) |
+| `description` | Short description (≤80 chars, goes into index) |
+| `layer` | Belonging layer (0-5) |
+| `category` | Functional classification (review/debug/test/plan/spec/pattern/runtime) |
+| `triggers.keywords` | Trigger keyword list |
+| `triggers.file_patterns` | File pattern triggers |
+| `triggers.context` | Context triggers (such as post-commit) |
+| `stack_detection` | Whether project tech stack needs detection |
+| `path` | Relative path to SKILL.md |
+| `deps` | Dependencies on other skills |
+| `priority` | Priority within same category (lower number is higher priority) |
+
+---
+
+## 5. Auto Router (csp-router)
+
+### 5.1 Workflow
+
+```
+User inputs task description
       │
       ▼
   ┌──────────┐
-  │ 信号抽取  │  关键词 / 文件模式 / 上下文 / 技术栈探测
+  │ Signal Extraction │  Keywords / File patterns / Context / Tech stack detection
   └────┬─────┘
        │
        ▼
-  ┌──────────┐     命中     ┌──────────┐
-  │ 规则匹配  │────────────→│ 确定 skill │
-  └────┬─────┘             └──────────┘
-       │ 未命中
-       ▼
-  ┌──────────┐     匹配     ┌──────────┐
-  │ 语义分类  │────────────→│ 候选 skill │
-  └────┬─────┘             └────┬─────┘
-       │                        │
-       ▼                        ▼
-  ┌──────────────────────────────┐
-  │ 组装激活列表(≤5 个,按层级排序)│
-  └──────────────────────────────┘
-       │
-       ▼
-  按层级顺序加载 SKILL.md → 执行
+  ┌─────────────┐
+  │ State Detection │  git status / tech stack / current development phase
+  └─────┬───────┘
+        │
+        ▼
+  ┌─────────────┐
+  │ Intent Classification │  Semantic matching + Regex pattern matching
+  └─────┬───────┘
+        │
+        ▼
+  ┌─────────────┐
+  │ Confidence Scoring │  Multi-dimensional weighted scoring
+  └─────┬───────┘
+        │
+        ▼
+  ┌─────────────┐
+  │ Routing Decision │  Decision based on confidence and state
+  └─────────────┘
 ```
 
-### 信号抽取
+### 5.2 Signal Extraction
 
-1. **关键词匹配**:从用户输入中提取 `triggers.keywords` 中的词
-2. **文件模式**:如用户提供了文件路径,匹配 `triggers.file_patterns`
-3. **上下文**:检测当前是否在 git commit 后、PR 中等场景
-4. **技术栈探测**:当 `stack_detection: true` 时,扫描项目根目录:
-   - `package.json` → Node.js/前端
+1. **Keyword Matching**: Extract words from `triggers.keywords` in user input
+2. **File Pattern**: If user provides file paths, match `triggers.file_patterns`
+3. **Context**: Detect scenarios like post-git commit, PR, etc.
+4. **Tech Stack Detection**: When `stack_detection: true`, scan project root:
+   - `package.json` → Node.js/frontend
    - `Cargo.toml` → Rust
    - `go.mod` → Go
    - `pyproject.toml` / `setup.py` → Python
    - `pom.xml` / `build.gradle` → Java/Kotlin
    - `*.xcodeproj` / `Package.swift` → Swift
 
-### 技术栈→Skill 映射
+### 5.3 State Detection (Pre-Router Hook)
+
+`state-detector.mjs` automatically detects and injects context:
+
+| Signal | Detection Method | Example Values |
+|------|------------------|----------------|
+| git_status | `git status --porcelain` | clean, dirty, conflict |
+| tech_stack | Project file scanning | python, typescript, go |
+| phase | Directory structure analysis | planning, building, testing |
+| test_status | Test result files | passing, failing, unknown |
+
+State is written to `.csp/state.json` for subsequent steps to use.
+
+### 5.4 SDD State-Aware Routing
+
+Based on files under `.csp/artifacts/` to automatically determine current development phase:
+
+| Existing Artifact | Current Phase | Recommended Next |
+|---------------|---------------|------------------|
+| None | Initial | understand (codebase-mapper) |
+| understand.md | Understanding complete | plan (writing-plans) |
+| plan.md | Planning complete | spec (spec-contract) |
+| spec.md | Specification complete | implement (tdd + executing-plans) |
+| implement.md | Implementation complete | review (code-review) |
+| review.md | Review complete | verify (verification) |
+
+Routing rules defined in `triggers.yaml` under `sdd_state_routing` section.
+
+### 5.5 Regex Pattern Matching Layer
+
+Above keyword matching, add regex pattern matching to improve fuzzy intent hit rates:
+
+- Support regex expressions (e.g. `re\\s*factor` matches "refactor", "re factor")
+- Support multi-word combinations (e.g. `production.*issue`)
+- Defined in `triggers.yaml` under `intent_patterns` section with `patterns:` field
+
+Relationship with keyword matching:
+1. Keyword exact match → confidence 0.9
+2. Regex pattern match → confidence 0.7
+3. Intent inference → confidence 0.5
+
+### 5.6 Confidence Scoring
+
+```
+confidence = keyword_score × 0.4
+           + intent_score × 0.3
+           + context_score × 0.3
+```
+
+Context score considerations:
+- Current phase matches skill phase → +0.2
+- Tech stack matches skill domain → +0.15
+- Git status (dirty →偏向 debug skills)
+
+### 5.7 Routing Decision
+
+| Confidence | Decision |
+|------------|----------|
+| > 80% | Direct routing to top skill |
+| 50-80% | Show top 3, let user confirm |
+| < 50% | Fall back to `/csp-interview-me` deep interview |
+
+### 5.8 SKPG Enhancement (Optional)
+
+Read `csp-router/skpg/graph.json` to perform:
+- **Dependency Check**: Does activated skill have prerequisites?
+- **Impact Analysis**: If modifying skill X, which other skills are affected?
+- **Path Finding**: Shortest path from skill A to skill B
+
+### 5.9 Tech Stack→Skill Mapping
 
 ```yaml
-# triggers.yaml 片段
+# triggers.yaml snippet
 
 stack_rules:
   python:
     files: ["pyproject.toml", "setup.py", "requirements.txt", "Pipfile"]
-    reviewers: ["python-reviewer", "django-reviewer", "fastapi-reviewer"]
+    reviewers: ["csp-python-reviewer", "csp-django-reviewer", "csp-fastapi-reviewer"]
     testers: ["csp-python-testing"]
-    build_resolvers: ["django-build-resolver"]
-    patterns: ["csp-python-patterns", "django-patterns", "fastapi-patterns"]
+    build_resolvers: ["csp-django-build-resolver"]
+    patterns: ["csp-python-patterns", "csp-django-patterns", "csp-fastapi-patterns"]
 
   rust:
     files: ["Cargo.toml"]
-    reviewers: ["rust-reviewer"]
-    testers: ["rust-testing"]
-    build_resolvers: ["rust-build-resolver"]
-    patterns: ["rust-patterns"]
+    reviewers: ["csp-rust-reviewer"]
+    testers: ["csp-rust-testing"]
+    build_resolvers: ["csp-rust-build-resolver"]
+    patterns: ["csp-rust-patterns"]
 
   golang:
     files: ["go.mod"]
-    reviewers: ["go-reviewer"]
+    reviewers: ["csp-go-reviewer"]
     testers: ["csp-golang-testing"]
-    build_resolvers: ["go-build-resolver"]
+    build_resolvers: ["csp-go-build-resolver"]
     patterns: ["csp-golang-patterns"]
 
   typescript:
     files: ["tsconfig.json", "package.json"]
-    reviewers: ["typescript-reviewer", "react-reviewer"]
-    testers: ["react-testing"]
-    build_resolvers: ["react-build-resolver"]
-    patterns: ["react-patterns", "nextjs-turbopack", "frontend-patterns"]
+    reviewers: ["csp-typescript-reviewer", "csp-react-reviewer"]
+    testers: ["csp-react-testing"]
+    build_resolvers: ["csp-react-build-resolver"]
+    patterns: ["csp-react-patterns", "csp-nextjs-turbopack", "csp-frontend-patterns"]
 
-  # ...更多栈
+  # ...more stacks
 ```
 
-### 路由器 SKILL.md 示例
+### 5.10 Router SKILL.md Example
 
 ```markdown
 ---
 name: csp-router
-description: CSP 任务路由器 — 自动识别任务类型并加载合适的 skill 组合
-version: 0.1.0
+description: >
+  CSP task router — state-aware + confidence scoring + knowledge graph enhanced intelligent routing.
+  Automatically identifies task type and loads suitable skill combinations.
+layer: 0
+category: router
+phase: plan
+domain: architecture
+tools: [Read, Glob, Grep]
 ---
 
 # CSP Router
 
-当用户给出任务时,按以下步骤执行:
+State-aware + confidence scoring + knowledge graph enhanced intelligent routing system.
 
-## 1. 信号抽取
-从用户输入中提取:
-- 关键词(如 "review", "debug", "plan", "test")
-- 文件路径和模式
-- 上下文(git 状态、PR 等)
+## Routing Process
 
-## 2. 技术栈探测
-扫描项目根目录,识别技术栈:
-- package.json → TypeScript/JavaScript
-- Cargo.toml → Rust
-- go.mod → Go
-- pyproject.toml → Python
-- ...
+### 1. State Detection (Pre-Router Hook)
 
-## 3. 匹配 Skill
-读取 registry.json,按 triggers 匹配:
-- 关键词命中 → 直接激活
-- 技术栈命中 → 加载对应 reviewer/patterns
-- 上下文命中 → 加载对应 workflow
+`state-detector.mjs` automatically detects and injects context:
 
-## 4. 输出激活列表
-最多激活 5 个 skill,按层级排序:
-L1(meta) → L2(workflow) → L3(patterns) → L4(runtime)
+| Signal | Detection Method | Example Values |
+|------|------------------|----------------|
+| git_status | `git status --porcelain` | clean, dirty, conflict |
+| tech_stack | Project file scanning | python, typescript, go |
+| phase | Directory structure analysis | planning, building, testing |
+| test_status | Test result files | passing, failing, unknown |
 
-## 5. 加载执行
-按顺序读取每个激活 skill 的 SKILL.md,按指引执行。
+State is written to `.csp/state.json` for subsequent steps to use.
+
+### 2. Keyword + Intent Matching
+
+- **Keyword Matching**: `triggers.yaml` → Candidate skills
+- **Intent Classification**: `intent_patterns` → Semantic matching
+- **Tech Stack Matching**: `stack_rules` → Language/framework specific skills
+
+### 3. SDD State-Aware Routing
+
+Based on files under `.csp/artifacts/` to automatically determine current development phase:
+
+| Existing Artifact | Current Phase | Recommended Next |
+|---------------|---------------|------------------|
+| None | Initial | understand (codebase-mapper) |
+| understand.md | Understanding complete | plan (writing-plans) |
+| plan.md | Planning complete | spec (spec-contract) |
+| spec.md | Specification complete | implement (tdd + executing-plans) |
+| implement.md | Implementation complete | review (code-review) |
+| review.md | Review complete | verify (verification) |
+
+Routing rules defined in `triggers.yaml` under `sdd_state_routing` section.
+
+### 4. Regex Pattern Matching Layer
+
+Above keyword matching, add regex pattern matching to improve fuzzy intent hit rates:
+
+- Support regex expressions (e.g. `re\\s*factor` matches "refactor", "re factor")
+- Support multi-word combinations (e.g. `production.*issue")
+- Defined in `triggers.yaml` under `intent_patterns` section with `patterns:` field
+
+Relationship with keyword matching:
+1. Keyword exact match → confidence 0.9
+2. Regex pattern match → confidence 0.7
+3. Intent inference → confidence 0.5
+
+### 5. Confidence Scoring
+
+```
+confidence = keyword_score × 0.4
+           + intent_score × 0.3
+           + context_score × 0.3
+```
+
+Context score considerations:
+- Current phase matches skill phase → +0.2
+- Tech stack matches skill domain → +0.15
+- Git status (dirty →偏向 debug skills)
+
+### 6. Routing Decision
+
+| Confidence | Decision |
+|------------|----------|
+| > 80% | Direct routing to top skill |
+| 50-80% | Show top 3, let user confirm |
+| < 50% | Fall back to `/csp-interview-me` deep interview |
+
+### 7. SKPG Enhancement (Optional)
+
+Read `csp-router/skpg/graph.json` to perform:
+- **Dependency Check**: Does activated skill have prerequisites?
+- **Impact Analysis**: If modifying skill X, which other skills are affected?
+- **Path Finding**: Shortest path from skill A to skill B
+
+### 8. Output Format
+
+```
+## Routing Decision
+
+**State**: git=clean | lang=python | phase=building
+
+**Matching skills** (Confidence):
+1. csp-tdd [build] — 78%
+2. csp-implementation-phase [build] — 65%
+3. csp-python-reviewer [review] — 35%
+
+**Decision**: Top 3 candidates — Please confirm
+
+**SKPG Hint**: csp-tdd depends on csp-spec-contract
+```
+
+## Signal Priority (from high to low)
+
+1. **Explicit Instruction**: User says "use TDD approach" → Force load
+2. **High Confidence Match**: >80% → Direct routing
+3. **Context Enhancement**: State detection adjusts weights
+4. **Tech Stack Detection**: Language/framework matching
+5. **Historical Preference**: Previously used skill takes priority
+
+## File References
+
+| File | Purpose |
+|------|---------|
+| `triggers.yaml` | Keyword → skill mapping |
+| `skill-metadata.yaml` | Metadata centralized registration |
+| `registry.json` | Full skill registry |
+| `csp-router/skpg/graph.json` | Skill knowledge graph |
+| `.csp/state.json` | Current project state snapshot
 ```
 
 ---
 
-## 六、csp-auto：动态 DAG 编排引擎
+## 6. csp-auto: Dynamic DAG Orchestration Engine
 
-### 6.1 设计理念
+### 6.1 Design Philosophy
 
-静态 recipe 无法覆盖所有编程场景。`csp-auto` 是一个**智能 DAG 编排器**：
+Static recipes cannot cover all programming scenarios. `csp-auto` is an **Intelligent DAG Orchestrator**:
 
 ```
-用户输入任务
+User inputs task
       │
       ▼
-  csp-auto（DAG 决策 Agent）
+  csp-auto (DAG Decision Agent)
       │
-      │ 分析任务 → 构建 DAG（有向无环图）
+      │ Analyze task → Build DAG (Directed Acyclic Graph)
       │
       ▼
   ┌─────────────────────────────────────┐
-  │  DAG 示例：新功能开发               │
+  │  DAG Example: New Feature Development │
   │                                     │
   │  [understand] → [plan] → [spec]    │
   │                         │           │
@@ -393,233 +454,233 @@ L1(meta) → L2(workflow) → L3(patterns) → L4(runtime)
   │                   [verify] → [ship] │
   └─────────────────────────────────────┘
       │
-      │ 逐节点执行，每个节点动态选择 skill
+      │ Execute node by node, each node dynamically selects skill
       │
       ▼
-  最终动态 Skill 链
+  Final Dynamic Skill Chain
 ```
 
-**核心区别：**
-- **静态 recipe**：预定义序列，一刀切
-- **csp-auto DAG**：任务驱动，逐节点动态决策，支持分支/并行/回退
+**Core Difference:**
+- **Static recipe**: Predefined sequence, one-size-fits-all
+- **csp-auto DAG**: Task-driven, dynamic decision per node, supports branches/parallels/backtracking
 
-### 6.2 DAG 节点定义
+### 6.2 DAG Node Definition
 
-每个节点是**逻辑阶段**（非具体 skill），由 csp-auto 在运行时决策加载哪个 skill：
+Each node is a **logical phase** (not specific skill), decided by csp-auto at runtime which skill to load:
 
 ```yaml
-# csp-auto/nodes.yaml — 节点类型注册表
-# 每个节点对应一个索引分片
+# csp-auto/nodes.yaml — Node type registry
+# Each node corresponds to an index slice
 
 nodes:
   understand:
-    description: "理解需求/代码库"
+    description: "Understanding requirements/codebase"
     shard: index-understand.json
     candidates:
-      - csp-explore           # 探索代码库
-      - csp-map-codebase      # 映射架构
-      - csp-deep-interview    # 需求澄清
-      - csp-brainstorming     # 头脑风暴
+      - csp-explore           # Explore codebase
+      - csp-map-codebase      # Map architecture
+      - csp-deep-interview    # Requirement clarification
+      - csp-brainstorming     # Brainstorming
     decision_factors:
-      - 用户是否了解现有代码？ → explore / map-codebase
-      - 需求是否清晰？ → brainstorming / deep-interview
+      - Does user understand existing code? → explore / map-codebase
+      - Are requirements clear? → brainstorming / deep-interview
 
   plan:
-    description: "规划方案"
+    description: "Planning solution"
     shard: index-plan.json
     candidates:
-      - csp-plan-phase        # 阶段规划
-      - csp-spike             # 技术探查
-      - csp-ultraplan-phase   # 深度规划
+      - csp-plan-phase        # Phase planning
+      - csp-spike             # Technical investigation
+      - csp-ultraplan-phase   # Deep planning
     decision_factors:
-      - 方案复杂度？ 高 → ultraplan / 中 → plan-phase / 低 → spike
-      - 是否需要技术验证？ → spike
+      - Solution complexity? High → ultraplan / Medium → plan-phase / Low → spike
+      - Need technical validation? → spike
 
   spec:
-    description: "编写规范"
+    description: "Writing specifications"
     shard: index-spec.json
     candidates:
-      - csp-spec-phase        # 澄清阶段需求 (CSPEC.md)
-      - csp-planning-phase    # 快速规划工件链
-      - skip                  # 简单任务可跳过
+      - csp-spec-phase        # Clarify phase requirements (CSPEC.md)
+      - csp-planning-phase    # Quick planning artifacts
+      - skip                  # Skip for simple tasks
     decision_factors:
-      - 需要正式规范？ → spec-phase / planning-phase
-      - 任务是否足够简单？ → skip
+      - Need formal spec? → spec-phase / planning-phase
+      - Is task simple enough? → skip
 
   implement:
-    description: "编写代码"
+    description: "Writing code"
     shard: index-implement.json
     candidates:
-      - csp-implement         # 通用实现
-      - csp-tdd               # TDD 方式
-      - csp-executor          # 按计划执行
+      - csp-implement         # General implementation
+      - csp-tdd               # TDD approach
+      - csp-executor          # Execute according to plan
     decision_factors:
-      - 用户偏好 TDD？ → tdd
-      - 是否有现成计划？ → executor
-      - 默认 → implement
+      - User prefers TDD? → tdd
+      - Existing plan? → executor
+      - Default → implement
 
   test:
-    description: "测试验证"
+    description: "Testing verification"
     shard: index-test.json
     candidates:
-      - csp-tdd               # 单元测试
-      - csp-e2e-testing       # E2E 测试
-      - csp-python-testing    # Python 测试
-      - csp-react-testing     # React 测试
-      - csp-rust-testing      # Rust 测试
+      - csp-tdd               # Unit tests
+      - csp-e2e-testing       # E2E tests
+      - csp-python-testing    # Python tests
+      - csp-react-testing     # React tests
+      - csp-rust-testing      # Rust tests
     decision_factors:
-      - 技术栈？ → 对应语言测试 skill
-      - 需要 E2E？ → e2e-testing
-      - 默认 → tdd
+      - Tech stack? → Corresponding language test skill
+      - Need E2E? → e2e-testing
+      - Default → tdd
 
   review:
-    description: "代码审查"
+    description: "Code review"
     shard: index-review.json
     candidates:
-      - csp-code-review       # 通用审查
-      - csp-python-reviewer   # Python 审查
-      - csp-go-reviewer       # Go 审查
-      - csp-rust-reviewer     # Rust 审查
-      - csp-react-reviewer    # React 审查
-      - csp-security-review   # 安全审查
+      - csp-code-review       # General review
+      - csp-python-reviewer   # Python review
+      - csp-go-reviewer       # Go review
+      - csp-rust-reviewer     # Rust review
+      - csp-react-reviewer    # React review
+      - csp-security-review   # Security review
     decision_factors:
-      - 技术栈？ → 对应语言 reviewer
-      - 涉及安全敏感代码？ → security-review
-      - 默认 → code-review
+      - Tech stack? → Corresponding language reviewer
+      - Involves security-sensitive code? → security-review
+      - Default → code-review
 
   verify:
-    description: "验证结果"
+    description: "Verification result"
     shard: index-verify.json
     candidates:
-      - csp-verify-phase      # 阶段验证
-      - csp-spec-contract   # SPEC 契约生成
-      - csp-nyquist-auditor   # 覆盖率验证
+      - csp-verify-phase      # Phase verification
+      - csp-spec-contract   # SPEC contract generation
+      - csp-nyquist-auditor   # Coverage verification
     decision_factors:
-      - 有 CSPEC？ → verify-phase（三维度 + 目标反向）
-      - 需要覆盖率？ → nyquist-auditor
-      - 默认 → verify-phase
+      - Has CSPEC? → verify-phase (three dimensions + goal-backward)
+      - Need coverage? → nyquist-auditor
+      - Default → verify-phase
 
   ship:
-    description: "发布部署"
+    description: "Release/deploy"
     shard: index-ship.json
     candidates:
-      - csp-ship              # 发布
-      - csp-pr-branch         # 创建 PR
-      - skip                  # 不需要发布
+      - csp-ship              # Release
+      - csp-pr-branch         # Create PR
+      - skip                  # No need to release
     decision_factors:
-      - 用户要求发布？ → ship / pr-branch
-      - 仅本地修改？ → skip
+      - User requests release? → ship / pr-branch
+      - Local changes only? → skip
 
   debug:
-    description: "调试修复"
+    description: "Debug/fix"
     shard: index-debug.json
     candidates:
-      - csp-debug             # 通用调试
-      - csp-debug-session     # 多轮调试管理
-      - csp-forensics         # 取证分析
-      - csp-build-error-fix   # 构建错误
+      - csp-debug             # General debug
+      - csp-debug-session     # Multi-round debug management
+      - csp-forensics         # Forensic analysis
+      - csp-build-error-fix   # Build error
     decision_factors:
-      - 构建错误？ → build-error-fix
-      - 复杂 bug 需要多轮？ → debug-session
-      - 需要历史分析？ → forensics
-      - 默认 → debug
+      - Build error? → build-error-fix
+      - Complex bug needing multiple rounds? → debug-session
+      - Need historical analysis? → forensics
+      - Default → debug
 
   parallel:
-    description: "并行执行节点（特殊类型）"
-    shard: null  # 不加载 skill，仅做编排
-    behavior: 子节点并行执行，等待全部完成后合并
+    description: "Parallel execution node (special type)"
+    shard: null  # No skill loading, orchestration only
+    behavior: Sub-nodes execute in parallel, merge after all complete
 ```
 
-### 6.3 DAG 执行流程
+### 6.3 DAG Execution Flow
 
 ```
-csp-auto 接收任务
+csp-auto receives task
   │
-  ├─ 1. 任务分析
-  │     输入：用户描述 + 项目上下文
-  │     输出：任务类型、复杂度、约束条件
+  ├─ 1. Task Analysis
+  │     Input: User description + Project context
+  │     Output: Task type, complexity, constraints
   │
-  ├─ 2. DAG 构建
-  │     根据任务类型，选择节点子集并确定拓扑关系
-  │     输出：nodes[] + edges[] (DAG 定义)
+  ├─ 2. DAG Construction
+  │     Based on task type, select node subset and determine topology
+  │     Output: nodes[] + edges[] (DAG definition)
   │
-  ├─ 3. 逐节点执行（拓扑排序遍历）
+  ├─ 3. Execute node by node (topological sort traversal)
   │     for node in topological_sort(DAG):
   │       │
-  │       ├─ 3a. 加载节点对应的索引分片
-  │       │      read(index-{node}.json)  ← 仅加载此分片
+  │       ├─ 3a. Load node's corresponding index slice
+  │       │      read(index-{node}.json)  ← Load only this slice
   │       │
-  │       ├─ 3b. Agent 决策：从候选 skill 中选择
-  │       │      考虑：技术栈、上下文、历史结果、用户偏好
-  │       │      输出：selected_skill
+  │       ├─ 3b. Agent decision: Select from candidate skills
+  │       │      Consider: Tech stack, context, historical results, user preference
+  │       │      Output: selected_skill
   │       │
-  │       ├─ 3c. 加载并执行 skill
+  │       ├─ 3c. Load and execute skill
   │       │      read(selected_skill/SKILL.md)
-  │       │      执行 skill 逻辑
+  │       │      Execute skill logic
   │       │
-  │       ├─ 3d. 收集输出
-  │       │      写入 .csp/artifacts/{node}-{timestamp}.yaml
+  │       ├─ 3d. Collect output
+  │       │      Write to .csp/artifacts/{node}-{timestamp}.yaml
   │       │
-  │       └─ 3e. 动态调整 DAG（可选）
-  │              如果执行结果偏离预期：
-  │                - 添加回退节点（如 verify 失败 → 插入 debug）
-  │                - 跳过后续可选节点
-  │                - 添加新分支
+  │       └─ 3e. Dynamically adjust DAG (optional)
+  │              If execution results deviate from expectation:
+  │                - Add rollback nodes (e.g., verify failure → insert debug)
+  │                - Skip subsequent optional nodes
+  │                - Add new branches
   │
-  └─ 4. 输出最终结果
-        汇总所有节点的 artifact
-        生成执行报告
+  └─ 4. Output final result
+        Summarize all node artifacts
+        Generate execution report
 ```
 
-### 6.4 索引分片策略
+### 6.4 Index Slice Strategy
 
-**问题：** registry.json 包含 ~200 个 skill，全量加载约 12K tokens
+**Problem:** registry.json contains ~538 skills, full loading ~12K tokens
 
-**解决方案：** 按节点类型分片，按需加载
+**Solution:** Slice by node type, load on demand
 
 ```
 csp-router/
-├── index-directory.json         # 总目录（常驻，~200 tokens）
-│                                # 列出所有分片名 + 分片描述
+├── index-directory.json         # Main directory (resident, ~200 tokens)
+│                                # List all slices + slice descriptions
 │
-├── index-understand.json        # "理解"节点候选 skill（~15 条）
-├── index-plan.json              # "规划"节点候选 skill（~12 条）
-├── index-spec.json              # "规范"节点候选 skill（~8 条）
-├── index-implement.json         # "实现"节点候选 skill（~10 条）
-├── index-test.json              # "测试"节点候选 skill（~20 条）
-├── index-review.json            # "审查"节点候选 skill（~25 条）
-├── index-verify.json            # "验证"节点候选 skill（~10 条）
-├── index-ship.json              # "发布"节点候选 skill（~8 条）
-├── index-debug.json             # "调试"节点候选 skill（~12 条）
-├── index-stacks.json            # 技术栈相关 skill（~50 条，按需）
-└── index-content.json           # 内容/营销 skill（~15 条，按需）
+├── index-understand.json        # "Understand" node candidate skills (~15 items)
+├── index-plan.json              # "Plan" node candidate skills (~12 items)
+├── index-spec.json              # "Spec" node candidate skills (~8 items)
+├── index-implement.json         # "Implement" node candidate skills (~10 items)
+├── index-test.json              # "Test" node candidate skills (~20 items)
+├── index-review.json            # "Review" node candidate skills (~25 items)
+├── index-verify.json            # "Verify" node candidate skills (~10 items)
+├── index-ship.json              # "Ship" node candidate skills (~8 items)
+├── index-debug.json             # "Debug" node candidate skills (~12 items)
+├── index-stacks.json            # Tech stack related skills (~50 items, on demand)
+└── index-content.json           # Content/marketing skills (~15 items, on demand)
 ```
 
-**总目录格式（常驻加载）：**
+**Main Directory Format (resident loading):**
 
 ```json
 {
   "version": "1.0",
-  "total_skills": 200,
+  "total_skills": 538,
   "shards": [
     {
       "name": "understand",
       "file": "index-understand.json",
-      "description": "代码库理解、需求澄清、架构探索",
+      "description": "Codebase understanding, requirement clarification, architecture exploration",
       "skill_count": 15,
       "size_tokens": 900
     },
     {
       "name": "plan",
       "file": "index-plan.json",
-      "description": "任务规划、技术探查、方案设计",
+      "description": "Task planning, technical investigation, solution design",
       "skill_count": 12,
       "size_tokens": 720
     },
     {
       "name": "spec",
       "file": "index-spec.json",
-      "description": "规范驱动、变更提案、工件管理",
+      "description": "Specification-driven, change proposal, artifact management",
       "skill_count": 8,
       "size_tokens": 480
     }
@@ -627,15 +688,15 @@ csp-router/
 }
 ```
 
-**Token 消耗对比：**
+**Token Consumption Comparison:**
 
-| 策略 | 常驻 Token | 单次任务 Token |
-|------|-----------|---------------|
-| 全量索引 | ~12,000 | ~12,000（全部加载） |
-| 分片加载 | ~200（仅目录） | ~500-1,500（仅相关分片） |
-| **节约比例** | **98%** | **87-96%** |
+| Strategy | Resident Token | Per-task Token |
+|----------|----------------|----------------|
+| Full index | ~32,000 | ~32,000 (all loaded) |
+| Slice loading | ~200 (directory only) | ~500-1,500 (relevant slices only) |
+| **Savings Ratio** | **94%** | **87-96%** |
 
-### 6.5 分片内容格式
+### 6.5 Slice Content Format
 
 ```json
 {
@@ -644,7 +705,7 @@ csp-router/
   "skills": [
     {
       "name": "csp-code-review",
-      "description": "通用代码审查：正确性、安全、性能、可维护",
+      "description": "General code review: correctness, security, performance, maintainability",
       "path": "csp-patterns/skills/code-review/SKILL.md",
       "stacks": ["any"],
       "priority": 1,
@@ -652,7 +713,7 @@ csp-router/
     },
     {
       "name": "csp-python-reviewer",
-      "description": "Python 专项审查：PEP8、类型提示、安全、性能",
+      "description": "Python specialized review: PEP8, type hints, security, performance",
       "path": "csp-patterns/agents/csp-python-reviewer.md",
       "stacks": ["python"],
       "priority": 2,
@@ -660,7 +721,7 @@ csp-router/
     },
     {
       "name": "csp-go-reviewer",
-      "description": "Go 专项审查：并发模式、错误处理、性能",
+      "description": "Go specialized review: concurrency patterns, error handling, performance",
       "path": "csp-patterns/agents/csp-go-reviewer.md",
       "stacks": ["golang"],
       "priority": 2,
@@ -670,39 +731,39 @@ csp-router/
 }
 ```
 
-### 6.6 节点决策逻辑
+### 6.6 Node Decision Logic
 
-每个节点的 skill 选择遵循以下决策树：
+Each node's skill selection follows this decision tree:
 
 ```
-节点：review
+Node: review
   │
-  ├─ 项目技术栈？
+  ├─ Project tech stack?
   │   ├─ Python → csp-python-reviewer
   │   ├─ Go → csp-go-reviewer
   │   ├─ Rust → csp-rust-reviewer
   │   ├─ TypeScript + React → csp-react-reviewer
-  │   └─ 其他/多栈 → csp-code-review（通用）
+  │   └─ Other/Multi-stack → csp-code-review (general)
   │
-  ├─ 是否涉及安全敏感代码？
-  │   ├─ 是 → 额外加载 csp-security-review
-  │   └─ 否 → 跳过
+  ├─ Involves security-sensitive code?
+  │   ├─ Yes → Additional csp-security-review
+  │   └─ No → Skip
   │
-  ├─ 审查模式？
-  │   ├─ 全面审查 → mode: comprehensive
-  │   ├─ 快速检查 → mode: quick
-  │   └─ 架构分析 → mode: architecture-analysis
+  ├─ Review mode?
+  │   ├─ Comprehensive → mode: comprehensive
+  │   ├─ Quick check → mode: quick
+  │   └─ Architecture analysis → mode: architecture-analysis
   │
-  └─ 输出：selected_skills = [csp-python-reviewer(mode=comprehensive), csp-security-review]
+  └─ Output: selected_skills = [csp-python-reviewer(mode=comprehensive), csp-security-review]
 ```
 
-### 6.7 DAG 动态调整
+### 6.7 DAG Dynamic Adjustment
 
-csp-auto 在执行过程中可以根据结果动态修改 DAG：
+csp-auto can dynamically modify DAG during execution based on results:
 
 ```yaml
 adjustment_rules:
-  # verify 失败 → 插入 debug + 重新 implement
+  # verify failed → insert debug + re-implement
   verify_failed:
     condition: "artifact.status == 'failed'"
     action:
@@ -713,20 +774,20 @@ adjustment_rules:
       - re_execute: verify
     max_retries: 3
 
-  # test 全部通过 + 代码简单 → 跳过 review
+  # test pass simple → Skip review
   test_pass_simple:
     condition: "artifact.all_passed && complexity < threshold"
     action:
       - skip_node: review
 
-  # 实现过程中发现需要数据库变更 → 插入 migration 节点
+  # DB change detected during implementation → Insert migration node
   db_change_detected:
     condition: "artifact.outputs contains 'schema_change'"
     action:
       - insert_node: database-migration
         position: before_verify
 
-  # 用户上下文接近 token 上限 → 压缩剩余节点
+  # User context approaching token limit → Compress remaining nodes
   token_pressure:
     condition: "context_usage > 80%"
     action:
@@ -734,140 +795,140 @@ adjustment_rules:
       - skip_optional: true
 ```
 
-### 6.8 csp-auto 与 csp-router 的关系
+### 6.8 Relationship between csp-auto and csp-router
 
 ```
 ┌────────────────────────────────────────────┐
-│              用户输入任务                    │
+│              User inputs task              │
 └─────────────┬──────────────────────────────┘
               │
               ▼
        ┌──────────────┐
-       │  csp-router   │ ← L0 常驻路由器
-       │  (简单任务)    │    关键词匹配 → 直接选 skill
+       │  csp-router   │ ← L0 resident router
+       │  (simple tasks) │    Keyword matching → Direct skill selection
        └──────┬───────┘
               │
          ┌────┴────┐
          │         │
-    简单任务    复杂任务
+    Simple task    Complex task
          │         │
          ▼         ▼
-   直接执行     ┌──────────────┐
-   单个 skill   │   csp-auto    │ ← L0 智能编排器
-               │  (复杂任务)    │    构建 DAG → 逐节点决策
-               └──────┬───────┘
+   Direct execution ┌──────────────┐
+   Single skill     │   csp-auto    │ ← L0 intelligent orchestrator
+                   │  (complex tasks) │    Build DAG → Node-by-node decision
+                   └──────┬───────┘
+                          │
+                    ┌─────┴─────┐
+                    ▼           ▼
+               Load slice     Agent decision
+               index-xxx    Select skill
+                    │           │
+                    └─────┬─────┘
+                          ▼
+                     Execute skill
+                          │
+                          ▼
+                     Adjust DAG?
+                      │      │
+                     Yes     No → Next node
                       │
-                ┌─────┴─────┐
-                ▼           ▼
-           加载分片     Agent 决策
-           index-xxx    选择 skill
-                │           │
-                └─────┬─────┘
                       ▼
-                 执行 skill
-                      │
-                      ▼
-                 调整 DAG？
-                  │      │
-                 是      否 → 下一节点
-                  │
-                  ▼
-             修改 DAG
-             继续执行
+                 Modify DAG
+                 Continue execution
 ```
 
-**路由判断规则：**
-- **简单任务**（单一动作、明确 skill）→ csp-router 直接处理
-- **复杂任务**（多步骤、需要规划、全链路）→ 交给 csp-auto
+**Routing Decision Rules:**
+- **Simple task** (single action, clear skill) → csp-router handles directly
+- **Complex task** (multi-step, needs planning, full pipeline) → Hand to csp-auto
 
-### 6.9 完整 DAG 示例：接手陌生项目并添加功能
+### 6.9 Complete DAG Example: Take over unfamiliar project and add feature
 
 ```
-用户："我刚接手这个 Django 项目，需要添加用户权限管理功能"
+User: "I just took over this Django project, need to add user permission management feature"
 
-csp-auto 构建的 DAG：
+DAG built by csp-auto:
 
   [understand] ──────────────────────────────┐
   │                                          │
-  ├─ 加载 index-understand.json 分片          │
-  ├─ 决策：csp-explore + csp-map-codebase    │
-  ├─ 执行：探索项目结构、映射架构              │
-  └─ 输出：architecture-map.yaml             │
+  ├─ Load index-understand.json slice         │
+  ├─ Decision: csp-explore + csp-map-codebase │
+  ├─ Execute: Explore project structure, map architecture │
+  └─ Output: architecture-map.yaml           │
                                              │
   [plan] ←───────────────────────────────────┘
   │
-  ├─ 加载 index-plan.json 分片
-  ├─ 决策：csp-plan-phase
-  ├─ 输入：architecture-map.yaml
-  ├─ 执行：制定权限管理功能计划
-  └─ 输出：plan.yaml
+  ├─ Load index-plan.json slice
+  ├─ Decision: csp-plan-phase
+  ├─ Input: architecture-map.yaml
+  ├─ Execute: Develop permission management feature plan
+  └─ Output: plan.yaml
        │
        ▼
   [spec]
   │
-  ├─ 加载 index-spec.json 分片
-  ├─ 决策：csp-spec-phase（项目已有 spec-driven 流程）
-  ├─ 执行：创建变更提案
-  └─ 输出：proposal.yaml
+  ├─ Load index-spec.json slice
+  ├─ Decision: csp-spec-phase (project has existing spec-driven process)
+  ├─ Execute: Create change proposal
+  └─ Output: proposal.yaml
        │
        ▼
   [implement]
   │
-  ├─ 加载 index-implement.json 分片
-  ├─ 决策：csp-tdd（Django 项目，测试重要）
-  ├─ 同时加载 index-stacks.json → csp-django-patterns
-  ├─ 执行：TDD 方式实现权限管理
-  └─ 输出：implementation.yaml
+  ├─ Load index-implement.json slice
+  ├─ Decision: csp-tdd (Django project, testing important)
+  ├─ Also load index-stacks.json → csp-django-patterns
+  ├─ Execute: Implement permission management in TDD manner
+  └─ Output: implementation.yaml
        │
-       │ ← 动态调整：检测到需要数据库变更
+       │ ← Dynamic adjustment: Database change detected
        │
-  [migrate] (动态插入)
+  [migrate] (dynamically inserted)
   │
-  ├─ 加载 index-stacks.json → csp-database-migration
-  ├─ 执行：生成并测试 Django migration
-  └─ 输出：migration.yaml
+  ├─ Load index-stacks.json → csp-database-migration
+  ├─ Execute: Generate and test Django migration
+  └─ Output: migration.yaml
        │
        ▼
   [test]
   │
-  ├─ 加载 index-test.json 分片
-  ├─ 决策：csp-python-testing + csp-django-testing
-  ├─ 执行：单元测试 + 集成测试
-  └─ 输出：test-results.yaml
+  ├─ Load index-test.json slice
+  ├─ Decision: csp-python-testing + csp-django-testing
+  ├─ Execute: Unit tests + Integration tests
+  └─ Output: test-results.yaml
        │
        ▼
   [review]
   │
-  ├─ 加载 index-review.json 分片
-  ├─ 决策：csp-django-reviewer + csp-security-review
-  │         （权限管理涉及安全，额外加载安全审查）
-  ├─ 执行：Django 专项审查 + 安全审查
-  └─ 输出：review-findings.yaml
+  ├─ Load index-review.json slice
+  ├─ Decision: csp-django-reviewer + csp-security-review
+  │         (permission management involves security, additional security review)
+  ├─ Execute: Django specialized review + Security review
+  └─ Output: review-findings.yaml
        │
-       │ ← 审查发现安全问题 → 动态插入修复
+       │ ← Review finds security issues → Dynamic fix insertion
        │
-  [fix-security] (动态插入)
+  [fix-security] (dynamically inserted)
   │
-  ├─ 执行：修复审查发现的安全问题
-  └─ 输出：fix.yaml
+  ├─ Execute: Fix security issues found in review
+  └─ Output: fix.yaml
        │
        ▼
   [verify]
   │
-  ├─ 加载 index-verify.json 分片
-  ├─ 决策：csp-verify-phase
-  ├─ 执行：验证所有变更
-  └─ 输出：verification.yaml (status: passed)
+  ├─ Load index-verify.json slice
+  ├─ Decision: csp-verify-phase
+  ├─ Execute: Verify all changes
+  └─ Output: verification.yaml (status: passed)
        │
        ▼
   [ship]
   │
-  ├─ 加载 index-ship.json 分片
-  ├─ 决策：csp-pr-branch（创建 PR 而非直接发布）
-  └─ 输出：pr-url
+  ├─ Load index-ship.json slice
+  ├─ Decision: csp-pr-branch (create PR instead of direct release)
+  └─ Output: pr-url
 ```
 
-**本次执行加载的分片：**
+**Slices loaded in this execution:**
 - index-understand.json (900 tokens)
 - index-plan.json (720 tokens)
 - index-spec.json (480 tokens)
@@ -876,18 +937,18 @@ csp-auto 构建的 DAG：
 - index-review.json (1,500 tokens)
 - index-verify.json (600 tokens)
 - index-ship.json (480 tokens)
-- index-stacks.json (3,000 tokens, 加载了 2 次)
-- **总计：~6,480 tokens**（vs 全量 12,000 tokens）
+- index-stacks.json (3,000 tokens, loaded 2 times)
+- **Total: ~6,480 tokens** (vs full 12,000 tokens)
 
 ---
 
-## 七、Skill 编排与阶段转换
+## 7. Skill Orchestration and Phase Transition
 
-### 7.1 问题：为什么需要编排
+### 7.1 Problem: Why orchestration is needed
 
-单个编程任务往往需要多个 skill 协作：
+Single programming tasks often require multiple skills to collaborate:
 
-**示例：开发新功能**
+**Example: Developing new feature**
 ```
 brainstorming (L1) 
   → plan-phase (L2) 
@@ -899,53 +960,53 @@ brainstorming (L1)
               → ship (L2)
 ```
 
-这不是同时激活 8 个 skill，而是**分阶段按需加载**。
+This is not activating 8 skills simultaneously, but **phased loading on demand**.
 
-### 7.2 阶段转换协议
+### 7.2 Phase Transition Protocol
 
-每个 skill 执行完毕后，通过**阶段信号**决定下一步：
+After each skill completes, determine next step via **Phase Signals**:
 
 ```markdown
-### 7.3 Skill 完成信号格式
+### 7.3 Skill Completion Signal Format
 
-每个 skill 的 SKILL.md 应在结尾定义完成信号：
+Each skill's SKILL.md should define completion signals at the end:
 
-#### 完成信号
-- **输出**: plan.md (计划文档路径)
-- **下一步**: 
-  - 默认: csp-spec-phase (创建变更提案)
-  - 备选: csp-execute-phase (直接执行)
-  - 跳过: 如果用户只想看计划
-- **状态**: 
+#### Completion Signals
+- **Output**: plan.md (path to plan document)
+- **Next Step**: 
+  - Default: csp-spec-phase (create change proposal)
+  - Alternative: csp-execute-phase (direct execution)
+  - Skip: If user only wants to see plan
+- **Status**: 
   - plan_path: {{output_path}}
   - phase: planning
   - ready_for: [propose, execute]
 ```
 
-**路由器根据完成信号自动加载下一个 skill：**
+**Router automatically loads next skill based on completion signal:**
 
 ```
-csp-plan-phase 完成
-  ↓ (输出 plan.md, 信号: ready_for=propose)
-csp-router 读取信号
-  ↓ (匹配 next=csp-spec-phase)
-加载 csp-spec-phase, 传入 plan.md 路径
+csp-plan-phase completes
+  ↓ (outputs plan.md, signal: ready_for=propose)
+csp-router reads signal
+  ↓ (matches next=csp-spec-phase)
+Load csp-spec-phase, pass in plan.md path
 ```
 
-### 7.4 Skill 组合模板
+### 7.4 Skill Combination Templates
 
-为常见编程场景预定义 skill 序列，存储在 `csp-router/recipes.yaml`：
+Pre-define skill sequences for common programming scenarios, stored in `csp-router/recipes.yaml`:
 
 ```yaml
 recipes:
-  # 新功能开发
+  # New feature development
   feature-development:
-    description: "从零开发新功能（含规范和测试）"
-    triggers: ["新功能", "feature", "添加功能", "实现XXX"]
+    description: "Develop new feature from scratch (with specs and tests)"
+    triggers: ["new feature", "feature", "add feature", "implement XXX"]
     sequence:
       - skill: csp-brainstorming
         layer: 1
-        optional: true  # 用户明确需求时可跳过
+        optional: true  # Can skip if user has clear requirements
       - skill: csp-plan-phase
         layer: 2
         outputs: [plan_path]
@@ -968,10 +1029,10 @@ recipes:
         layer: 2
         optional: true
 
-  # Bug 修复
+  # Bug fix
   bug-fix:
-    description: "定位并修复 bug"
-    triggers: ["bug", "修复", "fix", "问题", "报错"]
+    description: "Locate and fix bug"
+    triggers: ["bug", "fix", "problem", "error"]
     sequence:
       - skill: csp-debug
         layer: 2
@@ -981,15 +1042,15 @@ recipes:
         inputs: [root_cause]
       - skill: csp-tdd
         layer: 1
-        mode: regression-test  # 回归测试模式
+        mode: regression-test  # Regression test mode
       - skill: csp-verify-phase
         layer: 2
         check: fix-confirmed
 
-  # 代码重构
+  # Code refactoring
   refactor:
-    description: "重构现有代码"
-    triggers: ["重构", "refactor", "重写", "优化结构"]
+    description: "Refactor existing code"
+    triggers: ["refactor", "refactoring", "rewrite", "optimize structure"]
     sequence:
       - skill: csp-code-review
         layer: 4
@@ -1007,10 +1068,10 @@ recipes:
         layer: 4
         mode: verify-improvement
 
-  # 快速修复（跳过规划和规范）
+  # Quick fix (skip planning and specs)
   quick-fix:
-    description: "快速修复小问题"
-    triggers: ["快速修复", "小改动", "简单修复"]
+    description: "Quick fix for small issues"
+    triggers: ["quick fix", "small change", "simple fix"]
     sequence:
       - skill: csp-implement
         layer: 2
@@ -1019,57 +1080,57 @@ recipes:
         mode: quick-check
 ```
 
-### 7.5 动态加载与上下文管理
+### 7.5 Dynamic Loading and Context Management
 
-**问题：** 长序列执行时，早期 skill 占用上下文窗口
+**Problem:** Early skills occupy context window during long sequence execution
 
-**解决方案：阶段化加载/卸载**
+**Solution: Phased Loading/Unloading**
 
 ```
-阶段 1: 加载 csp-brainstorming (300 tokens)
-  ↓ 执行完毕，保存输出到 brainstorm.md
-  ↓ 卸载 csp-brainstorming (释放 300 tokens)
+Phase 1: Load csp-brainstorming (300 tokens)
+  ↓ After execution, save output to brainstorm.md
+  ↓ Unload csp-brainstorming (free 300 tokens)
   
-阶段 2: 加载 csp-plan-phase (500 tokens)
-  ↓ 读取 brainstorm.md 作为输入
-  ↓ 执行完毕，保存输出到 plan.md
-  ↓ 卸载 csp-plan-phase (释放 500 tokens)
+Phase 2: Load csp-plan-phase (500 tokens)
+  ↓ Read brainstorm.md as input
+  ↓ After execution, save output to plan.md
+  ↓ Unload csp-plan-phase (free 500 tokens)
   
-阶段 3: 加载 csp-spec-phase (400 tokens)
-  ↓ 读取 plan.md 作为输入
+Phase 3: Load csp-spec-phase (400 tokens)
+  ↓ Read plan.md as input
   ...
 ```
 
-**上下文预算控制：**
-- 同时激活的 skill: ≤3 个
-- 单次任务总 token 消耗: ≤10,000 tokens
-- 超出预算时：提示用户拆分任务或选择 quick-fix 模式
+**Context Budget Control:**
+- Simultaneously active skills: ≤3
+- Total token consumption per task: ≤10,000 tokens
+- When budget exceeded: Prompt user to split task or select quick-fix mode
 
-### 7.6 反馈循环与错误恢复
+### 7.6 Feedback Loops and Error Recovery
 
-**非线性执行：允许回退**
+**Non-linear execution: Allow backtracking**
 
 ```
-csp-verify-phase 失败
-  ↓ (输出: verification_failed, issues=[...])
-csp-router 读取失败原因
-  ↓ (匹配 feedback_loop)
-回退到 csp-debug 或 csp-implement
-  ↓ (传入 issues 列表)
-重新执行修复
+csp-verify-phase fails
+  ↓ (output: verification_failed, issues=[...])
+csp-router reads failure reason
+  ↓ (matches feedback_loop)
+Roll back to csp-debug or csp-implement
+  ↓ (pass in issues list)
+Re-execute fix
   ↓
-再次 csp-verify-phase
+Again csp-verify-phase
 ```
 
-**最大循环次数：3 次（防止无限循环）**
+**Maximum loop count: 3 times (prevent infinite loops)**
 
-### 7.7 Skill 间数据交换格式
+### 7.7 Data Exchange Format Between Skills
 
-**问题：** Skill 之间如何传递状态和输出？
+**Problem:** How do skills pass state and output to each other?
 
-**解决方案：标准化 Artifact 格式**
+**Solution: Standardized Artifact Format**
 
-每个 skill 的输出写入 `.csp/artifacts/` 目录，使用统一格式：
+Each skill's output is written to `.csp/artifacts/` directory, using unified format:
 
 ```yaml
 # .csp/artifacts/plan-phase-2026-06-11.yaml
@@ -1083,7 +1144,7 @@ outputs:
   primary:
     path: ./plan.md
     format: markdown
-    description: "实施计划文档"
+    description: "Implementation plan document"
   
   metadata:
     estimated_effort: "2 hours"
@@ -1099,69 +1160,69 @@ context:
   related_files: [models.py, views.py, urls.py]
 ```
 
-**路由器读取 artifact 决定下一步：**
+**Router reads artifact to decide next step:**
 
 ```python
-# router 伪代码
+# router pseudo-code
 def route_after_skill_completion(artifact_path):
     artifact = load_yaml(artifact_path)
     
-    # 优先使用用户指定的 next_skill
+    # Prioritize user-specified next_skill
     if user_override:
         return user_override
     
-    # 否则使用 recommended
+    # Otherwise use recommended
     next_skill = artifact['next_skills']['recommended']
     
-    # 传递 outputs 作为输入
+    # Pass outputs as input
     inputs = artifact['outputs']
     
     return load_skill(next_skill, inputs)
 ```
 
-### 7.8 编程场景覆盖清单
+### 7.8 Programming Scenario Coverage Checklist
 
-**确保常见编程场景都有对应 recipe：**
+**Ensure common programming scenarios have corresponding recipes:**
 
-| 场景 | Recipe 名称 | 关键 Skills |
-|------|------------|------------|
-| 新功能开发 | `feature-development` | plan → propose → implement → tdd → review → verify |
-| Bug 修复 | `bug-fix` | debug → implement → tdd → verify |
-| 代码重构 | `refactor` | review(分析) → plan → implement → tdd → review(验证) |
-| 性能优化 | `performance-optimization` | profile → analyze → implement → benchmark → verify |
-| 接手陌生项目 | `onboard-project` | explore → map-codebase → understand-architecture |
-| 构建错误修复 | `build-error-fix` | detect-error → resolve → verify-build |
-| CI/CD 失败 | `ci-failure` | analyze-logs → debug → fix → verify-ci |
-| 数据库迁移 | `database-migration` | plan-migration → generate → test → apply → verify |
-| 依赖升级 | `dependency-upgrade` | analyze-deps → plan-upgrade → test → verify |
-| 安全修复 | `security-fix` | security-scan → analyze-vulnerability → fix → verify |
-| 多栈项目 | `fullstack-feature` | plan → frontend-impl → backend-impl → integration-test |
+| Scenario | Recipe Name | Key Skills |
+|----------|-------------|------------|
+| New feature development | `feature-development` | plan → propose → implement → tdd → review → verify |
+| Bug fix | `bug-fix` | debug → implement → tdd → verify |
+| Code refactoring | `refactor` | review(analysis) → plan → implement → tdd → review(verification) |
+| Performance optimization | `performance-optimization` | profile → analyze → implement → benchmark → verify |
+| Taking over unfamiliar project | `onboard-project` | explore → map-codebase → understand-architecture |
+| Build error fix | `build-error-fix` | detect-error → resolve → verify-build |
+| CI/CD failure | `ci-failure` | analyze-logs → debug → fix → verify-ci |
+| Database migration | `database-migration` | plan-migration → generate → test → apply → verify |
+| Dependency upgrade | `dependency-upgrade` | analyze-deps → plan-upgrade → test → verify |
+| Security fix | `security-fix` | security-scan → analyze-vulnerability → fix → verify |
+| Multi-stack project | `fullstack-feature` | plan → frontend-impl → backend-impl → integration-test |
 
-### 7.9 用户自定义 Recipe 扩展
+### 7.9 User-Defined Recipe Extension
 
-**允许用户定义自己的 skill 组合：**
+**Allow users to define their own skill combinations:**
 
-用户可在项目根目录创建 `.csp/recipes.yaml`：
+Users can create `.csp/recipes.yaml` in project root:
 
 ```yaml
 # .csp/recipes.yaml
 recipes:
-  # 用户自定义：快速原型开发
+  # User-defined: Rapid prototyping
   rapid-prototype:
-    description: "快速原型，跳过完整测试和文档"
-    triggers: ["原型", "prototype", "demo", "快速验证"]
+    description: "Rapid prototype, skip full tests and docs"
+    triggers: ["prototype", "demo", "quick validation"]
     sequence:
       - skill: csp-brainstorming
         optional: true
       - skill: csp-implement
         layer: 2
       - skill: csp-verify-phase
-        mode: basic-check  # 只检查能否运行
+        mode: basic-check  # Only check if it runs
 
-  # 用户自定义：热修复
+  # User-defined: Hotfix
   hotfix:
-    description: "紧急生产修复，最小化变更"
-    triggers: ["hotfix", "紧急", "生产问题"]
+    description: "Emergency production fix, minimal change"
+    triggers: ["hotfix", "emergency", "production issue"]
     sequence:
       - skill: csp-debug
         layer: 2
@@ -1170,22 +1231,22 @@ recipes:
       - skill: csp-verify-phase
         mode: regression-only
       - skill: csp-ship
-        auto: true  # 验证通过后自动发布
+        auto: true  # Auto-release after verification passes
 ```
 
-**Recipe 优先级：**
-1. 用户自定义 recipe（`.csp/recipes.yaml`）
-2. 内置 recipe（`csp-router/recipes.yaml`）
-3. Router 动态组合
+**Recipe Priority:**
+1. User-defined recipes (`.csp/recipes.yaml`)
+2. Built-in recipes (`csp-router/recipes.yaml`)
+3. Router dynamic combination
 
-### 7.10 多栈项目处理策略
+### 7.10 Multi-Stack Project Handling Strategy
 
-**问题：** 前后端同时开发时，如何选择技术栈相关的 skill？
+**Problem:** When developing both frontend and backend, how to select tech stack-related skills?
 
-**解决方案：分层探测 + 并行激活**
+**Solution: Layered detection + Parallel activation**
 
 ```yaml
-# 多栈项目示例
+# Multi-stack project example
 project_structure:
   frontend/
     package.json  # TypeScript + React
@@ -1194,11 +1255,11 @@ project_structure:
     pyproject.toml  # Python + Django
     manage.py
   shared/
-    api-contracts.yaml  # OpenAPI 规范
+    api-contracts.yaml  # OpenAPI specification
 
-# Router 探测策略
+# Router detection strategy
 stack_detection:
-  strategy: directory-based  # 按目录分别探测
+  strategy: directory-based  # Detect by directory separately
   
   zones:
     - path: frontend/
@@ -1214,17 +1275,17 @@ stack_detection:
       skills: [api-design, openapi-validation]
 ```
 
-**Recipe 处理多栈：**
+**Recipe handling multi-stack:**
 
 ```yaml
 fullstack-feature:
-  description: "全栈功能开发（前端+后端）"
+  description: "Full-stack feature development (frontend+backend)"
   sequence:
     - skill: csp-plan-phase
       outputs: [frontend-plan, backend-plan, api-contract]
     
     - skill: csp-implement
-      mode: parallel  # 并行处理前后端
+      mode: parallel  # Parallel processing of frontend and backend
       zones:
         - path: backend/
           sub_recipe: [csp-spec-phase, csp-implement, csp-tdd]
@@ -1239,13 +1300,13 @@ fullstack-feature:
     - skill: csp-verify-phase
 ```
 
-### 7.11 错误信号自动检测
+### 7.11 Automatic Error Signal Detection
 
-**Router 应自动检测常见错误信号并触发对应 skill：**
+**Router should automatically detect common error signals and trigger corresponding skills:**
 
 ```yaml
 error_detection:
-  # 构建错误
+  # Build error
   build_error:
     triggers:
       - stderr_contains: ["error:", "Error:", "failed to compile", "build failed"]
@@ -1255,7 +1316,7 @@ error_detection:
     context:
       capture: [stderr, exit_code, error_file]
   
-  # 测试失败
+  # Test failure
   test_failure:
     triggers:
       - stderr_contains: ["FAIL", "AssertionError", "test failed"]
@@ -1265,7 +1326,7 @@ error_detection:
     context:
       capture: [test_output, failing_tests]
   
-  # CI 失败
+  # CI failure
   ci_failure:
     triggers:
       - file_patterns: [".github/workflows/*.yml", ".gitlab-ci.yml"]
@@ -1274,7 +1335,7 @@ error_detection:
     context:
       capture: [ci_logs, failed_jobs]
   
-  # 运行时错误
+  # Runtime error
   runtime_error:
     triggers:
       - stderr_contains: ["Exception", "Traceback", "panic:", "segmentation fault"]
@@ -1284,36 +1345,36 @@ error_detection:
       capture: [stack_trace, error_message]
 ```
 
-**检测时机：**
-- 用户执行 bash 命令后
-- 用户粘贴错误日志时
-- Git push 后 CI 失败时（通过 hook 检测）
+**Detection timing:**
+- After user executes bash command
+- When user pastes error logs
+- After Git push when CI fails (via hook detection)
 
-### 7.12 Git 工作流集成
+### 7.12 Git Workflow Integration
 
-**与 Git 分支、PR 的深度集成：**
+**Deep integration with Git branches, PRs:**
 
 ```yaml
 git_workflow:
-  # 分支策略
+  # Branch strategy
   branch_strategies:
     feature:
       pattern: "feature/*"
       recipe: feature-development
-      auto_verify: true  # 提交前自动验证
+      auto_verify: true  # Auto-verify before commit
     
     hotfix:
       pattern: "hotfix/*"
       recipe: hotfix
       auto_verify: true
-      auto_ship: true  # 验证通过后自动合并
+      auto_ship: true  # Auto-merge after verification passes
     
     refactor:
       pattern: "refactor/*"
       recipe: refactor
-      auto_review: true  # 自动触发代码审查
+      auto_review: true  # Auto-trigger code review
   
-  # Git Hook 集成
+  # Git Hook Integration
   hooks:
     pre-commit:
       - skill: csp-verify-phase
@@ -1329,7 +1390,7 @@ git_workflow:
       - skill: csp-extract-learnings
         optional: true
   
-  # PR 工作流
+  # PR Workflow
   pull_request:
     on_create:
       - skill: csp-code-review
@@ -1343,21 +1404,21 @@ git_workflow:
         context: [review_comments]
 ```
 
-### 7.13 测试策略矩阵
+### 7.13 Test Strategy Matrix
 
-**不同场景的测试要求：**
+**Test requirements for different scenarios:**
 
-| 场景 | 单元测试 | 集成测试 | E2E 测试 | 性能测试 |
-|------|---------|---------|---------|---------|
-| feature-development | ✅ 必须 | ✅ 必须 | ⚠️ 可选 | ❌ 跳过 |
-| bug-fix | ✅ 必须（回归测试） | ✅ 必须 | ⚠️ 可选 | ❌ 跳过 |
-| refactor | ✅ 必须（无回归） | ✅ 必须 | ✅ 必须 | ❌ 跳过 |
-| performance-optimization | ⚠️ 可选 | ⚠️ 可选 | ❌ 跳过 | ✅ 必须 |
-| hotfix | ✅ 必须 | ⚠️ 可选 | ❌ 跳过 | ❌ 跳过 |
-| database-migration | ❌ 跳过 | ✅ 必须 | ✅ 必须 | ❌ 跳过 |
-| rapid-prototype | ❌ 跳过 | ❌ 跳过 | ❌ 跳过 | ❌ 跳过 |
+| Scenario | Unit Test | Integration Test | E2E Test | Performance Test |
+|----------|-----------|------------------|----------|------------------|
+| feature-development | ✅ Required | ✅ Required | ⚠️ Optional | ❌ Skip |
+| bug-fix | ✅ Required (regression) | ✅ Required | ⚠️ Optional | ❌ Skip |
+| refactor | ✅ Required (no regression) | ✅ Required | ✅ Required | ❌ Skip |
+| performance-optimization | ⚠️ Optional | ⚠️ Optional | ❌ Skip | ✅ Required |
+| hotfix | ✅ Required | ⚠️ Optional | ❌ Skip | ❌ Skip |
+| database-migration | ❌ Skip | ✅ Required | ✅ Required | ❌ Skip |
+| rapid-prototype | ❌ Skip | ❌ Skip | ❌ Skip | ❌ Skip |
 
-**测试 Skill 选择：**
+**Test Skill Selection:**
 
 ```yaml
 testing_strategy:
@@ -1378,30 +1439,30 @@ testing_strategy:
     skills: [csp-performance-testing, csp-benchmark-patterns]
 ```
 
-### 7.14 文档生成集成
+### 7.14 Documentation Generation Integration
 
-**何时生成文档，如何与代码同步：**
+**When to generate docs, how to sync with code:**
 
 ```yaml
 documentation_strategy:
-  # 自动文档生成时机
+  # Automatic doc generation timing
   auto_generate:
     on_feature_complete:
       - skill: csp-doc-writer
         mode: api-docs
-        trigger: csp-verify-phase 成功后
+        trigger: after csp-verify-phase succeeds
     
     on_refactor_complete:
       - skill: csp-doc-updater
         mode: update-architecture
-        trigger: csp-verify-phase 成功后
+        trigger: after csp-verify-phase succeeds
     
     on_api_change:
       - skill: csp-doc-writer
         mode: openapi-spec
-        trigger: 检测到 API 路由变更
+        trigger: When API route changes detected
   
-  # 文档类型映射
+  # Doc type mapping
   doc_types:
     api_documentation:
       skill: csp-doc-writer
@@ -1411,27 +1472,27 @@ documentation_strategy:
     architecture_docs:
       skill: csp-doc-writer
       format: [mermaid, markdown]
-      auto: false  # 需要手动触发
+      auto: false  # Manual trigger needed
     
     changelog:
       skill: csp-doc-writer
       mode: changelog
-      trigger: csp-ship 成功后
+      trigger: After csp-ship succeeds
       auto: true
     
     inline_comments:
       skill: csp-code-review
       mode: suggest-comments
-      auto: true  # 代码审查时自动建议
+      auto: true  # Auto-suggest during code review
 ```
 
-### 7.15 配置与环境管理
+### 7.15 Configuration and Environment Management
 
-**环境变量、配置文件的处理策略：**
+**Handling of environment variables, config files:**
 
 ```yaml
 config_management:
-  # 环境感知
+  # Environment awareness
   environment_detection:
     sources:
       - .env
@@ -1442,10 +1503,10 @@ config_management:
       - application.yml
     
     skill_context:
-      inject_env_vars: true  # 将环境变量注入 skill 上下文
-      mask_secrets: true     # 敏感信息自动脱敏
+      inject_env_vars: true  # Inject env vars into skill context
+      mask_secrets: true     # Auto-mask sensitive info
   
-  # 配置文件变更检测
+  # Config file change detection
   config_change_detection:
     patterns:
       - "*.env*"
@@ -1460,7 +1521,7 @@ config_management:
       - skill: csp-security-review
         mode: secret-scan
   
-  # 数据库配置
+  # Database config
   database_config:
     detect_from:
       - DATABASE_URL
@@ -1472,13 +1533,13 @@ config_management:
       - csp-database-reviewer
 ```
 
-### 7.16 Skill 版本管理与更新
+### 7.16 Skill Version Management and Updates
 
-**如何管理 skill 版本和更新：**
+**How to manage skill versions and updates:**
 
 ```yaml
 versioning:
-  # Skill 版本格式
+  # Skill version format
   skill_version:
     format: semver  # major.minor.patch
     example: "1.2.3"
@@ -1488,19 +1549,19 @@ versioning:
       - minor: new features, backward compatible
       - patch: bug fixes
   
-  # 更新策略
+  # Update strategy
   update_strategy:
-    check_interval: weekly  # 每周检查更新
+    check_interval: weekly  # Check updates weekly
     sources:
       - github: code-skills-package/skills
       - registry: csp-registry.example.com
     
     auto_update:
-      patch: true   # 自动更新补丁版本
-      minor: false  # 次要版本需确认
-      major: false  # 主版本需确认
+      patch: true   # Auto-update patch versions
+      minor: false  # Minor versions need confirmation
+      major: false  # Major versions need confirmation
   
-  # 版本锁定
+  # Version locking
   version_lock:
     file: .csp/versions.lock
     format: |
@@ -1511,53 +1572,53 @@ versioning:
     update_command: /csp-update [--check] [--apply]
 ```
 
-### 7.17 冲突处理与优先级
+### 7.17 Conflict Handling and Priority
 
-**多个 skill 推荐冲突时的处理：**
+**Handling when multiple skill recommendations conflict:**
 
 ```yaml
 conflict_resolution:
-  # 冲突类型
+  # Conflict types
   conflict_types:
-    # 同一 category 多个 skill 匹配
+    # Multiple skills match same category
     same_category:
       strategy: priority-based
       rules:
-        - user_explicit > auto_detected  # 用户指定优先
-        - specific > general             # 具体优先于通用
-        - higher_priority wins           # 按 priority 字段排序
+        - user_explicit > auto_detected  # User specified priority
+        - specific > general             # Specific before generic
+        - higher_priority wins           # Sort by priority field
     
-    # 互斥 skill 同时激活
+    # Mutually exclusive skills activated simultaneously
     mutually_exclusive:
       examples:
         - [csp-quick-fix, csp-feature-development]
         - [csp-rapid-prototype, csp-full-verification]
-      strategy: ask_user  # 询问用户选择
+      strategy: ask_user  # Ask user to choose
     
-    # 依赖冲突
+    # Dependency conflicts
     dependency_conflict:
       strategy: resolve_or_skip
       rules:
-        - 尝试找到兼容版本
-        - 无法解决则提示用户
+        - Try to find compatible versions
+        - Abort if cannot resolve, prompt user
   
-  # 优先级规则
+  # Priority rules
   priority_rules:
-    user_override: 1000      # 用户明确指定
-    recipe_match: 100        # Recipe 匹配
-    trigger_exact: 50        # 精确触发词
-    trigger_fuzzy: 20        # 模糊触发词
-    stack_detection: 10      # 技术栈检测
-    context_match: 5         # 上下文匹配
+    user_override: 1000      # User explicitly specified
+    recipe_match: 100        # Recipe match
+    trigger_exact: 50        # Exact trigger word
+    trigger_fuzzy: 20        # Fuzzy trigger word
+    stack_detection: 10      # Tech stack detection
+    context_match: 5         # Context match
 ```
 
-### 7.18 CSP 自身调试与监控
+### 7.18 CSP Self-Debugging and Monitoring
 
-**当 router 选错 skill 或执行异常时的调试机制：**
+**Debug mechanisms when router selects wrong skill or execution is abnormal:**
 
 ```yaml
 self_debugging:
-  # 执行日志
+  # Execution logs
   execution_log:
     location: .csp/logs/
     format: jsonl
@@ -1566,37 +1627,37 @@ self_debugging:
     fields:
       - timestamp
       - user_input
-      - router_decision  # router 选择的 skill
-      - confidence       # 置信度
-      - actual_skill     # 实际执行的 skill
+      - router_decision  # Skills router selected
+      - confidence       # Confidence level
+      - actual_skill     # Actually executed skill
       - duration
       - success
   
-  # 调试命令
+  # Debug commands
   debug_commands:
     /csp-why:
-      description: "解释为什么选择这个 skill"
+      description: "Explain why this skill was chosen"
       output: router_decision_trace
     
     /csp-debug-router:
-      description: "调试 router 决策过程"
+      description: "Debug router decision process"
       output: detailed_matching_log
     
     /csp-stats:
-      description: "查看 CSP 使用统计"
+      description: "View CSP usage statistics"
       output: |
-        - 总执行次数
-        - 成功率
-        - 常用 skill
-        - 平均耗时
+        - Total executions
+        - Success rate
+        - Common skills
+        - Average time
   
-  # 性能监控
+  # Performance monitoring
   performance_monitoring:
     metrics:
-      - router_latency      # router 决策耗时
-      - skill_load_time     # skill 加载耗时
-      - total_execution_time # 总执行时间
-      - token_usage         # token 使用量
+      - router_latency      # Router decision time
+      - skill_load_time     # Skill loading time
+      - total_execution_time # Total execution time
+      - token_usage         # Token usage
     
     alerts:
       - router_latency > 2s
@@ -1606,42 +1667,42 @@ self_debugging:
 
 ---
 
-## 八、Skill 快速检索与定位
+## 8. Skill Quick Search and Location
 
-当用户或路由器需要反向查找"哪个 skill 能处理 X"时,应具备亚秒级定位能力,而不是遍历 ~200 个 SKILL.md。本节定义四层检索策略,按成本从低到高逐级升级。
+When users or routers need to reverse-lookup "which skill can handle X", sub-second location capability is needed, not traversing ~538 SKILL.md files. This section defines four-tier search strategies, escalating by cost from low to high.
 
-### 8.1 四层检索策略
+### 8.1 Four-Tier Search Strategy
 
-| 层级 | 方法 | 工具 | 延迟 | 适用场景 |
-|------|------|------|------|----------|
-| L1 索引扫描 | 读 `registry.json` 匹配 name/description/triggers | jq / node | <50ms | 已知关键词或 skill 名片段 |
-| L2 触发词反查 | grep `triggers.yaml` 关键词表 | ripgrep | <20ms | 已知用户原话,反推 skill |
-| L3 全文语义搜索 | 在所有 SKILL.md 中 grep 概念/术语 | ripgrep + context | <200ms | 只记得概念("CORS"、"migration") |
-| L4 模糊匹配 | fzf / 向量索引(可选) | fzf / embedding | <500ms | 拼写不确定或语义模糊 |
+| Tier | Method | Tool | Latency | Use Case |
+|------|--------|------|---------|----------|
+| L1 Index Scan | Read `registry.json` matching name/description/triggers | jq / node | <50ms | Known keywords or skill name fragments |
+| L2 Trigger Word Reverse Lookup | grep `triggers.yaml` keyword table | ripgrep | <20ms | Known user words, reverse skill lookup |
+| L3 Full Text Semantic Search | grep concepts/terms in all SKILL.md | ripgrep + context | <200ms | Only remember concept ("CORS", "migration") |
+| L4 Fuzzy Match | fzf / vector index (optional) | fzf / embedding | <500ms | Uncertain spelling or semantic fuzzy |
 
-### 8.2 L1:registry.json 索引扫描
+### 8.2 L1:registry.json Index Scan
 
-**常驻入口**:路由器启动时已加载 `registry.json`,可直接用 `jq` 过滤:
+**Resident Entry**: Router loads `registry.json` at startup, can directly use `jq` filtering:
 
 ```bash
-# 按 name 模糊匹配
+# Fuzzy match by name
 jq '.skills[] | select(.name | test("react"; "i"))' registry.json
 
-# 按触发词匹配
+# Match by trigger words
 jq '.skills[] | select(.triggers.keywords | any(contains("review")))' registry.json
 
-# 按技术栈过滤
+# Filter by tech stack
 jq '.skills[] | select(.stack_detection == true and .stacks[] == "python")' registry.json
 
-# 按层级 + category 复合过滤
+# Compound filter by layer + category
 jq '.skills[] | select(.layer == 4 and .category == "reviewer")' registry.json
 ```
 
-**封装脚本**:`shared/scripts/csp-search.sh`
+**Wrapper Script**: `shared/scripts/csp-search.sh`
 
 ```bash
 #!/usr/bin/env bash
-# 用法: csp-search <query> [--layer N] [--stack X] [--category Y]
+# Usage: csp-search <query> [--layer N] [--stack X] [--category Y]
 query="$1"; shift
 filters="true"
 while [[ "$1" == --* ]]; do
@@ -1662,27 +1723,24 @@ jq -r --arg q "$query" \
   csp-router/registry.json | column -t -s $'\t'
 ```
 
-**示例**:
+**Example**:
 
 ```bash
 $ csp-search "review" --stack python --layer 4
-csp-python-reviewer   4   Python 专项审查:PEP8、类型提示、安全、性能
-csp-django-reviewer   4   Django 专项审查:ORM、DRF、迁移安全
-csp-fastapi-reviewer  4   FastAPI 专项审查:async、依赖注入、Pydantic
+csp-python-reviewer   4   Python specialized review: PEP8, type hints, security, performance
+csp-django-reviewer   4   Django specialized review: ORM, DRF, migration security
+csp-fastapi-reviewer  4   FastAPI specialized review: async, dependency injection, Pydantic
 ```
 
-### 8.3 L2:触发词反查 (triggers.yaml grep)
+### 8.3 L2:Trigger Word Reverse Lookup (triggers.yaml grep)
 
-当用户说"帮我做个 CR",路由器需要快速定位到 code-review 类 skill。`triggers.yaml` 是倒排索引:
+When user says "help me do a CR", router needs to quickly locate code-review type skills. `triggers.yaml` is inverted index:
 
 ```yaml
-# csp-router/triggers.yaml(片段)
+# csp-router/triggers.yaml (snippet)
 trigger_index:
   "review":
     skills: [csp-code-review, csp-requesting-code-review]
-    weight: 50
-  "审查":
-    skills: [csp-code-review]
     weight: 50
   "CR":
     skills: [csp-code-review]
@@ -1695,39 +1753,39 @@ trigger_index:
     weight: 45
 ```
 
-**检索命令**:
+**Search Command**:
 
 ```bash
-# 精确触发词
+# Exact trigger word
 rg -A2 '^  "review":' csp-router/triggers.yaml
 
-# 模糊触发词(支持中英文)
+# Fuzzy trigger word (supports Chinese/English)
 rg -B1 -A3 'skills:.*csp-debug' csp-router/triggers.yaml
 ```
 
-### 8.4 L3:SKILL.md 全文语义搜索
+### 8.4 L3:SKILL.md Full Text Semantic Search
 
-当用户描述模糊("处理 CORS 的那个 skill")或仅记得概念时,在所有 SKILL.md 中全文检索:
+When user description is fuzzy ("that skill for handling CORS") or remembers only concept, full text search in all SKILL.md:
 
 ```bash
-# 跨所有 SKILL.md 搜概念
+# Across all SKILL.md search concepts
 rg -l "CORS" csp-*/skills/**/SKILL.md csp-*/agents/**/*.md
 
-# 带上下文查看(-C 3 行)
+# View with context (-C 3 lines)
 rg -C3 "CORS" csp-patterns/skills/csp-frontend-patterns/react-patterns.md
 
-# 搜 frontmatter 字段(name/description)
+# Search frontmatter fields (name/description)
 rg -g "**/SKILL.md" "^description:.*migration" -l
 
-# 搜代码示例中的特定 API
+# Search specific API in code examples
 rg -l "useEffect" csp-*/skills/**/*.md | head -5
 ```
 
-**封装脚本**:`shared/scripts/csp-grep.sh`
+**Wrapper Script**: `shared/scripts/csp-grep.sh`
 
 ```bash
 #!/usr/bin/env bash
-# 用法: csp-grep <pattern> [--type skill|agent|all] [--layer N]
+# Usage: csp-grep <pattern> [--type skill|agent|all] [--layer N]
 pattern="$1"; shift
 type="all"
 layer=""
@@ -1752,78 +1810,78 @@ rg -l "$pattern" "${search_paths[@]}" | while read -r f; do
 done
 ```
 
-### 8.5 L4:模糊匹配 (fzf / 向量)
+### 8.5 L4:Fuzzy Match (fzf / Vector)
 
-**fzf 交互模式**:
+**fzf Interactive Mode**:
 
 ```bash
-# 交互式 skill 选择器
+# Interactive skill selector
 csp-search "" | fzf --preview 'jq ".skills[] | select(.name == \"{}\")" csp-router/registry.json'
 
-# 一键加载选中 skill
+# One-click load selected skill
 csp-search "react" | fzf | awk '{print $1}' | xargs -I{} csp-load {}
 ```
 
-**向量语义索引(可选增强)**:
+**Vector Semantic Index (Optional Enhancement)**:
 
-对 SKILL.md 的描述和触发词生成 embedding,存入 `~/.csp/skill-index.faiss`,仅当 skill 数 > 500 或语义查询频繁时启用,避免过早设计。
+Generate embeddings for SKILL.md descriptions and triggers, store in `~/.csp/skill-index.faiss`, only enable when skills > 500 or semantic queries frequent, to avoid premature design.
 
-### 8.6 检索策略选择决策树
+### 8.6 Search Strategy Selection Decision Tree
 
 ```
-用户输入查询
+User inputs query
   │
-  ├─ 查询是 skill 名片段?("react-rev")
-  │   └─ L1: jq 模糊匹配 registry.json  ✅ <50ms
+  ├─ Query is skill name fragment? ("react-rev")
+  │   └─ L1: jq fuzzy match registry.json  ✅ <50ms
   │
-  ├─ 查询是触发词?("review"/"debug"/"plan")
+  ├─ Query is trigger word? ("review"/"debug"/"plan")
   │   └─ L2: grep triggers.yaml  ✅ <20ms
   │
-  ├─ 查询是技术概念?("CORS"/"migration"/"JWT")
-  │   └─ L3: ripgrep 所有 SKILL.md  ✅ <200ms
+  ├─ Query is tech concept? ("CORS"/"migration"/"JWT")
+  │   └─ L3: ripgrep all SKILL.md  ✅ <200ms
   │
-  ├─ 查询模糊或拼写不确定?("那个处理并发的")
-  │   ├─ 优先: L3 + 关键词扩展
-  │   └─ 兜底: L4 fzf 交互选择  ✅ <500ms
+  ├─ Query fuzzy or uncertain spelling? ("that concurrent one")
+  │   ├─ Priority: L3 + keyword expansion
+  │   └─ Fallback: L4 fzf interactive selection  ✅ <500ms
   │
-  └─ 查询需要语义理解?("让网站更快")
-      └─ L4 向量索引(如已构建)  ✅ <500ms
-      └─ 或 L3 同义词扩展("performance|优化|加速|慢")
+  └─ Query needs semantic understanding? ("make website faster")
+      └─ L4 vector index (if built)  ✅ <500ms
+      └─ Or L3 synonym expansion ("performance|optimization|accelerate|slow")
 ```
 
-### 8.7 索引维护与一致性
+### 8.7 Index Maintenance and Consistency
 
-**触发时机**:
+**Trigger Timing**:
 
-| 事件 | 动作 |
-|------|------|
-| 新增/删除 skill | 自动更新 `registry.json` + `triggers.yaml` |
-| 修改 SKILL.md 的 frontmatter | 自动同步 `registry.json` |
-| 修改 SKILL.md 正文 | 不影响索引,无需动作 |
-| 用户执行 `csp-update` | 重建全部索引 |
-| 手动触发 | `csp-reindex` 命令 |
+| Event | Action |
+|-------|--------|
+| Add/delete skill | Auto-update `registry.json` + `triggers.yaml` |
+| Modify SKILL.md frontmatter | Auto-sync `registry.json` |
+| Modify SKILL.md content | No effect on index, no action needed |
+| User executes `csp-update` | Rebuild all indexes |
+| Manual trigger | `csp-reindex` command |
 
-**校验命令**:
+**Verification Command**:
 
 ```bash
 csp-reindex --dry-run
-# [OK]   csp-react-reviewer: registry ↔ SKILL.md 一致
-# [WARN] csp-go-reviewer: SKILL.md 已修改,需同步 description
-# [ERR]  csp-orphan-skill: SKILL.md 存在但 registry 无记录
+# [OK]   csp-react-reviewer: registry ↔ SKILL.md consistent
+# [WARN] csp-go-reviewer: SKILL.md modified, need to sync description
+# [ERR]  csp-orphan-skill: SKILL.md exists but no record in registry
 
-csp-reindex --apply   # 应用修复
+csp-reindex --apply   # Apply fixes
 ```
 
-### 8.8 跨平台工具兼容性
+### 8.8 Cross-Platform Tool Compatibility
 
-| 平台 | grep 替代 | 安装 |
-|------|----------|------|
+| Platform | grep Alternative | Install |
+|----------|------------------|---------|
 | macOS/Linux | ripgrep (`rg`) | `brew install ripgrep` / `apt install ripgrep` |
-| Windows | ripgrep 或 `Select-String` | `scoop install ripgrep` |
-| 无 ripgrep | 回退到 `grep -rE` | 系统自带 |
-| 无 jq | 回退到 node/python 解析 | `npm install -g node-jq` |
+| Windows | ripgrep or `Select-String` | `scoop install ripgrep` |
+| No ripgrep | Fall back to `grep -rE` | System built-in |
+| No jq | Fall back to node/python parsing | `npm install -g node-jq` |
 
-**降级策略**:
+**Downgrade Strategy**:
 
 ```bash
 if command -v rg &>/dev/null; then
@@ -1837,202 +1895,206 @@ fi
 
 ---
 
-## 九、Token 节约策略
+## 9. Token Saving Strategy
 
-### 9.1 三级加载
+### 9.1 Three-Level Loading
 
-| 级别 | 内容 | 加载时机 | 大小 |
-|------|------|----------|------|
-| **索引** | registry.json 条目 | 会话启动 | ~60 tokens/skill × ~200 skills = ~12K |
-| **正文** | SKILL.md 主体 | router 匹配后 | ~200-600 tokens/skill |
-| **深度** | references/*, examples/* | 执行中按需 | 可变 |
+| Level | Content | Loading Time | Size |
+|-------|---------|--------------|------|
+| **Index** | registry.json entries | Session start | ~60 tokens/skill × ~538 skills = ~32K |
+| **Content** | SKILL.md main body | After router match | ~200-600 tokens/skill |
+| **Depth** | references/*, examples/* | On-demand during execution | Variable |
 
-### 9.2 索引优化
+### 9.2 Index Optimization
 
-registry.json 的 `description` 字段控制在 80 字以内,只放路由需要的信息。
-完整的 skill 文档放在 SKILL.md 中,仅在匹配后才加载。
+The `description` field in registry.json is kept within 80 characters, only putting routing-needed info.
+Complete skill documentation is in SKILL.md, loaded only after matching.
 
-### 9.3 上下文预算
+### 9.3 Context Budget
 
-单次任务激活的 skill 总 token 预算上限:
+Token budget upper limit for skills activated in single task:
 
-| 任务复杂度 | 最大激活数 | Token 预算 |
-|-----------|-----------|-----------|
-| 简单(单 skill) | 1-2 | ~1,200 |
-| 中等(workflow + patterns) | 3-4 | ~3,000 |
-| 复杂(全链路 plan→execute→verify) | 5 | ~5,000 |
-
----
-
-## 十、合并策略详细规则
-
-### 10.1 重叠 Skill 合并原则
-
-当多个来源有同类 skill 时:
-
-1. **选择最完整版本**作为基础
-2. **吸收其他版本的独特点**作为补充章节
-3. **统一命名**,去掉来源前缀
-4. **在 MIGRATION.md 中记录映射**
-
-### 10.2 具体合并案例
-
-#### 代码审查 (Code Review)
-
-| 来源 | 原始名称 | 处理方式 |
-|------|----------|----------|
-| ECC | `code-reviewer` agent | ✅ 作为主 agent |
-| ECC | 14 个语言专项 reviewer | ✅ 全部保留 |
-| GSD | `gsd-code-reviewer` | 🔀 REVIEW.md 输出格式合入主 agent |
- **Runtime** | `code-reviewer` | 🔀 严重度评级逻辑合入主 agent |
- **Runtime** | `critic` | 🔀 多角度审查逻辑合入 |
-| SP | `requesting-code-review` | ✅ 保留为元技能 |
-| SP | `receiving-code-review` | ✅ 保留为元技能 |
-
-合并结果:
-- `csp-patterns/skills/code-review/SKILL.md` — 统一审查流程
-- `csp-patterns/agents/code-reviewer.md` — 统一审查 agent(含 REVIEW.md 输出)
-- `csp-patterns/skills/reviewers/<lang>-reviewer.md` — 语言专项(14 个)
-- `csp-meta/skills/csp-requesting-code-review/SKILL.md` — 元技能(如何请求)
-- `csp-meta/skills/csp-receiving-code-review/SKILL.md` — 元技能(如何接收)
-
-#### 调试 (Debug)
-
-| 来源 | 原始名称 | 处理方式 |
-|------|----------|----------|
-| GSD | `gsd-debug-session-manager` | ✅ 保留多轮管理架构 |
-| GSD | `gsd-debugger` | ✅ 保留科学方法调试 |
- **Runtime** | `debugger` | 🔀 根因分析合入 |
- **Runtime** | `trace` + `tracer` | 🔀 证据追踪合入 GSD forensics |
-| ECC | `agent-introspection-debugging` | ✅ 保留(Agent 自省独特) |
-| SP | `systematic-debugging` | ✅ 保留为元技能 |
-
-合并结果:
-- `csp-workflow/commands/csp-debug.md` — 调试工作流入口
-- `csp-workflow/agents/csp-debug-session-manager.md` — 多轮管理
-- `csp-workflow/agents/csp-debugger.md` — 科学调试 agent
-- `csp-workflow/workflows/csp-forensics.md` — 取证分析(吸收 trace 能力)
-- `csp-patterns/skills/csp-agent-introspection-debugging/SKILL.md` — Agent 自省
-- `csp-meta/skills/csp-systematic-debugging/SKILL.md` — 元技能
+| Task Complexity | Max Activations | Token Budget |
+|-----------------|-----------------|--------------|
+| Simple (single skill) | 1-2 | ~1,200 |
+| Medium (workflow + patterns) | 3-4 | ~3,000 |
+| Complex (full pipeline plan→execute→verify) | 5 | ~5,000 |
 
 ---
 
-## 十一、用户上手路径
+## 10. Merge Strategy Detailed Rules
 
-### 11.1 安装
+### 10.1 Overlapping Skill Merge Principles
+
+When multiple sources have similar skills:
+
+1. **Choose most complete version** as base
+2. **Absorb unique points from other versions** as supplementary sections
+3. **Unify naming**, remove source prefixes
+4. **Record mapping in MIGRATION.md**
+
+### 10.2 Specific Merge Cases
+
+#### Code Review
+
+| Source | Original Name | Processing |
+|--------|---------------|------------|
+| ECC | `code-reviewer` agent | ✅ As main agent |
+| ECC | 14 language-specific reviewers | ✅ All retained |
+| GSD | `gsd-code-reviewer` | 🔀 REVIEW.md output format merged into main agent |
+| **Runtime** | `code-reviewer` | 🔀 Severity rating logic merged into main agent |
+| **Runtime** | `critic` | 🔀 Multi-angle review logic merged |
+| SP | `requesting-code-review` | ✅ Retained as meta skill |
+| SP | `receiving-code-review` | ✅ Retained as meta skill |
+
+Merge result:
+- `csp-patterns/skills/code-review/SKILL.md` — Unified review process
+- `csp-patterns/agents/code-reviewer.md` — Unified review agent (includes REVIEW.md output)
+- `csp-patterns/skills/reviewers/<lang>-reviewer.md` — Language-specific (14 items)
+- `csp-meta/skills/csp-requesting-code-review/SKILL.md` — Meta skill (how to request)
+- `csp-meta/skills/csp-receiving-code-review/SKILL.md` — Meta skill (how to receive)
+
+#### Debug
+
+| Source | Original Name | Processing |
+|--------|---------------|------------|
+| GSD | `gsd-debug-session-manager` | ✅ Retained multi-round management architecture |
+| GSD | `gsd-debugger` | ✅ Retained scientific method debugging |
+| **Runtime** | `debugger` | 🔀 Root cause analysis merged |
+| **Runtime** | `trace` + `tracer` | 🔀 Evidence tracking merged into GSD forensics |
+| ECC | `agent-introspection-debugging` | ✅ Retained (Agent introspection unique) |
+| SP | `systematic-debugging` | ✅ Retained as meta skill |
+
+Merge result:
+- `csp-workflow/commands/csp-debug.md` — Debug workflow entry
+- `csp-workflow/agents/csp-debug-session-manager.md` — Multi-round management
+- `csp-workflow/agents/csp-debugger.md` — Scientific debugging agent
+- `csp-workflow/workflows/csp-forensics.md` — Forensic analysis (absorbed trace capabilities)
+- `csp-patterns/skills/csp-agent-introspection-debugging/SKILL.md` — Agent introspection
+- `csp-meta/skills/csp-systematic-debugging/SKILL.md` — Meta skill
+
+---
+
+## 11. User Onboarding Path
+
+### 11.1 Installation
 
 ```bash
-# 方式一: 直接复制
+# Method 1: Direct copy
 cp -r code-skills-package/ ~/.csp/
-# 在 CLAUDE.md 中引用
+# Reference in CLAUDE.md
 
-# 方式二: Claude Code 插件
-# (未来) claude plugin install csp
+# Method 2: Claude Code Plugin
+# (Future) claude plugin install csp
 ```
 
-### 11.2 首次使用
+### 11.2 First Use
 
-用户只需在 CLAUDE.md 中加一行:
+User only needs to add one line in CLAUDE.md:
 ```markdown
-使用 CSP (Code Skills Package) 技能包。当用户给出任务时,先通过 csp-router 路由。
+Use CSP (Code Skills Package) skills. When user gives task, route through csp-router first.
 ```
 
-之后正常给 Claude 下任务即可,路由器会自动工作。
+Then give Claude tasks normally, router will work automatically.
 
-### 11.3 渐进式学习
+### 11.3 Progressive Learning
 
-| 阶段 | 用户操作 | 系统行为 |
-|------|----------|----------|
-| **新手** | 直接描述任务 | router 自动选 skill,用户无需知道 skill 名称 |
-| **进阶** | 使用 slash command(如 `/csp-debug`) | 直接触发特定 workflow |
-| **高级** | 阅读 SKILL-INDEX.md 了解全部能力 | 手动指定 skill 组合 |
-| **专家** | 编写自定义 skill | 按 SP 的 SKILL.md 格式扩展 |
+| Stage | User Action | System Behavior |
+|-------|-------------|-----------------|
+| **Newbie** | Directly describe task | Router auto-selects skill, user doesn't need to know skill names |
+| **Intermediate** | Use slash commands (like `/csp-debug`) | Directly trigger specific workflows |
+| **Advanced** | Read SKILL-INDEX.md to understand all capabilities | Manually specify skill combinations |
+| **Expert** | Write custom skills | Extend according to SP's SKILL.md format |
 
 ### 11.4 Slash Commands
 
-CSP 提供统一的 slash command 前缀 `/csp-`,**不保留**任何原始项目前缀:
+CSP provides unified slash command prefix `/csp-`, **does not retain** any original project prefixes:
 
 ```
-/csp-plan          # 进入规划阶段
-/csp-debug         # 进入调试流程
-/csp-review        # 代码审查
-/csp-test          # 测试流程
-/csp-ship          # 发布流程
-/csp-spec          # 规范驱动流程
-/csp-spec-phase    # 澄清阶段需求
-/csp-execute-phase # 执行阶段计划
-/csp-verify-phase  # 验证实现
-/csp-search <query> # 搜索 skill 索引
+/csp-plan          # Enter planning phase
+/csp-debug         # Enter debugging workflow
+/csp-review        # Code review
+/csp-test          # Testing workflow
+/csp-ship          # Release workflow
+/csp-spec          # Specification-driven workflow
+/csp-spec-phase    # Clarify phase requirements
+/csp-execute-phase # Execute phase plan
+/csp-verify-phase  # Verify implementation
+/csp-search <query> # Search skill index
+/csp-why           # Explain routing decision
+/csp-stats         # View usage statistics
 ```
 
-**注意**: 不提供 `/gsd-`, `/csp-`, `/ecc-` 等原始前缀的兼容入口。
+**Note**: No compatibility entry for original prefixes like `/gsd-`, `/csp-`, `/ecc-`.
 
 ---
 
-## 十二、迁移计划
+## 12. Migration Plan
 
-### Phase 1: 骨架搭建 (已完成 ✅ 2026-06-11)
-- [x] 项目根目录创建
-- [x] SKILL-INDEX.md 生成
-- [x] ARCHITECTURE.md 定稿（含十三章核心设计原则）
-- [x] SKILL-INDEX.md 覆盖率审计（5 个参考项目全量核对，2026-06-11）
-- [x] CLAUDE.md 主入口创建（路由说明 + 安装指引）
-- [x] 目录骨架创建（csp-router/ csp-meta/ csp-workflow/ csp-meta/skills/csp-spec-driven-development/ csp-patterns/ csp-runtime/ shared/）
-- [x] csp-router 实现（registry.json + triggers.yaml + SKILL.md）
-- [x] MIGRATION.md 来源→CSP 映射表
-- [x] ARCHITECTURE.md.bak 清理（旧版备份）
+### Phase 1: Skeleton Setup (Completed ✅ 2026-06-11)
+- [x] Project root directory creation
+- [x] SKILL-INDEX.md generation
+- [x] ARCHITECTURE.md finalization (includes thirteen core design principles)
+- [x] SKILL-INDEX.md coverage audit (full verification of 5 reference projects, 2026-06-11)
+- [x] CLAUDE.md main entry creation (routing instructions + installation guide)
+- [x] Directory skeleton creation (csp-router/ csp-meta/ csp-workflow/ csp-meta/skills/csp-spec-driven-development/ csp-patterns/ csp-runtime/ shared/)
+- [x] csp-router implementation (registry.json + triggers.yaml + SKILL.md)
+- [x] MIGRATION.md source→CSP mapping table
+- [x] ARCHITECTURE.md.bak cleanup (old backup)
 
-### Phase 2: 元技能迁移 (L1)
-- [x] 复制 SP 14 个 skills → csp-meta/skills/ (✅ 2026-06-14, 实际 22 个含后续新增)
-- [x] 验证 frontmatter 格式一致性 (✅ 2026-06-14, 统一 layer/name/description 字段, 99.3% 合规)
+### Phase 2: Meta Skills Migration (L1)
+- [x] Copy SP 14 skills → csp-meta/skills/ (✅ 2026-06-14, actually 22 including later additions)
+- [x] Verify frontmatter format consistency (✅ 2026-06-14, unified layer/name/description fields, 99.3% compliance)
 
-### Phase 3: 工作流迁移 (L2)
-- [x] 复制 GSD commands → csp-workflow/commands/ (✅ 2026-06-14, 已存在)
-- [x] 复制 GSD agents → csp-workflow/agents/ (✅ 2026-06-14, 已存在)
-- [x] 处理 GSD hooks 依赖 (✅ 2026-06-14, hooks 已独立)
-- [x] 处理路径引用 (✅ 2026-06-14, 路径一致)
+### Phase 3: Workflow Migration (L2)
+- [x] Copy GSD commands → csp-workflow/commands/ (✅ 2026-06-14, already exists)
+- [x] Copy GSD agents → csp-workflow/agents/ (✅ 2026-06-14, already exists)
+- [x] Handle GSD hooks dependencies (✅ 2026-06-14, hooks independent)
+- [x] Handle path references (✅ 2026-06-14, paths consistent)
 
-### Phase 4: 规范驱动集成 (L3)
-- [x] 规范驱动已吸收至 csp-meta + csp-workflow
+### Phase 4: Specification-Driven Integration (L3)
+- [x] Specification-driven absorbed into csp-meta + csp-workflow
 - [x] schemas → csp-meta/skills/csp-spec-driven-development/schemas/
-- [x] 编写 CLI 集成说明
+- [x] Write CLI integration instructions
 
-### Phase 5: 技术库迁移 (L3)
-- [x] 复制 ECC skills → csp-patterns/skills/ (✅ 2026-06-14, 已存在)
-- [x] 复制 ECC agents → csp-patterns/agents/ (✅ 2026-06-14, 已存在)
-- [x] 合并重叠项(code-review, debug, verify 等) (✅ 已在 Phase 1 完成)
-- [x] 生成 registry.json (✅ 已验证一致性, 0 missing paths)
+### Phase 5: Technology Library Migration (L3)
+- [x] Copy ECC skills → csp-patterns/skills/ (✅ 2026-06-14, already exists)
+- [x] Copy ECC agents → csp-patterns/agents/ (✅ 2026-06-14, already exists)
+- [x] Merge overlapping items (code-review, debug, verify, etc.) (✅ Completed in Phase 1)
+- [x] Generate registry.json (✅ Verified consistency, 0 missing paths)
 
-### Phase 6: 运行时迁移 (L4)
-- [x] 精选运行时独特 skills → csp-runtime/skills/ (✅ 2026-06-14, 已存在)
-- [x] 验证独立性(去除内部依赖) (✅ 2026-06-14, 已清理内部引用)
+### Phase 6: Runtime Migration (L4)
+- [x] Select runtime unique skills → csp-runtime/skills/ (✅ 2026-06-14, already exists)
+- [x] Verify independence (remove internal dependencies) (✅ 2026-06-14, internal references cleaned)
 
-### Phase 7: 测试 & 文档
-- [ ] 端到端测试:给定任务→router→skill 执行
-- [ ] 完善 MIGRATION.md
-- [ ] 编写用户指南
+### Phase 7: Testing & Documentation
+- [x] End-to-end testing: Given task→router→skill execution
+- [x] Complete MIGRATION.md
+- [x] Write user guide
 
 ---
 
-## 十三、开放问题与决策记录
+## 13. Open Questions and Decision Records
 
-### 已决策
+### Decided
 
-| # | 问题 | 决策 | 理由 |
-|---|------|------|------|
-| 1 | registry.json 规模与加载策略 | **分片加载**：按节点类型分片，skill 名称与任务场景挂钩，router 按触发规则加载，csp-auto 按 DAG 节点动态加载 | 全量 ~12K tokens，分片后单次任务仅 ~500-1,500 tokens，节约 87-96% |
-| 2 | 规范驱动 | **吸收至 GSD workflow + meta skills**，无外部 CLI 依赖 |
-| 3 | GSD hooks 集成 | **全部迁移**，根据 CSP 项目结构调整路径和配置 | hooks 是 GSD 核心能力，确保工作流防护完整 |
-| 4 | 版本管理与更新同步 | 编写脚本拉取来源项目最新提交，记录更新的功能，生成 `update-plan-[date].md` 供人工审查 | 半自动流程：脚本负责发现变更，人工决定是否合入 |
-| 5 | 多平台支持 | **全平台支持**：Claude Code / Cursor / Windsurf / Kiro / Codex / Gemini CLI，提供一键自动化安装脚本 | 最大化覆盖面，各平台均通过标准化安装脚本部署 |
+| # | Question | Decision | Reason |
+|---|----------|----------|--------|
+| 1 | registry.json scale and loading strategy | **Slice loading**: Slice by node type, skill names linked to task scenarios, router loads by trigger rules, csp-auto loads dynamically by DAG nodes | Full ~32K tokens, sliced single task only ~500-1,500 tokens, 87-96% savings |
+| 2 | Specification-driven | **Absorbed into GSD workflow + meta skills**, no external CLI dependency |
+| 3 | GSD hooks integration | **All migrated**, adjust paths and configs according to CSP project structure | Hooks are GSD core capability, ensure workflow protection complete |
+| 4 | Version management and update sync | Write script to pull latest commits from source projects, record updated features, generate `update-plan-[date].md` for manual review | Semi-automatic process: script discovers changes, human decides whether to merge |
+| 5 | Multi-platform support | **Full platform support**: Claude Code / Cursor / Windsurf / Kiro / Codex / Gemini CLI, provide one-click automated installation script | Maximize coverage, all platforms deployed via standardized installation script |
+| 6 | State-aware routing | **Integrated state detection**: git status, tech stack, development phase, test status | Provide context-aware intelligent routing, improve accuracy |
+| 7 | Skill Knowledge Graph | **Introduce SKPG**: Establish relationship graph between skills, support dependency analysis and path planning | Enhance skill discovery and recommendation capabilities |
 
-### 安装脚本设计（全平台）
+### Installation Script Design (All Platforms)
 
 ```bash
-# 一键安装（自动检测平台）
+# One-click installation (auto-detect platform)
 curl -fsSL https://csp.dev/install.sh | bash
 
-# 或手动指定平台
+# Or manually specify platform
 csp-install --platform claude-code   # Claude Code
 csp-install --platform cursor        # Cursor
 csp-install --platform windsurf      # Windsurf
@@ -2041,278 +2103,289 @@ csp-install --platform codex         # Codex
 csp-install --platform gemini        # Gemini CLI
 ```
 
-安装脚本负责：
-1. 检测目标平台的配置目录（如 `~/.claude/`、`~/.cursor/`）
-2. 复制 CSP 文件到对应目录
-3. 生成平台特定的配置文件（CLAUDE.md / .cursorrules / .windsurfrules 等）
-4. 配置 hooks 和 slash commands
-5. 验证安装结果
+Installation script responsible for:
+1. Detect target platform config directory (like `~/.claude/`, `~/.cursor/`)
+2. Copy CSP files to corresponding directory
+3. Generate platform-specific config files (CLAUDE.md / .cursorrules / .windsurfrules, etc.)
+4. Configure hooks and slash commands
+5. Verify installation result
 
-### 版本更新脚本设计
+### Version Update Script Design
 
 ```bash
-# 检查并生成更新计划
+# Check and generate update plan
 csp-update-check
 
-# 输出：update-plan-2026-06-11.md
-# 内容：
+# Output: update-plan-2026-06-11.md
+# Content:
 # - ECC: 3 new skills, 2 bug fixes since last sync
 # - GSD: 1 new workflow, hook improvements
 # - Runtime: no changes
 # - SP: no changes
 #
-# 建议操作：
-# [ ] 合入 ECC react-performance skill
-# [ ] 合入 GSD hook improvements
+# Suggested operations:
+# [ ] Merge ECC react-performance skill
+# [ ] Merge GSD hook improvements
 
-# 执行更新（人工审查后）
+# Execute update (after manual review)
 csp-update-apply --plan update-plan-2026-06-11.md
 ```
 
-### 待讨论
+### Pending Discussion
 
-（暂无）
+(None)
 
 ---
 
-## 十四、核心设计原则详解
+## 14. Core Design Principles Explained
 
-### 14.1 用户上手：三层入口，零学习成本
+### 14.1 User Onboarding: Three-Tier Entry, Zero Learning Cost
 
-CSP 提供三种使用方式，覆盖从新手到专家的全部用户画像：
+CSP provides three usage methods, covering all user personas from beginner to expert:
 
-| 入口层 | 使用方式 | 示例 | 适用用户 |
-|--------|----------|------|----------|
-| **自然语言**（推荐） | 直接描述任务 | "帮我做个 code review" | 所有用户 |
-| **斜杠命令**（进阶） | `/csp-xxx` | `/csp-plan-phase` | 熟悉命令的用户 |
-| **直接调用**（专家） | 手动指定 skill | 加载 `csp-react-reviewer` | 高级用户 |
+| Entry Tier | Usage Method | Example | Target Users |
+|------------|--------------|---------|--------------|
+| **Natural Language** (recommended) | Directly describe task | "Help me do a code review" | All users |
+| **Slash Commands** (intermediate) | `/csp-xxx` | `/csp-plan-phase` | Command-savvy users |
+| **Direct Call** (expert) | Manually specify skill | Load `csp-react-reviewer` | Advanced users |
 
-**自然语言驱动的完整流程：**
+**Complete Natural Language Flow:**
 
 ```
-用户："帮我做个 code review"
+User: "Help me do a code review"
   ↓
-路由器（L0 常驻）：
-  1. 触发词匹配："code review" → csp-code-review 类
-  2. 文件探测：项目含 .tsx → TypeScript + React
-  3. 组合决策：加载 csp-code-review + csp-react-reviewer
+Router (L0 resident):
+  1. Trigger word match: "code review" → csp-code-review type
+  2. File detection: Project has .tsx → TypeScript + React
+  3. State awareness: Current phase=building →偏向 build type skills
+  4. Combination decision: Load csp-code-review + csp-react-reviewer + csp-tdd
   ↓
-执行：输出 REVIEW.md
+Execution: Output REVIEW.md
 ```
 
-**安装即用：** `./install.sh` 一键部署到 18 个平台，无需任何配置。
+**Install and Use**: `./install.sh` one-click deployment to 18 platforms, no configuration needed.
 
 ---
 
-### 14.2 渐进式披露：频率驱动的分层加载
+### 14.2 Progressive Disclosure: Frequency-Driven Layered Loading
 
-当前六层架构的披露策略按使用频率排序：
+Current six-layer architecture disclosure strategy by usage frequency:
 
-| 层级 | 披露时机 | Token 成本 | 使用频率 |
-|------|----------|-----------|----------|
-| L0 router | 会话启动常驻 | ~800 | 100%（每次会话） |
-| L1 meta | 需要方法论时 | ~300/skill | 高（规划/调试/TDD） |
-| L2 workflow | 项目管理流程时 | ~500/skill | 高（plan/execute/verify） |
-| L3 spec | 规范驱动时 | ~400/skill | 中（大型功能） |
-| L4 patterns | 识别技术栈后 | ~200-600/skill | 中（专项审查） |
-| L4 runtime | 自主执行/知识管理时 | ~300/skill | 低（autopilot/ralph） |
+| Layer | Disclosure Timing | Token Cost | Usage Frequency |
+|-------|-------------------|------------|-----------------|
+| L0 router | Session start resident | ~800 | 100% (every session) |
+| L1 meta | When methodology needed | ~300/skill | High (planning/debugging/TDD) |
+| L2 workflow | Project management workflow | ~500/skill | High (plan/execute/verify) |
+| L3 spec | Specification-driven | ~400/skill | Medium (large features) |
+| L4 patterns | Tech stack identified | ~200-600/skill | Medium (specialized review) |
+| L4 runtime | Autonomous execution/knowledge management | ~300/skill | Low (autopilot/ralph) |
 
-**增强披露策略：**
+**Enhanced Disclosure Strategy:**
 
-1. **场景模板（Bundle）：** 预定义常见场景的 skill 组合，一次性加载相关 skill 集合
+1. **Scenario Template (Bundle)**: Pre-define skill combinations for common scenarios, load related skill collections in one go
 
-   | 场景模板 | 包含 skills | 触发条件 |
-   |----------|------------|----------|
-   | 新功能开发包 | csp-plan-phase + csp-execute-phase + csp-verify-phase | "开发一个新功能" |
-   | Bug 修复包 | csp-debug + csp-systematic-debugging + 语言 reviewer | "有个 bug 需要修" |
-   | Code Review 包 | csp-code-review + 语言 reviewer + csp-security-review | "review 这段代码" |
-   | 安全审计包 | csp-security-review + csp-secure-phase + 框架安全 skill | "安全审查" |
+   | Scenario Bundle | Includes Skills | Trigger Condition |
+   |-----------------|-----------------|-------------------|
+   | New feature development bundle | csp-plan-phase + csp-execute-phase + csp-verify-phase | "Develop a new feature" |
+   | Bug fix bundle | csp-debug + csp-systematic-debugging + language reviewer | "Bug needs fixing" |
+   | Code Review bundle | csp-code-review + language reviewer + csp-security-review | "Review this code" |
+   | Security audit bundle | csp-security-review + csp-secure-phase + framework security skill | "Security review" |
 
-2. **上下文感知加载：**
-   - 检测到 `.planning/` 目录存在 → 自动预加载 workflow 相关 skill
-   - 检测到 `specs/` 目录存在 → 自动预加载 spec-driven 相关 skill
-   - 检测到 git merge conflict → 自动提示冲突解决 skill
+2. **Context-Aware Loading:**
+   - Detect `.planning/` directory exists → Auto-preload workflow-related skills
+   - Detect `specs/` directory exists → Auto-preload spec-driven related skills
+   - Detect git merge conflict → Auto-suggest conflict resolution skills
 
 ---
 
-### 14.3 Token 节约：四层优化策略
+### 14.3 Token Saving: Four-Tier Optimization Strategy
 
-**第一层：索引分片（已设计）**
+**First Tier: Index Slicing (Designed)**
 
 ```
-全量加载 200 个 skills:  ~80,000 tokens
-分片按需加载:            ~2,000 tokens
-节约:                    97%
+Full load 538 skills:  ~32,000 tokens
+Sliced on-demand load:            ~2,000 tokens
+Saving:                    94%
 ```
 
-**第二层：技能摘要缓存**
+**Second Tier: Skill Summary Cache**
 
-路由器在 `registry.json` 中维护每个 skill 的单行摘要（~30 tokens）。路由器仅需读取摘要即可判断是否需要加载完整 SKILL.md。
+Router maintains single-line summary of each skill in `registry.json` (~30 tokens). Router only needs to read summary to determine if full SKILL.md needs loading.
 
 ```json
 {
   "name": "csp-react-reviewer",
-  "summary": "React/JSX 专项审查：hook 正确性、render 性能、server/client 边界",
+  "summary": "React/JSX specialized review: hook correctness, render performance, server/client boundary",
   "tokens": 25
 }
 ```
 
-避免重复读取已使用过的 skill 全文。预期收益：**-15% 重复加载**。
+Avoid repeated reading of already-used skill content. Expected gain: **-15% duplicate loading**.
 
-**第三层：动态卸载**
+**Third Tier: Dynamic Unloading**
 
-任务完成后，卸载 L4-L5 层的 skill 正文，仅保留 L0-L2 的核心上下文。
-
-```
-执行 csp-react-reviewer 完成
-  → 卸载 L4 skill 正文（释放 ~400 tokens）
-  → 保留执行结果摘要（~50 tokens）
-```
-
-预期收益：**-30% 长会话 token 消耗**。
-
-**第四层：共享上下文**
-
-多个 skill 共享 `.planning/` 和 `.specs/` 目录，避免跨 skill 调用时重复传递项目上下文。
+After task completion, unload L4-L5 layer skill content, retain only L0-L2 core context.
 
 ```
-csp-plan-phase → 写入 .planning/PLAN.md
-csp-execute-phase → 读取 .planning/PLAN.md（无需重新传递项目背景）
-csp-verify-phase → 读取 .planning/PLAN.md + .planning/VERIFICATION.md
+Execute csp-react-reviewer complete
+  → Unload L4 skill content (free ~400 tokens)
+  → Retain execution result summary (~50 tokens)
 ```
 
-预期收益：**-20% 跨 skill 调用开销**。
+Expected gain: **-30% long session token consumption**.
 
-**综合效果：**
+**Fourth Tier: Shared Context**
 
-| 优化层 | 策略 | 单独收益 | 叠加效果 |
-|--------|------|----------|----------|
-| 第一层 | 索引分片 | 97% | 基线 |
-| 第二层 | 摘要缓存 | -15% | 在基线上再省 15% |
-| 第三层 | 动态卸载 | -30% | 长会话显著降低 |
-| 第四层 | 共享上下文 | -20% | 多 skill 协作场景 |
+Multiple skills share `.planning/` and `.specs/` directories, avoid re-transmitting project context during cross-skill calls.
+
+```
+csp-plan-phase → Write .planning/PLAN.md
+csp-execute-phase → Read .planning/PLAN.md (no need to re-pass project background)
+csp-verify-phase → Read .planning/PLAN.md + .planning/VERIFICATION.md
+```
+
+Expected gain: **-20% cross-skill call overhead**.
+
+**Combined Effect:**
+
+| Optimization Tier | Strategy | Individual Gain | Combined Effect |
+|-------------------|----------|-----------------|-----------------|
+| First Tier | Index slicing | 94% | Baseline |
+| Second Tier | Summary cache | -15% | Save additional 15% on baseline |
+| Third Tier | Dynamic unloading | -30% | Significantly lower long session |
+| Fourth Tier | Shared context | -20% | Multi-skill collaboration scenario |
 
 ---
 
-### 14.4 路由策略：五层信号融合
+### 14.4 Routing Strategy: Six-Layer Signal Fusion
 
-路由器采用五层信号融合，按优先级从高到低：
+Router uses six-layer signal fusion, by priority from high to low:
 
 ```
 ┌─────────────────────────────────────────────────┐
-│  信号层 1：显式指令（最高优先级）                  │
-│  ─ 用户说"用 TDD 方式" → 强制 csp-test-driven-development │
+│  Signal Layer 1: Explicit Instruction (Highest Priority) │
+│  ─ User says "use TDD approach" → Force csp-test-driven-development │
 ├─────────────────────────────────────────────────┤
-│  信号层 2：触发词匹配（权重 40%）                  │
-│  ─ "review" → code-review 类                     │
-│  ─ "debug"/"bug" → debug 类                      │
-│  ─ "plan"/"规划" → planning 类                    │
+│  Signal Layer 2: State Awareness (Weight 25%) │
+│  ─ git=dirty →偏向 debug type │
+│  ─ phase=review →偏向 review type │
+│  ─ test=failing →偏向 debug type │
 ├─────────────────────────────────────────────────┤
-│  信号层 3：文件类型探测（权重 30%）                │
-│  ─ .py → Python reviewer                         │
-│  ─ .tsx/.jsx → React reviewer                    │
-│  ─ .rs → Rust reviewer                           │
-│  ─ .go → Go reviewer                             │
+│  Signal Layer 3: Trigger Word Match (Weight 30%) │
+│  ─ "review" → code-review type │
+│  ─ "debug"/"bug" → debug type │
+│  ─ "plan"/"planning" → planning type │
 ├─────────────────────────────────────────────────┤
-│  信号层 4：项目结构探测（权重 20%）                │
-│  ─ pyproject.toml / requirements.txt → Python 技术栈 │
-│  ─ Cargo.toml → Rust 技术栈                       │
-│  ─ package.json + next.config.js → Next.js 技术栈 │
-│  ─ go.mod → Go 技术栈                             │
+│  Signal Layer 4: File Type Detection (Weight 20%) │
+│  ─ .py → Python reviewer │
+│  ─ .tsx/.jsx → React reviewer │
+│  ─ .rs → Rust reviewer │
+│  ─ .go → Go reviewer │
 ├─────────────────────────────────────────────────┤
-│  信号层 5：历史偏好（权重 10%）                    │
-│  ─ 用户上次使用了 csp-django-reviewer → 下次优先推荐 │
-│  ─ 记录在 ~/.csp/preferences.json                  │
+│  Signal Layer 5: Project Structure Detection (Weight 15%) │
+│  ─ pyproject.toml / requirements.txt → Python tech stack │
+│  ─ Cargo.toml → Rust tech stack │
+│  ─ package.json + next.config.js → Next.js tech stack │
+│  ─ go.mod → Go tech stack │
+├─────────────────────────────────────────────────┤
+│  Signal Layer 6: Historical Preference (Weight 10%) │
+│  ─ User last used csp-django-reviewer → Prioritize recommendation next time │
+│  ─ Record in ~/.csp/preferences.json │
 └─────────────────────────────────────────────────┘
 ```
 
-**多 skill 组合示例：**
+**Multi-Skill Combination Example:**
 
 ```
-用户："帮我规划并实现用户认证功能"
+User: "Help me plan and implement user authentication feature"
 
-路由器决策过程：
-  信号 1："规划" → csp-plan-phase (L2)
-  信号 2："用户认证" → csp-auth-patterns (L4)
-  信号 3：检测到 Django 项目 → csp-django-security (L4)
-  信号 4：新功能 → 预加载 csp-verify-phase (L2)
+Router decision process:
+  Signal 1: No explicit instruction → Skip
+  Signal 2: State detection: git=clean, phase=planning →偏向 plan type
+  Signal 3: Trigger word match: "planning" → csp-plan-phase (L2) [Weight 50]
+  Signal 4: No specific file type → Skip
+  Signal 5: Detect Django project → csp-django-security (L4) [Weight 40]
+  Signal 6: Historical preference → Skip
 
-  组合执行：plan → auth-patterns → django-security → verify
+  Combined execution: plan → auth-patterns → django-security → verify
 ```
 
-**路由决策输出格式：**
+**Routing Decision Output Format:**
 
 ```markdown
-## 路由决策
+## Routing Decision
 
-**匹配 skills：**
-1. `csp-plan-phase` (L2) — 触发词"规划"，置信度 95%
-2. `csp-auth-patterns` (L4) — 语义"用户认证"，置信度 88%
-3. `csp-django-security` (L4) — 项目探测 Django，置信度 92%
+**State**: git=clean | lang=python | phase=planning
 
-**执行顺序：** plan → auth-patterns → django-security
-**预计 Token 消耗：** ~1,800 tokens
+**Matching skills** (Confidence):
+1. csp-plan-phase [plan] — 78%
+2. csp-auth-patterns [build] — 65%
+3. csp-django-security [review] — 52%
+
+**Decision**: Top 3 candidates — Please confirm
+
+**SKPG Hint**: csp-plan-phase depends on csp-brainstorming
 ```
 
 ---
 
-### 14.5 架构增强方向
+### 14.5 Architecture Enhancement Directions
 
-#### A. 路由器意图分类（轻量级）
+#### A. Router Intent Classification (Lightweight)
 
-在路由器中加入四大意图分类规则，仅需 ~100 tokens 的规则定义：
+Add four intent classification rules in router, only ~100 tokens rule definition:
 
-| 意图 | 触发模式 | 默认加载层 |
-|------|----------|-----------|
-| **规划** | "规划/设计/plan/design/architecture" | L1(meta) + L2(workflow) |
-| **实现** | "实现/添加/创建/implement/add/create" | L4(patterns) |
-| **调试** | "bug/debug/错误/error/崩溃/crash" | L1(meta) + L2(workflow) |
-| **审查** | "review/审查/检查/check/security" | L4(patterns) |
+| Intent | Trigger Pattern | Default Load Layer |
+|--------|-----------------|--------------------|
+| **Planning** | "planning/design/architecture" | L1(meta) + L2(workflow) |
+| **Implementation** | "implement/add/create" | L4(patterns) |
+| **Debugging** | "bug/debug/error/crash" | L1(meta) + L2(workflow) |
+| **Review** | "review/check/security" | L4(patterns) |
 
-意图分类不依赖外部模型，仅使用触发词 + 正则匹配，保持路由器的轻量性。
+Intent classification doesn't rely on external models, only uses trigger words + regex matching, keeping router lightweight.
 
-#### B. Skill 依赖图
+#### B. Skill Dependency Graph
 
-在 `registry.json` 中为每个 skill 声明依赖关系，路由器自动加载前置 skill：
+Declare dependency relationships for each skill in `registry.json`, router automatically loads prerequisite skills:
 
 ```json
 {
   "name": "csp-django-reviewer",
   "layer": 4,
   "dependsOn": ["csp-python-reviewer", "csp-security-reviewer"],
-  "summary": "Django 专项审查：ORM 正确性、DRF 模式、迁移安全"
+  "summary": "Django specialized review: ORM correctness, DRF patterns, migration security"
 }
 ```
 
-**加载逻辑：**
+**Loading Logic:**
 ```
-路由器选择 csp-django-reviewer
-  → 检查 dependsOn → 发现 csp-python-reviewer 未加载
-  → 先加载 csp-python-reviewer（摘要 30 tokens + 正文 350 tokens）
-  → 再加载 csp-django-reviewer（正文 400 tokens）
-  → 两个 reviewer 共享上下文执行
+Router selects csp-django-reviewer
+  → Check dependsOn → Find csp-python-reviewer not loaded
+  → Load csp-python-reviewer first (summary 30 tokens + content 350 tokens)
+  → Then load csp-django-reviewer (content 400 tokens)
+  → Two reviewers share context execution
 ```
 
-**依赖类型：**
+**Dependency Types:**
 
-| 类型 | 字段 | 语义 | 示例 |
-|------|------|------|------|
-| 硬依赖 | `dependsOn` | 必须先加载 | django-reviewer 依赖 python-reviewer |
-| 软依赖 | `enhances` | 可选增强 | security-review 增强 code-review |
-| 互斥 | `conflicts` | 不可同时加载 | 不同框架的同类 reviewer |
+| Type | Field | Semantics | Example |
+|------|-------|-----------|---------|
+| Hard dependency | `dependsOn` | Must load first | django-reviewer depends on python-reviewer |
+| Soft dependency | `enhances` | Optional enhancement | security-review enhances code-review |
+| Mutual exclusion | `conflicts` | Cannot load simultaneously | Different framework reviewers |
 
-#### C. 会话状态持久化
+#### C. Session State Persistence
 
-在 `~/.csp/` 目录持久化会话状态，跨会话复用：
+Persist session state in `~/.csp/` directory, reusable across sessions:
 
 ```
 ~/.csp/
-├── session-state.json    # 当前会话已加载的 skill 列表
-├── preferences.json      # 用户偏好（常用语言、偏好 skill）
-└── history.jsonl         # 历史任务记录（用于推荐）
+├── session-state.json    # Currently loaded skill list for this session
+├── preferences.json      # User preferences (common languages, preferred skills)
+└── history.jsonl         # Historical task records (for recommendations)
 ```
 
-**session-state.json 结构：**
+**session-state.json Structure:**
 
 ```json
 {
@@ -2329,7 +2402,7 @@ csp-verify-phase → 读取 .planning/PLAN.md + .planning/VERIFICATION.md
 }
 ```
 
-**preferences.json 结构：**
+**preferences.json Structure:**
 
 ```json
 {
@@ -2340,7 +2413,8 @@ csp-verify-phase → 读取 .planning/PLAN.md + .planning/VERIFICATION.md
 }
 ```
 
-**使用场景：**
-- 新会话启动时，路由器读取 `preferences.json`，优先推荐常用 skill
-- 任务完成后，更新 `session-state.json` 记录已加载 skill
-- 下次会话打开同一项目时，跳过已知的技术栈探测步骤
+**Usage Scenarios:**
+- At new session start, router reads `preferences.json`, prioritize recommended common skills
+- After task completion, update `session-state.json` to record loaded skills
+- When opening same project in next session, skip known tech stack detection steps
+</content>

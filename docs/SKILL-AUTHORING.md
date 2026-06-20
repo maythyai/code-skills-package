@@ -1,113 +1,111 @@
 ---
 name: csp-skill-authoring
-description: Skill 编写最佳实践 — 格式、结构、内容指南
+description: Skill Authoring Best Practices — Format, Structure, Content Guidelines
 ---
 
-# Skill 编写最佳实践
+# Skill Authoring Best Practices
 
-## 黄金规则
+## Golden Rules
 
-1. **触发明确**: 说明何时使用，何时不使用
-2. **流程可执行**: 步骤是 imperative（祈使句），不是描述性文本
-3. **内容可复用**: 聚焦方法论，不绑定特定工具版本
-4. **长度适中**: 800-2000 字。超过 3000 字考虑拆分
+1. **Clear Triggers**: Explain when to use and when not to use
+2. **Executable Process**: Steps are imperative (commands), not descriptive text
+3. **Reusable Content**: Focus on methodology, not specific tool versions
+4. **Appropriate Length**: 800-2000 words. Split if over 3000 words
 
-## Frontmatter 标准
+## Frontmatter Standards
 
 ```yaml
 ---
-name: csp-skill-slug          # kebab-case，以 csp- 开头
-description: 何时用 + 做什么     # 动词开头，一句话
+name: csp-skill-slug          # kebab-case, starts with csp-
+description: When to use + what it does     # Verb first, one sentence
 version: 0.1.0                # semver
 layer: 4                      # 1=meta, 2=workflow, 4=patterns, 5=runtime
-category: patterns            # 分类标签
-origin: optional-source        # 迁移来源，可选
+category: patterns            # Category label
 ---
 ```
 
-**必填字段**: name, description, layer, category
+**Required Fields**: name, description, layer, category
 
-**常见错误**:
-- 用 `csp-layer` 替代 `layer` → 必须是 `layer`
-- 用 `level` 替代 `layer` → 必须是 `layer`
-- description 过长（>120 字）→ 精简为一句话
+**Common Mistakes**:
+- Using `csp-layer` instead of `layer` → Must be `layer`
+- Using `level` instead of `layer` → Must be `layer`
+- Description too long (>120 words) → Keep to one sentence
 
-## 推荐结构
+## Recommended Structure
 
 ```markdown
 # Human-Readable Name
 
-概述：什么场景下用，做什么。
+Overview: What scenarios to use it, what it does.
 
 ## When to Use
-- 触发条件 1
-- 触发条件 2
+- Trigger condition 1
+- Trigger condition 2
 
 ## When NOT to Use
-- 不触发场景
+- Non-trigger scenarios
 
 ## Process
-1. 第一步（具体动作）
-2. 第二步
-3. 第三步
+1. Step one (specific action)
+2. Step two
+3. Step three
 
 ## Key Principles
-- 原则 1
-- 原则 2
+- Principle 1
+- Principle 2
 
-## Examples (可选)
-具体示例或代码片段。
+## Examples (Optional)
+Specific examples or code snippets.
 
 ## Related Skills
-- [[related-skill]] — 什么场景用那个
+- [[related-skill]] — When to use that
 ```
 
-## 触发器设计
+## Trigger Design
 
-在 `registry.json` 中配置触发器：
+Configure triggers in `registry.json`:
 
 ```json
 "triggers": {
-  "keywords": ["review", "code quality"],      // 关键词匹配
-  "file_patterns": ["*.rs", "Cargo.toml"],     // 文件模式匹配
-  "context": ["review", "build"]               // 上下文匹配
+  "keywords": ["review", "code quality"],      // Keyword matching
+  "file_patterns": ["*.rs", "Cargo.toml"],     // File pattern matching
+  "context": ["review", "build"]               // Context matching
 }
 ```
 
-**优先级**:
-- `keywords`: 通用触发词，不要过度具体
-- `file_patterns`: 语言/框架相关文件
-- `context`: 任务上下文（review, build, debug, test 等）
+**Priority**:
+- `keywords`: General trigger words, don't be overly specific
+- `file_patterns`: Language/framework related files
+- `context`: Task context (review, build, debug, test, etc.)
 
-## 层级选择
+## Layer Selection
 
-| 如果你的 skill... | 放到 |
-|-------------------|------|
-| 是方法论/工作方式（TDD, debugging, brainstorming） | L1 csp-meta |
-| 是项目生命周期流程（plan, execute, verify, ship） | L2 csp-workflow |
-| 是语言/框架特定模式（Python, Rust, React patterns） | L4 csp-patterns |
-| 是运行时功能（auto-routing, memory, self-improve） | L5 csp-runtime |
+| If your skill... | Put in |
+|------------------|--------|
+| Is methodology/workflow (TDD, debugging, brainstorming) | L1 csp-meta |
+| Is project lifecycle workflow (plan, execute, verify, ship) | L2 csp-workflow |
+| Is language/framework specific patterns (Python, Rust, React patterns) | L4 csp-patterns |
+| Is runtime functionality (auto-routing, memory, self-improve) | L5 csp-runtime |
 
-## 测试 Checklist
+## Testing Checklist
 
-1. **路径验证**: `node shared/scripts/audit-registry.js`
+1. **Path Validation**: `node shared/scripts/audit-registry.js`
 2. **Frontmatter**: `node shared/scripts/standardize-frontmatter.js --report`
-3. **本地安装**: `./install.sh --platform claude-code --dry-run`
-4. **内容审查**: 无 internal 依赖，无硬编码路径
+3. **Local Installation**: `./install.sh --platform claude-code --dry-run`
+4. **Content Review**: No internal dependencies, no hardcoded paths
 
-## 拆分原则
+## Splitting Principles
 
-一个 skill 只做一件事。如果出现以下情况，考虑拆分：
+One skill does one thing. If the following occurs, consider splitting:
 
-- 文件超过 3000 字
-- "When to Use" 超过 5 个条件
-- 包含两个以上独立的子流程
-- 同时涉及 "代码审查" 和 "性能优化" 等不相关主题
+- File exceeds 3000 words
+- "When to Use" exceeds 5 conditions
+- Contains two or more independent sub-processes
+- Involves unrelated topics like both "code review" and "performance optimization"
 
-## 从其他项目迁移
+## Migration from Other Projects
 
-1. 保留原文档的方法论内容
-2. 移除 internal 路径引用
-3. 替换为 CSP 标准路径和工具名
-4. 标注 `origin:` 来源
-5. 调整 frontmatter 为标准格式
+1. Keep original document's methodology content
+2. Remove internal path references
+3. Replace with CSP standard paths and tool names
+4. Adjust frontmatter to standard format

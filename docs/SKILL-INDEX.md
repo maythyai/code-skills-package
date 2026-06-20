@@ -1,8 +1,8 @@
 # Skills, Agents & Scripts 综合索引
 
-> 生成时间：2026-06-15
-> 版本：v0.5.0 — awesome-copilot skills 深度融入
-> 状态：awesome-copilot TIER 1/2/3 全部融入，reference 按需加载架构
+> 生成时间：2026-06-20
+> 版本：v0.7.0 — 状态感知路由 + 置信度评分 + SKILL.md v2 规范
+> 状态：538 个技能分布于 5 个层级，支持状态感知和置信度路由
 
 ---
 
@@ -15,6 +15,8 @@
 | **oh-my-claudecode (OMC)** | 41 | 19 | 28 | ~116 + MCP server + benchmark | Claude Code 增强运行时 |
 | **superpowers (SP)** | 14 | — | — | ~38 + hooks | 核心元技能（meta-skills） |
 | **spec-kit** | 1 | — | — | — | 规范驱动开发工具 |
+| **awesome-copilot** | ~40 | ~2 | — | — | GitHub Copilot skills & agents |
+| **CSP 总计** | 538 | — | — | — | 5 层架构（L0-L4），状态感知路由 |
 
 ---
 

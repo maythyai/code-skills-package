@@ -3,19 +3,68 @@
 <div align="center">
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
-[![v0.7.0](https://img.shields.io/badge/version-0.7.0-green)](./CHANGELOG.md)(./CHANGELOG.md)(./CHANGELOG.md)(./CHANGELOG.md)(./CHANGELOG.md)(./CHANGELOG.md)
+[![v0.7.0](https://img.shields.io/badge/version-0.7.0-green)](./CHANGELOG.md)
+[![Skills: 538](https://img.shields.io/badge/skills-538-orange)](./SKILL-INDEX.md)
+[![Platforms: 18+](https://img.shields.io/badge/platforms-18+-brightgreen)](./docs/INSTALL.md)
 
-**Unified AI Programming Skills · 18 Platforms · 15+ Languages**
+**Unified AI Programming Skills · 18+ Platforms · 15+ Languages · 538 Skills**
 
-Integrates capabilities from multiple open-source AI coding projects into a layered, auto-routing framework.
+Integrates capabilities from multiple open-source AI coding projects into a layered, auto-routing framework with extremely low token costs to complete complex development tasks.
 
-[Quick Start](#quick-start) · [Architecture](#architecture) · [Usage](#usage) · [中文文档](./README_zh.md)
+[Quick Start](#quick-start) · [Core Features](#core-features) · [Architecture](#architecture) · [English](./README.md)
 
 </div>
 
 ---
 
-CSP (Code Skills Package) consolidates the capabilities of multiple open-source AI programming projects into a layered architecture with automatic skill routing, on-demand loading, and spec-driven workflows. Instead of loading all skills upfront, CSP loads only what each task requires, keeping token usage between ~500–1,500 per task.
+CSP (Code Skills Package) consolidates the essence of multiple open-source AI programming projects into an integrated solution. It uses a five-layer architecture to load skills on demand, with confidence scoring router and skill knowledge graph, allowing AI programming assistants to load only the minimum skill set required for each task during a session. At the same time, CSP remembers user usage habits and project context, providing increasingly accurate services as the project evolves.
+
+## Core Features
+
+| Feature | CSP Solution | Traditional Solution |
+|---------|--------------|---------------------|
+| **Smart Routing** | Confidence scoring + state awareness + knowledge graph, automatically selects optimal skill combinations | Manual plugin selection / full loading |
+| **Token Savings** | Five-layer on-demand loading + index sharding, ~500–1,500 tokens per task | Full loading ~12,000+ tokens |
+| **Skill Orchestration** | Static Recipe + Dynamic DAG, supports branching / parallel / rollback / automatic merging | Fixed pipeline / no orchestration |
+| **Continuous Learning** | 5-dimensional knowledge extraction, gets smarter about projects and developers | Stateless, starts from zero each time |
+| **Full-Stack Coverage** | 538 skills · 5 layers · 15+ languages · 18+ platforms | Single language / limited scenarios |
+| **Open Extension** | Custom Skills + Recipe + Creation Wizard | Closed ecosystem / no extension |
+
+### Smart Routing
+
+The router uses triple-signal weighted scoring (keywords 40% + intent 30% + context 30%), combined with Git status, technology stack and development phase auto-detection, along with the SKPG skill knowledge graph (580+ nodes, 800+ edges) for dependency checking and path optimization. High confidence routes directly, low confidence uses interactive confirmation.
+
+### On-Demand Loading Architecture
+
+Only L0 router remains resident (~800 tokens), L1–L4 loads on demand. Index sharding reduces resident tokens by 98%, dynamic unloading and shared context further reduce long session overhead. Per-task token consumption controlled to ~500–1,500.
+
+### Skill Orchestration Engine
+
+Two orchestration modes complement each other: Static Recipe pre-defines skill sequences for common scenarios (feature development, bug fixes, refactoring, quick fixes); Dynamic DAG engine `csp-auto` makes node-by-node decisions, supporting branching parallelism, rollback retries and worktree isolation execution. Complexity classifier automatically matches model tiers.
+
+### Continuous Learning Engine
+
+Automatically extracts knowledge in 5 dimensions at session end — project architecture and tech stack, user requirement patterns, developer coding style and preferences, long-term lessons learned, skill usage feedback. Knowledge persisted to `.csp/intel/`, reused across sessions, making CSP increasingly accurate as projects evolve.
+
+### Full Development Lifecycle Coverage
+
+538 skills distributed across 5 layers, covering the full process of requirement planning, code implementation, review, debugging, testing, and release, extending to specialized areas such as AI Engineering (RAG/LLM/vLLM), DevOps (CI/CD/IaC/K8s), mobile (React Native/cross-platform), security auditing (STRIDE-A/CodeQL/incident response). Each skill follows the SKILL.md v2 specification, with structured fields like phase/domain/role.
+
+### Open Ecosystem
+
+Users can define custom workflows via `.csp/recipes.yaml`, create new skills interactively with `csp-skill-creator`. Installer supports selective deployment by tech stack (`--stacks`) and layer (`--layers`), with `--minimal` mode installing only the core router.
+
+### Common Workflows
+
+| Scenario | Input Example | Skill Chain |
+|----------|---------------|-------------|
+| **Feature Development** | "Develop user authentication feature" | brainstorming → spec → plan → execute → tdd → review → verify → ship |
+| **Bug Fix** | "There's a bug in this Django project" | debug + django-patterns → fix → tdd → verify |
+| **Code Review** | "Help me do a code review" | code-review + language reviewer → REVIEW.md |
+| **Requirements Clarification** | "I want to build something but not sure" | interview-me → brainstorming → spec |
+| **Project Onboarding** | "I just took over this project" | explore → map-codebase → architecture mapping |
+| **Quick Prototyping** | "Quickly make a demo" | brainstorming → implement → basic-check |
+| **Security Audit** | "Conduct security review" | security-review + framework security skill → audit report |
 
 ## Quick Start
 
@@ -53,7 +102,7 @@ cd /your/project && csp-install --platform cursor
 ./install.sh --list
 ```
 
-**Full command reference:** [docs/INSTALL.md](./docs/INSTALL.md) | [Update Guide](./docs/UPDATE.md)
+Complete installation documentation: [INSTALL.md](./docs/INSTALL.md) · Update Guide: [UPDATE.md](./docs/UPDATE.md)
 
 ## Usage
 
@@ -65,11 +114,12 @@ Add to your project `CLAUDE.md`:
 Use CSP (Code Skills Package) skills. When given a task, route to the appropriate skill combination via csp-router.
 ```
 
+After that, simply give tasks to AI normally, the router will work automatically:
+
 | Input | Result |
 |-------|--------|
 | `"Do a code review"` | Loads `csp-code-review` + language-specific reviewer |
 | `"Plan and implement user auth"` | brainstorming → spec → plan → execute → tdd → review → verify → ship |
-| `"Build me a complete habit tracking app"` | csp-full: intake → PRD → design → dev → test → review → ship → ops |
 | `"There's a bug in this Django project"` | Loads `csp-debug` + `csp-django-patterns` |
 
 ### Slash Commands
@@ -95,178 +145,80 @@ Load csp-plan-phase to plan this feature
 
 ## Architecture
 
-CSP uses a 5-layer architecture. Only the router (L0) loads at session start; remaining layers load on demand.
+CSP uses a five-layer layered architecture. Only the router (L0) loads at session start, remaining layers load on demand.
 
 ```
-┌─────────────────────────────────────────────────────────┐
-│  L0  csp-router     Session-start (~800 tokens)          │
-│                   Task classification + skill selection  │
-├─────────────────────────────────────────────────────────┤
-│  L1  csp-meta       Methodology (~300 tokens/skill)      │
-│     Planning · Debugging · TDD · Brainstorming           │
-├─────────────────────────────────────────────────────────┤
-│  L2  csp-workflow   Project management (~500 tokens/skill)│
-│     plan → execute → verify → ship                      │
-├─────────────────────────────────────────────────────────┤
-│  L3  csp-patterns   Language/framework (~200-600 tokens)  │
-│     15+ reviewers · build resolvers · patterns           │
-├─────────────────────────────────────────────────────────┤
-│  L4  csp-runtime    Runtime (~300 tokens/skill)          │
-│     autopilot · knowledge management · self-improvement  │
-│     · continuous learning loop                           │
-└─────────────────────────────────────────────────────────┘
+┌──────────────────────────────────────────────────────────────┐
+│  L0  csp-router      Session-start resident (~800 tokens)    │
+│      Task classification + confidence scoring + state        │
+│      awareness + SKPG knowledge graph enhancement            │
+├──────────────────────────────────────────────────────────────┤
+│  L1  csp-meta        Methodology (~300 tokens/skill · ~22)  │
+│      Planning · Debugging · TDD · Brainstorming · Spec-Drive │
+├──────────────────────────────────────────────────────────────┤
+│  L2  csp-workflow    Project management (~500 tokens/skill  │
+│      · ~147) plan → execute → verify → ship full lifecycle   │
+├──────────────────────────────────────────────────────────────┤
+│  L3  csp-patterns    Language/Framework (~200-600 tokens    │
+│      · ~313) 15+ reviewer · Build fix · Patterns · Security │
+├──────────────────────────────────────────────────────────────┤
+│  L4  csp-runtime     Runtime (~300 tokens/skill · ~55)      │
+│      Continuous learning · Autonomous execution · Knowledge  │
+│      management · Token budget · Parallel orchestration      │
+└──────────────────────────────────────────────────────────────┘
+                    Total: 538 skills
 ```
 
-### Loading Strategy
-
-| Layer | Trigger | Token Cost | Frequency |
-|-------|---------|-----------|-----------|
-| L0 router | Session start | ~800 | 100% |
-| L1 meta | Methodology needed | ~300/skill | High |
-| L2 workflow | Project management triggered | ~500/skill | High |
-| L3 patterns | Tech stack detected | ~200-600/skill | Medium |
-| L4 runtime | Runtime features requested | ~300/skill | Low |
-
-### How It Works
-
-1. **csp-router** classifies your task by matching trigger words and detecting project files
-2. Matching skills are selected from L1–L4 based on task type and tech stack
-3. Only the required skill files are loaded into context
-4. Skills execute in sequence, producing structured outputs (REVIEW.md, PLAN.md, etc.)
-
-## What's New in v0.7.0
-
-- **State-Aware Routing**: `state-detector.mjs` automatically detects Git/tech stack/project stage/test status
-- **Confidence-Based Router**: `confidence-router.mjs` uses weighted scoring (keywords 40% + intent 30% + context 30%)
-- **SKILL.md v2 Specification**: Enhanced with phase/domain/role/model_rules/anti_rationalizations fields
-- **Skill Metadata Registry**: `skill-metadata.yaml` centralized metadata for fast router lookup
-- **Skill Knowledge Graph (SKPG)**: Lightweight JSON graph modeling skill relationships/classifications (580+ nodes, 800+ edges)
-- **Intent Pattern Recognition**: Advanced intent classification in triggers.yaml with 9 regex patterns
-- **V2 Skill Upgrades**: 21 high-frequency skills upgraded to v2 format with structured metadata
-- **Workflow Schema Engine**: `csp-workflow-schema` — declarative JSON workflow engine with phase definitions, condition expressions, failure strategies, artifact passing
-- **Budget Enforcer**: `csp-budget-enforcer` — 4-level token budget degradation (OK→WARNING→SOFT→HARD) with auto model downgrade
-- **Parallel Worktree**: `csp-parallel-worktree` — automatic worktree allocation for parallel tasks with conflict detection and auto-merge
-- **Complexity Classifier**: `csp-complexity-classifier` — heuristic task complexity classification (simple/medium/complex)
-- **Model Selector**: `csp-model-selector` — automatic complexity→model mapping (haiku/sonnet/opus)
-
-## Common Workflows
-
-### Full Lifecycle (Idea → Product)
+### Routing Process
 
 ```
-"Build me a complete habit tracking app"
-  → csp-full: intake → PRD → design → parallel dev → test → review → ship → ops
+User input → State detection (Git/tech stack/phase)
+         → Keywords + Intent + Regex pattern matching
+         → Confidence scoring (keyword×0.4 + intent×0.3 + context×0.3)
+         → SKPG dependency check
+         → Routing decision
 ```
 
-### Feature Development
+| Confidence | Decision |
+|------------|----------|
+| > 80% | Directly route to top skill |
+| 50–80% | Show top 3, let user confirm |
+| < 50% | Fall back to deep interview (`/csp-interview-me`) |
 
-```
-"Build user authentication"
-  → brainstorming → spec → plan → execute → tdd → review → verify → ship
-```
+### Token Saving Strategy
 
-### Bug Fix
+| Strategy | Effect |
+|----------|--------|
+| Index sharding (on-demand loading by node type) | Resident tokens reduced by 98% |
+| Summary caching (~30 tokens/skill per line) | Avoid repeated loading, reduce 15% |
+| Dynamic unloading (release L3/L4 content after completion) | Long sessions reduced by 30% |
+| Shared context (pass via `.csp/artifacts/`) | Cross-skill calls reduced by 20% |
 
-```
-"There's a bug in this Django project"
-  → csp-debug + csp-django-patterns → fix → tdd → verify
-```
-
-### Code Review
-
-```
-"Do a code review"
-  → csp-code-review + language reviewer → REVIEW.md
-```
-
-### Requirements Clarification
-
-```
-"I want to build something, not sure what"
-  → csp-interview-me → csp-brainstorming → spec
-```
-
-### Project Onboarding
-
-```
-"I just inherited this project"
-  → csp-explore → csp-map-codebase → architecture map
-```
-
-### Specialized Agents
-
-```
-"Production incident management"
-  → csp-incident-commander → severity classification, structured response, post-mortems
-
-"Design a multi-agent AI pipeline"
-  → csp-multi-agent-architect → topology selection, failure modes, HITL gating
-
-"Build a data pipeline"
-  → csp-data-engineer → ETL/ELT design, lakehouse architecture, data quality
-
-"Create an MCP server"
-  → csp-mcp-builder → tool interface design, agent integration, testing
-
-"Minimal bug fix"
-  → csp-minimal-change-engineer → surgical diffs, scope discipline, no creep
-```
-
-## Version Locking
-
-`.csp/versions.lock` at project root tracks skill versions:
-
-```
-csp-plan-phase@1.2.3
-csp-code-review@2.0.1
-csp-debug@1.5.0
-```
-
-## Custom Recipes
-
-Define reusable workflows in `.csp/recipes.yaml`:
-
-```yaml
-recipes:
-  rapid-prototype:
-    description: "Quick prototype, skip full tests and docs"
-    triggers: ["prototype", "demo", "proof of concept"]
-    sequence:
-      - skill: csp-brainstorming
-        optional: true
-      - skill: csp-implement
-      - skill: csp-verification
-        mode: basic-check
-
-  hotfix:
-    description: "Emergency production fix, minimal change"
-    triggers: ["hotfix", "urgent", "production issue"]
-    sequence:
-      - skill: csp-debug
-      - skill: csp-implement
-        mode: minimal-change
-      - skill: csp-verification
-        mode: regression-only
-      - skill: csp-ship
-        auto: true
-```
-
-Recipe priority: user-defined → built-in (`csp-router/recipes.yaml`) → router composition.
+Detailed architecture design, DAG orchestration engine, skill knowledge graph, skill retrieval strategy, etc., please refer to [ARCHITECTURE.md](./docs/ARCHITECTURE.md).
 
 ## Troubleshooting
 
 ```bash
 /csp-why            # Why was this skill chosen?
-/csp-debug-router   # Detailed router matching log
+/csp-debug-router   # Router matching logs
 /csp-stats          # Usage statistics
 ```
+
+## Platform Support
+
+CSP supports 18+ AI programming platforms, including Claude Code, Cursor, Trae, Windsurf, Kiro, Codex, Gemini CLI, etc. The installation script automatically detects the platform and generates corresponding configuration files (CLAUDE.md / .cursorrules / .windsurfrules, etc.).
 
 ## Further Reading
 
 | Document | Description |
 |----------|-------------|
-| [ARCHITECTURE.md](./ARCHITECTURE.md) | Architecture design (13 core principles) |
-| [SKILL-INDEX.md](./SKILL-INDEX.md) | Complete skill/agent index |
+| [ARCHITECTURE.md](./docs/ARCHITECTURE.md) | Complete architecture design (11 chapters · DAG orchestration · SKPG · Token strategy) |
+| [SKILL-INDEX.md](./SKILL-INDEX.md) | Complete index of 538 skills/agents |
+| [INSTALL.md](./docs/INSTALL.md) | Complete installation guide (18+ platforms) |
+| [SKILL-AUTHORING.md](./docs/SKILL-AUTHORING.md) | Skill authoring best practices |
+| [SKILL-SPEC.md](./docs/SKILL-SPEC.md) | SKILL.md specification document |
+| [USER-GUIDE.md](./docs/USER-GUIDE.md) | User guide |
+| [README_zh.md](./README_zh.md) | Chinese Documentation |
 
 ## License
 
@@ -278,10 +230,12 @@ All integrated projects use the MIT license.
 
 CSP integrates capabilities from the following open-source projects:
 
-- [ECC](https://github.com/burningion/video-editing-ai) — Skill library
-- [GSD](https://github.com/benjiwoss/get-shit-done) — Project management
-- [OMC](https://github.com/ruvcode/oh-my-claudecode) — Runtime enhancement
-- [Superpowers](https://github.com/SimpleVibe/Superpowers) — Meta-skills
-- [spec-kit](https://github.com/microsoft/spec-kit) — Spec-driven development
-- [Agency-Agents](https://github.com/msitarzewski/agency-agents) — Specialized AI agents
-- [awesome-copilot](https://github.com/github/awesome-copilot) — GitHub Copilot skills & agents
+| Project | Contribution Area |
+|---------|------------------|
+| [ECC](https://github.com/burningion/video-editing-ai) | Skill library |
+| [GSD](https://github.com/benjiwoss/get-shit-done) | Project management & lifecycle workflows |
+| [OMC](https://github.com/ruvcode/oh-my-claudecode) | Runtime enhancement (autopilot · wiki · remember) |
+| [Superpowers](https://github.com/SimpleVibe/Superpowers) | Meta-skills & methodology |
+| [spec-kit](https://github.com/microsoft/spec-kit) | Spec-driven development |
+| [Agency-Agents](https://github.com/msitarzewski/agency-agents) | Specialized AI agents |
+| [awesome-copilot](https://github.com/github/awesome-copilot) | GitHub Copilot skills & agents (~40 selected) |

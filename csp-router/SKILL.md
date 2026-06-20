@@ -10,7 +10,7 @@ domain: architecture
 tools: [Read, Glob, Grep]
 ---
 
-# CSP Router (v2)
+# CSP Router
 
 状态感知 + 置信度评分 + 知识图谱增强的智能路由系统。
 
@@ -121,7 +121,7 @@ Context score 考虑:
 | 文件 | 用途 |
 |------|------|
 | `triggers.yaml` | 触发词 → skill 映射 |
-| `skill-metadata.yaml` | V2 元数据集中注册 |
+| `skill-metadata.yaml` |  元数据集中注册 |
 | `registry.json` | 全量 skill 注册表 |
 | `csp-router/skpg/graph.json` | 技能知识图谱 |
 | `.csp/state.json` | 当前项目状态快照

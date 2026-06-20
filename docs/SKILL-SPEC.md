@@ -28,26 +28,7 @@ The `name` and `description` fields remain required.
 | `version` | string | No | Semver version of the skill |
 | `phase` | enum | No | Lifecycle phase: `define`, `plan`, `build`, `verify`, `review`, `ship` |
 | `domain` | enum | No | Domain: `language`, `quality`, `security`, `architecture`, `devops`, `database`, `testing`, `api`, `patterns`, `other` |
-| `role` | enum | No | Agent role: `specialist`, `expert`, `architect`, `reviewer`, `guardian`, `wizard` |
 | `scope` | enum | No | Work scope: `implementation`, `review`, `analysis`, `design`, `testing` |
-
-### Model Routing
-
-| Field | Type | Required | Description |
-|-------|------|----------|-------------|
-| `model` | string | No | Default model: `opus`, `sonnet`, `haiku` |
-| `model_rules` | object | No | Conditional model selection |
-
-```yaml
-model: sonnet
-model_rules:
-  high_risk:
-    conditions: ["security audit", "architecture decision", "financial logic"]
-    model: opus
-  simple:
-    conditions: ["doc search", "dependency check", "formatting"]
-    model: haiku
-```
 
 ### Tool Permissions
 
@@ -120,13 +101,6 @@ phase: build
 domain: testing
 role: guardian
 scope: implementation
-
-model: sonnet
-model_rules:
-  high_risk:
-    conditions: ["core business logic", "security code"]
-    model: opus
-
 tools: [Read, Write, Edit, Bash, Glob, Grep]
 
 dependencies:

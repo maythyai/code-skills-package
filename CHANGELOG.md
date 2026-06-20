@@ -31,7 +31,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ### 统计
 | 指标 | v0.6.0 | v0.7.0 |
 |------|--------|--------|
-| Skills | 186 | 189 |
+| Skills (total) | 535 | 538 |
 | V2 Skills | 0 | 21 |
 | Hooks | 12 | 14 |
 | SKPG Nodes | 0 | 580+ |

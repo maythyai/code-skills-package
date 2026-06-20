@@ -1,7 +1,7 @@
 # CSP 用户指南
 
 > Code Skills Package — 统一编程技能包
-> 版本: v0.2 | 更新日期: 2026-06-11
+> 版本: v0.7.0 | 更新日期: 2026-06-20
 
 ---
 
@@ -112,7 +112,7 @@ CSP 采用五层架构,从路由到技能内容逐层深入:
 
 ## 三种使用方式
 
-### 入口一: 自然语言 (推荐,零学习成本)
+### 入口一: 自然语言
 
 在项目 `CLAUDE.md` 中添加 CSP 引用后,直接用自然语言描述任务:
 
@@ -127,7 +127,7 @@ CSP 采用五层架构,从路由到技能内容逐层深入:
 → 自动加载 csp-debug + csp-django-patterns + csp-django-reviewer
 ```
 
-### 入口二: 斜杠命令 (进阶)
+### 入口二: 斜杠命令
 
 ```bash
 /csp-plan          # 进入规划阶段
@@ -141,7 +141,7 @@ CSP 采用五层架构,从路由到技能内容逐层深入:
 /csp-search <query> # 搜索 skill 索引
 ```
 
-### 入口三: 直接调用 (专家)
+### 入口三: 直接调用
 
 手动指定加载特定 skill:
 
@@ -427,8 +427,6 @@ csp-debug@1.5.0
 
 - **完整架构设计**: [ARCHITECTURE.md](./ARCHITECTURE.md)
 - **Skill 索引**: [SKILL-INDEX.md](./SKILL-INDEX.md)
-- **迁移映射表**: [MIGRATION.md](./MIGRATION.md)
-- **来源项目**: `开源项目参考/` 目录包含 5 个原始项目
 
 ---
 

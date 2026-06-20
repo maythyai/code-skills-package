@@ -4,7 +4,7 @@
 import { readFileSync, writeFileSync, readdirSync, statSync, existsSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 
-const V2_FIELDS = ['phase', 'domain', 'role', 'scope', 'model', 'model_rules', 'tools', 'dependencies', 'related_skills', 'anti_rationalizations'];
+const V2_FIELDS = ['phase', 'domain', 'role', 'scope', 'model_rules', 'tools', 'dependencies', 'related_skills', 'anti_rationalizations'];
 const LAYER_DIRS = ['csp-meta', 'csp-workflow', 'csp-patterns', 'csp-runtime', 'csp-router'];
 
 function findSkills(baseDir) {
