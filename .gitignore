@@ -53,9 +53,5 @@ tmp/
 # Generated output from scripts/
 scripts/descriptions_output.json
 
-# CSP Learning Loop intel (per-project, optional commit)
-.csp/intel/
-
-# SKPG auto-generated indexes (graph.json is tracked)
-.csp/skpg/index.json
-.csp/skpg/triggers.json
+# CSP runtime directory (per-project, auto-generated after install)
+.csp/

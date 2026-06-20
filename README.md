@@ -3,7 +3,7 @@
 <div align="center">
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
-[![v0.7.0](https://img.shields.io/badge/version-0.7.0-green)](./ARCHITECTURE.md)
+[![v0.7.0](https://img.shields.io/badge/version-0.7.0-green)](./CHANGELOG.md)(./CHANGELOG.md)(./CHANGELOG.md)(./CHANGELOG.md)(./CHANGELOG.md)(./CHANGELOG.md)
 
 **Unified AI Programming Skills · 18 Platforms · 15+ Languages**
 
@@ -137,11 +137,17 @@ CSP uses a 5-layer architecture. Only the router (L0) loads at session start; re
 ## What's New in v0.7.0
 
 - **State-Aware Routing**: `state-detector.mjs` automatically detects Git/tech stack/project stage/test status
-- **Confidence-Based Router**: `confidence-router.mjs` uses weighted scoring (keywords 40% + intent 30% + context 30%) 
+- **Confidence-Based Router**: `confidence-router.mjs` uses weighted scoring (keywords 40% + intent 30% + context 30%)
 - **SKILL.md v2 Specification**: Enhanced with phase/domain/role/model_rules/anti_rationalizations fields
-- **Skill Knowledge Graph (SKPG)**: Lightweight JSON graph modeling skill relationships/classifications
-- **Intent Pattern Recognition**: Advanced intent classification in triggers.yaml
-- **V2 Skill Upgrades**: Top 20 high-frequency skills upgraded to v2 format with structured metadata
+- **Skill Metadata Registry**: `skill-metadata.yaml` centralized metadata for fast router lookup
+- **Skill Knowledge Graph (SKPG)**: Lightweight JSON graph modeling skill relationships/classifications (580+ nodes, 800+ edges)
+- **Intent Pattern Recognition**: Advanced intent classification in triggers.yaml with 9 regex patterns
+- **V2 Skill Upgrades**: 21 high-frequency skills upgraded to v2 format with structured metadata
+- **Workflow Schema Engine**: `csp-workflow-schema` — declarative JSON workflow engine with phase definitions, condition expressions, failure strategies, artifact passing
+- **Budget Enforcer**: `csp-budget-enforcer` — 4-level token budget degradation (OK→WARNING→SOFT→HARD) with auto model downgrade
+- **Parallel Worktree**: `csp-parallel-worktree` — automatic worktree allocation for parallel tasks with conflict detection and auto-merge
+- **Complexity Classifier**: `csp-complexity-classifier` — heuristic task complexity classification (simple/medium/complex)
+- **Model Selector**: `csp-model-selector` — automatic complexity→model mapping (haiku/sonnet/opus)
 
 ## Common Workflows
 

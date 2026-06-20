@@ -86,7 +86,7 @@ Context score 考虑:
 
 ### 7. SKPG 增强 (可选)
 
-读取 `.csp/skpg/graph.json` 进行:
+读取 `csp-router/skpg/graph.json` 进行:
 - **依赖检查**: 激活的 skill 是否有前置依赖？
 - **影响分析**: 如果修改 skill X，哪些其他 skill 受影响？
 - **路径查找**: skill A 到 skill B 的最短路径
@@ -123,5 +123,5 @@ Context score 考虑:
 | `triggers.yaml` | 触发词 → skill 映射 |
 | `skill-metadata.yaml` | V2 元数据集中注册 |
 | `registry.json` | 全量 skill 注册表 |
-| `.csp/skpg/graph.json` | 技能知识图谱 |
+| `csp-router/skpg/graph.json` | 技能知识图谱 |
 | `.csp/state.json` | 当前项目状态快照

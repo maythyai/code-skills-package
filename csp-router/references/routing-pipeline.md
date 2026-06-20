@@ -138,7 +138,7 @@ Based on the highest confidence score, the router makes one of three decisions:
 
 ### Stage 5: SKPG Enhancement (Optional)
 
-**File:** `.csp/skpg/graph.json`
+**File:** `csp-router/skpg/graph.json`
 
 The Skills Package Knowledge Graph (SKPG) provides dependency and impact analysis:
 
@@ -170,7 +170,7 @@ csp-brainstorming → csp-writing-plans → csp-executing-plans
 | `skill-metadata.yaml` | V2 metadata registry | YAML |
 | `registry.json` | Full skill registry | JSON |
 | `.csp/state.json` | Current project state | JSON |
-| `.csp/skpg/graph.json` | Skills knowledge graph | JSON |
+| `csp-router/skpg/graph.json` | Skills knowledge graph | JSON |
 
 ---
 

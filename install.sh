@@ -886,7 +886,7 @@ do_uninstall() {
 show_help() {
   cat <<'HELP'
 
-  CSP v0.6.0 — Code Skills Package 多平台安装器
+  CSP — Code Skills Package 多平台安装器
 
   用法：
     ./install.sh                        自动检测并安装（项目级）

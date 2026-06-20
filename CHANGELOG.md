@@ -20,8 +20,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - `csp-parallel-worktree` — 并行任务自动 worktree 分配，冲突检测，并发控制，自动合并清理
 - `csp-complexity-classifier` — 启发式任务复杂度分类（simple/medium/complex），影响 skill 加载和模型选择
 - `csp-model-selector` — 复杂度→模型自动映射（haiku/sonnet/opus），支持预算降级覆盖
-- `Pipeline 模板 (8个)` — feature-development/bug-fix/refactor/code-review/release/migration/hotfix/onboarding
-- `visualize-workflow.js` — 从 JSON 模板生成 Mermaid DAG 可视化脚本
 - `SDD 状态感知路由` — csp-router 基于 `.csp/artifacts/` 文件自动判断开发阶段并路由
 - `正则模式匹配层` — triggers.yaml intent_patterns 新增 9 个正则 pattern（refactor/performance/migration 等）
 
@@ -33,12 +31,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ### 统计
 | 指标 | v0.6.0 | v0.7.0 |
 |------|--------|--------|
-| Skills | 498 | 503 |
-| V2 Skills | 0 | 20 |
+| Skills | 186 | 189 |
+| V2 Skills | 0 | 21 |
 | Hooks | 12 | 14 |
 | SKPG Nodes | 0 | 580+ |
 | SKPG Edges | 0 | 800+ |
-| Pipeline Templates | 0 | 8 |
 
 ## [0.6.0] — 2026-06-18
 

@@ -6,7 +6,7 @@ import { resolve } from 'node:path';
 import { createHash } from 'node:crypto';
 
 const PROJECT_ROOT = resolve(process.argv[2] && (process.argv[2].startsWith('.') || process.argv[2].startsWith('/')) ? process.argv[2] : '.');
-const SKPG_DIR = resolve(PROJECT_ROOT, '.csp', 'skpg');
+const SKPG_DIR = resolve(PROJECT_ROOT, 'csp-router', 'skpg');
 
 function nodeId(kind, name) {
   return createHash('sha256').update(`${kind}::${name}`).digest('hex').slice(0, 12);
