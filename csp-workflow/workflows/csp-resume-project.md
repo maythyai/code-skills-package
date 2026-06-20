@@ -1,3 +1,8 @@
+---
+name: csp-resume-project
+description: Instantly restore full project context so "Where were we?" has an immediate, complete answer. Use when starting a new session on an existing project, when the user says "continue", "resume", or "where were we".
+---
+
 <trigger>
 Use this workflow when:
 - Starting a new session on an existing project

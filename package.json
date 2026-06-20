@@ -19,7 +19,11 @@
     "LICENSE"
   ],
   "scripts": {
-    "postinstall": "echo '' && echo '  CSP installed! Run in your project directory:' && echo '    cd /your/project && csp-install' && echo ''"
+    "postinstall": "echo '' && echo '  CSP installed! Run in your project directory:' && echo '    cd /your/project && csp-install' && echo ''",
+    "build:graph": "node shared/scripts/build-graph.mjs",
+    "verify:graph": "node shared/scripts/verify-graph-source.mjs",
+    "build:registry": "node shared/scripts/build-registry.mjs",
+    "build:all": "npm run build:registry && npm run build:graph"
   },
   "keywords": [
     "ai",
