@@ -3,14 +3,14 @@ name: csp-compound
 description: "Document a recently solved problem to compound your team's knowledge. Captures solutions in docs/solutions/ with YAML frontmatter for searchability. Use after fixing bugs or establishing patterns."
 layer: 2
 category: workflow
-version: "2.0.0"
 phase: build
 domain: quality
-role: specialist
 scope: implementation
-model: sonnet
 tools: [Read, Write, Edit, Bash, Glob, Grep]
-------|------|----------|
+---
+
+| Mode | Trigger | Behavior |
+|------|---------|----------|
 | **Interactive** (default) | No mode token | Ask Full vs Lightweight, ask about session history (Full only), prompt for Discoverability Check consent |
 | **Headless** | `mode:headless` in arguments | No blocking questions. Run Full without session history. Apply Discoverability Check silently. |
 

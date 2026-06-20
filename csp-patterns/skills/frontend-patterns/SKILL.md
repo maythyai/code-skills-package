@@ -6,7 +6,10 @@ metadata:
   origin: CSP
 layer: 4
 category: patterns
----------|-------------|
+---
+
+| Concept | Why It Matters |
+|---------|----------------|
 | Composition | Build UIs from small, reusable components |
 | Virtualization | Render only visible items in long lists |
 | Signals/Stores | Framework-agnostic reactive state management |

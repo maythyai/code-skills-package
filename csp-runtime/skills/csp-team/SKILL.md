@@ -1,11 +1,14 @@
 ---
-name: team
+name: csp-team
 description: N coordinated agents on shared task list using Claude Code native teams
 argument-hint: "[N:agent-type] [ralph] <task description>"
 aliases: []
 layer: 4
 category: patterns
---------------- | ----------------------------------- | ------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+---
+
+| Stage | Workers | Reviewers | Routing Notes |
+|-------|---------|-----------|---------------|
 | **team-plan**   | `explore` (haiku), `planner` (opus) | `analyst` (opus), `architect` (opus)                                                                    | Use `analyst` for unclear requirements. Use `architect` for systems with complex boundaries.                                                                                                      |
 | **team-prd**    | `analyst` (opus)                    | `critic` (opus)                                                                                         | Use `critic` to challenge scope.                                                                                                                                                                  |
 | **team-exec**   | `executor` (sonnet)                 | `executor` (opus), `debugger` (sonnet), `designer` (sonnet), `writer` (haiku), `test-engineer` (sonnet) | Match agent to subtask type. Use `executor` (model=opus) for complex autonomous work, `designer` for UI, `debugger` for compilation issues, `writer` for docs, `test-engineer` for test creation. |

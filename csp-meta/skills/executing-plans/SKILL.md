@@ -3,9 +3,6 @@ name: executing-plans
 description: Use when you have a written implementation plan to execute in a separate session with review checkpoints
 layer: 1
 category: meta
-----
-name: executing-plans
-description: Use when you have a written implementation plan to execute in a separate session with review checkpoints
 ---
 
 # Executing Plans

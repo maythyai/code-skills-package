@@ -3,7 +3,10 @@ name: everything-claude-code
 description: Development conventions and patterns for everything-claude-code. JavaScript project with conventional commits.
 layer: 4
 category: patterns
----------|------------|
+---
+
+| Element | Convention |
+|---------|------------|
 | Files | camelCase |
 | Functions | camelCase |
 | Classes | PascalCase |

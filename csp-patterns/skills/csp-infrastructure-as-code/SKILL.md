@@ -9,15 +9,6 @@ metadata:
   origin: CSP
 layer: 4
 category: patterns
-----
-name: csp-infrastructure-as-code
-description: >
-  Infrastructure as Code patterns for Terraform, Pulumi, and GitOps workflows
-  including module design, state management, drift detection, secrets management,
-  and cost estimation. Use when provisioning, managing, or auditing cloud
-  infrastructure through code-driven approaches.
-metadata:
-  origin: CSP
 ---
 
 # Infrastructure as Code Patterns

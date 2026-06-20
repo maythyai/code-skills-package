@@ -4,7 +4,10 @@ description: Review requirements or plan documents using parallel persona agents
 argument-hint: "[mode:headless] [path/to/document.md]"
 layer: 1
 category: meta
-----------|-------|
+---
+
+| Placeholder | Content |
+|-------------|---------|
 | `{persona_file}` | Full content of the agent's markdown file |
 | `{schema}` | Content of the findings schema included below |
 | `{document_type}` | "requirements" or "plan" from Phase 1 classification |

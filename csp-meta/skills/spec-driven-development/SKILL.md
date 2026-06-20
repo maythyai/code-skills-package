@@ -4,15 +4,14 @@ description: CSP-native spec-driven methodology integrated with CSP phase workfl
 layer: 1
 origin: csp-native
 category: meta
-version: "2.0.0"
 phase: build
 domain: patterns
-role: specialist
 scope: implementation
-model: sonnet
 tools: [Read, Write, Edit, Bash, Glob, Grep]
 ---
---------|-------------|------------------|
+
+| Phase | Command | Artifact |
+|-------|---------|----------|
 | Clarify what to build | `/csp-spec-phase` | `{phase}-CSPEC.md` |
 | Discuss how to build | `/csp-discuss-phase` | Discussion notes → PLAN inputs |
 | Plan implementation | `/csp-plan-phase` | `{phase}-PLAN.md` + tasks |

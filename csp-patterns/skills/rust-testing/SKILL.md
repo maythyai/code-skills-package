@@ -4,7 +4,10 @@ description: Rust testing patterns including unit tests, integration tests, asyn
 origin: CSP
 layer: 4
 category: patterns
------------|--------|
+---
+
+| Area | Target Coverage |
+|------|-----------------|
 | Critical business logic | 100% |
 | Public API | 90%+ |
 | General code | 80%+ |

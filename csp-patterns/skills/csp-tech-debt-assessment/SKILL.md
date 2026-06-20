@@ -9,7 +9,10 @@ metadata:
   origin: CSP
 layer: 4
 category: patterns
-----------|-----------|------------------|
+---
+
+| Smell | Detection Rule | Tool |
+|-------|----------------|------|
 | **Complexity** | Cyclomatic complexity > 15, cognitive complexity > 20 | complexity-report, SonarQube |
 | **Duplication** | Duplicated blocks > 10 lines | jscpd, SonarQube |
 | **Dead code** | Unused exports, unreachable branches | knip, ts-prune, ts-unused-exports |

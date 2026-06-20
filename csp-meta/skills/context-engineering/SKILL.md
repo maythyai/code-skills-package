@@ -4,7 +4,10 @@ description: Optimizes agent context setup. Use when starting a new session, whe
 layer: 1
 origin: agent-skills
 category: meta
------------|-----------------|
+---
+
+| MCP Server | Value |
+|------------|-------|
 | **Context7** | Auto-fetches relevant documentation for libraries |
 | **Chrome DevTools** | Live browser state, DOM, console, network |
 | **PostgreSQL** | Direct database schema and query results |

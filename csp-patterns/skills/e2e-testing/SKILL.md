@@ -6,19 +6,10 @@ metadata:
   origin: CSP
 layer: 4
 category: patterns
-version: "2.0.0"
 phase: verify
 domain: testing
-role: specialist
 scope: testing
-model: sonnet
 tools: [Read, Write, Edit, Bash, Glob, Grep]
-----
-name: e2e-testing
-description: >
-  Playwright E2E testing patterns, Page Object Model, configuration, CI/CD integration, artifact management, and flaky test strategies.
-metadata:
-  origin: CSP
 ---
 
 # E2E Testing Patterns

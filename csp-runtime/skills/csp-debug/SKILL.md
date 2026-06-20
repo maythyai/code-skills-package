@@ -1,18 +1,12 @@
 ---
-name: debug
+name: csp-debug
 description: Diagnose the current CSP session or repo state using logs, traces, state, and focused reproduction
 layer: 2
 category: workflow
-version: "2.0.0"
 phase: build
 domain: quality
-role: wizard
 scope: implementation
-model: sonnet
 tools: [Read, Write, Edit, Bash, Glob, Grep]
-----
-name: debug
-description: Diagnose the current CSP session or repo state using logs, traces, state, and focused reproduction
 ---
 
 # Debug

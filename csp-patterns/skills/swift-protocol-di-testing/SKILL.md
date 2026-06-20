@@ -4,10 +4,6 @@ description: Protocol-based dependency injection for testable Swift code — moc
 origin: CSP
 layer: 4
 category: patterns
-----
-name: swift-protocol-di-testing
-description: Protocol-based dependency injection for testable Swift code — mock file system, network, and external APIs using focused protocols and Swift Testing.
-origin: CSP
 ---
 
 # Swift Protocol-Based Dependency Injection for Testing

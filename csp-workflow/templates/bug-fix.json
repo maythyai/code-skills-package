@@ -1,0 +1,55 @@
+{
+  "name": "bug-fix",
+  "description": "Systematic bug fix pipeline from reproduction to regression prevention",
+  "stages": [
+    {
+      "name": "reproduce",
+      "description": "Reproduce the reported issue",
+      "skills": ["csp-systematic-debugging"],
+      "condition": null,
+      "on_failure": "stop",
+      "timeout": 600,
+      "artifacts": [".csp/artifacts/reproduce.md"]
+    },
+    {
+      "name": "diagnose",
+      "description": "Perform root cause analysis",
+      "skills": ["csp-debug", "csp-systematic-debugging"],
+      "condition": "reproduce.success",
+      "on_failure": "stop",
+      "timeout": 600,
+      "artifacts": [".csp/artifacts/diagnose.md"]
+    },
+    {
+      "name": "fix",
+      "description": "Implement the fix with TDD",
+      "skills": ["csp-tdd", "csp-executing-plans"],
+      "condition": "diagnose.success",
+      "on_failure": "stop",
+      "timeout": 900,
+      "artifacts": [".csp/artifacts/fix.md"]
+    },
+    {
+      "name": "verify",
+      "description": "Verify the fix resolves the issue",
+      "skills": ["csp-verification"],
+      "condition": "fix.success",
+      "on_failure": "stop",
+      "timeout": 600,
+      "artifacts": []
+    },
+    {
+      "name": "prevent",
+      "description": "Add regression tests to prevent recurrence",
+      "skills": ["csp-add-tests"],
+      "condition": "verify.success",
+      "on_failure": "skip",
+      "timeout": 600,
+      "artifacts": []
+    }
+  ],
+  "defaults": {
+    "on_failure": "stop",
+    "timeout": 600
+  }
+}

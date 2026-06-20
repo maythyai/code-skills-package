@@ -1,5 +1,5 @@
 ---
-name: configure-notifications
+name: csp-configure-notifications
 description: Configure notification integrations (Telegram, Discord, Slack) via natural language
 triggers:
   - "configure notifications"

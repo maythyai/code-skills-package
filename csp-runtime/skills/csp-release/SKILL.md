@@ -1,5 +1,5 @@
 ---
-name: release
+name: csp-release
 description: Generic release assistant — analyzes repo release rules, caches them in .csp/RELEASE_RULE.md, then guides the release
 layer: 3
 ---

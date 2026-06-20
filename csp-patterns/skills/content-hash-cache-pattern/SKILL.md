@@ -4,7 +4,10 @@ description: Cache expensive file processing results using SHA-256 content hashe
 origin: CSP
 layer: 4
 category: patterns
-----------|-----------|
+---
+
+| Decision | Rationale |
+|----------|-----------|
 | SHA-256 content hash | Path-independent, auto-invalidates on content change |
 | `{hash}.json` file naming | O(1) lookup, no index file needed |
 | Service layer wrapper | SRP: extraction stays pure, cache is a separate concern |

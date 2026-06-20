@@ -4,7 +4,10 @@ description: React 18/19 patterns including hooks discipline, server/client comp
 origin: CSP
 layer: 4
 category: patterns
----|---|
+---
+
+| Use Case | Solution |
+|----------|----------|
 | Per-request data in Next.js App Router | RSC `await fetch()` |
 | Client-side cache + mutations + invalidation | TanStack Query |
 | Lightweight client cache + revalidation | SWR |

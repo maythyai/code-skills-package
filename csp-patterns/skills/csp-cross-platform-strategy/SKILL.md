@@ -9,7 +9,10 @@ metadata:
   origin: CSP
 layer: 4
 category: patterns
------------|----------|------------|---------|------------|
+---
+
+| Platform | Language | Rendering | Best For | Team Profile |
+|----------|----------|-----------|----------|--------------|
 | **React Native** | JavaScript/TypeScript | Native components via bridge | Apps with web team, complex native integrations | Web/JS developers |
 | **Flutter** | Dart | Custom rendering (Skia/Impeller) | Pixel-perfect cross-platform UI, animations | New to Dart OK |
 | **KMP (Kotlin Multiplatform)** | Kotlin | Platform-native UI (Compose Multiplatform optional) | Shared business logic, native UI | Android/Kotlin developers |

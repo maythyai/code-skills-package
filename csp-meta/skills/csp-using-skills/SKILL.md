@@ -3,7 +3,10 @@ name: csp-using-skills
 description: Use when starting any conversation - establishes how to find and use skills, requiring Skill tool invocation before ANY response including clarifying questions
 layer: 1
 category: meta
----------|---------|
+---
+
+| Thought | Reality |
+|---------|---------|
 | "This is just a simple question" | Questions are tasks. Check for skills. |
 | "I need more context first" | Skill check comes BEFORE clarifying questions. |
 | "Let me explore the codebase first" | Skills tell you HOW to explore. Check first. |

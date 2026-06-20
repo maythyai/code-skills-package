@@ -9,7 +9,10 @@ metadata:
   origin: CSP
 layer: 4
 category: patterns
-------|-----------|--------|
+---
+
+| Start Type | Definition | Target |
+|------------|------------|--------|
 | **Cold start** | App process not in memory; full initialization | < 500ms (iOS), < 1s (Android) |
 | **Warm start** | App process in memory but backgrounded | < 200ms |
 | **Hot start** | App already in foreground | Instant |
@@ -196,6 +199,8 @@ dependencies {
 ### Memory Budget
 
 | Component | iOS Budget | Android Budget |
+---
+
 |-----------|-----------|----------------|
 | Total app memory | ~50% of device RAM | ~25% of device RAM |
 | Image cache | 20-30% of app budget | 15-25% of app budget |

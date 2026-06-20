@@ -3,7 +3,10 @@ name: csp-multi-review
 description: "Structured code review using tiered persona agents, confidence-gated findings, and a merge/dedup pipeline. Use when comprehensive review is needed before creating a PR."
 layer: 2
 category: workflow
--------|---------|--------|
+---
+
+| Priority | Definition | Action |
+|----------|------------|--------|
 | **P0** | Critical breakage, exploitable vulnerability, data loss | Must fix before merge |
 | **P1** | High-impact defect likely hit in normal usage | Should fix |
 | **P2** | Moderate issue with meaningful downside | Fix if straightforward |
@@ -69,6 +72,8 @@ Use mid-tier model for routine reviewers, strongest model for correctness and ad
 
 ### P0 -- Critical
 | # | File | Issue | Reviewer | Confidence |
+---
+
 |---|------|-------|----------|------------|
 
 ### P1 -- High

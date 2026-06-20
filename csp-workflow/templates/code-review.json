@@ -1,0 +1,46 @@
+{
+  "name": "code-review",
+  "description": "Multi-stage code review pipeline with static analysis, multi-persona review, and report generation",
+  "stages": [
+    {
+      "name": "scan",
+      "description": "Run static analysis scan",
+      "skills": ["csp-code-review"],
+      "condition": null,
+      "on_failure": "stop",
+      "timeout": 600,
+      "artifacts": [".csp/artifacts/scan.md"]
+    },
+    {
+      "name": "review",
+      "description": "Perform multi-dimensional code review",
+      "skills": ["csp-multi-review", "csp-requesting-code-review"],
+      "condition": "scan.success",
+      "on_failure": "stop",
+      "timeout": 600,
+      "artifacts": [".csp/artifacts/review.md"]
+    },
+    {
+      "name": "fix",
+      "description": "Fix identified issues",
+      "skills": ["csp-code-review-fix"],
+      "condition": "review.success",
+      "on_failure": "skip",
+      "timeout": 900,
+      "artifacts": []
+    },
+    {
+      "name": "report",
+      "description": "Generate review summary report",
+      "skills": ["csp-session-report"],
+      "condition": "fix.success || fix.skipped",
+      "on_failure": "stop",
+      "timeout": 600,
+      "artifacts": []
+    }
+  ],
+  "defaults": {
+    "on_failure": "stop",
+    "timeout": 600
+  }
+}

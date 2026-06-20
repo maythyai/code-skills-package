@@ -4,7 +4,10 @@ description: Django architecture patterns, REST API design with DRF, ORM best pr
 origin: CSP
 layer: 4
 category: patterns
----------|-------------|
+---
+
+| Pattern | Purpose |
+|---------|---------|
 | Split settings | Separate dev/prod/test settings |
 | Custom QuerySet | Reusable query methods |
 | Service Layer | Business logic separation |

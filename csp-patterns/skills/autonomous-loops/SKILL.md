@@ -4,7 +4,10 @@ description: "Patterns and architectures for autonomous Claude Code loops — fr
 origin: CSP
 layer: 4
 category: patterns
----------|-----------|----------|
+---
+
+| Pattern | Complexity | Best For |
+|---------|------------|----------|
 | Sequential Pipeline | Low | Daily dev steps, scripted workflows |
 | NanoClaw REPL | Low | Interactive persistent sessions |
 | Infinite Agentic Loop | Medium | Parallel content generation, spec-driven work |

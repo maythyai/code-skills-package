@@ -4,7 +4,10 @@ description: Grounds every implementation decision in official documentation. Us
 layer: 1
 origin: agent-skills
 category: meta
-----------|--------|---------|
+---
+
+| Tier | Source Type | Examples |
+|------|-------------|----------|
 | 1 | Official documentation | react.dev, docs.djangoproject.com, symfony.com/doc |
 | 2 | Official blog / changelog | react.dev/blog, nextjs.org/blog |
 | 3 | Web standards references | MDN, web.dev, html.spec.whatwg.org |

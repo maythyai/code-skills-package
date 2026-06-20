@@ -9,15 +9,6 @@ metadata:
   globs: ["**/*.py", "**/*.pyi"]
 layer: 4
 category: patterns
-----
-name: python-testing
-description: >
-  Python testing best practices using pytest including fixtures, parametrization,
-  mocking, coverage analysis, async testing, and test organization. Use when
-  writing or improving Python tests.
-metadata:
-  origin: CSP
-  globs: ["**/*.py", "**/*.pyi"]
 ---
 
 # Python Testing

@@ -3,7 +3,10 @@ name: video-editing
 description: AI-assisted video editing workflows for cutting, structuring, and augmenting real footage. Covers the full pipeline from raw capture through FFmpeg, Remotion, ElevenLabs, fal.ai, and final polish in Descript or CapCut. Use when the user wants to edit video, cut footage, create vlogs, or build video content.
 layer: 4
 category: patterns
-----------|-------------|------------|
+---
+
+| Platform | Aspect Ratio | Resolution |
+|----------|--------------|------------|
 | YouTube | 16:9 | 1920x1080 |
 | TikTok / Reels | 9:16 | 1080x1920 |
 | Instagram Feed | 1:1 | 1080x1080 |

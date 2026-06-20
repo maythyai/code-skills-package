@@ -1,10 +1,13 @@
 ---
-name: skill
+name: csp-skill
 description: Manage local skills - list, add, remove, search, edit, setup wizard
 argument-hint: "<command> [args]"
 layer: 2
 category: workflow
--------------------|--------------------------------|----------|
+---
+
+| Skill Name | Triggers | Quality |
+|------------|----------|---------|
 | visual-verdict    | Structured visual QA verdicts  | built-in |
 | ralph             | Persistence loop               | built-in |
 
@@ -46,7 +49,7 @@ Interactive wizard for creating a new skill.
 
 ```yaml
 ---
-name: <name>
+name: csp-skill
 description: <description>
 triggers:
   - <trigger1>
@@ -481,7 +484,7 @@ When creating skills via `/skill add` or `/skill setup`, offer quick templates f
 ```markdown
 ---
 id: error-[unique-id]
-name: [Error Name]
+name: csp-skill
 description: Solution for [specific error in specific context]
 source: conversation
 triggers: ["error message fragment", "file path", "symptom"]
@@ -523,7 +526,7 @@ Step-by-step solution:
 ```markdown
 ---
 id: workflow-[unique-id]
-name: [Workflow Name]
+name: csp-skill
 description: Process for [specific task in this codebase]
 source: conversation
 triggers: ["task description", "file pattern", "goal keyword"]
@@ -559,7 +562,7 @@ When should you use this workflow?
 ```markdown
 ---
 id: pattern-[unique-id]
-name: [Pattern Name]
+name: csp-skill
 description: Pattern for [specific use case in this codebase]
 source: conversation
 triggers: ["code pattern", "file type", "problem domain"]
@@ -602,7 +605,7 @@ What NOT to do and why:
 ```markdown
 ---
 id: integration-[unique-id]
-name: [Integration Name]
+name: csp-skill
 description: How [system A] integrates with [system B] in this codebase
 source: conversation
 triggers: ["system name", "integration point", "config file"]

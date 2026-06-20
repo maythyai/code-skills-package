@@ -1,11 +1,14 @@
 ---
-name: trace
+name: csp-trace
 description: Evidence-driven tracing lane that orchestrates competing tracer hypotheses in Claude built-in team mode
 argument-hint: "<observation to trace>"
 agent: tracer
 layer: 2
 category: workflow
-------|------------|------------|-------------------|--------------|
+---
+
+| Hypothesis | Evidence | Confidence | Strength | Verdict |
+|------------|----------|------------|----------|---------|
 | 1 | ... | High / Medium / Low | Strong / Moderate / Weak | ... |
 
 ### Evidence Summary by Hypothesis

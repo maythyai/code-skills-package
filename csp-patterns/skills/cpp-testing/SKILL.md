@@ -4,10 +4,6 @@ description: Use only when writing/updating/fixing C++ tests, configuring Google
 origin: CSP
 layer: 4
 category: patterns
-----
-name: cpp-testing
-description: Use only when writing/updating/fixing C++ tests, configuring GoogleTest/CTest, diagnosing failing or flaky tests, or adding coverage/sanitizers.
-origin: CSP
 ---
 
 # C++ Testing (Agent Skill)

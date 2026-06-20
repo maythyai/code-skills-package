@@ -4,10 +4,6 @@ description: FastAPI patterns for async APIs, dependency injection, Pydantic req
 origin: community
 layer: 4
 category: patterns
-----
-name: fastapi-patterns
-description: FastAPI patterns for async APIs, dependency injection, Pydantic request and response models, OpenAPI docs, tests, security, and production readiness.
-origin: community
 ---
 
 # FastAPI Patterns

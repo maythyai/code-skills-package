@@ -1,0 +1,44 @@
+{
+  "name": "hotfix",
+  "description": "Emergency production fix with minimal ceremony",
+  "stages": [
+    {
+      "name": "triage",
+      "description": "Assess severity and impact scope",
+      "skills": ["csp-systematic-debugging", "csp-incident-commander"],
+      "condition": null,
+      "on_failure": "stop",
+      "timeout": 300,
+      "artifacts": [".csp/artifacts/hotfix-triage.md"]
+    },
+    {
+      "name": "fix",
+      "description": "Implement minimal fix",
+      "skills": ["csp-tdd"],
+      "condition": "triage.success",
+      "on_failure": "stop",
+      "timeout": 600,
+      "artifacts": [".csp/artifacts/hotfix-fix.md"]
+    },
+    {
+      "name": "smoke-test",
+      "description": "Quick validation of fix",
+      "skills": ["csp-verification"],
+      "condition": "fix.success",
+      "on_failure": "stop",
+      "timeout": 300
+    },
+    {
+      "name": "deploy",
+      "description": "Deploy fix to production",
+      "skills": ["csp-shipping-and-launch"],
+      "condition": "smoke-test.success",
+      "on_failure": "stop",
+      "timeout": 300
+    }
+  ],
+  "defaults": {
+    "on_failure": "stop",
+    "timeout": 600
+  }
+}

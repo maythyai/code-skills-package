@@ -5,9 +5,11 @@ description: >
   Includes 6-phase verification (build, types, lint, tests, security, diff) and continuous mode.
   Use when about to claim work is complete, before committing or creating PRs.
 layer: 1
-origin: merged(CSP)
 category: meta
--------|----------|----------------|
+---
+
+| Check | Evidence Required | NOT Sufficient |
+|-------|-------------------|----------------|
 | Tests pass | Test command output: 0 failures | Previous run, "should pass" |
 | Linter clean | Linter output: 0 errors | Partial check, extrapolation |
 | Build succeeds | Build command: exit 0 | Linter passing, logs look good |

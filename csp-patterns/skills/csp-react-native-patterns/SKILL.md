@@ -9,7 +9,10 @@ metadata:
   origin: CSP
 layer: 4
 category: patterns
---------|---------------|---------------|
+---
+
+| Aspect | Expo (Managed) | Bare Workflow |
+|--------|----------------|---------------|
 | Setup time | Minutes | Hours to days |
 | Native modules | Via config plugins + EAS | Full control |
 | OTA updates | Expo Updates built-in | CodePush or custom |
@@ -461,6 +464,8 @@ function SwipeableCard() {
 ### Performance Checklist
 
 | Area | Action | Impact |
+---
+
 |------|--------|--------|
 | **Startup** | Enable Hermes, lazy-load screens | 30-50% faster cold start |
 | **Lists** | Use FlashList instead of FlatList | 5-10x scroll performance |

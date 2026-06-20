@@ -1,0 +1,55 @@
+{
+  "name": "onboarding",
+  "description": "New developer onboarding with codebase exploration and guided setup",
+  "stages": [
+    {
+      "name": "setup",
+      "description": "Verify development environment and dependencies",
+      "skills": ["csp-doctor"],
+      "condition": null,
+      "on_failure": "stop",
+      "timeout": 600,
+      "artifacts": [".csp/artifacts/onboarding-setup.md"]
+    },
+    {
+      "name": "explore",
+      "description": "Guided codebase tour and architecture overview",
+      "skills": ["csp-code-tour-guide", "csp-codebase-mapper"],
+      "condition": "setup.success",
+      "on_failure": "stop",
+      "timeout": 900,
+      "artifacts": [".csp/artifacts/onboarding-explore.md"]
+    },
+    {
+      "name": "conventions",
+      "description": "Review coding standards and project conventions",
+      "skills": ["csp-coding-standards"],
+      "condition": "explore.success",
+      "on_failure": "skip",
+      "timeout": 600,
+      "artifacts": [".csp/artifacts/onboarding-conventions.md"]
+    },
+    {
+      "name": "first-task",
+      "description": "Guided first contribution (good-first-issue style)",
+      "skills": ["csp-writing-plans", "csp-tdd"],
+      "condition": "explore.success",
+      "on_failure": "stop",
+      "timeout": 1200,
+      "artifacts": [".csp/artifacts/onboarding-first-task.md"]
+    },
+    {
+      "name": "review",
+      "description": "Review first contribution and provide feedback",
+      "skills": ["csp-code-review"],
+      "condition": "first-task.success",
+      "on_failure": "skip",
+      "timeout": 600,
+      "artifacts": [".csp/artifacts/onboarding-review.md"]
+    }
+  ],
+  "defaults": {
+    "on_failure": "stop",
+    "timeout": 600
+  }
+}

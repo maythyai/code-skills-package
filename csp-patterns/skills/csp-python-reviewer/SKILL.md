@@ -3,12 +3,9 @@ name: csp-python-reviewer
 description: Expert Python code reviewer specializing in PEP 8 compliance, Pythonic idioms, type hints, security, and performance. Use for all Python code changes.
 layer: 3
 category: patterns
-version: "2.0.0"
 phase: review
 domain: language
-role: reviewer
 scope: review
-model: sonnet
 tools: [Read, Grep, Glob]
 ---
 

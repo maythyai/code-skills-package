@@ -1,5 +1,5 @@
 ---
-name: ralph
+name: csp-ralph
 description: Self-referential loop until task completion with configurable verification reviewer
 argument-hint: "[--no-deslop] [--critic=architect|critic|codex] <task description>"
 layer: 4

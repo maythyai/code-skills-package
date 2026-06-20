@@ -5,18 +5,16 @@ description: >
   and review modes. Auto-detects whether to interview the user or plan directly.
   Unified entry point replacing ralplan alias. Use before implementing any non-trivial work.
 layer: 5
-origin: merged(CSP)
-aliases: [ralplan]
 triggers: ["plan", "plan this", "let's plan", "ralplan", "review this plan"]
 category: runtime
-version: "2.0.0"
 phase: plan
 domain: architecture
-role: architect
 scope: design
-model: sonnet
 tools: [Read, Write, Edit, Glob, Grep, WebFetch, WebSearch]
-------|---------|----------|
+---
+
+| Mode | When to Use | Behavior |
+|------|-------------|----------|
 | **Interview** | Default for broad requests | Interactive requirements gathering |
 | **Direct** | `--direct`, or detailed request | Skip interview, generate plan directly |
 | **Consensus** | `--consensus`, "ralplan" | Planner → Architect → Critic loop with RALPLAN-DR |

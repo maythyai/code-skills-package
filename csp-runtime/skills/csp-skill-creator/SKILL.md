@@ -1,7 +1,6 @@
 ---
 name: csp-skill-creator
 description: Interactive skill creation wizard — guides users through creating new CSP skills with templates, validation, and registry registration
-version: 0.1.0
 layer: 5
 category: runtime
 ---

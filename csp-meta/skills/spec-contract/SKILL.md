@@ -4,15 +4,14 @@ description: Transform ideas, requirements, or discussions into CSP SPEC contrac
 layer: 1
 origin: csp-native
 category: meta
-version: "2.0.0"
 phase: define
 domain: quality
-role: guardian
 scope: design
-model: sonnet
 tools: [Read, Write, Edit, Glob, Grep]
 ---
-------|------|
+
+| Criterion | Rule |
+|-----------|------|
 | Completeness | All sections present; boundaries non-empty |
 | Testability | Every FR has ≥1 AC; no "should/might/could" in requirements |
 | Consistency | No contradictions between FR and boundaries |

@@ -1,0 +1,64 @@
+{
+  "name": "refactor",
+  "description": "Safe code refactoring pipeline with baseline comparison and regression validation",
+  "stages": [
+    {
+      "name": "analyze",
+      "description": "Analyze current code quality and structure",
+      "skills": ["csp-codebase-mapper"],
+      "condition": null,
+      "on_failure": "stop",
+      "timeout": 600,
+      "artifacts": [".csp/artifacts/analyze.md"]
+    },
+    {
+      "name": "design",
+      "description": "Design refactoring approach and strategy",
+      "skills": ["csp-brainstorming", "csp-refactoring-strategies"],
+      "condition": "analyze.success",
+      "on_failure": "stop",
+      "timeout": 600,
+      "artifacts": [".csp/artifacts/design.md"]
+    },
+    {
+      "name": "snapshot",
+      "description": "Record pre-refactor test baseline",
+      "skills": ["csp-verification"],
+      "condition": "design.success",
+      "on_failure": "skip",
+      "timeout": 600,
+      "artifacts": []
+    },
+    {
+      "name": "refactor",
+      "description": "Execute the refactoring with TDD",
+      "skills": ["csp-tdd", "csp-executing-plans"],
+      "condition": "design.success",
+      "on_failure": "stop",
+      "timeout": 1800,
+      "artifacts": []
+    },
+    {
+      "name": "compare",
+      "description": "Compare before and after refactoring",
+      "skills": ["csp-code-review"],
+      "condition": "refactor.success",
+      "on_failure": "stop",
+      "timeout": 600,
+      "artifacts": []
+    },
+    {
+      "name": "validate",
+      "description": "Validate no regressions introduced",
+      "skills": ["csp-verification", "csp-verify-phase"],
+      "condition": "compare.success",
+      "on_failure": "stop",
+      "timeout": 600,
+      "artifacts": []
+    }
+  ],
+  "defaults": {
+    "on_failure": "stop",
+    "timeout": 600
+  }
+}

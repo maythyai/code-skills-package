@@ -3,7 +3,10 @@ name: csp-writer-memory
 description: Agentic memory system for writers - track characters, relationships, scenes, and themes
 argument-hint: "init|char|rel|scene|query|validate|synopsis|status|export [args]"
 layer: 7
----------|--------|
+---
+
+| Command | Description |
+|---------|-------------|
 | `/csp-writer-memory init <project-name>` | Initialize new project memory |
 | `/csp-writer-memory status` | Show memory overview (character count, scene count, etc) |
 | `/csp-writer-memory char add <name>` | Add new character |

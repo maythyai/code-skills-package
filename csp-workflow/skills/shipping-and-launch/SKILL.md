@@ -2,17 +2,15 @@
 name: csp-shipping-and-launch
 description: Prepares production launches. Use when preparing to deploy to production. Use when you need a pre-launch checklist, when setting up monitoring, when planning a staged rollout, or when you need a rollback strategy.
 layer: 2
-origin: agent-skills
 category: workflow
-version: "2.0.0"
 phase: ship
 domain: devops
-role: specialist
 scope: implementation
-model: sonnet
 tools: [Read, Write, Edit, Bash, Glob, Grep]
 ---
---------|-----------------|-------------------------------|-----------------|
+
+| Metric | Green (OK) | Yellow (Monitor) | Red (Roll Back) |
+|--------|------------|------------------|-----------------|
 | Error rate | Within 10% of baseline | 10-100% above baseline | >2x baseline |
 | P95 latency | Within 20% of baseline | 20-50% above baseline | >50% above baseline |
 | Client JS errors | No new error types | New errors at <0.1% of sessions | New errors at >0.1% of sessions |

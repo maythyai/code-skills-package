@@ -1,0 +1,55 @@
+{
+  "name": "release",
+  "description": "Production release pipeline with preflight checks, testing, changelog, tagging, and publish notification",
+  "stages": [
+    {
+      "name": "preflight",
+      "description": "Run pre-release health and verification checks",
+      "skills": ["csp-verification", "csp-health"],
+      "condition": null,
+      "on_failure": "stop",
+      "timeout": 600,
+      "artifacts": [".csp/artifacts/preflight.md"]
+    },
+    {
+      "name": "test",
+      "description": "Execute full test suite",
+      "skills": ["csp-add-tests", "csp-verify-phase"],
+      "condition": "preflight.success",
+      "on_failure": "stop",
+      "timeout": 1200,
+      "artifacts": []
+    },
+    {
+      "name": "changelog",
+      "description": "Generate changelog from commits",
+      "skills": ["csp-docs-update"],
+      "condition": "test.success",
+      "on_failure": "skip",
+      "timeout": 600,
+      "artifacts": []
+    },
+    {
+      "name": "tag",
+      "description": "Create version tag",
+      "skills": ["csp-ship"],
+      "condition": "test.success",
+      "on_failure": "stop",
+      "timeout": 600,
+      "artifacts": []
+    },
+    {
+      "name": "publish",
+      "description": "Publish release and send notifications",
+      "skills": ["csp-shipping-and-launch"],
+      "condition": "tag.success",
+      "on_failure": "skip",
+      "timeout": 600,
+      "artifacts": []
+    }
+  ],
+  "defaults": {
+    "on_failure": "stop",
+    "timeout": 600
+  }
+}

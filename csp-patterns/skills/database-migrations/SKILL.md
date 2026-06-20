@@ -9,7 +9,10 @@ metadata:
   origin: CSP
 layer: 4
 category: patterns
--------------|-------------|-----------------|
+---
+
+| Anti-Pattern | Why It's Bad | Do This Instead |
+|--------------|--------------|-----------------|
 | Manual SQL in production | No audit trail, unrepeatable | Always use migration files |
 | Editing deployed migrations | Causes drift between environments | Create new migration instead |
 | NOT NULL without default | Locks table, rewrites all rows | Add nullable, backfill, then add constraint |

@@ -201,7 +201,7 @@
     },
     {
       "name": "csp-config",
-      "description": "Configure CSP settings — workflow toggles, advanced knobs, integrations, and model profile",
+      "description": "Configure CSP settings \u2014 workflow toggles, advanced knobs, integrations, and model profile",
       "layer": 2,
       "category": "workflow",
       "triggers": {
@@ -321,7 +321,7 @@
     },
     {
       "name": "csp-phase",
-      "description": "CRUD for phases in ROADMAP.md — add, insert, remove, or edit phases",
+      "description": "CRUD for phases in ROADMAP.md \u2014 add, insert, remove, or edit phases",
       "layer": 2,
       "category": "workflow",
       "triggers": {
@@ -366,7 +366,7 @@
     },
     {
       "name": "csp-surface",
-      "description": "Toggle which skills are surfaced — apply a profile, list, or disable a cluster without reinstall",
+      "description": "Toggle which skills are surfaced \u2014 apply a profile, list, or disable a cluster without reinstall",
       "layer": 2,
       "category": "workflow",
       "triggers": {
@@ -381,7 +381,7 @@
     },
     {
       "name": "csp-workspace",
-      "description": "Manage CSP workspaces — create, list, or remove isolated workspace environments",
+      "description": "Manage CSP workspaces \u2014 create, list, or remove isolated workspace environments",
       "layer": 2,
       "category": "workflow",
       "triggers": {
@@ -396,7 +396,7 @@
     },
     {
       "name": "csp-workstreams",
-      "description": "Manage parallel workstreams — list, create, switch, status, progress, complete, and resume",
+      "description": "Manage parallel workstreams \u2014 list, create, switch, status, progress, complete, and resume",
       "layer": 2,
       "category": "workflow",
       "triggers": {
@@ -426,7 +426,7 @@
     },
     {
       "name": "csp-ai-researcher",
-      "description": "Researches a chosen AI framework's official docs to produce implementation-ready guidance — best practices, syntax, core patterns, and pitfalls distilled for the specific use case. Writes the Framework Quick Reference and Implementation Guidance sections of AI-SPEC.md. Spawned by /csp-ai-integration-phase orchestrator.",
+      "description": "Researches a chosen AI framework's official docs to produce implementation-ready guidance \u2014 best practices, syntax, core patterns, and pitfalls distilled for the specific use case. Writes the Framework Quick Reference and Implementation Guidance sections of AI-SPEC.md. Spawned by /csp-ai-integration-phase orchestrator.",
       "layer": 2,
       "category": "workflow",
       "triggers": {
@@ -591,7 +591,7 @@
     },
     {
       "name": "csp-domain-researcher",
-      "description": "Researches the business domain and real-world application context of the AI system being built. Surfaces domain expert evaluation criteria, industry-specific failure modes, regulatory context, and what \"good\" looks like for practitioners in this field — before the eval-planner turns it into measurable rubrics. Spawned by /csp-ai-integration-phase orchestrator.",
+      "description": "Researches the business domain and real-world application context of the AI system being built. Surfaces domain expert evaluation criteria, industry-specific failure modes, regulatory context, and what \"good\" looks like for practitioners in this field \u2014 before the eval-planner turns it into measurable rubrics. Spawned by /csp-ai-integration-phase orchestrator.",
       "layer": 2,
       "category": "workflow",
       "triggers": {
@@ -1341,7 +1341,7 @@
     },
     {
       "name": "csp-fast",
-      "description": "Use when executing a trivial task inline without subagent overhead — understand, do, commit, and log in one pass",
+      "description": "Use when executing a trivial task inline without subagent overhead \u2014 understand, do, commit, and log in one pass",
       "layer": 2,
       "category": "workflow",
       "triggers": {
@@ -2091,7 +2091,7 @@
     },
     {
       "name": "csp-transition",
-      "description": "Internal workflow invoked automatically during phase transitions to graduate learnings — not a user-facing command",
+      "description": "Internal workflow invoked automatically during phase transitions to graduate learnings \u2014 not a user-facing command",
       "layer": 2,
       "category": "workflow",
       "triggers": {
@@ -2191,6 +2191,25 @@
       },
       "stack_detection": false,
       "path": "csp-workflow/workflows/csp-validate-phase.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-workflow-schema",
+      "description": "Declarative JSON workflow schema engine. Define workflows as JSON with stages, conditions, failure strategies, and artifact passing. Use when designing or executing structured multi-phase workflows.",
+      "layer": 2,
+      "category": "workflow",
+      "triggers": {
+        "keywords": [
+          "workflow-schema",
+          "workflow-json",
+          "declarative-workflow"
+        ],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-workflow/skills/csp-workflow-schema/SKILL.md",
       "deps": [],
       "priority": 10
     },
@@ -2302,7 +2321,7 @@
     },
     {
       "name": "csp-autonomous-loops",
-      "description": "Patterns and architectures for autonomous Claude Code loops — from simple sequential pipelines to RFC-driven multi-agent DAG systems.",
+      "description": "Patterns and architectures for autonomous Claude Code loops \u2014 from simple sequential pipelines to RFC-driven multi-agent DAG systems.",
       "layer": 4,
       "category": "patterns",
       "triggers": {
@@ -2392,7 +2411,7 @@
     },
     {
       "name": "csp-content-hash-cache-pattern",
-      "description": "Cache expensive file processing results using SHA-256 content hashes — path-independent, auto-invalidating, with service layer separation.",
+      "description": "Cache expensive file processing results using SHA-256 content hashes \u2014 path-independent, auto-invalidating, with service layer separation.",
       "layer": 4,
       "category": "patterns",
       "triggers": {
@@ -3187,7 +3206,7 @@
     },
     {
       "name": "csp-fal-ai-media",
-      "description": "Unified media generation via fal.ai MCP — image, video, and audio. Covers text-to-image (Nano Banana), text/image-to-video (Seedance, Kling, Veo 3), text-to-speech (CSM-1B), and video-to-audio (ThinkSound). Use when the user wants to generate images, videos, or audio with AI.",
+      "description": "Unified media generation via fal.ai MCP \u2014 image, video, and audio. Covers text-to-image (Nano Banana), text/image-to-video (Seedance, Kling, Veo 3), text-to-speech (CSM-1B), and video-to-audio (ThinkSound). Use when the user wants to generate images, videos, or audio with AI.",
       "layer": 4,
       "category": "patterns",
       "triggers": {
@@ -3322,7 +3341,7 @@
     },
     {
       "name": "csp-mcp-server-patterns",
-      "description": "Build MCP servers with Node/TypeScript SDK — tools, resources, prompts, Zod validation, stdio vs Streamable HTTP. Use Context7 or official MCP docs for latest API.",
+      "description": "Build MCP servers with Node/TypeScript SDK \u2014 tools, resources, prompts, Zod validation, stdio vs Streamable HTTP. Use Context7 or official MCP docs for latest API.",
       "layer": 4,
       "category": "patterns",
       "triggers": {
@@ -3367,7 +3386,7 @@
     },
     {
       "name": "csp-nextjs-turbopack",
-      "description": "Next.js 16+ and Turbopack — incremental bundling, FS caching, dev speed, and when to use Turbopack vs webpack.",
+      "description": "Next.js 16+ and Turbopack \u2014 incremental bundling, FS caching, dev speed, and when to use Turbopack vs webpack.",
       "layer": 4,
       "category": "patterns",
       "triggers": {
@@ -3562,7 +3581,7 @@
     },
     {
       "name": "csp-swift-actor-persistence",
-      "description": "Thread-safe data persistence in Swift using actors — in-memory cache with file-backed storage, eliminating data races by design.",
+      "description": "Thread-safe data persistence in Swift using actors \u2014 in-memory cache with file-backed storage, eliminating data races by design.",
       "layer": 4,
       "category": "patterns",
       "triggers": {
@@ -3577,7 +3596,7 @@
     },
     {
       "name": "csp-swift-protocol-di-testing",
-      "description": "Protocol-based dependency injection for testable Swift code — mock file system, network, and external APIs using focused protocols and Swift Testing.",
+      "description": "Protocol-based dependency injection for testable Swift code \u2014 mock file system, network, and external APIs using focused protocols and Swift Testing.",
       "layer": 4,
       "category": "patterns",
       "triggers": {
@@ -3938,7 +3957,7 @@
     },
     {
       "name": "csp-flutter-reviewer",
-      "description": "Flutter and Dart code reviewer. Reviews Flutter code for widget best practices, state management patterns, Dart idioms, performance pitfalls, accessibility, and clean architecture violations. Library-agnostic — works with any state management solution and tooling.",
+      "description": "Flutter and Dart code reviewer. Reviews Flutter code for widget best practices, state management patterns, Dart idioms, performance pitfalls, accessibility, and clean architecture violations. Library-agnostic \u2014 works with any state management solution and tooling.",
       "layer": 4,
       "category": "agent",
       "triggers": {
@@ -3968,7 +3987,7 @@
     },
     {
       "name": "csp-gan-evaluator",
-      "description": "GAN Harness — Evaluator agent. Tests the live running application via Playwright, scores against rubric, and provides actionable feedback to the Generator.",
+      "description": "GAN Harness \u2014 Evaluator agent. Tests the live running application via Playwright, scores against rubric, and provides actionable feedback to the Generator.",
       "layer": 4,
       "category": "agent",
       "triggers": {
@@ -3983,7 +4002,7 @@
     },
     {
       "name": "csp-gan-generator",
-      "description": "GAN Harness — Generator agent. Implements features according to the spec, reads evaluator feedback, and iterates until quality threshold is met.",
+      "description": "GAN Harness \u2014 Generator agent. Implements features according to the spec, reads evaluator feedback, and iterates until quality threshold is met.",
       "layer": 4,
       "category": "agent",
       "triggers": {
@@ -3998,7 +4017,7 @@
     },
     {
       "name": "csp-gan-planner",
-      "description": "GAN Harness — Planner agent. Expands a one-line prompt into a full product specification with features, sprints, evaluation criteria, and design direction.",
+      "description": "GAN Harness \u2014 Planner agent. Expands a one-line prompt into a full product specification with features, sprints, evaluation criteria, and design direction.",
       "layer": 4,
       "category": "agent",
       "triggers": {
@@ -5246,7 +5265,7 @@
     },
     {
       "name": "csp-orch-add-feature",
-      "description": "Orchestrate building a brand-new feature end to end — research, plan, TDD, review, gated commit. Wrapper that kicks off the orch-add-feature skill.",
+      "description": "Orchestrate building a brand-new feature end to end \u2014 research, plan, TDD, review, gated commit. Wrapper that kicks off the orch-add-feature skill.",
       "layer": 4,
       "category": "patterns",
       "triggers": {
@@ -5261,7 +5280,7 @@
     },
     {
       "name": "csp-orch-build-mvp",
-      "description": "Orchestrate bootstrapping a working MVP from a design/spec doc — ingest, slice, scaffold, TDD, review, gated commit (reuses the GAN harness). Wrapper for the orch-build-mvp skill.",
+      "description": "Orchestrate bootstrapping a working MVP from a design/spec doc \u2014 ingest, slice, scaffold, TDD, review, gated commit (reuses the GAN harness). Wrapper for the orch-build-mvp skill.",
       "layer": 4,
       "category": "patterns",
       "triggers": {
@@ -5276,7 +5295,7 @@
     },
     {
       "name": "csp-orch-change-feature",
-      "description": "Orchestrate altering an existing, working feature to new desired behavior — update tests to the new spec, change impl, review, gated commit. Wrapper for the orch-change-feature skill.",
+      "description": "Orchestrate altering an existing, working feature to new desired behavior \u2014 update tests to the new spec, change impl, review, gated commit. Wrapper for the orch-change-feature skill.",
       "layer": 4,
       "category": "patterns",
       "triggers": {
@@ -5291,7 +5310,7 @@
     },
     {
       "name": "csp-orch-fix-defect",
-      "description": "Orchestrate fixing a bug — reproduce it as a failing regression test, fix to green, review, gated commit. Wrapper for the orch-fix-defect skill.",
+      "description": "Orchestrate fixing a bug \u2014 reproduce it as a failing regression test, fix to green, review, gated commit. Wrapper for the orch-fix-defect skill.",
       "layer": 4,
       "category": "patterns",
       "triggers": {
@@ -5306,7 +5325,7 @@
     },
     {
       "name": "csp-orch-refine-code",
-      "description": "Orchestrate a behavior-preserving refactor — confirm tests green, restructure without changing behavior, keep green, review, gated commit. Wrapper for the orch-refine-code skill.",
+      "description": "Orchestrate a behavior-preserving refactor \u2014 confirm tests green, restructure without changing behavior, keep green, review, gated commit. Wrapper for the orch-refine-code skill.",
       "layer": 4,
       "category": "patterns",
       "triggers": {
@@ -5366,7 +5385,7 @@
     },
     {
       "name": "csp-pr",
-      "description": "Create a GitHub PR from current branch with unpushed commits — discovers templates, analyzes changes, pushes",
+      "description": "Create a GitHub PR from current branch with unpushed commits \u2014 discovers templates, analyzes changes, pushes",
       "layer": 4,
       "category": "patterns",
       "triggers": {
@@ -5426,7 +5445,7 @@
     },
     {
       "name": "csp-prp-commit",
-      "description": "Quick commit with natural language file targeting — describe what to commit in plain English",
+      "description": "Quick commit with natural language file targeting \u2014 describe what to commit in plain English",
       "layer": 4,
       "category": "patterns",
       "triggers": {
@@ -5471,7 +5490,7 @@
     },
     {
       "name": "csp-prp-pr",
-      "description": "Create a GitHub PR from current branch with unpushed commits — discovers templates, analyzes changes, pushes",
+      "description": "Create a GitHub PR from current branch with unpushed commits \u2014 discovers templates, analyzes changes, pushes",
       "layer": 4,
       "category": "patterns",
       "triggers": {
@@ -5546,7 +5565,7 @@
     },
     {
       "name": "csp-react-build",
-      "description": "Fix React build failures (Vite, webpack, Next.js, CRA, Parcel, esbuild, Bun) incrementally — JSX/TSX compile errors, hydration mismatches, server/client component boundary failures, missing types. Invokes the react-build-resolver agent for minimal, surgical fixes.",
+      "description": "Fix React build failures (Vite, webpack, Next.js, CRA, Parcel, esbuild, Bun) incrementally \u2014 JSX/TSX compile errors, hydration mismatches, server/client component boundary failures, missing types. Invokes the react-build-resolver agent for minimal, surgical fixes.",
       "layer": 4,
       "category": "patterns",
       "triggers": {
@@ -5681,7 +5700,7 @@
     },
     {
       "name": "csp-santa-loop",
-      "description": "Adversarial dual-review convergence loop — two independent model reviewers must both approve before code ships.",
+      "description": "Adversarial dual-review convergence loop \u2014 two independent model reviewers must both approve before code ships.",
       "layer": 4,
       "category": "patterns",
       "triggers": {
@@ -6031,13 +6050,32 @@
       "layer": 4,
       "category": "runtime",
       "triggers": {
-        "keywords": ["learning loop", "continuous learning", "intel", "session digest", "学习循环", "持续学习", "知识积累", "会话摘要"],
-        "file_patterns": [".csp/intel/*"],
-        "context": ["session_end", "pre_compact"]
+        "keywords": [
+          "learning loop",
+          "continuous learning",
+          "intel",
+          "session digest",
+          "\u5b66\u4e60\u5faa\u73af",
+          "\u6301\u7eed\u5b66\u4e60",
+          "\u77e5\u8bc6\u79ef\u7d2f",
+          "\u4f1a\u8bdd\u6458\u8981"
+        ],
+        "file_patterns": [
+          ".csp/intel/*"
+        ],
+        "context": [
+          "session_end",
+          "pre_compact"
+        ]
       },
       "stack_detection": false,
       "path": "csp-runtime/skills/csp-learning-loop/SKILL.md",
-      "deps": ["csp-remember", "csp-learner", "skill-optimizer", "csp-compound"],
+      "deps": [
+        "csp-remember",
+        "csp-learner",
+        "skill-optimizer",
+        "csp-compound"
+      ],
       "priority": 5
     },
     {
@@ -6194,7 +6232,7 @@
     },
     {
       "name": "csp-release",
-      "description": "Generic release assistant — analyzes repo release rules, caches them in .csp/RELEASE_RULE.md, then guides the release",
+      "description": "Generic release assistant \u2014 analyzes repo release rules, caches them in .csp/RELEASE_RULE.md, then guides the release",
       "layer": 5,
       "category": "runtime",
       "triggers": {
@@ -6254,7 +6292,7 @@
     },
     {
       "name": "csp-setup",
-      "description": "Use first for install/update routing — sends setup, doctor, or MCP requests to the correct CSP setup flow",
+      "description": "Use first for install/update routing \u2014 sends setup, doctor, or MCP requests to the correct CSP setup flow",
       "layer": 5,
       "category": "runtime",
       "triggers": {
@@ -6389,7 +6427,7 @@
     },
     {
       "name": "csp-wiki",
-      "description": "LLM Wiki — persistent markdown knowledge base that compounds across sessions (Karpathy model)",
+      "description": "LLM Wiki \u2014 persistent markdown knowledge base that compounds across sessions (Karpathy model)",
       "layer": 5,
       "category": "runtime",
       "triggers": {
@@ -6434,7 +6472,7 @@
     },
     {
       "name": "csp-critic",
-      "description": "Work plan and code review expert — thorough, structured, multi-perspective (Opus)",
+      "description": "Work plan and code review expert \u2014 thorough, structured, multi-perspective (Opus)",
       "layer": 5,
       "category": "runtime",
       "triggers": {
@@ -6649,13 +6687,13 @@
       "category": "meta",
       "triggers": {
         "keywords": [
-          "优化skill",
-          "skill优化",
+          "\u4f18\u5316skill",
+          "skill\u4f18\u5316",
           "optimize skill",
           "skill gap",
           "skill feedback",
-          "自动优化",
-          "让skill更懂",
+          "\u81ea\u52a8\u4f18\u5316",
+          "\u8ba9skill\u66f4\u61c2",
           "skill doesn't handle",
           "skill missed",
           "skill doesn't cover"
@@ -6762,7 +6800,7 @@
     },
     {
       "name": "csp-planning-phase",
-      "description": "Define what to build and why — product requirements, user stories, UX design, technical requirements, SPEC generation.",
+      "description": "Define what to build and why \u2014 product requirements, user stories, UX design, technical requirements, SPEC generation.",
       "layer": 2,
       "category": "workflow",
       "triggers": {
@@ -6783,7 +6821,7 @@
     },
     {
       "name": "csp-solutioning-phase",
-      "description": "Design how to build it — architecture design, implementation planning, epic/story creation, readiness check.",
+      "description": "Design how to build it \u2014 architecture design, implementation planning, epic/story creation, readiness check.",
       "layer": 2,
       "category": "workflow",
       "triggers": {
@@ -6804,7 +6842,7 @@
     },
     {
       "name": "csp-implementation-phase",
-      "description": "Execute the solution design — story implementation, code review, documentation, testing, deployment.",
+      "description": "Execute the solution design \u2014 story implementation, code review, documentation, testing, deployment.",
       "layer": 2,
       "category": "workflow",
       "triggers": {
@@ -6825,7 +6863,7 @@
     },
     {
       "name": "csp-quick-dev",
-      "description": "Unified rapid development flow for prototypes, MVPs, and small features — clarify intent, quick plan, build, review, demo.",
+      "description": "Unified rapid development flow for prototypes, MVPs, and small features \u2014 clarify intent, quick plan, build, review, demo.",
       "layer": 2,
       "category": "workflow",
       "triggers": {
@@ -6866,7 +6904,7 @@
     },
     {
       "name": "csp-review-edge-case",
-      "description": "Systematic edge case identification — boundary conditions, data variations, user behavior anomalies, system failures, race conditions.",
+      "description": "Systematic edge case identification \u2014 boundary conditions, data variations, user behavior anomalies, system failures, race conditions.",
       "layer": 4,
       "category": "patterns",
       "triggers": {
@@ -6952,7 +6990,7 @@
     },
     {
       "name": "csp-index-docs",
-      "description": "Generate comprehensive, searchable indexes for document sets — hierarchical, alphabetical, topical, or by audience.",
+      "description": "Generate comprehensive, searchable indexes for document sets \u2014 hierarchical, alphabetical, topical, or by audience.",
       "layer": 4,
       "category": "patterns",
       "triggers": {
@@ -6993,7 +7031,7 @@
     },
     {
       "name": "csp-analyst",
-      "description": "Business Analyst — expertise in Porter's Five Forces, Minto Pyramid, SWOT, and Business Model Canvas.",
+      "description": "Business Analyst \u2014 expertise in Porter's Five Forces, Minto Pyramid, SWOT, and Business Model Canvas.",
       "layer": 4,
       "category": "patterns",
       "triggers": {
@@ -7013,7 +7051,7 @@
     },
     {
       "name": "csp-pm",
-      "description": "Product Manager — expertise in Jobs to be Done, Kano Model, RICE Scoring, and User Story Mapping.",
+      "description": "Product Manager \u2014 expertise in Jobs to be Done, Kano Model, RICE Scoring, and User Story Mapping.",
       "layer": 4,
       "category": "patterns",
       "triggers": {
@@ -7033,7 +7071,7 @@
     },
     {
       "name": "csp-architect",
-      "description": "System Architect — expertise in C4 Model, ADRs, Evolutionary Architecture, and Fitness Functions.",
+      "description": "System Architect \u2014 expertise in C4 Model, ADRs, Evolutionary Architecture, and Fitness Functions.",
       "layer": 4,
       "category": "patterns",
       "triggers": {
@@ -7053,7 +7091,7 @@
     },
     {
       "name": "csp-developer",
-      "description": "Senior Software Engineer — expertise in TDD, Clean Code, SOLID Principles, and Refactoring.",
+      "description": "Senior Software Engineer \u2014 expertise in TDD, Clean Code, SOLID Principles, and Refactoring.",
       "layer": 4,
       "category": "patterns",
       "triggers": {
@@ -7072,7 +7110,7 @@
     },
     {
       "name": "csp-ux-designer",
-      "description": "UX Designer — expertise in Design Thinking, Nielsen's Heuristics, User Journey Mapping, and Accessibility.",
+      "description": "UX Designer \u2014 expertise in Design Thinking, Nielsen's Heuristics, User Journey Mapping, and Accessibility.",
       "layer": 4,
       "category": "patterns",
       "triggers": {
@@ -7093,7 +7131,7 @@
     },
     {
       "name": "csp-tech-writer",
-      "description": "Technical Writer — expertise in Diataxis Framework, Information Architecture, Progressive Disclosure, and Analogy-Based Explanation.",
+      "description": "Technical Writer \u2014 expertise in Diataxis Framework, Information Architecture, Progressive Disclosure, and Analogy-Based Explanation.",
       "layer": 4,
       "category": "patterns",
       "triggers": {
@@ -7119,7 +7157,7 @@
       "triggers": {
         "keywords": [
           "spec-driven",
-          "规范驱动",
+          "\u89c4\u8303\u9a71\u52a8",
           "delta requirements"
         ],
         "file_patterns": [],
@@ -7162,16 +7200,16 @@
           "full workflow",
           "full pipeline",
           "csp-full",
-          "端到端",
-          "全流程",
-          "全链路",
-          "从需求到发布",
-          "从想法到产品",
-          "从概念到上线",
-          "从0到1",
-          "从零开始",
-          "从零搭建",
-          "从0开始",
+          "\u7aef\u5230\u7aef",
+          "\u5168\u6d41\u7a0b",
+          "\u5168\u94fe\u8def",
+          "\u4ece\u9700\u6c42\u5230\u53d1\u5e03",
+          "\u4ece\u60f3\u6cd5\u5230\u4ea7\u54c1",
+          "\u4ece\u6982\u5ff5\u5230\u4e0a\u7ebf",
+          "\u4ece0\u52301",
+          "\u4ece\u96f6\u5f00\u59cb",
+          "\u4ece\u96f6\u642d\u5efa",
+          "\u4ece0\u5f00\u59cb",
           "build me a product",
           "build me an app",
           "build me a tool",
@@ -7188,21 +7226,21 @@
           "create a complete",
           "enterprise workflow",
           "product lifecycle",
-          "多轮迭代",
-          "完整交付",
-          "一站式",
-          "帮我做一个",
-          "帮我搭建",
-          "帮我构建",
-          "帮我开发一个",
-          "搭建一个完整的",
-          "构建一个完整",
-          "开发一个完整",
-          "做一个产品",
-          "做一个平台",
-          "做一个系统",
-          "新建一个应用",
-          "新建一个产品"
+          "\u591a\u8f6e\u8fed\u4ee3",
+          "\u5b8c\u6574\u4ea4\u4ed8",
+          "\u4e00\u7ad9\u5f0f",
+          "\u5e2e\u6211\u505a\u4e00\u4e2a",
+          "\u5e2e\u6211\u642d\u5efa",
+          "\u5e2e\u6211\u6784\u5efa",
+          "\u5e2e\u6211\u5f00\u53d1\u4e00\u4e2a",
+          "\u642d\u5efa\u4e00\u4e2a\u5b8c\u6574\u7684",
+          "\u6784\u5efa\u4e00\u4e2a\u5b8c\u6574",
+          "\u5f00\u53d1\u4e00\u4e2a\u5b8c\u6574",
+          "\u505a\u4e00\u4e2a\u4ea7\u54c1",
+          "\u505a\u4e00\u4e2a\u5e73\u53f0",
+          "\u505a\u4e00\u4e2a\u7cfb\u7edf",
+          "\u65b0\u5efa\u4e00\u4e2a\u5e94\u7528",
+          "\u65b0\u5efa\u4e00\u4e2a\u4ea7\u54c1"
         ],
         "file_patterns": [],
         "context": []
@@ -7220,16 +7258,16 @@
     },
     {
       "name": "csp-hotfix",
-      "description": "CSP 热修复工作流 — 快速修复线上 bug 的轻量级流程。跳过 design 阶段，直接进入 build，适用于紧急 bug 修复。",
+      "description": "CSP \u70ed\u4fee\u590d\u5de5\u4f5c\u6d41 \u2014 \u5feb\u901f\u4fee\u590d\u7ebf\u4e0a bug \u7684\u8f7b\u91cf\u7ea7\u6d41\u7a0b\u3002\u8df3\u8fc7 design \u9636\u6bb5\uff0c\u76f4\u63a5\u8fdb\u5165 build\uff0c\u9002\u7528\u4e8e\u7d27\u6025 bug \u4fee\u590d\u3002",
       "layer": 2,
       "category": "workflow",
       "triggers": {
         "keywords": [
           "hotfix",
-          "热修复",
-          "紧急修复",
-          "线上bug",
-          "生产问题",
+          "\u70ed\u4fee\u590d",
+          "\u7d27\u6025\u4fee\u590d",
+          "\u7ebf\u4e0abug",
+          "\u751f\u4ea7\u95ee\u9898",
           "quick fix",
           "csp-hotfix"
         ],
@@ -7246,16 +7284,16 @@
     },
     {
       "name": "csp-tweak",
-      "description": "CSP 微调工作流 — 最轻量的变更流程，适用于文案调整、配置修改、文档更新等小改动。跳过 design 和完整的 build 阶段。",
+      "description": "CSP \u5fae\u8c03\u5de5\u4f5c\u6d41 \u2014 \u6700\u8f7b\u91cf\u7684\u53d8\u66f4\u6d41\u7a0b\uff0c\u9002\u7528\u4e8e\u6587\u6848\u8c03\u6574\u3001\u914d\u7f6e\u4fee\u6539\u3001\u6587\u6863\u66f4\u65b0\u7b49\u5c0f\u6539\u52a8\u3002\u8df3\u8fc7 design \u548c\u5b8c\u6574\u7684 build \u9636\u6bb5\u3002",
       "layer": 2,
       "category": "workflow",
       "triggers": {
         "keywords": [
           "tweak",
-          "微调",
-          "小改",
-          "文案调整",
-          "配置修改",
+          "\u5fae\u8c03",
+          "\u5c0f\u6539",
+          "\u6587\u6848\u8c03\u6574",
+          "\u914d\u7f6e\u4fee\u6539",
           "minor change",
           "csp-tweak"
         ],
@@ -7736,7 +7774,7 @@
     },
     {
       "name": "csp-skill-creator",
-      "description": "Interactive skill creation wizard — guides users through creating new CSP skills with templates and validation",
+      "description": "Interactive skill creation wizard \u2014 guides users through creating new CSP skills with templates and validation",
       "layer": 5,
       "category": "runtime",
       "triggers": {
@@ -7751,6 +7789,91 @@
       "stack_detection": false,
       "path": "csp-runtime/skills/csp-skill-creator/SKILL.md",
       "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-budget-enforcer",
+      "description": "Token budget management with four-tier graceful degradation. Tracks token consumption, enforces budget limits, and automatically downgrades model complexity as budget depletes. Use when running long sessions or managing token costs.",
+      "layer": 4,
+      "category": "runtime",
+      "triggers": {
+        "keywords": [
+          "budget",
+          "token-budget",
+          "cost-control",
+          "\u9884\u7b97",
+          "token\u9650\u5236"
+        ],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-runtime/skills/csp-budget-enforcer/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-parallel-worktree",
+      "description": "Automatic git worktree allocation for parallel task execution. Detects parallelizable tasks, creates isolated worktrees, manages concurrent execution with configurable workers, and handles cleanup. Use when executing multi-file changes that can run in parallel.",
+      "layer": 2,
+      "category": "workflow",
+      "triggers": {
+        "keywords": [
+          "parallel",
+          "worktree",
+          "concurrent",
+          "\u5e76\u884c",
+          "\u5e76\u884c\u6267\u884c"
+        ],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-workflow/skills/csp-parallel-worktree/SKILL.md",
+      "deps": [
+        "using-git-worktrees"
+      ],
+      "priority": 10
+    },
+    {
+      "name": "csp-complexity-classifier",
+      "description": "Heuristic task complexity classifier. Analyzes user input to classify tasks as simple/medium/complex, influencing skill loading strategy and model selection. Use automatically before task execution.",
+      "layer": 4,
+      "category": "runtime",
+      "triggers": {
+        "keywords": [
+          "complexity",
+          "\u590d\u6742\u5ea6",
+          "\u4efb\u52a1\u96be\u5ea6"
+        ],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-runtime/skills/csp-complexity-classifier/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-model-selector",
+      "description": "Automatic model selection based on task complexity. Maps complexity levels to optimal models (haiku/sonnet/opus) considering cost, speed, and quality trade-offs. Use automatically during task routing.",
+      "layer": 4,
+      "category": "runtime",
+      "triggers": {
+        "keywords": [
+          "model-selection",
+          "\u6a21\u578b\u9009\u62e9",
+          "\u81ea\u52a8\u6a21\u578b"
+        ],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-runtime/skills/csp-model-selector/SKILL.md",
+      "deps": [
+        "csp-complexity-classifier",
+        "csp-budget-enforcer"
+      ],
       "priority": 10
     }
   ]

@@ -3,7 +3,10 @@ name: writing-skills
 description: Use when creating new skills, editing existing skills, or verifying skills work before deployment
 layer: 1
 category: meta
--------------|----------------|
+---
+
+| TDD Concept | Skill Equivalent |
+|-------------|------------------|
 | **Test case** | Pressure scenario with subagent |
 | **Production code** | Skill document (SKILL.md) |
 | **Test fails (RED)** | Agent violates rule without skill (baseline) |

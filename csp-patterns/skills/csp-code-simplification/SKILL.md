@@ -8,7 +8,10 @@ description: >
 layer: 4
 origin: merged(agent-skills+CSP)
 category: patterns
----------|----------------|
+---
+
+| Smell | Fix |
+|-------|-----|
 | Deep nesting (3+ levels) | Extract conditions into guard clauses |
 | Long functions (50+ lines) | Split into focused functions |
 | Nested ternaries | Replace with if/else or lookup objects |

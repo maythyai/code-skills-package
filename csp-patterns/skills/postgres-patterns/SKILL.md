@@ -9,7 +9,10 @@ metadata:
   credit: Supabase team (MIT License)
 layer: 4
 category: patterns
---------------|------------|---------|
+---
+
+| Query Pattern | Index Type | Example |
+|---------------|------------|---------|
 | `WHERE col = value` | B-tree (default) | `CREATE INDEX idx ON t (col)` |
 | `WHERE col > value` | B-tree | `CREATE INDEX idx ON t (col)` |
 | `WHERE a = x AND b > y` | Composite | `CREATE INDEX idx ON t (a, b)` |

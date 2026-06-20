@@ -1,5 +1,5 @@
 ---
-name: ultrawork
+name: csp-ultrawork
 description: Parallel execution engine for high-throughput task completion
 argument-hint: "<task description with parallel work items>"
 layer: 4

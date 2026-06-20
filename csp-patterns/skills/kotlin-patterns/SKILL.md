@@ -4,7 +4,10 @@ description: Idiomatic Kotlin patterns, best practices, and conventions for buil
 origin: CSP
 layer: 4
 category: patterns
--------|-------------|
+---
+
+| Pattern | Usage |
+|---------|-------|
 | `val` over `var` | Prefer immutable variables |
 | `data class` | For value objects with equals/hashCode/copy |
 | `sealed class/interface` | For restricted type hierarchies |

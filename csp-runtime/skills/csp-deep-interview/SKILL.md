@@ -1,12 +1,15 @@
 ---
-name: deep-interview
+name: csp-deep-interview
 description: Socratic deep interview with mathematical ambiguity gating before explicit execution approval
 argument-hint: "[--quick|--standard|--deep] [--autoresearch] <idea or vague description>"
 pipeline: [deep-interview, plan]
 handoff-policy: approval-required
 handoff: .csp/specs/deep-interview-{slug}.md
 layer: 3
------------|---------------|---------|
+---
+
+| Dimension | Question Type | Example |
+|-----------|---------------|---------|
 | Goal Clarity | "What exactly happens when...?" | "When you say 'manage tasks', what specific action does a user take first?" |
 | Constraint Clarity | "What are the boundaries?" | "Should this work offline, or is internet connectivity assumed?" |
 | Success Criteria | "How do we know it works?" | "If I showed you the finished product, what would make you say 'yes, that's it'?" |

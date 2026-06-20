@@ -1,5 +1,5 @@
 ---
-name: deep-dive
+name: csp-deep-dive
 description: "2-stage pipeline: trace (causal investigation) -> deep-interview (requirements crystallization) with 3-point injection"
 argument-hint: "<problem or exploration target>"
 triggers:
@@ -13,7 +13,10 @@ next-skill-args: --consensus --direct
 handoff: .csp/specs/deep-dive-{slug}.md
 layer: 5
 category: runtime
-------|------------|------------|-------------------|--------------|
+---
+
+| Hypothesis | Evidence | Confidence | Strength | Verdict |
+|------------|----------|------------|----------|---------|
 | 1 | ... | High/Medium/Low | Strong/Moderate/Weak | ... |
 | 2 | ... | ... | ... | ... |
 | 3 | ... | ... | ... | ... |

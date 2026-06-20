@@ -3,7 +3,10 @@ name: skill-optimizer
 description: Use when collecting user feedback on skill behavior, identifying skill coverage gaps, or optimizing existing skills based on real usage patterns. Also triggers when user says "this skill doesn't handle X", "skill X missed", "make skill X better", or "optimize skills".
 layer: 1
 category: meta
-----------|---------|-------------|
+---
+
+| Signal | Meaning | Action |
+|--------|---------|--------|
 | **Missing trigger** | Skill should have activated but didn't | Add trigger words to description |
 | **Missing rule** | Skill activated but wrong behavior | Add specific rule/red flag |
 | **Missing context** | Skill didn't account for project-specific pattern | Add project-aware section |

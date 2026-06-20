@@ -3,7 +3,10 @@ name: agent-introspection-debugging
 description: Structured self-debugging workflow for AI agent failures using capture, diagnosis, contained recovery, and introspection reports.
 layer: 4
 category: patterns
---- | --- | --- |
+---
+
+| Symptom | Likely Cause | First Step |
+|---------|--------------|------------|
 | Maximum tool calls / repeated same command | loop or no-exit observer path | inspect the last N tool calls for repetition |
 | Context overflow / degraded reasoning | unbounded notes, repeated plans, oversized logs | inspect recent context for duplication and low-signal bulk |
 | `ECONNREFUSED` / timeout | service unavailable or wrong port | verify service health, URL, and port assumptions |

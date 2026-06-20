@@ -3,7 +3,10 @@ name: exa-search
 description: Neural search via Exa MCP for web, code, and company research. Use when the user needs web search, code examples, company intel, people lookup, or AI-powered deep research with Exa's neural search engine.
 layer: 4
 category: patterns
--------|------|---------|-------|
+---
+
+| Parameter | Type | Default | Notes |
+|-----------|------|---------|-------|
 | `query` | string | required | Search query |
 | `numResults` | number | 8 | Number of results |
 

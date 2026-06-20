@@ -1,5 +1,5 @@
 ---
-name: visual-verdict
+name: csp-visual-verdict
 description: Structured visual QA verdict for screenshot-to-reference comparisons
 layer: 2
 category: workflow

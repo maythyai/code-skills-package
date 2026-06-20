@@ -3,12 +3,9 @@ name: csp-verify-phase
 description: Verification phase specialist ensuring all acceptance criteria are met, tests pass, and quality gates are satisfied before shipping. Use when verifying implementation completeness.
 layer: 2
 category: workflow
-version: "2.0.0"
 phase: verify
 domain: quality
-role: guardian
 scope: testing
-model: sonnet
 tools: [Read, Write, Edit, Bash, Glob, Grep]
 anti_rationalizations:
   "Tests passed, we're done": "Passing tests don't guarantee correctness. Verify against requirements."

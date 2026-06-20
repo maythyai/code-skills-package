@@ -3,7 +3,10 @@ name: receiving-code-review
 description: Use when receiving code review feedback, before implementing suggestions, especially if feedback seems unclear or technically questionable - requires technical rigor and verification, not performative agreement or blind implementation
 layer: 1
 category: meta
----------|-----|
+---
+
+| Anti-Pattern | Instead Do This |
+|--------------|-----------------|
 | Performative agreement | State requirement or just act |
 | Blind implementation | Verify against codebase first |
 | Batch without testing | One at a time, test each |

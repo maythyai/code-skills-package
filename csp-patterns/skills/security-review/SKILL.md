@@ -6,12 +6,9 @@ metadata:
   origin: CSP
 layer: 4
 category: patterns
-version: "2.0.0"
 phase: review
 domain: security
-role: reviewer
 scope: review
-model: sonnet
 tools: [Read, Grep, Glob]
 ---
 

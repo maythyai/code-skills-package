@@ -1,0 +1,73 @@
+{
+  "name": "feature-development",
+  "description": "End-to-end feature development pipeline from understanding to shipping",
+  "stages": [
+    {
+      "name": "understand",
+      "description": "Explore codebase and understand existing architecture",
+      "skills": ["csp-codebase-mapper"],
+      "condition": null,
+      "on_failure": "stop",
+      "timeout": 600,
+      "artifacts": [".csp/artifacts/understand.md"]
+    },
+    {
+      "name": "plan",
+      "description": "Create implementation plan",
+      "skills": ["csp-writing-plans", "csp-plan-phase"],
+      "condition": "understand.success",
+      "on_failure": "stop",
+      "timeout": 600,
+      "artifacts": [".csp/artifacts/plan.md"]
+    },
+    {
+      "name": "spec",
+      "description": "Write technical specification",
+      "skills": ["csp-spec-contract"],
+      "condition": "plan.success",
+      "on_failure": "stop",
+      "timeout": 600,
+      "artifacts": [".csp/artifacts/spec.md"]
+    },
+    {
+      "name": "implement",
+      "description": "Implement code with TDD approach",
+      "skills": ["csp-tdd", "csp-executing-plans"],
+      "condition": "spec.success",
+      "on_failure": "stop",
+      "timeout": 1800,
+      "artifacts": [".csp/artifacts/implement.md"]
+    },
+    {
+      "name": "review",
+      "description": "Code review",
+      "skills": ["csp-code-review"],
+      "condition": "implement.success",
+      "on_failure": "stop",
+      "timeout": 600,
+      "artifacts": [".csp/artifacts/review.md"]
+    },
+    {
+      "name": "verify",
+      "description": "Run verification tests",
+      "skills": ["csp-verification", "csp-verify-phase"],
+      "condition": "review.success",
+      "on_failure": "stop",
+      "timeout": 600,
+      "artifacts": [".csp/artifacts/verify.md"]
+    },
+    {
+      "name": "ship",
+      "description": "Release and deploy",
+      "skills": ["csp-shipping-and-launch"],
+      "condition": "verify.success",
+      "on_failure": "stop",
+      "timeout": 600,
+      "artifacts": []
+    }
+  ],
+  "defaults": {
+    "on_failure": "stop",
+    "timeout": 600
+  }
+}

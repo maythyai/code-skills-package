@@ -1,11 +1,14 @@
 ---
-name: cancel
+name: csp-cancel
 aliases: [cancel-ralph]
 description: Cancel any active CSP mode (autopilot, ralph, ultrawork, ultraqa, swarm, ultrapilot, pipeline, team)
 argument-hint: "[--force|--all]"
 layer: 2
 category: workflow
-------|-----------------|
+---
+
+| Mode | Message |
+|------|---------|
 | Autopilot | "Autopilot cancelled at phase: {phase}. Progress preserved for resume." |
 | Ralph | "Ralph cancelled. Persistent mode deactivated." |
 | Ultrawork | "Ultrawork cancelled. Parallel execution mode deactivated." |

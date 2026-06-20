@@ -10,7 +10,10 @@ metadata:
   origin: CSP
 layer: 2
 category: workflow
-------|----------------|------|
+---
+
+| Metric | What to Measure | Tool |
+|--------|-----------------|------|
 | **Code volume** | Total LOC, files, modules | cloc, find |
 | **Complexity** | Cyclomatic complexity, cognitive complexity | complexity-report, radon |
 | **Test coverage** | Line/branch coverage, missing critical paths | jest --coverage, istanbul |

@@ -1,5 +1,5 @@
 ---
-name: learner
+name: csp-learner
 description: Extract a learned skill from the current conversation
 layer: 7
 ---
@@ -111,7 +111,7 @@ Minimum required frontmatter:
 
 ```yaml
 ---
-name: <skill-name>
+name: csp-learner
 description: <one-line description>
 triggers:
   - <trigger-1>
@@ -123,7 +123,7 @@ triggers:
 
 ```markdown
 ---
-name: <skill-name>
+name: csp-learner
 description: <one-line description>
 triggers:
   - <trigger-1>

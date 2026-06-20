@@ -4,7 +4,10 @@ description: Tests in real browsers via Chrome DevTools MCP. Use when building o
 layer: 4
 origin: agent-skills
 category: patterns
-------|-------------|-------------|
+---
+
+| Tool | What It Does | Use For |
+|------|--------------|---------|
 | **Screenshot** | Captures the current page state | Visual verification, before/after comparisons |
 | **DOM Inspection** | Reads the live DOM tree | Verify component rendering, check structure |
 | **Console Logs** | Retrieves console output (log, warn, error) | Diagnose errors, verify logging |
@@ -226,6 +229,8 @@ A production-quality page should have **zero** console errors and warnings. If t
 ## Common Rationalizations
 
 | Rationalization | Reality |
+---
+
 |---|---|
 | "It looks right in my mental model" | Runtime behavior regularly differs from what code suggests. Verify with actual browser state. |
 | "Console warnings are fine" | Warnings become errors. Clean consoles catch bugs early. |

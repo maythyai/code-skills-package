@@ -1,0 +1,63 @@
+{
+  "name": "migration",
+  "description": "System migration with analysis, planning, execution, and validation",
+  "stages": [
+    {
+      "name": "analyze",
+      "description": "Analyze current system and identify migration targets",
+      "skills": ["csp-codebase-mapper"],
+      "condition": null,
+      "on_failure": "stop",
+      "timeout": 600,
+      "artifacts": [".csp/artifacts/migration-analyze.md"]
+    },
+    {
+      "name": "plan",
+      "description": "Create migration plan with rollback strategy",
+      "skills": ["csp-writing-plans", "csp-deprecation-and-migration"],
+      "condition": "analyze.success",
+      "on_failure": "stop",
+      "timeout": 900,
+      "artifacts": [".csp/artifacts/migration-plan.md"]
+    },
+    {
+      "name": "prepare",
+      "description": "Set up new system alongside old",
+      "skills": ["csp-executing-plans"],
+      "condition": "plan.success",
+      "on_failure": "stop",
+      "timeout": 1200,
+      "artifacts": [".csp/artifacts/migration-prepare.md"]
+    },
+    {
+      "name": "migrate",
+      "description": "Execute data and code migration",
+      "skills": ["csp-executing-plans", "csp-tdd"],
+      "condition": "prepare.success",
+      "on_failure": "stop",
+      "timeout": 1800,
+      "artifacts": [".csp/artifacts/migration-migrate.md"]
+    },
+    {
+      "name": "validate",
+      "description": "Validate migration completeness and correctness",
+      "skills": ["csp-verification", "csp-verify-phase"],
+      "condition": "migrate.success",
+      "on_failure": "stop",
+      "timeout": 900,
+      "artifacts": [".csp/artifacts/migration-validate.md"]
+    },
+    {
+      "name": "cutover",
+      "description": "Switch traffic and decommission old system",
+      "skills": ["csp-shipping-and-launch", "csp-deprecation-and-migration"],
+      "condition": "validate.success",
+      "on_failure": "stop",
+      "timeout": 600
+    }
+  ],
+  "defaults": {
+    "on_failure": "stop",
+    "timeout": 600
+  }
+}

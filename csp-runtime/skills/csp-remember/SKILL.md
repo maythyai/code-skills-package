@@ -1,11 +1,8 @@
 ---
-name: remember
+name: csp-remember
 description: Review reusable project knowledge and decide what belongs in project memory, notepad, or durable docs
 layer: 5
 category: runtime
-----
-name: remember
-description: Review reusable project knowledge and decide what belongs in project memory, notepad, or durable docs
 ---
 
 # Remember

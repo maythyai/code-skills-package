@@ -1,9 +1,12 @@
 ---
-name: ultraqa
+name: csp-ultraqa
 description: QA cycling workflow - test, verify, fix, repeat until goal met
 argument-hint: "[--tests|--build|--lint|--typecheck|--custom <pattern>] [--interactive]"
 layer: 3
----------------------------------------------- | --------- | -------------------------------- |
+---
+
+| Command | Goal Type | Success Criteria |
+|---------|-----------|------------------|
 | `/code-skills-package:ultraqa --tests`            | tests     | All test suites pass             |
 | `/code-skills-package:ultraqa --build`            | build     | Build succeeds with exit 0       |
 | `/code-skills-package:ultraqa --lint`             | lint      | No lint errors                   |

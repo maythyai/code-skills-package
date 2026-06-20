@@ -4,7 +4,10 @@ description: PyTorch deep learning patterns and best practices for building robu
 origin: CSP
 layer: 4
 category: patterns
--------|-------------|
+---
+
+| Pattern | Rule |
+|---------|------|
 | `model.train()` / `model.eval()` | Always set mode before train/eval |
 | `torch.no_grad()` | Disable gradients for inference |
 | `optimizer.zero_grad(set_to_none=True)` | More efficient gradient clearing |

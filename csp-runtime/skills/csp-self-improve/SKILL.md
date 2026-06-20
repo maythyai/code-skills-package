@@ -1,5 +1,5 @@
 ---
-name: self-improve
+name: csp-self-improve
 description: Autonomous evolutionary code improvement engine with tournament selection
 layer: 4
 category: patterns

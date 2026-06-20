@@ -1,10 +1,13 @@
 ---
-name: csp-teams
+name: csp-omc-teams
 description: CLI-team runtime for claude, codex, or gemini workers in tmux panes when you need process-based parallel execution
 aliases: []
 layer: 4
 category: patterns
----------------------------- | ----------------------------------- | ----------------------------------------------------------------------------------- |
+---
+
+| Error                        | Cause                                 | Fix                                                                     |
+|------------------------------|---------------------------------------|-------------------------------------------------------------------------|
 | `not inside tmux`            | Requested in-place pane topology from a non-tmux surface | Start tmux and rerun, or let `csp team` use its detached-session fallback           |
 | `cmux surface detected`      | Running inside cmux without `$TMUX` | Use the normal `csp team ...` flow; CSP will create native cmux worker splits      |
 | `Unsupported agent type`     | Requested agent is not claude/codex/gemini | Use `claude`, `codex`, or `gemini`; for native Claude Code agents use `/code-skills-package:team` |

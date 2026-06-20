@@ -1,5 +1,5 @@
 ---
-name: mcp-setup
+name: csp-mcp-setup
 description: Configure popular MCP servers for enhanced agent capabilities
 layer: 2
 category: workflow

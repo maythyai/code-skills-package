@@ -8,7 +8,10 @@ description: >
 layer: 4
 origin: merged(CSP+agent-skills)
 category: patterns
----|---|
+---
+
+| Rationalization | Counter |
+|-----------------|---------|
 | "CI is too slow" | Optimize the pipeline, don't skip it. |
 | "This change is trivial, skip CI" | Trivial changes break builds. CI is fast for trivial changes. |
 | "The test is flaky, just re-run" | Flaky tests mask real bugs. Fix the flakiness. |

@@ -1,10 +1,13 @@
 ---
-name: scicsp
+name: csp-scientist
 description: Orchestrate parallel scientist agents for comprehensive analysis with AUTO mode
 argument-hint: <research goal>
 layer: 4
 category: patterns
------------------|-------|-------|---------|
+---
+
+| Task Type | Agent | Model | Examples |
+|-----------|-------|-------|----------|
 | Data gathering | `scientist` (model=haiku) | haiku | File enumeration, pattern counting, simple lookups |
 | Standard analysis | `scientist` | sonnet | Code analysis, pattern detection, documentation review |
 | Complex reasoning | `scientist` | opus | Architecture analysis, cross-cutting concerns, hypothesis validation |

@@ -4,7 +4,10 @@ description: Production machine-learning engineering workflow for data contracts
 origin: CSP
 layer: 4
 category: patterns
--------------|---------|
+---
+
+| Skill Combo | Why |
+|-------------|-----|
 | `product-capability` / `architecture-decision-records` | Turn model work into explicit product contracts and record irreversible data, model, and rollout choices |
 | `repo-scan` / `codebase-onboarding` / `code-tour` | Find existing training, feature, serving, eval, and monitoring paths before introducing a parallel ML stack |
 | `plan` / `feature-dev` | Scope model changes as product capabilities with data, eval, serving, and rollback phases |

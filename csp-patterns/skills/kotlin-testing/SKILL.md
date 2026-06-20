@@ -4,7 +4,10 @@ description: Kotlin testing patterns with Kotest, MockK, coroutine testing, prop
 origin: CSP
 layer: 4
 category: patterns
--------|-----------|
+---
+
+| Topic | Coverage |
+|-------|----------|
 | Kotest spec styles | StringSpec, FunSpec, BehaviorSpec, DescribeSpec |
 | Mocking | MockK setup, coroutine mocking, argument capture, spy |
 | Coroutine testing | runTest, TestDispatcher, flow testing |

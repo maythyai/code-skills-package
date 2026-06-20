@@ -1407,6 +1407,18 @@ stack_rules:
   "quick fix":
     skills: [csp-hotfix]
     weight: 45
+  "workflow-schema":
+    skills: [csp-workflow-schema]
+    weight: 50
+  "工作流schema":
+    skills: [csp-workflow-schema]
+    weight: 50
+  "声明式工作流":
+    skills: [csp-workflow-schema]
+    weight: 45
+  "workflow-json":
+    skills: [csp-workflow-schema]
+    weight: 45
   "tweak":
     skills: [csp-tweak]
     weight: 50
@@ -1445,6 +1457,63 @@ stack_rules:
     weight: 45
   "intel":
     skills: [csp-learning-loop]
+    weight: 40
+  "budget":
+    skills: [csp-budget-enforcer]
+    weight: 50
+  "token-budget":
+    skills: [csp-budget-enforcer]
+    weight: 50
+  "token limit":
+    skills: [csp-budget-enforcer]
+    weight: 45
+  "cost-control":
+    skills: [csp-budget-enforcer]
+    weight: 45
+  "预算":
+    skills: [csp-budget-enforcer]
+    weight: 50
+  "token限制":
+    skills: [csp-budget-enforcer]
+    weight: 45
+  "降级":
+    skills: [csp-budget-enforcer]
+    weight: 40
+  "parallel":
+    skills: [csp-parallel-worktree]
+    weight: 50
+  "parallel-execution":
+    skills: [csp-parallel-worktree]
+    weight: 50
+  "concurrent":
+    skills: [csp-parallel-worktree]
+    weight: 45
+  "worktree":
+    skills: [csp-parallel-worktree, using-git-worktrees]
+    weight: 50
+  "并行":
+    skills: [csp-parallel-worktree]
+    weight: 50
+  "并行执行":
+    skills: [csp-parallel-worktree]
+    weight: 50
+  "complexity":
+    skills: [csp-complexity-classifier]
+    weight: 45
+  "复杂度":
+    skills: [csp-complexity-classifier]
+    weight: 50
+  "任务难度":
+    skills: [csp-complexity-classifier]
+    weight: 40
+  "model-selection":
+    skills: [csp-model-selector]
+    weight: 45
+  "模型选择":
+    skills: [csp-model-selector]
+    weight: 50
+  "自动模型":
+    skills: [csp-model-selector]
     weight: 40
 
 # ─── Intent Classification Patterns ───
@@ -1503,3 +1572,96 @@ intent_patterns:
     skills: [csp-explore, csp-map-codebase, csp-code-tour-guide]
     phase_hint: plan
     weight: 45
+
+  # ─── Regex Pattern Layer ───
+  # Flexible pattern matching for nuanced intent detection
+  refactor_request:
+    patterns: ["re\\s*factor", "clean\\s*up", "code\\s*smell", "tech\\s*debt", "重构", "代码异味", "技术债"]
+    skills: [csp-refactorer, csp-refactoring-strategies]
+    phase_hint: build
+    weight: 50
+
+  performance_issue:
+    patterns: ["slow", "latency", "bottleneck", "lag", "卡", "慢", "延迟", "性能.*问题"]
+    skills: [csp-performance-optimizer, csp-web-performance-auditor]
+    phase_hint: build
+    weight: 50
+
+  migration_task:
+    patterns: ["migrat", "upgrade.*version", "port.*to", "迁移", "升级.*版本", "移植"]
+    skills: [csp-deprecation-and-migration, csp-legacy-modernization]
+    phase_hint: plan
+    weight: 50
+
+  documentation_request:
+    patterns: ["document", "readme", "docs?", "wiki", "changelog", "文档", "说明", "注释"]
+    skills: [csp-docs-update, csp-document-generator]
+    phase_hint: review
+    weight: 45
+
+  hotfix_urgent:
+    patterns: ["hotfix", "urgent", "production.*issue", "emergency", "P0", "紧急", "线上.*问题", "生产.*故障"]
+    skills: [csp-debug, csp-systematic-debugging, csp-incident-commander]
+    phase_hint: build
+    weight: 50
+
+  api_work:
+    patterns: ["api", "endpoint", "route", "controller", "接口", "端点", "REST", "GraphQL"]
+    skills: [csp-api-design, csp-api-tester]
+    phase_hint: build
+    weight: 45
+
+  database_work:
+    patterns: ["database", "schema", "migration", "table", "index", "query", "数据库", "表", "索引", "查询优化"]
+    skills: [csp-postgres-optimizer, csp-sql-reviewer, csp-data-engineer]
+    phase_hint: build
+    weight: 45
+
+  ci_cd:
+    patterns: ["ci", "cd", "pipeline", "github.*action", "workflow.*run", "deploy.*script", "构建", "流水线", "自动化部署"]
+    skills: [csp-cicd-pipelines, csp-deployment]
+    phase_hint: ship
+    weight: 50
+
+  onboarding:
+    patterns: ["onboard", "getting.*started", "new.*developer", "codebase.*tour", "入门", "新人", "项目导览"]
+    skills: [csp-code-tour-guide, csp-codebase-onboarding]
+    phase_hint: plan
+    weight: 45
+
+# ─── SDD State-Aware Routing ───
+# Detect current development phase from artifacts and route accordingly
+sdd_state_routing:
+  artifact_checks:
+    - path: ".csp/artifacts/understand.md"
+      phase: "understand_complete"
+    - path: ".csp/artifacts/plan.md"
+      phase: "plan_complete"
+    - path: ".csp/artifacts/spec.md"
+      phase: "spec_complete"
+    - path: ".csp/artifacts/implement.md"
+      phase: "implement_complete"
+    - path: ".csp/artifacts/review.md"
+      phase: "review_complete"
+    - path: ".csp/artifacts/verify.md"
+      phase: "verify_complete"
+
+  routing_rules:
+    - when: "!artifact_exists('.csp/artifacts/understand.md')"
+      boost: [csp-codebase-mapper]
+      phase_hint: understand
+    - when: "understand_complete && !plan_complete"
+      boost: [csp-writing-plans, csp-plan-phase]
+      phase_hint: plan
+    - when: "plan_complete && !spec_complete"
+      boost: [csp-spec-contract]
+      phase_hint: spec
+    - when: "spec_complete && !implement_complete"
+      boost: [csp-tdd, csp-executing-plans]
+      phase_hint: implement
+    - when: "implement_complete && !review_complete"
+      boost: [csp-code-review, csp-multi-review]
+      phase_hint: review
+    - when: "review_complete && !verify_complete"
+      boost: [csp-verification, csp-verify-phase]
+      phase_hint: verify

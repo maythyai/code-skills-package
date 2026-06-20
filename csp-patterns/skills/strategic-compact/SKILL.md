@@ -4,7 +4,10 @@ description: Suggests manual context compaction at logical intervals to preserve
 origin: CSP
 layer: 4
 category: patterns
------------------|----------|-----|
+---
+
+| Transition | Compact? | Why |
+|------------|----------|-----|
 | Research → Planning | Yes | Research context is bulky; plan is the distilled output |
 | Planning → Implementation | Yes | Plan is in TodoWrite or a file; free up context for code |
 | Implementation → Testing | Maybe | Keep if tests reference recent code; compact if switching focus |

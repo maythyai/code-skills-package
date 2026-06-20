@@ -3,18 +3,17 @@ name: systematic-debugging
 description: Use when encountering any bug, test failure, or unexpected behavior, before proposing fixes
 layer: 1
 category: meta
-version: "2.0.0"
 phase: build
 domain: quality
-role: wizard
 scope: implementation
-model: sonnet
 tools: [Read, Write, Edit, Bash, Glob, Grep]
 anti_rationalizations:
   "I see the problem, let me fix it": "Seeing symptoms ≠ understanding root cause."
   "One more fix attempt": "3+ failures = architectural problem. Question pattern, don't fix again."
 ---
---------|---------|
+
+| Rationalization | Counter |
+|-----------------|---------|
 | "Issue is simple, don't need process" | Simple issues have root causes too. Process is fast for simple bugs. |
 | "Emergency, no time for process" | Systematic debugging is FASTER than guess-and-check thrashing. |
 | "Just try this first, then investigate" | First fix sets the pattern. Do it right from the start. |

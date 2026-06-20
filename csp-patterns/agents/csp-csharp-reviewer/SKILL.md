@@ -8,7 +8,6 @@ metadata:
   source: awesome-copilot/skills/csharp-*,dotnet-*,ef-core
   globs: ["**/*.cs", "**/*.csproj"]
 tools: ["Read", "Grep", "Glob", "Bash"]
-model: sonnet
 ---
 
 ## Prompt Defense Baseline

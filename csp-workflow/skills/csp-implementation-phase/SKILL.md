@@ -3,12 +3,9 @@ name: csp-implementation-phase
 description: Implementation phase specialist for executing planned work with proper patterns, error handling, and code quality. Use when writing production code from a plan.
 layer: 2
 category: workflow
-version: "2.0.0"
 phase: build
 domain: patterns
-role: specialist
 scope: implementation
-model: sonnet
 tools: [Read, Write, Edit, Bash, Glob, Grep]
 anti_rationalizations:
   "I'll refactor later": "Later never comes. Implement it right the first time."

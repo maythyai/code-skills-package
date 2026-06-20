@@ -9,15 +9,6 @@ metadata:
   globs: ["**/*.go", "**/go.mod", "**/go.sum"]
 layer: 4
 category: patterns
-----
-name: golang-testing
-description: >
-  Go testing best practices including table-driven tests, test helpers,
-  benchmarking, race detection, coverage analysis, and integration testing
-  patterns. Use when writing or improving Go tests.
-metadata:
-  origin: CSP
-  globs: ["**/*.go", "**/go.mod", "**/go.sum"]
 ---
 
 # Go Testing

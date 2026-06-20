@@ -1,5 +1,5 @@
 ---
-name: external-context
+name: csp-external-context
 description: Invoke parallel document-specialist agents for external web searches and documentation lookup
 argument-hint: <search query or topic>
 layer: 4

@@ -4,6 +4,8 @@ description: Extracts what the user actually wants instead of what they think th
 layer: 1
 origin: agent-skills
 category: meta
+---
+
 ---|---|
 | "The ask is clear enough" | If you can't write the user's desired outcome in one sentence right now, the ask isn't clear. Run Step 1 before deciding. |
 | "Asking too many questions wastes their time" | Time wasted by 4–6 targeted questions is small. Time wasted by building the wrong thing is enormous, and the user is the one bearing that cost. |

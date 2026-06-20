@@ -4,10 +4,6 @@ description: NestJS architecture patterns for modules, controllers, providers, D
 origin: CSP
 layer: 4
 category: patterns
-----
-name: nestjs-patterns
-description: NestJS architecture patterns for modules, controllers, providers, DTO validation, guards, interceptors, config, and production-grade TypeScript backends.
-origin: CSP
 ---
 
 # NestJS Development Patterns

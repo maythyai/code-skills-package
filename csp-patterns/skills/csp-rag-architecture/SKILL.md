@@ -5,7 +5,10 @@ metadata:
   origin: CSP
 layer: 4
 category: patterns
--------|-----------|------------|----------|------|-------|
+---
+
+| Model | Dimensions | Max Tokens | MTEB Score | Cost | Notes |
+|-------|------------|------------|------------|------|-------|
 | OpenAI text-embedding-3-large | 3072 (reducible) | 8191 | 64.6 | $0.13/1M tokens | Best general-purpose, supports dimension reduction |
 | OpenAI text-embedding-3-small | 1536 | 8191 | 62.3 | $0.02/1M tokens | Good cost/performance ratio |
 | Cohere embed-v3 | 1024 | 512 | 64.1 | $0.10/1M tokens | Multi-language, search_document vs search_query types |

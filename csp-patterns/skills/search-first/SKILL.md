@@ -9,7 +9,10 @@ metadata:
   origin: CSP
 layer: 4
 category: patterns
---------|--------|
+---
+
+| Search Result | Strategy | Action |
+|---------------|----------|--------|
 | Exact match, well-maintained, MIT/Apache | **Adopt** — recommend the package and request approval before install or config changes |
 | Partial match, good foundation | **Extend** — recommend the package plus a thin wrapper, then wait for approval before applying |
 | Multiple weak matches | **Compose** — propose 2-3 small packages and the integration plan before installing anything |

@@ -8,7 +8,10 @@ description: >
 layer: 1
 origin: merged(CSP)
 category: meta
------------|---------|-------|
+---
+
+| Task Type | Characteristics | Model Tier |
+|-----------|-----------------|------------|
 | Mechanical | 1-2 files, clear spec | Fast/cheap |
 | Integration | Multi-file, debugging | Standard |
 | Architecture/Review | Design judgment, broad understanding | Most capable |

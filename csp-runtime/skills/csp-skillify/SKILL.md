@@ -1,5 +1,5 @@
 ---
-name: skillify
+name: csp-skillify
 aliases: [learner]
 description: Turn a repeatable workflow from the current session into a reusable CSP skill draft
 layer: 5

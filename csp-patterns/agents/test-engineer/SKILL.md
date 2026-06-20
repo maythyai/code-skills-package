@@ -5,7 +5,7 @@ layer: 4
 csp-type: agent
 origin: agent-skills
 category: patterns
-----------|---------|
+---------|---------|
 | Happy path | Valid input produces expected output |
 | Empty input | Empty string, empty array, null, undefined |
 | Boundary values | Min, max, zero, negative |

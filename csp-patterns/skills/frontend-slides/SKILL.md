@@ -3,7 +3,10 @@ name: frontend-slides
 description: Create stunning, animation-rich HTML presentations from scratch or by converting PowerPoint files. Use when the user wants to build a presentation, convert a PPT/PPTX to web, or create slides for a talk/pitch. Helps non-designers discover their aesthetic through visual exploration rather than abstract choices.
 layer: 4
 category: patterns
-------------|-------|
+---
+
+| Slide Type | Content Budget |
+|------------|----------------|
 | Title | 1 heading + 1 subtitle + optional tagline |
 | Content | 1 heading + 4-6 bullets or 2 short paragraphs |
 | Feature grid | 6 cards max |

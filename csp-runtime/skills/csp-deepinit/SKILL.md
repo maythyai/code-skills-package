@@ -1,15 +1,20 @@
 ---
-name: deepinit
+name: csp-deepinit
 description: Deep codebase initialization with hierarchical AGENTS.md documentation
 layer: 4
 category: patterns
-------|-------------|
+---
+
+| File | Purpose |
+|------|---------|
 | `file.ts` | Brief description of purpose |
 
 ## Subdirectories
 {List each subdirectory with brief purpose}
 
 | Directory | Purpose |
+---
+
 |-----------|---------|
 | `subdir/` | What it contains (see `subdir/AGENTS.md`) |
 

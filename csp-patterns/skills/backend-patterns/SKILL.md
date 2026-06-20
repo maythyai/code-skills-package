@@ -6,7 +6,10 @@ metadata:
   origin: CSP
 layer: 4
 category: patterns
----------|-------------|
+---
+
+| Pattern | Purpose |
+|---------|---------|
 | Repository | Abstract data access logic |
 | Service Layer | Business logic separation |
 | Middleware | Request/response pipeline |

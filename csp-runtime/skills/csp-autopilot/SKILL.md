@@ -1,5 +1,5 @@
 ---
-name: autopilot
+name: csp-autopilot
 description: Full autonomous execution from idea to working code
 argument-hint: "<product idea or task description>"
 layer: 4

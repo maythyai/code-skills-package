@@ -4,7 +4,10 @@ description: Manages deprecation and migration. Use when removing old systems, A
 layer: 2
 origin: agent-skills
 category: workflow
-------|-------------|-----------|
+---
+
+| Type | When to Use | Migration Approach |
+|------|-------------|-------------------|
 | **Advisory** | Migration is optional, old system is stable | Warnings, documentation, nudges. Users migrate on their own timeline. |
 | **Compulsory** | Old system has security issues, blocks progress, or maintenance cost is unsustainable | Hard deadline. Old system will be removed by date X. Provide migration tooling. |
 

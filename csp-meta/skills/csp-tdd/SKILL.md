@@ -7,12 +7,9 @@ description: >
 layer: 1
 origin: merged(CSP+agent-skills)
 category: meta
-version: "2.0.0"
 phase: build
 domain: testing
-role: guardian
 scope: implementation
-model: sonnet
 tools: [Read, Write, Edit, Bash, Glob, Grep]
 dependencies:
   skills: [csp-spec-contract]
@@ -22,7 +19,9 @@ anti_rationalizations:
   "This is too simple to test": "Simple code has bugs too. Tests are cheap."
   "Tests slow me down": "Tests prevent debugging sessions that take longer."
 ---
-------|-------------|------|
+
+| Test Layer | Scope | When to Write |
+|------------|-------|---------------|
 | **Unit** | Individual functions, component logic, pure helpers | Always |
 | **Integration** | API endpoints, database operations, service interactions | Always |
 | **E2E** | Critical user flows (Playwright/Cypress) | Critical paths |

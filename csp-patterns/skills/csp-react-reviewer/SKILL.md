@@ -3,12 +3,9 @@ name: csp-react-reviewer
 description: Expert React code reviewer specializing in hooks rules, component patterns, performance optimization, and accessibility. Use for all React code changes.
 layer: 3
 category: patterns
-version: "2.0.0"
 phase: review
 domain: language
-role: reviewer
 scope: review
-model: sonnet
 tools: [Read, Grep, Glob]
 ---
 

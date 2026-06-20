@@ -248,6 +248,8 @@ Decision boundary:
 ## Coverage Targets
 
 | Layer | Target |
+---
+
 |---|---|
 | Pure utilities | >=90% |
 | Custom hooks | >=85% |

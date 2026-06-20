@@ -9,7 +9,10 @@ metadata:
   origin: CSP
 layer: 4
 category: patterns
-------|-----------|
+---
+
+| Risk | Mitigation |
+|------|------------|
 | Proxy becomes a bottleneck | Keep proxy logic minimal; no business logic |
 | Data inconsistency between old and new | Use shared database or sync mechanism during transition |
 | Partial migration state | Feature toggles to route per-user or per-request |
@@ -210,6 +213,8 @@ class CheckoutRouter {
 **Rollout stages:**
 
 | Stage | Audience | Purpose |
+---
+
 |-------|----------|---------|
 | Internal | Team members only | Smoke test in production |
 | Canary | 1-5% of users | Detect obvious issues |

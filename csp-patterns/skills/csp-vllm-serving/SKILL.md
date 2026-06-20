@@ -5,7 +5,10 @@ metadata:
   origin: CSP
 layer: 4
 category: patterns
---------|-----------|----------------|--------------|---------------------|
+---
+
+| Method | Bits | Compression | Quality Impact | Calibration Required |
+|--------|------|-------------|----------------|----------------------|
 | AWQ | 4-bit | ~4x | Minimal | Yes (small dataset) |
 | GPTQ | 4-bit | ~4x | Low | Yes (calibration set) |
 | FP8 (E4M3) | 8-bit float | ~2x | Negligible | No (dynamic) or Yes (static) |

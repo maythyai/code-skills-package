@@ -4,10 +4,6 @@ description: C++ coding standards based on the C++ Core Guidelines (isocpp.githu
 origin: CSP
 layer: 4
 category: patterns
-----
-name: cpp-coding-standards
-description: C++ coding standards based on the C++ Core Guidelines (isocpp.github.io). Use when writing, reviewing, or refactoring C++ code to enforce modern, safe, and idiomatic practices.
-origin: CSP
 ---
 
 # C++ Coding Standards (C++ Core Guidelines)

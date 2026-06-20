@@ -32,6 +32,8 @@ logger.warn({
 **Log levels — use them consistently:**
 
 | Level | Meaning | On-call action |
+---
+
 |---|---|---|
 | `error` | Invariant broken; someone may need to act | Investigate |
 | `warn` | Degraded but handled (retry succeeded, fallback used) | Watch for trends |

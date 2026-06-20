@@ -3,12 +3,9 @@ name: csp-performance-optimizer
 description: Performance optimization specialist for identifying bottlenecks, improving efficiency, and reducing resource consumption. Use when optimizing code or investigating performance issues.
 layer: 3
 category: patterns
-version: "2.0.0"
 phase: build
 domain: quality
-role: specialist
 scope: implementation
-model: sonnet
 tools: [Read, Write, Edit, Bash, Glob, Grep]
 anti_rationalizations:
   "Premature optimization is the root of all evil": "But so is premature pessimism. Profile first."

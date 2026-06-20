@@ -1,3 +1,10 @@
+---
+name: csp-party-mode
+description: Multi-agent collaboration for complex problem-solving with specialized AI agents
+layer: 1
+category: meta
+---
+
 # CSP Party Mode - Multi-Agent Collaboration
 
 ## Purpose

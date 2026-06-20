@@ -4,7 +4,10 @@ description: Refresh stale learning and pattern docs under docs/solutions/ by re
 argument-hint: "[optional: scope hint — directory, filename, module, or keyword] [mode:headless] "
 layer: 2
 category: workflow
-------|------|----------|
+---
+
+| Mode | Trigger | Behavior |
+|------|---------|----------|
 | **Interactive** (default) | User is present and can answer questions | Ask for decisions on ambiguous cases, confirm actions |
 | **Headless** | `mode:headless` in arguments | No user interaction. Apply all unambiguous actions (Keep, Update, Consolidate, auto-Delete, Replace with sufficient evidence). Mark ambiguous cases as stale. Generate a summary report at the end. |
 

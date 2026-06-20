@@ -4,7 +4,10 @@ description: Django security best practices, authentication, authorization, CSRF
 origin: CSP
 layer: 4
 category: patterns
--------|-------------|
+---
+
+| Setting | Recommendation |
+|---------|----------------|
 | `DEBUG = False` | Never run with DEBUG in production |
 | HTTPS only | Force SSL, secure cookies |
 | Strong secrets | Use environment variables for SECRET_KEY |

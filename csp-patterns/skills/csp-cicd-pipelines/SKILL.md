@@ -9,15 +9,6 @@ metadata:
   origin: CSP
 layer: 4
 category: patterns
-----
-name: csp-cicd-pipelines
-description: >
-  CI/CD pipeline patterns for GitHub Actions, GitLab CI, and CircleCI including
-  matrix builds, reusable workflows, caching strategies, monorepo triggers,
-  deployment gates, and branch protection integration. Use when designing or
-  optimizing continuous integration and delivery pipelines.
-metadata:
-  origin: CSP
 ---
 
 # CI/CD Pipeline Patterns

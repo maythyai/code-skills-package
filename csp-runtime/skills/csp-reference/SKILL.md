@@ -4,10 +4,6 @@ description: CSP agent catalog, available tools, team pipeline routing, commit p
 user-invocable: false
 layer: 5
 category: runtime
-----
-name: csp-reference
-description: CSP agent catalog, available tools, team pipeline routing, commit protocol, and skills registry. Auto-loads when delegating to agents, using CSP tools, orchestrating teams, making commits, or invoking skills.
-user-invocable: false
 ---
 
 # CSP Reference

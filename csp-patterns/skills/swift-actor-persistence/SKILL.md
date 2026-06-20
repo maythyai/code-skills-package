@@ -4,7 +4,10 @@ description: Thread-safe data persistence in Swift using actors — in-memory ca
 origin: CSP
 layer: 4
 category: patterns
-----------|-----------|
+---
+
+| Decision | Rationale |
+|----------|-----------|
 | Actor (not class + lock) | Compiler-enforced thread safety, no manual synchronization |
 | In-memory cache + file persistence | Fast reads from cache, durable writes to disk |
 | Synchronous init loading | Avoids async initialization complexity |
