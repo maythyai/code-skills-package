@@ -6,12 +6,14 @@
     "csp-install": "./install.sh"
   },
   "files": [
+    "VERSION",
     "install.sh",
     "csp-router",
     "csp-meta",
     "csp-workflow",
     "csp-patterns",
     "csp-runtime",
+    "scripts/sync-version.js",
     "README.md",
     "README_zh.md",
     "LICENSE"

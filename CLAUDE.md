@@ -19,6 +19,7 @@ L4  csp-runtime   — autopilot, ralph, wiki, remember, self-improve (~41 skills
 - [USER-GUIDE.md](./docs/USER-GUIDE.md) — user guide
 - [INSTALL.md](./docs/INSTALL.md) — installation guide
 - [UPDATE.md](./docs/UPDATE.md) — update guide
+- [VERSIONING.md](./docs/VERSIONING.md) — version management (X=arch, Y=feature, Z=fix)
 
 ## License
 

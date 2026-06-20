@@ -142,11 +142,7 @@ cat ./.claude/code-skills-package/VERSION     # 项目级安装（Claude）
 
 ### 版本号规则
 
-| 变更类型 | 升级位置 | 示例 |
-|----------|---------|------|
-| 新增少量 skills | PATCH (Z) | v0.5.0 → v0.5.1 |
-| 新增层级/大重构 | MINOR (Y) | v0.5.0 → v0.6.0 |
-| 破坏性变更 | MAJOR (X) | v0.5.0 → v1.0.0 |
+CSP 采用 `X.Y.Z` 语义化版本号，详见 [VERSIONING.md](./VERSIONING.md)。
 
 ---
 
