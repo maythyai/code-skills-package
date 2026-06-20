@@ -1,5 +1,5 @@
 ---
-name: golang-testing
+name: csp-golang-testing
 description: >
   Go testing best practices including table-driven tests, test helpers,
   benchmarking, race detection, coverage analysis, and integration testing

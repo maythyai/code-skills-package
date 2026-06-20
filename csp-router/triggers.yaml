@@ -160,7 +160,6 @@ trigger_index:
     skills: [csp-quick-dev, csp-rapid-prototype]
     weight: 45
   "快速验证":
-    skills: [csp-rapid-prototype]
     weight: 40
   "MVP":
     skills: [csp-quick-dev]
@@ -466,13 +465,10 @@ stack_rules:
     skills: [writing-skills]
     weight: 45
   "工作流":
-    skills: [csp-compound]
     weight: 45
   "compound":
-    skills: [csp-compound]
     weight: 40
   "csp-compound":
-    skills: [csp-compound]
     weight: 40
   "上下文刷新":
     skills: [csp-compound-refresh]
@@ -1078,16 +1074,16 @@ stack_rules:
     skills: [frontend-slides]
     weight: 40
   "Go":
-    skills: [golang-patterns]
+    skills: [csp-golang-patterns]
     weight: 45
   "Golang":
-    skills: [golang-patterns]
+    skills: [csp-golang-patterns]
     weight: 45
   "golang patterns":
-    skills: [golang-patterns]
+    skills: [csp-golang-patterns]
     weight: 40
   "golang testing":
-    skills: [golang-testing]
+    skills: [csp-golang-testing]
     weight: 40
   "investor":
     skills: [investor-materials]
@@ -1108,13 +1104,13 @@ stack_rules:
     skills: [jpa-patterns]
     weight: 40
   "kotlin":
-    skills: [kotlin-patterns]
+    skills: [csp-kotlin-patterns]
     weight: 40
   "kotlin patterns":
-    skills: [kotlin-patterns]
+    skills: [csp-kotlin-patterns]
     weight: 40
   "kotlin testing":
-    skills: [kotlin-testing]
+    skills: [csp-kotlin-testing]
     weight: 40
   "market":
     skills: [market-research]
@@ -1150,13 +1146,13 @@ stack_rules:
     skills: [product-capability]
     weight: 40
   "Python":
-    skills: [python-patterns]
+    skills: [csp-python-patterns]
     weight: 45
   "Python开发":
-    skills: [python-patterns]
+    skills: [csp-python-patterns]
     weight: 45
   "python testing":
-    skills: [python-testing]
+    skills: [csp-python-testing]
     weight: 40
   "pytorch":
     skills: [pytorch-patterns]
@@ -1207,16 +1203,16 @@ stack_rules:
     skills: [video-editing]
     weight: 40
   "Web应用":
-    skills: [webapp-testing]
+    skills: [csp-webapp-testing]
     weight: 45
   "Web测试":
-    skills: [webapp-testing]
+    skills: [csp-webapp-testing]
     weight: 45
   "testing":
-    skills: [webapp-testing]
+    skills: [csp-webapp-testing]
     weight: 40
   "webapp":
-    skills: [webapp-testing]
+    skills: [csp-webapp-testing]
     weight: 40
   "x api":
     skills: [x-api]
@@ -1268,12 +1264,6 @@ stack_rules:
     weight: 40
   "csp-skill-creator":
     skills: [csp-skill-creator]
-    weight: 40
-  "csp-teams":
-    skills: [csp-teams]
-    weight: 40
-  "teams":
-    skills: [csp-teams]
     weight: 40
   "csp-writer-memory":
     skills: [csp-writer-memory]
@@ -1336,7 +1326,6 @@ stack_rules:
     skills: [remember]
     weight: 40
   "scicsp":
-    skills: [scicsp]
     weight: 40
   "改进":
     skills: [self-improve]
@@ -1607,7 +1596,7 @@ intent_patterns:
 
   api_work:
     patterns: ["api", "endpoint", "route", "controller", "接口", "端点", "REST", "GraphQL"]
-    skills: [csp-api-design, csp-api-tester]
+    skills: [csp-api-tester]
     phase_hint: build
     weight: 45
 

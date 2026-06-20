@@ -1,5 +1,5 @@
 ---
-name: kotlin-testing
+name: csp-kotlin-testing
 description: Kotlin testing patterns with Kotest, MockK, coroutine testing, property-based testing, and Kover coverage. Follows TDD methodology with idiomatic Kotlin practices.
 origin: CSP
 layer: 4

@@ -2289,22 +2289,6 @@
       "priority": 10
     },
     {
-      "name": "csp-api-design",
-      "description": ">",
-      "layer": 4,
-      "category": "patterns",
-      "triggers": {
-        "keywords": [],
-        "file_patterns": [],
-        "context": []
-      },
-      "stack_detection": false,
-      "path": null,
-      "deps": [],
-      "priority": 10,
-      "deprecated": true
-    },
-    {
       "name": "csp-article-writing",
       "description": "Write articles, guides, blog posts, tutorials, newsletter issues, and other long-form content in a distinctive voice derived from supplied examples or brand guidance. Use when the user wants polished written content longer than a paragraph, especially when voice consistency, structure, and credibility matter.",
       "layer": 4,
@@ -2635,7 +2619,7 @@
       "priority": 10
     },
     {
-      "name": "csp-golang-patterns",
+      "name": "csp-cursor-rules-golang-patterns",
       "description": "Go patterns extending common rules",
       "layer": 4,
       "category": "patterns",
@@ -2665,7 +2649,7 @@
       "priority": 10
     },
     {
-      "name": "csp-golang-testing",
+      "name": "csp-cursor-rules-golang-testing",
       "description": "Go testing extending common rules",
       "layer": 4,
       "category": "patterns",
@@ -2710,7 +2694,7 @@
       "priority": 10
     },
     {
-      "name": "csp-kotlin-patterns",
+      "name": "csp-cursor-rules-kotlin-patterns",
       "description": "Kotlin patterns extending common rules",
       "layer": 4,
       "category": "patterns",
@@ -2740,7 +2724,7 @@
       "priority": 10
     },
     {
-      "name": "csp-kotlin-testing",
+      "name": "csp-cursor-rules-kotlin-testing",
       "description": "Kotlin testing extending common rules",
       "layer": 4,
       "category": "patterns",
@@ -2860,7 +2844,7 @@
       "priority": 10
     },
     {
-      "name": "csp-python-patterns",
+      "name": "csp-cursor-rules-python-patterns",
       "description": "Python patterns extending common rules",
       "layer": 4,
       "category": "patterns",
@@ -2890,7 +2874,7 @@
       "priority": 10
     },
     {
-      "name": "csp-python-testing",
+      "name": "csp-cursor-rules-python-testing",
       "description": "Python testing extending common rules",
       "layer": 4,
       "category": "patterns",
@@ -3745,22 +3729,6 @@
       "priority": 10
     },
     {
-      "name": "csp-code-simplifier",
-      "description": "Simplifies and refines code for clarity, consistency, and maintainability while preserving all functionality. Focuses on recently modified code unless instructed otherwise.",
-      "layer": 4,
-      "category": "agent",
-      "triggers": {
-        "keywords": [],
-        "file_patterns": [],
-        "context": []
-      },
-      "stack_detection": false,
-      "path": null,
-      "deps": [],
-      "priority": 10,
-      "deprecated": true
-    },
-    {
       "name": "csp-comment-analyzer",
       "description": "Analyze code comments for accuracy, completeness, maintainability, and comment rot risk.",
       "layer": 4,
@@ -3831,7 +3799,7 @@
         "context": []
       },
       "stack_detection": false,
-      "path": "csp-patterns/agents/csp-csharp-reviewer.md",
+      "path": "csp-patterns/agents/csp-csharp-reviewer/SKILL.md",
       "deps": [],
       "priority": 10
     },
@@ -3922,21 +3890,6 @@
       },
       "stack_detection": false,
       "path": "csp-patterns/skills/csp-docs-lookup/SKILL.md",
-      "deps": [],
-      "priority": 10
-    },
-    {
-      "name": "csp-e2e-runner",
-      "description": "End-to-end testing specialist using Vercel Agent Browser (preferred) with Playwright fallback. Use PROACTIVELY for generating, maintaining, and running E2E tests. Manages test journeys, quarantines flaky tests, uploads artifacts (screenshots, videos, traces), and ensures critical user flows work.",
-      "layer": 4,
-      "category": "agent",
-      "triggers": {
-        "keywords": [],
-        "file_patterns": [],
-        "context": []
-      },
-      "stack_detection": false,
-      "path": "csp-patterns/agents/csp-e2e-runner.md",
       "deps": [],
       "priority": 10
     },
@@ -4436,22 +4389,6 @@
       "priority": 10
     },
     {
-      "name": "csp-refactor-cleaner",
-      "description": "Dead code cleanup and consolidation specialist. Use PROACTIVELY for removing unused code, duplicates, and refactoring. Runs analysis tools (knip, depcheck, ts-prune) to identify dead code and safely removes it.",
-      "layer": 4,
-      "category": "agent",
-      "triggers": {
-        "keywords": [],
-        "file_patterns": [],
-        "context": []
-      },
-      "stack_detection": false,
-      "path": null,
-      "deps": [],
-      "priority": 10,
-      "deprecated": true
-    },
-    {
       "name": "csp-rust-build-resolver",
       "description": "Rust build, compilation, and dependency error resolution specialist. Fixes cargo build errors, borrow checker issues, and Cargo.toml problems with minimal changes. Use when Rust builds fail.",
       "layer": 4,
@@ -4555,22 +4492,6 @@
       "path": "csp-patterns/agents/csp-swift-reviewer.md",
       "deps": [],
       "priority": 10
-    },
-    {
-      "name": "csp-tdd-guide",
-      "description": "Test-Driven Development specialist enforcing write-tests-first methodology. Use PROACTIVELY when writing new features, fixing bugs, or refactoring code. Ensures 80%+ test coverage.",
-      "layer": 4,
-      "category": "agent",
-      "triggers": {
-        "keywords": [],
-        "file_patterns": [],
-        "context": []
-      },
-      "stack_detection": false,
-      "path": null,
-      "deps": [],
-      "priority": 10,
-      "deprecated": true
     },
     {
       "name": "csp-type-design-analyzer",
@@ -4721,22 +4642,6 @@
       "path": "csp-patterns/commands/cpp-test.md",
       "deps": [],
       "priority": 10
-    },
-    {
-      "name": "csp-csp-guide",
-      "description": "Navigate CSP's current agents, skills, commands, hooks, install profiles, and docs from the live repository surface.",
-      "layer": 4,
-      "category": "patterns",
-      "triggers": {
-        "keywords": [],
-        "file_patterns": [],
-        "context": []
-      },
-      "stack_detection": false,
-      "path": null,
-      "deps": [],
-      "priority": 10,
-      "deprecated": true
     },
     {
       "name": "csp-evolve",
@@ -5849,22 +5754,6 @@
       "priority": 10
     },
     {
-      "name": "csp-ai-slop-cleaner",
-      "description": "Clean AI-generated code slop with a regression-safe, deletion-first workflow and optional reviewer-only mode",
-      "layer": 5,
-      "category": "runtime",
-      "triggers": {
-        "keywords": [],
-        "file_patterns": [],
-        "context": []
-      },
-      "stack_detection": false,
-      "path": null,
-      "deps": [],
-      "priority": 10,
-      "deprecated": true
-    },
-    {
       "name": "csp-ask",
       "description": "Process-first advisor routing for Claude, Codex, or Gemini via `csp ask`, with artifact capture and no raw CLI assembly",
       "layer": 5,
@@ -6154,22 +6043,6 @@
       "priority": 10
     },
     {
-      "name": "csp-teams",
-      "description": "CLI-team runtime for claude, codex, or gemini workers in tmux panes when you need process-based parallel execution",
-      "layer": 5,
-      "category": "runtime",
-      "triggers": {
-        "keywords": [],
-        "file_patterns": [],
-        "context": []
-      },
-      "stack_detection": false,
-      "path": null,
-      "deps": [],
-      "priority": 10,
-      "deprecated": true
-    },
-    {
       "name": "csp-plan",
       "description": "Strategic planning with optional interview workflow",
       "layer": 5,
@@ -6213,22 +6086,6 @@
       "path": "csp-runtime/skills/csp-ralph/SKILL.md",
       "deps": [],
       "priority": 10
-    },
-    {
-      "name": "csp-ralplan",
-      "description": "Consensus planning entrypoint that auto-gates vague ralph/autopilot/team requests before execution",
-      "layer": 5,
-      "category": "runtime",
-      "triggers": {
-        "keywords": [],
-        "file_patterns": [],
-        "context": []
-      },
-      "stack_detection": false,
-      "path": null,
-      "deps": [],
-      "priority": 10,
-      "deprecated": true
     },
     {
       "name": "csp-release",
@@ -7518,7 +7375,7 @@
       "priority": 10
     },
     {
-      "name": "csp-omc-teams",
+      "name": "csp-cli-teams",
       "description": "Team coordination and management skill",
       "layer": 5,
       "category": "runtime",
@@ -7528,7 +7385,7 @@
         "context": []
       },
       "stack_detection": false,
-      "path": "csp-runtime/skills/csp-omc-teams/SKILL.md",
+      "path": "csp-runtime/skills/csp-cli-teams/SKILL.md",
       "deps": [],
       "priority": 10
     },
@@ -7874,6 +7731,21 @@
         "csp-complexity-classifier",
         "csp-budget-enforcer"
       ],
+      "priority": 10
+    },
+    {
+      "name": "csp-webapp-testing",
+      "description": "End-to-end web application testing strategies. Covers Cypress, Playwright, and Puppeteer for integration and E2E tests.",
+      "layer": 4,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/webapp-testing/SKILL.md",
+      "deps": [],
       "priority": 10
     }
   ]

@@ -1,5 +1,5 @@
 ---
-name: python-patterns
+name: csp-python-patterns
 description: >
   Python-specific design patterns and best practices including protocols,
   dataclasses, context managers, decorators, async/await, type hints, and

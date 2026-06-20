@@ -1,5 +1,5 @@
 ---
-name: python-testing
+name: csp-python-testing
 description: >
   Python testing best practices using pytest including fixtures, parametrization,
   mocking, coverage analysis, async testing, and test organization. Use when

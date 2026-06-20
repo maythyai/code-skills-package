@@ -324,6 +324,6 @@ Use these examples as patterns, not as project-wide templates:
 
 - Agent: `fastapi-reviewer`
 - Command: `/fastapi-review`
-- Skill: `python-patterns`
-- Skill: `python-testing`
+- Skill: `csp-python-patterns`
+- Skill: `csp-python-testing`
 - Skill: `api-design`

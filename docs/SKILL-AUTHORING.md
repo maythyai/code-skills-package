@@ -93,7 +93,7 @@ origin: optional-source        # 迁移来源，可选
 1. **路径验证**: `node shared/scripts/audit-registry.js`
 2. **Frontmatter**: `node shared/scripts/standardize-frontmatter.js --report`
 3. **本地安装**: `./install.sh --platform claude-code --dry-run`
-4. **内容审查**: 无 OMC/internal 依赖，无硬编码路径
+4. **内容审查**: 无 internal 依赖，无硬编码路径
 
 ## 拆分原则
 
@@ -107,7 +107,7 @@ origin: optional-source        # 迁移来源，可选
 ## 从其他项目迁移
 
 1. 保留原文档的方法论内容
-2. 移除 OMC/internal 路径引用
+2. 移除 internal 路径引用
 3. 替换为 CSP 标准路径和工具名
 4. 标注 `origin:` 来源
 5. 调整 frontmatter 为标准格式

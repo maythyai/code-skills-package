@@ -1,5 +1,5 @@
 ---
-name: golang-patterns
+name: csp-golang-patterns
 description: >
   Go-specific design patterns and best practices including functional options,
   small interfaces, dependency injection, concurrency patterns, error handling,

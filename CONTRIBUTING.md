@@ -132,7 +132,7 @@ node shared/scripts/standardize-frontmatter.js --report
 - [ ] `standardize-frontmatter.js --report` passes
 - [ ] Triggers are added to `triggers.yaml` (both English and Chinese)
 - [ ] Entry added to `docs/SKILL-INDEX.md`
-- [ ] Content has no OMC/internal dependencies
+- [ ] Content has no internal dependencies
 
 ## PR Process
 
