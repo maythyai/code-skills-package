@@ -4,7 +4,7 @@
 
 ## Prerequisites
 
-- Clone CSP repository locally: `git clone https://github.com/chensaics/code-skills-package.git`
+- Clone CSP repository locally: `git clone https://github.com/maythyai/code-skills-package.git`
 - Or install remotely via one-liner command (no clone required)
 - Or install globally via npm
 
@@ -33,19 +33,19 @@ When user hasn't cloned CSP project, install directly via one-liner command (ins
 ```bash
 # Auto-detect platform and install to current directory
 cd /path/to/your/project
-curl -fsSL https://raw.githubusercontent.com/chensaics/code-skills-package/master/install.sh | bash -s --
+curl -fsSL https://raw.githubusercontent.com/maythyai/code-skills-package/master/install.sh | bash -s --
 
 # Specify platform
-curl -fsSL https://raw.githubusercontent.com/chensaics/code-skills-package/master/install.sh | bash -s -- --platform cursor
+curl -fsSL https://raw.githubusercontent.com/maythyai/code-skills-package/master/install.sh | bash -s -- --platform cursor
 
 # Specify platform + target directory
-curl -fsSL https://raw.githubusercontent.com/chensaics/code-skills-package/master/install.sh | bash -s -- --platform cursor --target /path/to/your/project
+curl -fsSL https://raw.githubusercontent.com/maythyai/code-skills-package/master/install.sh | bash -s -- --platform cursor --target /path/to/your/project
 
 # Filter by tech stack
-curl -fsSL https://raw.githubusercontent.com/chensaics/code-skills-package/master/install.sh | bash -s -- --platform cursor --stacks python,typescript
+curl -fsSL https://raw.githubusercontent.com/maythyai/code-skills-package/master/install.sh | bash -s -- --platform cursor --stacks python,typescript
 
 # Global installation
-curl -fsSL https://raw.githubusercontent.com/chensaics/code-skills-package/master/install.sh | bash -s -- --platform cursor --global
+curl -fsSL https://raw.githubusercontent.com/maythyai/code-skills-package/master/install.sh | bash -s -- --platform cursor --global
 ```
 
 All `install.sh` supported parameters can be passed to remote installation script via `bash -s --`.

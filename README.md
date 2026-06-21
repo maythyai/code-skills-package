@@ -85,16 +85,15 @@ Users can define custom workflows via `.csp/recipes.yaml`, create new skills int
 # Install for a specific platform (18 supported)
 ./install.sh --platform claude-code
 ./install.sh --platform cursor
-./install.sh --platform tra
 
 # Install into any target directory (no need to clone this project here)
 ./install.sh --platform cursor --target /path/to/your/project
 
 # Remote one-line install (no clone required)
-curl -fsSL https://raw.githubusercontent.com/chensaics/code-skills-package/master/install.sh | bash -s -- --platform cursor
+curl -fsSL https://raw.githubusercontent.com/maythyai/code-skills-package/master/install.sh | bash -s -- --platform cursor
 
 # Remote install to a specific target directory
-curl -fsSL https://raw.githubusercontent.com/chensaics/code-skills-package/master/install.sh | bash -s -- --platform cursor --target /path/to/your/project
+curl -fsSL https://raw.githubusercontent.com/maythyai/code-skills-package/master/install.sh | bash -s -- --platform cursor --target /path/to/your/project
 
 # npm global install
 npm install -g code-skills-package

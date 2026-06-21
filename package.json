@@ -6,7 +6,6 @@
     "csp-install": "./install.sh"
   },
   "files": [
-    "VERSION",
     "install.sh",
     "csp-router",
     "csp-meta",
@@ -35,11 +34,11 @@
     "copilot",
     "csp"
   ],
-  "author": "chensaics",
+  "author": "maythyai",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/chensaics/code-skills-package.git"
+    "url": "https://github.com/maythyai/code-skills-package.git"
   },
-  "homepage": "https://github.com/chensaics/code-skills-package"
+  "homepage": "https://github.com/maythyai/code-skills-package"
 }

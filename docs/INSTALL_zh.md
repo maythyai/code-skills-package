@@ -4,7 +4,7 @@
 
 ## 前置条件
 
-- 克隆 CSP 仓库到本地：`git clone https://github.com/chensaics/code-skills-package.git`
+- 克隆 CSP 仓库到本地：`git clone https://github.com/maythyai/code-skills-package.git`
 - 或通过一行命令远程安装（无需克隆）
 - 或通过 npm 全局安装
 
@@ -33,19 +33,19 @@
 ```bash
 # 自动检测平台并安装到当前目录
 cd /path/to/your/project
-curl -fsSL https://raw.githubusercontent.com/chensaics/code-skills-package/master/install.sh | bash -s --
+curl -fsSL https://raw.githubusercontent.com/maythyai/code-skills-package/master/install.sh | bash -s --
 
 # 指定平台
-curl -fsSL https://raw.githubusercontent.com/chensaics/code-skills-package/master/install.sh | bash -s -- --platform cursor
+curl -fsSL https://raw.githubusercontent.com/maythyai/code-skills-package/master/install.sh | bash -s -- --platform cursor
 
 # 指定平台 + 目标目录
-curl -fsSL https://raw.githubusercontent.com/chensaics/code-skills-package/master/install.sh | bash -s -- --platform cursor --target /path/to/your/project
+curl -fsSL https://raw.githubusercontent.com/maythyai/code-skills-package/master/install.sh | bash -s -- --platform cursor --target /path/to/your/project
 
 # 按技术栈过滤
-curl -fsSL https://raw.githubusercontent.com/chensaics/code-skills-package/master/install.sh | bash -s -- --platform cursor --stacks python,typescript
+curl -fsSL https://raw.githubusercontent.com/maythyai/code-skills-package/master/install.sh | bash -s -- --platform cursor --stacks python,typescript
 
 # 全局安装
-curl -fsSL https://raw.githubusercontent.com/chensaics/code-skills-package/master/install.sh | bash -s -- --platform cursor --global
+curl -fsSL https://raw.githubusercontent.com/maythyai/code-skills-package/master/install.sh | bash -s -- --platform cursor --global
 ```
 
 所有 `install.sh` 支持的参数都可以通过 `bash -s --` 传递给远程安装脚本。

@@ -90,7 +90,7 @@ CSP（Code Skills Package）将多个开源 AI 编程项目的精华整合为一
 ./install.sh --platform cursor --target /path/to/your/project
 
 # 一行远程安装
-curl -fsSL https://raw.githubusercontent.com/chensaics/code-skills-package/master/install.sh | bash -s -- --platform cursor
+curl -fsSL https://raw.githubusercontent.com/maythyai/code-skills-package/master/install.sh | bash -s -- --platform cursor
 
 # npm 全局安装
 npm install -g code-skills-package
