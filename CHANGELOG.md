@@ -28,6 +28,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Top 20 高频技能升级到 v2 格式（phase/domain/role/anti_rationalizations）
 - `hooks-csp.json` 新增 state-detector 和 confidence-router hook
 
+### 发布
+- 首次发布到 npm registry — `npm install -g code-skills-package`（2026-06-21）
+- `package.json` 清理 `files` 白名单残留的 `VERSION` 条目
+- 统一仓库 owner 为 `maythyai`（README / docs / install.sh / package.json）
+- README 新增 npm 版本徽章
+
 ### 统计
 | 指标 | v0.6.0 | v0.7.0 |
 |------|--------|--------|
