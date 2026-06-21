@@ -3,6 +3,7 @@
 <div align="center">
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
+[![npm](https://img.shields.io/npm/v/code-skills-package)](https://www.npmjs.com/package/code-skills-package)
 [![v0.7.0](https://img.shields.io/badge/version-0.7.0-green)](./CHANGELOG.md)
 [![Skills: 568](https://img.shields.io/badge/skills-568-orange)](./SKILL-INDEX.md)
 [![Platforms: 18+](https://img.shields.io/badge/platforms-18+-brightgreen)](./docs/INSTALL.md)
@@ -16,6 +17,14 @@ Integrates capabilities from multiple open-source AI coding projects into a laye
 </div>
 
 ---
+
+<div align="center">
+
+[![CSP Overview](./assets/page.png)](https://maythyai.github.io/code-skills-package/)
+
+**🔗 [Live Interactive Dashboard](https://maythyai.github.io/code-skills-package/)** — explore all 568 skills by layer, category, and triggers
+
+</div>
 
 CSP (Code Skills Package) consolidates the essence of multiple open-source AI programming projects into an integrated solution. It uses a five-layer architecture to load skills on demand, with confidence scoring router and skill knowledge graph, allowing AI programming assistants to load only the minimum skill set required for each task during a session. At the same time, CSP remembers user usage habits and project context, providing increasingly accurate services as the project evolves. With 568 skills spanning full-stack development, DevOps, security, and a dedicated indie developer toolkit covering deployment, monetization, performance, and more, CSP supports the complete journey from idea to production.
 
@@ -81,16 +90,15 @@ Users can define custom workflows via `.csp/recipes.yaml`, create new skills int
 # Install for a specific platform (18 supported)
 ./install.sh --platform claude-code
 ./install.sh --platform cursor
-./install.sh --platform tra
 
 # Install into any target directory (no need to clone this project here)
 ./install.sh --platform cursor --target /path/to/your/project
 
 # Remote one-line install (no clone required)
-curl -fsSL https://raw.githubusercontent.com/chensaics/code-skills-package/master/install.sh | bash -s -- --platform cursor
+curl -fsSL https://raw.githubusercontent.com/maythyai/code-skills-package/master/install.sh | bash -s -- --platform cursor
 
 # Remote install to a specific target directory
-curl -fsSL https://raw.githubusercontent.com/chensaics/code-skills-package/master/install.sh | bash -s -- --platform cursor --target /path/to/your/project
+curl -fsSL https://raw.githubusercontent.com/maythyai/code-skills-package/master/install.sh | bash -s -- --platform cursor --target /path/to/your/project
 
 # npm global install
 npm install -g code-skills-package

@@ -3,6 +3,7 @@
 <div align="center">
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
+[![npm](https://img.shields.io/npm/v/code-skills-package)](https://www.npmjs.com/package/code-skills-package)
 [![v0.7.0](https://img.shields.io/badge/version-0.7.0-green)](./CHANGELOG.md)
 [![Skills: 568](https://img.shields.io/badge/skills-568-orange)](./SKILL-INDEX.md)
 [![Platforms: 18+](https://img.shields.io/badge/platforms-18+-brightgreen)](./docs/INSTALL.md)
@@ -16,6 +17,14 @@
 </div>
 
 ---
+
+<div align="center">
+
+[![CSP 总览](./assets/page.png)](https://maythyai.github.io/code-skills-package/)
+
+**🔗 [在线交互式仪表盘](https://maythyai.github.io/code-skills-package/)** — 按层级、分类、触发词浏览全部 568 个技能
+
+</div>
 
 CSP（Code Skills Package）将多个开源 AI 编程项目的精华整合为一体化解决方案。它通过五层架构按需加载技能，配合置信度评分路由器和技能知识图谱，让 AI 编程助手在每次会话中只加载任务所需的最小 skill 集合。同时，CSP 会记忆用户的使用习惯和项目上下文，随着项目演进提供越来越精准的服务。568 个技能覆盖全栈开发、DevOps、安全审计等领域，并专为独立开发者提供部署运维、商业化运营、性能调优、国际化、Monorepo 管理等专项技能包，支持从 idea 到 production 的完整旅程。
 
@@ -86,7 +95,7 @@ CSP（Code Skills Package）将多个开源 AI 编程项目的精华整合为一
 ./install.sh --platform cursor --target /path/to/your/project
 
 # 一行远程安装
-curl -fsSL https://raw.githubusercontent.com/chensaics/code-skills-package/master/install.sh | bash -s -- --platform cursor
+curl -fsSL https://raw.githubusercontent.com/maythyai/code-skills-package/master/install.sh | bash -s -- --platform cursor
 
 # npm 全局安装
 npm install -g code-skills-package

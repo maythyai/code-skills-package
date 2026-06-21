@@ -84,7 +84,7 @@ git pull
 
 ```bash
 cd /path/to/your/project
-curl -fsSL https://raw.githubusercontent.com/chensaics/code-skills-package/master/install.sh | bash -s -- --platform cursor
+curl -fsSL https://raw.githubusercontent.com/maythyai/code-skills-package/master/install.sh | bash -s -- --platform cursor
 ```
 
 ---

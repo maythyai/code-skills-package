@@ -6,7 +6,6 @@
     "csp-install": "./install.sh"
   },
   "files": [
-    "VERSION",
     "install.sh",
     "csp-router",
     "csp-meta",
@@ -23,7 +22,8 @@
     "build:graph": "node shared/scripts/build-graph.mjs",
     "verify:graph": "node shared/scripts/verify-graph-source.mjs",
     "build:registry": "node shared/scripts/build-registry.mjs",
-    "build:all": "npm run build:registry && npm run build:graph"
+    "build:page": "node shared/scripts/build-page.mjs",
+    "build:all": "npm run build:registry && npm run build:graph && npm run build:page"
   },
   "keywords": [
     "ai",
@@ -34,11 +34,11 @@
     "copilot",
     "csp"
   ],
-  "author": "chensaics",
+  "author": "maythyai",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/chensaics/code-skills-package.git"
+    "url": "https://github.com/maythyai/code-skills-package.git"
   },
-  "homepage": "https://github.com/chensaics/code-skills-package"
+  "homepage": "https://github.com/maythyai/code-skills-package"
 }

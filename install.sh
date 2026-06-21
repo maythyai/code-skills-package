@@ -33,7 +33,7 @@ if [ "$_has_layers" = "false" ]; then
   trap 'rm -rf "$_csp_tmp"' EXIT
   _csp_branch="${CSP_BRANCH:-master}"
   echo "  CSP: downloading full repo..." >&2
-  curl -fsSL "https://github.com/chensaics/code-skills-package/archive/refs/heads/${_csp_branch}.tar.gz" \
+  curl -fsSL "https://github.com/maythyai/code-skills-package/archive/refs/heads/${_csp_branch}.tar.gz" \
     | tar xz -C "$_csp_tmp"
   exec bash "$_csp_tmp/code-skills-package-${_csp_branch}/install.sh" "$@"
 fi
@@ -905,7 +905,7 @@ show_help() {
     ./install.sh --dry-run              预览安装内容而不实际执行
 
   一行远程安装（无需克隆本项目）：
-    curl -fsSL https://raw.githubusercontent.com/chensaics/code-skills-package/master/install.sh | bash -s -- --platform cursor
+    curl -fsSL https://raw.githubusercontent.com/maythyai/code-skills-package/master/install.sh | bash -s -- --platform cursor
 
   npm 全局安装：
     npm install -g code-skills-package

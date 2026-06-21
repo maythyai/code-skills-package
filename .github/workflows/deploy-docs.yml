@@ -4,7 +4,14 @@ on:
   push:
     branches: [master]
     paths:
+      - 'csp-router/**'
+      - 'csp-meta/**'
+      - 'csp-workflow/**'
+      - 'csp-patterns/**'
+      - 'csp-runtime/**'
       - 'docs/csp-page/**'
+      - 'shared/scripts/build-registry.mjs'
+      - 'shared/scripts/build-page.mjs'
       - '.github/workflows/deploy-docs.yml'
   workflow_dispatch:
 
@@ -26,6 +33,19 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # Rebuild registry.json from skill sources, then regenerate the
+      # CSP_DATA payload embedded in docs/csp-page/index.html so the
+      # published dashboard always reflects the current skill set.
+      - name: Rebuild dashboard data
+        run: |
+          node shared/scripts/build-registry.mjs
+          node shared/scripts/build-page.mjs
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
