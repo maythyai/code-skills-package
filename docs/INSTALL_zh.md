@@ -65,6 +65,29 @@ csp-install --platform claude-code --stacks python
 
 npm 安装后提供 `csp-install` 命令，功能与 `install.sh` 完全一致。
 
+### 免 sudo 安装（推荐）
+
+如果 `npm install -g` 报权限错误（`EACCES`），把 npm 的全局前缀指向用户主目录，而非系统路径，即可免 `sudo` 安装：
+
+```bash
+# 一次性配置
+npm config set prefix ~/.npm-global
+echo 'export PATH=~/.npm-global/bin:$PATH' >> ~/.bashrc   # zsh 用户改为 ~/.zshrc
+source ~/.bashrc
+
+# 此后全局安装都会装到 ~/.npm-global（无需 sudo）
+npm install -g code-skills-package
+csp-install --version
+```
+
+### 提示「找不到包」时
+
+如果你的默认 registry 是镜像源（如 `registry.npmmirror.com`），新发布的版本可能尚未同步。直接从官方 registry 安装即可：
+
+```bash
+npm install -g code-skills-package --registry=https://registry.npmjs.org/
+```
+
 ---
 
 ## 方式四：`--target` 参数

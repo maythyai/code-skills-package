@@ -65,6 +65,29 @@ csp-install --platform claude-code --stacks python
 
 npm installation provides `csp-install` command, with functionality identical to `install.sh`.
 
+### Install without sudo (recommended)
+
+If `npm install -g` fails with a permission error (`EACCES`), point npm's global prefix at your home directory instead of the system path — no `sudo` required:
+
+```bash
+# One-time setup
+npm config set prefix ~/.npm-global
+echo 'export PATH=~/.npm-global/bin:$PATH' >> ~/.bashrc   # use ~/.zshrc for zsh
+source ~/.bashrc
+
+# Now global installs land in ~/.npm-global (no sudo)
+npm install -g code-skills-package
+csp-install --version
+```
+
+### If the package is "not found"
+
+If your default registry is a mirror (e.g. `registry.npmmirror.com`), newly published versions may not be synced yet. Install straight from the official registry:
+
+```bash
+npm install -g code-skills-package --registry=https://registry.npmjs.org/
+```
+
 ---
 
 ## Method 4: `--target` Parameter
