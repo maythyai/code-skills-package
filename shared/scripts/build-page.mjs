@@ -96,7 +96,6 @@ const skills = registry.skills.map((s) => {
   return {
     name: s.name,
     description: s.description,
-    origin: 'csp-native',
     category: s.category,
     layer: `L${s.layer}`,
     layer_name: lm.name,
@@ -120,7 +119,6 @@ const reviewers = skills.filter((s) => /review|critic|analyst/i.test(s.name)).le
 const stats = {
   total: skills.length,
   by_layer,
-  by_origin: { 'csp-native': skills.length },
   by_category,
   reviewers,
 };
