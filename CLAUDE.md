@@ -22,6 +22,3 @@ Total: 538 skills across 5 layers
 - [UPDATE.md](./docs/UPDATE.md) — update guide
 - [VERSIONING.md](./docs/VERSIONING.md) — version management (X=arch, Y=feature, Z=fix)
 
-## License
-
-MIT. See [LICENSE](./LICENSE).
