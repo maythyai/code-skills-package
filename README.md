@@ -17,6 +17,12 @@ Integrates capabilities from multiple open-source AI coding projects into a laye
 
 ---
 
+<div align="center">
+
+![CSP Overview](./assets/page.png)
+
+</div>
+
 CSP (Code Skills Package) consolidates the essence of multiple open-source AI programming projects into an integrated solution. It uses a five-layer architecture to load skills on demand, with confidence scoring router and skill knowledge graph, allowing AI programming assistants to load only the minimum skill set required for each task during a session. At the same time, CSP remembers user usage habits and project context, providing increasingly accurate services as the project evolves.
 
 ## Core Features
