@@ -19,7 +19,9 @@
 
 <div align="center">
 
-![CSP 总览](./assets/page.png)
+[![CSP 总览](./assets/page.png)](https://maythyai.github.io/code-skills-package/)
+
+**🔗 [在线交互式仪表盘](https://maythyai.github.io/code-skills-package/)** — 按层级、分类、触发词浏览全部 538 个技能
 
 </div>
 

@@ -19,7 +19,9 @@ Integrates capabilities from multiple open-source AI coding projects into a laye
 
 <div align="center">
 
-![CSP Overview](./assets/page.png)
+[![CSP Overview](./assets/page.png)](https://maythyai.github.io/code-skills-package/)
+
+**🔗 [Live Interactive Dashboard](https://maythyai.github.io/code-skills-package/)** — explore all 538 skills by layer, category, and triggers
 
 </div>
 

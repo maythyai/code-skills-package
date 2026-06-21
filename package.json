@@ -23,7 +23,8 @@
     "build:graph": "node shared/scripts/build-graph.mjs",
     "verify:graph": "node shared/scripts/verify-graph-source.mjs",
     "build:registry": "node shared/scripts/build-registry.mjs",
-    "build:all": "npm run build:registry && npm run build:graph"
+    "build:page": "node shared/scripts/build-page.mjs",
+    "build:all": "npm run build:registry && npm run build:graph && npm run build:page"
   },
   "keywords": [
     "ai",
