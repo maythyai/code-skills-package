@@ -4,7 +4,7 @@
 # Regenerate: node scripts/build-skill-metadata.mjs
 
 version: 2.0
-generated_at: 2026-06-20T12:34:35.975Z
+generated_at: 2026-06-22T10:53:54.462Z
 skills:
   csp-brainstorming:
     phase: define
@@ -163,6 +163,9 @@ skills:
       - Read
       - Grep
       - Glob
+  csp-java-testing:
+    phase: verify
+    domain: testing
   csp-performance-optimizer:
     phase: build
     domain: quality
@@ -198,6 +201,12 @@ skills:
       - Read
       - Grep
       - Glob
+  csp-typescript-patterns:
+    phase: build
+    domain: language
+  csp-typescript-testing:
+    phase: verify
+    domain: testing
   csp-debug:
     phase: build
     domain: quality

@@ -526,14 +526,14 @@ stack_rules:
   typescript:
     files: ["tsconfig.json", "package.json"]
     reviewers: ["csp-typescript-reviewer", "csp-react-reviewer"]
-    testers: ["csp-react-testing"]
+    testers: ["csp-typescript-testing", "csp-react-testing"]
     build_resolvers: ["csp-react-build-resolver"]
-    patterns: ["csp-react-patterns", "csp-nextjs-turbopack", "csp-frontend-patterns"]
+    patterns: ["csp-typescript-patterns", "csp-react-patterns", "csp-nextjs-turbopack", "csp-frontend-patterns"]
 
   java:
     files: ["pom.xml", "build.gradle"]
     reviewers: ["csp-java-reviewer", "csp-kotlin-reviewer"]
-    testers: []
+    testers: ["csp-java-testing"]
     build_resolvers: ["csp-java-build-resolver", "csp-kotlin-build-resolver"]
     patterns: ["csp-springboot-patterns", "csp-kotlin-patterns"]
 

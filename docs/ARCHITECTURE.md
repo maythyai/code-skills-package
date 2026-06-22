@@ -634,7 +634,7 @@ csp-auto receives task
 
 ### 6.4 Index Slice Strategy
 
-**Problem:** registry.json contains ~538 skills, full loading ~12K tokens
+**Problem:** registry.json contains ~570 skills, full loading ~12K tokens
 
 **Solution:** Slice by node type, load on demand
 
@@ -661,7 +661,7 @@ csp-router/
 ```json
 {
   "version": "1.0",
-  "total_skills": 538,
+  "total_skills": 570,
   "shards": [
     {
       "name": "understand",
@@ -1669,7 +1669,7 @@ self_debugging:
 
 ## 8. Skill Quick Search and Location
 
-When users or routers need to reverse-lookup "which skill can handle X", sub-second location capability is needed, not traversing ~538 SKILL.md files. This section defines four-tier search strategies, escalating by cost from low to high.
+When users or routers need to reverse-lookup "which skill can handle X", sub-second location capability is needed, not traversing ~570 SKILL.md files. This section defines four-tier search strategies, escalating by cost from low to high.
 
 ### 8.1 Four-Tier Search Strategy
 
@@ -1901,7 +1901,7 @@ fi
 
 | Level | Content | Loading Time | Size |
 |-------|---------|--------------|------|
-| **Index** | registry.json entries | Session start | ~60 tokens/skill × ~538 skills = ~32K |
+| **Index** | registry.json entries | Session start | ~60 tokens/skill × ~570 skills = ~32K |
 | **Content** | SKILL.md main body | After router match | ~200-600 tokens/skill |
 | **Depth** | references/*, examples/* | On-demand during execution | Variable |
 
@@ -2203,7 +2203,7 @@ Current six-layer architecture disclosure strategy by usage frequency:
 **First Tier: Index Slicing (Designed)**
 
 ```
-Full load 538 skills:  ~32,000 tokens
+Full load 570 skills:  ~32,000 tokens
 Sliced on-demand load:            ~2,000 tokens
 Saving:                    94%
 ```

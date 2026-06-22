@@ -23,7 +23,9 @@
     "verify:graph": "node shared/scripts/verify-graph-source.mjs",
     "build:registry": "node shared/scripts/build-registry.mjs",
     "build:page": "node shared/scripts/build-page.mjs",
-    "build:all": "npm run build:registry && npm run build:graph && npm run build:page"
+    "build:all": "npm run build:registry && npm run build:graph && npm run build:page",
+    "count:skills": "node scripts/count-skills.mjs",
+    "validate:skills": "node scripts/validate-skill-v2.mjs csp-patterns/skills && node scripts/count-skills.mjs"
   },
   "keywords": [
     "ai",
