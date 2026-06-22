@@ -619,7 +619,7 @@ csp-auto 接收任务
 
 ### 6.4 索引分片策略
 
-**问题：** registry.json 包含 ~538 个 skill，全量加载约 12K tokens
+**问题：** registry.json 包含 ~570 个 skill，全量加载约 12K tokens
 
 **解决方案：** 按节点类型分片，按需加载
 
@@ -646,7 +646,7 @@ csp-router/
 ```json
 {
   "version": "1.0",
-  "total_skills": 538,
+  "total_skills": 570,
   "shards": [
     {
       "name": "understand",
@@ -1654,7 +1654,7 @@ self_debugging:
 
 ## 八、Skill 快速检索与定位
 
-当用户或路由器需要反向查找"哪个 skill 能处理 X"时,应具备亚秒级定位能力,而不是遍历 ~538 个 SKILL.md。本节定义四层检索策略,按成本从低到高逐级升级。
+当用户或路由器需要反向查找"哪个 skill 能处理 X"时,应具备亚秒级定位能力,而不是遍历 ~570 个 SKILL.md。本节定义四层检索策略,按成本从低到高逐级升级。
 
 ### 8.1 四层检索策略
 
@@ -1889,7 +1889,7 @@ fi
 
 | 级别 | 内容 | 加载时机 | 大小 |
 |------|------|----------|------|
-| **索引** | registry.json 条目 | 会话启动 | ~60 tokens/skill × ~538 skills = ~32K |
+| **索引** | registry.json 条目 | 会话启动 | ~60 tokens/skill × ~570 skills = ~32K |
 | **正文** | SKILL.md 主体 | router 匹配后 | ~200-600 tokens/skill |
 | **深度** | references/*, examples/* | 执行中按需 | 可变 |
 
@@ -2068,7 +2068,7 @@ CSP 提供三种使用方式，覆盖从新手到专家的全部用户画像：
 **第一层：索引分片（已设计）**
 
 ```
-全量加载 538 个 skills:  ~32,000 tokens
+全量加载 570 个 skills:  ~32,000 tokens
 分片按需加载:            ~2,000 tokens
 节约:                    94%
 ```

@@ -1,0 +1,58 @@
+name: Validate Skills
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - 'csp-router/**'
+      - 'csp-meta/**'
+      - 'csp-workflow/**'
+      - 'csp-patterns/**'
+      - 'csp-runtime/**'
+      - 'scripts/**'
+      - 'shared/scripts/build-registry.mjs'
+      - 'README.md'
+      - 'README_zh.md'
+      - 'CLAUDE.md'
+      - 'docs/SKILL-INDEX.md'
+  pull_request:
+    paths:
+      - 'csp-router/**'
+      - 'csp-meta/**'
+      - 'csp-workflow/**'
+      - 'csp-patterns/**'
+      - 'csp-runtime/**'
+      - 'scripts/**'
+      - 'shared/scripts/build-registry.mjs'
+      - 'README.md'
+      - 'README_zh.md'
+      - 'CLAUDE.md'
+      - 'docs/SKILL-INDEX.md'
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Validate SKILL.md v2 frontmatter
+        run: node scripts/validate-skill-v2.mjs csp-patterns/skills
+
+      - name: Verify registry.json is up to date
+        run: |
+          node shared/scripts/build-registry.mjs
+          if ! git diff --quiet csp-router/registry.json; then
+            echo "::error::registry.json is stale. Run 'npm run build:registry' and commit the result."
+            git diff --stat csp-router/registry.json
+            exit 1
+          fi
+
+      - name: Check documented skill counts match registry
+        run: node scripts/count-skills.mjs

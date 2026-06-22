@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "total_skills": 568,
+  "total_skills": 570,
   "shards": [],
   "skill_metadata": "skill-metadata.yaml",
   "skills": [
@@ -3186,7 +3186,7 @@
     },
     {
       "name": "csp-backend-patterns",
-      "description": "Backend architecture patterns, API design, database optimization, and server-side best practices for Node.js, Express, and Next.js API routes.",
+      "description": "Language-agnostic backend patterns: layered architecture, dependency injection, repository pattern, error handling and retries, idempotency, rate limiting, caching, transaction boundaries, API design, and background jobs. Use for server-side design regardless of language or framework.",
       "layer": 3,
       "category": "patterns",
       "triggers": {
@@ -3485,21 +3485,6 @@
       "priority": 10
     },
     {
-      "name": "csp-database-migrations",
-      "description": "Database migration best practices for schema changes, data migrations, rollbacks, and zero-downtime deployments across PostgreSQL, MySQL, and common ORMs (Prisma, Drizzle, Django, TypeORM, golang-migrate). Use when planning or implementing database schema changes.",
-      "layer": 3,
-      "category": "patterns",
-      "triggers": {
-        "keywords": [],
-        "file_patterns": [],
-        "context": []
-      },
-      "stack_detection": false,
-      "path": "csp-patterns/skills/csp-database-migrations/SKILL.md",
-      "deps": [],
-      "priority": 10
-    },
-    {
       "name": "csp-db-backup",
       "description": "Implement automated database backup and point-in-time recovery for PostgreSQL and MySQL with encryption, verification, and disaster recovery runbooks.",
       "layer": 3,
@@ -3516,7 +3501,7 @@
     },
     {
       "name": "csp-db-migration",
-      "description": "Execute zero-downtime database schema migrations using expand-contract patterns, online schema changes, and safe deployment pipeline integration.",
+      "description": "Database migration best practices for schema changes, data migrations, rollbacks, and zero-downtime deployments across PostgreSQL and MySQL and common ORMs/tools (Prisma, Drizzle, TypeORM, Knex, Django, Alembic, Flyway, golang-migrate, Atlas). Execute zero-downtime migrations using expand-contract p",
       "layer": 3,
       "category": "patterns",
       "triggers": {
@@ -3771,7 +3756,7 @@
     },
     {
       "name": "csp-frontend-patterns",
-      "description": "Frontend development patterns for state management, performance optimization, accessibility, and UI best practices across frameworks.",
+      "description": "Framework-agnostic frontend patterns for component composition, state management, performance, accessibility, forms, and data fetching. Use as the cross-framework entry point; React-specific patterns live in csp-react-patterns.",
       "layer": 3,
       "category": "patterns",
       "triggers": {
@@ -3901,6 +3886,21 @@
       },
       "stack_detection": false,
       "path": "csp-patterns/skills/csp-java-coding-standards/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-java-testing",
+      "description": "Java testing best practices using JUnit 5 (Jupiter), AssertJ fluent assertions, Mockito (mock/spy/verify/ArgumentCaptor), and Testcontainers for integration tests against real dependencies. Covers parameterized and nested tests, lifecycle hooks, Spring Boot test slices (@WebMvcTest, @DataJpaTest), t",
+      "layer": 3,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/csp-java-testing/SKILL.md",
       "deps": [],
       "priority": 10
     },
@@ -4636,6 +4636,36 @@
       },
       "stack_detection": false,
       "path": "csp-patterns/skills/csp-tech-debt-assessment/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-typescript-patterns",
+      "description": "TypeScript-specific design patterns and best practices for TypeScript 5.x: the type system (generics, conditional types, `infer`, mapped types, template literal types), `type` vs `interface`, discriminated unions, the `satisfies` operator, strict mode and key tsconfig options, ESM vs CJS, type guard",
+      "layer": 3,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/csp-typescript-patterns/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-typescript-testing",
+      "description": "TypeScript testing best practices for TypeScript 5.x: choosing between Vitest and Jest, the Arrange-Act-Assert structure, type-level testing with expectTypeOf and tsd, mocking with vi.mock / jest.mock and module mocks, async testing, coverage with v8 (c8) or istanbul, and pointers to component and E",
+      "layer": 3,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/csp-typescript-testing/SKILL.md",
       "deps": [],
       "priority": 10
     },

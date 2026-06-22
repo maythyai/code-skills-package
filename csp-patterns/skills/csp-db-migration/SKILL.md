@@ -1,8 +1,15 @@
 ---
 name: csp-db-migration
 description: >
-  Execute zero-downtime database schema migrations using expand-contract patterns, online schema changes, and safe deployment pipeline integration.
+  Database migration best practices for schema changes, data migrations, rollbacks,
+  and zero-downtime deployments across PostgreSQL and MySQL and common ORMs/tools
+  (Prisma, Drizzle, TypeORM, Knex, Django, Alembic, Flyway, golang-migrate, Atlas).
+  Execute zero-downtime migrations using expand-contract patterns, online schema
+  changes, and safe CI/CD pipeline integration. Use when planning or implementing
+  database schema changes.
 version: 0.1.0
+metadata:
+  origin: CSP
 layer: 4
 category: patterns
 ---
@@ -26,8 +33,10 @@ Execute schema and data migrations with zero downtime using the expand-contract 
 |------------------|------------|------------------------|-------------------|------------------------|
 | Prisma           | TypeScript | Postgres, MySQL, SQLite | Declarative (schema.prisma) | TypeScript full-stack |
 | Drizzle          | TypeScript | Postgres, MySQL, SQLite | SQL-like (type-safe) | TypeScript with SQL control |
+| TypeORM          | TypeScript | Postgres, MySQL, SQLite, MSSQL | Entity decorators + generated migrations | NestJS / decorator-based apps |
 | Knex             | TypeScript | Postgres, MySQL, SQLite | Imperative (builder) | Legacy Node.js projects |
 | Alembic          | Python     | PostgreSQL, MySQL, SQLite | Imperative (scripts) | Python/SQLAlchemy     |
+| Django Migrations| Python     | Postgres, MySQL, SQLite | Auto-generated from models | Django projects (built-in) |
 | Flyway           | Java/SQL   | Postgres, MySQL, Oracle, SQL Server | SQL file versioning | Java/JVM projects    |
 | golang-migrate   | Go/SQL     | Postgres, MySQL, SQLite | SQL file versioning | Go projects            |
 | Atlas            | Multi      | Postgres, MySQL, SQLite | Declarative + SQL  | Polyglot teams         |
@@ -49,6 +58,52 @@ What language/framework?
   Java/JVM ->
     SQL file versioning?    -> Flyway
     Spring Boot?            -> Flyway or Liquibase
+```
+
+### ORM/Tool Command Reference
+
+```bash
+# Prisma (declarative — edit schema.prisma, then)
+npx prisma migrate dev --name add_handle    # create + apply in dev
+npx prisma migrate deploy                    # apply pending in prod/CI
+
+# Drizzle (SQL-like — edit schema.ts, then)
+npx drizzle-kit generate                     # generate SQL migration
+npx drizzle-kit migrate                      # apply migrations
+
+# TypeORM (entity decorators)
+npx typeorm migration:generate -d ds.ts src/migrations/AddHandle  # diff entities
+npx typeorm migration:run -d ds.ts           # apply
+npx typeorm migration:revert -d ds.ts        # roll back last
+
+# Knex
+npx knex migrate:make add_handle
+npx knex migrate:latest
+npx knex migrate:rollback
+
+# Django (auto-generated from models)
+python manage.py makemigrations
+python manage.py migrate
+python manage.py migrate app 0007            # roll back to a specific migration
+
+# Alembic (Python/SQLAlchemy)
+alembic revision --autogenerate -m "add handle"
+alembic upgrade head
+alembic downgrade -1
+
+# golang-migrate (Go/SQL file versioning)
+migrate create -ext sql -dir migrations -seq add_handle
+migrate -path migrations -database "$DATABASE_URL" up
+migrate -path migrations -database "$DATABASE_URL" down 1
+
+# Flyway (Java/JVM, SQL file versioning)
+flyway migrate
+flyway info
+flyway undo                                  # Teams edition
+
+# Atlas (declarative + versioned, polyglot)
+atlas migrate diff add_handle --env local
+atlas migrate apply --env local
 ```
 
 ## Migration Types
@@ -661,6 +716,19 @@ jobs:
 ```
 
 ## Anti-Patterns
+
+### Quick Reference
+
+| Anti-Pattern | Why It's Bad | Do This Instead |
+|--------------|--------------|-----------------|
+| Manual SQL in production | No audit trail, unrepeatable | Always use migration files |
+| Editing deployed migrations | Causes drift between environments | Create a new migration instead |
+| NOT NULL without default | Locks table, rewrites all rows | Add nullable, backfill, then add constraint |
+| Inline index on large table | Blocks writes during build | `CREATE INDEX CONCURRENTLY` |
+| Schema + data in one migration | Hard to rollback, long transactions | Separate migrations |
+| Dropping column before removing code | Application errors on missing column | Remove code first, drop column next deploy |
+
+### Detailed Guidance
 
 - **Running destructive migrations without a rollback plan**: Every migration must have a tested `down()` function. Before deploying, verify the rollback works against a production clone. If a column might contain data you need later, drop it only after a safety period (7-30 days).
 - **Renaming columns in a single deploy**: A direct `ALTER TABLE RENAME COLUMN` breaks all running application instances that reference the old name. Always use the expand-contract pattern across multiple deployments.
