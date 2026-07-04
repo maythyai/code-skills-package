@@ -1,6 +1,6 @@
 {
   "name": "code-skills-package",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "description": "Unified AI programming skills for 18 coding platforms — auto-routing, lazy loading, spec-driven workflows",
   "bin": {
     "csp-install": "./install.sh"

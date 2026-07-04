@@ -4,11 +4,11 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
 [![npm](https://img.shields.io/npm/v/code-skills-package)](https://www.npmjs.com/package/code-skills-package)
-[![v0.7.0](https://img.shields.io/badge/version-0.7.0-green)](./CHANGELOG.md)
-[![Skills: 570](https://img.shields.io/badge/skills-570-orange)](./SKILL-INDEX.md)
+[![v0.7.1](https://img.shields.io/badge/version-0.7.1-green)](./CHANGELOG.md)
+[![Skills: 573](https://img.shields.io/badge/skills-573-orange)](./SKILL-INDEX.md)
 [![Platforms: 18+](https://img.shields.io/badge/platforms-18+-brightgreen)](./docs/INSTALL.md)
 
-**统一 AI 编程技能 · 18+ 个平台 · 15+ 语言 · 570 个技能**
+**统一 AI 编程技能 · 18+ 个平台 · 15+ 语言 · 573 个技能**
 
 整合多个开源 AI 编程项目为分层自动路由框架，以极低的 token 成本完成复杂开发任务。
 

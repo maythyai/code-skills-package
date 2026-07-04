@@ -4,6 +4,44 @@ All notable changes to CSP will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## v0.7.1 — 2026-07-04
+
+### 新增
+- `csp-doc-lifecycle-manager` — 文档生命周期管理 5 步工作流（审计→分类→归档→修剪→索引）
+- `csp-project-doc-architect` — 项目文档架构设计标准（目录树、命名规范、索引要求、卫生规则）
+- `csp-session-knowledge-extractor` — 会话知识提炼，从开发会话中提取可复用知识并路由到文档存储
+
+### 增强
+- 31 个独立开发者场景 skill（部署、商业化、性能优化、i18n、monorepo 等方向）
+- `csp-writing-skills` 从 631 行压缩至 281 行，拆分出 3 个 reference 文件
+- `csp-spec-contract` 从 37 行扩充至 85 行，新增 Process/Template/Verification 章节
+- `csp-writing-plans` 补充缺失的标题和概述
+- `csp-skill-optimizer` 修复硬编码 `~/.claude/logs/` 路径为通用占位符
+- `csp-implementation-phase` 从 23 行 stub 扩充至 100 行完整流程
+- `csp-verify-phase` 从 23 行 stub 扩充至 114 行验证管线
+- `csp-explore` 从 19 行 stub 扩充至 110 行探索流程
+
+### 文档整理
+- `.planning/` 重组：根目录精简为 4 个活跃文件 + INDEX.md 入口索引
+- 新建 `reference/` 目录存放 6 份持久性参考文档
+- 新建 `archive/` 目录，按版本（v0.4.0/v0.7.0）和主题归档已完成文档
+- `STATE.md` 重写至 v0.7.0 当前状态，`ROADMAP.md` 重写完整版本历史
+- 清理重复文件和空 phases 子目录
+
+### 基础设施
+- `install.sh` 新增 no-sudo 前缀安装和 registry-mirror fallback
+- 新增 `validate-skills.yml` GitHub Actions 工作流
+- 新增 `count-skills.mjs` 统计脚本
+- `triggers.yaml` 追加文档管理类触发词
+
+### 统计
+| 指标 | v0.7.0 | v0.7.1 |
+|------|--------|--------|
+| Skills (total) | 538 | 573 |
+| V2 Skills | 21 | 21 |
+| L2 Workflow Skills | ~147 | 153 |
+| L3 Pattern Skills | ~313 | 340 |
+
 ## v0.7.0 — 2026-06-19
 
 ### 新增

@@ -1,6 +1,6 @@
 # CSP (Code Skills Package) Architecture Design
 
-> Version: v0.7.0 | Date: 2026-06-20
+> Version: v0.7.1 | Date: 2026-07-04
 > Status: State-aware routing + Confidence scoring + Skill Knowledge Graph enhancement
 
 ---

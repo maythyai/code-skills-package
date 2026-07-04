@@ -4,11 +4,11 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
 [![npm](https://img.shields.io/npm/v/code-skills-package)](https://www.npmjs.com/package/code-skills-package)
-[![v0.7.0](https://img.shields.io/badge/version-0.7.0-green)](./CHANGELOG.md)
-[![Skills: 570](https://img.shields.io/badge/skills-570-orange)](./SKILL-INDEX.md)
+[![v0.7.1](https://img.shields.io/badge/version-0.7.1-green)](./CHANGELOG.md)
+[![Skills: 573](https://img.shields.io/badge/skills-573-orange)](./SKILL-INDEX.md)
 [![Platforms: 18+](https://img.shields.io/badge/platforms-18+-brightgreen)](./docs/INSTALL.md)
 
-**Unified AI Programming Skills · 18+ Platforms · 15+ Languages · 570 Skills**
+**Unified AI Programming Skills · 18+ Platforms · 15+ Languages · 573 Skills**
 
 Integrates capabilities from multiple open-source AI coding projects into a layered, auto-routing framework with extremely low token costs to complete complex development tasks.
 
