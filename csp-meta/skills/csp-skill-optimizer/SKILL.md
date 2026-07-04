@@ -93,8 +93,9 @@ digraph optimization_flow {
 ```bash
 # Search recent conversations for skill-related feedback
 # Look for user corrections, approvals, frustrations
+# Replace {log_directory} with your AI tool's log directory
 grep -rn "不要\|应该\|stop\|perfect\|perfect\|keep doing\|怎么又\|还是没\|说了" \
-  ~/.claude/logs/ 2>/dev/null || echo "No log directory found"
+  {log_directory} 2>/dev/null || echo "No log directory found"
 
 # Check git diff for recent skill changes
 git diff HEAD~5 -- csp-meta/ csp-patterns/ 2>/dev/null | head -100
@@ -240,7 +241,7 @@ When run with "自动优化" intent (user says "automatically optimize"):
 | Optimization makes skill worse | Over-generalized from single data point | Require 2+ signals before changing behavior |
 | Token bloat grows | Only adding, never compressing | Run Type 5 after every 3 Type 2 additions |
 | Skills drift apart | Multiple skills covering same area | Run overlap check monthly |
-| Project-specific leaks into generic | Capturing project conventions in generic skills | Use project CLAUDE.md for project-specific, skills for universal |
+| Project-specific leaks into generic | Capturing project conventions in generic skills | Use project config file (e.g., CLAUDE.md, .cursorrules, AGENTS.md) for project-specific, skills for universal |
 
 ## Integration with Other Skills
 

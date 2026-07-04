@@ -8,6 +8,11 @@ domain: architecture
 scope: design
 tools: [Read, Write, Edit, Glob, Grep]
 ---
+
+# Writing Plans
+
+Transform a spec or requirements document into a fully detailed, step-by-step implementation plan. Every task includes exact file paths, complete code blocks, and precise commands — no placeholders, no ambiguity. Plans are written test-first (TDD) and structured so an engineer (or subagent) can execute each task independently.
+
 ```
 
 ## Task Structure

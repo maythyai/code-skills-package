@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "total_skills": 570,
+  "total_skills": 573,
   "shards": [],
   "skill_metadata": "skill-metadata.yaml",
   "skills": [
@@ -8552,6 +8552,103 @@
       "stack_detection": false,
       "path": "csp-workflow/workflows/csp-transition.md",
       "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-doc-lifecycle-manager",
+      "description": "Manage project documentation lifecycle: categorize, archive, index, and prune documents. Use when organizing docs, creating INDEX.md files, archiving obsolete docs, or doing documentation health checks.",
+      "layer": 2,
+      "category": "workflow",
+      "triggers": {
+        "keywords": [
+          "整理文档",
+          "doc cleanup",
+          "organize docs",
+          "文档归类",
+          "文档管理",
+          "archive docs",
+          "documentation hygiene"
+        ],
+        "file_patterns": [
+          "INDEX.md",
+          "STATE.md",
+          ".planning/"
+        ],
+        "context": [
+          "documentation reorganization",
+          "milestone completion",
+          "onboarding"
+        ]
+      },
+      "stack_detection": false,
+      "path": "csp-workflow/skills/csp-doc-lifecycle-manager/SKILL.md",
+      "deps": [
+        "csp-project-doc-architect",
+        "csp-session-knowledge-extractor"
+      ],
+      "priority": 10
+    },
+    {
+      "name": "csp-project-doc-architect",
+      "description": "Design and maintain project documentation architecture: folder structure, naming conventions, index files, and cross-references. Use when setting up docs for a new project, restructuring existing docs, or creating documentation standards.",
+      "layer": 2,
+      "category": "workflow",
+      "triggers": {
+        "keywords": [
+          "文档架构",
+          "doc structure",
+          "文件夹结构",
+          "documentation architecture",
+          "文档规范",
+          "organize project docs"
+        ],
+        "file_patterns": [
+          "docs/",
+          ".planning/",
+          "INDEX.md"
+        ],
+        "context": [
+          "new project setup",
+          "documentation restructuring",
+          "doc standards"
+        ]
+      },
+      "stack_detection": false,
+      "path": "csp-workflow/skills/csp-project-doc-architect/SKILL.md",
+      "deps": [
+        "csp-doc-lifecycle-manager"
+      ],
+      "priority": 10
+    },
+    {
+      "name": "csp-session-knowledge-extractor",
+      "description": "Extract reusable knowledge from development sessions and route to appropriate documentation stores. Use after completing a sprint, finishing a complex task, or when session discoveries should be preserved.",
+      "layer": 2,
+      "category": "workflow",
+      "triggers": {
+        "keywords": [
+          "提炼经验",
+          "沉淀知识",
+          "session review",
+          "extract learnings",
+          "会话总结",
+          "knowledge capture",
+          "经验提取"
+        ],
+        "file_patterns": [],
+        "context": [
+          "sprint completion",
+          "debugging session",
+          "planning session",
+          "knowledge hygiene"
+        ]
+      },
+      "stack_detection": false,
+      "path": "csp-workflow/skills/csp-session-knowledge-extractor/SKILL.md",
+      "deps": [
+        "csp-doc-lifecycle-manager",
+        "csp-project-doc-architect"
+      ],
       "priority": 10
     }
   ]

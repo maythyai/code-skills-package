@@ -407,6 +407,9 @@
 | `csp-verify-phase` | GSD/workflow | Workflow | 目标反向 + 三维度验证 | ✅ | ✅ 保留 |
 | `csp-hotfix` | CSP/workflow | Workflow | 热修复流程（跳过设计，直接修复+验证） | ✅ | ✅ 保留 |
 | `csp-tweak` | CSP/workflow | Workflow | 微调流程（轻量级小改动，简化验证） | ✅ | ✅ 保留 |
+| `csp-doc-lifecycle-manager` | CSP/workflow | Workflow | 文档生命周期管理：归类→归档→索引→裁剪的 5 步工作流 | ✅ | ✅ 保留（文档治理） |
+| `csp-project-doc-architect` | CSP/workflow | Workflow | 文档架构设计：标准目录树、命名规范、索引要求、卫生规则 | ✅ | ✅ 保留（文档治理） |
+| `csp-session-knowledge-extractor` | CSP/workflow | Workflow | 会话知识提炼：从开发会话中提取可复用知识并路由到文档 | ✅ | ✅ 保留（文档治理） |
 | `artifact-verification.md` | CSP/workflow | Reference | completeness/correctness/coherence | ✅ 保留 |
 | `change-artifacts/` templates | CSP/workflow | Templates | proposal/spec/design/tasks | ✅ 保留 |
 | Delta Specs | CSP 概念 | 模式 | ADDED/MODIFIED/REMOVED 增量合并 | ✅ 保留（brownfield） |

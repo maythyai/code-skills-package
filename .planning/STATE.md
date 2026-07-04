@@ -1,75 +1,8 @@
 # CSP Project State
 
-**Last Updated**: 2026-06-14
-**Current Version**: v0.3 → v0.4.0 (in progress)
-**Overall Progress**: 85% (v0.3 complete), v0.4.0 starting
-
----
-
-## v0.3 Release — RELEASED
-
-### Completed in v0.3
-- **AI Engineering** (5 skills + 3 agents): RAG, LLM app dev, vLLM serving, data pipelines, prompt engineering
-- **DevOps/Infrastructure** (4 skills): CI/CD, IaC, Kubernetes, cloud platform patterns
-- **Refactoring/Legacy** (3 skills): Refactoring strategies, tech debt assessment, legacy modernization
-- **Mobile** (3 skills + 3 agents): React Native patterns, mobile performance, cross-platform strategy
-- **Skill Optimization**: 8 large skills split (5,453 → 511 lines, 91% reduction)
-- **Architecture**: Updated to v0.3 (5-layer, sharded index, csp-auto DAG design)
-- **Documentation**: SKILL-INDEX.md sections 17-20, ARCHITECTURE.md updated
-- **Doc Ingest**: 10 documents ingested, SYNTHESIS.md created
-
----
-
-## v0.4.0 — 质量巩固与工程化 (COMPLETED ✅)
-
-### 目标
-基于 v0.3 思辨分析: 不开发 plugin 系统, 聚焦项目质量巩固。
-消除重叠 → 完善迁移 → 优化安装 → 开放贡献。
-
-### Phases
-
-| # | Phase | Status | Disk |
-|---|-------|--------|------|
-| 1 | Skill 重叠合并 | **Executed** ✅ (3/3 plans, 5 deprecated) | 01-skill |
-| 2 | 核心技能迁移 | **Executed** ✅ (4/4 plans) | 02-migration |
-| 3 | 安装器优化 | **Executed** ✅ | install.sh |
-| 4 | 自定义技能创作 | **Executed** ✅ | templates/guides/creator |
-| 5 | 质量审计与文档 | **Executed** ✅ | docs/changelog |
-
-### Key Decisions
-- **不开发 plugin 系统**: 过早抽象, 现有 recipes + registry 已足够灵活
-- **完成核心迁移优先**: ARCHITECTURE.md Phase 2-7 尚未执行
-- **11 组重叠需合并**: 参考 CSP-OVERLAP-ANALYSIS.md
-
----
-
-## Deferred Items
-
-### BMAD Integration (71% → deferred to v0.5+)
-- Phase 6: Quick Dev Flow & Integration
-- Phase 7: Verification & Audit
-
-### Compound Engineering (Partial → deferred)
-- Headless mode support
-- Discoverability Check
-- CONCEPTS.md maintenance
-- Session History
-- Strategy Anchor
-
-### Agency-Agents Integration (New → planned for v0.5.0)
-- **Status**: Planning Phase Complete
-- **Progress**: Detailed implementation plan created (IMPLEMENTATION_PLAN_AGENCY_AGENTS.md)
-- **Phases**: 
-  1. Engineering Division agents (Frontend Dev, Backend Arch, Code Reviewer, etc.) - High Priority
-  2. Testing Division agents (Evidence Collector, API Tester, etc.) - Medium Priority  
-  3. Specialized Division agents (MCP Builder, Codebase Onboarding Engineer, etc.) - Medium Priority
-- **Deliverables**:
-  - csp-agency-frontend-developer, csp-agency-backend-architect, csp-agency-code-reviewer
-  - csp-agency-software-architect, csp-agency-devops-automator
-  - csp-agency-evidence-collector, csp-agency-api-tester
-  - csp-agency-mcp-builder, csp-agency-codebase-onboarding-engineer
-- **Integration**: Maintain CSP's auto-routing and lazy-loading architecture
-- **Timeline**: Planned for v0.5.0 milestone
+**Last Updated**: 2026-07-04
+**Current Version**: v0.7.0 (released 2026-06-21)
+**Next Target**: v0.8.0 — 独立开发者场景扩展
 
 ---
 
@@ -77,19 +10,71 @@
 
 | Metric | Value |
 |--------|-------|
-| Total Skills (registry) | 497 (489 active, 8 deprecated) |
-| Total Agents | ~84 (csp-patterns) + 18 (csp-runtime) + 33 (csp-workflow) = 135 |
+| Total Skills (registry) | 538 (active + deprecated) |
+| V2-upgraded Skills | 20 |
+| SKPG Nodes / Edges | 597 / 638 |
+| Total Agents | ~135 (csp-patterns 84 + csp-runtime 18 + csp-workflow 33) |
 | Language Stacks | 15+ |
 | Installation Platforms | 18 |
 | Token Cost per Task | ~500-1,500 |
-| Full Load (reference) | ~12,000 tokens |
+| Full Load (reference) | ~12,000+ tokens |
 | Token Savings | 87-96% |
-| Overlap Groups | 0 — all resolved in v0.4.0 Phase 1 |
-| Registry Missing Paths | 0 — 100% consistent |
 | Frontmatter Compliance | 99.3% (name/description/layer) |
+| Registry Path Consistency | 100% (0 missing paths) |
 
 ---
 
-## Blockers/Concerns
+## Version History
+
+| Version | Release Date | Key Features |
+|---------|-------------|--------------|
+| v0.3 | 2026-06-12 | AI Engineering + DevOps + Refactoring + Mobile skills; 8 skill splits |
+| v0.4.0 | 2026-06-14 | 质量巩固: 11 组重叠合并, 核心迁移, 安装器优化, 创作工具 |
+| v0.5.0 | ~2026-06-16 | Agency-Agents 专业化代理集成 |
+| v0.6.0 | ~2026-06-18 | State-aware routing, SKILL.md v2 spec |
+| v0.7.0 | 2026-06-21 | SKPG 知识图谱, 置信度评分路由, 状态检测 hook |
+
+---
+
+## v0.7.0 核心能力
+
+1. **状态感知路由**: 基于项目上下文自动检测开发阶段，路由到对应 skill 组合
+2. **SKILL.md V2 规范**: 新增 classification (version/phase/domain/scope)、tool permissions、enhanced triggers
+3. **SKPG 知识图谱**: 597 节点 / 638 边的 skill 关联图谱，支持智能推荐和上下文扩展
+4. **置信度评分路由**: keyword 40% + intent 30% + context 30% 的三维置信度评分
+5. **状态检测 hook**: 自动检测 session 状态变化，触发 skill 加载/卸载
+
+---
+
+## Forward Planning
+
+### v0.8.0 方向 (详见 [indie_builder_plan.md](indie_builder_plan.md))
+
+| 优先级 | 方向 | 预估新增 Skills |
+|--------|------|----------------|
+| P0 | 商业化与产品运营 (支付/SEO/分析/邮件) | 5-8 |
+| P0 | 运维与部署 (Vercel/VPS/监控/On-call) | 6-10 |
+| P1 | 性能优化 (前端/后端/数据库/度量) | 3-5 |
+| P1 | API 设计与第三方集成 (Webhook/OAuth/治理) | 4-6 |
+| P2 | 测试工程 (E2E/视觉回归/Mock/ROI) | 3-4 |
+| P2 | 数据库运维 (备份/迁移/隐私/灾难恢复) | 2-3 |
+| P3 | 国际化、Monorepo、软性技能 | 6-9 |
+
+**总计**: 29-45 新增 skills → 目标 ~570-585 skills
+
+---
+
+## Blockers / Concerns
 
 None currently.
+
+---
+
+## Document Map
+
+- 入口索引: [INDEX.md](INDEX.md)
+- 路线图: [ROADMAP.md](ROADMAP.md)
+- 架构设计: [docs/ARCHITECTURE.md](../docs/ARCHITECTURE.md)
+- 技能目录: [docs/SKILL-INDEX.md](../docs/SKILL-INDEX.md)
+- 历史归档: [archive/](archive/)
+- 参考知识: [reference/](reference/)

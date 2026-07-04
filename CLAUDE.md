@@ -7,10 +7,10 @@ Unified AI coding skills from multiple open-source projects with auto-routing, l
 ```
 L0  csp-router    — task classification + skill selection (always loaded, ~800 tokens)
 L1  csp-meta      — methodology: brainstorming, TDD, debugging, spec-driven (~22 skills)
-L2  csp-workflow  — project lifecycle: plan → execute → verify → ship (~147 skills)
+L2  csp-workflow  — project lifecycle: plan → execute → verify → ship (~150 skills)
 L3  csp-patterns  — language/framework patterns, reviewers, build-resolvers (~313 skills)
 L4  csp-runtime   — autopilot, ralph, wiki, remember, self-improve (~55 skills)
-Total: 570 skills across 5 layers
+Total: 573 skills across 5 layers
 ```
 
 ## Docs
