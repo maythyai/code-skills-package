@@ -1,15 +1,18 @@
 ---
 name: csp-code-review
-description: Comprehensive code review specialist for correctness, reuse, simplification, and efficiency. Use when reviewing code changes, before merging PRs, or when asked to audit code quality.
+description: Comprehensive code review specialist for correctness, reuse, simplification, and efficiency. Use when reviewing code changes, before merging PRs, or when asked to audit code quality. Supports graph-enhanced mode when a code knowledge graph is available (see csp-code-graph).
 layer: 3
 category: patterns
 phase: review
 domain: quality
 scope: review
-tools: [Read, Grep, Glob]
+role: reviewer
+tools: [Read, Grep, Glob, Bash]
+related_skills: [csp-code-graph, csp-graph-impact, csp-graph-review, csp-multi-review]
 anti_rationalizations:
   "This code looks fine": "Looks can deceive. Review for correctness, reuse, and efficiency."
   "It works, let's move on": "Working code can still be wasteful or hard to maintain."
+  "The diff is small, skip impact analysis": "Small diffs in hub functions cascade widely. Check structural impact when graph is available."
 ---
 
 # Code Review
@@ -153,3 +156,35 @@ Principles:
 **Remember**: the reviewer's job is to protect correctness and long-term
 maintainability while keeping the author moving. Find the real problems, say them
 clearly, label their severity, and let the small stuff be small.
+
+## Graph-Enhanced Review (when knowledge graph is available)
+
+When a code knowledge graph is built (see `csp-code-graph`), augment each review
+dimension with structural context. The graph provides **callers, dependents, test
+coverage, and execution flow** information that pure diff reading cannot.
+
+### Pre-Review: Structural Context
+
+Before applying the six dimensions, gather structural context:
+
+1. **Detect changes** — map the diff to affected graph nodes with risk scores
+2. **Blast radius** — identify all callers/dependents within 2 hops
+3. **Flow context** — which execution flows pass through the changed code
+4. **Test coverage** — which impacted nodes have tests, which don't
+
+### Dimension Augmentation
+
+| Dimension | Graph augmentation |
+|-----------|-------------------|
+| Correctness | Check all callers (from graph) still work with the new contract; trace the execution flow end-to-end |
+| Reuse | Query graph for similar signatures; check if new code duplicates an existing node |
+| Simplification | Check fan-out (too many callees = complexity); detect dead edges (callers that no longer exist) |
+| Efficiency | Is the change on a hot flow? Check for N+1 via call graph (function called in loop) |
+| Security | Is the change on a security-critical flow? Does it modify a trust boundary node? |
+| Testability | Which TESTED_BY edges exist? What's the test gap in the blast radius? |
+
+### When Graph Is Unavailable
+
+Fall back to the standard six-dimension review above. The graph is an enhancement,
+not a prerequisite — manual review remains thorough without it. When graph tools
+are available, prefer `csp-graph-review` for the full graph-powered workflow.

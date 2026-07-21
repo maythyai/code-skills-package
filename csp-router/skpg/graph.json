@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generated_at": "2026-07-21T01:33:17.555Z",
+  "generated_at": "2026-07-21T05:48:02.493Z",
   "nodes": {
     "88f248904f44": {
       "id": "88f248904f44",
@@ -23,6 +23,20 @@
         "domain": "architecture",
         "scope": "design",
         "path": "csp-meta/skills/csp-brainstorming/SKILL.md"
+      }
+    },
+    "df147db122f7": {
+      "id": "df147db122f7",
+      "kind": "skill",
+      "name": "csp-code-graph",
+      "metadata": {
+        "layer": 1,
+        "category": "meta",
+        "phase": "review",
+        "domain": "architecture",
+        "role": "architect",
+        "scope": "analysis",
+        "path": "csp-meta/skills/csp-code-graph/SKILL.md"
       }
     },
     "515697e4bd9a": {
@@ -2235,6 +2249,7 @@
         "category": "patterns",
         "phase": "review",
         "domain": "quality",
+        "role": "reviewer",
         "scope": "review",
         "path": "csp-patterns/skills/csp-code-review/SKILL.md"
       }
@@ -5306,6 +5321,76 @@
         "path": "csp-workflow/skills/csp-fullstack-spec-generator/SKILL.md"
       }
     },
+    "f21c9d39fd81": {
+      "id": "f21c9d39fd81",
+      "kind": "skill",
+      "name": "csp-graph-architecture",
+      "metadata": {
+        "layer": 2,
+        "category": "workflow",
+        "phase": "define",
+        "domain": "architecture",
+        "role": "architect",
+        "scope": "analysis",
+        "path": "csp-workflow/skills/csp-graph-architecture/SKILL.md"
+      }
+    },
+    "5a0880720c47": {
+      "id": "5a0880720c47",
+      "kind": "skill",
+      "name": "csp-graph-build",
+      "metadata": {
+        "layer": 2,
+        "category": "workflow",
+        "phase": "build",
+        "domain": "architecture",
+        "role": "specialist",
+        "scope": "implementation",
+        "path": "csp-workflow/skills/csp-graph-build/SKILL.md"
+      }
+    },
+    "ee60bac12aac": {
+      "id": "ee60bac12aac",
+      "kind": "skill",
+      "name": "csp-graph-impact",
+      "metadata": {
+        "layer": 2,
+        "category": "workflow",
+        "phase": "review",
+        "domain": "quality",
+        "role": "specialist",
+        "scope": "analysis",
+        "path": "csp-workflow/skills/csp-graph-impact/SKILL.md"
+      }
+    },
+    "44a5b1566745": {
+      "id": "44a5b1566745",
+      "kind": "skill",
+      "name": "csp-graph-refactor",
+      "metadata": {
+        "layer": 2,
+        "category": "workflow",
+        "phase": "build",
+        "domain": "architecture",
+        "role": "specialist",
+        "scope": "implementation",
+        "path": "csp-workflow/skills/csp-graph-refactor/SKILL.md"
+      }
+    },
+    "1db4a8b44706": {
+      "id": "1db4a8b44706",
+      "kind": "skill",
+      "name": "csp-graph-review",
+      "metadata": {
+        "layer": 2,
+        "category": "workflow",
+        "phase": "review",
+        "domain": "quality",
+        "role": "reviewer",
+        "scope": "review",
+        "path": "csp-workflow/skills/csp-graph-review/SKILL.md"
+      }
+    },
     "fb21cdf9ca05": {
       "id": "fb21cdf9ca05",
       "kind": "skill",
@@ -5369,6 +5454,10 @@
       "metadata": {
         "layer": 2,
         "category": "workflow",
+        "phase": "review",
+        "domain": "quality",
+        "role": "reviewer",
+        "scope": "review",
         "path": "csp-workflow/skills/csp-multi-review/SKILL.md"
       }
     },
@@ -5870,6 +5959,12 @@
       "name": "define",
       "metadata": {}
     },
+    "3eebafeeb161": {
+      "id": "3eebafeeb161",
+      "kind": "phase",
+      "name": "review",
+      "metadata": {}
+    },
     "b16d759bceb5": {
       "id": "b16d759bceb5",
       "kind": "phase",
@@ -5880,12 +5975,6 @@
       "id": "709ab9a830c6",
       "kind": "phase",
       "name": "build",
-      "metadata": {}
-    },
-    "3eebafeeb161": {
-      "id": "3eebafeeb161",
-      "kind": "phase",
-      "name": "review",
       "metadata": {}
     },
     "68f34f00b5d0": {
@@ -6919,6 +7008,18 @@
     {
       "source": "e338188ebd66",
       "target": "3ef475552537",
+      "kind": "contains",
+      "metadata": {}
+    },
+    {
+      "source": "f84ac5e3d578",
+      "target": "df147db122f7",
+      "kind": "contains",
+      "metadata": {}
+    },
+    {
+      "source": "3eebafeeb161",
+      "target": "df147db122f7",
       "kind": "contains",
       "metadata": {}
     },
@@ -10182,6 +10283,66 @@
     },
     {
       "source": "0778b22ddb53",
+      "target": "f21c9d39fd81",
+      "kind": "contains",
+      "metadata": {}
+    },
+    {
+      "source": "e338188ebd66",
+      "target": "f21c9d39fd81",
+      "kind": "contains",
+      "metadata": {}
+    },
+    {
+      "source": "0778b22ddb53",
+      "target": "5a0880720c47",
+      "kind": "contains",
+      "metadata": {}
+    },
+    {
+      "source": "709ab9a830c6",
+      "target": "5a0880720c47",
+      "kind": "contains",
+      "metadata": {}
+    },
+    {
+      "source": "0778b22ddb53",
+      "target": "ee60bac12aac",
+      "kind": "contains",
+      "metadata": {}
+    },
+    {
+      "source": "3eebafeeb161",
+      "target": "ee60bac12aac",
+      "kind": "contains",
+      "metadata": {}
+    },
+    {
+      "source": "0778b22ddb53",
+      "target": "44a5b1566745",
+      "kind": "contains",
+      "metadata": {}
+    },
+    {
+      "source": "709ab9a830c6",
+      "target": "44a5b1566745",
+      "kind": "contains",
+      "metadata": {}
+    },
+    {
+      "source": "0778b22ddb53",
+      "target": "1db4a8b44706",
+      "kind": "contains",
+      "metadata": {}
+    },
+    {
+      "source": "3eebafeeb161",
+      "target": "1db4a8b44706",
+      "kind": "contains",
+      "metadata": {}
+    },
+    {
+      "source": "0778b22ddb53",
       "target": "fb21cdf9ca05",
       "kind": "contains",
       "metadata": {}
@@ -10224,6 +10385,12 @@
     },
     {
       "source": "0778b22ddb53",
+      "target": "bdc997988c72",
+      "kind": "contains",
+      "metadata": {}
+    },
+    {
+      "source": "3eebafeeb161",
       "target": "bdc997988c72",
       "kind": "contains",
       "metadata": {}
@@ -11706,9 +11873,9 @@
     }
   ],
   "stats": {
-    "node_count": 751,
-    "edge_count": 800,
-    "skill_count": 578,
+    "node_count": 757,
+    "edge_count": 813,
+    "skill_count": 584,
     "trigger_count": 162,
     "phase_count": 6,
     "category_count": 5
