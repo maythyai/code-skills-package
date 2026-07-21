@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "total_skills": 573,
+  "total_skills": 578,
   "shards": [],
   "skill_metadata": "skill-metadata.yaml",
   "skills": [
@@ -7085,6 +7085,21 @@
       "priority": 10
     },
     {
+      "name": "csp-lifecycle",
+      "description": "/csp-lifecycle [需求描述]",
+      "layer": 2,
+      "category": "workflow",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-workflow/commands/csp-lifecycle.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
       "name": "csp-manager",
       "description": "Interactive command center for managing multiple phases from one terminal",
       "layer": 2,
@@ -7790,6 +7805,21 @@
       "priority": 10
     },
     {
+      "name": "csp-doc-lifecycle-manager",
+      "description": "Manage project documentation lifecycle: categorize, archive, index, and prune documents. Use when organizing docs into folders (design/plan/architecture/prototypes/reference), creating INDEX.md files, archiving obsolete docs, or doing documentation health checks. Triggers: 整理文档, doc cleanup, organiz",
+      "layer": 2,
+      "category": "workflow",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-workflow/skills/csp-doc-lifecycle-manager/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
       "name": "csp-explore",
       "description": "Exploration phase specialist for understanding codebases, investigating patterns, and mapping architecture. Use when starting new work or investigating unfamiliar code.",
       "layer": 2,
@@ -7816,6 +7846,21 @@
       },
       "stack_detection": false,
       "path": "csp-workflow/skills/csp-full/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-fullstack-spec-generator",
+      "description": "全栈技术规格生成器。为每个 Feature 生成完整的、可直接指导实现的技术规格文档，覆盖： UI/UX 原型描述、数据库 Schema（DDL 级）、API 契约（OpenAPI 级）、后端架构设计、 前端组件树、基础设施需求、测试策略、安全考量。 当技术选型完成后需要生成详细实现规格、或用户需要\"每个 feature 的完整技术细节\"时使用。 关键词：全栈spec、fullstack spec、技术规格、implementation spec、详细设计、 数据库设计、API设计、schema design、前端设计、组件设计、接口契约、 generate spec、生成规格、feature",
+      "layer": 2,
+      "category": "workflow",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-workflow/skills/csp-fullstack-spec-generator/SKILL.md",
       "deps": [],
       "priority": 10
     },
@@ -7880,6 +7925,21 @@
       "priority": 10
     },
     {
+      "name": "csp-lifecycle-orchestrator",
+      "description": "产品全生命周期编排引擎。串联需求拆解→技术选型→全栈Spec→实施规划→并行开发→测试→审查→发布→运维 的完整链路，管理阶段间产物流转、门控检查、动态路由和迭代推进。 是 csp-requirement-decomposition、csp-tech-stack-advisor、csp-fullstack-spec-generator 的 上层编排器，同时与 csp-full 互补（csp-full 侧重执行，本 skill 侧重规格化拆解与选型）。 当用户需要\"从需求到上线的完整流程\"、\"自动化产品开发全链路\"时使用。 关键词：全生命周期、lifecycle、端到端编排、产品迭代、从需求到上",
+      "layer": 2,
+      "category": "workflow",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-workflow/skills/csp-lifecycle-orchestrator/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
       "name": "csp-multi-review",
       "description": "Structured code review using tiered persona agents, confidence-gated findings, and a merge/dedup pipeline. Use when comprehensive review is needed before creating a PR.",
       "layer": 2,
@@ -7921,6 +7981,51 @@
       },
       "stack_detection": false,
       "path": "csp-workflow/skills/csp-product-pulse/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-project-doc-architect",
+      "description": "Design and maintain project documentation architecture: folder structure, naming conventions, index files, and cross-references. Use when setting up docs for a new project, restructuring existing docs, or creating documentation standards. Triggers: 文档架构, doc structure, 文件夹结构, documentation architect",
+      "layer": 2,
+      "category": "workflow",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-workflow/skills/csp-project-doc-architect/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-requirement-decomposition",
+      "description": "需求全维度拆解引擎。将模糊需求/PRD/想法彻底分解为原子级 Feature，每个 Feature 附带用户故事、 验收标准、前后端边界、数据实体、技术维度和依赖关系。 当用户给出一个产品需求、功能描述、或想要从零构建系统时，第一步使用此 skill 进行结构化拆解。 关键词：需求拆解、feature 分解、requirement decomposition、break down requirements、 拆解需求、功能拆分、feature breakdown、需求分析、feature list、功能清单、 拆解功能、分解需求、analyze requirements、feature ext",
+      "layer": 2,
+      "category": "workflow",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-workflow/skills/csp-requirement-decomposition/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-session-knowledge-extractor",
+      "description": "Extract reusable knowledge from development sessions and route to appropriate documentation stores. Use after completing a sprint, finishing a complex task, or when session discoveries should be preserved. Triggers: 提炼经验, 沉淀知识, session review, extract learnings, 会话总结, knowledge capture, 经验提取.",
+      "layer": 2,
+      "category": "workflow",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-workflow/skills/csp-session-knowledge-extractor/SKILL.md",
       "deps": [],
       "priority": 10
     },
@@ -7981,6 +8086,21 @@
       },
       "stack_detection": false,
       "path": "csp-workflow/skills/csp-tech-debt-paydown/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-tech-stack-advisor",
+      "description": "全栈技术选型决策引擎。基于 Feature 需求的技术维度，为每个 Feature 和系统整体推荐最优技术栈： 主语言、Web 框架、数据库、缓存、消息队列、AI 框架、向量库、搜索引擎、实时通信、 对象存储、任务调度、监控可观测性等。输出结构化技术决策记录(ADR)和选型理由。 当需求拆解完成后需要进行技术选型、或用户询问\"用什么技术\"时使用。 关键词：技术选型、tech stack、technology selection、架构选型、技术栈推荐、 用什么数据库、用什么框架、tech decision、ADR、技术决策、选型建议、 消息队列选型、AI框架、向量库选择、database sel",
+      "layer": 2,
+      "category": "workflow",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-workflow/skills/csp-tech-stack-advisor/SKILL.md",
       "deps": [],
       "priority": 10
     },
@@ -8552,103 +8672,6 @@
       "stack_detection": false,
       "path": "csp-workflow/workflows/csp-transition.md",
       "deps": [],
-      "priority": 10
-    },
-    {
-      "name": "csp-doc-lifecycle-manager",
-      "description": "Manage project documentation lifecycle: categorize, archive, index, and prune documents. Use when organizing docs, creating INDEX.md files, archiving obsolete docs, or doing documentation health checks.",
-      "layer": 2,
-      "category": "workflow",
-      "triggers": {
-        "keywords": [
-          "整理文档",
-          "doc cleanup",
-          "organize docs",
-          "文档归类",
-          "文档管理",
-          "archive docs",
-          "documentation hygiene"
-        ],
-        "file_patterns": [
-          "INDEX.md",
-          "STATE.md",
-          ".planning/"
-        ],
-        "context": [
-          "documentation reorganization",
-          "milestone completion",
-          "onboarding"
-        ]
-      },
-      "stack_detection": false,
-      "path": "csp-workflow/skills/csp-doc-lifecycle-manager/SKILL.md",
-      "deps": [
-        "csp-project-doc-architect",
-        "csp-session-knowledge-extractor"
-      ],
-      "priority": 10
-    },
-    {
-      "name": "csp-project-doc-architect",
-      "description": "Design and maintain project documentation architecture: folder structure, naming conventions, index files, and cross-references. Use when setting up docs for a new project, restructuring existing docs, or creating documentation standards.",
-      "layer": 2,
-      "category": "workflow",
-      "triggers": {
-        "keywords": [
-          "文档架构",
-          "doc structure",
-          "文件夹结构",
-          "documentation architecture",
-          "文档规范",
-          "organize project docs"
-        ],
-        "file_patterns": [
-          "docs/",
-          ".planning/",
-          "INDEX.md"
-        ],
-        "context": [
-          "new project setup",
-          "documentation restructuring",
-          "doc standards"
-        ]
-      },
-      "stack_detection": false,
-      "path": "csp-workflow/skills/csp-project-doc-architect/SKILL.md",
-      "deps": [
-        "csp-doc-lifecycle-manager"
-      ],
-      "priority": 10
-    },
-    {
-      "name": "csp-session-knowledge-extractor",
-      "description": "Extract reusable knowledge from development sessions and route to appropriate documentation stores. Use after completing a sprint, finishing a complex task, or when session discoveries should be preserved.",
-      "layer": 2,
-      "category": "workflow",
-      "triggers": {
-        "keywords": [
-          "提炼经验",
-          "沉淀知识",
-          "session review",
-          "extract learnings",
-          "会话总结",
-          "knowledge capture",
-          "经验提取"
-        ],
-        "file_patterns": [],
-        "context": [
-          "sprint completion",
-          "debugging session",
-          "planning session",
-          "knowledge hygiene"
-        ]
-      },
-      "stack_detection": false,
-      "path": "csp-workflow/skills/csp-session-knowledge-extractor/SKILL.md",
-      "deps": [
-        "csp-doc-lifecycle-manager",
-        "csp-project-doc-architect"
-      ],
       "priority": 10
     }
   ]
