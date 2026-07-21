@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "total_skills": 578,
+  "total_skills": 584,
   "shards": [],
   "skill_metadata": "skill-metadata.yaml",
   "skills": [
@@ -31,6 +31,21 @@
       },
       "stack_detection": false,
       "path": "csp-meta/skills/csp-brainstorming/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-code-graph",
+      "description": "Code knowledge graph methodology and lifecycle orchestration. Use when starting a code review session, exploring codebase structure, or deciding which graph-powered analysis to run. Routes to the correct lifecycle stage: build, impact, review, architecture, or refactor.",
+      "layer": 1,
+      "category": "meta",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-meta/skills/csp-code-graph/SKILL.md",
       "deps": [],
       "priority": 10
     },
@@ -3306,7 +3321,7 @@
     },
     {
       "name": "csp-code-review",
-      "description": "Comprehensive code review specialist for correctness, reuse, simplification, and efficiency. Use when reviewing code changes, before merging PRs, or when asked to audit code quality.",
+      "description": "Comprehensive code review specialist for correctness, reuse, simplification, and efficiency. Use when reviewing code changes, before merging PRs, or when asked to audit code quality. Supports graph-enhanced mode when a code knowledge graph is available (see csp-code-graph).",
       "layer": 3,
       "category": "patterns",
       "triggers": {
@@ -7865,6 +7880,81 @@
       "priority": 10
     },
     {
+      "name": "csp-graph-architecture",
+      "description": "Codebase architecture analysis via knowledge graph. Use when onboarding to a codebase, understanding module boundaries, detecting coupling issues, identifying hub/bridge nodes, or generating architecture documentation. Covers community detection, centrality analysis, surprise scoring, and visualizat",
+      "layer": 2,
+      "category": "workflow",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-workflow/skills/csp-graph-architecture/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-graph-build",
+      "description": "Build and maintain the code knowledge graph. Use when indexing a new repository, updating a stale graph after changes, or diagnosing graph health issues. Covers initial build, incremental updates, custom language support, and graph integrity verification.",
+      "layer": 2,
+      "category": "workflow",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-workflow/skills/csp-graph-build/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-graph-impact",
+      "description": "Graph-powered change impact analysis. Use when a diff or PR is ready and you need to understand blast radius, affected execution flows, and downstream dependents before reviewing. Covers change detection, weighted BFS traversal, flow tracing, and risk scoring.",
+      "layer": 2,
+      "category": "workflow",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-workflow/skills/csp-graph-impact/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-graph-refactor",
+      "description": "Graph-powered safe refactoring. Use when renaming symbols, moving code between modules, extracting functions, detecting dead code, or validating that a refactoring won't break dependents. Covers rename preview, dependency-safe moves, dead code detection, and post-refactor verification.",
+      "layer": 2,
+      "category": "workflow",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-workflow/skills/csp-graph-refactor/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-graph-review",
+      "description": "Graph-powered code review with minimal context assembly and risk scoring. Use when reviewing a PR or diff with graph support — assembles only the code the reviewer needs, scores risk structurally, and runs pre-merge checks. Enhances csp-code-review with structural awareness.",
+      "layer": 2,
+      "category": "workflow",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-workflow/skills/csp-graph-review/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
       "name": "csp-hotfix",
       "description": "CSP 热修复工作流 — 快速修复线上 bug 的轻量级流程。 跳过 design 阶段，直接进入 build，适用于紧急 bug 修复。 Use when: 需要快速修复生产环境 bug、紧急安全漏洞、线上故障。 关键词: hotfix, 热修复, 紧急修复, 线上 bug, 生产问题, quick fix",
       "layer": 2,
@@ -7941,7 +8031,7 @@
     },
     {
       "name": "csp-multi-review",
-      "description": "Structured code review using tiered persona agents, confidence-gated findings, and a merge/dedup pipeline. Use when comprehensive review is needed before creating a PR.",
+      "description": "Structured code review using tiered persona agents, confidence-gated findings, and a merge/dedup pipeline. Use when comprehensive review is needed before creating a PR. Supports graph-enhanced context when code knowledge graph is available.",
       "layer": 2,
       "category": "workflow",
       "triggers": {

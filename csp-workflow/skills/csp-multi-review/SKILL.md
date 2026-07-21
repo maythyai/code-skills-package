@@ -1,8 +1,14 @@
 ---
 name: csp-multi-review
-description: "Structured code review using tiered persona agents, confidence-gated findings, and a merge/dedup pipeline. Use when comprehensive review is needed before creating a PR."
+description: "Structured code review using tiered persona agents, confidence-gated findings, and a merge/dedup pipeline. Use when comprehensive review is needed before creating a PR. Supports graph-enhanced context when code knowledge graph is available."
 layer: 2
 category: workflow
+phase: review
+domain: quality
+role: reviewer
+scope: review
+tools: [Read, Grep, Glob, Bash, Agent]
+related_skills: [csp-code-graph, csp-graph-impact, csp-graph-review, csp-code-review]
 ---
 
 | Priority | Definition | Action |
@@ -24,6 +30,29 @@ Findings use anchored confidence levels:
 Cross-reviewer agreement promotes one level: 50->75, 75->100.
 
 ## How to Run
+
+### Stage 0: Graph Context (when available)
+
+If a code knowledge graph is available (see `csp-code-graph`), gather structural context before dispatching reviewers:
+
+```bash
+# Check graph availability
+code-review-graph status 2>/dev/null && GRAPH_AVAILABLE=true || GRAPH_AVAILABLE=false
+```
+
+When `GRAPH_AVAILABLE=true`:
+
+1. **Detect changes with risk scoring** — `code-review-graph detect-changes --brief`
+2. **Compute blast radius** — `code-review-graph impact-radius --depth 2`
+3. **Identify affected flows** — `code-review-graph affected-flows`
+4. **Assemble minimal context** — `code-review-graph review-context`
+
+Feed results into subsequent stages:
+- **Stage 3 (reviewer selection):** High-risk nodes on security flows → force `csp-security-reviewer`; large blast radius → force `csp-correctness-reviewer`
+- **Stage 4 (sub-agent dispatch):** Each reviewer receives only the minimal graph context (callers, dependents, tests) instead of entire files — 38x–528x token savings
+- **Stage 6 (report):** Include structural risk score and blast radius summary
+
+When `GRAPH_AVAILABLE=false`: proceed with standard Stage 1 (git diff) as before. The graph is an enhancement, not a prerequisite.
 
 ### Stage 1: Determine scope
 

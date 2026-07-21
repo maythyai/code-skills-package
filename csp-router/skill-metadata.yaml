@@ -4,7 +4,7 @@
 # Regenerate: node scripts/build-skill-metadata.mjs
 
 version: 2.0
-generated_at: 2026-07-21T01:33:12.926Z
+generated_at: 2026-07-21T05:47:56.525Z
 skills:
   csp-brainstorming:
     phase: define
@@ -19,6 +19,25 @@ skills:
     related_skills:
       - csp-plan-phase
       - csp-spec-contract
+  csp-code-graph:
+    phase: review
+    domain: architecture
+    role: architect
+    scope: analysis
+    tools:
+      - Read
+      - Grep
+      - Glob
+      - Bash
+      - Agent
+    related_skills:
+      - csp-graph-build
+      - csp-graph-impact
+      - csp-graph-review
+      - csp-graph-architecture
+      - csp-graph-refactor
+      - csp-code-review
+      - csp-multi-review
   csp-mvp-scoping:
     phase: define
     domain: architecture
@@ -133,6 +152,78 @@ skills:
       - Glob
       - Grep
       - Bash
+  csp-graph-architecture:
+    phase: define
+    domain: architecture
+    role: architect
+    scope: analysis
+    tools:
+      - Bash
+      - Read
+      - Glob
+      - Grep
+    related_skills:
+      - csp-graph-impact
+      - csp-graph-refactor
+      - csp-code-review
+  csp-graph-build:
+    phase: build
+    domain: architecture
+    role: specialist
+    scope: implementation
+    tools:
+      - Bash
+      - Read
+      - Glob
+      - Grep
+    related_skills:
+      - csp-graph-impact
+      - csp-graph-review
+      - csp-graph-architecture
+  csp-graph-impact:
+    phase: review
+    domain: quality
+    role: specialist
+    scope: analysis
+    tools:
+      - Bash
+      - Read
+      - Grep
+      - Glob
+    related_skills:
+      - csp-graph-review
+      - csp-graph-architecture
+      - csp-code-review
+  csp-graph-refactor:
+    phase: build
+    domain: architecture
+    role: specialist
+    scope: implementation
+    tools:
+      - Bash
+      - Read
+      - Grep
+      - Glob
+      - Edit
+    related_skills:
+      - csp-graph-impact
+      - csp-graph-architecture
+      - csp-code-review
+  csp-graph-review:
+    phase: review
+    domain: quality
+    role: reviewer
+    scope: review
+    tools:
+      - Bash
+      - Read
+      - Grep
+      - Glob
+      - Agent
+    related_skills:
+      - csp-code-review
+      - csp-multi-review
+      - csp-graph-build
   csp-implementation-phase:
     phase: build
     domain: patterns
@@ -155,6 +246,22 @@ skills:
       - Glob
       - Grep
       - Bash
+  csp-multi-review:
+    phase: review
+    domain: quality
+    role: reviewer
+    scope: review
+    tools:
+      - Read
+      - Grep
+      - Glob
+      - Bash
+      - Agent
+    related_skills:
+      - csp-code-graph
+      - csp-graph-impact
+      - csp-graph-review
+      - csp-code-review
   csp-requirement-decomposition:
     phase: define
     domain: architecture
@@ -202,11 +309,18 @@ skills:
   csp-code-review:
     phase: review
     domain: quality
+    role: reviewer
     scope: review
     tools:
       - Read
       - Grep
       - Glob
+      - Bash
+    related_skills:
+      - csp-code-graph
+      - csp-graph-impact
+      - csp-graph-review
+      - csp-multi-review
   csp-java-testing:
     phase: verify
     domain: testing
