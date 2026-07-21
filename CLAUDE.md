@@ -10,7 +10,7 @@ L1  csp-meta      — methodology: brainstorming, TDD, debugging, spec-driven (~
 L2  csp-workflow  — project lifecycle: plan → execute → verify → ship (~153 skills)
 L3  csp-patterns  — language/framework patterns, reviewers, build-resolvers (~340 skills)
 L4  csp-runtime   — autopilot, ralph, wiki, remember, self-improve (~55 skills)
-Total: 573 skills across 5 layers
+Total: 578 skills across 5 layers
 ```
 
 ## Docs

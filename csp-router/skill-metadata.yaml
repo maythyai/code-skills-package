@@ -4,7 +4,7 @@
 # Regenerate: node scripts/build-skill-metadata.mjs
 
 version: 2.0
-generated_at: 2026-06-22T10:53:54.462Z
+generated_at: 2026-07-21T01:33:12.926Z
 skills:
   csp-brainstorming:
     phase: define
@@ -122,6 +122,17 @@ skills:
       - Grep
       - WebFetch
       - WebSearch
+  csp-fullstack-spec-generator:
+    phase: plan
+    domain: architecture
+    scope: design
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
+      - Bash
   csp-implementation-phase:
     phase: build
     domain: patterns
@@ -133,6 +144,28 @@ skills:
       - Bash
       - Glob
       - Grep
+  csp-lifecycle-orchestrator:
+    phase: define
+    domain: architecture
+    scope: design
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
+      - Bash
+  csp-requirement-decomposition:
+    phase: define
+    domain: architecture
+    scope: analysis
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
+      - Bash
   csp-shipping-and-launch:
     phase: ship
     domain: devops
@@ -144,6 +177,17 @@ skills:
       - Bash
       - Glob
       - Grep
+  csp-tech-stack-advisor:
+    phase: plan
+    domain: architecture
+    scope: design
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
+      - Bash
   csp-verify-phase:
     phase: verify
     domain: quality
