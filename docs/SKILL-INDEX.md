@@ -2,7 +2,7 @@
 
 > 生成时间：2026-06-20
 > 版本：v0.7.0 — 状态感知路由 + 置信度评分 + SKILL.md v2 规范
-> 状态：584 个技能分布于 5 个层级，支持状态感知和置信度路由
+> 状态：585 个技能分布于 5 个层级，支持状态感知和置信度路由
 
 ---
 
@@ -455,6 +455,12 @@
 | `csp-react-native-build-resolver` | csp-patterns/agents | Agent | React Native 构建错误修复 | ✅ 保留（独特） |
 | `csp-react-native-reviewer` | csp-patterns/agents | Agent | React Native 代码审查 | ✅ 保留（独特） |
 | `csp-mobile-performance-auditor` | csp-patterns/agents | Agent | 移动端性能审计 | ✅ 保留（独特） |
+
+### 20.5 技术可视化 (Technical Diagrams)
+
+| 名称 | 来源 | 类型 | 描述 | V2 | 合并建议 |
+|------|------|------|------|----|----------|
+| `csp-tech-diagram` | csp-patterns/skills | Skill | 技术图引擎（架构图/流程图/序列图/C4/云部署/事件流/运维/UML/ER/网络拓扑），确定性渲染+几何校验+语义GIF+交互HTML | ✅ | ✅ 保留（独特） |
 
 ### 21. awesome-copilot 融入 (v0.5.0 新增)
 
