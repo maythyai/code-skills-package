@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "total_skills": 584,
+  "total_skills": 585,
   "shards": [],
   "skill_metadata": "skill-metadata.yaml",
   "skills": [
@@ -4651,6 +4651,21 @@
       },
       "stack_detection": false,
       "path": "csp-patterns/skills/csp-tech-debt-assessment/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-tech-diagram",
+      "description": "Use when the user asks to create, visualize, or animate a technical diagram — software architecture, data flow, flowcharts, sequence diagrams, C4 models, cloud deployments, event streams, observability traces, agent/memory systems, UML, ER, network topology, timelines, or technical concept maps. Pro",
+      "layer": 3,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/csp-tech-diagram/SKILL.md",
       "deps": [],
       "priority": 10
     },

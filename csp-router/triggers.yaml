@@ -1971,3 +1971,48 @@ sdd_state_routing:
   "经验提取":
     skills: [csp-session-knowledge-extractor]
     weight: 50
+  "架构图":
+    skills: [csp-tech-diagram]
+    weight: 60
+  "流程图":
+    skills: [csp-tech-diagram]
+    weight: 60
+  "序列图":
+    skills: [csp-tech-diagram]
+    weight: 60
+  "技术图":
+    skills: [csp-tech-diagram]
+    weight: 60
+  "画架构图":
+    skills: [csp-tech-diagram]
+    weight: 70
+  "画流程图":
+    skills: [csp-tech-diagram]
+    weight: 70
+  "diagram":
+    skills: [csp-tech-diagram]
+    weight: 50
+  "architecture diagram":
+    skills: [csp-tech-diagram]
+    weight: 60
+  "flowchart":
+    skills: [csp-tech-diagram]
+    weight: 60
+  "sequence diagram":
+    skills: [csp-tech-diagram]
+    weight: 60
+  "tech graph":
+    skills: [csp-tech-diagram]
+    weight: 60
+  "生成GIF":
+    skills: [csp-tech-diagram]
+    weight: 60
+  "animate diagram":
+    skills: [csp-tech-diagram]
+    weight: 60
+  "数据流图":
+    skills: [csp-tech-diagram]
+    weight: 60
+  "系统架构":
+    skills: [csp-tech-diagram]
+    weight: 55
