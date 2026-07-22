@@ -4,6 +4,11 @@ All notable changes to CSP will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## Unreleased
+
+### 新增
+- `csp-tech-diagram` — 确定性技术图引擎（14+ 图类型：架构/流程/序列/C4/云部署/事件流/运维/UML/ER/网络拓扑/时间线/思维导图），5 层几何校验 + 正交 Dijkstra 路由 + 12 风格 + 语义 GIF 动画 + 离线交互 HTML，集成 doc-lifecycle 文档资产管理与 doc-insight 结构提取
+
 ## v0.7.1 — 2026-07-04
 
 ### 新增
