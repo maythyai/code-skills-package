@@ -99,7 +99,7 @@ After saving the plan, offer execution choice:
 **Which approach?"**
 
 **If Subagent-Driven chosen:**
-- **REQUIRED SUB-SKILL:** Use csp:subagent-driven-development
+- **REQUIRED SUB-SKILL:** Use csp-executing-plans
 - Fresh subagent per task + two-stage review
 
 **If Inline Execution chosen:**

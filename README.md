@@ -4,8 +4,8 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
 [![npm](https://img.shields.io/npm/v/code-skills-package)](https://www.npmjs.com/package/code-skills-package)
-[![v0.7.1](https://img.shields.io/badge/version-0.7.1-green)](./CHANGELOG.md)
-[![Skills: 584](https://img.shields.io/badge/skills-585-orange)](./SKILL-INDEX.md)
+[![v0.8.0](https://img.shields.io/badge/version-0.8.0-green)](./CHANGELOG.md)
+[![Skills: 585](https://img.shields.io/badge/skills-585-orange)](./SKILL-INDEX.md)
 [![Platforms: 18+](https://img.shields.io/badge/platforms-18+-brightgreen)](./docs/INSTALL.md)
 
 **Unified AI Programming Skills · 18+ Platforms · 15+ Languages · 585 Skills**
@@ -26,7 +26,7 @@ Integrates capabilities from multiple open-source AI coding projects into a laye
 
 </div>
 
-CSP (Code Skills Package) consolidates the essence of multiple open-source AI programming projects into an integrated solution. It uses a five-layer architecture to load skills on demand, with confidence scoring router and skill knowledge graph, allowing AI programming assistants to load only the minimum skill set required for each task during a session. At the same time, CSP remembers user usage habits and project context, providing increasingly accurate services as the project evolves. With 584 skills spanning full-stack development, DevOps, security, and a dedicated indie developer toolkit covering deployment, monetization, performance, and more, CSP supports the complete journey from idea to production.
+CSP (Code Skills Package) consolidates the essence of multiple open-source AI programming projects into an integrated solution. It uses a five-layer architecture to load skills on demand, with confidence scoring router and skill knowledge graph, allowing AI programming assistants to load only the minimum skill set required for each task during a session. At the same time, CSP remembers user usage habits and project context, providing increasingly accurate services as the project evolves. With 585 skills spanning full-stack development, DevOps, security, and a dedicated indie developer toolkit covering deployment, monetization, performance, and more, CSP supports the complete journey from idea to production.
 
 ## Core Features
 
@@ -36,7 +36,7 @@ CSP (Code Skills Package) consolidates the essence of multiple open-source AI pr
 | **Token Savings** | Five-layer on-demand loading + index sharding, ~500–1,500 tokens per task | Full loading ~12,000+ tokens |
 | **Skill Orchestration** | Static Recipe + Dynamic DAG, supports branching / parallel / rollback / automatic merging | Fixed pipeline / no orchestration |
 | **Continuous Learning** | 5-dimensional knowledge extraction, gets smarter about projects and developers | Stateless, starts from zero each time |
-| **Full-Stack Coverage** | 584 skills · 5 layers · 15+ languages · 18+ platforms | Single language / limited scenarios |
+| **Full-Stack Coverage** | 585 skills · 5 layers · 15+ languages · 18+ platforms | Single language / limited scenarios |
 | **Open Extension** | Custom Skills + Recipe + Creation Wizard | Closed ecosystem / no extension |
 
 ### Smart Routing
@@ -45,7 +45,7 @@ The router uses triple-signal weighted scoring (keywords 40% + intent 30% + cont
 
 ### On-Demand Loading Architecture
 
-Only L0 router remains resident (~800 tokens), L1–L4 loads on demand. Index sharding reduces resident tokens by 98%, dynamic unloading and shared context further reduce long session overhead. Per-task token consumption controlled to ~500–1,500.
+Only L0 router remains resident (~2,000 tokens (SKILL.md + routing index summary)), L1–L4 loads on demand. Index sharding reduces resident tokens by ~85%, dynamic unloading and shared context further reduce long session overhead. Per-task token consumption controlled to ~500–1,500.
 
 ### Skill Orchestration Engine
 
@@ -161,7 +161,7 @@ CSP uses a five-layer layered architecture. Only the router (L0) loads at sessio
 
 ```
 ┌──────────────────────────────────────────────────────────────┐
-│  L0  csp-router      Session-start resident (~800 tokens)    │
+│  L0  csp-router      Session-start resident (~2,000 tokens)  │
 │      Task classification + confidence scoring + state        │
 │      awareness + SKPG knowledge graph enhancement            │
 ├──────────────────────────────────────────────────────────────┤
@@ -202,7 +202,7 @@ User input → State detection (Git/tech stack/phase)
 
 | Strategy | Effect |
 |----------|--------|
-| Index sharding (on-demand loading by node type) | Resident tokens reduced by 98% |
+| Index sharding (on-demand loading by node type) | Resident tokens reduced by ~85% |
 | Summary caching (~30 tokens/skill per line) | Avoid repeated loading, reduce 15% |
 | Dynamic unloading (release L3/L4 content after completion) | Long sessions reduced by 30% |
 | Shared context (pass via `.csp/artifacts/`) | Cross-skill calls reduced by 20% |
@@ -226,7 +226,7 @@ CSP supports 18+ AI programming platforms, including Claude Code, Cursor, Trae, 
 | Document | Description |
 |----------|-------------|
 | [ARCHITECTURE.md](./docs/ARCHITECTURE.md) | Complete architecture design (11 chapters · DAG orchestration · SKPG · Token strategy) |
-| [SKILL-INDEX.md](./SKILL-INDEX.md) | Complete index of 584 skills/agents |
+| [SKILL-INDEX.md](./SKILL-INDEX.md) | Complete index of 585 skills/agents |
 | [INSTALL.md](./docs/INSTALL.md) | Complete installation guide (18+ platforms) |
 | [SKILL-AUTHORING.md](./docs/SKILL-AUTHORING.md) | Skill authoring best practices |
 | [SKILL-SPEC.md](./docs/SKILL-SPEC.md) | SKILL.md specification document |

@@ -6,6 +6,8 @@
 
 ## 快速开始
 
+> **Note:** `/csp-doctor` is available via `csp-sdk doctor`. `/csp-update` and `/csp-sync-skills` are planned for v0.9.0.
+
 在已安装 CSP 的项目中运行以下命令即可更新：
 
 ```
@@ -52,10 +54,10 @@
 
 ```bash
 # 全局安装
-npx -y --package=code-skills-package-cc@latest -- code-skills-package-cc --<runtime> --global
+npx -y --package=code-skills-package@latest -- code-skills-package --<runtime> --global
 
 # 项目级安装
-npx -y --package=code-skills-package-cc@latest -- code-skills-package-cc --<runtime> --local
+npx -y --package=code-skills-package@latest -- code-skills-package --<runtime> --local
 ```
 
 其中 `<runtime>` 为你的 AI 工具名称，如 `claude`、`cursor`、`gemini`、`codex` 等。
@@ -168,7 +170,7 @@ CSP 采用 `X.Y.Z` 语义化版本号，详见 [VERSIONING.md](./VERSIONING.md)�
 
 ```bash
 # 使用 npm 安装指定版本
-npx -y --package=code-skills-package-cc@<version> -- code-skills-package-cc --<runtime> --global
+npx -y --package=code-skills-package@<version> -- code-skills-package --<runtime> --global
 ```
 
 ### Q: 开发版本（本地修改源码）如何更新？

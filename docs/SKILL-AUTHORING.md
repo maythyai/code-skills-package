@@ -19,7 +19,7 @@ description: Skill Authoring Best Practices — Format, Structure, Content Guide
 name: csp-skill-slug          # kebab-case, starts with csp-
 description: When to use + what it does     # Verb first, one sentence
 version: 0.1.0                # semver
-layer: 4                      # 1=meta, 2=workflow, 4=patterns, 5=runtime
+layer: 3                      # L0=router, L1=meta, L2=workflow, L3=patterns, L4=runtime
 category: patterns            # Category label
 ---
 ```
@@ -84,8 +84,8 @@ Configure triggers in `registry.json`:
 |------------------|--------|
 | Is methodology/workflow (TDD, debugging, brainstorming) | L1 csp-meta |
 | Is project lifecycle workflow (plan, execute, verify, ship) | L2 csp-workflow |
-| Is language/framework specific patterns (Python, Rust, React patterns) | L4 csp-patterns |
-| Is runtime functionality (auto-routing, memory, self-improve) | L5 csp-runtime |
+| Is language/framework specific patterns (Python, Rust, React patterns) | L3 csp-patterns |
+| Is runtime functionality (auto-routing, memory, self-improve) | L4 csp-runtime |
 
 ## Testing Checklist
 

@@ -4,7 +4,7 @@ description: >
   Automatic session-boundary learning orchestrator. Extracts, classifies, and
   stores learnings across 5 dimensions (project core, user needs, developer profile,
   long-term memory, skill feedback). Delegates to csp-remember, csp-learner,
-  skill-optimizer, csp-compound. Runs at Stop/PreCompact/SessionEnd hooks.
+  skill-optimizer, csp-compound. [PLANNED] Runs at Stop/PreCompact/SessionEnd hooks.
   Manual trigger: /csp-learning-loop [--full|--delta|--query <dimension>]
 layer: 4
 category: runtime
@@ -26,7 +26,7 @@ tools: [Read, Write, Edit, Bash, Glob, Grep]
 Session-boundary learning orchestrator that transforms scattered session knowledge into a unified, queryable intelligence store (`.csp/intel/`) that accumulates across sessions.
 
 ## When to Use
-- **Automatically** at session boundaries via hooks (Stop, PreCompact, SessionEnd)
+- **[PLANNED] Automatically** at session boundaries via hooks (Stop, PreCompact, SessionEnd)
 - **Manually**: `/csp-learning-loop` to force a full extraction cycle
 - **Query**: `/csp-learning-loop --query <dimension>` to read stored intel
 
@@ -77,6 +77,42 @@ digraph learning_loop {
 }
 ```
 
+## Current Implementation (v0.8.0)
+
+The delta extraction script (`scripts/learning-loop-delta.mjs`) implements a focused subset of the full architecture:
+
+**Signal extraction:**
+- Reads the last 50,000 characters of the session transcript
+- Regex-based pattern matching (no embeddings, no similarity scoring):
+  - **Preferences**: `/I prefer|我喜欢|always use/` → confidence 0.8
+  - **Feedback**: `/perfect|不对|wrong/` → confidence 0.7
+  - **Language detection**: `/中文|Chinese|English/` → confidence 0.85
+
+**Storage mechanics:**
+- Atomic writes via tmp file + rename (prevents corruption on crash)
+- Appends to `changelog.jsonl` for audit trail
+- Max 3 entries per dimension per session (prevents noise accumulation)
+- Always exits 0 (never blocks the host session on errors)
+
+**What is NOT yet implemented** (see Roadmap below):
+- No semantic deduplication — entries are appended without similarity checks
+- No confidence decay — stored values never decrease over time
+- No archival or compression of dimension files
+- No hook-triggered automation — must be invoked manually
+
+## Roadmap (v0.9+)
+
+The following features are designed but not yet implemented:
+
+| Feature | Description | Priority |
+|---------|-------------|----------|
+| Similarity-based dedup | Embedding comparison with >0.85 threshold to merge near-duplicate entries | High |
+| Confidence decay | `confidence -= 0.02` per session for entries not re-confirmed | Medium |
+| Low-confidence archival | Move entries below 0.3 confidence to a separate archive section | Medium |
+| Dimension compression | Summarize lowest-confidence entries when a dimension exceeds 2000 tokens | Low |
+| Hook-triggered automation | Auto-run at Stop/PreCompact/SessionEnd hooks without manual invocation | High |
+| Delegate skill integration | Orchestrate csp-remember, csp-learner, skill-optimizer, csp-compound | Medium |
+
 ## Execution Modes
 
 ### Mode: Delta (default, hook-triggered)
@@ -89,7 +125,7 @@ Lightweight incremental extraction at session boundaries.
 4. Apply merge strategy (see references/merge-strategy.md):
    - Append new entries
    - Update existing entries with higher confidence if re-confirmed
-   - Skip duplicates (content similarity > 0.85)
+   - [PLANNED] Skip duplicates (content similarity > 0.85)
 5. Write updated dimension files + changelog entry
 6. Update `_meta.json` timestamps and counts
 
@@ -99,10 +135,10 @@ Comprehensive extraction delegating to all source skills.
 
 1. Run all 5 delegate skills in sequence
 2. Aggregate outputs into dimension files
-3. Run deduplication pass across all dimensions
-4. Apply confidence decay to entries not re-confirmed
-5. Archive entries below min_confidence (0.3)
-6. Compress if any dimension exceeds 2000 tokens
+3. [PLANNED] Run deduplication pass across all dimensions
+4. [PLANNED] Apply confidence decay to entries not re-confirmed
+5. [PLANNED] Archive entries below min_confidence (0.3)
+6. [PLANNED] Compress if any dimension exceeds 2000 tokens
 7. Generate summary report
 
 ### Mode: Query (`/csp-learning-loop --query <dimension>`)
@@ -128,11 +164,11 @@ Read-only access for other skills or the user.
 See `references/merge-strategy.md` for full specification.
 
 **Core rules:**
-- **Dedup**: Content similarity > 0.85 → merge into single entry, combine evidence
+- **[PLANNED] Dedup**: Content similarity > 0.85 → merge into single entry, combine evidence
 - **Confidence update**: `new_confidence = max(old, new)` for re-confirmed entries
-- **Decay**: `confidence -= 0.02` per session where entry is not re-confirmed
-- **Archive**: Entries below 0.3 confidence are moved to an archive section
-- **Compress**: When dimension exceeds 2000 tokens, summarize lowest-confidence entries
+- **[PLANNED] Decay**: `confidence -= 0.02` per session where entry is not re-confirmed
+- **[PLANNED] Archive**: Entries below 0.3 confidence are moved to an archive section
+- **[PLANNED] Compress**: When dimension exceeds 2000 tokens, summarize lowest-confidence entries
 - **Changelog**: Every write appends to `changelog.jsonl`
 
 ## Integration with Auto-Memory
@@ -160,7 +196,7 @@ Respects `CSP_DISABLED_HOOKS` — if `learning-loop` is listed, all hooks are sk
 - **DO NOT** store Googleable knowledge — defer to docs/search
 - **DO NOT** duplicate auto-memory entries — cross-reference instead
 - **DO NOT** run full extraction mid-session — only at boundaries
-- **DO NOT** exceed 2000 tokens per dimension file — compress when needed
+- **DO NOT** exceed 2000 tokens per dimension file — [PLANNED] compress when needed
 - **DO NOT** store API keys, passwords, or credentials — filter aggressively
 - **DO NOT** block on hook errors — always exit 0
 

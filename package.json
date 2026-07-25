@@ -1,31 +1,38 @@
 {
   "name": "code-skills-package",
-  "version": "0.7.1",
+  "version": "0.8.0",
   "description": "Unified AI programming skills for 18 coding platforms — auto-routing, lazy loading, spec-driven workflows",
   "bin": {
-    "csp-install": "./install.sh"
+    "csp-install": "./install.sh",
+    "csp-sdk": "./bin/csp-sdk.mjs"
   },
   "files": [
     "install.sh",
+    "bin/",
     "csp-router",
     "csp-meta",
     "csp-workflow",
     "csp-patterns",
     "csp-runtime",
-    "scripts/sync-version.js",
+    "shared/scripts/",
+    "scripts/",
     "README.md",
     "README_zh.md",
-    "LICENSE"
+    "LICENSE",
+    "VERSION"
   ],
   "scripts": {
     "postinstall": "echo '' && echo '  CSP installed! Run in your project directory:' && echo '    cd /your/project && csp-install' && echo ''",
-    "build:graph": "node shared/scripts/build-graph.mjs",
-    "verify:graph": "node shared/scripts/verify-graph-source.mjs",
-    "build:registry": "node shared/scripts/build-registry.mjs",
-    "build:page": "node shared/scripts/build-page.mjs",
+    "build:graph": "node scripts/build-skpg.mjs",
+    "verify:graph": "node scripts/verify-graph-source.mjs",
+    "build:registry": "node scripts/build-registry.mjs",
+    "build:page": "node scripts/build-page.mjs",
     "build:all": "npm run build:registry && npm run build:graph && npm run build:page",
     "count:skills": "node scripts/count-skills.mjs",
-    "validate:skills": "node scripts/validate-skill-v2.mjs csp-patterns/skills && node scripts/count-skills.mjs"
+    "validate:skills": "node scripts/validate-skill-v2.mjs csp-patterns/skills && node scripts/validate-skill-v2.mjs csp-meta/skills && node scripts/validate-skill-v2.mjs csp-workflow/skills && node scripts/validate-skill-v2.mjs csp-runtime/skills && node scripts/count-skills.mjs",
+    "validate:triggers": "node scripts/validate-triggers.mjs",
+    "validate:all": "npm run validate:skills && npm run validate:triggers",
+    "test": "node bin/csp-sdk.mjs doctor && npm run validate:all"
   },
   "keywords": [
     "ai",

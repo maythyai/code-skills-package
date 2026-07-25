@@ -82,17 +82,15 @@ CSP 采用五层架构,从路由到技能内容逐层深入:
 ├─────────────────────────────────────────────────────┤
 │  Layer 1: csp-meta    (SP 14 个元技能)               │
 │  ─ 方法论层: brainstorming, TDD, debugging...        │
+│  ─ 规范驱动: propose → specs → apply → verify        │
 ├─────────────────────────────────────────────────────┤
 │  Layer 2: csp-workflow (CSP 93 workflows 骨架)      │
 │  ─ 项目管理: plan → execute → verify → ship          │
 ├─────────────────────────────────────────────────────┤
-│  Layer 1: csp-meta    (spec-driven 方法论并入元技能)          │
-│  ─ 规范驱动: propose → specs → apply → verify        │
-├─────────────────────────────────────────────────────┤
-│  Layer 4: csp-patterns (技术库 ~200 skills)     │
+│  Layer 3: csp-patterns (技术库 ~200 skills)     │
 │  ─ 语言/框架 patterns, reviewers, build-resolvers    │
 ├─────────────────────────────────────────────────────┤
-│  Layer 5: csp-runtime (运行时能力 ~40 skills)     │
+│  Layer 4: csp-runtime (运行时能力 ~40 skills)     │
 │  ─ autopilot, ralph, wiki, remember, self-improve    │
 └─────────────────────────────────────────────────────┘
 ```
@@ -104,9 +102,9 @@ CSP 采用五层架构,从路由到技能内容逐层深入:
 | Layer 1 | 元技能 | 14 |
 | Layer 2 | 工作流 Commands + Agents | 67 + 33 |
 | Layer 3 | OPSX Commands + Templates | 12 + 8 |
-| Layer 4 | Agents + Skill Categories | 64 + 71 |
-| Layer 5 | 运行时 Skills | 40 |
-| **总计** | | **509 skills** |
+| Layer 3 | Agents + Skill Categories | 64 + 71 |
+| Layer 4 | 运行时 Skills | 40 |
+| **总计** | | **585 skills** |
 
 ---
 

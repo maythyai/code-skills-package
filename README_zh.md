@@ -4,8 +4,8 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
 [![npm](https://img.shields.io/npm/v/code-skills-package)](https://www.npmjs.com/package/code-skills-package)
-[![v0.7.1](https://img.shields.io/badge/version-0.7.1-green)](./CHANGELOG.md)
-[![Skills: 584](https://img.shields.io/badge/skills-585-orange)](./SKILL-INDEX.md)
+[![v0.8.0](https://img.shields.io/badge/version-0.8.0-green)](./CHANGELOG.md)
+[![Skills: 585](https://img.shields.io/badge/skills-585-orange)](./SKILL-INDEX.md)
 [![Platforms: 18+](https://img.shields.io/badge/platforms-18+-brightgreen)](./docs/INSTALL.md)
 
 **统一 AI 编程技能 · 18+ 个平台 · 15+ 语言 · 585 个技能**
@@ -26,7 +26,7 @@
 
 </div>
 
-CSP（Code Skills Package）将多个开源 AI 编程项目的精华整合为一体化解决方案。它通过五层架构按需加载技能，配合置信度评分路由器和技能知识图谱，让 AI 编程助手在每次会话中只加载任务所需的最小 skill 集合。同时，CSP 会记忆用户的使用习惯和项目上下文，随着项目演进提供越来越精准的服务。584 个技能覆盖全栈开发、DevOps、安全审计等领域，并专为独立开发者提供部署运维、商业化运营、性能调优、国际化、Monorepo 管理等专项技能包，支持从 idea 到 production 的完整旅程。
+CSP（Code Skills Package）将多个开源 AI 编程项目的精华整合为一体化解决方案。它通过五层架构按需加载技能，配合置信度评分路由器和技能知识图谱，让 AI 编程助手在每次会话中只加载任务所需的最小 skill 集合。同时，CSP 会记忆用户的使用习惯和项目上下文，随着项目演进提供越来越精准的服务。585 个技能覆盖全栈开发、DevOps、安全审计等领域，并专为独立开发者提供部署运维、商业化运营、性能调优、国际化、Monorepo 管理等专项技能包，支持从 idea 到 production 的完整旅程。
 
 ## 核心亮点
 
@@ -36,7 +36,7 @@ CSP（Code Skills Package）将多个开源 AI 编程项目的精华整合为一
 | **Token 节约** | 五层按需加载 + 索引分片，单次任务 ~500–1,500 tokens | 全量加载 ~12,000+ tokens |
 | **技能编排** | 静态 Recipe + 动态 DAG，支持分支 / 并行 / 回退 / 自动合并 | 固定流水线 / 无编排 |
 | **持续学习** | 5 维度知识提取，越用越懂项目和开发者 | 无状态，每次从零开始 |
-| **全栈覆盖** | 584 技能 · 5 层级 · 15+ 语言 · 18+ 平台 | 单一语言 / 有限场景 |
+| **全栈覆盖** | 585 技能 · 5 层级 · 15+ 语言 · 18+ 平台 | 单一语言 / 有限场景 |
 | **开放扩展** | 自定义 Skill + Recipe + 创作向导 | 封闭生态 / 无扩展 |
 
 ### 智能路由
@@ -45,7 +45,7 @@ CSP（Code Skills Package）将多个开源 AI 编程项目的精华整合为一
 
 ### 按需加载架构
 
-仅 L0 路由器常驻（~800 tokens），L1–L4 按需加载。索引分片将常驻 token 减少 98%，动态卸载和共享上下文进一步降低长会话开销。单次任务 token 消耗控制在 ~500–1,500。
+仅 L0 路由器常驻（~2,000 tokens（SKILL.md + 路由索引摘要）），L1–L4 按需加载。索引分片将常驻 token 减少 ~85%，动态卸载和共享上下文进一步降低长会话开销。单次任务 token 消耗控制在 ~500–1,500。
 
 ### 技能编排引擎
 
@@ -161,7 +161,7 @@ CSP 采用五层分层架构。仅路由器（L0）在会话启动时加载，�
 
 ```
 ┌──────────────────────────────────────────────────────────────┐
-│  L0  csp-router      会话启动常驻（~800 tokens）              │
+│  L0  csp-router      会话启动常驻（~2,000 tokens）            │
 │      任务分类 + 置信度评分 + 状态感知 + SKPG 知识图谱增强      │
 ├──────────────────────────────────────────────────────────────┤
 │  L1  csp-meta        方法论（~300 tokens/skill · ~24 个）     │
@@ -200,7 +200,7 @@ CSP 采用五层分层架构。仅路由器（L0）在会话启动时加载，�
 
 | 策略 | 效果 |
 |------|------|
-| 索引分片（按节点类型按需加载） | 常驻 token 减少 98% |
+| 索引分片（按节点类型按需加载） | 常驻 token 减少 ~85% |
 | 摘要缓存（单行 ~30 tokens/skill） | 避免重复加载，减少 15% |
 | 动态卸载（完成后释放 L3/L4 正文） | 长会话减少 30% |
 | 共享上下文（`.csp/artifacts/` 传递） | 跨 skill 调用减少 20% |

@@ -43,7 +43,14 @@ jobs:
           node-version: '20'
 
       - name: Validate SKILL.md v2 frontmatter
-        run: node scripts/validate-skill-v2.mjs csp-patterns/skills
+        run: |
+          node scripts/validate-skill-v2.mjs csp-patterns/skills
+          node scripts/validate-skill-v2.mjs csp-meta/skills
+          node scripts/validate-skill-v2.mjs csp-workflow/skills
+          node scripts/validate-skill-v2.mjs csp-runtime/skills
+
+      - name: Validate trigger keywords
+        run: node scripts/validate-triggers.mjs
 
       - name: Verify registry.json is up to date
         run: |

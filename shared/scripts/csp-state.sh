@@ -1,4 +1,8 @@
 #!/bin/bash
+# DEPRECATED: This script is superseded by csp-sdk (bin/csp-sdk.mjs).
+# Kept for backward compatibility with L1-era skills (csp-hotfix, csp-tweak).
+# New workflows should use: csp-sdk query state.load / state.save / state.update
+#
 # CSP State — unified interface for workflow state management
 # Usage: csp-state.sh <subcommand> [args...]
 #

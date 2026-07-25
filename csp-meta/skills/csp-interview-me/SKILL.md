@@ -41,4 +41,4 @@ After applying interview-me:
 - [ ] A concrete restate (Outcome / User / Why now / Success / Constraint / Out of scope) was written back to the user
 - [ ] The user confirmed the restate with an explicit yes (not "whatever you think," not "sounds good," not silence)
 - [ ] At the stop point, the agent could predict reactions to the next three questions it would ask
-- [ ] Any handoff to a downstream skill (`csp-idea-refine`, `csp-spec-driven-development`) was framed in terms of the confirmed intent, not the original underspecified ask
+- [ ] Any handoff to a downstream skill (`csp-brainstorming`, `csp-spec-driven-development`) was framed in terms of the confirmed intent, not the original underspecified ask

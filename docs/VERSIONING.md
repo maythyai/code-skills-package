@@ -14,11 +14,13 @@ VERSION (手动改这一处)
   └──→ scripts/sync-version.js ──→ package.json / CLAUDE.md / install.sh / README
 ```
 
+> **Note:** `scripts/sync-version.js` 实际以 `package.json.version` 为数据源（脚本会读取 package.json，并同步到 CLAUDE.md / install.sh / README，但不读写 VERSION 文件）。因此 `package.json.version` 是 sync-version.js 的 source of truth；`VERSION` 文件为手动维护的人类可读版本号，需按下方流程与 package.json 保持一致。
+
 **操作**：修改版本号时只改 `VERSION` 文件的第一行，然后运行同步脚本：
 
 ```bash
 node scripts/sync-version.js          # 同步到所有文件
-node scripts/sync-version.js 0.8.0    # 先改 VERSION 再同步
+node scripts/sync-version.js 0.8.0    # 先更新 package.json 再同步
 ```
 
 ## 版本号规则 (X.Y.Z)

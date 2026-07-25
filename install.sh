@@ -32,6 +32,16 @@ if [ "$_has_layers" = "false" ]; then
   _csp_tmp="$(mktemp -d)"
   trap 'rm -rf "$_csp_tmp"' EXIT
   _csp_branch="${CSP_BRANCH:-master}"
+  # Security: validate branch name to prevent shell injection via CSP_BRANCH env var.
+  # Reject branches containing spaces, semicolons, or pipe characters.
+  case "$_csp_branch" in
+    *" "*|*";"*|*"|"*)
+      echo "  CSP: error: invalid CSP_BRANCH value (contains illegal characters)" >&2
+      exit 1
+      ;;
+  esac
+  # NOTE: Users should verify the integrity of the downloaded archive (e.g., check
+  # the commit SHA or tag) before running this script in security-sensitive environments.
   echo "  CSP: downloading full repo..." >&2
   curl -fsSL "https://github.com/maythyai/code-skills-package/archive/refs/heads/${_csp_branch}.tar.gz" \
     | tar xz -C "$_csp_tmp"
@@ -651,6 +661,135 @@ ${list}
 EOF
 }
 
+bootstrap_cursor() {
+  local n; n=$(scan_skill_entries | wc -l | tr -d ' ')
+  local list; list=$(generate_skill_list)
+  cat <<EOF
+---
+alwaysApply: true
+---
+
+# CSP (Code Skills Package)
+
+本项目已安装 CSP 技能包（${n} 个 skills）。
+
+## 核心规则
+
+1. **收到任务时，先通过 csp-router 路由** — 识别任务类型并加载对应 skill 组合
+2. **设计先于编码**
+3. **测试先于实现**
+4. **验证先于完成**
+
+## 可用 Skills
+
+${list}
+
+## 如何使用
+
+当任务匹配某个 skill 时，读取 \`.cursor/skills/<layer>/<skill>/SKILL.md\` 并遵循其流程。
+EOF
+}
+
+bootstrap_codex() {
+  local n; n=$(scan_skill_entries | wc -l | tr -d ' ')
+  local list; list=$(generate_skill_list)
+  cat <<EOF
+# CSP (Code Skills Package)
+
+本项目已安装 CSP 技能包（${n} 个 skills）。
+
+## 核心规则
+
+1. **收到任务时，先通过 csp-router 路由** — 识别任务类型并加载对应 skill 组合
+2. **设计先于编码**
+3. **测试先于实现**
+4. **验证先于完成**
+
+## 可用 Skills
+
+${list}
+
+## 如何使用
+
+当任务匹配某个 skill 时，读取 \`.codex/skills/<layer>/<skill>/SKILL.md\` 并遵循其流程。
+EOF
+}
+
+bootstrap_deerflow() {
+  local n; n=$(scan_skill_entries | wc -l | tr -d ' ')
+  local list; list=$(generate_skill_list)
+  cat <<EOF
+# CSP (Code Skills Package)
+
+本项目已安装 CSP 技能包（${n} 个 skills）。
+
+## 核心规则
+
+1. **收到任务时，先通过 csp-router 路由** — 识别任务类型并加载对应 skill 组合
+2. **设计先于编码**
+3. **测试先于实现**
+4. **验证先于完成**
+
+## 可用 Skills
+
+${list}
+
+## 如何使用
+
+当任务匹配某个 skill 时，读取 \`skills/custom/<layer>/<skill>/SKILL.md\` 并遵循其流程。
+EOF
+}
+
+bootstrap_opencode() {
+  local n; n=$(scan_skill_entries | wc -l | tr -d ' ')
+  local list; list=$(generate_skill_list)
+  cat <<EOF
+# CSP (Code Skills Package)
+
+本项目已安装 CSP 技能包（${n} 个 skills）。
+
+## 核心规则
+
+1. **收到任务时，先通过 csp-router 路由** — 识别任务类型并加载对应 skill 组合
+2. **设计先于编码**
+3. **测试先于实现**
+4. **验证先于完成**
+
+## 可用 Skills
+
+${list}
+
+## 如何使用
+
+当任务匹配某个 skill 时，读取 \`.opencode/skills/<layer>/<skill>/SKILL.md\` 并遵循其流程。
+EOF
+}
+
+bootstrap_qwen() {
+  local n; n=$(scan_skill_entries | wc -l | tr -d ' ')
+  local list; list=$(generate_skill_list)
+  cat <<EOF
+# CSP (Code Skills Package)
+
+本项目已安装 CSP 技能包（${n} 个 skills）。
+
+## 核心规则
+
+1. **收到任务时，先通过 csp-router 路由** — 识别任务类型并加载对应 skill 组合
+2. **设计先于编码**
+3. **测试先于实现**
+4. **验证先于完成**
+
+## 可用 Skills
+
+${list}
+
+## 如何使用
+
+当任务匹配某个 skill 时，读取 \`.qwen/skills/<layer>/<skill>/SKILL.md\` 并遵循其流程。
+EOF
+}
+
 # ─── Platform Installation ────────────────────────────────────────
 
 install_skills_to() {
@@ -729,6 +868,12 @@ generate_bootstrap_for() {
     windsurf)                bootstrap_windsurf ;;
     kiro)                    bootstrap_kiro ;;
     vscode)                  bootstrap_vscode ;;
+    cursor)                  bootstrap_cursor ;;
+    codex)                   bootstrap_codex ;;
+    deerflow)                bootstrap_deerflow ;;
+    opencode)                bootstrap_opencode ;;
+    openclaw|claw-code)      bootstrap_claude ;;
+    qwen-code)               bootstrap_qwen ;;
     *)                       echo "" ;;
   esac
 }
@@ -788,6 +933,32 @@ install_for_platform() {
     vscode)
       mkdir -p "$base_dir/.github"
       append_bootstrap_to_file "$base_dir/.github/copilot-instructions.md" "$bootstrap_content"
+      ;;
+    cursor)
+      mkdir -p "$base_dir/.cursor/rules"
+      echo "$bootstrap_content" > "$base_dir/.cursor/rules/csp.md"
+      echo "  ✅ Cursor: bootstrap rule → .cursor/rules/csp.md"
+      ;;
+    codex)
+      append_bootstrap_to_file "$base_dir/AGENTS.md" "$bootstrap_content"
+      ;;
+    deerflow)
+      mkdir -p "$base_dir/.deerflow/rules"
+      echo "$bootstrap_content" > "$base_dir/.deerflow/rules/csp.md"
+      echo "  ✅ DeerFlow: bootstrap rule → .deerflow/rules/csp.md"
+      ;;
+    opencode)
+      mkdir -p "$base_dir/.opencode/rules"
+      echo "$bootstrap_content" > "$base_dir/.opencode/rules/csp.md"
+      echo "  ✅ OpenCode: bootstrap rule → .opencode/rules/csp.md"
+      ;;
+    openclaw|claw-code)
+      append_bootstrap_to_file "$base_dir/CLAUDE.md" "$bootstrap_content"
+      ;;
+    qwen-code)
+      mkdir -p "$base_dir/.qwen/rules"
+      echo "$bootstrap_content" > "$base_dir/.qwen/rules/csp.md"
+      echo "  ✅ Qwen Code: bootstrap rule → .qwen/rules/csp.md"
       ;;
   esac
 }
@@ -856,7 +1027,7 @@ do_uninstall() {
   done
 
   # Clean bootstrap files (sentinel-based)
-  for file in CLAUDE.md GEMINI.md HERMES.md CONVENTIONS.md .windsurfrules; do
+  for file in CLAUDE.md GEMINI.md HERMES.md CONVENTIONS.md .windsurfrules .github/copilot-instructions.md AGENTS.md; do
     if clean_bootstrap_section "$base_dir/$file" 2>/dev/null; then
       echo "  ✅ 清理 bootstrap: $file"
       total_bootstraps=$((total_bootstraps + 1))
@@ -864,7 +1035,7 @@ do_uninstall() {
   done
 
   # Delete standalone bootstrap files
-  for file in .trae/rules/csp.md .qoder/rules/csp.md .antigravity/rules.md .kiro/steering/csp.md; do
+  for file in .trae/rules/csp.md .qoder/rules/csp.md .antigravity/rules.md .kiro/steering/csp.md .cursor/rules/csp.md .deerflow/rules/csp.md .opencode/rules/csp.md .qwen/rules/csp.md; do
     if [ -f "$base_dir/$file" ]; then
       rm -f "$base_dir/$file"
       echo "  ✅ 删除 bootstrap: $file"
@@ -936,8 +1107,8 @@ show_help() {
     Layer 0: csp-router     路由器（任务分类 + skill 选择）
     Layer 1: csp-meta       元技能（brainstorming, TDD, debugging...）
     Layer 2: csp-workflow   工作流（plan → execute → verify → ship）
-    Layer 4: csp-patterns   技术库（语言/框架 patterns, reviewers）
-    Layer 5: csp-runtime    运行时（autopilot, ralph, wiki, remember）
+    Layer 3: csp-patterns   技术库（语言/框架 patterns, reviewers）
+    Layer 4: csp-runtime    运行时（autopilot, ralph, wiki, remember）
 
 HELP
 }

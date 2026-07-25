@@ -13,7 +13,7 @@ trigger_index:
     skills: [csp-code-review]
     weight: 40
   "debug":
-    skills: [csp-debug, csp-systematic-debugging, csp-debug-session]
+    skills: [csp-debug, csp-systematic-debugging, csp-systematic-debugging]
     weight: 50
   "调试":
     skills: [csp-debug, csp-systematic-debugging]
@@ -43,7 +43,7 @@ trigger_index:
     skills: [csp-plan-phase, csp-writing-plans]
     weight: 45
   "设计":
-    skills: [csp-plan-phase, csp-brainstorming]
+    skills: [csp-plan-phase, csp-brainstorming, csp-solutioning-phase]
     weight: 40
   "test":
     skills: [csp-tdd, csp-e2e-testing]
@@ -94,7 +94,7 @@ trigger_index:
     skills: [csp-explore, csp-map-codebase]
     weight: 40
   "refactor":
-    skills: [csp-code-review, csp-plan-phase]
+    skills: [csp-code-review, csp-plan-phase, csp-tech-debt-paydown, csp-refactorer]
     weight: 40
   "重构":
     skills: [csp-code-review, csp-plan-phase]
@@ -154,15 +154,15 @@ trigger_index:
     skills: [csp-quick-dev]
     weight: 50
   "prototype":
-    skills: [csp-quick-dev, csp-rapid-prototype]
+    skills: [csp-quick-dev, csp-quick-dev]
     weight: 45
   "原型":
-    skills: [csp-quick-dev, csp-rapid-prototype]
+    skills: [csp-quick-dev, csp-quick-dev]
     weight: 45
   "快速验证":
     weight: 40
   "MVP":
-    skills: [csp-quick-dev]
+    skills: [csp-quick-dev, csp-mvp-scoping]
     weight: 45
   "rapid":
     skills: [csp-quick-dev]
@@ -236,23 +236,20 @@ trigger_index:
   "架构":
     skills: [csp-solutioning-phase, csp-plan-phase]
     weight: 50
-  "设计":
-    skills: [csp-solutioning-phase, csp-plan-phase, csp-brainstorming]
-    weight: 45
   "create stories":
     skills: [csp-solutioning-phase]
     weight: 50
   "实现":
-    skills: [csp-implementation-phase, csp-implement]
+    skills: [csp-implementation-phase, csp-implementation-phase]
     weight: 50
   "implement":
-    skills: [csp-implementation-phase, csp-implement]
+    skills: [csp-implementation-phase, csp-implementation-phase]
     weight: 50
   "编码":
-    skills: [csp-implementation-phase, csp-implement]
+    skills: [csp-implementation-phase, csp-implementation-phase]
     weight: 45
   "code":
-    skills: [csp-implementation-phase, csp-implement]
+    skills: [csp-implementation-phase, csp-implementation-phase]
     weight: 45
   "api":
     skills: [csp-backend-patterns]
@@ -273,19 +270,19 @@ trigger_index:
     skills: [csp-code-simplification]
     weight: 40
   "开发":
-    skills: [csp-implementation-phase, csp-implement]
+    skills: [csp-implementation-phase, csp-implementation-phase]
     weight: 45
   "build":
-    skills: [csp-implementation-phase, csp-implement]
+    skills: [csp-implementation-phase, csp-implementation-phase]
     weight: 45
   "添加功能":
-    skills: [csp-implementation-phase, csp-implement]
+    skills: [csp-implementation-phase, csp-implementation-phase]
     weight: 45
   "添加":
-    skills: [csp-implementation-phase, csp-implement]
+    skills: [csp-implementation-phase, csp-implementation-phase]
     weight: 40
   "创建":
-    skills: [csp-implementation-phase, csp-implement]
+    skills: [csp-implementation-phase, csp-implementation-phase]
     weight: 40
 
   # ─── Indie Developer Skills Triggers ───
@@ -472,9 +469,6 @@ trigger_index:
   "scope creep":
     skills: [csp-scope-guard]
     weight: 50
-  "MVP":
-    skills: [csp-mvp-scoping]
-    weight: 50
   "on-call":
     skills: [csp-solo-oncall]
     weight: 50
@@ -490,9 +484,6 @@ trigger_index:
   "technical debt":
     skills: [csp-tech-debt-paydown]
     weight: 50
-  "refactor":
-    skills: [csp-tech-debt-paydown, csp-refactorer]
-    weight: 45
   "rollback":
     skills: [csp-indie-deploy-ops]
     weight: 45
@@ -617,64 +608,64 @@ stack_rules:
     skills: [csp-verification]
     weight: 40
   "executing":
-    skills: [executing-plans]
+    skills: [csp-executing-plans]
     weight: 40
   "executing plans":
-    skills: [executing-plans]
+    skills: [csp-executing-plans]
     weight: 40
   "分支清理":
-    skills: [finishing-a-development-branch]
+    skills: [csp-finishing-a-development-branch]
     weight: 45
   "完成":
-    skills: [finishing-a-development-branch]
+    skills: [csp-finishing-a-development-branch]
     weight: 45
   "branch":
-    skills: [finishing-a-development-branch]
+    skills: [csp-finishing-a-development-branch]
     weight: 40
   "receiving":
-    skills: [receiving-code-review]
+    skills: [csp-receiving-code-review]
     weight: 40
   "requesting":
-    skills: [requesting-code-review]
+    skills: [csp-requesting-code-review]
     weight: 40
   "性能优化":
-    skills: [skill-optimizer]
+    skills: [csp-skill-optimizer]
     weight: 45
   "optimizer":
-    skills: [skill-optimizer]
+    skills: [csp-skill-optimizer]
     weight: 40
   "skill":
-    skills: [skill-optimizer]
+    skills: [csp-skill-optimizer]
     weight: 40
   "排错":
-    skills: [systematic-debugging]
+    skills: [csp-systematic-debugging]
     weight: 45
   "debugging":
-    skills: [systematic-debugging]
+    skills: [csp-systematic-debugging]
     weight: 40
   "systematic":
-    skills: [systematic-debugging]
+    skills: [csp-systematic-debugging]
     weight: 40
   "Git":
-    skills: [using-git-worktrees]
+    skills: [csp-using-git-worktrees]
     weight: 45
   "using":
-    skills: [using-git-worktrees]
+    skills: [csp-using-git-worktrees]
     weight: 40
   "写作":
-    skills: [writing-plans]
+    skills: [csp-writing-plans]
     weight: 45
   "编写":
-    skills: [writing-plans]
+    skills: [csp-writing-plans]
     weight: 45
   "plans":
-    skills: [writing-plans]
+    skills: [csp-writing-plans]
     weight: 40
   "writing":
-    skills: [writing-plans]
+    skills: [csp-writing-plans]
     weight: 40
   "技能":
-    skills: [writing-skills]
+    skills: [csp-writing-skills]
     weight: 45
   "工作流":
     weight: 45
@@ -755,109 +746,109 @@ stack_rules:
     skills: [csp-strategy]
     weight: 40
   "agent introspection debugging":
-    skills: [agent-introspection-debugging]
+    skills: [csp-agent-introspection-debugging]
     weight: 40
   "agent sort":
-    skills: [agent-sort]
+    skills: [csp-agent-sort]
     weight: 40
   "agentic":
-    skills: [agentic-engineering]
+    skills: [csp-agentic-engineering]
     weight: 40
   "agentic engineering":
-    skills: [agentic-engineering]
+    skills: [csp-agentic-engineering]
     weight: 40
   "文章":
-    skills: [article-writing]
+    skills: [csp-article-writing]
     weight: 45
   "article":
-    skills: [article-writing]
+    skills: [csp-article-writing]
     weight: 40
   "article writing":
-    skills: [article-writing]
+    skills: [csp-article-writing]
     weight: 40
   "autonomous":
-    skills: [autonomous-loops]
+    skills: [csp-autonomous-loops]
     weight: 40
   "autonomous loops":
-    skills: [autonomous-loops]
+    skills: [csp-autonomous-loops]
     weight: 40
   "后端":
-    skills: [backend-patterns]
+    skills: [csp-backend-patterns]
     weight: 45
   "后端开发":
-    skills: [backend-patterns]
+    skills: [csp-backend-patterns]
     weight: 45
   "backend patterns":
-    skills: [backend-patterns]
+    skills: [csp-backend-patterns]
     weight: 40
   "品牌声音":
-    skills: [brand-voice]
+    skills: [csp-brand-voice]
     weight: 45
   "品牌语调":
-    skills: [brand-voice]
+    skills: [csp-brand-voice]
     weight: 45
   "brand":
-    skills: [brand-voice]
+    skills: [csp-brand-voice]
     weight: 40
   "brand voice":
-    skills: [brand-voice]
+    skills: [csp-brand-voice]
     weight: 40
   "bun":
-    skills: [bun-runtime]
+    skills: [csp-bun-runtime]
     weight: 40
   "bun runtime":
-    skills: [bun-runtime]
+    skills: [csp-bun-runtime]
     weight: 40
   "标准":
-    skills: [coding-standards]
+    skills: [csp-coding-standards]
     weight: 45
   "项目标准":
-    skills: [coding-standards]
+    skills: [csp-coding-standards]
     weight: 45
   "coding":
-    skills: [coding-standards]
+    skills: [csp-coding-standards]
     weight: 40
   "coding standards":
-    skills: [coding-standards]
+    skills: [csp-coding-standards]
     weight: 40
   "内容引擎":
-    skills: [content-engine]
+    skills: [csp-content-engine]
     weight: 45
   "内容生成":
-    skills: [content-engine]
+    skills: [csp-content-engine]
     weight: 45
   "content":
-    skills: [content-engine]
+    skills: [csp-content-engine]
     weight: 40
   "content engine":
-    skills: [content-engine]
+    skills: [csp-content-engine]
     weight: 40
   "内容哈希":
-    skills: [content-hash-cache-pattern]
+    skills: [csp-content-hash-cache-pattern]
     weight: 45
   "最佳实践":
-    skills: [content-hash-cache-pattern]
+    skills: [csp-content-hash-cache-pattern]
     weight: 45
   "cache":
-    skills: [content-hash-cache-pattern]
+    skills: [csp-content-hash-cache-pattern]
     weight: 40
   "cpp":
-    skills: [cpp-coding-standards]
+    skills: [csp-cpp-coding-standards]
     weight: 40
   "单元测试":
-    skills: [cpp-testing]
+    skills: [csp-cpp-testing]
     weight: 45
   "cpp testing":
-    skills: [cpp-testing]
+    skills: [csp-cpp-testing]
     weight: 40
   "跨平台":
-    skills: [crosspost]
+    skills: [csp-crosspost]
     weight: 45
   "跨端":
-    skills: [crosspost]
+    skills: [csp-crosspost]
     weight: 45
   "crosspost":
-    skills: [crosspost]
+    skills: [csp-crosspost]
     weight: 40
   "agentic identity trust":
     skills: [csp-agentic-identity-trust]
@@ -1184,106 +1175,106 @@ stack_rules:
     skills: [csp-workflow-architect]
     weight: 40
   "数据库":
-    skills: [database-migrations]
+#     skills: [database-migrations] # FIXED: all skill references invalid, commented out
     weight: 45
   "数据库迁移":
-    skills: [database-migrations]
+#     skills: [database-migrations] # FIXED: all skill references invalid, commented out
     weight: 45
   "database":
-    skills: [database-migrations]
+#     skills: [database-migrations] # FIXED: all skill references invalid, commented out
     weight: 40
   "database migrations":
-    skills: [database-migrations]
+#     skills: [database-migrations] # FIXED: all skill references invalid, commented out
     weight: 40
   "优先搜索":
-    skills: [deep-research]
+    skills: [csp-deep-research]
     weight: 45
   "搜索":
-    skills: [deep-research]
+    skills: [csp-deep-research]
     weight: 45
   "deep":
-    skills: [deep-research]
+    skills: [csp-deep-research]
     weight: 40
   "deep research":
-    skills: [deep-research]
+    skills: [csp-deep-research]
     weight: 40
   "django":
-    skills: [django-patterns]
+    skills: [csp-django-patterns]
     weight: 40
   "django patterns":
-    skills: [django-patterns]
+    skills: [csp-django-patterns]
     weight: 40
   "安全审查":
-    skills: [django-security]
+    skills: [csp-django-security]
     weight: 45
   "django security":
-    skills: [django-security]
+    skills: [csp-django-security]
     weight: 40
   "流程":
-    skills: [dmux-workflows]
+    skills: [csp-dmux-workflows]
     weight: 45
   "dmux":
-    skills: [dmux-workflows]
+    skills: [csp-dmux-workflows]
     weight: 40
   "dmux workflows":
-    skills: [dmux-workflows]
+    skills: [csp-dmux-workflows]
     weight: 40
   "Docker":
-    skills: [docker-patterns]
+    skills: [csp-docker-patterns]
     weight: 45
   "容器化":
-    skills: [docker-patterns]
+    skills: [csp-docker-patterns]
     weight: 45
   "docker patterns":
-    skills: [docker-patterns]
+    skills: [csp-docker-patterns]
     weight: 40
   "E2E":
-    skills: [e2e-testing]
+    skills: [csp-e2e-testing]
     weight: 45
   "e2e testing":
-    skills: [e2e-testing]
+    skills: [csp-e2e-testing]
     weight: 40
   "eval":
-    skills: [eval-harness]
+    skills: [csp-eval-harness]
     weight: 40
   "eval harness":
-    skills: [eval-harness]
+    skills: [csp-eval-harness]
     weight: 40
   "claude":
-    skills: [everything-claude-code]
+    skills: [csp-everything-claude-code]
     weight: 40
   "exa":
-    skills: [exa-search]
+    skills: [csp-exa-search]
     weight: 40
   "exa search":
-    skills: [exa-search]
+    skills: [csp-exa-search]
     weight: 40
   "fal":
-    skills: [fal-ai-media]
+    skills: [csp-fal-ai-media]
     weight: 40
   "fal ai media":
-    skills: [fal-ai-media]
+    skills: [csp-fal-ai-media]
     weight: 40
   "fastapi":
-    skills: [fastapi-patterns]
+    skills: [csp-fastapi-patterns]
     weight: 40
   "fastapi patterns":
-    skills: [fastapi-patterns]
+    skills: [csp-fastapi-patterns]
     weight: 40
   "前端":
-    skills: [frontend-patterns]
+    skills: [csp-frontend-patterns]
     weight: 45
   "前端开发":
-    skills: [frontend-patterns]
+    skills: [csp-frontend-patterns]
     weight: 45
   "frontend":
-    skills: [frontend-patterns]
+    skills: [csp-frontend-patterns]
     weight: 40
   "frontend patterns":
-    skills: [frontend-patterns]
+    skills: [csp-frontend-patterns]
     weight: 40
   "frontend slides":
-    skills: [frontend-slides]
+    skills: [csp-frontend-slides]
     weight: 40
   "Go":
     skills: [csp-golang-patterns]
@@ -1298,22 +1289,22 @@ stack_rules:
     skills: [csp-golang-testing]
     weight: 40
   "investor":
-    skills: [investor-materials]
+    skills: [csp-investor-materials]
     weight: 40
   "investor materials":
-    skills: [investor-materials]
+    skills: [csp-investor-materials]
     weight: 40
   "investor outreach":
-    skills: [investor-outreach]
+    skills: [csp-investor-outreach]
     weight: 40
   "java":
-    skills: [java-coding-standards]
+    skills: [csp-java-coding-standards]
     weight: 40
   "jpa":
-    skills: [jpa-patterns]
+    skills: [csp-jpa-patterns]
     weight: 40
   "jpa patterns":
-    skills: [jpa-patterns]
+    skills: [csp-jpa-patterns]
     weight: 40
   "kotlin":
     skills: [csp-kotlin-patterns]
@@ -1325,37 +1316,37 @@ stack_rules:
     skills: [csp-kotlin-testing]
     weight: 40
   "market":
-    skills: [market-research]
+    skills: [csp-market-research]
     weight: 40
   "market research":
-    skills: [market-research]
+    skills: [csp-market-research]
     weight: 40
   "mcp":
-    skills: [mcp-server-patterns]
+    skills: [csp-mcp-server-patterns]
     weight: 40
   "mcp server patterns":
-    skills: [mcp-server-patterns]
+    skills: [csp-mcp-server-patterns]
     weight: 40
   "mle":
-    skills: [mle-workflow]
+    skills: [csp-mle-workflow]
     weight: 40
   "mle workflow":
-    skills: [mle-workflow]
+    skills: [csp-mle-workflow]
     weight: 40
   "nestjs":
-    skills: [nestjs-patterns]
+    skills: [csp-nestjs-patterns]
     weight: 40
   "nestjs patterns":
-    skills: [nestjs-patterns]
+    skills: [csp-nestjs-patterns]
     weight: 40
   "nextjs":
-    skills: [nextjs-turbopack]
+    skills: [csp-nextjs-turbopack]
     weight: 40
   "nextjs turbopack":
-    skills: [nextjs-turbopack]
+    skills: [csp-nextjs-turbopack]
     weight: 40
   "capability":
-    skills: [product-capability]
+    skills: [csp-product-capability]
     weight: 40
   "Python":
     skills: [csp-python-patterns]
@@ -1367,52 +1358,52 @@ stack_rules:
     skills: [csp-python-testing]
     weight: 40
   "pytorch":
-    skills: [pytorch-patterns]
+    skills: [csp-pytorch-patterns]
     weight: 40
   "react testing":
-    skills: [react-testing]
+    skills: [csp-react-testing]
     weight: 40
   "rust":
-    skills: [rust-patterns]
+    skills: [csp-rust-patterns]
     weight: 40
   "rust testing":
-    skills: [rust-testing]
+    skills: [csp-rust-testing]
     weight: 40
   "first":
-    skills: [search-first]
+    skills: [csp-search-first]
     weight: 40
   "search":
-    skills: [search-first]
+    skills: [csp-search-first]
     weight: 40
   "Spring Boot":
-    skills: [springboot-patterns]
+    skills: [csp-springboot-patterns]
     weight: 45
   "springboot":
-    skills: [springboot-patterns]
+    skills: [csp-springboot-patterns]
     weight: 40
   "compact":
-    skills: [strategic-compact]
+    skills: [csp-strategic-compact]
     weight: 40
   "strategic":
-    skills: [strategic-compact]
+    skills: [csp-strategic-compact]
     weight: 40
   "actor":
-    skills: [swift-actor-persistence]
+    skills: [csp-swift-actor-persistence]
     weight: 40
   "persistence":
-    skills: [swift-actor-persistence]
+    skills: [csp-swift-actor-persistence]
     weight: 40
   "protocol":
-    skills: [swift-protocol-di-testing]
+    skills: [csp-swift-protocol-di-testing]
     weight: 40
   "swift":
-    skills: [swift-protocol-di-testing]
+    skills: [csp-swift-protocol-di-testing]
     weight: 40
   "editing":
-    skills: [video-editing]
+    skills: [csp-video-editing]
     weight: 40
   "video":
-    skills: [video-editing]
+    skills: [csp-video-editing]
     weight: 40
   "Web应用":
     skills: [csp-webapp-testing]
@@ -1427,31 +1418,31 @@ stack_rules:
     skills: [csp-webapp-testing]
     weight: 40
   "x api":
-    skills: [x-api]
+    skills: [csp-x-api]
     weight: 40
   "运行时":
-    skills: [ask]
+    skills: [csp-ask]
     weight: 45
   "ask":
-    skills: [ask]
+    skills: [csp-ask]
     weight: 40
   "autopilot":
-    skills: [autopilot]
+    skills: [csp-autopilot]
     weight: 40
   "autoresearch":
-    skills: [autoresearch]
+    skills: [csp-autoresearch]
     weight: 40
   "cancel":
-    skills: [cancel]
+    skills: [csp-cancel]
     weight: 40
   "ccg":
-    skills: [ccg]
+    skills: [csp-ccg]
     weight: 40
   "configure":
-    skills: [configure-notifications]
+    skills: [csp-configure-notifications]
     weight: 40
   "configure notifications":
-    skills: [configure-notifications]
+    skills: [csp-configure-notifications]
     weight: 40
   "csp-doctor":
     skills: [csp-doctor]
@@ -1484,114 +1475,114 @@ stack_rules:
     skills: [csp-writer-memory]
     weight: 40
   "deep dive":
-    skills: [deep-dive]
+    skills: [csp-deep-dive]
     weight: 40
   "访谈":
-    skills: [deep-interview]
+    skills: [csp-deep-interview]
     weight: 45
   "deep interview":
-    skills: [deep-interview]
+    skills: [csp-deep-interview]
     weight: 40
   "deepinit":
-    skills: [deepinit]
+    skills: [csp-deepinit]
     weight: 40
   "工程上下文":
-    skills: [external-context]
+    skills: [csp-external-context]
     weight: 45
   "external":
-    skills: [external-context]
+    skills: [csp-external-context]
     weight: 40
   "hud":
-    skills: [hud]
+    skills: [csp-hud]
     weight: 40
   "learner":
-    skills: [learner]
+    skills: [csp-learner]
     weight: 40
   "提醒":
-    skills: [local-build-reminder]
+    skills: [csp-local-build-reminder]
     weight: 45
   "本地":
-    skills: [local-build-reminder]
+    skills: [csp-local-build-reminder]
     weight: 45
   "local":
-    skills: [local-build-reminder]
+    skills: [csp-local-build-reminder]
     weight: 40
   "mcp setup":
-    skills: [mcp-setup]
+    skills: [csp-mcp-setup]
     weight: 40
   "manager":
-    skills: [project-session-manager]
+    skills: [csp-project-session-manager]
     weight: 40
   "ralph":
-    skills: [ralph]
+    skills: [csp-ralph]
     weight: 40
   "release":
-    skills: [release]
+    skills: [csp-release]
     weight: 40
   "记住":
-    skills: [remember]
+    skills: [csp-remember]
     weight: 45
   "记忆":
-    skills: [remember]
+    skills: [csp-remember]
     weight: 45
   "remember":
-    skills: [remember]
+    skills: [csp-remember]
     weight: 40
   "scicsp":
     weight: 40
   "改进":
-    skills: [self-improve]
+    skills: [csp-self-improve]
     weight: 45
   "自我":
-    skills: [self-improve]
+    skills: [csp-self-improve]
     weight: 45
   "improve":
-    skills: [self-improve]
+    skills: [csp-self-improve]
     weight: 40
   "self":
-    skills: [self-improve]
+    skills: [csp-self-improve]
     weight: 40
   "setup":
-    skills: [setup]
+    skills: [csp-setup]
     weight: 40
   "skillify":
-    skills: [skillify]
+    skills: [csp-skillify]
     weight: 40
   "team":
-    skills: [team]
+    skills: [csp-team]
     weight: 40
   "trace":
-    skills: [trace]
+    skills: [csp-trace]
     weight: 40
   "目标设定":
-    skills: [ultragoal]
+    skills: [csp-ultragoal]
     weight: 45
   "终极目标":
-    skills: [ultragoal]
+    skills: [csp-ultragoal]
     weight: 45
   "ultragoal":
-    skills: [ultragoal]
+    skills: [csp-ultragoal]
     weight: 40
   "ultraqa":
-    skills: [ultraqa]
+    skills: [csp-ultraqa]
     weight: 40
   "ultrawork":
-    skills: [ultrawork]
+    skills: [csp-ultrawork]
     weight: 40
   "裁决":
-    skills: [visual-verdict]
+    skills: [csp-visual-verdict]
     weight: 45
   "verdict":
-    skills: [visual-verdict]
+    skills: [csp-visual-verdict]
     weight: 40
   "visual":
-    skills: [visual-verdict]
+    skills: [csp-visual-verdict]
     weight: 40
   "Wiki":
-    skills: [wiki]
+    skills: [csp-wiki]
     weight: 45
   "知识库":
-    skills: [wiki]
+    skills: [csp-wiki]
     weight: 45
   "hotfix":
     skills: [csp-hotfix]
@@ -1690,7 +1681,7 @@ stack_rules:
     skills: [csp-parallel-worktree]
     weight: 45
   "worktree":
-    skills: [csp-parallel-worktree, using-git-worktrees]
+    skills: [csp-parallel-worktree, csp-using-git-worktrees]
     weight: 50
   "并行":
     skills: [csp-parallel-worktree]
@@ -1722,7 +1713,7 @@ stack_rules:
 intent_patterns:
   implement_feature:
     patterns: ["implement", "build", "create", "add", "develop", "实现", "开发", "添加", "创建"]
-    skills: [csp-implementation-phase, csp-implement, csp-tdd]
+    skills: [csp-implementation-phase, csp-implementation-phase, csp-tdd]
     phase_hint: build
     weight: 50
 
@@ -1826,7 +1817,7 @@ intent_patterns:
 
   onboarding:
     patterns: ["onboard", "getting.*started", "new.*developer", "codebase.*tour", "入门", "新人", "项目导览"]
-    skills: [csp-code-tour-guide, csp-codebase-onboarding]
+    skills: [csp-code-tour-guide, csp-map-codebase]
     phase_hint: plan
     weight: 45
 

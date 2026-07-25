@@ -75,4 +75,4 @@
 - `examples/example-3-build-error-fix.md` — 构建错误分析完整记录
 - `examples/example-4-code-simplification.md` — 代码简化分析完整记录
 - `examples/example-5-csp-dashboard.md` — 可视化仪表板构建记录
-- `examples/csp-view/index.html` — **可运行的仪表板** (69KB, 173 skills, 零依赖)
+- Interactive dashboard available at https://maythyai.github.io/code-skills-package/

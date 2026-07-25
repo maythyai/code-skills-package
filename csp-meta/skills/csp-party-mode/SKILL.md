@@ -5,6 +5,10 @@ layer: 1
 category: meta
 ---
 
+> **⚠️ Status: DESIGN ONLY** — This skill describes a planned multi-agent discussion feature.
+> The CLI commands (`csp-party-mode --save/--resume/--learn-from`) are not yet implemented.
+> Tracked for v0.9.0. For now, use `csp-brainstorming` for structured ideation.
+
 # CSP Party Mode - Multi-Agent Collaboration
 
 ## Purpose
