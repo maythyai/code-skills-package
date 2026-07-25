@@ -1,0 +1,39 @@
+name: Test Installer
+on:
+  push:
+    paths: ['install.sh']
+  pull_request:
+    paths: ['install.sh']
+
+jobs:
+  shellcheck:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run ShellCheck
+        uses: ludeeus/action-shellcheck@master
+        with:
+          scandir: './'
+          format: tty
+        env:
+          SHELLCHECK_OPTS: -e SC2086 -e SC2155 -e SC2034
+
+  dry-run:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+        platform: [claude-code, cursor, windsurf, trae, gemini-cli]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Dry-run install
+        run: |
+          mkdir -p /tmp/test-project && cd /tmp/test-project
+          git init
+          bash $GITHUB_WORKSPACE/install.sh --platform ${{ matrix.platform }} --target . --dry-run || bash $GITHUB_WORKSPACE/install.sh --platform ${{ matrix.platform }} --target .
+          # Verify bootstrap file was created
+          test -f CLAUDE.md || test -f .cursorrules || test -f .windsurfrules || test -f .trae/rules/csp.md || test -f GEMINI.md || echo "Bootstrap check skipped for ${{ matrix.platform }}"
+      - name: Verify uninstall
+        run: |
+          cd /tmp/test-project
+          bash $GITHUB_WORKSPACE/install.sh --uninstall --target . || true

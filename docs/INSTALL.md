@@ -144,3 +144,15 @@ Install to user home directory (`~/.xxx/skills/`), available to all projects:
 ## Available Tech Stacks
 
 `python`, `typescript/javascript`, `rust`, `go/golang`, `java`, `kotlin`, `swift`, `cpp/c++`, `react`, `django`, `spring`, `fastapi`, `postgres`, `docker`, `kubernetes/k8s`, `ai/ml`, `mobile`, `devops`, `security`, `testing`, `frontend`
+
+---
+
+### Windows
+
+```powershell
+# PowerShell installer (claude-code, cursor, windsurf, vscode)
+.\install.ps1 -Platform cursor -Target C:\path\to\project
+
+# Or use WSL2 with the bash installer for full 18-platform support
+wsl bash install.sh --platform cursor --target /mnt/c/path/to/project
+```

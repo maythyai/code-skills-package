@@ -73,6 +73,22 @@ function timestamp() {
   return new Date().toISOString();
 }
 
+function findMarkdownFiles(dir) {
+  const results = [];
+  try {
+    const entries = readdirSync(dir, { withFileTypes: true });
+    for (const entry of entries) {
+      const fullPath = join(dir, entry.name);
+      if (entry.isDirectory()) {
+        results.push(...findMarkdownFiles(fullPath));
+      } else if (entry.name.endsWith('.md')) {
+        results.push(fullPath);
+      }
+    }
+  } catch { /* ignore unreadable dirs */ }
+  return results;
+}
+
 // --- State Management ---
 
 function loadState() {
@@ -492,6 +508,139 @@ function doctor() {
   return failed.length === 0 ? 0 : 1;
 }
 
+// --- Token Budget Operations (Phase 4.18) ---
+
+const BUDGET_FILE = join(CSP_DIR, 'budget.json');
+const BUDGET_CHECKPOINT_FILE = join(CSP_DIR, 'budget-checkpoint.json');
+
+const CODE_EXTS = new Set([
+  '.js', '.mjs', '.cjs', '.ts', '.tsx', '.jsx', '.py', '.rb', '.go',
+  '.rs', '.java', '.kt', '.swift', '.c', '.cpp', '.h', '.hpp', '.cs',
+  '.php', '.sh', '.bash', '.zsh', '.pl', '.lua', '.r', '.scala',
+  '.hs', '.ex', '.exs', '.clj', '.cljs', '.vue', '.svelte', '.sql',
+]);
+
+function budgetGetLimit() {
+  const config = loadConfig();
+  const limit = config?.budget?.limit;
+  return (typeof limit === 'number' && limit > 0) ? limit : 200000;
+}
+
+function budgetCreateState() {
+  return {
+    session_id: randomUUID(),
+    started_at: timestamp(),
+    budget_limit: budgetGetLimit(),
+    used: 0,
+    history: [],
+    tier: 'ok',
+  };
+}
+
+function budgetSave(state) {
+  ensureDir(CSP_DIR);
+  writeJSON(BUDGET_FILE, state);
+}
+
+function budgetEnsure() {
+  let state = readJSON(BUDGET_FILE, null);
+  if (!state) {
+    state = budgetCreateState();
+    budgetSave(state);
+  }
+  state.budget_limit = budgetGetLimit();
+  return state;
+}
+
+function budgetCalculateTier(used, limit) {
+  const pct = limit > 0 ? used / limit : 0;
+  if (pct >= 1.0) return 'hard_limit';
+  if (pct >= 0.9) return 'soft_limit';
+  if (pct >= 0.75) return 'warning';
+  return 'ok';
+}
+
+function budgetPct(used, limit) {
+  return limit > 0 ? Math.round((used / limit) * 10000) / 100 : 0;
+}
+
+function budgetWriteCheckpoint(state) {
+  const checkpoint = {
+    session_id: state.session_id,
+    checkpoint_at: timestamp(),
+    budget_limit: state.budget_limit,
+    used: state.used,
+    tier: state.tier,
+    history_count: state.history.length,
+    last_entries: state.history.slice(-10),
+    resume_command: '/csp-budget-extend',
+  };
+  ensureDir(CSP_DIR);
+  writeJSON(BUDGET_CHECKPOINT_FILE, checkpoint);
+}
+
+function budgetStatusOp() {
+  const state = budgetEnsure();
+  const remaining = Math.max(0, state.budget_limit - state.used);
+  return {
+    session_id: state.session_id,
+    started_at: state.started_at,
+    budget_limit: state.budget_limit,
+    used: state.used,
+    remaining,
+    percent_used: budgetPct(state.used, state.budget_limit),
+    tier: state.tier,
+    history_count: state.history.length,
+  };
+}
+
+function budgetTrackOp(tokens, skillName) {
+  const state = budgetEnsure();
+  state.used += tokens;
+  state.tier = budgetCalculateTier(state.used, state.budget_limit);
+  state.history.push({ ts: timestamp(), tokens, skill: skillName || 'unknown' });
+  if (state.history.length > 500) state.history = state.history.slice(-500);
+  budgetSave(state);
+  return {
+    status: 'tracked',
+    tokens_added: tokens,
+    total_used: state.used,
+    remaining: Math.max(0, state.budget_limit - state.used),
+    tier: state.tier,
+    percent_used: budgetPct(state.used, state.budget_limit),
+  };
+}
+
+function budgetEnforceOp() {
+  const state = budgetEnsure();
+  const remaining = Math.max(0, state.budget_limit - state.used);
+  switch (state.tier) {
+    case 'ok':
+      return { action: 'continue', tier: 'ok', remaining };
+    case 'warning':
+      return { action: 'warn', tier: 'warning', remaining, suggestion: 'Consider using shorter context or skipping optional skills' };
+    case 'soft_limit':
+      return { action: 'degrade', tier: 'soft_limit', remaining, suggestion: 'Downgrade model tier, disable optional skills, checkpoint workflow' };
+    case 'hard_limit':
+      budgetWriteCheckpoint(state);
+      return { action: 'stop', tier: 'hard_limit', remaining: 0, suggestion: 'Save state to .csp/budget-checkpoint.json and stop. Resume with /csp-budget-extend' };
+    default:
+      return { action: 'continue', tier: 'ok', remaining };
+  }
+}
+
+function budgetEstimateOp(filePath) {
+  if (!filePath) return { error: 'usage', message: 'budget.estimate <file>' };
+  const resolved = resolve(PROJECT_ROOT, filePath);
+  if (!existsSync(resolved)) return { error: 'file_not_found', path: resolved };
+  const content = readText(resolved);
+  const ext = resolved.includes('.') ? '.' + resolved.split('.').pop().toLowerCase() : '';
+  const fileType = CODE_EXTS.has(ext) ? 'code' : (ext === '.md' || ext === '.mdx' || ext === '.markdown') ? 'markdown' : 'text';
+  const chars = content.length;
+  const tokens = fileType === 'code' ? Math.ceil(chars / 3.5) : Math.ceil(chars / 4);
+  return { file: filePath, type: fileType, chars, estimated_tokens: tokens };
+}
+
 // --- Main Router ---
 
 function main() {
@@ -526,7 +675,15 @@ Subcommands (query):
   verify.artifacts <phase>    Check phase artifacts
   verify.commits <phase>      Check phase commits
   validate.context            Validate planning context
-  validate.health             Health check`);
+  validate.health             Health check
+  intel.search <query>        Search ALL knowledge stores (intel/wiki/skills/planning)
+  intel.list                  List knowledge stores with file counts
+  wiki <command> [args]       Wiki ops (ingest/query/lint/list/index) — delegates to scripts/csp-wiki.mjs
+  budget.status               Token budget: current status (tier, used, remaining)
+  budget.track <N> [skill]    Token budget: add N tokens to usage counter
+  budget.enforce              Token budget: check tier and output enforcement action
+  budget.reset                Token budget: reset counter for new session
+  budget.estimate <file>      Token budget: estimate tokens in a file`);
     process.exit(0);
   }
 
@@ -823,6 +980,76 @@ function routeQuery(sub, args, flags) {
   if (sub === 'user-story.validate') return { valid: true, story: args[0] || '' };
   if (sub === 'docs-init') return { docs_dir: join(PROJECT_ROOT, 'docs'), exists: existsSync(join(PROJECT_ROOT, 'docs')) };
 
+  // --- intel.* (unified knowledge store search) ---
+  if (sub === 'intel.search') {
+    const query = args.join(' ').toLowerCase();
+    if (!query) return { error: 'usage', message: 'intel.search <query>' };
+    const results = [];
+    const stores = [
+      { name: 'intel', dir: join(CSP_DIR, 'intel') },
+      { name: 'wiki', dir: join(CSP_DIR, 'wiki') },
+      { name: 'skills', dir: join(CSP_DIR, 'skills') },
+      { name: 'planning', dir: PLANNING_DIR },
+    ];
+    for (const store of stores) {
+      if (!existsSync(store.dir)) continue;
+      const files = findMarkdownFiles(store.dir);
+      for (const filePath of files) {
+        const content = readText(filePath);
+        const lines = content.split('\n');
+        const snippets = [];
+        for (let i = 0; i < lines.length; i++) {
+          if (lines[i].toLowerCase().includes(query)) {
+            const start = Math.max(0, i - 1);
+            const end = Math.min(lines.length - 1, i + 1);
+            snippets.push({
+              line: i + 1,
+              context: lines.slice(start, end + 1).join('\n').trim(),
+            });
+            if (snippets.length >= 3) break; // max 3 snippets per file
+          }
+        }
+        if (snippets.length > 0) {
+          results.push({
+            store: store.name,
+            file: filePath.replace(PROJECT_ROOT + '/', ''),
+            snippets,
+          });
+        }
+      }
+    }
+    return { query, results, total: results.length };
+  }
+  if (sub === 'intel.list') {
+    const stores = [
+      { name: 'intel', dir: join(CSP_DIR, 'intel') },
+      { name: 'wiki', dir: join(CSP_DIR, 'wiki') },
+      { name: 'skills', dir: join(CSP_DIR, 'skills') },
+      { name: 'planning', dir: PLANNING_DIR },
+    ];
+    const summary = stores.map(store => {
+      const exists = existsSync(store.dir);
+      const files = exists ? findMarkdownFiles(store.dir) : [];
+      return { name: store.name, dir: store.dir.replace(PROJECT_ROOT + '/', ''), exists, file_count: files.length, files: files.map(f => f.replace(PROJECT_ROOT + '/', '')) };
+    });
+    const totalFiles = summary.reduce((acc, s) => acc + s.file_count, 0);
+    return { stores: summary, total_files: totalFiles };
+  }
+
+  // --- wiki (delegates to scripts/csp-wiki.mjs) ---
+  if (sub === 'wiki' || sub.startsWith('wiki.')) {
+    const wikiCmd = sub === 'wiki' ? args[0] : sub.replace('wiki.', '');
+    const wikiArgs = sub === 'wiki' ? args.slice(1) : args;
+    const scriptPath = join(dirname(new URL(import.meta.url).pathname), '..', 'scripts', 'csp-wiki.mjs');
+    if (!existsSync(scriptPath)) return { error: 'not_found', message: `Wiki script not found at ${scriptPath}. Run: node scripts/csp-wiki.mjs ${wikiCmd} ${wikiArgs.join(' ')}` };
+    try {
+      const result = execSync(`node "${scriptPath}" ${wikiCmd} ${wikiArgs.map(a => `"${a}"`).join(' ')}`, { cwd: PROJECT_ROOT, encoding: 'utf-8', timeout: 15000, env: { ...process.env, CSP_PROJECT_ROOT: PROJECT_ROOT } });
+      try { return JSON.parse(result); } catch { return { output: result.trim() }; }
+    } catch (e) {
+      return { error: 'wiki_error', message: e.stderr || e.message, output: e.stdout || '' };
+    }
+  }
+
   // --- learnings ---
   if (sub === 'learnings.query') {
     const intelDir = join(CSP_DIR, 'intel');
@@ -844,6 +1071,28 @@ function routeQuery(sub, args, flags) {
 
   // --- agent.* ---
   if (sub === 'agent.classify-failure') return { category: 'unknown', retryable: true };
+
+  // --- budget.* (token budget active counting — Phase 4.18) ---
+  if (sub === 'budget.status' || sub === 'budget status') {
+    return budgetStatusOp();
+  }
+  if (sub === 'budget.track' || sub === 'budget track') {
+    const tokens = parseInt(args[0], 10);
+    if (isNaN(tokens) || tokens < 0) return { error: 'usage', message: 'budget.track <tokens> [skill-name]' };
+    return budgetTrackOp(tokens, args[1] || 'unknown');
+  }
+  if (sub === 'budget.enforce' || sub === 'budget enforce') {
+    return budgetEnforceOp();
+  }
+  if (sub === 'budget.reset' || sub === 'budget reset') {
+    const state = budgetCreateState();
+    budgetSave(state);
+    return { status: 'reset', session_id: state.session_id, budget_limit: state.budget_limit };
+  }
+  if (sub === 'budget.estimate' || sub === 'budget estimate') {
+    return budgetEstimateOp(args[0]);
+  }
+  if (sub.startsWith('budget.')) return budgetStatusOp();
 
   // --- Fallback: return empty success for unknown subcommands ---
   return { status: 'ok', _note: `Unhandled subcommand "${sub}" — returning default success` };

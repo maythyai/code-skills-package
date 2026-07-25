@@ -4,7 +4,7 @@
 # ─── 触发词倒排索引 ───
 trigger_index:
   "review":
-    skills: [csp-code-review, csp-requesting-code-review]
+    skills: [csp-code-review, csp-requesting-code-review, csp-review, csp-review-backlog, csp-review-pr]
     weight: 50
   "审查":
     skills: [csp-code-review]
@@ -13,7 +13,7 @@ trigger_index:
     skills: [csp-code-review]
     weight: 40
   "debug":
-    skills: [csp-debug, csp-systematic-debugging, csp-systematic-debugging]
+    skills: [csp-debug, csp-systematic-debugging, csp-systematic-debugging, csp-debug-session-manager]
     weight: 50
   "调试":
     skills: [csp-debug, csp-systematic-debugging]
@@ -34,7 +34,7 @@ trigger_index:
     skills: [csp-debug]
     weight: 40
   "plan":
-    skills: [csp-plan-phase, csp-writing-plans]
+    skills: [csp-plan-phase, csp-writing-plans, csp-plan-checker, csp-plan-milestone-gaps, csp-plan-prd, csp-plan-review-convergence]
     weight: 50
   "规划":
     skills: [csp-plan-phase]
@@ -46,13 +46,13 @@ trigger_index:
     skills: [csp-plan-phase, csp-brainstorming, csp-solutioning-phase]
     weight: 40
   "test":
-    skills: [csp-tdd, csp-e2e-testing]
+    skills: [csp-tdd, csp-e2e-testing, csp-pr-test-analyzer, csp-test-coverage]
     weight: 45
   "测试":
     skills: [csp-tdd]
     weight: 45
   "verify":
-    skills: [csp-verify-phase]
+    skills: [csp-verify-phase, csp-verify, csp-verify-work]
     weight: 50
   "验证":
     skills: [csp-verify-phase]
@@ -76,7 +76,7 @@ trigger_index:
     skills: [csp-execute-phase, csp-implementation-phase]
     weight: 50
   "security":
-    skills: [csp-security-review, csp-secure-phase]
+    skills: [csp-security-review, csp-secure-phase, csp-security-auditor, csp-security-scan]
     weight: 50
   "安全":
     skills: [csp-security-review]
@@ -94,7 +94,7 @@ trigger_index:
     skills: [csp-explore, csp-map-codebase]
     weight: 40
   "refactor":
-    skills: [csp-code-review, csp-plan-phase, csp-tech-debt-paydown, csp-refactorer]
+    skills: [csp-code-review, csp-plan-phase, csp-tech-debt-paydown, csp-refactorer, csp-refactor-clean]
     weight: 40
   "重构":
     skills: [csp-code-review, csp-plan-phase]
@@ -148,7 +148,7 @@ trigger_index:
     skills: [csp-brainstorming]
     weight: 45
   "ideate":
-    skills: [csp-brainstorming]
+    skills: [csp-brainstorming, csp-ns-ideate]
     weight: 45
   "quick dev":
     skills: [csp-quick-dev]
@@ -168,7 +168,7 @@ trigger_index:
     skills: [csp-quick-dev]
     weight: 40
   "adversarial review":
-    skills: [csp-review-adversarial]
+    skills: [csp-review-adversarial, csp-adversarial-reviewer]
     weight: 50
   "challenge":
     skills: [csp-review-adversarial]
@@ -201,13 +201,13 @@ trigger_index:
     skills: [csp-advanced-elicitation]
     weight: 50
   "extract":
-    skills: [csp-advanced-elicitation]
+    skills: [csp-advanced-elicitation, csp-extract-learnings]
     weight: 45
   "structure":
     skills: [csp-advanced-elicitation, csp-review-editorial-structure]
     weight: 40
   "analyze":
-    skills: [csp-analysis-phase]
+    skills: [csp-analysis-phase, csp-analyze-dependencies]
     weight: 45
   "explore opportunity":
     skills: [csp-analysis-phase]
@@ -249,7 +249,7 @@ trigger_index:
     skills: [csp-implementation-phase, csp-implementation-phase]
     weight: 45
   "code":
-    skills: [csp-implementation-phase, csp-implementation-phase]
+    skills: [csp-implementation-phase, csp-implementation-phase, csp-code-architect, csp-code-explorer, csp-code-fixer, csp-code-graph, csp-code-review-fix]
     weight: 45
   "api":
     skills: [csp-backend-patterns]
@@ -273,7 +273,7 @@ trigger_index:
     skills: [csp-implementation-phase, csp-implementation-phase]
     weight: 45
   "build":
-    skills: [csp-implementation-phase, csp-implementation-phase]
+    skills: [csp-implementation-phase, csp-implementation-phase, csp-build-error-resolver, csp-build-fix]
     weight: 45
   "添加功能":
     skills: [csp-implementation-phase, csp-implementation-phase]
@@ -492,6 +492,3983 @@ trigger_index:
     weight: 45
 
 # ─── 技术栈探测规则 ───
+
+  # ─── auto-generated triggers (generate-triggers.mjs) ───
+  "a11y":
+    skills: [csp-a11y-architect]
+    weight: 40
+  "a11y architect":
+    skills: [csp-a11y-architect]
+    weight: 40
+  "a11y-architect":
+    skills: [csp-a11y-architect]
+    weight: 40
+  "add":
+    skills: [csp-add-backlog, csp-add-phase, csp-add-tests, csp-add-todo]
+    weight: 40
+  "add backlog":
+    skills: [csp-add-backlog]
+    weight: 40
+  "add phase":
+    skills: [csp-add-phase]
+    weight: 40
+  "add tests":
+    skills: [csp-add-tests]
+    weight: 40
+  "add todo":
+    skills: [csp-add-todo]
+    weight: 40
+  "add-backlog":
+    skills: [csp-add-backlog]
+    weight: 40
+  "add-phase":
+    skills: [csp-add-phase]
+    weight: 40
+  "add-tests":
+    skills: [csp-add-tests]
+    weight: 40
+  "add-todo":
+    skills: [csp-add-todo]
+    weight: 40
+  "adversarial code review":
+    skills: [csp-adversarial-reviewer]
+    weight: 40
+  "adversarial 审查":
+    skills: [csp-adversarial-reviewer]
+    weight: 40
+  "adversarial-reviewer":
+    skills: [csp-adversarial-reviewer]
+    weight: 40
+  "advisor":
+    skills: [csp-advisor-researcher]
+    weight: 40
+  "advisor researcher":
+    skills: [csp-advisor-researcher]
+    weight: 40
+  "advisor-researcher":
+    skills: [csp-advisor-researcher]
+    weight: 40
+  "ai integration phase":
+    skills: [csp-ai-integration-phase]
+    weight: 40
+  "ai researcher":
+    skills: [csp-ai-researcher]
+    weight: 40
+  "ai-integration-phase":
+    skills: [csp-ai-integration-phase]
+    weight: 40
+  "ai-researcher":
+    skills: [csp-ai-researcher]
+    weight: 40
+  "analyze dependencies":
+    skills: [csp-analyze-dependencies]
+    weight: 40
+  "analyze dependencies 分析":
+    skills: [csp-analyze-dependencies]
+    weight: 40
+  "analyze-dependencies":
+    skills: [csp-analyze-dependencies]
+    weight: 40
+  "api contract code review":
+    skills: [csp-api-contract-reviewer]
+    weight: 40
+  "api contract review":
+    skills: [csp-api-contract-reviewer]
+    weight: 40
+  "api contract 审查":
+    skills: [csp-api-contract-reviewer]
+    weight: 40
+  "api-contract-reviewer":
+    skills: [csp-api-contract-reviewer]
+    weight: 40
+  "aside":
+    skills: [csp-aside]
+    weight: 40
+  "assumptions":
+    skills: [csp-assumptions-analyzer]
+    weight: 40
+  "assumptions analyzer":
+    skills: [csp-assumptions-analyzer]
+    weight: 40
+  "assumptions-analyzer":
+    skills: [csp-assumptions-analyzer]
+    weight: 40
+  "audit":
+    skills: [csp-audit-fix, csp-audit-milestone, csp-audit-uat]
+    weight: 40
+  "audit fix":
+    skills: [csp-audit-fix]
+    weight: 40
+  "audit fix 审计":
+    skills: [csp-audit-fix]
+    weight: 40
+  "audit milestone":
+    skills: [csp-audit-milestone]
+    weight: 40
+  "audit milestone 审计":
+    skills: [csp-audit-milestone]
+    weight: 40
+  "audit uat":
+    skills: [csp-audit-uat]
+    weight: 40
+  "audit uat 审计":
+    skills: [csp-audit-uat]
+    weight: 40
+  "audit-fix":
+    skills: [csp-audit-fix]
+    weight: 40
+  "audit-milestone":
+    skills: [csp-audit-milestone]
+    weight: 40
+  "audit-uat":
+    skills: [csp-audit-uat]
+    weight: 40
+  "auto":
+    skills: [csp-auto-update]
+    weight: 40
+  "auto update":
+    skills: [csp-auto-update]
+    weight: 40
+  "auto-update":
+    skills: [csp-auto-update]
+    weight: 40
+  "build error resolver":
+    skills: [csp-build-error-resolver]
+    weight: 40
+  "build error resolver 构建":
+    skills: [csp-build-error-resolver]
+    weight: 40
+  "build fix":
+    skills: [csp-build-fix]
+    weight: 40
+  "build fix 构建":
+    skills: [csp-build-fix]
+    weight: 40
+  "build-error-resolver":
+    skills: [csp-build-error-resolver]
+    weight: 40
+  "build-fix":
+    skills: [csp-build-fix]
+    weight: 40
+  "capture":
+    skills: [csp-capture]
+    weight: 40
+  "check":
+    skills: [csp-check-todos]
+    weight: 40
+  "check todos":
+    skills: [csp-check-todos]
+    weight: 40
+  "check-todos":
+    skills: [csp-check-todos]
+    weight: 40
+  "checker":
+    skills: [csp-ui-checker]
+    weight: 40
+  "checkpoint":
+    skills: [csp-checkpoint]
+    weight: 40
+  "chief":
+    skills: [csp-chief-of-staff]
+    weight: 40
+  "chief of staff":
+    skills: [csp-chief-of-staff]
+    weight: 40
+  "chief-of-staff":
+    skills: [csp-chief-of-staff]
+    weight: 40
+  "cleanup":
+    skills: [csp-cleanup]
+    weight: 40
+  "cli":
+    skills: [csp-cli-teams]
+    weight: 40
+  "cli teams":
+    skills: [csp-cli-teams]
+    weight: 40
+  "cli-teams":
+    skills: [csp-cli-teams]
+    weight: 40
+  "code architect":
+    skills: [csp-code-architect]
+    weight: 40
+  "code code review":
+    skills: [csp-code-reviewer]
+    weight: 40
+  "code explorer":
+    skills: [csp-code-explorer]
+    weight: 40
+  "code fixer":
+    skills: [csp-code-fixer]
+    weight: 40
+  "code graph":
+    skills: [csp-code-graph]
+    weight: 40
+  "code review":
+    skills: [csp-code-reviewer]
+    weight: 40
+  "code review fix":
+    skills: [csp-code-review-fix]
+    weight: 40
+  "code 审查":
+    skills: [csp-code-reviewer]
+    weight: 40
+  "code-architect":
+    skills: [csp-code-architect]
+    weight: 40
+  "code-explorer":
+    skills: [csp-code-explorer]
+    weight: 40
+  "code-fixer":
+    skills: [csp-code-fixer]
+    weight: 40
+  "code-graph":
+    skills: [csp-code-graph]
+    weight: 40
+  "code-review-fix":
+    skills: [csp-code-review-fix]
+    weight: 40
+  "code-reviewer":
+    skills: [csp-code-reviewer]
+    weight: 40
+  "coherence code review":
+    skills: [csp-coherence-reviewer]
+    weight: 40
+  "coherence review":
+    skills: [csp-coherence-reviewer]
+    weight: 40
+  "coherence 审查":
+    skills: [csp-coherence-reviewer]
+    weight: 40
+  "coherence-reviewer":
+    skills: [csp-coherence-reviewer]
+    weight: 40
+  "comment":
+    skills: [csp-comment-analyzer]
+    weight: 40
+  "comment analyzer":
+    skills: [csp-comment-analyzer]
+    weight: 40
+  "comment-analyzer":
+    skills: [csp-comment-analyzer]
+    weight: 40
+  "common coding style":
+    skills: [csp-cursor-rules-common-coding-style]
+    weight: 40
+  "common cursor rules":
+    skills: [csp-cursor-rules-common-coding-style, csp-cursor-rules-common-hooks, csp-cursor-rules-common-patterns, csp-cursor-rules-common-security, csp-cursor-rules-common-testing]
+    weight: 40
+  "common hooks":
+    skills: [csp-cursor-rules-common-hooks]
+    weight: 40
+  "common patterns":
+    skills: [csp-cursor-rules-common-patterns]
+    weight: 40
+  "common security":
+    skills: [csp-cursor-rules-common-security]
+    weight: 40
+  "common testing":
+    skills: [csp-cursor-rules-common-testing]
+    weight: 40
+  "common-agents agents":
+    skills: [csp-cursor-rules-common-agents]
+    weight: 40
+  "common-agents cursor rules":
+    skills: [csp-cursor-rules-common-agents]
+    weight: 40
+  "common-development-workflow cursor rules":
+    skills: [csp-cursor-rules-common-development-workflow]
+    weight: 40
+  "common-development-workflow development workflow":
+    skills: [csp-cursor-rules-common-development-workflow]
+    weight: 40
+  "common-git-workflow cursor rules":
+    skills: [csp-cursor-rules-common-git-workflow]
+    weight: 40
+  "common-git-workflow git workflow":
+    skills: [csp-cursor-rules-common-git-workflow]
+    weight: 40
+  "common-performance cursor rules":
+    skills: [csp-cursor-rules-common-performance]
+    weight: 40
+  "common-performance performance":
+    skills: [csp-cursor-rules-common-performance]
+    weight: 40
+  "complete":
+    skills: [csp-complete-milestone]
+    weight: 40
+  "complete milestone":
+    skills: [csp-complete-milestone]
+    weight: 40
+  "complete-milestone":
+    skills: [csp-complete-milestone]
+    weight: 40
+  "compound learning":
+    skills: [csp-compound-learning]
+    weight: 40
+  "compound-learning":
+    skills: [csp-compound-learning]
+    weight: 40
+  "config":
+    skills: [csp-config]
+    weight: 40
+  "config 配置":
+    skills: [csp-config]
+    weight: 40
+  "conversation":
+    skills: [csp-conversation-analyzer]
+    weight: 40
+  "conversation analyzer":
+    skills: [csp-conversation-analyzer]
+    weight: 40
+  "conversation-analyzer":
+    skills: [csp-conversation-analyzer]
+    weight: 40
+  "cost":
+    skills: [csp-cost-report]
+    weight: 40
+  "cost report":
+    skills: [csp-cost-report]
+    weight: 40
+  "cost-report":
+    skills: [csp-cost-report]
+    weight: 40
+  "cpp build error":
+    skills: [csp-cpp-build]
+    weight: 40
+  "cpp code review":
+    skills: [csp-cpp-review]
+    weight: 40
+  "cpp review":
+    skills: [csp-cpp-review]
+    weight: 40
+  "cpp test":
+    skills: [csp-cpp-test]
+    weight: 40
+  "cpp 审查":
+    skills: [csp-cpp-review]
+    weight: 40
+  "cpp 构建错误":
+    skills: [csp-cpp-build]
+    weight: 40
+  "cpp 测试":
+    skills: [csp-cpp-test]
+    weight: 40
+  "cpp-build":
+    skills: [csp-cpp-build]
+    weight: 40
+  "cpp-review":
+    skills: [csp-cpp-review]
+    weight: 40
+  "cpp-test":
+    skills: [csp-cpp-test]
+    weight: 40
+  "critic":
+    skills: [csp-critic]
+    weight: 40
+  "cursor rules common":
+    skills: [csp-cursor-rules-common-coding-style, csp-cursor-rules-common-hooks, csp-cursor-rules-common-patterns, csp-cursor-rules-common-security, csp-cursor-rules-common-testing]
+    weight: 40
+  "cursor rules common-agents":
+    skills: [csp-cursor-rules-common-agents]
+    weight: 40
+  "cursor rules common-development-workflow":
+    skills: [csp-cursor-rules-common-development-workflow]
+    weight: 40
+  "cursor rules common-git-workflow":
+    skills: [csp-cursor-rules-common-git-workflow]
+    weight: 40
+  "cursor rules common-performance":
+    skills: [csp-cursor-rules-common-performance]
+    weight: 40
+  "cursor rules golang":
+    skills: [csp-cursor-rules-golang-coding-style, csp-cursor-rules-golang-hooks, csp-cursor-rules-golang-patterns, csp-cursor-rules-golang-security, csp-cursor-rules-golang-testing]
+    weight: 40
+  "cursor rules kotlin":
+    skills: [csp-cursor-rules-kotlin-coding-style, csp-cursor-rules-kotlin-hooks, csp-cursor-rules-kotlin-patterns, csp-cursor-rules-kotlin-security, csp-cursor-rules-kotlin-testing]
+    weight: 40
+  "cursor rules php":
+    skills: [csp-cursor-rules-php-coding-style, csp-cursor-rules-php-hooks, csp-cursor-rules-php-patterns, csp-cursor-rules-php-security, csp-cursor-rules-php-testing]
+    weight: 40
+  "cursor rules python":
+    skills: [csp-cursor-rules-python-coding-style, csp-cursor-rules-python-hooks, csp-cursor-rules-python-patterns, csp-cursor-rules-python-security, csp-cursor-rules-python-testing]
+    weight: 40
+  "cursor rules swift":
+    skills: [csp-cursor-rules-swift-coding-style, csp-cursor-rules-swift-hooks, csp-cursor-rules-swift-patterns, csp-cursor-rules-swift-security, csp-cursor-rules-swift-testing]
+    weight: 40
+  "cursor rules typescript":
+    skills: [csp-cursor-rules-typescript-coding-style, csp-cursor-rules-typescript-hooks, csp-cursor-rules-typescript-patterns, csp-cursor-rules-typescript-security, csp-cursor-rules-typescript-testing]
+    weight: 40
+  "cursor-rules-common-agents":
+    skills: [csp-cursor-rules-common-agents]
+    weight: 40
+  "cursor-rules-common-coding-style":
+    skills: [csp-cursor-rules-common-coding-style]
+    weight: 40
+  "cursor-rules-common-development-workflow":
+    skills: [csp-cursor-rules-common-development-workflow]
+    weight: 40
+  "cursor-rules-common-git-workflow":
+    skills: [csp-cursor-rules-common-git-workflow]
+    weight: 40
+  "cursor-rules-common-hooks":
+    skills: [csp-cursor-rules-common-hooks]
+    weight: 40
+  "cursor-rules-common-patterns":
+    skills: [csp-cursor-rules-common-patterns]
+    weight: 40
+  "cursor-rules-common-performance":
+    skills: [csp-cursor-rules-common-performance]
+    weight: 40
+  "cursor-rules-common-security":
+    skills: [csp-cursor-rules-common-security]
+    weight: 40
+  "cursor-rules-common-testing":
+    skills: [csp-cursor-rules-common-testing]
+    weight: 40
+  "cursor-rules-golang-coding-style":
+    skills: [csp-cursor-rules-golang-coding-style]
+    weight: 40
+  "cursor-rules-golang-hooks":
+    skills: [csp-cursor-rules-golang-hooks]
+    weight: 40
+  "cursor-rules-golang-patterns":
+    skills: [csp-cursor-rules-golang-patterns]
+    weight: 40
+  "cursor-rules-golang-security":
+    skills: [csp-cursor-rules-golang-security]
+    weight: 40
+  "cursor-rules-golang-testing":
+    skills: [csp-cursor-rules-golang-testing]
+    weight: 40
+  "cursor-rules-kotlin-coding-style":
+    skills: [csp-cursor-rules-kotlin-coding-style]
+    weight: 40
+  "cursor-rules-kotlin-hooks":
+    skills: [csp-cursor-rules-kotlin-hooks]
+    weight: 40
+  "cursor-rules-kotlin-patterns":
+    skills: [csp-cursor-rules-kotlin-patterns]
+    weight: 40
+  "cursor-rules-kotlin-security":
+    skills: [csp-cursor-rules-kotlin-security]
+    weight: 40
+  "cursor-rules-kotlin-testing":
+    skills: [csp-cursor-rules-kotlin-testing]
+    weight: 40
+  "cursor-rules-php-coding-style":
+    skills: [csp-cursor-rules-php-coding-style]
+    weight: 40
+  "cursor-rules-php-hooks":
+    skills: [csp-cursor-rules-php-hooks]
+    weight: 40
+  "cursor-rules-php-patterns":
+    skills: [csp-cursor-rules-php-patterns]
+    weight: 40
+  "cursor-rules-php-security":
+    skills: [csp-cursor-rules-php-security]
+    weight: 40
+  "cursor-rules-php-testing":
+    skills: [csp-cursor-rules-php-testing]
+    weight: 40
+  "cursor-rules-python-coding-style":
+    skills: [csp-cursor-rules-python-coding-style]
+    weight: 40
+  "cursor-rules-python-hooks":
+    skills: [csp-cursor-rules-python-hooks]
+    weight: 40
+  "cursor-rules-python-patterns":
+    skills: [csp-cursor-rules-python-patterns]
+    weight: 40
+  "cursor-rules-python-security":
+    skills: [csp-cursor-rules-python-security]
+    weight: 40
+  "cursor-rules-python-testing":
+    skills: [csp-cursor-rules-python-testing]
+    weight: 40
+  "cursor-rules-swift-coding-style":
+    skills: [csp-cursor-rules-swift-coding-style]
+    weight: 40
+  "cursor-rules-swift-hooks":
+    skills: [csp-cursor-rules-swift-hooks]
+    weight: 40
+  "cursor-rules-swift-patterns":
+    skills: [csp-cursor-rules-swift-patterns]
+    weight: 40
+  "cursor-rules-swift-security":
+    skills: [csp-cursor-rules-swift-security]
+    weight: 40
+  "cursor-rules-swift-testing":
+    skills: [csp-cursor-rules-swift-testing]
+    weight: 40
+  "cursor-rules-typescript-coding-style":
+    skills: [csp-cursor-rules-typescript-coding-style]
+    weight: 40
+  "cursor-rules-typescript-hooks":
+    skills: [csp-cursor-rules-typescript-hooks]
+    weight: 40
+  "cursor-rules-typescript-patterns":
+    skills: [csp-cursor-rules-typescript-patterns]
+    weight: 40
+  "cursor-rules-typescript-security":
+    skills: [csp-cursor-rules-typescript-security]
+    weight: 40
+  "cursor-rules-typescript-testing":
+    skills: [csp-cursor-rules-typescript-testing]
+    weight: 40
+  "dart build error":
+    skills: [csp-dart-build-resolver]
+    weight: 40
+  "dart 构建错误":
+    skills: [csp-dart-build-resolver]
+    weight: 40
+  "dart-build-resolver":
+    skills: [csp-dart-build-resolver]
+    weight: 40
+  "data migration code review":
+    skills: [csp-data-migration-reviewer]
+    weight: 40
+  "data migration review":
+    skills: [csp-data-migration-reviewer]
+    weight: 40
+  "data migration 审查":
+    skills: [csp-data-migration-reviewer]
+    weight: 40
+  "data pipeline code review":
+    skills: [csp-data-pipeline-reviewer]
+    weight: 40
+  "data pipeline review":
+    skills: [csp-data-pipeline-reviewer]
+    weight: 40
+  "data pipeline 审查":
+    skills: [csp-data-pipeline-reviewer]
+    weight: 40
+  "data-migration-reviewer":
+    skills: [csp-data-migration-reviewer]
+    weight: 40
+  "data-pipeline-reviewer":
+    skills: [csp-data-pipeline-reviewer]
+    weight: 40
+  "database code review":
+    skills: [csp-database-reviewer]
+    weight: 40
+  "database review":
+    skills: [csp-database-reviewer]
+    weight: 40
+  "database 审查":
+    skills: [csp-database-reviewer]
+    weight: 40
+  "database-reviewer":
+    skills: [csp-database-reviewer]
+    weight: 40
+  "debug session manager":
+    skills: [csp-debug-session-manager]
+    weight: 40
+  "debug session manager 调试":
+    skills: [csp-debug-session-manager]
+    weight: 40
+  "debug-session-manager":
+    skills: [csp-debug-session-manager]
+    weight: 40
+  "debugger":
+    skills: [csp-debugger]
+    weight: 40
+  "deployment verification agent":
+    skills: [csp-deployment-verification-agent]
+    weight: 40
+  "deployment-verification-agent":
+    skills: [csp-deployment-verification-agent]
+    weight: 40
+  "designer":
+    skills: [csp-designer, csp-ux-designer]
+    weight: 40
+  "developer":
+    skills: [csp-developer]
+    weight: 40
+  "diagnose":
+    skills: [csp-diagnose-issues]
+    weight: 40
+  "diagnose issues":
+    skills: [csp-diagnose-issues]
+    weight: 40
+  "diagnose-issues":
+    skills: [csp-diagnose-issues]
+    weight: 40
+  "discovery":
+    skills: [csp-discovery-phase]
+    weight: 40
+  "discovery phase":
+    skills: [csp-discovery-phase]
+    weight: 40
+  "discovery-phase":
+    skills: [csp-discovery-phase]
+    weight: 40
+  "discuss":
+    skills: [csp-discuss-phase, csp-discuss-phase-assumptions, csp-discuss-phase-power]
+    weight: 40
+  "discuss phase":
+    skills: [csp-discuss-phase]
+    weight: 40
+  "discuss phase assumptions":
+    skills: [csp-discuss-phase-assumptions]
+    weight: 40
+  "discuss phase power":
+    skills: [csp-discuss-phase-power]
+    weight: 40
+  "discuss-phase":
+    skills: [csp-discuss-phase]
+    weight: 40
+  "discuss-phase-assumptions":
+    skills: [csp-discuss-phase-assumptions]
+    weight: 40
+  "discuss-phase-power":
+    skills: [csp-discuss-phase-power]
+    weight: 40
+  "do":
+    skills: [csp-do]
+    weight: 40
+  "doc classifier":
+    skills: [csp-doc-classifier]
+    weight: 40
+  "doc synthesizer":
+    skills: [csp-doc-synthesizer]
+    weight: 40
+  "doc updater":
+    skills: [csp-doc-updater]
+    weight: 40
+  "doc verifier":
+    skills: [csp-doc-verifier]
+    weight: 40
+  "doc writer":
+    skills: [csp-doc-writer]
+    weight: 40
+  "doc-classifier":
+    skills: [csp-doc-classifier]
+    weight: 40
+  "doc-synthesizer":
+    skills: [csp-doc-synthesizer]
+    weight: 40
+  "doc-updater":
+    skills: [csp-doc-updater]
+    weight: 40
+  "doc-verifier":
+    skills: [csp-doc-verifier]
+    weight: 40
+  "doc-writer":
+    skills: [csp-doc-writer]
+    weight: 40
+  "document specialist":
+    skills: [csp-document-specialist]
+    weight: 40
+  "document-specialist":
+    skills: [csp-document-specialist]
+    weight: 40
+  "domain":
+    skills: [csp-domain-researcher]
+    weight: 40
+  "domain researcher":
+    skills: [csp-domain-researcher]
+    weight: 40
+  "domain-researcher":
+    skills: [csp-domain-researcher]
+    weight: 40
+  "e2e":
+    skills: [csp-e2e-runner]
+    weight: 40
+  "e2e runner":
+    skills: [csp-e2e-runner]
+    weight: 40
+  "e2e-runner":
+    skills: [csp-e2e-runner]
+    weight: 40
+  "ecc":
+    skills: [csp-ecc-guide]
+    weight: 40
+  "ecc guide":
+    skills: [csp-ecc-guide]
+    weight: 40
+  "ecc-guide":
+    skills: [csp-ecc-guide]
+    weight: 40
+  "edit":
+    skills: [csp-edit-phase]
+    weight: 40
+  "edit phase":
+    skills: [csp-edit-phase]
+    weight: 40
+  "edit-phase":
+    skills: [csp-edit-phase]
+    weight: 40
+  "eval auditor":
+    skills: [csp-eval-auditor]
+    weight: 40
+  "eval code review":
+    skills: [csp-eval-review]
+    weight: 40
+  "eval planner":
+    skills: [csp-eval-planner]
+    weight: 40
+  "eval review":
+    skills: [csp-eval-review]
+    weight: 40
+  "eval 审查":
+    skills: [csp-eval-review]
+    weight: 40
+  "eval-auditor":
+    skills: [csp-eval-auditor]
+    weight: 40
+  "eval-planner":
+    skills: [csp-eval-planner]
+    weight: 40
+  "eval-review":
+    skills: [csp-eval-review]
+    weight: 40
+  "evolve":
+    skills: [csp-evolve]
+    weight: 40
+  "execute":
+    skills: [csp-execute-plan]
+    weight: 40
+  "execute plan":
+    skills: [csp-execute-plan]
+    weight: 40
+  "execute-plan":
+    skills: [csp-execute-plan]
+    weight: 40
+  "executor":
+    skills: [csp-executor]
+    weight: 40
+  "extract-learnings":
+    skills: [csp-extract-learnings]
+    weight: 40
+  "fast":
+    skills: [csp-fast]
+    weight: 40
+  "fastapi code review":
+    skills: [csp-fastapi-review]
+    weight: 40
+  "fastapi review":
+    skills: [csp-fastapi-review]
+    weight: 40
+  "fastapi 审查":
+    skills: [csp-fastapi-review]
+    weight: 40
+  "fastapi-review":
+    skills: [csp-fastapi-review]
+    weight: 40
+  "feasibility code review":
+    skills: [csp-feasibility-reviewer]
+    weight: 40
+  "feasibility review":
+    skills: [csp-feasibility-reviewer]
+    weight: 40
+  "feasibility 审查":
+    skills: [csp-feasibility-reviewer]
+    weight: 40
+  "feasibility-reviewer":
+    skills: [csp-feasibility-reviewer]
+    weight: 40
+  "feature":
+    skills: [csp-feature-dev]
+    weight: 40
+  "feature dev":
+    skills: [csp-feature-dev]
+    weight: 40
+  "feature-dev":
+    skills: [csp-feature-dev]
+    weight: 40
+  "fix a11y architect":
+    skills: [csp-a11y-architect]
+    weight: 40
+  "fix add backlog":
+    skills: [csp-add-backlog]
+    weight: 40
+  "fix add phase":
+    skills: [csp-add-phase]
+    weight: 40
+  "fix add tests":
+    skills: [csp-add-tests]
+    weight: 40
+  "fix add todo":
+    skills: [csp-add-todo]
+    weight: 40
+  "fix advisor researcher":
+    skills: [csp-advisor-researcher]
+    weight: 40
+  "fix ai integration phase":
+    skills: [csp-ai-integration-phase]
+    weight: 40
+  "fix ai researcher":
+    skills: [csp-ai-researcher]
+    weight: 40
+  "fix analyst":
+    skills: [csp-analyst]
+    weight: 40
+  "fix analyze dependencies":
+    skills: [csp-analyze-dependencies]
+    weight: 40
+  "fix architect":
+    skills: [csp-architect]
+    weight: 40
+  "fix aside":
+    skills: [csp-aside]
+    weight: 40
+  "fix assumptions analyzer":
+    skills: [csp-assumptions-analyzer]
+    weight: 40
+  "fix audit fix":
+    skills: [csp-audit-fix]
+    weight: 40
+  "fix audit milestone":
+    skills: [csp-audit-milestone]
+    weight: 40
+  "fix audit uat":
+    skills: [csp-audit-uat]
+    weight: 40
+  "fix auto update":
+    skills: [csp-auto-update]
+    weight: 40
+  "fix autonomous":
+    skills: [csp-autonomous]
+    weight: 40
+  "fix build error resolver":
+    skills: [csp-build-error-resolver]
+    weight: 40
+  "fix build fix":
+    skills: [csp-build-fix]
+    weight: 40
+  "fix capture":
+    skills: [csp-capture]
+    weight: 40
+  "fix check todos":
+    skills: [csp-check-todos]
+    weight: 40
+  "fix checkpoint":
+    skills: [csp-checkpoint]
+    weight: 40
+  "fix chief of staff":
+    skills: [csp-chief-of-staff]
+    weight: 40
+  "fix cleanup":
+    skills: [csp-cleanup]
+    weight: 40
+  "fix cli teams":
+    skills: [csp-cli-teams]
+    weight: 40
+  "fix code architect":
+    skills: [csp-code-architect]
+    weight: 40
+  "fix code explorer":
+    skills: [csp-code-explorer]
+    weight: 40
+  "fix code fixer":
+    skills: [csp-code-fixer]
+    weight: 40
+  "fix code graph":
+    skills: [csp-code-graph]
+    weight: 40
+  "fix code review fix":
+    skills: [csp-code-review-fix]
+    weight: 40
+  "fix comment analyzer":
+    skills: [csp-comment-analyzer]
+    weight: 40
+  "fix compact":
+    skills: [csp-compact]
+    weight: 40
+  "fix complete milestone":
+    skills: [csp-complete-milestone]
+    weight: 40
+  "fix compound learning":
+    skills: [csp-compound-learning]
+    weight: 40
+  "fix config":
+    skills: [csp-config]
+    weight: 40
+  "fix conversation analyzer":
+    skills: [csp-conversation-analyzer]
+    weight: 40
+  "fix cost report":
+    skills: [csp-cost-report]
+    weight: 40
+  "fix cpp build":
+    skills: [csp-cpp-build]
+    weight: 40
+  "fix critic":
+    skills: [csp-critic]
+    weight: 40
+  "fix dart build":
+    skills: [csp-dart-build-resolver]
+    weight: 40
+  "fix debug session manager":
+    skills: [csp-debug-session-manager]
+    weight: 40
+  "fix debugger":
+    skills: [csp-debugger]
+    weight: 40
+  "fix deployment verification agent":
+    skills: [csp-deployment-verification-agent]
+    weight: 40
+  "fix designer":
+    skills: [csp-designer]
+    weight: 40
+  "fix developer":
+    skills: [csp-developer]
+    weight: 40
+  "fix diagnose issues":
+    skills: [csp-diagnose-issues]
+    weight: 40
+  "fix discovery phase":
+    skills: [csp-discovery-phase]
+    weight: 40
+  "fix discuss phase":
+    skills: [csp-discuss-phase]
+    weight: 40
+  "fix discuss phase assumptions":
+    skills: [csp-discuss-phase-assumptions]
+    weight: 40
+  "fix discuss phase power":
+    skills: [csp-discuss-phase-power]
+    weight: 40
+  "fix do":
+    skills: [csp-do]
+    weight: 40
+  "fix doc classifier":
+    skills: [csp-doc-classifier]
+    weight: 40
+  "fix doc synthesizer":
+    skills: [csp-doc-synthesizer]
+    weight: 40
+  "fix doc updater":
+    skills: [csp-doc-updater]
+    weight: 40
+  "fix doc verifier":
+    skills: [csp-doc-verifier]
+    weight: 40
+  "fix doc writer":
+    skills: [csp-doc-writer]
+    weight: 40
+  "fix document specialist":
+    skills: [csp-document-specialist]
+    weight: 40
+  "fix domain researcher":
+    skills: [csp-domain-researcher]
+    weight: 40
+  "fix e2e runner":
+    skills: [csp-e2e-runner]
+    weight: 40
+  "fix ecc guide":
+    skills: [csp-ecc-guide]
+    weight: 40
+  "fix edit phase":
+    skills: [csp-edit-phase]
+    weight: 40
+  "fix eval auditor":
+    skills: [csp-eval-auditor]
+    weight: 40
+  "fix eval planner":
+    skills: [csp-eval-planner]
+    weight: 40
+  "fix evolve":
+    skills: [csp-evolve]
+    weight: 40
+  "fix execute plan":
+    skills: [csp-execute-plan]
+    weight: 40
+  "fix executor":
+    skills: [csp-executor]
+    weight: 40
+  "fix extract learnings":
+    skills: [csp-extract-learnings]
+    weight: 40
+  "fix fast":
+    skills: [csp-fast]
+    weight: 40
+  "fix feature dev":
+    skills: [csp-feature-dev]
+    weight: 40
+  "fix flutter build":
+    skills: [csp-flutter-build]
+    weight: 40
+  "fix forensics":
+    skills: [csp-forensics]
+    weight: 40
+  "fix framework selector":
+    skills: [csp-framework-selector]
+    weight: 40
+  "fix fullstack spec generator":
+    skills: [csp-fullstack-spec-generator]
+    weight: 40
+  "fix gan build":
+    skills: [csp-gan-build]
+    weight: 40
+  "fix gan design":
+    skills: [csp-gan-design]
+    weight: 40
+  "fix gan evaluator":
+    skills: [csp-gan-evaluator]
+    weight: 40
+  "fix gan generator":
+    skills: [csp-gan-generator]
+    weight: 40
+  "fix gan planner":
+    skills: [csp-gan-planner]
+    weight: 40
+  "fix git master":
+    skills: [csp-git-master]
+    weight: 40
+  "fix go build":
+    skills: [csp-go-build]
+    weight: 40
+  "fix gradle build":
+    skills: [csp-gradle-build]
+    weight: 40
+  "fix graduation":
+    skills: [csp-graduation]
+    weight: 40
+  "fix graph architecture":
+    skills: [csp-graph-architecture]
+    weight: 40
+  "fix graph build":
+    skills: [csp-graph-build]
+    weight: 40
+  "fix graph impact":
+    skills: [csp-graph-impact]
+    weight: 40
+  "fix graph refactor":
+    skills: [csp-graph-refactor]
+    weight: 40
+  "fix graphify":
+    skills: [csp-graphify]
+    weight: 40
+  "fix harmonyos app resolver":
+    skills: [csp-harmonyos-app-resolver]
+    weight: 40
+  "fix harness audit":
+    skills: [csp-harness-audit]
+    weight: 40
+  "fix harness optimizer":
+    skills: [csp-harness-optimizer]
+    weight: 40
+  "fix health":
+    skills: [csp-health]
+    weight: 40
+  "fix homelab architect":
+    skills: [csp-homelab-architect]
+    weight: 40
+  "fix hookify":
+    skills: [csp-hookify]
+    weight: 40
+  "fix hookify configure":
+    skills: [csp-hookify-configure]
+    weight: 40
+  "fix hookify help":
+    skills: [csp-hookify-help]
+    weight: 40
+  "fix hookify list":
+    skills: [csp-hookify-list]
+    weight: 40
+  "fix import":
+    skills: [csp-import]
+    weight: 40
+  "fix inbox":
+    skills: [csp-inbox]
+    weight: 40
+  "fix ingest docs":
+    skills: [csp-ingest-docs]
+    weight: 40
+  "fix insert phase":
+    skills: [csp-insert-phase]
+    weight: 40
+  "fix instinct export":
+    skills: [csp-instinct-export]
+    weight: 40
+  "fix instinct import":
+    skills: [csp-instinct-import]
+    weight: 40
+  "fix instinct status":
+    skills: [csp-instinct-status]
+    weight: 40
+  "fix integration checker":
+    skills: [csp-integration-checker]
+    weight: 40
+  "fix intel updater":
+    skills: [csp-intel-updater]
+    weight: 40
+  "fix jira":
+    skills: [csp-jira]
+    weight: 40
+  "fix kotlin build":
+    skills: [csp-kotlin-build]
+    weight: 40
+  "fix learn":
+    skills: [csp-learn]
+    weight: 40
+  "fix learn eval":
+    skills: [csp-learn-eval]
+    weight: 40
+  "fix lifecycle":
+    skills: [csp-lifecycle]
+    weight: 40
+  "fix lifecycle orchestrator":
+    skills: [csp-lifecycle-orchestrator]
+    weight: 40
+  "fix list phase assumptions":
+    skills: [csp-list-phase-assumptions]
+    weight: 40
+  "fix list workspaces":
+    skills: [csp-list-workspaces]
+    weight: 40
+  "fix loop operator":
+    skills: [csp-loop-operator]
+    weight: 40
+  "fix loop start":
+    skills: [csp-loop-start]
+    weight: 40
+  "fix loop status":
+    skills: [csp-loop-status]
+    weight: 40
+  "fix manager":
+    skills: [csp-manager]
+    weight: 40
+  "fix marketing agent":
+    skills: [csp-marketing-agent]
+    weight: 40
+  "fix marketing campaign":
+    skills: [csp-marketing-campaign]
+    weight: 40
+  "fix milestone summary":
+    skills: [csp-milestone-summary]
+    weight: 40
+  "fix mobile performance auditor":
+    skills: [csp-mobile-performance-auditor]
+    weight: 40
+  "fix model route":
+    skills: [csp-model-route]
+    weight: 40
+  "fix multi backend":
+    skills: [csp-multi-backend]
+    weight: 40
+  "fix multi execute":
+    skills: [csp-multi-execute]
+    weight: 40
+  "fix multi frontend":
+    skills: [csp-multi-frontend]
+    weight: 40
+  "fix multi plan":
+    skills: [csp-multi-plan]
+    weight: 40
+  "fix multi workflow":
+    skills: [csp-multi-workflow]
+    weight: 40
+  "fix mvp phase":
+    skills: [csp-mvp-phase]
+    weight: 40
+  "fix network architect":
+    skills: [csp-network-architect]
+    weight: 40
+  "fix network troubleshooter":
+    skills: [csp-network-troubleshooter]
+    weight: 40
+  "fix new milestone":
+    skills: [csp-new-milestone]
+    weight: 40
+  "fix new project":
+    skills: [csp-new-project]
+    weight: 40
+  "fix new workspace":
+    skills: [csp-new-workspace]
+    weight: 40
+  "fix next":
+    skills: [csp-next]
+    weight: 40
+  "fix node repair":
+    skills: [csp-node-repair]
+    weight: 40
+  "fix note":
+    skills: [csp-note]
+    weight: 40
+  "fix ns context":
+    skills: [csp-ns-context]
+    weight: 40
+  "fix ns ideate":
+    skills: [csp-ns-ideate]
+    weight: 40
+  "fix ns manage":
+    skills: [csp-ns-manage]
+    weight: 40
+  "fix ns project":
+    skills: [csp-ns-project]
+    weight: 40
+  "fix ns workflow":
+    skills: [csp-ns-workflow]
+    weight: 40
+  "fix nyquist auditor":
+    skills: [csp-nyquist-auditor]
+    weight: 40
+  "fix opensource forker":
+    skills: [csp-opensource-forker]
+    weight: 40
+  "fix opensource packager":
+    skills: [csp-opensource-packager]
+    weight: 40
+  "fix opensource sanitizer":
+    skills: [csp-opensource-sanitizer]
+    weight: 40
+  "fix orch add feature":
+    skills: [csp-orch-add-feature]
+    weight: 40
+  "fix orch build mvp":
+    skills: [csp-orch-build-mvp]
+    weight: 40
+  "fix orch change feature":
+    skills: [csp-orch-change-feature]
+    weight: 40
+  "fix orch fix defect":
+    skills: [csp-orch-fix-defect]
+    weight: 40
+  "fix orch refine code":
+    skills: [csp-orch-refine-code]
+    weight: 40
+  "fix pattern mapper":
+    skills: [csp-pattern-mapper]
+    weight: 40
+  "fix pause work":
+    skills: [csp-pause-work]
+    weight: 40
+  "fix phase":
+    skills: [csp-phase]
+    weight: 40
+  "fix phase researcher":
+    skills: [csp-phase-researcher]
+    weight: 40
+  "fix plan checker":
+    skills: [csp-plan-checker]
+    weight: 40
+  "fix plan milestone gaps":
+    skills: [csp-plan-milestone-gaps]
+    weight: 40
+  "fix plan prd":
+    skills: [csp-plan-prd]
+    weight: 40
+  "fix plan review convergence":
+    skills: [csp-plan-review-convergence]
+    weight: 40
+  "fix planner":
+    skills: [csp-planner]
+    weight: 40
+  "fix plant seed":
+    skills: [csp-plant-seed]
+    weight: 40
+  "fix pm":
+    skills: [csp-pm]
+    weight: 40
+  "fix pm2":
+    skills: [csp-pm2]
+    weight: 40
+  "fix pr":
+    skills: [csp-pr]
+    weight: 40
+  "fix pr branch":
+    skills: [csp-pr-branch]
+    weight: 40
+  "fix pr test analyzer":
+    skills: [csp-pr-test-analyzer]
+    weight: 40
+  "fix profile user":
+    skills: [csp-profile-user]
+    weight: 40
+  "fix progress":
+    skills: [csp-progress]
+    weight: 40
+  "fix project init":
+    skills: [csp-project-init]
+    weight: 40
+  "fix project researcher":
+    skills: [csp-project-researcher]
+    weight: 40
+  "fix projects":
+    skills: [csp-projects]
+    weight: 40
+  "fix promote":
+    skills: [csp-promote]
+    weight: 40
+  "fix prp commit":
+    skills: [csp-prp-commit]
+    weight: 40
+  "fix prp implement":
+    skills: [csp-prp-implement]
+    weight: 40
+  "fix prp plan":
+    skills: [csp-prp-plan]
+    weight: 40
+  "fix prp pr":
+    skills: [csp-prp-pr]
+    weight: 40
+  "fix prp prd":
+    skills: [csp-prp-prd]
+    weight: 40
+  "fix prune":
+    skills: [csp-prune]
+    weight: 40
+  "fix psm":
+    skills: [csp-psm]
+    weight: 40
+  "fix pytorch build":
+    skills: [csp-pytorch-build-resolver]
+    weight: 40
+  "fix qa tester":
+    skills: [csp-qa-tester]
+    weight: 40
+  "fix quality gate":
+    skills: [csp-quality-gate]
+    weight: 40
+  "fix quick":
+    skills: [csp-quick]
+    weight: 40
+  "fix rag architect":
+    skills: [csp-rag-architect]
+    weight: 40
+  "fix react build":
+    skills: [csp-react-build]
+    weight: 40
+  "fix react native build":
+    skills: [csp-react-native-build-resolver]
+    weight: 40
+  "fix reapply patches":
+    skills: [csp-reapply-patches]
+    weight: 40
+  "fix refactor clean":
+    skills: [csp-refactor-clean]
+    weight: 40
+  "fix remove phase":
+    skills: [csp-remove-phase]
+    weight: 40
+  "fix remove workspace":
+    skills: [csp-remove-workspace]
+    weight: 40
+  "fix requirement decomposition":
+    skills: [csp-requirement-decomposition]
+    weight: 40
+  "fix research synthesizer":
+    skills: [csp-research-synthesizer]
+    weight: 40
+  "fix resume project":
+    skills: [csp-resume-project]
+    weight: 40
+  "fix resume session":
+    skills: [csp-resume-session]
+    weight: 40
+  "fix resume work":
+    skills: [csp-resume-work]
+    weight: 40
+  "fix review":
+    skills: [csp-review]
+    weight: 40
+  "fix review backlog":
+    skills: [csp-review-backlog]
+    weight: 40
+  "fix review pr":
+    skills: [csp-review-pr]
+    weight: 40
+  "fix roadmapper":
+    skills: [csp-roadmapper]
+    weight: 40
+  "fix rust build":
+    skills: [csp-rust-build]
+    weight: 40
+  "fix santa loop":
+    skills: [csp-santa-loop]
+    weight: 40
+  "fix save session":
+    skills: [csp-save-session]
+    weight: 40
+  "fix scan":
+    skills: [csp-scan]
+    weight: 40
+  "fix scientist":
+    skills: [csp-scientist]
+    weight: 40
+  "fix security auditor":
+    skills: [csp-security-auditor]
+    weight: 40
+  "fix security scan":
+    skills: [csp-security-scan]
+    weight: 40
+  "fix seo specialist":
+    skills: [csp-seo-specialist]
+    weight: 40
+  "fix session report":
+    skills: [csp-session-report]
+    weight: 40
+  "fix sessions":
+    skills: [csp-sessions]
+    weight: 40
+  "fix settings":
+    skills: [csp-settings]
+    weight: 40
+  "fix settings advanced":
+    skills: [csp-settings-advanced]
+    weight: 40
+  "fix settings integrations":
+    skills: [csp-settings-integrations]
+    weight: 40
+  "fix setup pm":
+    skills: [csp-setup-pm]
+    weight: 40
+  "fix silent failure hunter":
+    skills: [csp-silent-failure-hunter]
+    weight: 40
+  "fix sketch":
+    skills: [csp-sketch]
+    weight: 40
+  "fix sketch wrap up":
+    skills: [csp-sketch-wrap-up]
+    weight: 40
+  "fix skill":
+    skills: [csp-skill]
+    weight: 40
+  "fix skill create":
+    skills: [csp-skill-create]
+    weight: 40
+  "fix skill health":
+    skills: [csp-skill-health]
+    weight: 40
+  "fix spike":
+    skills: [csp-spike]
+    weight: 40
+  "fix spike wrap up":
+    skills: [csp-spike-wrap-up]
+    weight: 40
+  "fix springboot security":
+    skills: [csp-springboot-security]
+    weight: 40
+  "fix stats":
+    skills: [csp-stats]
+    weight: 40
+  "fix surface":
+    skills: [csp-surface]
+    weight: 40
+  "fix sync skills":
+    skills: [csp-sync-skills]
+    weight: 40
+  "fix tech stack advisor":
+    skills: [csp-tech-stack-advisor]
+    weight: 40
+  "fix tech writer":
+    skills: [csp-tech-writer]
+    weight: 40
+  "fix test coverage":
+    skills: [csp-test-coverage]
+    weight: 40
+  "fix thread":
+    skills: [csp-thread]
+    weight: 40
+  "fix tracer":
+    skills: [csp-tracer]
+    weight: 40
+  "fix transition":
+    skills: [csp-transition]
+    weight: 40
+  "fix type design analyzer":
+    skills: [csp-type-design-analyzer]
+    weight: 40
+  "fix ui auditor":
+    skills: [csp-ui-auditor]
+    weight: 40
+  "fix ui checker":
+    skills: [csp-ui-checker]
+    weight: 40
+  "fix ui phase":
+    skills: [csp-ui-phase]
+    weight: 40
+  "fix ui researcher":
+    skills: [csp-ui-researcher]
+    weight: 40
+  "fix ultraplan phase":
+    skills: [csp-ultraplan-phase]
+    weight: 40
+  "fix undo":
+    skills: [csp-undo]
+    weight: 40
+  "fix update":
+    skills: [csp-update]
+    weight: 40
+  "fix update codemaps":
+    skills: [csp-update-codemaps]
+    weight: 40
+  "fix update docs":
+    skills: [csp-update-docs]
+    weight: 40
+  "fix user profiler":
+    skills: [csp-user-profiler]
+    weight: 40
+  "fix ux designer":
+    skills: [csp-ux-designer]
+    weight: 40
+  "fix validate phase":
+    skills: [csp-validate-phase]
+    weight: 40
+  "fix verifier":
+    skills: [csp-verifier]
+    weight: 40
+  "fix verify":
+    skills: [csp-verify]
+    weight: 40
+  "fix verify work":
+    skills: [csp-verify-work]
+    weight: 40
+  "fix workspace":
+    skills: [csp-workspace]
+    weight: 40
+  "fix workstreams":
+    skills: [csp-workstreams]
+    weight: 40
+  "fix writer":
+    skills: [csp-writer]
+    weight: 40
+  "flutter build error":
+    skills: [csp-flutter-build]
+    weight: 40
+  "flutter code review":
+    skills: [csp-flutter-review, csp-flutter-reviewer]
+    weight: 40
+  "flutter review":
+    skills: [csp-flutter-review, csp-flutter-reviewer]
+    weight: 40
+  "flutter test":
+    skills: [csp-flutter-test]
+    weight: 40
+  "flutter testing":
+    skills: [csp-flutter-test]
+    weight: 40
+  "flutter 审查":
+    skills: [csp-flutter-review, csp-flutter-reviewer]
+    weight: 40
+  "flutter 构建错误":
+    skills: [csp-flutter-build]
+    weight: 40
+  "flutter 测试":
+    skills: [csp-flutter-test]
+    weight: 40
+  "flutter-build":
+    skills: [csp-flutter-build]
+    weight: 40
+  "flutter-review":
+    skills: [csp-flutter-review]
+    weight: 40
+  "flutter-reviewer":
+    skills: [csp-flutter-reviewer]
+    weight: 40
+  "flutter-test":
+    skills: [csp-flutter-test]
+    weight: 40
+  "forensics":
+    skills: [csp-forensics]
+    weight: 40
+  "framework":
+    skills: [csp-framework-selector]
+    weight: 40
+  "framework selector":
+    skills: [csp-framework-selector]
+    weight: 40
+  "framework-selector":
+    skills: [csp-framework-selector]
+    weight: 40
+  "fsharp code review":
+    skills: [csp-fsharp-reviewer]
+    weight: 40
+  "fsharp review":
+    skills: [csp-fsharp-reviewer]
+    weight: 40
+  "fsharp 审查":
+    skills: [csp-fsharp-reviewer]
+    weight: 40
+  "fsharp-reviewer":
+    skills: [csp-fsharp-reviewer]
+    weight: 40
+  "fullstack":
+    skills: [csp-fullstack-spec-generator]
+    weight: 40
+  "fullstack spec generator":
+    skills: [csp-fullstack-spec-generator]
+    weight: 40
+  "fullstack-spec-generator":
+    skills: [csp-fullstack-spec-generator]
+    weight: 40
+  "gan":
+    skills: [csp-gan-design, csp-gan-evaluator, csp-gan-generator, csp-gan-planner]
+    weight: 40
+  "gan build error":
+    skills: [csp-gan-build]
+    weight: 40
+  "gan design":
+    skills: [csp-gan-design]
+    weight: 40
+  "gan evaluator":
+    skills: [csp-gan-evaluator]
+    weight: 40
+  "gan generator":
+    skills: [csp-gan-generator]
+    weight: 40
+  "gan planner":
+    skills: [csp-gan-planner]
+    weight: 40
+  "gan 构建错误":
+    skills: [csp-gan-build]
+    weight: 40
+  "gan-build":
+    skills: [csp-gan-build]
+    weight: 40
+  "gan-design":
+    skills: [csp-gan-design]
+    weight: 40
+  "gan-evaluator":
+    skills: [csp-gan-evaluator]
+    weight: 40
+  "gan-generator":
+    skills: [csp-gan-generator]
+    weight: 40
+  "gan-planner":
+    skills: [csp-gan-planner]
+    weight: 40
+  "git":
+    skills: [csp-git-master]
+    weight: 40
+  "git master":
+    skills: [csp-git-master]
+    weight: 40
+  "git-master":
+    skills: [csp-git-master]
+    weight: 40
+  "go build error":
+    skills: [csp-go-build]
+    weight: 40
+  "go code review":
+    skills: [csp-go-review]
+    weight: 40
+  "go review":
+    skills: [csp-go-review]
+    weight: 40
+  "go test":
+    skills: [csp-go-test]
+    weight: 40
+  "go testing":
+    skills: [csp-go-test]
+    weight: 40
+  "go 审查":
+    skills: [csp-go-review]
+    weight: 40
+  "go 构建错误":
+    skills: [csp-go-build]
+    weight: 40
+  "go 测试":
+    skills: [csp-go-test]
+    weight: 40
+  "go-build":
+    skills: [csp-go-build]
+    weight: 40
+  "go-review":
+    skills: [csp-go-review]
+    weight: 40
+  "go-test":
+    skills: [csp-go-test]
+    weight: 40
+  "golang coding style":
+    skills: [csp-cursor-rules-golang-coding-style]
+    weight: 40
+  "golang cursor rules":
+    skills: [csp-cursor-rules-golang-coding-style, csp-cursor-rules-golang-hooks, csp-cursor-rules-golang-patterns, csp-cursor-rules-golang-security, csp-cursor-rules-golang-testing]
+    weight: 40
+  "golang hooks":
+    skills: [csp-cursor-rules-golang-hooks]
+    weight: 40
+  "golang security":
+    skills: [csp-cursor-rules-golang-security]
+    weight: 40
+  "gradle build error":
+    skills: [csp-gradle-build]
+    weight: 40
+  "gradle 构建错误":
+    skills: [csp-gradle-build]
+    weight: 40
+  "gradle-build":
+    skills: [csp-gradle-build]
+    weight: 40
+  "graduation":
+    skills: [csp-graduation]
+    weight: 40
+  "graph":
+    skills: [csp-graph-architecture, csp-graph-impact, csp-graph-refactor]
+    weight: 40
+  "graph architecture":
+    skills: [csp-graph-architecture]
+    weight: 40
+  "graph build error":
+    skills: [csp-graph-build]
+    weight: 40
+  "graph code review":
+    skills: [csp-graph-review]
+    weight: 40
+  "graph impact":
+    skills: [csp-graph-impact]
+    weight: 40
+  "graph refactor":
+    skills: [csp-graph-refactor]
+    weight: 40
+  "graph review":
+    skills: [csp-graph-review]
+    weight: 40
+  "graph 审查":
+    skills: [csp-graph-review]
+    weight: 40
+  "graph 构建错误":
+    skills: [csp-graph-build]
+    weight: 40
+  "graph-architecture":
+    skills: [csp-graph-architecture]
+    weight: 40
+  "graph-build":
+    skills: [csp-graph-build]
+    weight: 40
+  "graph-impact":
+    skills: [csp-graph-impact]
+    weight: 40
+  "graph-refactor":
+    skills: [csp-graph-refactor]
+    weight: 40
+  "graph-review":
+    skills: [csp-graph-review]
+    weight: 40
+  "graphify":
+    skills: [csp-graphify]
+    weight: 40
+  "harmonyos":
+    skills: [csp-harmonyos-app-resolver]
+    weight: 40
+  "harmonyos app resolver":
+    skills: [csp-harmonyos-app-resolver]
+    weight: 40
+  "harmonyos-app-resolver":
+    skills: [csp-harmonyos-app-resolver]
+    weight: 40
+  "harness":
+    skills: [csp-harness-audit, csp-harness-optimizer]
+    weight: 40
+  "harness audit":
+    skills: [csp-harness-audit]
+    weight: 40
+  "harness optimizer":
+    skills: [csp-harness-optimizer]
+    weight: 40
+  "harness-audit":
+    skills: [csp-harness-audit]
+    weight: 40
+  "harness-optimizer":
+    skills: [csp-harness-optimizer]
+    weight: 40
+  "health":
+    skills: [csp-health]
+    weight: 40
+  "healthcare code review":
+    skills: [csp-healthcare-reviewer]
+    weight: 40
+  "healthcare review":
+    skills: [csp-healthcare-reviewer]
+    weight: 40
+  "healthcare 审查":
+    skills: [csp-healthcare-reviewer]
+    weight: 40
+  "healthcare-reviewer":
+    skills: [csp-healthcare-reviewer]
+    weight: 40
+  "homelab":
+    skills: [csp-homelab-architect]
+    weight: 40
+  "homelab architect":
+    skills: [csp-homelab-architect]
+    weight: 40
+  "homelab-architect":
+    skills: [csp-homelab-architect]
+    weight: 40
+  "hookify":
+    skills: [csp-hookify, csp-hookify-configure, csp-hookify-help, csp-hookify-list]
+    weight: 40
+  "hookify configure":
+    skills: [csp-hookify-configure]
+    weight: 40
+  "hookify help":
+    skills: [csp-hookify-help]
+    weight: 40
+  "hookify list":
+    skills: [csp-hookify-list]
+    weight: 40
+  "hookify-configure":
+    skills: [csp-hookify-configure]
+    weight: 40
+  "hookify-help":
+    skills: [csp-hookify-help]
+    weight: 40
+  "hookify-list":
+    skills: [csp-hookify-list]
+    weight: 40
+  "import":
+    skills: [csp-import]
+    weight: 40
+  "inbox":
+    skills: [csp-inbox]
+    weight: 40
+  "ingest":
+    skills: [csp-ingest-docs]
+    weight: 40
+  "ingest docs":
+    skills: [csp-ingest-docs]
+    weight: 40
+  "ingest-docs":
+    skills: [csp-ingest-docs]
+    weight: 40
+  "insert":
+    skills: [csp-insert-phase]
+    weight: 40
+  "insert phase":
+    skills: [csp-insert-phase]
+    weight: 40
+  "insert-phase":
+    skills: [csp-insert-phase]
+    weight: 40
+  "instinct":
+    skills: [csp-instinct-export, csp-instinct-import, csp-instinct-status]
+    weight: 40
+  "instinct export":
+    skills: [csp-instinct-export]
+    weight: 40
+  "instinct import":
+    skills: [csp-instinct-import]
+    weight: 40
+  "instinct status":
+    skills: [csp-instinct-status]
+    weight: 40
+  "instinct-export":
+    skills: [csp-instinct-export]
+    weight: 40
+  "instinct-import":
+    skills: [csp-instinct-import]
+    weight: 40
+  "instinct-status":
+    skills: [csp-instinct-status]
+    weight: 40
+  "integration":
+    skills: [csp-ai-integration-phase, csp-integration-checker]
+    weight: 40
+  "integration checker":
+    skills: [csp-integration-checker]
+    weight: 40
+  "integration-checker":
+    skills: [csp-integration-checker]
+    weight: 40
+  "intel updater":
+    skills: [csp-intel-updater]
+    weight: 40
+  "intel-updater":
+    skills: [csp-intel-updater]
+    weight: 40
+  "jira":
+    skills: [csp-jira]
+    weight: 40
+  "kotlin build error":
+    skills: [csp-kotlin-build]
+    weight: 40
+  "kotlin code review":
+    skills: [csp-kotlin-review]
+    weight: 40
+  "kotlin coding style":
+    skills: [csp-cursor-rules-kotlin-coding-style]
+    weight: 40
+  "kotlin cursor rules":
+    skills: [csp-cursor-rules-kotlin-coding-style, csp-cursor-rules-kotlin-hooks, csp-cursor-rules-kotlin-patterns, csp-cursor-rules-kotlin-security, csp-cursor-rules-kotlin-testing]
+    weight: 40
+  "kotlin hooks":
+    skills: [csp-cursor-rules-kotlin-hooks]
+    weight: 40
+  "kotlin review":
+    skills: [csp-kotlin-review]
+    weight: 40
+  "kotlin security":
+    skills: [csp-cursor-rules-kotlin-security]
+    weight: 40
+  "kotlin test":
+    skills: [csp-kotlin-test]
+    weight: 40
+  "kotlin 审查":
+    skills: [csp-kotlin-review]
+    weight: 40
+  "kotlin 构建错误":
+    skills: [csp-kotlin-build]
+    weight: 40
+  "kotlin 测试":
+    skills: [csp-kotlin-test]
+    weight: 40
+  "kotlin-build":
+    skills: [csp-kotlin-build]
+    weight: 40
+  "kotlin-review":
+    skills: [csp-kotlin-review]
+    weight: 40
+  "kotlin-test":
+    skills: [csp-kotlin-test]
+    weight: 40
+  "learn":
+    skills: [csp-learn, csp-learn-eval]
+    weight: 40
+  "learn eval":
+    skills: [csp-learn-eval]
+    weight: 40
+  "learn-eval":
+    skills: [csp-learn-eval]
+    weight: 40
+  "lifecycle":
+    skills: [csp-lifecycle, csp-lifecycle-orchestrator]
+    weight: 40
+  "lifecycle orchestrator":
+    skills: [csp-lifecycle-orchestrator]
+    weight: 40
+  "lifecycle-orchestrator":
+    skills: [csp-lifecycle-orchestrator]
+    weight: 40
+  "list":
+    skills: [csp-list-phase-assumptions, csp-list-workspaces]
+    weight: 40
+  "list phase assumptions":
+    skills: [csp-list-phase-assumptions]
+    weight: 40
+  "list workspaces":
+    skills: [csp-list-workspaces]
+    weight: 40
+  "list-phase-assumptions":
+    skills: [csp-list-phase-assumptions]
+    weight: 40
+  "list-workspaces":
+    skills: [csp-list-workspaces]
+    weight: 40
+  "llm app code review":
+    skills: [csp-llm-app-reviewer]
+    weight: 40
+  "llm app review":
+    skills: [csp-llm-app-reviewer]
+    weight: 40
+  "llm app 审查":
+    skills: [csp-llm-app-reviewer]
+    weight: 40
+  "llm-app-reviewer":
+    skills: [csp-llm-app-reviewer]
+    weight: 40
+  "loop":
+    skills: [csp-loop-operator, csp-loop-start, csp-loop-status]
+    weight: 40
+  "loop operator":
+    skills: [csp-loop-operator]
+    weight: 40
+  "loop start":
+    skills: [csp-loop-start]
+    weight: 40
+  "loop status":
+    skills: [csp-loop-status]
+    weight: 40
+  "loop-operator":
+    skills: [csp-loop-operator]
+    weight: 40
+  "loop-start":
+    skills: [csp-loop-start]
+    weight: 40
+  "loop-status":
+    skills: [csp-loop-status]
+    weight: 40
+  "manage":
+    skills: [csp-ns-manage]
+    weight: 40
+  "marketing":
+    skills: [csp-marketing-agent, csp-marketing-campaign]
+    weight: 40
+  "marketing agent":
+    skills: [csp-marketing-agent]
+    weight: 40
+  "marketing campaign":
+    skills: [csp-marketing-campaign]
+    weight: 40
+  "marketing-agent":
+    skills: [csp-marketing-agent]
+    weight: 40
+  "marketing-campaign":
+    skills: [csp-marketing-campaign]
+    weight: 40
+  "milestone":
+    skills: [csp-milestone-summary]
+    weight: 40
+  "milestone summary":
+    skills: [csp-milestone-summary]
+    weight: 40
+  "milestone summary 里程碑":
+    skills: [csp-milestone-summary]
+    weight: 40
+  "milestone-summary":
+    skills: [csp-milestone-summary]
+    weight: 40
+  "mle code review":
+    skills: [csp-mle-reviewer]
+    weight: 40
+  "mle review":
+    skills: [csp-mle-reviewer]
+    weight: 40
+  "mle 审查":
+    skills: [csp-mle-reviewer]
+    weight: 40
+  "mle-reviewer":
+    skills: [csp-mle-reviewer]
+    weight: 40
+  "mobile performance auditor":
+    skills: [csp-mobile-performance-auditor]
+    weight: 40
+  "mobile performance auditor 移动端":
+    skills: [csp-mobile-performance-auditor]
+    weight: 40
+  "mobile-performance-auditor":
+    skills: [csp-mobile-performance-auditor]
+    weight: 40
+  "model route":
+    skills: [csp-model-route]
+    weight: 40
+  "model-route":
+    skills: [csp-model-route]
+    weight: 40
+  "multi backend":
+    skills: [csp-multi-backend]
+    weight: 40
+  "multi execute":
+    skills: [csp-multi-execute]
+    weight: 40
+  "multi frontend":
+    skills: [csp-multi-frontend]
+    weight: 40
+  "multi plan":
+    skills: [csp-multi-plan]
+    weight: 40
+  "multi workflow":
+    skills: [csp-multi-workflow]
+    weight: 40
+  "multi-backend":
+    skills: [csp-multi-backend]
+    weight: 40
+  "multi-execute":
+    skills: [csp-multi-execute]
+    weight: 40
+  "multi-frontend":
+    skills: [csp-multi-frontend]
+    weight: 40
+  "multi-plan":
+    skills: [csp-multi-plan]
+    weight: 40
+  "multi-workflow":
+    skills: [csp-multi-workflow]
+    weight: 40
+  "mvp":
+    skills: [csp-mvp-phase]
+    weight: 40
+  "mvp phase":
+    skills: [csp-mvp-phase]
+    weight: 40
+  "mvp-phase":
+    skills: [csp-mvp-phase]
+    weight: 40
+  "network":
+    skills: [csp-network-architect, csp-network-troubleshooter]
+    weight: 40
+  "network architect":
+    skills: [csp-network-architect]
+    weight: 40
+  "network architect 网络":
+    skills: [csp-network-architect]
+    weight: 40
+  "network config code review":
+    skills: [csp-network-config-reviewer]
+    weight: 40
+  "network config review":
+    skills: [csp-network-config-reviewer]
+    weight: 40
+  "network config 审查":
+    skills: [csp-network-config-reviewer]
+    weight: 40
+  "network troubleshooter":
+    skills: [csp-network-troubleshooter]
+    weight: 40
+  "network troubleshooter 网络":
+    skills: [csp-network-troubleshooter]
+    weight: 40
+  "network-architect":
+    skills: [csp-network-architect]
+    weight: 40
+  "network-config-reviewer":
+    skills: [csp-network-config-reviewer]
+    weight: 40
+  "network-troubleshooter":
+    skills: [csp-network-troubleshooter]
+    weight: 40
+  "new":
+    skills: [csp-new-milestone, csp-new-project, csp-new-workspace]
+    weight: 40
+  "new milestone":
+    skills: [csp-new-milestone]
+    weight: 40
+  "new project":
+    skills: [csp-new-project]
+    weight: 40
+  "new workspace":
+    skills: [csp-new-workspace]
+    weight: 40
+  "new-milestone":
+    skills: [csp-new-milestone]
+    weight: 40
+  "new-project":
+    skills: [csp-new-project]
+    weight: 40
+  "new-workspace":
+    skills: [csp-new-workspace]
+    weight: 40
+  "next":
+    skills: [csp-next]
+    weight: 40
+  "node":
+    skills: [csp-node-repair]
+    weight: 40
+  "node repair":
+    skills: [csp-node-repair]
+    weight: 40
+  "node-repair":
+    skills: [csp-node-repair]
+    weight: 40
+  "note":
+    skills: [csp-note]
+    weight: 40
+  "ns code review":
+    skills: [csp-ns-review]
+    weight: 40
+  "ns context":
+    skills: [csp-ns-context]
+    weight: 40
+  "ns ideate":
+    skills: [csp-ns-ideate]
+    weight: 40
+  "ns manage":
+    skills: [csp-ns-manage]
+    weight: 40
+  "ns project":
+    skills: [csp-ns-project]
+    weight: 40
+  "ns project 项目":
+    skills: [csp-ns-project]
+    weight: 40
+  "ns review":
+    skills: [csp-ns-review]
+    weight: 40
+  "ns workflow":
+    skills: [csp-ns-workflow]
+    weight: 40
+  "ns workflow 工作流":
+    skills: [csp-ns-workflow]
+    weight: 40
+  "ns 审查":
+    skills: [csp-ns-review]
+    weight: 40
+  "ns-context":
+    skills: [csp-ns-context]
+    weight: 40
+  "ns-ideate":
+    skills: [csp-ns-ideate]
+    weight: 40
+  "ns-manage":
+    skills: [csp-ns-manage]
+    weight: 40
+  "ns-project":
+    skills: [csp-ns-project]
+    weight: 40
+  "ns-review":
+    skills: [csp-ns-review]
+    weight: 40
+  "ns-workflow":
+    skills: [csp-ns-workflow]
+    weight: 40
+  "nyquist":
+    skills: [csp-nyquist-auditor]
+    weight: 40
+  "nyquist auditor":
+    skills: [csp-nyquist-auditor]
+    weight: 40
+  "nyquist-auditor":
+    skills: [csp-nyquist-auditor]
+    weight: 40
+  "opensource":
+    skills: [csp-opensource-forker, csp-opensource-packager, csp-opensource-sanitizer]
+    weight: 40
+  "opensource forker":
+    skills: [csp-opensource-forker]
+    weight: 40
+  "opensource packager":
+    skills: [csp-opensource-packager]
+    weight: 40
+  "opensource sanitizer":
+    skills: [csp-opensource-sanitizer]
+    weight: 40
+  "opensource-forker":
+    skills: [csp-opensource-forker]
+    weight: 40
+  "opensource-packager":
+    skills: [csp-opensource-packager]
+    weight: 40
+  "opensource-sanitizer":
+    skills: [csp-opensource-sanitizer]
+    weight: 40
+  "orch":
+    skills: [csp-orch-add-feature, csp-orch-build-mvp, csp-orch-change-feature, csp-orch-fix-defect, csp-orch-refine-code]
+    weight: 40
+  "orch add feature":
+    skills: [csp-orch-add-feature]
+    weight: 40
+  "orch build mvp":
+    skills: [csp-orch-build-mvp]
+    weight: 40
+  "orch change feature":
+    skills: [csp-orch-change-feature]
+    weight: 40
+  "orch fix defect":
+    skills: [csp-orch-fix-defect]
+    weight: 40
+  "orch refine code":
+    skills: [csp-orch-refine-code]
+    weight: 40
+  "orch-add-feature":
+    skills: [csp-orch-add-feature]
+    weight: 40
+  "orch-build-mvp":
+    skills: [csp-orch-build-mvp]
+    weight: 40
+  "orch-change-feature":
+    skills: [csp-orch-change-feature]
+    weight: 40
+  "orch-fix-defect":
+    skills: [csp-orch-fix-defect]
+    weight: 40
+  "orch-refine-code":
+    skills: [csp-orch-refine-code]
+    weight: 40
+  "pattern":
+    skills: [csp-pattern-mapper]
+    weight: 40
+  "pattern mapper":
+    skills: [csp-pattern-mapper]
+    weight: 40
+  "pattern-mapper":
+    skills: [csp-pattern-mapper]
+    weight: 40
+  "pause":
+    skills: [csp-pause-work]
+    weight: 40
+  "pause work":
+    skills: [csp-pause-work]
+    weight: 40
+  "pause-work":
+    skills: [csp-pause-work]
+    weight: 40
+  "phase":
+    skills: [csp-phase, csp-phase-researcher, csp-ui-phase]
+    weight: 40
+  "phase researcher":
+    skills: [csp-phase-researcher]
+    weight: 40
+  "phase researcher 阶段":
+    skills: [csp-phase-researcher]
+    weight: 40
+  "phase 阶段":
+    skills: [csp-phase]
+    weight: 40
+  "phase-researcher":
+    skills: [csp-phase-researcher]
+    weight: 40
+  "php code review":
+    skills: [csp-php-reviewer]
+    weight: 40
+  "php coding style":
+    skills: [csp-cursor-rules-php-coding-style]
+    weight: 40
+  "php cursor rules":
+    skills: [csp-cursor-rules-php-coding-style, csp-cursor-rules-php-hooks, csp-cursor-rules-php-patterns, csp-cursor-rules-php-security, csp-cursor-rules-php-testing]
+    weight: 40
+  "php hooks":
+    skills: [csp-cursor-rules-php-hooks]
+    weight: 40
+  "php patterns":
+    skills: [csp-cursor-rules-php-patterns]
+    weight: 40
+  "php review":
+    skills: [csp-php-reviewer]
+    weight: 40
+  "php security":
+    skills: [csp-cursor-rules-php-security]
+    weight: 40
+  "php testing":
+    skills: [csp-cursor-rules-php-testing]
+    weight: 40
+  "php 审查":
+    skills: [csp-php-reviewer]
+    weight: 40
+  "php-reviewer":
+    skills: [csp-php-reviewer]
+    weight: 40
+  "plan checker":
+    skills: [csp-plan-checker]
+    weight: 40
+  "plan checker 规划":
+    skills: [csp-plan-checker]
+    weight: 40
+  "plan milestone gaps":
+    skills: [csp-plan-milestone-gaps]
+    weight: 40
+  "plan milestone gaps 规划":
+    skills: [csp-plan-milestone-gaps]
+    weight: 40
+  "plan prd":
+    skills: [csp-plan-prd]
+    weight: 40
+  "plan prd 规划":
+    skills: [csp-plan-prd]
+    weight: 40
+  "plan review convergence":
+    skills: [csp-plan-review-convergence]
+    weight: 40
+  "plan review convergence 规划":
+    skills: [csp-plan-review-convergence]
+    weight: 40
+  "plan-checker":
+    skills: [csp-plan-checker]
+    weight: 40
+  "plan-milestone-gaps":
+    skills: [csp-plan-milestone-gaps]
+    weight: 40
+  "plan-prd":
+    skills: [csp-plan-prd]
+    weight: 40
+  "plan-review-convergence":
+    skills: [csp-plan-review-convergence]
+    weight: 40
+  "planner":
+    skills: [csp-planner]
+    weight: 40
+  "plant":
+    skills: [csp-plant-seed]
+    weight: 40
+  "plant seed":
+    skills: [csp-plant-seed]
+    weight: 40
+  "plant-seed":
+    skills: [csp-plant-seed]
+    weight: 40
+  "pm":
+    skills: [csp-pm]
+    weight: 40
+  "pm2":
+    skills: [csp-pm2]
+    weight: 40
+  "postgres best practices":
+    skills: [csp-postgres-patterns]
+    weight: 40
+  "postgres patterns":
+    skills: [csp-postgres-patterns]
+    weight: 40
+  "postgres 最佳实践":
+    skills: [csp-postgres-patterns]
+    weight: 40
+  "postgres-patterns":
+    skills: [csp-postgres-patterns]
+    weight: 40
+  "pr":
+    skills: [csp-pr]
+    weight: 40
+  "pr branch":
+    skills: [csp-pr-branch]
+    weight: 40
+  "pr test analyzer":
+    skills: [csp-pr-test-analyzer]
+    weight: 40
+  "pr test analyzer 测试":
+    skills: [csp-pr-test-analyzer]
+    weight: 40
+  "pr-branch":
+    skills: [csp-pr-branch]
+    weight: 40
+  "pr-test-analyzer":
+    skills: [csp-pr-test-analyzer]
+    weight: 40
+  "previous comments code review":
+    skills: [csp-previous-comments-reviewer]
+    weight: 40
+  "previous comments review":
+    skills: [csp-previous-comments-reviewer]
+    weight: 40
+  "previous comments 审查":
+    skills: [csp-previous-comments-reviewer]
+    weight: 40
+  "previous-comments-reviewer":
+    skills: [csp-previous-comments-reviewer]
+    weight: 40
+  "product lens code review":
+    skills: [csp-product-lens-reviewer]
+    weight: 40
+  "product lens review":
+    skills: [csp-product-lens-reviewer]
+    weight: 40
+  "product lens 审查":
+    skills: [csp-product-lens-reviewer]
+    weight: 40
+  "product-lens-reviewer":
+    skills: [csp-product-lens-reviewer]
+    weight: 40
+  "profile":
+    skills: [csp-profile-user]
+    weight: 40
+  "profile user":
+    skills: [csp-profile-user]
+    weight: 40
+  "profile-user":
+    skills: [csp-profile-user]
+    weight: 40
+  "progress":
+    skills: [csp-progress]
+    weight: 40
+  "project init":
+    skills: [csp-project-init]
+    weight: 40
+  "project init 项目":
+    skills: [csp-project-init]
+    weight: 40
+  "project researcher":
+    skills: [csp-project-researcher]
+    weight: 40
+  "project researcher 项目":
+    skills: [csp-project-researcher]
+    weight: 40
+  "project-init":
+    skills: [csp-project-init]
+    weight: 40
+  "project-researcher":
+    skills: [csp-project-researcher]
+    weight: 40
+  "projects":
+    skills: [csp-projects]
+    weight: 40
+  "promote":
+    skills: [csp-promote]
+    weight: 40
+  "prp":
+    skills: [csp-prp-commit, csp-prp-implement, csp-prp-plan, csp-prp-pr, csp-prp-prd]
+    weight: 40
+  "prp commit":
+    skills: [csp-prp-commit]
+    weight: 40
+  "prp implement":
+    skills: [csp-prp-implement]
+    weight: 40
+  "prp plan":
+    skills: [csp-prp-plan]
+    weight: 40
+  "prp pr":
+    skills: [csp-prp-pr]
+    weight: 40
+  "prp prd":
+    skills: [csp-prp-prd]
+    weight: 40
+  "prp-commit":
+    skills: [csp-prp-commit]
+    weight: 40
+  "prp-implement":
+    skills: [csp-prp-implement]
+    weight: 40
+  "prp-plan":
+    skills: [csp-prp-plan]
+    weight: 40
+  "prp-pr":
+    skills: [csp-prp-pr]
+    weight: 40
+  "prp-prd":
+    skills: [csp-prp-prd]
+    weight: 40
+  "prune":
+    skills: [csp-prune]
+    weight: 40
+  "psm":
+    skills: [csp-psm]
+    weight: 40
+  "python code review":
+    skills: [csp-python-review]
+    weight: 40
+  "python coding style":
+    skills: [csp-cursor-rules-python-coding-style]
+    weight: 40
+  "python cursor rules":
+    skills: [csp-cursor-rules-python-coding-style, csp-cursor-rules-python-hooks, csp-cursor-rules-python-patterns, csp-cursor-rules-python-security, csp-cursor-rules-python-testing]
+    weight: 40
+  "python hooks":
+    skills: [csp-cursor-rules-python-hooks]
+    weight: 40
+  "python patterns":
+    skills: [csp-cursor-rules-python-patterns]
+    weight: 40
+  "python review":
+    skills: [csp-python-review]
+    weight: 40
+  "python security":
+    skills: [csp-cursor-rules-python-security]
+    weight: 40
+  "python 审查":
+    skills: [csp-python-review]
+    weight: 40
+  "python-review":
+    skills: [csp-python-review]
+    weight: 40
+  "pytorch build error":
+    skills: [csp-pytorch-build-resolver]
+    weight: 40
+  "pytorch 构建错误":
+    skills: [csp-pytorch-build-resolver]
+    weight: 40
+  "pytorch-build-resolver":
+    skills: [csp-pytorch-build-resolver]
+    weight: 40
+  "qa tester":
+    skills: [csp-qa-tester]
+    weight: 40
+  "qa-tester":
+    skills: [csp-qa-tester]
+    weight: 40
+  "quality":
+    skills: [csp-quality-gate]
+    weight: 40
+  "quality gate":
+    skills: [csp-quality-gate]
+    weight: 40
+  "quality gate 质量":
+    skills: [csp-quality-gate]
+    weight: 40
+  "quality-gate":
+    skills: [csp-quality-gate]
+    weight: 40
+  "quick":
+    skills: [csp-quick]
+    weight: 40
+  "rag":
+    skills: [csp-rag-architect]
+    weight: 40
+  "rag architect":
+    skills: [csp-rag-architect]
+    weight: 40
+  "rag-architect":
+    skills: [csp-rag-architect]
+    weight: 40
+  "react build error":
+    skills: [csp-react-build]
+    weight: 40
+  "react code review":
+    skills: [csp-react-review]
+    weight: 40
+  "react native build error":
+    skills: [csp-react-native-build-resolver]
+    weight: 40
+  "react native code review":
+    skills: [csp-react-native-reviewer]
+    weight: 40
+  "react native review":
+    skills: [csp-react-native-reviewer]
+    weight: 40
+  "react native 审查":
+    skills: [csp-react-native-reviewer]
+    weight: 40
+  "react native 构建错误":
+    skills: [csp-react-native-build-resolver]
+    weight: 40
+  "react review":
+    skills: [csp-react-review]
+    weight: 40
+  "react test":
+    skills: [csp-react-test]
+    weight: 40
+  "react 审查":
+    skills: [csp-react-review]
+    weight: 40
+  "react 构建错误":
+    skills: [csp-react-build]
+    weight: 40
+  "react 测试":
+    skills: [csp-react-test]
+    weight: 40
+  "react-build":
+    skills: [csp-react-build]
+    weight: 40
+  "react-native-build-resolver":
+    skills: [csp-react-native-build-resolver]
+    weight: 40
+  "react-native-reviewer":
+    skills: [csp-react-native-reviewer]
+    weight: 40
+  "react-review":
+    skills: [csp-react-review]
+    weight: 40
+  "react-test":
+    skills: [csp-react-test]
+    weight: 40
+  "reapply":
+    skills: [csp-reapply-patches]
+    weight: 40
+  "reapply patches":
+    skills: [csp-reapply-patches]
+    weight: 40
+  "reapply-patches":
+    skills: [csp-reapply-patches]
+    weight: 40
+  "refactor clean":
+    skills: [csp-refactor-clean]
+    weight: 40
+  "refactor clean 重构":
+    skills: [csp-refactor-clean]
+    weight: 40
+  "refactor-clean":
+    skills: [csp-refactor-clean]
+    weight: 40
+  "reliability code review":
+    skills: [csp-reliability-reviewer]
+    weight: 40
+  "reliability review":
+    skills: [csp-reliability-reviewer]
+    weight: 40
+  "reliability 审查":
+    skills: [csp-reliability-reviewer]
+    weight: 40
+  "reliability-reviewer":
+    skills: [csp-reliability-reviewer]
+    weight: 40
+  "remove":
+    skills: [csp-remove-phase, csp-remove-workspace]
+    weight: 40
+  "remove phase":
+    skills: [csp-remove-phase]
+    weight: 40
+  "remove workspace":
+    skills: [csp-remove-workspace]
+    weight: 40
+  "remove-phase":
+    skills: [csp-remove-phase]
+    weight: 40
+  "remove-workspace":
+    skills: [csp-remove-workspace]
+    weight: 40
+  "requirement":
+    skills: [csp-requirement-decomposition]
+    weight: 40
+  "requirement decomposition":
+    skills: [csp-requirement-decomposition]
+    weight: 40
+  "requirement-decomposition":
+    skills: [csp-requirement-decomposition]
+    weight: 40
+  "research":
+    skills: [csp-research-synthesizer]
+    weight: 40
+  "research synthesizer":
+    skills: [csp-research-synthesizer]
+    weight: 40
+  "research synthesizer 研究":
+    skills: [csp-research-synthesizer]
+    weight: 40
+  "research-synthesizer":
+    skills: [csp-research-synthesizer]
+    weight: 40
+  "researcher":
+    skills: [csp-ai-researcher, csp-ui-researcher]
+    weight: 40
+  "resume":
+    skills: [csp-resume-project, csp-resume-session, csp-resume-work]
+    weight: 40
+  "resume project":
+    skills: [csp-resume-project]
+    weight: 40
+  "resume session":
+    skills: [csp-resume-session]
+    weight: 40
+  "resume work":
+    skills: [csp-resume-work]
+    weight: 40
+  "resume-project":
+    skills: [csp-resume-project]
+    weight: 40
+  "resume-session":
+    skills: [csp-resume-session]
+    weight: 40
+  "resume-work":
+    skills: [csp-resume-work]
+    weight: 40
+  "review a11y architect":
+    skills: [csp-a11y-architect]
+    weight: 40
+  "review add backlog":
+    skills: [csp-add-backlog]
+    weight: 40
+  "review add phase":
+    skills: [csp-add-phase]
+    weight: 40
+  "review add tests":
+    skills: [csp-add-tests]
+    weight: 40
+  "review add todo":
+    skills: [csp-add-todo]
+    weight: 40
+  "review adversarial code":
+    skills: [csp-adversarial-reviewer]
+    weight: 40
+  "review advisor researcher":
+    skills: [csp-advisor-researcher]
+    weight: 40
+  "review ai integration phase":
+    skills: [csp-ai-integration-phase]
+    weight: 40
+  "review ai researcher":
+    skills: [csp-ai-researcher]
+    weight: 40
+  "review analyst":
+    skills: [csp-analyst]
+    weight: 40
+  "review analyze dependencies":
+    skills: [csp-analyze-dependencies]
+    weight: 40
+  "review api contract code":
+    skills: [csp-api-contract-reviewer]
+    weight: 40
+  "review architect":
+    skills: [csp-architect]
+    weight: 40
+  "review aside":
+    skills: [csp-aside]
+    weight: 40
+  "review assumptions analyzer":
+    skills: [csp-assumptions-analyzer]
+    weight: 40
+  "review audit fix":
+    skills: [csp-audit-fix]
+    weight: 40
+  "review audit milestone":
+    skills: [csp-audit-milestone]
+    weight: 40
+  "review audit uat":
+    skills: [csp-audit-uat]
+    weight: 40
+  "review auto update":
+    skills: [csp-auto-update]
+    weight: 40
+  "review autonomous":
+    skills: [csp-autonomous]
+    weight: 40
+  "review backlog":
+    skills: [csp-review-backlog]
+    weight: 40
+  "review backlog 审查":
+    skills: [csp-review-backlog]
+    weight: 40
+  "review build error resolver":
+    skills: [csp-build-error-resolver]
+    weight: 40
+  "review build fix":
+    skills: [csp-build-fix]
+    weight: 40
+  "review capture":
+    skills: [csp-capture]
+    weight: 40
+  "review check todos":
+    skills: [csp-check-todos]
+    weight: 40
+  "review checkpoint":
+    skills: [csp-checkpoint]
+    weight: 40
+  "review chief of staff":
+    skills: [csp-chief-of-staff]
+    weight: 40
+  "review cleanup":
+    skills: [csp-cleanup]
+    weight: 40
+  "review cli teams":
+    skills: [csp-cli-teams]
+    weight: 40
+  "review code architect":
+    skills: [csp-code-architect]
+    weight: 40
+  "review code code":
+    skills: [csp-code-reviewer]
+    weight: 40
+  "review code explorer":
+    skills: [csp-code-explorer]
+    weight: 40
+  "review code fixer":
+    skills: [csp-code-fixer]
+    weight: 40
+  "review code graph":
+    skills: [csp-code-graph]
+    weight: 40
+  "review code review fix":
+    skills: [csp-code-review-fix]
+    weight: 40
+  "review coherence code":
+    skills: [csp-coherence-reviewer]
+    weight: 40
+  "review comment analyzer":
+    skills: [csp-comment-analyzer]
+    weight: 40
+  "review compact":
+    skills: [csp-compact]
+    weight: 40
+  "review complete milestone":
+    skills: [csp-complete-milestone]
+    weight: 40
+  "review compound learning":
+    skills: [csp-compound-learning]
+    weight: 40
+  "review config":
+    skills: [csp-config]
+    weight: 40
+  "review conversation analyzer":
+    skills: [csp-conversation-analyzer]
+    weight: 40
+  "review cost report":
+    skills: [csp-cost-report]
+    weight: 40
+  "review cpp code":
+    skills: [csp-cpp-review]
+    weight: 40
+  "review critic":
+    skills: [csp-critic]
+    weight: 40
+  "review data migration code":
+    skills: [csp-data-migration-reviewer]
+    weight: 40
+  "review data pipeline code":
+    skills: [csp-data-pipeline-reviewer]
+    weight: 40
+  "review database code":
+    skills: [csp-database-reviewer]
+    weight: 40
+  "review debug session manager":
+    skills: [csp-debug-session-manager]
+    weight: 40
+  "review debugger":
+    skills: [csp-debugger]
+    weight: 40
+  "review deployment verification agent":
+    skills: [csp-deployment-verification-agent]
+    weight: 40
+  "review designer":
+    skills: [csp-designer]
+    weight: 40
+  "review developer":
+    skills: [csp-developer]
+    weight: 40
+  "review diagnose issues":
+    skills: [csp-diagnose-issues]
+    weight: 40
+  "review discovery phase":
+    skills: [csp-discovery-phase]
+    weight: 40
+  "review discuss phase":
+    skills: [csp-discuss-phase]
+    weight: 40
+  "review discuss phase assumptions":
+    skills: [csp-discuss-phase-assumptions]
+    weight: 40
+  "review discuss phase power":
+    skills: [csp-discuss-phase-power]
+    weight: 40
+  "review do":
+    skills: [csp-do]
+    weight: 40
+  "review doc classifier":
+    skills: [csp-doc-classifier]
+    weight: 40
+  "review doc synthesizer":
+    skills: [csp-doc-synthesizer]
+    weight: 40
+  "review doc updater":
+    skills: [csp-doc-updater]
+    weight: 40
+  "review doc verifier":
+    skills: [csp-doc-verifier]
+    weight: 40
+  "review doc writer":
+    skills: [csp-doc-writer]
+    weight: 40
+  "review document specialist":
+    skills: [csp-document-specialist]
+    weight: 40
+  "review domain researcher":
+    skills: [csp-domain-researcher]
+    weight: 40
+  "review e2e runner":
+    skills: [csp-e2e-runner]
+    weight: 40
+  "review ecc guide":
+    skills: [csp-ecc-guide]
+    weight: 40
+  "review edit phase":
+    skills: [csp-edit-phase]
+    weight: 40
+  "review eval auditor":
+    skills: [csp-eval-auditor]
+    weight: 40
+  "review eval code":
+    skills: [csp-eval-review]
+    weight: 40
+  "review eval planner":
+    skills: [csp-eval-planner]
+    weight: 40
+  "review evolve":
+    skills: [csp-evolve]
+    weight: 40
+  "review execute plan":
+    skills: [csp-execute-plan]
+    weight: 40
+  "review executor":
+    skills: [csp-executor]
+    weight: 40
+  "review extract learnings":
+    skills: [csp-extract-learnings]
+    weight: 40
+  "review fast":
+    skills: [csp-fast]
+    weight: 40
+  "review fastapi code":
+    skills: [csp-fastapi-review]
+    weight: 40
+  "review feasibility code":
+    skills: [csp-feasibility-reviewer]
+    weight: 40
+  "review feature dev":
+    skills: [csp-feature-dev]
+    weight: 40
+  "review flutter code":
+    skills: [csp-flutter-review, csp-flutter-reviewer]
+    weight: 40
+  "review forensics":
+    skills: [csp-forensics]
+    weight: 40
+  "review framework selector":
+    skills: [csp-framework-selector]
+    weight: 40
+  "review fsharp code":
+    skills: [csp-fsharp-reviewer]
+    weight: 40
+  "review fullstack spec generator":
+    skills: [csp-fullstack-spec-generator]
+    weight: 40
+  "review gan design":
+    skills: [csp-gan-design]
+    weight: 40
+  "review gan evaluator":
+    skills: [csp-gan-evaluator]
+    weight: 40
+  "review gan generator":
+    skills: [csp-gan-generator]
+    weight: 40
+  "review gan planner":
+    skills: [csp-gan-planner]
+    weight: 40
+  "review git master":
+    skills: [csp-git-master]
+    weight: 40
+  "review go code":
+    skills: [csp-go-review]
+    weight: 40
+  "review graduation":
+    skills: [csp-graduation]
+    weight: 40
+  "review graph architecture":
+    skills: [csp-graph-architecture]
+    weight: 40
+  "review graph code":
+    skills: [csp-graph-review]
+    weight: 40
+  "review graph impact":
+    skills: [csp-graph-impact]
+    weight: 40
+  "review graph refactor":
+    skills: [csp-graph-refactor]
+    weight: 40
+  "review graphify":
+    skills: [csp-graphify]
+    weight: 40
+  "review harmonyos app resolver":
+    skills: [csp-harmonyos-app-resolver]
+    weight: 40
+  "review harness audit":
+    skills: [csp-harness-audit]
+    weight: 40
+  "review harness optimizer":
+    skills: [csp-harness-optimizer]
+    weight: 40
+  "review health":
+    skills: [csp-health]
+    weight: 40
+  "review healthcare code":
+    skills: [csp-healthcare-reviewer]
+    weight: 40
+  "review homelab architect":
+    skills: [csp-homelab-architect]
+    weight: 40
+  "review hookify":
+    skills: [csp-hookify]
+    weight: 40
+  "review hookify configure":
+    skills: [csp-hookify-configure]
+    weight: 40
+  "review hookify help":
+    skills: [csp-hookify-help]
+    weight: 40
+  "review hookify list":
+    skills: [csp-hookify-list]
+    weight: 40
+  "review import":
+    skills: [csp-import]
+    weight: 40
+  "review inbox":
+    skills: [csp-inbox]
+    weight: 40
+  "review ingest docs":
+    skills: [csp-ingest-docs]
+    weight: 40
+  "review insert phase":
+    skills: [csp-insert-phase]
+    weight: 40
+  "review instinct export":
+    skills: [csp-instinct-export]
+    weight: 40
+  "review instinct import":
+    skills: [csp-instinct-import]
+    weight: 40
+  "review instinct status":
+    skills: [csp-instinct-status]
+    weight: 40
+  "review integration checker":
+    skills: [csp-integration-checker]
+    weight: 40
+  "review intel updater":
+    skills: [csp-intel-updater]
+    weight: 40
+  "review jira":
+    skills: [csp-jira]
+    weight: 40
+  "review kotlin code":
+    skills: [csp-kotlin-review]
+    weight: 40
+  "review learn":
+    skills: [csp-learn]
+    weight: 40
+  "review learn eval":
+    skills: [csp-learn-eval]
+    weight: 40
+  "review lifecycle":
+    skills: [csp-lifecycle]
+    weight: 40
+  "review lifecycle orchestrator":
+    skills: [csp-lifecycle-orchestrator]
+    weight: 40
+  "review list phase assumptions":
+    skills: [csp-list-phase-assumptions]
+    weight: 40
+  "review list workspaces":
+    skills: [csp-list-workspaces]
+    weight: 40
+  "review llm app code":
+    skills: [csp-llm-app-reviewer]
+    weight: 40
+  "review loop operator":
+    skills: [csp-loop-operator]
+    weight: 40
+  "review loop start":
+    skills: [csp-loop-start]
+    weight: 40
+  "review loop status":
+    skills: [csp-loop-status]
+    weight: 40
+  "review manager":
+    skills: [csp-manager]
+    weight: 40
+  "review marketing agent":
+    skills: [csp-marketing-agent]
+    weight: 40
+  "review marketing campaign":
+    skills: [csp-marketing-campaign]
+    weight: 40
+  "review milestone summary":
+    skills: [csp-milestone-summary]
+    weight: 40
+  "review mle code":
+    skills: [csp-mle-reviewer]
+    weight: 40
+  "review mobile performance auditor":
+    skills: [csp-mobile-performance-auditor]
+    weight: 40
+  "review model route":
+    skills: [csp-model-route]
+    weight: 40
+  "review multi backend":
+    skills: [csp-multi-backend]
+    weight: 40
+  "review multi execute":
+    skills: [csp-multi-execute]
+    weight: 40
+  "review multi frontend":
+    skills: [csp-multi-frontend]
+    weight: 40
+  "review multi plan":
+    skills: [csp-multi-plan]
+    weight: 40
+  "review multi workflow":
+    skills: [csp-multi-workflow]
+    weight: 40
+  "review mvp phase":
+    skills: [csp-mvp-phase]
+    weight: 40
+  "review network architect":
+    skills: [csp-network-architect]
+    weight: 40
+  "review network config code":
+    skills: [csp-network-config-reviewer]
+    weight: 40
+  "review network troubleshooter":
+    skills: [csp-network-troubleshooter]
+    weight: 40
+  "review new milestone":
+    skills: [csp-new-milestone]
+    weight: 40
+  "review new project":
+    skills: [csp-new-project]
+    weight: 40
+  "review new workspace":
+    skills: [csp-new-workspace]
+    weight: 40
+  "review next":
+    skills: [csp-next]
+    weight: 40
+  "review node repair":
+    skills: [csp-node-repair]
+    weight: 40
+  "review note":
+    skills: [csp-note]
+    weight: 40
+  "review ns code":
+    skills: [csp-ns-review]
+    weight: 40
+  "review ns context":
+    skills: [csp-ns-context]
+    weight: 40
+  "review ns ideate":
+    skills: [csp-ns-ideate]
+    weight: 40
+  "review ns manage":
+    skills: [csp-ns-manage]
+    weight: 40
+  "review ns project":
+    skills: [csp-ns-project]
+    weight: 40
+  "review ns workflow":
+    skills: [csp-ns-workflow]
+    weight: 40
+  "review nyquist auditor":
+    skills: [csp-nyquist-auditor]
+    weight: 40
+  "review opensource forker":
+    skills: [csp-opensource-forker]
+    weight: 40
+  "review opensource packager":
+    skills: [csp-opensource-packager]
+    weight: 40
+  "review opensource sanitizer":
+    skills: [csp-opensource-sanitizer]
+    weight: 40
+  "review orch add feature":
+    skills: [csp-orch-add-feature]
+    weight: 40
+  "review orch build mvp":
+    skills: [csp-orch-build-mvp]
+    weight: 40
+  "review orch change feature":
+    skills: [csp-orch-change-feature]
+    weight: 40
+  "review orch fix defect":
+    skills: [csp-orch-fix-defect]
+    weight: 40
+  "review orch refine code":
+    skills: [csp-orch-refine-code]
+    weight: 40
+  "review pattern mapper":
+    skills: [csp-pattern-mapper]
+    weight: 40
+  "review pause work":
+    skills: [csp-pause-work]
+    weight: 40
+  "review phase":
+    skills: [csp-phase]
+    weight: 40
+  "review phase researcher":
+    skills: [csp-phase-researcher]
+    weight: 40
+  "review php code":
+    skills: [csp-php-reviewer]
+    weight: 40
+  "review plan checker":
+    skills: [csp-plan-checker]
+    weight: 40
+  "review plan milestone gaps":
+    skills: [csp-plan-milestone-gaps]
+    weight: 40
+  "review plan prd":
+    skills: [csp-plan-prd]
+    weight: 40
+  "review plan review convergence":
+    skills: [csp-plan-review-convergence]
+    weight: 40
+  "review planner":
+    skills: [csp-planner]
+    weight: 40
+  "review plant seed":
+    skills: [csp-plant-seed]
+    weight: 40
+  "review pm":
+    skills: [csp-pm]
+    weight: 40
+  "review pm2":
+    skills: [csp-pm2]
+    weight: 40
+  "review pr":
+    skills: [csp-pr, csp-review-pr]
+    weight: 40
+  "review pr branch":
+    skills: [csp-pr-branch]
+    weight: 40
+  "review pr test analyzer":
+    skills: [csp-pr-test-analyzer]
+    weight: 40
+  "review pr 审查":
+    skills: [csp-review-pr]
+    weight: 40
+  "review previous comments code":
+    skills: [csp-previous-comments-reviewer]
+    weight: 40
+  "review product lens code":
+    skills: [csp-product-lens-reviewer]
+    weight: 40
+  "review profile user":
+    skills: [csp-profile-user]
+    weight: 40
+  "review progress":
+    skills: [csp-progress]
+    weight: 40
+  "review project init":
+    skills: [csp-project-init]
+    weight: 40
+  "review project researcher":
+    skills: [csp-project-researcher]
+    weight: 40
+  "review projects":
+    skills: [csp-projects]
+    weight: 40
+  "review promote":
+    skills: [csp-promote]
+    weight: 40
+  "review prp commit":
+    skills: [csp-prp-commit]
+    weight: 40
+  "review prp implement":
+    skills: [csp-prp-implement]
+    weight: 40
+  "review prp plan":
+    skills: [csp-prp-plan]
+    weight: 40
+  "review prp pr":
+    skills: [csp-prp-pr]
+    weight: 40
+  "review prp prd":
+    skills: [csp-prp-prd]
+    weight: 40
+  "review prune":
+    skills: [csp-prune]
+    weight: 40
+  "review psm":
+    skills: [csp-psm]
+    weight: 40
+  "review python code":
+    skills: [csp-python-review]
+    weight: 40
+  "review qa tester":
+    skills: [csp-qa-tester]
+    weight: 40
+  "review quality gate":
+    skills: [csp-quality-gate]
+    weight: 40
+  "review quick":
+    skills: [csp-quick]
+    weight: 40
+  "review rag architect":
+    skills: [csp-rag-architect]
+    weight: 40
+  "review react code":
+    skills: [csp-react-review]
+    weight: 40
+  "review react native code":
+    skills: [csp-react-native-reviewer]
+    weight: 40
+  "review reapply patches":
+    skills: [csp-reapply-patches]
+    weight: 40
+  "review refactor clean":
+    skills: [csp-refactor-clean]
+    weight: 40
+  "review reliability code":
+    skills: [csp-reliability-reviewer]
+    weight: 40
+  "review remove phase":
+    skills: [csp-remove-phase]
+    weight: 40
+  "review remove workspace":
+    skills: [csp-remove-workspace]
+    weight: 40
+  "review requirement decomposition":
+    skills: [csp-requirement-decomposition]
+    weight: 40
+  "review research synthesizer":
+    skills: [csp-research-synthesizer]
+    weight: 40
+  "review resume project":
+    skills: [csp-resume-project]
+    weight: 40
+  "review resume session":
+    skills: [csp-resume-session]
+    weight: 40
+  "review resume work":
+    skills: [csp-resume-work]
+    weight: 40
+  "review review":
+    skills: [csp-review]
+    weight: 40
+  "review review backlog":
+    skills: [csp-review-backlog]
+    weight: 40
+  "review review pr":
+    skills: [csp-review-pr]
+    weight: 40
+  "review roadmapper":
+    skills: [csp-roadmapper]
+    weight: 40
+  "review rust code":
+    skills: [csp-rust-review]
+    weight: 40
+  "review santa loop":
+    skills: [csp-santa-loop]
+    weight: 40
+  "review save session":
+    skills: [csp-save-session]
+    weight: 40
+  "review scan":
+    skills: [csp-scan]
+    weight: 40
+  "review scientist":
+    skills: [csp-scientist]
+    weight: 40
+  "review scope guardian code":
+    skills: [csp-scope-guardian-reviewer]
+    weight: 40
+  "review security auditor":
+    skills: [csp-security-auditor]
+    weight: 40
+  "review security code":
+    skills: [csp-security-reviewer]
+    weight: 40
+  "review security scan":
+    skills: [csp-security-scan]
+    weight: 40
+  "review seo specialist":
+    skills: [csp-seo-specialist]
+    weight: 40
+  "review session report":
+    skills: [csp-session-report]
+    weight: 40
+  "review sessions":
+    skills: [csp-sessions]
+    weight: 40
+  "review settings":
+    skills: [csp-settings]
+    weight: 40
+  "review settings advanced":
+    skills: [csp-settings-advanced]
+    weight: 40
+  "review settings integrations":
+    skills: [csp-settings-integrations]
+    weight: 40
+  "review setup pm":
+    skills: [csp-setup-pm]
+    weight: 40
+  "review silent failure hunter":
+    skills: [csp-silent-failure-hunter]
+    weight: 40
+  "review sketch":
+    skills: [csp-sketch]
+    weight: 40
+  "review sketch wrap up":
+    skills: [csp-sketch-wrap-up]
+    weight: 40
+  "review skill":
+    skills: [csp-skill]
+    weight: 40
+  "review skill create":
+    skills: [csp-skill-create]
+    weight: 40
+  "review skill health":
+    skills: [csp-skill-health]
+    weight: 40
+  "review spike":
+    skills: [csp-spike]
+    weight: 40
+  "review spike wrap up":
+    skills: [csp-spike-wrap-up]
+    weight: 40
+  "review springboot security":
+    skills: [csp-springboot-security]
+    weight: 40
+  "review stats":
+    skills: [csp-stats]
+    weight: 40
+  "review surface":
+    skills: [csp-surface]
+    weight: 40
+  "review sync skills":
+    skills: [csp-sync-skills]
+    weight: 40
+  "review tech stack advisor":
+    skills: [csp-tech-stack-advisor]
+    weight: 40
+  "review tech writer":
+    skills: [csp-tech-writer]
+    weight: 40
+  "review test coverage":
+    skills: [csp-test-coverage]
+    weight: 40
+  "review thread":
+    skills: [csp-thread]
+    weight: 40
+  "review tracer":
+    skills: [csp-tracer]
+    weight: 40
+  "review transition":
+    skills: [csp-transition]
+    weight: 40
+  "review type design analyzer":
+    skills: [csp-type-design-analyzer]
+    weight: 40
+  "review ui auditor":
+    skills: [csp-ui-auditor]
+    weight: 40
+  "review ui checker":
+    skills: [csp-ui-checker]
+    weight: 40
+  "review ui code":
+    skills: [csp-ui-review]
+    weight: 40
+  "review ui phase":
+    skills: [csp-ui-phase]
+    weight: 40
+  "review ui researcher":
+    skills: [csp-ui-researcher]
+    weight: 40
+  "review ultraplan phase":
+    skills: [csp-ultraplan-phase]
+    weight: 40
+  "review undo":
+    skills: [csp-undo]
+    weight: 40
+  "review update":
+    skills: [csp-update]
+    weight: 40
+  "review update codemaps":
+    skills: [csp-update-codemaps]
+    weight: 40
+  "review update docs":
+    skills: [csp-update-docs]
+    weight: 40
+  "review user profiler":
+    skills: [csp-user-profiler]
+    weight: 40
+  "review ux designer":
+    skills: [csp-ux-designer]
+    weight: 40
+  "review validate phase":
+    skills: [csp-validate-phase]
+    weight: 40
+  "review verifier":
+    skills: [csp-verifier]
+    weight: 40
+  "review verify":
+    skills: [csp-verify]
+    weight: 40
+  "review verify work":
+    skills: [csp-verify-work]
+    weight: 40
+  "review workspace":
+    skills: [csp-workspace]
+    weight: 40
+  "review workstreams":
+    skills: [csp-workstreams]
+    weight: 40
+  "review writer":
+    skills: [csp-writer]
+    weight: 40
+  "review 审查":
+    skills: [csp-review]
+    weight: 40
+  "review-backlog":
+    skills: [csp-review-backlog]
+    weight: 40
+  "review-pr":
+    skills: [csp-review-pr]
+    weight: 40
+  "roadmapper":
+    skills: [csp-roadmapper]
+    weight: 40
+  "rust build error":
+    skills: [csp-rust-build]
+    weight: 40
+  "rust code review":
+    skills: [csp-rust-review]
+    weight: 40
+  "rust review":
+    skills: [csp-rust-review]
+    weight: 40
+  "rust test":
+    skills: [csp-rust-test]
+    weight: 40
+  "rust 审查":
+    skills: [csp-rust-review]
+    weight: 40
+  "rust 构建错误":
+    skills: [csp-rust-build]
+    weight: 40
+  "rust 测试":
+    skills: [csp-rust-test]
+    weight: 40
+  "rust-build":
+    skills: [csp-rust-build]
+    weight: 40
+  "rust-review":
+    skills: [csp-rust-review]
+    weight: 40
+  "rust-test":
+    skills: [csp-rust-test]
+    weight: 40
+  "santa":
+    skills: [csp-santa-loop]
+    weight: 40
+  "santa loop":
+    skills: [csp-santa-loop]
+    weight: 40
+  "santa-loop":
+    skills: [csp-santa-loop]
+    weight: 40
+  "save":
+    skills: [csp-save-session]
+    weight: 40
+  "save session":
+    skills: [csp-save-session]
+    weight: 40
+  "save-session":
+    skills: [csp-save-session]
+    weight: 40
+  "scan":
+    skills: [csp-scan]
+    weight: 40
+  "scan 扫描":
+    skills: [csp-scan]
+    weight: 40
+  "scientist":
+    skills: [csp-scientist]
+    weight: 40
+  "scope guardian code review":
+    skills: [csp-scope-guardian-reviewer]
+    weight: 40
+  "scope guardian review":
+    skills: [csp-scope-guardian-reviewer]
+    weight: 40
+  "scope guardian 审查":
+    skills: [csp-scope-guardian-reviewer]
+    weight: 40
+  "scope-guardian-reviewer":
+    skills: [csp-scope-guardian-reviewer]
+    weight: 40
+  "security auditor":
+    skills: [csp-security-auditor]
+    weight: 40
+  "security auditor 安全":
+    skills: [csp-security-auditor]
+    weight: 40
+  "security code review":
+    skills: [csp-security-reviewer]
+    weight: 40
+  "security review":
+    skills: [csp-security-reviewer]
+    weight: 40
+  "security scan":
+    skills: [csp-security-scan]
+    weight: 40
+  "security scan 安全":
+    skills: [csp-security-scan]
+    weight: 40
+  "security 审查":
+    skills: [csp-security-reviewer]
+    weight: 40
+  "security-auditor":
+    skills: [csp-security-auditor]
+    weight: 40
+  "security-reviewer":
+    skills: [csp-security-reviewer]
+    weight: 40
+  "security-scan":
+    skills: [csp-security-scan]
+    weight: 40
+  "seo":
+    skills: [csp-seo-specialist]
+    weight: 40
+  "seo specialist":
+    skills: [csp-seo-specialist]
+    weight: 40
+  "seo-specialist":
+    skills: [csp-seo-specialist]
+    weight: 40
+  "session":
+    skills: [csp-session-report]
+    weight: 40
+  "session report":
+    skills: [csp-session-report]
+    weight: 40
+  "session report 会话":
+    skills: [csp-session-report]
+    weight: 40
+  "session-report":
+    skills: [csp-session-report]
+    weight: 40
+  "sessions":
+    skills: [csp-sessions]
+    weight: 40
+  "settings":
+    skills: [csp-settings, csp-settings-advanced, csp-settings-integrations]
+    weight: 40
+  "settings advanced":
+    skills: [csp-settings-advanced]
+    weight: 40
+  "settings integrations":
+    skills: [csp-settings-integrations]
+    weight: 40
+  "settings-advanced":
+    skills: [csp-settings-advanced]
+    weight: 40
+  "settings-integrations":
+    skills: [csp-settings-integrations]
+    weight: 40
+  "setup pm":
+    skills: [csp-setup-pm]
+    weight: 40
+  "setup-pm":
+    skills: [csp-setup-pm]
+    weight: 40
+  "silent":
+    skills: [csp-silent-failure-hunter]
+    weight: 40
+  "silent failure hunter":
+    skills: [csp-silent-failure-hunter]
+    weight: 40
+  "silent-failure-hunter":
+    skills: [csp-silent-failure-hunter]
+    weight: 40
+  "sketch":
+    skills: [csp-sketch, csp-sketch-wrap-up]
+    weight: 40
+  "sketch wrap up":
+    skills: [csp-sketch-wrap-up]
+    weight: 40
+  "sketch-wrap-up":
+    skills: [csp-sketch-wrap-up]
+    weight: 40
+  "skill create":
+    skills: [csp-skill-create]
+    weight: 40
+  "skill create 技能":
+    skills: [csp-skill-create]
+    weight: 40
+  "skill health":
+    skills: [csp-skill-health]
+    weight: 40
+  "skill health 技能":
+    skills: [csp-skill-health]
+    weight: 40
+  "skill 技能":
+    skills: [csp-skill]
+    weight: 40
+  "skill-create":
+    skills: [csp-skill-create]
+    weight: 40
+  "skill-health":
+    skills: [csp-skill-health]
+    weight: 40
+  "spike":
+    skills: [csp-spike, csp-spike-wrap-up]
+    weight: 40
+  "spike wrap up":
+    skills: [csp-spike-wrap-up]
+    weight: 40
+  "spike-wrap-up":
+    skills: [csp-spike-wrap-up]
+    weight: 40
+  "springboot security":
+    skills: [csp-springboot-security]
+    weight: 40
+  "springboot-security":
+    skills: [csp-springboot-security]
+    weight: 40
+  "stats":
+    skills: [csp-stats]
+    weight: 40
+  "surface":
+    skills: [csp-surface]
+    weight: 40
+  "swift coding style":
+    skills: [csp-cursor-rules-swift-coding-style]
+    weight: 40
+  "swift cursor rules":
+    skills: [csp-cursor-rules-swift-coding-style, csp-cursor-rules-swift-hooks, csp-cursor-rules-swift-patterns, csp-cursor-rules-swift-security, csp-cursor-rules-swift-testing]
+    weight: 40
+  "swift hooks":
+    skills: [csp-cursor-rules-swift-hooks]
+    weight: 40
+  "swift patterns":
+    skills: [csp-cursor-rules-swift-patterns]
+    weight: 40
+  "swift security":
+    skills: [csp-cursor-rules-swift-security]
+    weight: 40
+  "swift testing":
+    skills: [csp-cursor-rules-swift-testing]
+    weight: 40
+  "sync":
+    skills: [csp-sync-skills]
+    weight: 40
+  "sync skills":
+    skills: [csp-sync-skills]
+    weight: 40
+  "sync-skills":
+    skills: [csp-sync-skills]
+    weight: 40
+  "tech":
+    skills: [csp-tech-stack-advisor, csp-tech-writer]
+    weight: 40
+  "tech stack advisor":
+    skills: [csp-tech-stack-advisor]
+    weight: 40
+  "tech writer":
+    skills: [csp-tech-writer]
+    weight: 40
+  "tech-stack-advisor":
+    skills: [csp-tech-stack-advisor]
+    weight: 40
+  "tech-writer":
+    skills: [csp-tech-writer]
+    weight: 40
+  "test coverage":
+    skills: [csp-test-coverage]
+    weight: 40
+  "test coverage 测试":
+    skills: [csp-test-coverage]
+    weight: 40
+  "test-coverage":
+    skills: [csp-test-coverage]
+    weight: 40
+  "tester":
+    skills: [csp-qa-tester]
+    weight: 40
+  "thread":
+    skills: [csp-thread]
+    weight: 40
+  "tracer":
+    skills: [csp-tracer]
+    weight: 40
+  "transition":
+    skills: [csp-transition]
+    weight: 40
+  "type":
+    skills: [csp-type-design-analyzer]
+    weight: 40
+  "type design analyzer":
+    skills: [csp-type-design-analyzer]
+    weight: 40
+  "type-design-analyzer":
+    skills: [csp-type-design-analyzer]
+    weight: 40
+  "typescript coding style":
+    skills: [csp-cursor-rules-typescript-coding-style]
+    weight: 40
+  "typescript cursor rules":
+    skills: [csp-cursor-rules-typescript-coding-style, csp-cursor-rules-typescript-hooks, csp-cursor-rules-typescript-patterns, csp-cursor-rules-typescript-security, csp-cursor-rules-typescript-testing]
+    weight: 40
+  "typescript hooks":
+    skills: [csp-cursor-rules-typescript-hooks]
+    weight: 40
+  "typescript patterns":
+    skills: [csp-cursor-rules-typescript-patterns]
+    weight: 40
+  "typescript security":
+    skills: [csp-cursor-rules-typescript-security]
+    weight: 40
+  "typescript testing":
+    skills: [csp-cursor-rules-typescript-testing]
+    weight: 40
+  "ui auditor":
+    skills: [csp-ui-auditor]
+    weight: 40
+  "ui checker":
+    skills: [csp-ui-checker]
+    weight: 40
+  "ui code review":
+    skills: [csp-ui-review]
+    weight: 40
+  "ui phase":
+    skills: [csp-ui-phase]
+    weight: 40
+  "ui phase 阶段":
+    skills: [csp-ui-phase]
+    weight: 40
+  "ui researcher":
+    skills: [csp-ui-researcher]
+    weight: 40
+  "ui review":
+    skills: [csp-ui-review]
+    weight: 40
+  "ui 审查":
+    skills: [csp-ui-review]
+    weight: 40
+  "ui-auditor":
+    skills: [csp-ui-auditor]
+    weight: 40
+  "ui-checker":
+    skills: [csp-ui-checker]
+    weight: 40
+  "ui-phase":
+    skills: [csp-ui-phase]
+    weight: 40
+  "ui-researcher":
+    skills: [csp-ui-researcher]
+    weight: 40
+  "ui-review":
+    skills: [csp-ui-review]
+    weight: 40
+  "ultraplan":
+    skills: [csp-ultraplan-phase]
+    weight: 40
+  "ultraplan phase":
+    skills: [csp-ultraplan-phase]
+    weight: 40
+  "ultraplan-phase":
+    skills: [csp-ultraplan-phase]
+    weight: 40
+  "undo":
+    skills: [csp-undo]
+    weight: 40
+  "update":
+    skills: [csp-update, csp-update-codemaps, csp-update-docs]
+    weight: 40
+  "update codemaps":
+    skills: [csp-update-codemaps]
+    weight: 40
+  "update codemaps 更新":
+    skills: [csp-update-codemaps]
+    weight: 40
+  "update docs":
+    skills: [csp-update-docs]
+    weight: 40
+  "update docs 更新":
+    skills: [csp-update-docs]
+    weight: 40
+  "update 更新":
+    skills: [csp-update]
+    weight: 40
+  "update-codemaps":
+    skills: [csp-update-codemaps]
+    weight: 40
+  "update-docs":
+    skills: [csp-update-docs]
+    weight: 40
+  "user":
+    skills: [csp-user-profiler]
+    weight: 40
+  "user profiler":
+    skills: [csp-user-profiler]
+    weight: 40
+  "user-profiler":
+    skills: [csp-user-profiler]
+    weight: 40
+  "ux designer":
+    skills: [csp-ux-designer]
+    weight: 40
+  "ux-designer":
+    skills: [csp-ux-designer]
+    weight: 40
+  "validate":
+    skills: [csp-validate-phase]
+    weight: 40
+  "validate phase":
+    skills: [csp-validate-phase]
+    weight: 40
+  "validate phase 验证":
+    skills: [csp-validate-phase]
+    weight: 40
+  "validate-phase":
+    skills: [csp-validate-phase]
+    weight: 40
+  "verifier":
+    skills: [csp-verifier]
+    weight: 40
+  "verify work":
+    skills: [csp-verify-work]
+    weight: 40
+  "verify work 验证":
+    skills: [csp-verify-work]
+    weight: 40
+  "verify 验证":
+    skills: [csp-verify]
+    weight: 40
+  "verify-work":
+    skills: [csp-verify-work]
+    weight: 40
+  "workflow":
+    skills: [csp-ns-workflow]
+    weight: 40
+  "workspace":
+    skills: [csp-workspace]
+    weight: 40
+  "workspace 工作区":
+    skills: [csp-workspace]
+    weight: 40
+  "workstreams":
+    skills: [csp-workstreams]
+    weight: 40
+  "writer":
+    skills: [csp-writer]
+    weight: 40
 stack_rules:
   python:
     files: ["pyproject.toml", "setup.py", "requirements.txt", "Pipfile"]
@@ -560,7 +4537,7 @@ stack_rules:
     skills: [csp-context-engineering]
     weight: 45
   "context":
-    skills: [csp-context-engineering]
+    skills: [csp-context-engineering, csp-ns-context]
     weight: 40
   "context engineering":
     skills: [csp-context-engineering]
@@ -569,7 +4546,7 @@ stack_rules:
     skills: [csp-doc-review]
     weight: 40
   "doc":
-    skills: [csp-doc-review]
+    skills: [csp-doc-review, csp-doc-classifier, csp-doc-synthesizer, csp-doc-updater, csp-doc-verifier, csp-doc-writer]
     weight: 40
   "质疑":
     skills: [csp-doubt-driven-development]
@@ -620,7 +4597,7 @@ stack_rules:
     skills: [csp-finishing-a-development-branch]
     weight: 45
   "branch":
-    skills: [csp-finishing-a-development-branch]
+    skills: [csp-finishing-a-development-branch, csp-pr-branch]
     weight: 40
   "receiving":
     skills: [csp-receiving-code-review]
@@ -635,7 +4612,7 @@ stack_rules:
     skills: [csp-skill-optimizer]
     weight: 40
   "skill":
-    skills: [csp-skill-optimizer]
+    skills: [csp-skill-optimizer, csp-skill, csp-skill-create, csp-skill-health]
     weight: 40
   "排错":
     skills: [csp-systematic-debugging]
@@ -719,7 +4696,7 @@ stack_rules:
     skills: [csp-multi-review]
     weight: 40
   "multi":
-    skills: [csp-multi-review]
+    skills: [csp-multi-review, csp-multi-backend, csp-multi-execute, csp-multi-frontend, csp-multi-plan, csp-multi-workflow]
     weight: 40
   "产品健康度":
     skills: [csp-product-pulse]
@@ -767,7 +4744,7 @@ stack_rules:
     skills: [csp-article-writing]
     weight: 40
   "autonomous":
-    skills: [csp-autonomous-loops]
+    skills: [csp-autonomous-loops, csp-autonomous]
     weight: 40
   "autonomous loops":
     skills: [csp-autonomous-loops]
@@ -839,7 +4816,7 @@ stack_rules:
     skills: [csp-cpp-testing]
     weight: 45
   "cpp testing":
-    skills: [csp-cpp-testing]
+    skills: [csp-cpp-testing, csp-cpp-test]
     weight: 40
   "跨平台":
     skills: [csp-crosspost]
@@ -908,7 +4885,7 @@ stack_rules:
     skills: [csp-codeql-analyst]
     weight: 45
   "analyst":
-    skills: [csp-codeql-analyst]
+    skills: [csp-codeql-analyst, csp-analyst]
     weight: 40
   "策略":
     skills: [csp-cross-platform-strategy]
@@ -947,7 +4924,7 @@ stack_rules:
     skills: [csp-deployment]
     weight: 40
   "deployment":
-    skills: [csp-deployment]
+    skills: [csp-deployment, csp-deployment-verification-agent]
     weight: 40
   "文档":
     skills: [csp-docs-lookup]
@@ -965,7 +4942,7 @@ stack_rules:
     skills: [csp-document-generator]
     weight: 40
   "document":
-    skills: [csp-document-generator]
+    skills: [csp-document-generator, csp-document-specialist]
     weight: 40
   "版本控制":
     skills: [csp-git-conventions]
@@ -1034,16 +5011,16 @@ stack_rules:
     skills: [csp-mobile-performance]
     weight: 40
   "mobile":
-    skills: [csp-mobile-performance]
+    skills: [csp-mobile-performance, csp-mobile-performance-auditor]
     weight: 40
   "csp-model-qa":
     skills: [csp-model-qa]
     weight: 40
   "model":
-    skills: [csp-model-qa]
+    skills: [csp-model-qa, csp-model-route]
     weight: 40
   "architect":
-    skills: [csp-multi-agent-architect]
+    skills: [csp-multi-agent-architect, csp-architect]
     weight: 40
   "csp-observability-and-instrumentation":
     skills: [csp-observability-and-instrumentation]
@@ -1061,7 +5038,7 @@ stack_rules:
     skills: [csp-project-standards-reviewer]
     weight: 40
   "project":
-    skills: [csp-project-standards-reviewer]
+    skills: [csp-project-standards-reviewer, csp-ns-project, csp-project-init, csp-project-researcher]
     weight: 40
   "csp-prompt-engineer":
     skills: [csp-prompt-engineer]
@@ -1166,7 +5143,7 @@ stack_rules:
     skills: [csp-vllm-serving]
     weight: 40
   "auditor":
-    skills: [csp-web-performance-auditor]
+    skills: [csp-web-performance-auditor, csp-ui-auditor]
     weight: 40
   "csp-web-performance-auditor":
     skills: [csp-web-performance-auditor]
@@ -1235,7 +5212,7 @@ stack_rules:
     skills: [csp-e2e-testing]
     weight: 40
   "eval":
-    skills: [csp-eval-harness]
+    skills: [csp-eval-harness, csp-eval-auditor, csp-eval-planner]
     weight: 40
   "eval harness":
     skills: [csp-eval-harness]
@@ -1283,10 +5260,10 @@ stack_rules:
     skills: [csp-golang-patterns]
     weight: 45
   "golang patterns":
-    skills: [csp-golang-patterns]
+    skills: [csp-golang-patterns, csp-cursor-rules-golang-patterns]
     weight: 40
   "golang testing":
-    skills: [csp-golang-testing]
+    skills: [csp-golang-testing, csp-cursor-rules-golang-testing]
     weight: 40
   "investor":
     skills: [csp-investor-materials]
@@ -1310,10 +5287,10 @@ stack_rules:
     skills: [csp-kotlin-patterns]
     weight: 40
   "kotlin patterns":
-    skills: [csp-kotlin-patterns]
+    skills: [csp-kotlin-patterns, csp-cursor-rules-kotlin-patterns]
     weight: 40
   "kotlin testing":
-    skills: [csp-kotlin-testing]
+    skills: [csp-kotlin-testing, csp-cursor-rules-kotlin-testing, csp-kotlin-test]
     weight: 40
   "market":
     skills: [csp-market-research]
@@ -1355,19 +5332,19 @@ stack_rules:
     skills: [csp-python-patterns]
     weight: 45
   "python testing":
-    skills: [csp-python-testing]
+    skills: [csp-python-testing, csp-cursor-rules-python-testing]
     weight: 40
   "pytorch":
     skills: [csp-pytorch-patterns]
     weight: 40
   "react testing":
-    skills: [csp-react-testing]
+    skills: [csp-react-testing, csp-react-test]
     weight: 40
   "rust":
     skills: [csp-rust-patterns]
     weight: 40
   "rust testing":
-    skills: [csp-rust-testing]
+    skills: [csp-rust-testing, csp-rust-test]
     weight: 40
   "first":
     skills: [csp-search-first]
@@ -1379,10 +5356,10 @@ stack_rules:
     skills: [csp-springboot-patterns]
     weight: 45
   "springboot":
-    skills: [csp-springboot-patterns]
+    skills: [csp-springboot-patterns, csp-springboot-security]
     weight: 40
   "compact":
-    skills: [csp-strategic-compact]
+    skills: [csp-strategic-compact, csp-compact]
     weight: 40
   "strategic":
     skills: [csp-strategic-compact]
@@ -1511,7 +5488,7 @@ stack_rules:
     skills: [csp-mcp-setup]
     weight: 40
   "manager":
-    skills: [csp-project-session-manager]
+    skills: [csp-project-session-manager, csp-manager]
     weight: 40
   "ralph":
     skills: [csp-ralph]
@@ -1543,7 +5520,7 @@ stack_rules:
     skills: [csp-self-improve]
     weight: 40
   "setup":
-    skills: [csp-setup]
+    skills: [csp-setup, csp-setup-pm]
     weight: 40
   "skillify":
     skills: [csp-skillify]
@@ -1648,7 +5625,7 @@ stack_rules:
     skills: [csp-learning-loop]
     weight: 45
   "intel":
-    skills: [csp-learning-loop]
+    skills: [csp-learning-loop, csp-intel-updater]
     weight: 40
   "budget":
     skills: [csp-budget-enforcer]
@@ -1954,7 +5931,7 @@ sdd_state_routing:
     skills: [csp-session-knowledge-extractor]
     weight: 50
   "extract learnings":
-    skills: [csp-session-knowledge-extractor]
+    skills: [csp-session-knowledge-extractor, csp-extract-learnings]
     weight: 50
   "知识提炼":
     skills: [csp-session-knowledge-extractor]
