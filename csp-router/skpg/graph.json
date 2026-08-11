@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generated_at": "2026-08-11T10:31:06.991Z",
+  "generated_at": "2026-08-11T11:25:23.124Z",
   "nodes": {
     "5b37ecd541b4": {
       "id": "5b37ecd541b4",
@@ -5648,6 +5648,18 @@
         "phase": "review",
         "domain": "patterns",
         "path": "csp-workflow/skills/csp-compound-refresh/SKILL.md"
+      }
+    },
+    "480c8767f617": {
+      "id": "480c8767f617",
+      "kind": "skill",
+      "name": "csp-defect-mining",
+      "metadata": {
+        "layer": 2,
+        "category": "workflow",
+        "phase": "verify",
+        "domain": "testing",
+        "path": "csp-workflow/skills/csp-defect-mining/SKILL.md"
       }
     },
     "fa9d3e39dbff": {
@@ -15614,6 +15626,36 @@
       "id": "4009dad0b18c",
       "kind": "trigger",
       "name": "web-artifacts",
+      "metadata": {}
+    },
+    "0773ba4d9535": {
+      "id": "0773ba4d9535",
+      "kind": "trigger",
+      "name": "defect",
+      "metadata": {}
+    },
+    "4e20bc90f647": {
+      "id": "4e20bc90f647",
+      "kind": "trigger",
+      "name": "defect mining",
+      "metadata": {}
+    },
+    "88ec0967a99e": {
+      "id": "88ec0967a99e",
+      "kind": "trigger",
+      "name": "defect-mining",
+      "metadata": {}
+    },
+    "90f5d004c7c3": {
+      "id": "90f5d004c7c3",
+      "kind": "trigger",
+      "name": "fix defect mining",
+      "metadata": {}
+    },
+    "dab8aaf231b1": {
+      "id": "dab8aaf231b1",
+      "kind": "trigger",
+      "name": "review defect mining",
       "metadata": {}
     }
   },
@@ -25855,6 +25897,36 @@
       "metadata": {}
     },
     {
+      "source": "0773ba4d9535",
+      "target": "480c8767f617",
+      "kind": "triggers",
+      "metadata": {}
+    },
+    {
+      "source": "4e20bc90f647",
+      "target": "480c8767f617",
+      "kind": "triggers",
+      "metadata": {}
+    },
+    {
+      "source": "88ec0967a99e",
+      "target": "480c8767f617",
+      "kind": "triggers",
+      "metadata": {}
+    },
+    {
+      "source": "90f5d004c7c3",
+      "target": "480c8767f617",
+      "kind": "triggers",
+      "metadata": {}
+    },
+    {
+      "source": "dab8aaf231b1",
+      "target": "480c8767f617",
+      "kind": "triggers",
+      "metadata": {}
+    },
+    {
       "source": "b2e754d45580",
       "target": "5b37ecd541b4",
       "kind": "contains",
@@ -29030,6 +29102,12 @@
     },
     {
       "source": "caa9d170319b",
+      "target": "480c8767f617",
+      "kind": "contains",
+      "metadata": {}
+    },
+    {
+      "source": "caa9d170319b",
       "target": "fa9d3e39dbff",
       "kind": "contains",
       "metadata": {}
@@ -30505,6 +30583,12 @@
       "metadata": {}
     },
     {
+      "source": "207aa78c0c90",
+      "target": "480c8767f617",
+      "kind": "contains",
+      "metadata": {}
+    },
+    {
       "source": "4df9fd7d77be",
       "target": "fa9d3e39dbff",
       "kind": "contains",
@@ -30807,6 +30891,42 @@
     {
       "source": "1179b083c804",
       "target": "4d8ffb285e88",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "1179b083c804",
+      "target": "480c8767f617",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "480c8767f617",
+      "target": "1179b083c804",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "480c8767f617",
+      "target": "f95c39d25b36",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "480c8767f617",
+      "target": "88425ce7fc02",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "480c8767f617",
+      "target": "d8ddd7c38474",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "480c8767f617",
+      "target": "795cbf00b346",
       "kind": "related_to",
       "metadata": {}
     },
@@ -34411,8 +34531,44 @@
       "metadata": {}
     },
     {
+      "source": "1179b083c804",
+      "target": "480c8767f617",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
       "source": "10d14d9499bc",
       "target": "39233688d342",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "480c8767f617",
+      "target": "1179b083c804",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "480c8767f617",
+      "target": "f95c39d25b36",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "480c8767f617",
+      "target": "88425ce7fc02",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "480c8767f617",
+      "target": "d8ddd7c38474",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "480c8767f617",
+      "target": "795cbf00b346",
       "kind": "depends_on",
       "metadata": {}
     },
@@ -38936,6 +39092,12 @@
     },
     {
       "source": "39233688d342",
+      "target": "480c8767f617",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "480c8767f617",
       "target": "fa9d3e39dbff",
       "kind": "related_to",
       "metadata": {}
@@ -39434,19 +39596,19 @@
     }
   ],
   "stats": {
-    "node_count": 2136,
-    "edge_count": 3969,
-    "skill_count": 594,
-    "trigger_count": 1532,
+    "node_count": 2142,
+    "edge_count": 3989,
+    "skill_count": 595,
+    "trigger_count": 1537,
     "phase_count": 6,
     "category_count": 5,
-    "depends_on_count": 784,
-    "related_to_count": 675,
+    "depends_on_count": 790,
+    "related_to_count": 682,
     "edge_types": {
-      "contains": 804,
-      "triggers": 1706,
-      "depends_on": 784,
-      "related_to": 675
+      "contains": 806,
+      "triggers": 1711,
+      "depends_on": 790,
+      "related_to": 682
     }
   }
 }

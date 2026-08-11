@@ -14,6 +14,7 @@ related_skills:
   - csp-code-review
   - csp-verification
   - csp-architecture-review
+  - csp-defect-mining
 anti_rationalizations:
   "I'll just read the code myself": "One context can't hold a large codebase; parallel agents cover more dimensions than a single pass."
   "The agent's finding looks right, skip verification": "P0/P1 findings MUST be machine-verified — agents hallucinate dangling refs and missing files."
@@ -57,7 +58,7 @@ anti_rationalizations:
 | ② | 技术架构 | 分层与依赖方向；模块规模；抽象增殖；接口设计；错误处理策略 |
 | ③ | 数据管理 | 存储清单；schema 版本化；migration；一致性；隔离与备份 |
 | ④ | 前端设计与交互 | 路由盘点；信息架构；设计系统一致性；i18n；假控件与死交互 |
-| ⑤ | 工程质量与安全 | 测试真实性；CI 门禁；安全原语接线；密钥管理；依赖安全 |
+| ⑤ | 工程质量与安全 | 测试真实性 + 方法论多样性（覆盖率≠有效性，高覆盖率但只有 happy-path 单元测试时调用 `csp-defect-mining` 做深度套件审计）；CI 门禁；安全原语接线；密钥管理；依赖安全 |
 
 ### 扩展 6 维（按需开启）
 

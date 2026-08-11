@@ -88,7 +88,8 @@ N. {具体问题 N}
 
 调查问题模板：
 1. 测试质量：测试组织结构；用例中有多少是真实断言 vs 快照/占位/stub pass？有没有大量 skip/xfail？是否过度 mock？关键路径的覆盖情况？`npm test`/`pytest` 当前是否真的绿？
-2. CI 配置：workflow 是否真实阻断（检查 continue-on-error / `|| true`）？门禁是否有效？
+2. **测试方法论多样性（深度审计）**：套件是否只有单元测试？有没有 property/fuzz/mutation/state-transition 测试？覆盖率 >80% 但只有 happy-path 单元测试 = 方法论盲区。**当单元测试已触顶（连续 0 新 bug），调用 `csp-defect-mining` skill 做深度套件审计**：5 项多样性检查（方法普查 / 关键函数变异杀死率 / 静默 fallback 覆盖 / 状态机 happy-path 偏向 / 工具自测）+ 平台检测，把发现的盲区作为结构性问题列入升级方案。
+3. CI 配置：workflow 是否真实阻断（检查 continue-on-error / `|| true`）？门禁是否有效？
 3. 安全原语接线：加密/认证/授权模块的代码质量 vs 实际接线状态。有没有"实现了但从未被调用"的安全机制？输入校验是白名单还是黑名单（黑名单常可绕过）？
 4. 认证与授权：auth 流程有没有绕过路径？token 验证是否完整？RBAC 是否可被 header 伪造绕过？
 5. 密钥管理：secrets 存储方式、.env 处理、日志中是否泄漏敏感信息？install 脚本的环境变量注入向量分析。

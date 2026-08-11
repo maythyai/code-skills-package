@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "total_skills": 594,
+  "total_skills": 595,
   "shards": [],
   "skill_metadata": "skill-metadata.yaml",
   "skills": [
@@ -7940,6 +7940,21 @@
       },
       "stack_detection": false,
       "path": "csp-workflow/skills/csp-compound-refresh/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-defect-mining",
+      "description": "Systematic defect discovery via DIVERSE test methodologies — when a test suite has plateaued (more unit tests find 0 bugs), switch methods, not add quantity. Layers: basic (unit/BVA) → structural (mutation / error-path enumeration / type-tightening) → adversarial (fuzz / property-based / state-trans",
+      "layer": 2,
+      "category": "workflow",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-workflow/skills/csp-defect-mining/SKILL.md",
       "deps": [],
       "priority": 10
     },

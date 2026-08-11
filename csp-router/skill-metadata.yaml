@@ -4,7 +4,7 @@
 # Regenerate: node scripts/build-skill-metadata.mjs
 
 version: 2.0
-generated_at: 2026-08-11T09:39:36.856Z
+generated_at: 2026-08-11T11:24:46.126Z
 skills:
   csp-agent-teams:
     phase: review
@@ -213,6 +213,7 @@ skills:
       - csp-code-review
       - csp-verification
       - csp-architecture-review
+      - csp-defect-mining
     anti_rationalizations:
       I'll just read the code myself: "One context can't hold a large codebase; parallel agents cover more dimensions than a single pass."
       The agent's finding looks right, skip verification: "P0/P1 findings MUST be machine-verified — agents hallucinate dangling refs and missing files."
@@ -231,6 +232,30 @@ skills:
   csp-compound-refresh:
     phase: review
     domain: patterns
+  csp-defect-mining:
+    phase: verify
+    domain: testing
+    scope: testing
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
+    related_skills:
+      - csp-codebase-audit
+      - csp-test-coverage
+      - csp-test-engineer
+      - csp-systematic-debugging
+      - csp-adversarial-reviewer
+    anti_rationalizations:
+      Just add more unit tests: "Unit tests verify logic the developer THOUGHT of — they plateau at 0 new bugs. Bugs live in paths the developer didn't think of."
+      Coverage is 90%, tests are fine: "Coverage measures execution, not assertion strength or methodology diversity. 90% coverage with only happy-path unit tests still hides state-machine + parser + silent-fallback bugs."
+      Mutation testing is too expensive: "Even MANUAL mutation (flip one operator, see if any test fails) on 5 key functions exposes blind spots in minutes. The cost is per-function, not per-project."
+      Fuzz found nothing on round 1, skip it: "Round-1 fuzz calibrates the generator. Rounds 2-3 with adjusted seeds (deeper nesting, embedded escapes) find the parser short-circuits."
+      These are equivalent mutants, ignore: "Equivalent mutants are noise — triage them manually, don't blindly trust 'survived = weak tests'. But the NON-equivalent survivors are real blind spots."
+      noUncheckedIndexedAccess is too noisy: "It reports many false positives (.returning()/.count() always return rows). Triage for real bugs, fix locally — don't enable globally and drown in noise."
   csp-deprecation-and-migration:
     phase: build
     domain: patterns

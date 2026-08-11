@@ -4608,6 +4608,23 @@ trigger_index:
   "web-artifacts":
     skills: [csp-web-artifacts]
     weight: 40
+
+  # ─── auto-generated triggers (generate-triggers.mjs) ───
+  "defect":
+    skills: [csp-defect-mining]
+    weight: 40
+  "defect mining":
+    skills: [csp-defect-mining]
+    weight: 40
+  "defect-mining":
+    skills: [csp-defect-mining]
+    weight: 40
+  "fix defect mining":
+    skills: [csp-defect-mining]
+    weight: 40
+  "review defect mining":
+    skills: [csp-defect-mining]
+    weight: 40
 stack_rules:
   python:
     files: ["pyproject.toml", "setup.py", "requirements.txt", "Pipfile"]

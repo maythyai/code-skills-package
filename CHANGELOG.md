@@ -11,6 +11,7 @@ _Nothing yet._
 ## [0.8.0] — 2026-08-11
 
 ### Added
+- `csp-defect-mining` skill (L2 workflow, phase: verify, domain: testing) — systematic defect discovery via DIVERSE test methodologies. Core thesis: methodology diversity > test quantity; each new method (mutation / fuzz / property-based / state-transition / error-path enumeration / type-tightening) finds bug classes the previous ones structurally cannot. When a method plateaus (0 new bugs), switch methods, not add quantity. Includes a 4-layer methodology, a 7-step workflow, empirical rules (comparator self-bugs, equivalent-mutant noise, type-tightening trade-off), and two reference docs: `references/methods.md` (per-method recipes + method-selection cheat sheet by code shape) and `references/test-suite-audit.md` (5 diversity checks + plateau detection + audit-report template). Cross-linked bidirectionally with `csp-codebase-audit` (dim ⑤ invokes it when a suite has high coverage but low diversity).
 - `csp-codebase-audit` skill (L2 workflow, phase: review, domain: architecture) — multi-dimensional codebase audit: parallel Explore agents per dimension (functionality / architecture / data / frontend / engineering-quality + 6 extension dims) + high-risk on-machine verification + single decision-source report (problem report / design / upgrade plan with testable acceptance criteria). Ported from the external `codebase-multidim-audit` skill and adapted to the SKILL.md v2 spec; reference prompts live in `references/dimensions.md`.
 
 ### Security
