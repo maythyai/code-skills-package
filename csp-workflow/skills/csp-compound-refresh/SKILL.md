@@ -4,6 +4,8 @@ description: Refresh stale learning and pattern docs under docs/solutions/ by re
 argument-hint: "[optional: scope hint — directory, filename, module, or keyword] [mode:headless] "
 layer: 2
 category: workflow
+phase: review
+domain: patterns
 ---
 
 | Mode | Trigger | Behavior |

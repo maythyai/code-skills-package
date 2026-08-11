@@ -4,6 +4,8 @@ aliases: [learner]
 description: Turn a repeatable workflow from the current session into a reusable CSP skill draft
 layer: 5
 category: runtime
+domain: architecture
+phase: build
 ---
      name: <skill-name>
      description: <one-line description>

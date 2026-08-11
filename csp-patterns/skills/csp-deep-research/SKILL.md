@@ -4,6 +4,8 @@ description: Multi-source deep research using firecrawl and exa MCPs. Searches t
 origin: CSP
 layer: 4
 category: patterns
+domain: patterns
+phase: build
 ---
 
 # Deep Research

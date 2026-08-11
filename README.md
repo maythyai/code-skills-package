@@ -5,10 +5,10 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
 [![npm](https://img.shields.io/npm/v/code-skills-package)](https://www.npmjs.com/package/code-skills-package)
 [![v0.8.0](https://img.shields.io/badge/version-0.8.0-green)](./CHANGELOG.md)
-[![Skills: 585](https://img.shields.io/badge/skills-585-orange)](./SKILL-INDEX.md)
-[![Platforms: 18+](https://img.shields.io/badge/platforms-18+-brightgreen)](./docs/INSTALL.md)
+[![Skills: 594](https://img.shields.io/badge/skills-594-orange)](./docs/SKILL-INDEX.md)
+[![Platforms: 22+](https://img.shields.io/badge/platforms-22+-brightgreen)](./docs/INSTALL.md)
 
-**Unified AI Programming Skills · 18+ Platforms · 15+ Languages · 585 Skills**
+**Unified AI Programming Skills · 22+ Platforms · 15+ Languages · 594 Skills**
 
 Integrates capabilities from multiple open-source AI coding projects into a layered, auto-routing framework with extremely low token costs to complete complex development tasks.
 
@@ -22,11 +22,11 @@ Integrates capabilities from multiple open-source AI coding projects into a laye
 
 [![CSP Overview](./assets/page.png)](https://maythyai.github.io/code-skills-package/)
 
-**🔗 [Live Interactive Dashboard](https://maythyai.github.io/code-skills-package/)** — explore all 585 skills by layer, category, and triggers
+**🔗 [Live Interactive Dashboard](https://maythyai.github.io/code-skills-package/)** — explore all 594 skills by layer, category, and triggers
 
 </div>
 
-CSP (Code Skills Package) consolidates the essence of multiple open-source AI programming projects into an integrated solution. It uses a five-layer architecture to load skills on demand, with confidence scoring router and skill knowledge graph, allowing AI programming assistants to load only the minimum skill set required for each task during a session. At the same time, CSP remembers user usage habits and project context, providing increasingly accurate services as the project evolves. With 585 skills spanning full-stack development, DevOps, security, and a dedicated indie developer toolkit covering deployment, monetization, performance, and more, CSP supports the complete journey from idea to production.
+CSP (Code Skills Package) consolidates the essence of multiple open-source AI programming projects into an integrated solution. It uses a five-layer architecture to load skills on demand, with confidence scoring router and skill knowledge graph, allowing AI programming assistants to load only the minimum skill set required for each task during a session. At the same time, CSP remembers user usage habits and project context, providing increasingly accurate services as the project evolves. With 594 skills spanning full-stack development, DevOps, security, and a dedicated indie developer toolkit covering deployment, monetization, performance, and more, CSP supports the complete journey from idea to production.
 
 ## Core Features
 
@@ -36,7 +36,7 @@ CSP (Code Skills Package) consolidates the essence of multiple open-source AI pr
 | **Token Savings** | Five-layer on-demand loading + index sharding, ~500–1,500 tokens per task | Full loading ~12,000+ tokens |
 | **Skill Orchestration** | Static Recipe + Dynamic DAG, supports branching / parallel / rollback / automatic merging | Fixed pipeline / no orchestration |
 | **Continuous Learning** | 5-dimensional knowledge extraction, gets smarter about projects and developers | Stateless, starts from zero each time |
-| **Full-Stack Coverage** | 585 skills · 5 layers · 15+ languages · 18+ platforms | Single language / limited scenarios |
+| **Full-Stack Coverage** | 594 skills · 5 layers · 15+ languages · 22+ platforms | Single language / limited scenarios |
 | **Open Extension** | Custom Skills + Recipe + Creation Wizard | Closed ecosystem / no extension |
 
 ### Smart Routing
@@ -57,7 +57,7 @@ Automatically extracts knowledge in 5 dimensions at session end — project arch
 
 ### Full Development Lifecycle Coverage
 
-585 skills distributed across 5 layers, covering the full process of requirement planning, code implementation, review, debugging, testing, and release, extending to specialized areas such as AI Engineering (RAG/LLM/vLLM), DevOps (CI/CD/IaC/K8s), mobile (React Native/cross-platform), security auditing (STRIDE-A/CodeQL/incident response). Additionally, 31 skills are specifically designed for independent developers, covering deployment (Vercel/Railway/VPS), monetization (Stripe/subscriptions/SEO/analytics), performance tuning, API integration (webhooks/OAuth), testing engineering (E2E/visual regression), internationalization, and monorepo management. Each skill follows the SKILL.md v2 specification, with structured fields like phase/domain/role.
+594 skills distributed across 5 layers, covering the full process of requirement planning, code implementation, review, debugging, testing, and release, extending to specialized areas such as AI Engineering (RAG/LLM/vLLM), DevOps (CI/CD/IaC/K8s), mobile (React Native/cross-platform), security auditing (STRIDE-A/CodeQL/incident response). Additionally, 31 skills are specifically designed for independent developers, covering deployment (Vercel/Railway/VPS), monetization (Stripe/subscriptions/SEO/analytics), performance tuning, API integration (webhooks/OAuth), testing engineering (E2E/visual regression), internationalization, and monorepo management. Each skill follows the SKILL.md v2 specification, with structured fields like phase/domain/role.
 
 ### Open Ecosystem
 
@@ -87,7 +87,7 @@ Users can define custom workflows via `.csp/recipes.yaml`, create new skills int
 # Auto-detect AI tool and install
 ./install.sh
 
-# Install for a specific platform (18 supported)
+# Install for a specific platform (22 supported)
 ./install.sh --platform claude-code
 ./install.sh --platform cursor
 
@@ -165,21 +165,22 @@ CSP uses a five-layer layered architecture. Only the router (L0) loads at sessio
 │      Task classification + confidence scoring + state        │
 │      awareness + SKPG knowledge graph enhancement            │
 ├──────────────────────────────────────────────────────────────┤
-│  L1  csp-meta        Methodology (~300 tokens/skill · ~24)  │
+│  L1  csp-meta        Methodology (~300 tokens/skill · 25)  │
 │      Planning · Debugging · TDD · Brainstorming · Scope Guard│
 ├──────────────────────────────────────────────────────────────┤
 │  L2  csp-workflow    Project management (~500 tokens/skill  │
-│      · ~150) plan → execute → verify → ship full lifecycle   │
+│      · 165) plan → execute → verify → ship full lifecycle   │
 ├──────────────────────────────────────────────────────────────┤
 │  L3  csp-patterns    Language/Framework (~200-600 tokens    │
-│      · ~338) 15+ reviewer · Build fix · Patterns · Security │
-│      · Indie Dev (deploy/monetization/perf/i18n/monorepo)   │
+│      · 347) 15+ reviewer · Build fix · Patterns · Security │
+│      · Indie Dev (deploy/monetization/perf/i18n/monorepo)  │
+│      · Responsive/Data-analysis/Paper-reader/UI-design      │
 ├──────────────────────────────────────────────────────────────┤
-│  L4  csp-runtime     Runtime (~300 tokens/skill · ~55)      │
+│  L4  csp-runtime     Runtime (~300 tokens/skill · 56)      │
 │      Continuous learning · Autonomous execution · Knowledge  │
-│      management · Token budget · Parallel orchestration      │
+│      management · Token budget · File-organizer · Parallel   │
 └──────────────────────────────────────────────────────────────┘
-                    Total: 585 skills
+                    Total: 594 skills
 ```
 
 ### Routing Process
@@ -219,18 +220,42 @@ Detailed architecture design, DAG orchestration engine, skill knowledge graph, s
 
 ## Platform Support
 
-CSP supports 18+ AI programming platforms, including Claude Code, Cursor, Trae, Windsurf, Kiro, Codex, Gemini CLI, etc. The installation script automatically detects the platform and generates corresponding configuration files (CLAUDE.md / .cursorrules / .windsurfrules, etc.).
+CSP supports 22+ AI programming platforms, including Claude Code, Cursor, Trae, Windsurf, Kiro, Codex, Gemini CLI, **JetBrains (Junie)**, **Cline**, **Roo Code**, **Neovim (avante.nvim)**, etc. The installation script automatically detects the platform and generates corresponding configuration files (CLAUDE.md / .cursorrules / .windsurfrules / .junie/guidelines.md / .cline/rules / .roo/rules / .avante/rules, etc.).
+
+## Engineering & Supply-Chain Safety
+
+For contributors and security-conscious installers:
+
+```bash
+# Full rebuild of all derived data from SKILL.md frontmatter
+npm run build:all     # registry → metadata → triggers → graph → page
+
+# Validate skills + triggers + registry schema
+npm run validate:all
+
+# Full test suite (validate + graph rebuild + 20 invariant assertions)
+npm test
+
+# Scaffold a new validate-passing skill
+node bin/csp-sdk.mjs init-skill csp-my-skill --layer 3 --phase build
+```
+
+- **`install.sh`** is split into `install.sh` + `lib/platforms.sh` + `lib/bootstrap.sh` for maintainability.
+- **Remote bootstrap integrity**: set `CSP_SHA256=<hash>` to verify the downloaded archive (the hash is printed on every install so you can pin it). `CSP_BRANCH` is whitelisted against `^[A-Za-z0-9._-]+$` to prevent command injection.
+- **Single source of truth**: `SKILL.md` frontmatter (v2 fields) → all of `registry.json` / `triggers.yaml` / `skpg/graph.json` / `skill-metadata.yaml` are derived — never hand-edit them.
+- See [CLAUDE.md](./CLAUDE.md) for the engineering pipeline and [docs/analysis/project-review-2026-08.md](./docs/analysis/project-review-2026-08.md) for the multi-dimensional audit.
 
 ## Further Reading
 
 | Document | Description |
 |----------|-------------|
 | [ARCHITECTURE.md](./docs/ARCHITECTURE.md) | Complete architecture design (11 chapters · DAG orchestration · SKPG · Token strategy) |
-| [SKILL-INDEX.md](./SKILL-INDEX.md) | Complete index of 585 skills/agents |
-| [INSTALL.md](./docs/INSTALL.md) | Complete installation guide (18+ platforms) |
+| [SKILL-INDEX.md](./docs/SKILL-INDEX.md) | Complete index of 594 skills/agents |
+| [INSTALL.md](./docs/INSTALL.md) | Complete installation guide (22+ platforms) |
 | [SKILL-AUTHORING.md](./docs/SKILL-AUTHORING.md) | Skill authoring best practices |
 | [SKILL-SPEC.md](./docs/SKILL-SPEC.md) | SKILL.md specification document |
 | [USER-GUIDE.md](./docs/USER-GUIDE.md) | User guide |
+| [project-review-2026-08.md](./docs/analysis/project-review-2026-08.md) | Multi-dimensional audit + upgrade plan |
 | [README_zh.md](./README_zh.md) | Chinese Documentation |
 
 ## License

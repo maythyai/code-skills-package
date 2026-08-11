@@ -9,6 +9,7 @@
 
 import fs from 'fs';
 import path from 'path';
+import { parseSimpleYaml, extractFrontmatter } from './lib/yaml.mjs';
 
 const ROOT = process.cwd();
 const REGISTRY_OUTPUT = 'csp-router/registry.json';
@@ -164,10 +165,26 @@ function shouldExclude(relPath) {
   return false;
 }
 
+// ─── Extract deprecation flags from frontmatter ─────────────────────
+// Propagates `deprecated: true` and `redirect: "..."` so the router/registry
+// can programmatically filter or redirect superseded skills (previously the
+// deprecation marker lived only inside the description text).
+function extractFlags(filePath) {
+  try {
+    const fm = extractFrontmatter(fs.readFileSync(filePath, 'utf8'));
+    if (!fm) return {};
+    const parsed = parseSimpleYaml(fm);
+    const out = {};
+    if (parsed.deprecated !== undefined) out.deprecated = parsed.deprecated === true || parsed.deprecated === 'true';
+    if (parsed.redirect) out.redirect = String(parsed.redirect).replace(/^["']|["']$/g, '');
+    return out;
+  } catch { return {}; }
+}
+
 // ─── Build a registry entry ──────────────────────────────────────────
 function makeEntry(relPath, name, description) {
   const { layer, category } = getLayerCategory(relPath);
-  return {
+  const entry = {
     name,
     description: description || 'No description available',
     layer,
@@ -178,6 +195,10 @@ function makeEntry(relPath, name, description) {
     deps: [],
     priority: 10,
   };
+  const flags = extractFlags(path.join(ROOT, relPath));
+  if (flags.deprecated !== undefined) entry.deprecated = flags.deprecated;
+  if (flags.redirect !== undefined) entry.redirect = flags.redirect;
+  return entry;
 }
 
 // ─── Name extraction rules by directory type ─────────────────────────

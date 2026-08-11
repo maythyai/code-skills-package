@@ -8,6 +8,7 @@ metadata:
   origin: CSP
   source: awesome-copilot/skills/sql-*
   globs: ["**/*.sql", "**/migrations/**"]
+phase: review
 ---
 
 # SQL Code Review Agent

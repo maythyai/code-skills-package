@@ -8,6 +8,8 @@ description: >
 layer: 1
 origin: merged(CSP)
 category: meta
+phase: review
+domain: architecture
 ---
 
 | Task Type | Characteristics | Model Tier |

@@ -4,6 +4,8 @@ description: Tests in real browsers via Chrome DevTools MCP. Use when building o
 layer: 4
 origin: agent-skills
 category: patterns
+phase: verify
+domain: patterns
 ---
 
 | Tool | What It Does | Use For |

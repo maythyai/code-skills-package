@@ -3,6 +3,8 @@ name: csp-product-capability
 description: Translate PRD intent, roadmap asks, or product discussions into an implementation-ready capability plan that exposes constraints, invariants, interfaces, and unresolved decisions before multi-service work starts. Use when the user needs an CSP-native PRD-to-SRS lane instead of vague planning prose.
 layer: 4
 category: patterns
+phase: plan
+domain: patterns
 ---
 
 # Product Capability

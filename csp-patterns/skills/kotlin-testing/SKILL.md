@@ -4,6 +4,8 @@ description: Kotlin testing patterns with Kotest, MockK, coroutine testing, prop
 origin: CSP
 layer: 4
 category: patterns
+phase: build
+domain: patterns
 ---
 
 | Topic | Coverage |

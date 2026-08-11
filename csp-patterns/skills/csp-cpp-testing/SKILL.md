@@ -4,6 +4,8 @@ description: Use only when writing/updating/fixing C++ tests, configuring Google
 origin: CSP
 layer: 4
 category: patterns
+phase: verify
+domain: patterns
 ---
 
 # C++ Testing (Agent Skill)

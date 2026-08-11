@@ -8,6 +8,8 @@ description: >
 version: 0.1.0
 layer: 4
 category: patterns
+domain: patterns
+phase: build
 ---
 
 # Locale Data Management and Formatting Patterns

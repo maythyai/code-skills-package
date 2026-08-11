@@ -4,6 +4,8 @@ description: "Design and maintain project documentation architecture: folder str
 layer: 2
 category: workflow
 origin: original
+phase: plan
+domain: patterns
 ---
 
 # Project Documentation Architect

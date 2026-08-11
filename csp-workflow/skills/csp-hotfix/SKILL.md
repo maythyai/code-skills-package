@@ -12,6 +12,8 @@ triggers:
   - 热修复
   - 紧急修复
   - 线上bug
+phase: build
+domain: patterns
 ---
 
 # CSP Hotfix Workflow

@@ -4,6 +4,8 @@ description: React 18/19 patterns including hooks discipline, server/client comp
 origin: CSP
 layer: 4
 category: patterns
+domain: patterns
+phase: build
 ---
 
 | Use Case | Solution |

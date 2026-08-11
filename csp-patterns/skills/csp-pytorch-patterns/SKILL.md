@@ -4,6 +4,8 @@ description: PyTorch deep learning patterns and best practices for building robu
 origin: CSP
 layer: 4
 category: patterns
+domain: patterns
+phase: build
 ---
 
 | Pattern | Rule |

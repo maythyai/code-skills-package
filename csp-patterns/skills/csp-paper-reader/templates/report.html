@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{PAPER_TITLE}} - 全方位论文阅读报告</title>
+<style>
+:root {
+  --font-serif: 'Source Serif 4', 'Noto Serif SC', 'Georgia', serif;
+  --font-sans: 'Inter', 'Noto Sans SC', 'Helvetica Neue', sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+  --color-bg: #ffffff; --color-text: #1a1a1a; --color-muted: #6b7280;
+  --color-accent: #2563eb; --color-accent-light: #eff6ff;
+  --color-border: #e5e7eb; --color-code-bg: #f8f9fa; --sidebar-width: 280px;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--font-serif); font-size: 16px; line-height: 1.8; color: var(--color-text); background: var(--color-bg); }
+.reading-progress { position: fixed; top: 0; left: 0; height: 3px; width: 0%; background: var(--color-accent); z-index: 300; transition: width 0.1s linear; }
+.sidebar { position: fixed; top: 0; left: 0; width: var(--sidebar-width); height: 100vh; overflow-y: auto; border-right: 1px solid var(--color-border); padding: 32px 16px; font-family: var(--font-sans); font-size: 14px; z-index: 100; background: var(--color-bg); }
+.sidebar h3 { font-size: 12px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--color-muted); margin-bottom: 20px; padding-bottom: 8px; border-bottom: 1px solid var(--color-border); }
+.sidebar nav a { display: block; padding: 7px 12px; color: var(--color-text); text-decoration: none; border-radius: 6px; transition: all 0.2s; margin-bottom: 2px; font-size: 13px; }
+.sidebar nav a:hover { background: #f3f4f6; }
+.sidebar nav a.active { background: var(--color-accent-light); color: var(--color-accent); font-weight: 600; border-left: 3px solid var(--color-accent); }
+.main-content { margin-left: calc(var(--sidebar-width) + 48px); max-width: 800px; padding: 56px 36px 100px; }
+.project-link-card { background: var(--color-accent-light); border: 1px solid #bfdbfe; border-radius: 8px; padding: 14px 20px; margin-bottom: 24px; font-family: var(--font-sans); font-size: 15px; }
+.project-link-card a { color: var(--color-accent); font-weight: 600; text-decoration: none; }
+.project-link-card a:hover { text-decoration: underline; }
+.quick-guide { background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%); border: 1px solid var(--color-border); border-radius: 10px; padding: 24px 28px; margin-bottom: 36px; font-family: var(--font-sans); }
+.quick-guide h3 { font-size: 16px; color: var(--color-accent); margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+.quick-guide ul { list-style: none; padding: 0; }
+.quick-guide li { padding: 6px 0; font-size: 14px; line-height: 1.6; border-bottom: 1px dashed #e2e8f0; }
+.quick-guide li:last-child { border-bottom: none; }
+.quick-guide .guide-label { display: inline-block; font-weight: 600; color: var(--color-accent); min-width: 80px; margin-right: 8px; }
+.paper-header { margin-bottom: 32px; border-bottom: 2px solid var(--color-border); padding-bottom: 28px; }
+.paper-header h1 { font-family: var(--font-sans); font-size: 30px; line-height: 1.35; margin-bottom: 14px; letter-spacing: -0.3px; }
+.paper-meta { font-size: 14px; color: var(--color-muted); font-family: var(--font-sans); line-height: 1.6; }
+.paper-meta span { margin-right: 16px; white-space: nowrap; }
+.section-content p { margin-bottom: 1em; text-align: justify; }
+.section-content ul, .section-content ol { margin-bottom: 1em; padding-left: 24px; }
+.section-content li { margin-bottom: 0.5em; }
+.section-content h3 { font-family: var(--font-sans); font-size: 18px; margin-top: 28px; margin-bottom: 12px; padding-left: 12px; border-left: 3px solid var(--color-accent); }
+.highlight { background: var(--color-accent-light); padding: 1px 6px; border-radius: 4px; font-weight: 600; font-family: var(--font-sans); font-size: 0.95em; white-space: nowrap; }
+.analysis-section, .references { margin-bottom: 40px; scroll-margin-top: 24px; }
+.section-toggle { font-family: var(--font-sans); font-size: 22px; cursor: pointer; display: flex; align-items: center; gap: 10px; user-select: none; padding: 10px 0; border-bottom: 2px solid var(--color-border); margin-bottom: 20px; letter-spacing: -0.2px; }
+.toggle-icon { font-size: 12px; color: var(--color-accent); transition: transform 0.3s; width: 16px; text-align: center; }
+/* 折叠机制：用 display 而非 max-height，避免过渡动画导致内容为空 */
+.section-content { }
+.section-content.collapsed { display: none; }
+.paper-figure { margin: 28px 0; text-align: center; }
+.paper-figure img { max-width: 100%; border-radius: 6px; border: 1px solid var(--color-border); box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+.paper-figure figcaption { font-style: italic; font-size: 13px; color: var(--color-muted); margin-top: 10px; text-align: left; line-height: 1.6; padding: 0 8px; }
+.formula-block { text-align: center; font-size: 17px; margin: 20px 0; padding: 16px 24px; background: #fafbfc; border-radius: 6px; font-family: 'Cambria Math', 'Latin Modern Math', Georgia, serif; overflow-x: auto; }
+.code-block { background: var(--color-code-bg); border-radius: 8px; padding: 18px 20px; overflow-x: auto; font-family: var(--font-mono); font-size: 13px; line-height: 1.7; margin: 18px 0; border: 1px solid var(--color-border); }
+.code-block .kw { color: #2563eb; font-weight: bold; } .code-block .fn { color: #7c3aed; } .code-block .str { color: #16a34a; } .code-block .num { color: #ea580c; } .code-block .cmt { color: #9ca3af; font-style: italic; } .code-block .cls { color: #1e40af; }
+table { border-collapse: collapse; width: 100%; margin: 20px 0; font-size: 14px; font-family: var(--font-sans); }
+th, td { border: 1px solid var(--color-border); padding: 10px 14px; text-align: left; }
+th { background: var(--color-code-bg); font-weight: 600; }
+tr:nth-child(even) td { background: #fafbfc; }
+sup a { color: var(--color-accent); text-decoration: none; font-weight: 600; } sup a:hover { text-decoration: underline; }
+.references { margin-top: 56px; padding-top: 28px; border-top: 2px solid var(--color-border); font-size: 13px; }
+.references h2 { font-family: var(--font-sans); font-size: 20px; margin-bottom: 16px; }
+.references ol { padding-left: 24px; } .references li { margin-bottom: 8px; color: var(--color-muted); line-height: 1.6; }
+.resource-card { border: 1px solid var(--color-border); border-radius: 10px; padding: 20px; margin: 14px 0; font-family: var(--font-sans); font-size: 14px; transition: box-shadow 0.2s; }
+.resource-card:hover { box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
+.resource-card h4 { margin-bottom: 10px; color: var(--color-accent); font-size: 15px; }
+.resource-card a { color: var(--color-accent); word-break: break-all; }
+.hamburger { display: none; position: fixed; top: 12px; left: 12px; z-index: 200; background: var(--color-accent); color: white; border: none; border-radius: 6px; padding: 8px 12px; font-size: 18px; cursor: pointer; }
+@media (max-width: 1023px) { :root { --sidebar-width: 220px; } }
+@media (max-width: 767px) {
+  .sidebar { transform: translateX(-100%); transition: transform 0.3s; }
+  .sidebar.open { transform: translateX(0); }
+  .main-content { margin-left: 0; padding: 64px 20px 60px; }
+  .hamburger { display: block; }
+  .paper-header h1 { font-size: 24px; }
+}
+@media print {
+  .sidebar, .toggle-icon, .hamburger, .reading-progress { display: none; }
+  .main-content { margin-left: 0; }
+  .section-content { display: block !important; }
+  .quick-guide { break-inside: avoid; }
+}
+</style>
+</head>
+<body>
+<div class="reading-progress" id="readingProgress"></div>
+<button class="hamburger" onclick="document.querySelector('.sidebar').classList.toggle('open')">&#9776;</button>
+<aside class="sidebar"><h3>&#x76EE;&#x5F55;&#x5BFC;&#x822A;</h3><nav>{{TOC_ITEMS}}<a href="#abstract">&#x6458;&#x8981;</a><a href="#related-work">&#x76F8;&#x5173;&#x5DE5;&#x4F5C;</a><a href="#contributions">&#x4E3B;&#x8981;&#x8D21;&#x732E;</a><a href="#method">&#x6838;&#x5FC3;&#x65B9;&#x6CD5;</a><a href="#experiments">&#x5B9E;&#x9A8C;&#x7ED3;&#x8BBA;</a><a href="#applications">&#x5E94;&#x7528;&#x573A;&#x666F;</a><a href="#limitations">&#x5C40;&#x9650;&#x4E0E;&#x5C55;&#x671B;</a><a href="#resources">&#x5173;&#x8054;&#x8D44;&#x6E90;</a><a href="#references">&#x53C2;&#x8003;&#x6587;&#x732E;</a></nav></aside>
+<main class="main-content">
+<header class="paper-header"><h1>{{PAPER_TITLE}}</h1><div class="paper-meta"><span>{{AUTHORS}}</span><span>{{VENUE_YEAR}}</span><span>{{ARXIV_ID}}</span></div></header>
+<div class="project-link-card">&#x1F4C4; Project Page: <a href="{{PROJECT_URL}}" target="_blank">{{PROJECT_URL}}</a></div>
+<div class="quick-guide"><h3>&#x26A1; &#x5FEB;&#x901F;&#x5BFC;&#x8BFB;</h3><ul>{{QUICK_GUIDE_ITEMS}}<li><span class="guide-label">&#x4E00;&#x53E5;&#x8BDD;</span>{{ONE_LINE_SUMMARY}}</li><li><span class="guide-label">&#x5173;&#x952E;&#x6307;&#x6807;</span>{{KEY_METRICS}}</li><li><span class="guide-label">&#x6838;&#x5FC3;&#x521B;&#x65B0;</span>{{CORE_INNOVATION}}</li><li><span class="guide-label">&#x9002;&#x7528;&#x573A;&#x666F;</span>{{USE_CASES}}</li><li><span class="guide-label">&#x63A8;&#x8350;&#x9605;&#x8BFB;</span>{{READING_ORDER}}</li></ul></div>
+<section class="analysis-section" id="abstract"><h2 class="section-toggle" onclick="toggleSection(this)"><span class="toggle-icon">&#9660;</span> &#x6458;&#x8981;</h2><div class="section-content">{{ABSTRACT_CONTENT}}</div></section>
+<section class="analysis-section" id="related-work"><h2 class="section-toggle" onclick="toggleSection(this)"><span class="toggle-icon">&#9660;</span> &#x76F8;&#x5173;&#x5DE5;&#x4F5C;</h2><div class="section-content">{{RELATED_WORK_CONTENT}}</div></section>
+<section class="analysis-section" id="contributions"><h2 class="section-toggle" onclick="toggleSection(this)"><span class="toggle-icon">&#9660;</span> &#x4E3B;&#x8981;&#x8D21;&#x732E;</h2><div class="section-content">{{CONTRIBUTIONS_CONTENT}}</div></section>
+<section class="analysis-section" id="method"><h2 class="section-toggle" onclick="toggleSection(this)"><span class="toggle-icon">&#9660;</span> &#x6838;&#x5FC3;&#x65B9;&#x6CD5;</h2><div class="section-content">{{METHOD_CONTENT}}</div></section>
+<section class="analysis-section" id="experiments"><h2 class="section-toggle" onclick="toggleSection(this)"><span class="toggle-icon">&#9660;</span> &#x5B9E;&#x9A8C;&#x7ED3;&#x8BBA;</h2><div class="section-content">{{EXPERIMENTS_CONTENT}}</div></section>
+<section class="analysis-section" id="applications"><h2 class="section-toggle" onclick="toggleSection(this)"><span class="toggle-icon">&#9660;</span> &#x5E94;&#x7528;&#x573A;&#x666F;</h2><div class="section-content">{{APPLICATIONS_CONTENT}}</div></section>
+<section class="analysis-section" id="limitations"><h2 class="section-toggle" onclick="toggleSection(this)"><span class="toggle-icon">&#9660;</span> &#x5C40;&#x9650;&#x4E0E;&#x5C55;&#x671B;</h2><div class="section-content">{{LIMITATIONS_CONTENT}}</div></section>
+<section class="analysis-section" id="resources"><h2 class="section-toggle" onclick="toggleSection(this)"><span class="toggle-icon">&#9660;</span> &#x5173;&#x8054;&#x8D44;&#x6E90;</h2><div class="section-content">{{RESOURCES_CONTENT}}</div></section>
+<section class="references" id="references"><h2>&#x53C2;&#x8003;&#x6587;&#x732E;</h2><ol>{{REFERENCES_LIST}}</ol></section>
+</main>
+<script>
+// 折叠/展开 — 使用 display:none/block，即时生效无过渡问题
+function toggleSection(h){
+  var c=h.nextElementSibling,i=h.querySelector('.toggle-icon');
+  c.classList.toggle('collapsed');
+  i.innerHTML=c.classList.contains('collapsed')?'&#9654;':'&#9660;';
+}
+
+// 展开指定章节
+function expandSection(id){
+  var sec=document.getElementById(id);
+  if(!sec)return false;
+  var content=sec.querySelector('.section-content');
+  var icon=sec.querySelector('.toggle-icon');
+  var wasCollapsed=false;
+  if(content&&content.classList.contains('collapsed')){
+    content.classList.remove('collapsed');
+    if(icon)icon.innerHTML='&#9660;';
+    wasCollapsed=true;
+  }
+  return wasCollapsed;
+}
+
+// TOC 导航：preventDefault → 展开 → 延迟滚动
+document.querySelectorAll('.sidebar nav a').forEach(function(link){
+  link.addEventListener('click',function(e){
+    e.preventDefault();
+    var targetId=this.getAttribute('href').substring(1);
+    var target=document.getElementById(targetId);
+    expandSection(targetId);
+    // 移动端自动关闭侧边栏
+    if(window.innerWidth<=767){
+      document.querySelector('.sidebar').classList.remove('open');
+    }
+    // 延迟滚动确保 DOM 已更新（display:block 后需要一帧计算布局）
+    requestAnimationFrame(function(){
+      if(target){
+        target.scrollIntoView({behavior:'smooth',block:'start'});
+      }
+    });
+  });
+});
+
+// TOC 高亮
+var allSections=document.querySelectorAll('.analysis-section, .references');
+var tocLinks=document.querySelectorAll('.sidebar nav a');
+var observer=new IntersectionObserver(function(entries){
+  entries.forEach(function(entry){
+    if(entry.isIntersecting){
+      tocLinks.forEach(function(l){l.classList.remove('active');});
+      var lk=document.querySelector('.sidebar nav a[href="#'+entry.target.id+'"]');
+      if(lk)lk.classList.add('active');
+    }
+  });
+},{rootMargin:'-20% 0px -70% 0px'});
+allSections.forEach(function(s){observer.observe(s);});
+
+// 阅读进度条
+window.addEventListener('scroll',function(){
+  var dh=document.documentElement.scrollHeight-window.innerHeight;
+  var sc=window.scrollY;
+  var p=dh>0?(sc/dh)*100:0;
+  document.getElementById('readingProgress').style.width=p+'%';
+});
+</script>
+</body></html>

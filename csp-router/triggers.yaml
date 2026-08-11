@@ -4469,6 +4469,145 @@ trigger_index:
   "writer":
     skills: [csp-writer]
     weight: 40
+
+  # ─── auto-generated triggers (generate-triggers.mjs) ───
+  "bugfix":
+    skills: [csp-bugfix-chain]
+    weight: 40
+  "bugfix chain":
+    skills: [csp-bugfix-chain]
+    weight: 40
+  "bugfix-chain":
+    skills: [csp-bugfix-chain]
+    weight: 40
+  "codebase":
+    skills: [csp-codebase-audit]
+    weight: 40
+  "codebase audit":
+    skills: [csp-codebase-audit]
+    weight: 40
+  "codebase-audit":
+    skills: [csp-codebase-audit]
+    weight: 40
+  "fix bugfix chain":
+    skills: [csp-bugfix-chain]
+    weight: 40
+  "fix codebase audit":
+    skills: [csp-codebase-audit]
+    weight: 40
+  "review bugfix chain":
+    skills: [csp-bugfix-chain]
+    weight: 40
+  "review codebase audit":
+    skills: [csp-codebase-audit]
+    weight: 40
+
+  # ─── auto-generated triggers (generate-triggers.mjs) ───
+  "data analysis":
+    skills: [csp-data-analysis]
+    weight: 40
+  "data-analysis":
+    skills: [csp-data-analysis]
+    weight: 40
+  "file":
+    skills: [csp-file-organizer]
+    weight: 40
+  "file organizer":
+    skills: [csp-file-organizer]
+    weight: 40
+  "file-organizer":
+    skills: [csp-file-organizer]
+    weight: 40
+  "fix data analysis":
+    skills: [csp-data-analysis]
+    weight: 40
+  "fix file organizer":
+    skills: [csp-file-organizer]
+    weight: 40
+  "fix frontend design":
+    skills: [csp-frontend-design]
+    weight: 40
+  "fix html prototype":
+    skills: [csp-html-prototype]
+    weight: 40
+  "fix paper reader":
+    skills: [csp-paper-reader]
+    weight: 40
+  "fix responsive design":
+    skills: [csp-responsive-design]
+    weight: 40
+  "fix web artifacts":
+    skills: [csp-web-artifacts]
+    weight: 40
+  "frontend design":
+    skills: [csp-frontend-design]
+    weight: 40
+  "frontend design 前端":
+    skills: [csp-frontend-design]
+    weight: 40
+  "frontend-design":
+    skills: [csp-frontend-design]
+    weight: 40
+  "html":
+    skills: [csp-html-prototype]
+    weight: 40
+  "html prototype":
+    skills: [csp-html-prototype]
+    weight: 40
+  "html-prototype":
+    skills: [csp-html-prototype]
+    weight: 40
+  "paper":
+    skills: [csp-paper-reader]
+    weight: 40
+  "paper reader":
+    skills: [csp-paper-reader]
+    weight: 40
+  "paper-reader":
+    skills: [csp-paper-reader]
+    weight: 40
+  "responsive":
+    skills: [csp-responsive-design]
+    weight: 40
+  "responsive design":
+    skills: [csp-responsive-design]
+    weight: 40
+  "responsive-design":
+    skills: [csp-responsive-design]
+    weight: 40
+  "review data analysis":
+    skills: [csp-data-analysis]
+    weight: 40
+  "review file organizer":
+    skills: [csp-file-organizer]
+    weight: 40
+  "review frontend design":
+    skills: [csp-frontend-design]
+    weight: 40
+  "review html prototype":
+    skills: [csp-html-prototype]
+    weight: 40
+  "review paper reader":
+    skills: [csp-paper-reader]
+    weight: 40
+  "review responsive design":
+    skills: [csp-responsive-design]
+    weight: 40
+  "review web artifacts":
+    skills: [csp-web-artifacts]
+    weight: 40
+  "web":
+    skills: [csp-web-artifacts]
+    weight: 40
+  "web artifacts":
+    skills: [csp-web-artifacts]
+    weight: 40
+  "web artifacts 网页":
+    skills: [csp-web-artifacts]
+    weight: 40
+  "web-artifacts":
+    skills: [csp-web-artifacts]
+    weight: 40
 stack_rules:
   python:
     files: ["pyproject.toml", "setup.py", "requirements.txt", "Pipfile"]
@@ -4912,7 +5051,7 @@ stack_rules:
     skills: [csp-data-engineer]
     weight: 40
   "data":
-    skills: [csp-data-engineer]
+    skills: [csp-data-engineer, csp-data-analysis]
     weight: 40
   "模式":
     skills: [csp-data-pipeline-patterns]
@@ -5245,7 +5384,7 @@ stack_rules:
     skills: [csp-frontend-patterns]
     weight: 45
   "frontend":
-    skills: [csp-frontend-patterns]
+    skills: [csp-frontend-patterns, csp-frontend-design]
     weight: 40
   "frontend patterns":
     skills: [csp-frontend-patterns]

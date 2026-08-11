@@ -2163,7 +2163,7 @@ Router (L0 resident):
 Execution: Output REVIEW.md
 ```
 
-**Install and Use**: `./install.sh` one-click deployment to 18 platforms, no configuration needed.
+**Install and Use**: `./install.sh` one-click deployment to 22 platforms, no configuration needed.
 
 ---
 

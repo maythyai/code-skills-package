@@ -3,6 +3,7 @@
 
 import { readFileSync, writeFileSync, readdirSync, statSync, existsSync } from 'node:fs';
 import { join, resolve } from 'node:path';
+import { parseSimpleYaml } from '../shared/scripts/lib/yaml.mjs';
 
 const V2_FIELDS = ['phase', 'domain', 'role', 'scope', 'model_rules', 'tools', 'dependencies', 'related_skills', 'anti_rationalizations'];
 const LAYER_DIRS = ['csp-meta', 'csp-workflow', 'csp-patterns', 'csp-runtime', 'csp-router'];
@@ -32,50 +33,7 @@ function extractV2(filePath) {
   const match = content.match(/^---\n([\s\S]*?)\n---/);
   if (!match) return null;
 
-  // Simple YAML frontmatter parsing
-  const frontmatter = match[1];
-  const lines = frontmatter.split('\n');
-  const fm = {};
-
-  for (const line of lines) {
-    if (line.trim() === '') continue;
-
-    const keyValueMatch = line.match(/^([a-zA-Z0-9_]+):\s*(.*)/);
-    if (keyValueMatch) {
-      const [, key, value] = keyValueMatch;
-
-      if (value.trim() !== '') {
-        // Parse the value (simple approach for strings, arrays, booleans, numbers)
-        let parsedValue = value.trim();
-
-        if (parsedValue.startsWith('"') && parsedValue.endsWith('"')) {
-          parsedValue = parsedValue.substring(1, parsedValue.length - 1);
-        } else if (parsedValue.startsWith("'") && parsedValue.endsWith("'")) {
-          parsedValue = parsedValue.substring(1, parsedValue.length - 1);
-        } else if (parsedValue === 'true') {
-          parsedValue = true;
-        } else if (parsedValue === 'false') {
-          parsedValue = false;
-        } else if (!isNaN(parsedValue) && parsedValue.trim() !== '') {
-          parsedValue = Number(parsedValue);
-        } else if (parsedValue.startsWith('[') && parsedValue.endsWith(']')) {
-          // Parse array
-          parsedValue = parsedValue.substring(1, parsedValue.length - 1)
-            .split(',')
-            .map(item => item.trim().replace(/(^["']|["']$)/g, ''));
-        }
-
-        fm[key] = parsedValue;
-      }
-    } else {
-      // Handle array items and nested structures
-      const arrayItemMatch = line.match(/^\s*-\s*(.*)/);
-      if (arrayItemMatch) {
-        // This is an array item, but we need to know which array it belongs to
-        // For simplicity, we'll handle this in a basic way
-      }
-    }
-  }
+  const fm = parseSimpleYaml(match[1], { coerce: true });
 
   const v2 = {};
   for (const field of V2_FIELDS) {

@@ -9,6 +9,8 @@ metadata:
   credit: Supabase team (MIT License)
 layer: 4
 category: patterns
+domain: patterns
+phase: build
 ---
 
 | Query Pattern | Index Type | Example |

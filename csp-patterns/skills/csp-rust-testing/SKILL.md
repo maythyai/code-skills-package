@@ -4,6 +4,8 @@ description: Rust testing patterns including unit tests, integration tests, asyn
 origin: CSP
 layer: 4
 category: patterns
+phase: build
+domain: patterns
 ---
 
 | Area | Target Coverage |

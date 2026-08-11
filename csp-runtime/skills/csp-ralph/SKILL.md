@@ -4,6 +4,8 @@ description: Self-referential loop until task completion with configurable verif
 argument-hint: "[--no-deslop] [--critic=architect|critic|codex] <task description>"
 layer: 4
 category: patterns
+domain: patterns
+phase: build
 ---
 
 [RALPH + ULTRAWORK - ITERATION {{ITERATION}}/{{MAX}}]

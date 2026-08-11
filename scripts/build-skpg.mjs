@@ -4,6 +4,7 @@
 import { readFileSync, writeFileSync, mkdirSync, existsSync, readdirSync, statSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { createHash } from 'node:crypto';
+import { parseSimpleYaml } from '../shared/scripts/lib/yaml.mjs';
 
 const PROJECT_ROOT = resolve(process.argv[2] || '.');
 const CSP_ROOT = join(PROJECT_ROOT, 'csp-router');
@@ -39,69 +40,6 @@ function loadTriggers() {
   }
 }
 
-function parseSimpleYaml(content) {
-  // Minimal YAML parser for our specific structure
-  // Handles: nested objects, inline arrays [a, b], quoted keys, comments, blank lines
-
-  const result = {};
-  const lines = content.split('\n');
-
-  // Stack tracks { indent, obj, key } - nesting context
-  const stack = [{ indent: -1, obj: result, key: null }];
-
-  for (let i = 0; i < lines.length; i++) {
-    const line = lines[i];
-    if (!line.trim() || line.trim().startsWith('#')) continue;
-
-    const indent = line.search(/\S/);
-    const trimmed = line.trim();
-
-    // Pop stack until we find a parent with smaller indent
-    while (stack.length > 1 && stack[stack.length - 1].indent >= indent) {
-      stack.pop();
-    }
-
-    const parent = stack[stack.length - 1];
-
-    // Handle list items (- value)
-    if (trimmed.startsWith('- ')) {
-      const value = trimmed.substring(2).trim().replace(/^["']|["']$/g, '');
-      if (Array.isArray(parent.obj[parent.key])) {
-        parent.obj[parent.key].push(value);
-      }
-      continue;
-    }
-
-    // Handle key: value
-    const colonMatch = trimmed.match(/^([^:]+):\s*(.*)/);
-    if (colonMatch) {
-      let key = colonMatch[1].trim();
-      let value = colonMatch[2].trim();
-
-      // Remove quotes from keys
-      key = key.replace(/^["']|["']$/g, '');
-
-      // Handle inline arrays
-      if (value.startsWith('[') && value.endsWith(']')) {
-        value = value.slice(1, -1).split(',').map(s => s.trim().replace(/^["']|["']$/g, '')).filter(Boolean);
-      } else if (value === '' || value === '|' || value === '>') {
-        // Empty value means this key maps to a nested object
-        parent.obj[key] = {};
-        stack.push({ indent, obj: parent.obj[key], key: null });
-        continue;
-      } else {
-        // Remove quotes from scalar values
-        if ((value.startsWith('"') && value.endsWith('"')) || (value.startsWith("'") && value.endsWith("'"))) {
-          value = value.slice(1, -1);
-        }
-      }
-
-      parent.obj[key] = value;
-    }
-  }
-
-  return result;
-}
 
 function findSkillFrontmatter(baseDir) {
   const results = {};
@@ -248,10 +186,11 @@ function buildGraph() {
       }
     }
 
-    // Related skills
-    if (fm.related_skills) {
+    // Related skills — guard against non-array frontmatter values (string / object),
+    // which previously crashed the whole build (TypeError: not iterable).
+    if (Array.isArray(fm.related_skills)) {
       for (const rel of fm.related_skills) {
-        const relName = rel.replace(/^csp:/, '');
+        const relName = String(rel).replace(/^csp:/, '');
         const targetId = index[relName];
         if (targetId) {
           edges.push({ source: sourceId, target: targetId, kind: 'related_to', metadata: {} });
@@ -286,7 +225,13 @@ function buildGraph() {
     }
   };
 
-  return { graph, index };
+  // Sort index keys for deterministic output (subsumes rebuild-skpg-index.mjs,
+  // which only re-sorted what build-skpg already produced).
+  const sortedIndex = Object.fromEntries(
+    Object.entries(index).sort(([a], [b]) => a.localeCompare(b))
+  );
+
+  return { graph, index: sortedIndex };
 }
 
 function main() {

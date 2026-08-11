@@ -4,6 +4,8 @@ description: Spring Security best practices for authn/authz, validation, CSRF, s
 origin: CSP
 layer: 4
 category: patterns
+domain: patterns
+phase: build
 ---
 
 # Spring Boot Security Review

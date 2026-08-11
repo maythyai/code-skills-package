@@ -10,6 +10,8 @@ metadata:
   globs: ["**/*.py", "**/*.pyi"]
 layer: 4
 category: patterns
+domain: patterns
+phase: build
 ---
 
 

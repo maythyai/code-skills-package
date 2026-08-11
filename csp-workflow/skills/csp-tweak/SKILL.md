@@ -13,6 +13,8 @@ triggers:
   - 小改
   - 文案调整
   - 配置修改
+phase: build
+domain: patterns
 ---
 
 # CSP Tweak Workflow

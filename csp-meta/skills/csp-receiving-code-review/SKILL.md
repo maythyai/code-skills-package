@@ -3,6 +3,8 @@ name: csp-receiving-code-review
 description: Use when receiving code review feedback, before implementing suggestions, especially if feedback seems unclear or technically questionable - requires technical rigor and verification, not performative agreement or blind implementation
 layer: 1
 category: meta
+phase: review
+domain: architecture
 ---
 
 | Anti-Pattern | Instead Do This |

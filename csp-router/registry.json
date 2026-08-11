@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "total_skills": 585,
+  "total_skills": 594,
   "shards": [],
   "skill_metadata": "skill-metadata.yaml",
   "skills": [
@@ -557,7 +557,9 @@
       "stack_detection": false,
       "path": "csp-patterns/agents/csp-code-reviewer.md",
       "deps": [],
-      "priority": 10
+      "priority": 10,
+      "deprecated": true,
+      "redirect": "csp-runtime/agents/csp-code-reviewer.md"
     },
     {
       "name": "csp-coherence-reviewer",
@@ -1352,7 +1354,9 @@
       "stack_detection": false,
       "path": "csp-patterns/agents/csp-planner.md",
       "deps": [],
-      "priority": 10
+      "priority": 10,
+      "deprecated": true,
+      "redirect": "csp-runtime/agents/csp-planner.md"
     },
     {
       "name": "csp-pm",
@@ -3485,6 +3489,21 @@
       "priority": 10
     },
     {
+      "name": "csp-data-analysis",
+      "description": "Implement analytics, data analysis, and visualization best practices using Python, Jupyter, and modern data tools.",
+      "layer": 3,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/csp-data-analysis/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
       "name": "csp-data-pipeline-patterns",
       "description": "Production data pipeline patterns covering Airflow DAG design, dbt transformations, data quality checks, incremental processing, idempotent pipelines, schema evolution, data lineage, ODPS/MaxCompute, data lake/warehouse patterns, and CDC with Debezium. Use when designing, building, or debugging data",
       "layer": 3,
@@ -3770,6 +3789,21 @@
       "priority": 10
     },
     {
+      "name": "csp-frontend-design",
+      "description": "Create distinctive, production-grade frontend interfaces with high design quality. Use this skill when the user asks to build web components, pages, artifacts, posters, or applications (examples include websites, landing pages, dashboards, React components, HTML/CSS layouts, or when styling/beautify",
+      "layer": 3,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/csp-frontend-design/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
       "name": "csp-frontend-patterns",
       "description": "Framework-agnostic frontend patterns for component composition, state management, performance, accessibility, forms, and data fetching. Use as the cross-framework entry point; React-specific patterns live in csp-react-patterns.",
       "layer": 3,
@@ -3826,6 +3860,21 @@
       },
       "stack_detection": false,
       "path": "csp-patterns/skills/csp-git-conventions/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-html-prototype",
+      "description": "生成用于 UI 线框图和模型图的交互式 HTML 原型页面。当用户要求创建原型、线框图、模型图、页面设计或 UI 布局时使用。支持移动端、桌面端和平板设备，并可采用高保真或低保真风格。",
+      "layer": 3,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/csp-html-prototype/SKILL.md",
       "deps": [],
       "priority": 10
     },
@@ -4160,6 +4209,21 @@
       "priority": 10
     },
     {
+      "name": "csp-paper-reader",
+      "description": "解析、解读、探索、讲解、总结某领域最新论文或某篇具体论文。 触发词：解析论文、解读论文、论文总结、paper review、read paper、论文笔记、最新论文、领域综述、 这篇论文讲了什么、帮我看看这篇paper、XX领域有什么新进展。 输入：论文名称/标题/arXiv ID，或领域关键词。 输出：自包含学术风 HTML 文档 + 原始论文 PDF，含侧边栏目录导航、折叠展开交互、关键图片、代码片段、数据集信息。 不要用于：纯文献检索不需要深度解读、只需要PDF转Wor",
+      "layer": 3,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/csp-paper-reader/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
       "name": "csp-payment-integration",
       "description": "Implements Stripe and LemonSqueezy payment integration patterns including checkout sessions, webhook handling, error recovery, and multi-currency support for SaaS and e-commerce applications.",
       "layer": 3,
@@ -4426,6 +4490,21 @@
       },
       "stack_detection": false,
       "path": "csp-patterns/skills/csp-refactoring-strategies/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-responsive-design",
+      "description": "Implement modern responsive layouts using container queries, fluid typography, CSS Grid, and mobile-first breakpoint strategies. Use when building adaptive interfaces, implementing fluid layouts, or creating component-level responsive behavior.",
+      "layer": 3,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/csp-responsive-design/SKILL.md",
       "deps": [],
       "priority": 10
     },
@@ -4771,6 +4850,21 @@
       },
       "stack_detection": false,
       "path": "csp-patterns/skills/csp-vps-deploy/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-web-artifacts",
+      "description": "用于创建复杂、多组件的 HTML 网页，采用现代前端 Web 技术（React、Tailwind CSS、shadcn/ui）。适用于需要状态管理、路由或 shadcn/ui 组件的复杂网页，不适用于简单的单文件 HTML/JSX 网页。",
+      "layer": 3,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/csp-web-artifacts/SKILL.md",
       "deps": [],
       "priority": 10
     },
@@ -5945,6 +6039,21 @@
       "priority": 10
     },
     {
+      "name": "csp-file-organizer",
+      "description": "通过理解上下文、查找重复文件、建议更合理的目录结构并自动化清理任务，智能整理你电脑中的文件与文件夹。降低整理负担，让数字工作空间长期保持整洁有序。",
+      "layer": 4,
+      "category": "runtime",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-runtime/skills/csp-file-organizer/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
       "name": "csp-hud",
       "description": "Configure HUD display options (layout, presets, display elements)",
       "layer": 4,
@@ -5976,7 +6085,7 @@
     },
     {
       "name": "csp-learning-loop",
-      "description": "Automatic session-boundary learning orchestrator. Extracts, classifies, and stores learnings across 5 dimensions (project core, user needs, developer profile, long-term memory, skill feedback). Delegates to csp-remember, csp-learner, skill-optimizer, csp-compound. Runs at Stop/PreCompact/SessionEnd ",
+      "description": "Automatic session-boundary learning orchestrator. Extracts, classifies, and stores learnings across 5 dimensions (project core, user needs, developer profile, long-term memory, skill feedback). Delegates to csp-remember, csp-learner, skill-optimizer, csp-compound. [PLANNED] Runs at Stop/PreCompact/S",
       "layer": 4,
       "category": "runtime",
       "triggers": {
@@ -7790,6 +7899,21 @@
       "priority": 10
     },
     {
+      "name": "csp-codebase-audit",
+      "description": "Multi-dimensional codebase audit: parallel Explore agents investigate one dimension each (functionality/architecture/data/frontend/engineering-quality), high-risk findings are verified on-machine, then assembled into a single decision-source document (problem report + design + upgrade plan). Trigger",
+      "layer": 2,
+      "category": "workflow",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-workflow/skills/csp-codebase-audit/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
       "name": "csp-compound-learning",
       "description": "Document a recently solved problem to compound your team's knowledge. Captures solutions in docs/solutions/ with YAML frontmatter for searchability. Use after fixing bugs or establishing patterns.",
       "layer": 2,
@@ -8311,6 +8435,21 @@
       },
       "stack_detection": false,
       "path": "csp-workflow/workflows/csp-analyze-dependencies.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-bugfix-chain",
+      "description": "Chains the full bug fix lifecycle — debug → fix → tdd → verify — into a single",
+      "layer": 2,
+      "category": "workflow",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-workflow/workflows/csp-bugfix-chain.md",
       "deps": [],
       "priority": 10
     },

@@ -4,6 +4,8 @@ description: Parallel execution engine for high-throughput task completion
 argument-hint: "<task description with parallel work items>"
 layer: 4
 category: patterns
+domain: patterns
+phase: build
 ---
 
 <Purpose>

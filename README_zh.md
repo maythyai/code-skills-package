@@ -5,10 +5,10 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
 [![npm](https://img.shields.io/npm/v/code-skills-package)](https://www.npmjs.com/package/code-skills-package)
 [![v0.8.0](https://img.shields.io/badge/version-0.8.0-green)](./CHANGELOG.md)
-[![Skills: 585](https://img.shields.io/badge/skills-585-orange)](./SKILL-INDEX.md)
-[![Platforms: 18+](https://img.shields.io/badge/platforms-18+-brightgreen)](./docs/INSTALL.md)
+[![Skills: 594](https://img.shields.io/badge/skills-594-orange)](./docs/SKILL-INDEX.md)
+[![Platforms: 22+](https://img.shields.io/badge/platforms-22+-brightgreen)](./docs/INSTALL.md)
 
-**统一 AI 编程技能 · 18+ 个平台 · 15+ 语言 · 585 个技能**
+**统一 AI 编程技能 · 22+ 个平台 · 15+ 语言 · 594 个技能**
 
 整合多个开源 AI 编程项目为分层自动路由框架，以极低的 token 成本完成复杂开发任务。
 
@@ -22,11 +22,11 @@
 
 [![CSP 总览](./assets/page.png)](https://maythyai.github.io/code-skills-package/)
 
-**🔗 [在线交互式仪表盘](https://maythyai.github.io/code-skills-package/)** — 按层级、分类、触发词浏览全部 585 个技能
+**🔗 [在线交互式仪表盘](https://maythyai.github.io/code-skills-package/)** — 按层级、分类、触发词浏览全部 594 个技能
 
 </div>
 
-CSP（Code Skills Package）将多个开源 AI 编程项目的精华整合为一体化解决方案。它通过五层架构按需加载技能，配合置信度评分路由器和技能知识图谱，让 AI 编程助手在每次会话中只加载任务所需的最小 skill 集合。同时，CSP 会记忆用户的使用习惯和项目上下文，随着项目演进提供越来越精准的服务。585 个技能覆盖全栈开发、DevOps、安全审计等领域，并专为独立开发者提供部署运维、商业化运营、性能调优、国际化、Monorepo 管理等专项技能包，支持从 idea 到 production 的完整旅程。
+CSP（Code Skills Package）将多个开源 AI 编程项目的精华整合为一体化解决方案。它通过五层架构按需加载技能，配合置信度评分路由器和技能知识图谱，让 AI 编程助手在每次会话中只加载任务所需的最小 skill 集合。同时，CSP 会记忆用户的使用习惯和项目上下文，随着项目演进提供越来越精准的服务。594 个技能覆盖全栈开发、DevOps、安全审计等领域，并专为独立开发者提供部署运维、商业化运营、性能调优、国际化、Monorepo 管理等专项技能包，支持从 idea 到 production 的完整旅程。
 
 ## 核心亮点
 
@@ -36,7 +36,7 @@ CSP（Code Skills Package）将多个开源 AI 编程项目的精华整合为一
 | **Token 节约** | 五层按需加载 + 索引分片，单次任务 ~500–1,500 tokens | 全量加载 ~12,000+ tokens |
 | **技能编排** | 静态 Recipe + 动态 DAG，支持分支 / 并行 / 回退 / 自动合并 | 固定流水线 / 无编排 |
 | **持续学习** | 5 维度知识提取，越用越懂项目和开发者 | 无状态，每次从零开始 |
-| **全栈覆盖** | 585 技能 · 5 层级 · 15+ 语言 · 18+ 平台 | 单一语言 / 有限场景 |
+| **全栈覆盖** | 594 技能 · 5 层级 · 15+ 语言 · 18+ 平台 | 单一语言 / 有限场景 |
 | **开放扩展** | 自定义 Skill + Recipe + 创作向导 | 封闭生态 / 无扩展 |
 
 ### 智能路由
@@ -57,7 +57,7 @@ CSP（Code Skills Package）将多个开源 AI 编程项目的精华整合为一
 
 ### 全开发生命周期覆盖
 
-585 个技能分布在 5 个层级，覆盖需求规划、代码实现、审查、调试、测试、发布全流程，并延伸至 AI 工程（RAG/LLM/vLLM）、DevOps（CI/CD/IaC/K8s）、移动端（React Native/跨平台）、安全审计（STRIDE-A/CodeQL/事件响应）等专业领域。此外，31 个技能专为独立开发者设计，覆盖部署运维（Vercel/Railway/VPS）、商业化运营（Stripe/订阅/SEO/分析）、性能调优、API 集成（Webhook/OAuth）、测试工程（E2E/视觉回归）、国际化和 Monorepo 管理。每个技能遵循 SKILL.md v2 规范，含 phase/domain/role 等结构化字段。
+594 个技能分布在 5 个层级，覆盖需求规划、代码实现、审查、调试、测试、发布全流程，并延伸至 AI 工程（RAG/LLM/vLLM）、DevOps（CI/CD/IaC/K8s）、移动端（React Native/跨平台）、安全审计（STRIDE-A/CodeQL/事件响应）等专业领域。此外，31 个技能专为独立开发者设计，覆盖部署运维（Vercel/Railway/VPS）、商业化运营（Stripe/订阅/SEO/分析）、性能调优、API 集成（Webhook/OAuth）、测试工程（E2E/视觉回归）、国际化和 Monorepo 管理。每个技能遵循 SKILL.md v2 规范，含 phase/domain/role 等结构化字段。
 
 ### 开放生态
 
@@ -87,7 +87,7 @@ CSP（Code Skills Package）将多个开源 AI 编程项目的精华整合为一
 # 自动检测 AI 工具并安装
 ./install.sh
 
-# 指定平台安装（支持 18 个平台）
+# 指定平台安装（支持 22 个平台）
 ./install.sh --platform claude-code
 ./install.sh --platform cursor
 
@@ -164,20 +164,21 @@ CSP 采用五层分层架构。仅路由器（L0）在会话启动时加载，�
 │  L0  csp-router      会话启动常驻（~2,000 tokens）            │
 │      任务分类 + 置信度评分 + 状态感知 + SKPG 知识图谱增强      │
 ├──────────────────────────────────────────────────────────────┤
-│  L1  csp-meta        方法论（~300 tokens/skill · ~24 个）     │
+│  L1  csp-meta        方法论（~300 tokens/skill · 25 个）     │
 │      规划 · 调试 · TDD · 头脑风暴 · 范围控制                   │
 ├──────────────────────────────────────────────────────────────┤
-│  L2  csp-workflow    项目管理（~500 tokens/skill · ~150 个）  │
+│  L2  csp-workflow    项目管理（~500 tokens/skill · 165 个）  │
 │      plan → execute → verify → ship 全生命周期                 │
 ├──────────────────────────────────────────────────────────────┤
-│  L3  csp-patterns    语言/框架（~200-600 tokens · ~338 个）   │
+│  L3  csp-patterns    语言/框架（~200-600 tokens · 347 个）   │
 │      15+ reviewer · 构建修复 · patterns · 安全审查             │
 │      · 独立开发者（部署/商业化/性能/i18n/monorepo）            │
+│      · 响应式/数据分析/论文阅读/UI 设计                       │
 ├──────────────────────────────────────────────────────────────┤
-│  L4  csp-runtime     运行时（~300 tokens/skill · ~55 个）     │
-│      持续学习 · 自主执行 · 知识管理 · Token 预算 · 并行编排    │
+│  L4  csp-runtime     运行时（~300 tokens/skill · 56 个）     │
+│      持续学习 · 自主执行 · 知识管理 · Token 预算 · 文件整理 · 并行编排│
 └──────────────────────────────────────────────────────────────┘
-                    总计：585 个技能
+                    总计：594 个技能
 ```
 
 ### 路由流程
@@ -262,18 +263,42 @@ Recipe 优先级：用户自定义 → 内置 → 路由器动态组合。
 
 ## 平台支持
 
-CSP 支持 18+ 个 AI 编程平台，包括 Claude Code、Cursor、Trae、Windsurf、Kiro、Codex、Gemini CLI 等。安装脚本会自动检测平台并生成对应配置文件（CLAUDE.md / .cursorrules / .windsurfrules 等）。
+CSP 支持 22+ 个 AI 编程平台，包括 Claude Code、Cursor、Trae、Windsurf、Kiro、Codex、Gemini CLI、**JetBrains (Junie)**、**Cline**、**Roo Code**、**Neovim (avante.nvim)** 等。安装脚本会自动检测平台并生成对应配置文件（CLAUDE.md / .cursorrules / .windsurfrules / .junie/guidelines.md / .cline/rules / .roo/rules / .avante/rules 等）。
+
+## 工程与供应链安全
+
+面向贡献者和关注安全的安装者：
+
+```bash
+# 从 SKILL.md frontmatter 一键重建全部派生数据
+npm run build:all     # registry → metadata → triggers → graph → page
+
+# 校验 skills + triggers + registry schema
+npm run validate:all
+
+# 完整测试套件（validate + graph 重建 + 20 条不变量断言）
+npm test
+
+# 脚手架一个新 skill（自动生成合规 SKILL.md）
+node bin/csp-sdk.mjs init-skill csp-my-skill --layer 3 --phase build
+```
+
+- **`install.sh`** 拆分为 `install.sh` + `lib/platforms.sh` + `lib/bootstrap.sh`，便于维护。
+- **远程 bootstrap 完整性**：设置 `CSP_SHA256=<hash>` 可校验下载的压缩包（每次安装都会打印实际 hash，可固定）。`CSP_BRANCH` 经 `^[A-Za-z0-9._-]+$` 白名单校验，防止命令注入。
+- **单一真相源**：`SKILL.md` frontmatter（v2 字段）→ 派生出 `registry.json` / `triggers.yaml` / `skpg/graph.json` / `skill-metadata.yaml`，请勿手编。
+- 详见 [CLAUDE.md](./CLAUDE.md) 的工程管线与 [docs/analysis/project-review-2026-08.md](./docs/analysis/project-review-2026-08.md) 的多维审查报告。
 
 ## 进一步阅读
 
 | 文档 | 说明 |
 |------|------|
 | [ARCHITECTURE_zh.md](./docs/ARCHITECTURE_zh.md) | 完整架构设计（11 章 · DAG 编排 · SKPG · Token 策略） |
-| [SKILL-INDEX.md](./SKILL-INDEX.md) | 全部 585 个 skill/agent 索引 |
+| [SKILL-INDEX.md](./docs/SKILL-INDEX.md) | 全部 594 个 skill/agent 索引 |
 | [INSTALL.md](./docs/INSTALL.md) | 完整安装指南（18+ 平台） |
 | [SKILL-AUTHORING.md](./docs/SKILL-AUTHORING.md) | Skill 编写最佳实践 |
 | [SKILL-SPEC.md](./docs/SKILL-SPEC.md) | SKILL.md 规范文档 |
 | [USER-GUIDE.md](./docs/USER-GUIDE.md) | 用户使用指南 |
+| [project-review-2026-08.md](./docs/analysis/project-review-2026-08.md) | 多维审查 + 升级方案 |
 | [README.md](./README.md) | English Documentation |
 
 ## 许可证

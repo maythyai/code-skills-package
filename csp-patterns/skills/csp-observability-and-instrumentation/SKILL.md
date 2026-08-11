@@ -4,6 +4,8 @@ description: Instruments code so production behavior is visible and diagnosable.
 layer: 4
 origin: agent-skills
 category: patterns
+domain: patterns
+phase: build
 ---
 
 | Signal | Question It Answers | Cost | Example |

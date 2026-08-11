@@ -4,6 +4,8 @@ description: Durable multi-goal workflow that persists plan/ledger artifacts und
 argument-hint: "<brief or subcommand>"
 layer: 3
 category: runtime
+phase: plan
+domain: architecture
 ---
 
 <Purpose>

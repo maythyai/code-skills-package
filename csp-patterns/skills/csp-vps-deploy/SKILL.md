@@ -5,6 +5,8 @@ description: >
 version: 0.1.0
 layer: 4
 category: patterns
+phase: ship
+domain: patterns
 ---
 
 # VPS Deployment and Server Management

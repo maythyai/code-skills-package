@@ -56,3 +56,13 @@ scripts/descriptions_output.json
 
 # CSP runtime directory (per-project, auto-generated after install)
 .csp/
+
+# Trigger snapshots (local artifacts from fix-triggers/generate-triggers)
+*.bak
+*.pre-gen.bak
+
+# CSP runtime state (per-session, never committed)
+.csp/
+
+# Local analysis working notes (the published report IS committed under docs/analysis/)
+# (docs/analysis/ is committed; only scratch notes here would be ignored if added)

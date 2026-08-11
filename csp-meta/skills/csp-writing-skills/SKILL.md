@@ -3,6 +3,8 @@ name: csp-writing-skills
 description: Use when creating new skills, editing existing skills, or verifying skills work before deployment
 layer: 1
 category: meta
+domain: architecture
+phase: define
 ---
 
 | TDD Concept | Skill Equivalent |

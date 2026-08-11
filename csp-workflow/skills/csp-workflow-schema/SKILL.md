@@ -6,6 +6,8 @@ description: >
   executing structured multi-phase workflows.
 layer: 2
 category: workflow
+phase: define
+domain: patterns
 ---
 
 # CSP Workflow Schema

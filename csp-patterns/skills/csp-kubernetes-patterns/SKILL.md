@@ -8,6 +8,8 @@ metadata:
   origin: CSP
 layer: 4
 category: patterns
+domain: patterns
+phase: build
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress

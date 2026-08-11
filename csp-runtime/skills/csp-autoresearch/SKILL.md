@@ -4,6 +4,8 @@ description: Stateful single-mission improvement loop with strict evaluator cont
 argument-hint: "[--mission-dir <path>] [--max-runtime <duration>] [--cron <spec>] [--resume <run-id>]"
 layer: 4
 category: patterns
+domain: patterns
+phase: build
 ---
 
 <Purpose>

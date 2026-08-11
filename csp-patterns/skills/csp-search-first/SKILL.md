@@ -9,6 +9,8 @@ metadata:
   origin: CSP
 layer: 4
 category: patterns
+phase: build
+domain: patterns
 ---
 
 | Search Result | Strategy | Action |

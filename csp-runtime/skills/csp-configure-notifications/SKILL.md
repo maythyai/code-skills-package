@@ -15,6 +15,8 @@ triggers:
   - "slack webhook"
 layer: 2
 category: workflow
+domain: patterns
+phase: build
 ---
 
 ## Telegram Setup

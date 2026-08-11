@@ -9,6 +9,8 @@ metadata:
   globs: ["**/*.go", "**/go.mod", "**/go.sum"]
 layer: 4
 category: patterns
+phase: verify
+domain: patterns
 ---
 
 # Go Testing

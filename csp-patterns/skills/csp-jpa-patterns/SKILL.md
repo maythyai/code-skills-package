@@ -4,6 +4,8 @@ description: JPA/Hibernate patterns for entity design, relationships, query opti
 origin: CSP
 layer: 4
 category: patterns
+domain: patterns
+phase: build
 ---
 
 # JPA/Hibernate Patterns

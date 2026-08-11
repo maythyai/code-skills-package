@@ -4,6 +4,8 @@ description: Production machine-learning engineering workflow for data contracts
 origin: CSP
 layer: 4
 category: patterns
+domain: patterns
+phase: build
 ---
 
 | Skill Combo | Why |

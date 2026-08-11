@@ -3,6 +3,8 @@ name: csp-agent-introspection-debugging
 description: Structured self-debugging workflow for AI agent failures using capture, diagnosis, contained recovery, and introspection reports.
 layer: 4
 category: patterns
+domain: patterns
+phase: build
 ---
 
 | Symptom | Likely Cause | First Step |

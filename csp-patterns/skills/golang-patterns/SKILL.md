@@ -10,6 +10,8 @@ metadata:
   globs: ["**/*.go", "**/go.mod", "**/go.sum"]
 layer: 4
 category: patterns
+domain: patterns
+phase: build
 ---
 
 # Go Patterns

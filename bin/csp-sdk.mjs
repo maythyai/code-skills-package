@@ -696,8 +696,77 @@ Subcommands (query):
     process.exit(doctor());
   }
 
+  // csp-sdk init-skill <name> [--layer <1|2|3|4>] [--category <c>] [--phase <p>] [--domain <d>]
+  // Scaffolds a validate-passing SKILL.md (v2 frontmatter + body) in the right
+  // csp-*/skills/csp-<name>/ directory. The new skill is registered on the next
+  // `npm run build:all`.
+  if (args[0] === 'init-skill') {
+    const initArgs = args.slice(1);
+    const lf = {};
+    const pos = [];
+    for (let i = 0; i < initArgs.length; i++) {
+      if (initArgs[i].startsWith('--')) {
+        const k = initArgs[i].slice(2);
+        lf[k] = initArgs[i + 1] && !initArgs[i + 1].startsWith('--') ? initArgs[++i] : true;
+      } else pos.push(initArgs[i]);
+    }
+    const name = pos[0] || '';
+    const layer = lf.layer || '3';
+    const category = lf.category || ({ '1': 'meta', '2': 'workflow', '3': 'patterns', '4': 'runtime' }[layer] || 'patterns');
+    const phase = lf.phase || 'build';
+    const domain = lf.domain || 'patterns';
+    const scope = lf.scope || 'implementation';
+
+    if (!name) { err('usage: csp-sdk init-skill <name> [--layer 1|2|3|4]'); process.exit(1); }
+    const skillName = name.startsWith('csp-') ? name : 'csp-' + name;
+    if (!/^[a-z0-9-]+$/.test(skillName)) { err(`invalid skill name: ${skillName} (lowercase kebab only)`); process.exit(1); }
+
+    const layerDir = ({ '1': 'csp-meta/skills', '2': 'csp-workflow/skills', '3': 'csp-patterns/skills', '4': 'csp-runtime/skills' }[layer]);
+    if (!layerDir) { err(`invalid layer: ${layer} (1|2|3|4)`); process.exit(1); }
+
+    const skillDir = join(PROJECT_ROOT, layerDir, skillName);
+    if (existsSync(skillDir)) { err(`already exists: ${skillDir}`); process.exit(1); }
+    mkdirSync(skillDir, { recursive: true });
+
+    const template = `---
+name: ${skillName}
+description: "TODO: one-line description of what this skill does and when to use it."
+version: 0.1.0
+layer: ${layer}
+category: ${category}
+phase: ${phase}
+domain: ${domain}
+scope: ${scope}
+tools: [Read, Write, Edit, Glob, Grep]
+related_skills: []
+---
+
+# ${skillName}
+
+## When to Use
+
+<!-- Describe the trigger conditions. -->
+
+## When NOT to Use
+
+<!-- Describe anti-triggers. -->
+
+## Workflow
+
+1. <!-- Step 1 -->
+2. <!-- Step 2 -->
+
+## Verification
+
+<!-- How does the user/agent confirm the outcome? -->
+`;
+    writeFileSync(join(skillDir, 'SKILL.md'), template);
+    out({ status: 'created', name: skillName, path: `${layerDir}/${skillName}/SKILL.md`, next: 'npm run build:all && npm run validate:all' });
+    process.exit(0);
+  }
+
   if (args[0] !== 'query') {
-    err(`Unknown command: ${args[0]}. Use "csp-sdk query <subcommand>".`);
+    err(`Unknown command: ${args[0]}. Use "csp-sdk query <subcommand>" or "csp-sdk init-skill <name>".`);
     process.exit(1);
   }
 
@@ -947,10 +1016,17 @@ function routeQuery(sub, args, flags) {
     };
   }
   if (sub === 'validate.health') return { healthy: true };
-  if (sub.startsWith('verify.') || sub.startsWith('validate.')) return { status: 'pass' };
+  // Generic verify.*/validate.*/check.* fallbacks now report unimplemented instead
+  // of silently returning pass/coverage:1.0 — callers (hooks/agents) previously
+  // could not distinguish "check passed" from "check does not exist".
+  if (sub.startsWith('verify.') || sub.startsWith('validate.')) {
+    return { status: 'unimplemented', subcommand: sub };
+  }
 
   // --- check.* ---
-  if (sub.startsWith('check.')) return { status: 'pass', coverage: 1.0 };
+  if (sub.startsWith('check.')) {
+    return { status: 'unimplemented', subcommand: sub };
+  }
 
   // --- utilities ---
   if (sub === 'generate-slug') return slugify(args.join(' '));
@@ -1094,8 +1170,10 @@ function routeQuery(sub, args, flags) {
   }
   if (sub.startsWith('budget.')) return budgetStatusOp();
 
-  // --- Fallback: return empty success for unknown subcommands ---
-  return { status: 'ok', _note: `Unhandled subcommand "${sub}" — returning default success` };
+  // --- Fallback: unknown subcommand. Previously returned success, masking every
+  // typo / unimplemented route as a green result. Throwing lets main()'s catch
+  // block emit stderr and exit 1 so callers can detect the unknown route.
+  throw new Error(`unknown subcommand: ${sub}`);
 }
 
 main();

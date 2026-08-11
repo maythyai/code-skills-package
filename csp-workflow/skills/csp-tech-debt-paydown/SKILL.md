@@ -7,6 +7,8 @@ description: >
 version: 0.1.0
 layer: 2
 category: workflow
+domain: patterns
+phase: build
 ---
 
 # Technical Debt Paydown

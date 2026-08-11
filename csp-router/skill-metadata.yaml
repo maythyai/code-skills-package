@@ -4,8 +4,11 @@
 # Regenerate: node scripts/build-skill-metadata.mjs
 
 version: 2.0
-generated_at: 2026-07-21T05:47:56.525Z
+generated_at: 2026-08-11T09:39:36.856Z
 skills:
+  csp-agent-teams:
+    phase: review
+    domain: architecture
   csp-brainstorming:
     phase: define
     domain: architecture
@@ -19,6 +22,9 @@ skills:
     related_skills:
       - csp-plan-phase
       - csp-spec-contract
+    anti_rationalizations:
+      Let's just start coding: "Design first prevents rework. 30 min brainstorming saves 3 hours."
+      I know what to build: "Assumptions are bugs waiting to happen. Surface them explicitly."
   csp-code-graph:
     phase: review
     domain: architecture
@@ -38,6 +44,28 @@ skills:
       - csp-graph-refactor
       - csp-code-review
       - csp-multi-review
+    anti_rationalizations:
+      I'll just grep the codebase: "Graph traversal finds structural relationships (callers, dependents, test coverage) that text search cannot. Use the graph first, grep as fallback."
+      The diff is small, no need for impact analysis: "Small diffs in hub functions can have massive blast radius. Always check impact before reviewing."
+      I already know this codebase: "Code evolves. The graph reflects current state, not your memory of it."
+  csp-context-engineering:
+    phase: define
+    domain: architecture
+  csp-doc-review:
+    phase: plan
+    domain: architecture
+  csp-doubt-driven-development:
+    phase: verify
+    domain: architecture
+  csp-executing-plans:
+    phase: plan
+    domain: architecture
+  csp-finishing-a-development-branch:
+    phase: define
+    domain: architecture
+  csp-interview-me:
+    phase: plan
+    domain: architecture
   csp-mvp-scoping:
     phase: define
     domain: architecture
@@ -52,6 +80,20 @@ skills:
       - csp-strategy
       - csp-brainstorming
       - csp-plan-phase
+    anti_rationalizations:
+      We need all these features to be competitive: "Ship one feature and learn. Competitors ship faster because they cut more."
+      Users will expect this on day one: "Users don't know what they want until they use something. Ship and iterate."
+      It's harder to add later: "Adding to a working product is easier than debugging a bloated one that never shipped."
+      This is the minimum: "If you can't describe why each feature is essential, it isn't."
+  csp-party-mode:
+    phase: define
+    domain: architecture
+  csp-receiving-code-review:
+    phase: review
+    domain: architecture
+  csp-requesting-code-review:
+    phase: verify
+    domain: architecture
   csp-scope-guard:
     phase: plan
     domain: quality
@@ -64,6 +106,17 @@ skills:
       - csp-mvp-scoping
       - csp-strategy
       - csp-brainstorming
+    anti_rationalizations:
+      It's just one more small thing: "Small things compound. Ten 'small things' delay a release by a week."
+      I'm already in this file, might as well fix it: "Drive-by fixes bypass review and introduce regressions."
+      The user asked for it: "The user asked for a solution, not every possible feature."
+      It'll be harder to do later: "If it's not critical now, it might never need doing."
+  csp-skill-optimizer:
+    phase: verify
+    domain: architecture
+  csp-source-driven-development:
+    phase: define
+    domain: architecture
   csp-spec-contract:
     phase: define
     domain: quality
@@ -96,6 +149,9 @@ skills:
       - Bash
       - Glob
       - Grep
+    anti_rationalizations:
+      I see the problem, let me fix it: "Seeing symptoms ≠ understanding root cause."
+      One more fix attempt: "3+ failures = architectural problem. Question pattern, don't fix again."
   csp-tdd:
     phase: build
     domain: testing
@@ -107,9 +163,25 @@ skills:
       - Bash
       - Glob
       - Grep
+    dependencies:
+      skills:
+        - csp-spec-contract
     related_skills:
       - csp-verification
       - csp-code-review
+    anti_rationalizations:
+      I'll add tests later: "Later never comes. Write tests first."
+      This is too simple to test: "Simple code has bugs too. Tests are cheap."
+      Tests slow me down: "Tests prevent debugging sessions that take longer."
+  csp-using-git-worktrees:
+    phase: define
+    domain: architecture
+  csp-using-skills:
+    phase: define
+    domain: architecture
+  csp-verification:
+    phase: build
+    domain: architecture
   csp-writing-plans:
     phase: plan
     domain: architecture
@@ -120,6 +192,31 @@ skills:
       - Edit
       - Glob
       - Grep
+  csp-writing-skills:
+    phase: define
+    domain: architecture
+  csp-codebase-audit:
+    phase: review
+    domain: architecture
+    scope: review
+    tools:
+      - Read
+      - Glob
+      - Grep
+      - Bash
+      - WebFetch
+      - WebSearch
+    dependencies:
+      skills:
+        - csp-codebase-mapper
+    related_skills:
+      - csp-code-review
+      - csp-verification
+      - csp-architecture-review
+    anti_rationalizations:
+      I'll just read the code myself: "One context can't hold a large codebase; parallel agents cover more dimensions than a single pass."
+      The agent's finding looks right, skip verification: "P0/P1 findings MUST be machine-verified — agents hallucinate dangling refs and missing files."
+      Skip the report, just tell the user: "The single decision-source doc is the deliverable; verbal summaries lose the upgrade plan's testable acceptance criteria."
   csp-compound-learning:
     phase: build
     domain: quality
@@ -131,6 +228,15 @@ skills:
       - Bash
       - Glob
       - Grep
+  csp-compound-refresh:
+    phase: review
+    domain: patterns
+  csp-deprecation-and-migration:
+    phase: build
+    domain: patterns
+  csp-doc-lifecycle-manager:
+    phase: plan
+    domain: patterns
   csp-explore:
     phase: plan
     domain: patterns
@@ -141,6 +247,9 @@ skills:
       - Grep
       - WebFetch
       - WebSearch
+  csp-full:
+    phase: build
+    domain: patterns
   csp-fullstack-spec-generator:
     phase: plan
     domain: architecture
@@ -152,6 +261,20 @@ skills:
       - Glob
       - Grep
       - Bash
+    dependencies:
+      skills:
+        - csp-requirement-decomposition
+        - csp-tech-stack-advisor
+    related_skills:
+      - csp-requirement-decomposition
+      - csp-tech-stack-advisor
+      - csp-lifecycle-orchestrator
+      - csp-implementation-phase
+      - csp-spec-driven-development
+    anti_rationalizations:
+      The feature is simple, no need for detailed spec: "Simple features have hidden edge cases. Spec them."
+      I'll design the schema during implementation: "Schema changes cascade. Design first, implement second."
+      API contract can be informal: "Informal contracts break frontend-backend integration. Formalize."
   csp-graph-architecture:
     phase: define
     domain: architecture
@@ -162,6 +285,10 @@ skills:
       - Read
       - Glob
       - Grep
+    dependencies:
+      skills:
+        - csp-code-graph
+        - csp-graph-build
     related_skills:
       - csp-graph-impact
       - csp-graph-refactor
@@ -176,6 +303,9 @@ skills:
       - Read
       - Glob
       - Grep
+    dependencies:
+      skills:
+        - csp-code-graph
     related_skills:
       - csp-graph-impact
       - csp-graph-review
@@ -190,10 +320,17 @@ skills:
       - Read
       - Grep
       - Glob
+    dependencies:
+      skills:
+        - csp-code-graph
+        - csp-graph-build
     related_skills:
       - csp-graph-review
       - csp-graph-architecture
       - csp-code-review
+    anti_rationalizations:
+      It's just a one-line change: "One-line changes in hub functions can cascade to 50+ dependents. Check the graph."
+      I know nothing else uses this: "The graph knows better — it tracks all callers, including dynamic references and test coverage."
   csp-graph-refactor:
     phase: build
     domain: architecture
@@ -205,10 +342,17 @@ skills:
       - Grep
       - Glob
       - Edit
+    dependencies:
+      skills:
+        - csp-code-graph
+        - csp-graph-build
     related_skills:
       - csp-graph-impact
       - csp-graph-architecture
       - csp-code-review
+    anti_rationalizations:
+      I'll just find-and-replace: "Text replacement misses dynamic references, string-based imports, and cross-language calls. The graph tracks all edge types."
+      This code is obviously unused: "The graph checks callers, references, dynamic dispatch, and test usage. 'Obviously unused' often has hidden consumers."
   csp-graph-review:
     phase: review
     domain: quality
@@ -220,10 +364,20 @@ skills:
       - Grep
       - Glob
       - Agent
+    dependencies:
+      skills:
+        - csp-code-graph
+        - csp-graph-impact
     related_skills:
       - csp-code-review
       - csp-multi-review
       - csp-graph-build
+    anti_rationalizations:
+      I'll just read the whole file: "The graph assembles exactly the functions you need — callers, callees, tests — in 1/80th the tokens."
+      Risk scoring is overkill for this PR: "Structural risk (hub modification, security path, test gap) catches what visual review misses."
+  csp-hotfix:
+    phase: build
+    domain: patterns
   csp-implementation-phase:
     phase: build
     domain: patterns
@@ -235,6 +389,15 @@ skills:
       - Bash
       - Glob
       - Grep
+    anti_rationalizations:
+      I'll refactor later: "Later never comes. Implement it right the first time."
+      This pattern is overkill: "Patterns exist for a reason. Follow established conventions."
+  csp-indie-deploy-ops:
+    phase: ship
+    domain: patterns
+  csp-legacy-modernization:
+    phase: verify
+    domain: patterns
   csp-lifecycle-orchestrator:
     phase: define
     domain: architecture
@@ -246,6 +409,23 @@ skills:
       - Glob
       - Grep
       - Bash
+    dependencies:
+      skills:
+        - csp-requirement-decomposition
+        - csp-tech-stack-advisor
+        - csp-fullstack-spec-generator
+    related_skills:
+      - csp-full
+      - csp-implementation-phase
+      - csp-verify-phase
+      - csp-ship
+      - csp-plan-phase
+      - csp-tdd
+      - csp-code-review
+    anti_rationalizations:
+      Let's skip the spec phase and just code: "Skipping specs causes rework. The spec phase pays for itself."
+      We can do tech selection during implementation: "Mid-implementation tech changes are 10x more expensive."
+      This is too small for the full lifecycle: "Scale the lifecycle down, don't skip stages. Even a 1-feature module benefits from structured spec."
   csp-multi-review:
     phase: review
     domain: quality
@@ -262,6 +442,15 @@ skills:
       - csp-graph-impact
       - csp-graph-review
       - csp-code-review
+  csp-parallel-worktree:
+    phase: build
+    domain: patterns
+  csp-product-pulse:
+    phase: build
+    domain: patterns
+  csp-project-doc-architect:
+    phase: plan
+    domain: patterns
   csp-requirement-decomposition:
     phase: define
     domain: architecture
@@ -273,6 +462,25 @@ skills:
       - Glob
       - Grep
       - Bash
+    dependencies:
+      skills:
+        skills: []
+      agents:
+        agents: []
+    related_skills:
+      - csp-tech-stack-advisor
+      - csp-fullstack-spec-generator
+      - csp-lifecycle-orchestrator
+      - csp-brainstorming
+      - csp-interview-me
+      - csp-full
+    anti_rationalizations:
+      This requirement is simple enough, no need to decompose: "Even simple requirements have hidden complexity. Decompose first."
+      I'll figure out the features during implementation: "Undiscovered features become tech debt. Map them now."
+      The user already listed the features: "Validate completeness. Users describe what they want, not everything they need."
+  csp-session-knowledge-extractor:
+    phase: review
+    domain: patterns
   csp-shipping-and-launch:
     phase: ship
     domain: devops
@@ -284,6 +492,15 @@ skills:
       - Bash
       - Glob
       - Grep
+  csp-solo-oncall:
+    phase: build
+    domain: patterns
+  csp-strategy:
+    phase: define
+    domain: patterns
+  csp-tech-debt-paydown:
+    phase: build
+    domain: patterns
   csp-tech-stack-advisor:
     phase: plan
     domain: architecture
@@ -295,6 +512,21 @@ skills:
       - Glob
       - Grep
       - Bash
+    dependencies:
+      skills:
+        - csp-requirement-decomposition
+    related_skills:
+      - csp-requirement-decomposition
+      - csp-fullstack-spec-generator
+      - csp-lifecycle-orchestrator
+      - csp-full
+    anti_rationalizations:
+      I'll just use the same stack as last time: "Different requirements demand different tools. Evaluate fresh."
+      This technology is trendy so let's use it: "Trend != fit. Evaluate against actual requirements."
+      We don't need a message queue for this: "Async processing, event-driven architecture, and decoupling often need one. Check the requirements."
+  csp-tweak:
+    phase: build
+    domain: patterns
   csp-verify-phase:
     phase: verify
     domain: quality
@@ -306,6 +538,54 @@ skills:
       - Bash
       - Glob
       - Grep
+    anti_rationalizations:
+      Tests passed, we're done: "Passing tests don't guarantee correctness. Verify against requirements."
+      It works on my machine: "Local success ≠ production readiness. Check environment parity."
+  csp-workflow-schema:
+    phase: define
+    domain: patterns
+  csp-agent-introspection-debugging:
+    phase: build
+    domain: patterns
+  csp-agent-sort:
+    phase: plan
+    domain: patterns
+  csp-agentic-engineering:
+    phase: build
+    domain: patterns
+  csp-api-governance:
+    phase: build
+    domain: patterns
+  csp-article-writing:
+    phase: build
+    domain: patterns
+  csp-autonomous-loops:
+    phase: build
+    domain: patterns
+  csp-backend-patterns:
+    phase: build
+    domain: patterns
+  csp-backend-performance:
+    phase: build
+    domain: patterns
+  csp-brand-voice:
+    phase: build
+    domain: patterns
+  csp-browser-testing-with-devtools:
+    phase: verify
+    domain: patterns
+  csp-bun-runtime:
+    phase: verify
+    domain: patterns
+  csp-changelog-management:
+    phase: ship
+    domain: patterns
+  csp-cicd-pipelines:
+    phase: build
+    domain: patterns
+  csp-cloud-platform-patterns:
+    phase: build
+    domain: patterns
   csp-code-review:
     phase: review
     domain: quality
@@ -321,9 +601,220 @@ skills:
       - csp-graph-impact
       - csp-graph-review
       - csp-multi-review
+    anti_rationalizations:
+      This code looks fine: "Looks can deceive. Review for correctness, reuse, and efficiency."
+      It works, let's move on: "Working code can still be wasteful or hard to maintain."
+      The diff is small, skip impact analysis: "Small diffs in hub functions cascade widely. Check structural impact when graph is available."
+  csp-code-simplification:
+    phase: build
+    domain: patterns
+  csp-coding-standards:
+    phase: build
+    domain: patterns
+  csp-content-engine:
+    phase: build
+    domain: patterns
+  csp-content-hash-cache-pattern:
+    phase: build
+    domain: patterns
+  csp-cpp-coding-standards:
+    phase: build
+    domain: patterns
+  csp-cpp-testing:
+    phase: verify
+    domain: patterns
+  csp-cross-platform-strategy:
+    phase: build
+    domain: patterns
+  csp-crosspost:
+    phase: build
+    domain: patterns
+  csp-data-analysis:
+    phase: build
+    domain: database
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
+    related_skills:
+      related_skills: []
+  csp-data-pipeline-patterns:
+    phase: build
+    domain: patterns
+  csp-db-backup:
+    phase: build
+    domain: patterns
+  csp-db-migration:
+    phase: build
+    domain: patterns
+  csp-db-performance:
+    phase: build
+    domain: patterns
+  csp-deep-research:
+    phase: build
+    domain: patterns
+  csp-deployment:
+    phase: build
+    domain: patterns
+  csp-django-patterns:
+    phase: build
+    domain: patterns
+  csp-django-security:
+    phase: build
+    domain: patterns
+  csp-dmux-workflows:
+    phase: build
+    domain: patterns
+  csp-docker-patterns:
+    phase: build
+    domain: patterns
+  csp-docs-lookup:
+    phase: build
+    domain: patterns
+  csp-e2e-testing:
+    phase: build
+    domain: patterns
+  csp-email-systems:
+    phase: build
+    domain: patterns
+  csp-eval-harness:
+    phase: build
+    domain: patterns
+  csp-everything-claude-code:
+    phase: build
+    domain: patterns
+  csp-exa-search:
+    phase: build
+    domain: patterns
+  csp-fal-ai-media:
+    phase: build
+    domain: patterns
+  csp-fastapi-patterns:
+    phase: build
+    domain: patterns
+  csp-file-storage:
+    phase: build
+    domain: patterns
+  csp-frontend-design:
+    phase: plan
+    domain: patterns
+    scope: design
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
+    related_skills:
+      related_skills: []
+  csp-frontend-patterns:
+    phase: build
+    domain: patterns
+  csp-frontend-performance:
+    phase: build
+    domain: patterns
+  csp-frontend-slides:
+    phase: build
+    domain: patterns
+  csp-html-prototype:
+    phase: plan
+    domain: patterns
+    scope: design
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
+    related_skills:
+      related_skills: []
+  csp-i18n-frameworks:
+    phase: build
+    domain: patterns
+  csp-infrastructure-as-code:
+    phase: build
+    domain: patterns
+  csp-investor-materials:
+    phase: build
+    domain: patterns
+  csp-investor-outreach:
+    phase: build
+    domain: patterns
+  csp-java-coding-standards:
+    phase: build
+    domain: patterns
   csp-java-testing:
     phase: verify
     domain: testing
+  csp-jpa-patterns:
+    phase: build
+    domain: patterns
+  csp-kubernetes-patterns:
+    phase: build
+    domain: patterns
+  csp-llm-app-development:
+    phase: build
+    domain: patterns
+  csp-locale-management:
+    phase: build
+    domain: patterns
+  csp-market-research:
+    phase: build
+    domain: patterns
+  csp-mcp-server-patterns:
+    phase: build
+    domain: patterns
+  csp-mle-workflow:
+    phase: build
+    domain: patterns
+  csp-mobile-performance:
+    phase: build
+    domain: patterns
+  csp-mock-strategies:
+    phase: build
+    domain: patterns
+  csp-monitoring-alerting:
+    phase: build
+    domain: patterns
+  csp-monorepo-tooling:
+    phase: build
+    domain: patterns
+  csp-nestjs-patterns:
+    phase: build
+    domain: patterns
+  csp-nextjs-turbopack:
+    phase: build
+    domain: patterns
+  csp-oauth-integration:
+    phase: build
+    domain: patterns
+  csp-observability-and-instrumentation:
+    phase: build
+    domain: patterns
+  csp-package-publishing:
+    phase: ship
+    domain: patterns
+  csp-paper-reader:
+    phase: review
+    domain: other
+    scope: analysis
+    tools:
+      - Read
+      - Write
+      - Bash
+      - Glob
+      - Grep
+      - WebFetch
+      - WebSearch
+    related_skills:
+      related_skills: []
+  csp-payment-integration:
+    phase: build
+    domain: patterns
   csp-performance-optimizer:
     phase: build
     domain: quality
@@ -335,6 +826,26 @@ skills:
       - Bash
       - Glob
       - Grep
+    anti_rationalizations:
+      Premature optimization is the root of all evil: "But so is premature pessimism. Profile first."
+      This is fast enough: "Fast enough today may not be fast enough tomorrow. Think scale."
+  csp-platform-deploy:
+    phase: ship
+    domain: patterns
+  csp-postgres-optimizer:
+    phase: plan
+  csp-postgres-patterns:
+    phase: build
+    domain: patterns
+  csp-privacy-compliance:
+    phase: build
+    domain: patterns
+  csp-product-capability:
+    phase: plan
+    domain: patterns
+  csp-prompt-engineering:
+    phase: build
+    domain: patterns
   csp-python-reviewer:
     phase: review
     domain: language
@@ -343,6 +854,18 @@ skills:
       - Read
       - Grep
       - Glob
+  csp-pytorch-patterns:
+    phase: build
+    domain: patterns
+  csp-rag-architecture:
+    phase: build
+    domain: patterns
+  csp-react-native-patterns:
+    phase: build
+    domain: patterns
+  csp-react-patterns:
+    phase: build
+    domain: patterns
   csp-react-reviewer:
     phase: review
     domain: language
@@ -351,6 +874,35 @@ skills:
       - Read
       - Grep
       - Glob
+  csp-react-testing:
+    phase: build
+    domain: patterns
+  csp-refactoring-strategies:
+    phase: build
+    domain: patterns
+  csp-responsive-design:
+    phase: build
+    domain: patterns
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
+    related_skills:
+      related_skills: []
+  csp-ruff-fixer:
+    phase: review
+  csp-rust-patterns:
+    phase: build
+    domain: patterns
+  csp-rust-testing:
+    phase: build
+    domain: patterns
+  csp-search-first:
+    phase: build
+    domain: patterns
   csp-security-review:
     phase: review
     domain: security
@@ -359,12 +911,140 @@ skills:
       - Read
       - Grep
       - Glob
+  csp-seo-engineering:
+    phase: build
+    domain: patterns
+  csp-springboot-patterns:
+    phase: build
+    domain: patterns
+  csp-springboot-security:
+    phase: build
+    domain: patterns
+  csp-sql-reviewer:
+    phase: review
+  csp-strategic-compact:
+    phase: build
+    domain: patterns
+  csp-subscription-management:
+    phase: plan
+    domain: patterns
+  csp-swift-actor-persistence:
+    phase: build
+    domain: patterns
+  csp-swift-protocol-di-testing:
+    phase: build
+    domain: patterns
+  csp-tech-debt-assessment:
+    phase: build
+    domain: patterns
+  csp-tech-diagram:
+    phase: build
+    domain: architecture
+    role: specialist
+    scope: design
+    tools:
+      - Bash
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
+      - Agent
+    related_skills:
+      - csp-frontend-slides
+      - csp-visual-verdict
+      - csp-graph-architecture
+    anti_rationalizations:
+      - "Never skip geometry validation — syntactic SVG validity does not guarantee visual correctness"
+      - "Never hardcode node positions without checking for collisions"
+      - "Never claim visual review passed without actually reading the PNG"
   csp-typescript-patterns:
     phase: build
     domain: language
   csp-typescript-testing:
     phase: verify
     domain: testing
+  csp-user-analytics:
+    phase: build
+    domain: patterns
+  csp-video-editing:
+    phase: build
+    domain: patterns
+  csp-visual-regression:
+    phase: build
+    domain: patterns
+  csp-vllm-serving:
+    phase: build
+    domain: patterns
+  csp-vps-deploy:
+    phase: ship
+    domain: patterns
+  csp-web-artifacts:
+    phase: build
+    domain: patterns
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
+    related_skills:
+      related_skills: []
+  csp-webhook-architecture:
+    phase: build
+    domain: patterns
+  csp-x-api:
+    phase: build
+    domain: patterns
+  golang-patterns:
+    phase: build
+    domain: patterns
+  golang-testing:
+    phase: verify
+    domain: patterns
+  kotlin-patterns:
+    phase: build
+    domain: patterns
+  kotlin-testing:
+    phase: build
+    domain: patterns
+  python-patterns:
+    phase: build
+    domain: patterns
+  python-testing:
+    phase: verify
+    domain: patterns
+  webapp-testing:
+    phase: verify
+  csp-ask:
+    phase: build
+    domain: architecture
+  csp-autopilot:
+    phase: build
+    domain: patterns
+  csp-autoresearch:
+    phase: build
+    domain: patterns
+  csp-budget-enforcer:
+    phase: build
+    domain: architecture
+  csp-cancel:
+    phase: build
+    domain: patterns
+  csp-ccg:
+    phase: build
+    domain: architecture
+  csp-cli-teams:
+    phase: build
+    domain: patterns
+  csp-complexity-classifier:
+    phase: build
+    domain: architecture
+  csp-configure-notifications:
+    phase: build
+    domain: patterns
   csp-debug:
     phase: build
     domain: quality
@@ -376,8 +1056,35 @@ skills:
       - Bash
       - Glob
       - Grep
+  csp-deep-dive:
+    phase: build
+    domain: architecture
+  csp-deep-interview:
+    phase: build
+  csp-deepinit:
+    phase: build
+    domain: patterns
+  csp-doctor:
+    phase: build
+  csp-external-context:
+    phase: build
+    domain: patterns
+  csp-file-organizer:
+    phase: build
+    domain: devops
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
+    related_skills:
+      related_skills: []
   csp-hud:
-    scope: "~/.claude/**  # DOCUMENTATION ONLY - Allowed write scope"
+    phase: build
+    domain: patterns
   csp-learning-loop:
     phase: ship
     domain: quality
@@ -389,6 +1096,15 @@ skills:
       - Bash
       - Glob
       - Grep
+  csp-local-build-reminder:
+    phase: build
+    domain: architecture
+  csp-mcp-setup:
+    phase: build
+    domain: patterns
+  csp-model-selector:
+    phase: build
+    domain: architecture
   csp-plan:
     phase: plan
     domain: architecture
@@ -401,3 +1117,55 @@ skills:
       - Grep
       - WebFetch
       - WebSearch
+  csp-project-session-manager:
+    phase: build
+    domain: patterns
+  csp-ralph:
+    phase: build
+    domain: patterns
+  csp-reference:
+    phase: build
+    domain: architecture
+  csp-release:
+    phase: ship
+  csp-remember:
+    phase: review
+    domain: architecture
+  csp-scientist:
+    phase: build
+    domain: patterns
+  csp-self-improve:
+    phase: build
+    domain: patterns
+  csp-setup:
+    phase: build
+    domain: patterns
+  csp-skill:
+    phase: build
+    domain: patterns
+  csp-skill-creator:
+    phase: build
+    domain: architecture
+  csp-skillify:
+    phase: build
+    domain: architecture
+  csp-team:
+    phase: build
+    domain: patterns
+  csp-trace:
+    phase: build
+    domain: patterns
+  csp-ultragoal:
+    phase: plan
+    domain: architecture
+  csp-ultraqa:
+    phase: verify
+  csp-ultrawork:
+    phase: build
+    domain: patterns
+  csp-visual-verdict:
+    phase: verify
+    domain: patterns
+  csp-wiki:
+    phase: build
+    domain: architecture

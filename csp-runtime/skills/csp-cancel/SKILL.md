@@ -5,6 +5,8 @@ description: Cancel any active CSP mode (autopilot, ralph, ultrawork, ultraqa, s
 argument-hint: "[--force|--all]"
 layer: 2
 category: workflow
+domain: patterns
+phase: build
 ---
 
 | Mode | Message |

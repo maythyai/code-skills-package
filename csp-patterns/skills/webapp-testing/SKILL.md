@@ -7,6 +7,7 @@ metadata:
   origin: CSP
   source: awesome-copilot/skills/csp-webapp-testing
   globs: ["**/*.test.{js,ts,jsx,tsx}", "**/*.spec.{js,ts,jsx,tsx}", "**/cypress/**", "**/playwright/**"]
+phase: verify
 ---
 
 # Web Application Testing

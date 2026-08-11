@@ -6,6 +6,8 @@ metadata:
   origin: CSP
 layer: 4
 category: patterns
+phase: build
+domain: patterns
 ---
 
 # Coding Standards & Best Practices

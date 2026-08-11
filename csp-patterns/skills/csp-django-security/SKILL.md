@@ -4,6 +4,8 @@ description: Django security best practices, authentication, authorization, CSRF
 origin: CSP
 layer: 4
 category: patterns
+domain: patterns
+phase: build
 ---
 
 | Setting | Recommendation |

@@ -8,6 +8,7 @@ metadata:
   origin: CSP
   source: awesome-copilot/skills/postgresql-*
   globs: ["**/*.sql", "**/migrations/**"]
+phase: plan
 ---
 
 # PostgreSQL Performance Optimizer

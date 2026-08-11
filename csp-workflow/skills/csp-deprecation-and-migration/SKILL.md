@@ -4,6 +4,8 @@ description: Manages deprecation and migration. Use when removing old systems, A
 layer: 2
 origin: agent-skills
 category: workflow
+domain: patterns
+phase: build
 ---
 
 | Type | When to Use | Migration Approach |

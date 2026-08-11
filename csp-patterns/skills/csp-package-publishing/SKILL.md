@@ -8,6 +8,8 @@ description: >
 version: 0.1.0
 layer: 4
 category: patterns
+phase: ship
+domain: patterns
 ---
 
 # Package Publishing Workflows

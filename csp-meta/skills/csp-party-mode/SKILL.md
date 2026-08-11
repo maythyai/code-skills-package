@@ -3,6 +3,8 @@ name: csp-party-mode
 description: Multi-agent collaboration for complex problem-solving with specialized AI agents
 layer: 1
 category: meta
+domain: architecture
+phase: define
 ---
 
 > **⚠️ Status: DESIGN ONLY** — This skill describes a planned multi-agent discussion feature.

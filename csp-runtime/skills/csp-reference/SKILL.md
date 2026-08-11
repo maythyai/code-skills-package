@@ -4,6 +4,8 @@ description: CSP agent catalog, available tools, team pipeline routing, commit p
 user-invocable: false
 layer: 5
 category: runtime
+domain: architecture
+phase: build
 ---
 
 # CSP Reference

@@ -4,6 +4,8 @@ description: Grounds every implementation decision in official documentation. Us
 layer: 1
 origin: agent-skills
 category: meta
+domain: architecture
+phase: define
 ---
 
 | Tier | Source Type | Examples |

@@ -4,6 +4,8 @@ description: Suggests manual context compaction at logical intervals to preserve
 origin: CSP
 layer: 4
 category: patterns
+domain: patterns
+phase: build
 ---
 
 | Transition | Compact? | Why |

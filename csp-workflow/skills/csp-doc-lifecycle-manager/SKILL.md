@@ -4,6 +4,8 @@ description: "Manage project documentation lifecycle: categorize, archive, index
 layer: 2
 category: workflow
 origin: original
+phase: plan
+domain: patterns
 ---
 
 # Documentation Lifecycle Manager

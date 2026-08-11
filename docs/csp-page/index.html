@@ -351,15 +351,15 @@ a { color: var(--layer-1); text-decoration: none; }
 // ═══════════════════════════════════════════════════
 const CSP_DATA = {
   "stats": {
-    "total": 538,
+    "total": 594,
     "by_layer": {
       "Meta": {
-        "count": 22,
+        "count": 25,
         "layer": "L1",
         "color": "#3b82f6"
       },
       "Patterns": {
-        "count": 313,
+        "count": 347,
         "layer": "L3",
         "color": "#a855f7"
       },
@@ -369,24 +369,24 @@ const CSP_DATA = {
         "color": "#ef4444"
       },
       "Runtime": {
-        "count": 55,
+        "count": 56,
         "layer": "L4",
         "color": "#f97316"
       },
       "Workflow": {
-        "count": 147,
+        "count": 165,
         "layer": "L2",
         "color": "#22c55e"
       }
     },
     "by_category": {
-      "meta": 22,
-      "patterns": 313,
+      "meta": 25,
+      "patterns": 347,
       "router": 1,
-      "runtime": 55,
-      "workflow": 147
+      "runtime": 56,
+      "workflow": 165
     },
-    "reviewers": 65
+    "reviewers": 66
   },
   "skills": [
     {
@@ -422,6 +422,25 @@ const CSP_DATA = {
           "发散",
           "脑暴"
         ]
+      }
+    },
+    {
+      "name": "csp-code-graph",
+      "description": "Code knowledge graph methodology and lifecycle orchestration. Use when starting a code review session, exploring codebase structure, or deciding which graph-powered analysis to run. Routes to the correct lifecycle stage: build, impact, review, architecture, or refactor.",
+      "category": "meta",
+      "layer": "L1",
+      "layer_name": "Meta",
+      "layer_color": "#3b82f6",
+      "triggers": {
+        "en": [
+          "csp-code-graph",
+          "code",
+          "code graph",
+          "code-graph",
+          "fix code graph",
+          "review code graph"
+        ],
+        "zh": []
       }
     },
     {
@@ -512,6 +531,21 @@ const CSP_DATA = {
       }
     },
     {
+      "name": "csp-mvp-scoping",
+      "description": "Cut a product idea down to the smallest shippable version that validates the core hypothesis. Use when facing a long feature wishlist, when planning a new product or feature, or when scope needs to be reduced to ship within a deadline.",
+      "category": "meta",
+      "layer": "L1",
+      "layer_name": "Meta",
+      "layer_color": "#3b82f6",
+      "triggers": {
+        "en": [
+          "csp-mvp-scoping",
+          "MVP"
+        ],
+        "zh": []
+      }
+    },
+    {
       "name": "csp-party-mode",
       "description": "Multi-agent collaboration for complex problem-solving with specialized AI agents",
       "category": "meta",
@@ -554,6 +588,21 @@ const CSP_DATA = {
         "en": [
           "csp-requesting-code-review",
           "review"
+        ],
+        "zh": []
+      }
+    },
+    {
+      "name": "csp-scope-guard",
+      "description": "Detect and resist scope creep during development. Use when a feature request triggers unplanned work, when \"while I'm here\" changes pile up, or when the current sprint/task is at risk of expanding beyond its original boundary.",
+      "category": "meta",
+      "layer": "L1",
+      "layer_name": "Meta",
+      "layer_color": "#3b82f6",
+      "triggers": {
+        "en": [
+          "csp-scope-guard",
+          "scope creep"
         ],
         "zh": []
       }
@@ -741,7 +790,12 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-a11y-architect"
+          "csp-a11y-architect",
+          "a11y",
+          "a11y architect",
+          "a11y-architect",
+          "fix a11y architect",
+          "review a11y architect"
         ],
         "zh": []
       }
@@ -755,9 +809,15 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-adversarial-reviewer"
+          "csp-adversarial-reviewer",
+          "adversarial review",
+          "adversarial code review",
+          "adversarial-reviewer",
+          "review adversarial code"
         ],
-        "zh": []
+        "zh": [
+          "adversarial 审查"
+        ]
       }
     },
     {
@@ -783,7 +843,9 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-analyst"
+          "csp-analyst",
+          "fix analyst",
+          "review analyst"
         ],
         "zh": []
       }
@@ -797,9 +859,15 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-api-contract-reviewer"
+          "csp-api-contract-reviewer",
+          "api contract code review",
+          "api contract review",
+          "api-contract-reviewer",
+          "review api contract code"
         ],
-        "zh": []
+        "zh": [
+          "api contract 审查"
+        ]
       }
     },
     {
@@ -825,7 +893,9 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-architect"
+          "csp-architect",
+          "fix architect",
+          "review architect"
         ],
         "zh": []
       }
@@ -839,9 +909,16 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-build-error-resolver"
+          "csp-build-error-resolver",
+          "build",
+          "build error resolver",
+          "build-error-resolver",
+          "fix build error resolver",
+          "review build error resolver"
         ],
-        "zh": []
+        "zh": [
+          "build error resolver 构建"
+        ]
       }
     },
     {
@@ -853,7 +930,12 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-chief-of-staff"
+          "csp-chief-of-staff",
+          "chief",
+          "chief of staff",
+          "chief-of-staff",
+          "fix chief of staff",
+          "review chief of staff"
         ],
         "zh": []
       }
@@ -867,7 +949,12 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-code-architect"
+          "csp-code-architect",
+          "code",
+          "code architect",
+          "code-architect",
+          "fix code architect",
+          "review code architect"
         ],
         "zh": []
       }
@@ -881,7 +968,12 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-code-explorer"
+          "csp-code-explorer",
+          "code",
+          "code explorer",
+          "code-explorer",
+          "fix code explorer",
+          "review code explorer"
         ],
         "zh": []
       }
@@ -895,9 +987,15 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-code-reviewer"
+          "csp-code-reviewer",
+          "code code review",
+          "code review",
+          "code-reviewer",
+          "review code code"
         ],
-        "zh": []
+        "zh": [
+          "code 审查"
+        ]
       }
     },
     {
@@ -909,9 +1007,15 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-coherence-reviewer"
+          "csp-coherence-reviewer",
+          "coherence code review",
+          "coherence review",
+          "coherence-reviewer",
+          "review coherence code"
         ],
-        "zh": []
+        "zh": [
+          "coherence 审查"
+        ]
       }
     },
     {
@@ -923,7 +1027,12 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-comment-analyzer"
+          "csp-comment-analyzer",
+          "comment",
+          "comment analyzer",
+          "comment-analyzer",
+          "fix comment analyzer",
+          "review comment analyzer"
         ],
         "zh": []
       }
@@ -937,7 +1046,12 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-conversation-analyzer"
+          "csp-conversation-analyzer",
+          "conversation",
+          "conversation analyzer",
+          "conversation-analyzer",
+          "fix conversation analyzer",
+          "review conversation analyzer"
         ],
         "zh": []
       }
@@ -993,9 +1107,14 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-dart-build-resolver"
+          "csp-dart-build-resolver",
+          "dart build error",
+          "dart-build-resolver",
+          "fix dart build"
         ],
-        "zh": []
+        "zh": [
+          "dart 构建错误"
+        ]
       }
     },
     {
@@ -1021,9 +1140,15 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-data-migration-reviewer"
+          "csp-data-migration-reviewer",
+          "data migration code review",
+          "data migration review",
+          "data-migration-reviewer",
+          "review data migration code"
         ],
-        "zh": []
+        "zh": [
+          "data migration 审查"
+        ]
       }
     },
     {
@@ -1035,9 +1160,15 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-data-pipeline-reviewer"
+          "csp-data-pipeline-reviewer",
+          "data pipeline code review",
+          "data pipeline review",
+          "data-pipeline-reviewer",
+          "review data pipeline code"
         ],
-        "zh": []
+        "zh": [
+          "data pipeline 审查"
+        ]
       }
     },
     {
@@ -1049,9 +1180,15 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-database-reviewer"
+          "csp-database-reviewer",
+          "database code review",
+          "database review",
+          "database-reviewer",
+          "review database code"
         ],
-        "zh": []
+        "zh": [
+          "database 审查"
+        ]
       }
     },
     {
@@ -1063,7 +1200,11 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-deployment-verification-agent"
+          "csp-deployment-verification-agent",
+          "deployment verification agent",
+          "deployment-verification-agent",
+          "fix deployment verification agent",
+          "review deployment verification agent"
         ],
         "zh": []
       }
@@ -1077,7 +1218,10 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-developer"
+          "csp-developer",
+          "developer",
+          "fix developer",
+          "review developer"
         ],
         "zh": []
       }
@@ -1119,7 +1263,11 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-doc-updater"
+          "csp-doc-updater",
+          "doc updater",
+          "doc-updater",
+          "fix doc updater",
+          "review doc updater"
         ],
         "zh": []
       }
@@ -1147,7 +1295,12 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-e2e-runner"
+          "csp-e2e-runner",
+          "e2e",
+          "e2e runner",
+          "e2e-runner",
+          "fix e2e runner",
+          "review e2e runner"
         ],
         "zh": []
       }
@@ -1175,9 +1328,15 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-feasibility-reviewer"
+          "csp-feasibility-reviewer",
+          "feasibility code review",
+          "feasibility review",
+          "feasibility-reviewer",
+          "review feasibility code"
         ],
-        "zh": []
+        "zh": [
+          "feasibility 审查"
+        ]
       }
     },
     {
@@ -1189,9 +1348,15 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-flutter-reviewer"
+          "csp-flutter-reviewer",
+          "flutter code review",
+          "flutter review",
+          "flutter-reviewer",
+          "review flutter code"
         ],
-        "zh": []
+        "zh": [
+          "flutter 审查"
+        ]
       }
     },
     {
@@ -1203,9 +1368,15 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-fsharp-reviewer"
+          "csp-fsharp-reviewer",
+          "fsharp code review",
+          "fsharp review",
+          "fsharp-reviewer",
+          "review fsharp code"
         ],
-        "zh": []
+        "zh": [
+          "fsharp 审查"
+        ]
       }
     },
     {
@@ -1217,7 +1388,12 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-gan-evaluator"
+          "csp-gan-evaluator",
+          "fix gan evaluator",
+          "gan",
+          "gan evaluator",
+          "gan-evaluator",
+          "review gan evaluator"
         ],
         "zh": []
       }
@@ -1231,7 +1407,12 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-gan-generator"
+          "csp-gan-generator",
+          "fix gan generator",
+          "gan",
+          "gan generator",
+          "gan-generator",
+          "review gan generator"
         ],
         "zh": []
       }
@@ -1245,7 +1426,12 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-gan-planner"
+          "csp-gan-planner",
+          "fix gan planner",
+          "gan",
+          "gan planner",
+          "gan-planner",
+          "review gan planner"
         ],
         "zh": []
       }
@@ -1287,7 +1473,12 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-harmonyos-app-resolver"
+          "csp-harmonyos-app-resolver",
+          "fix harmonyos app resolver",
+          "harmonyos",
+          "harmonyos app resolver",
+          "harmonyos-app-resolver",
+          "review harmonyos app resolver"
         ],
         "zh": []
       }
@@ -1301,7 +1492,12 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-harness-optimizer"
+          "csp-harness-optimizer",
+          "fix harness optimizer",
+          "harness",
+          "harness optimizer",
+          "harness-optimizer",
+          "review harness optimizer"
         ],
         "zh": []
       }
@@ -1315,9 +1511,15 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-healthcare-reviewer"
+          "csp-healthcare-reviewer",
+          "healthcare code review",
+          "healthcare review",
+          "healthcare-reviewer",
+          "review healthcare code"
         ],
-        "zh": []
+        "zh": [
+          "healthcare 审查"
+        ]
       }
     },
     {
@@ -1329,7 +1531,12 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-homelab-architect"
+          "csp-homelab-architect",
+          "fix homelab architect",
+          "homelab",
+          "homelab architect",
+          "homelab-architect",
+          "review homelab architect"
         ],
         "zh": []
       }
@@ -1343,7 +1550,8 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-incident-commander"
+          "csp-incident-commander",
+          "incident"
         ],
         "zh": []
       }
@@ -1413,9 +1621,15 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-llm-app-reviewer"
+          "csp-llm-app-reviewer",
+          "llm app code review",
+          "llm app review",
+          "llm-app-reviewer",
+          "review llm app code"
         ],
-        "zh": []
+        "zh": [
+          "llm app 审查"
+        ]
       }
     },
     {
@@ -1427,7 +1641,12 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-loop-operator"
+          "csp-loop-operator",
+          "fix loop operator",
+          "loop",
+          "loop operator",
+          "loop-operator",
+          "review loop operator"
         ],
         "zh": []
       }
@@ -1441,7 +1660,12 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-marketing-agent"
+          "csp-marketing-agent",
+          "fix marketing agent",
+          "marketing",
+          "marketing agent",
+          "marketing-agent",
+          "review marketing agent"
         ],
         "zh": []
       }
@@ -1483,9 +1707,15 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-mle-reviewer"
+          "csp-mle-reviewer",
+          "mle code review",
+          "mle review",
+          "mle-reviewer",
+          "review mle code"
         ],
-        "zh": []
+        "zh": [
+          "mle 审查"
+        ]
       }
     },
     {
@@ -1497,9 +1727,15 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-mobile-performance-auditor"
+          "csp-mobile-performance-auditor",
+          "fix mobile performance auditor",
+          "mobile performance auditor",
+          "mobile-performance-auditor",
+          "review mobile performance auditor"
         ],
-        "zh": []
+        "zh": [
+          "mobile performance auditor 移动端"
+        ]
       }
     },
     {
@@ -1539,9 +1775,16 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-network-architect"
+          "csp-network-architect",
+          "fix network architect",
+          "network",
+          "network architect",
+          "network-architect",
+          "review network architect"
         ],
-        "zh": []
+        "zh": [
+          "network architect 网络"
+        ]
       }
     },
     {
@@ -1553,9 +1796,15 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-network-config-reviewer"
+          "csp-network-config-reviewer",
+          "network config code review",
+          "network config review",
+          "network-config-reviewer",
+          "review network config code"
         ],
-        "zh": []
+        "zh": [
+          "network config 审查"
+        ]
       }
     },
     {
@@ -1567,9 +1816,16 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-network-troubleshooter"
+          "csp-network-troubleshooter",
+          "fix network troubleshooter",
+          "network",
+          "network troubleshooter",
+          "network-troubleshooter",
+          "review network troubleshooter"
         ],
-        "zh": []
+        "zh": [
+          "network troubleshooter 网络"
+        ]
       }
     },
     {
@@ -1581,7 +1837,12 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-opensource-forker"
+          "csp-opensource-forker",
+          "fix opensource forker",
+          "opensource",
+          "opensource forker",
+          "opensource-forker",
+          "review opensource forker"
         ],
         "zh": []
       }
@@ -1595,7 +1856,12 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-opensource-packager"
+          "csp-opensource-packager",
+          "fix opensource packager",
+          "opensource",
+          "opensource packager",
+          "opensource-packager",
+          "review opensource packager"
         ],
         "zh": []
       }
@@ -1609,7 +1875,12 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-opensource-sanitizer"
+          "csp-opensource-sanitizer",
+          "fix opensource sanitizer",
+          "opensource",
+          "opensource sanitizer",
+          "opensource-sanitizer",
+          "review opensource sanitizer"
         ],
         "zh": []
       }
@@ -1623,9 +1894,15 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-php-reviewer"
+          "csp-php-reviewer",
+          "php code review",
+          "php review",
+          "php-reviewer",
+          "review php code"
         ],
-        "zh": []
+        "zh": [
+          "php 审查"
+        ]
       }
     },
     {
@@ -1637,7 +1914,10 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-planner"
+          "csp-planner",
+          "fix planner",
+          "planner",
+          "review planner"
         ],
         "zh": []
       }
@@ -1651,7 +1931,10 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-pm"
+          "csp-pm",
+          "fix pm",
+          "pm",
+          "review pm"
         ],
         "zh": []
       }
@@ -1665,9 +1948,16 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-pr-test-analyzer"
+          "csp-pr-test-analyzer",
+          "test",
+          "fix pr test analyzer",
+          "pr test analyzer",
+          "pr-test-analyzer",
+          "review pr test analyzer"
         ],
-        "zh": []
+        "zh": [
+          "pr test analyzer 测试"
+        ]
       }
     },
     {
@@ -1679,9 +1969,15 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-previous-comments-reviewer"
+          "csp-previous-comments-reviewer",
+          "previous comments code review",
+          "previous comments review",
+          "previous-comments-reviewer",
+          "review previous comments code"
         ],
-        "zh": []
+        "zh": [
+          "previous comments 审查"
+        ]
       }
     },
     {
@@ -1693,9 +1989,15 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-product-lens-reviewer"
+          "csp-product-lens-reviewer",
+          "product lens code review",
+          "product lens review",
+          "product-lens-reviewer",
+          "review product lens code"
         ],
-        "zh": []
+        "zh": [
+          "product lens 审查"
+        ]
       }
     },
     {
@@ -1735,9 +2037,14 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-pytorch-build-resolver"
+          "csp-pytorch-build-resolver",
+          "fix pytorch build",
+          "pytorch build error",
+          "pytorch-build-resolver"
         ],
-        "zh": []
+        "zh": [
+          "pytorch 构建错误"
+        ]
       }
     },
     {
@@ -1749,7 +2056,12 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-rag-architect"
+          "csp-rag-architect",
+          "fix rag architect",
+          "rag",
+          "rag architect",
+          "rag-architect",
+          "review rag architect"
         ],
         "zh": []
       }
@@ -1777,9 +2089,14 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-react-native-build-resolver"
+          "csp-react-native-build-resolver",
+          "fix react native build",
+          "react native build error",
+          "react-native-build-resolver"
         ],
-        "zh": []
+        "zh": [
+          "react native 构建错误"
+        ]
       }
     },
     {
@@ -1791,9 +2108,15 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-react-native-reviewer"
+          "csp-react-native-reviewer",
+          "react native code review",
+          "react native review",
+          "react-native-reviewer",
+          "review react native code"
         ],
-        "zh": []
+        "zh": [
+          "react native 审查"
+        ]
       }
     },
     {
@@ -1805,9 +2128,15 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-reliability-reviewer"
+          "csp-reliability-reviewer",
+          "reliability code review",
+          "reliability review",
+          "reliability-reviewer",
+          "review reliability code"
         ],
-        "zh": []
+        "zh": [
+          "reliability 审查"
+        ]
       }
     },
     {
@@ -1847,9 +2176,15 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-scope-guardian-reviewer"
+          "csp-scope-guardian-reviewer",
+          "review scope guardian code",
+          "scope guardian code review",
+          "scope guardian review",
+          "scope-guardian-reviewer"
         ],
-        "zh": []
+        "zh": [
+          "scope guardian 审查"
+        ]
       }
     },
     {
@@ -1861,9 +2196,15 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-security-reviewer"
+          "csp-security-reviewer",
+          "review security code",
+          "security code review",
+          "security review",
+          "security-reviewer"
         ],
-        "zh": []
+        "zh": [
+          "security 审查"
+        ]
       }
     },
     {
@@ -1875,7 +2216,12 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-seo-specialist"
+          "csp-seo-specialist",
+          "fix seo specialist",
+          "review seo specialist",
+          "seo",
+          "seo specialist",
+          "seo-specialist"
         ],
         "zh": []
       }
@@ -1889,7 +2235,12 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-silent-failure-hunter"
+          "csp-silent-failure-hunter",
+          "fix silent failure hunter",
+          "review silent failure hunter",
+          "silent",
+          "silent failure hunter",
+          "silent-failure-hunter"
         ],
         "zh": []
       }
@@ -1945,7 +2296,12 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-tech-writer"
+          "csp-tech-writer",
+          "fix tech writer",
+          "review tech writer",
+          "tech",
+          "tech writer",
+          "tech-writer"
         ],
         "zh": []
       }
@@ -1959,7 +2315,12 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-type-design-analyzer"
+          "csp-type-design-analyzer",
+          "fix type design analyzer",
+          "review type design analyzer",
+          "type",
+          "type design analyzer",
+          "type-design-analyzer"
         ],
         "zh": []
       }
@@ -1987,7 +2348,12 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-ux-designer"
+          "csp-ux-designer",
+          "designer",
+          "fix ux designer",
+          "review ux designer",
+          "ux designer",
+          "ux-designer"
         ],
         "zh": []
       }
@@ -2029,7 +2395,10 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-aside"
+          "csp-aside",
+          "aside",
+          "fix aside",
+          "review aside"
         ],
         "zh": []
       }
@@ -2043,7 +2412,12 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-auto-update"
+          "csp-auto-update",
+          "auto",
+          "auto update",
+          "auto-update",
+          "fix auto update",
+          "review auto update"
         ],
         "zh": []
       }
@@ -2057,9 +2431,16 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-build-fix"
+          "csp-build-fix",
+          "build",
+          "build fix",
+          "build-fix",
+          "fix build fix",
+          "review build fix"
         ],
-        "zh": []
+        "zh": [
+          "build fix 构建"
+        ]
       }
     },
     {
@@ -2071,7 +2452,10 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-checkpoint"
+          "csp-checkpoint",
+          "checkpoint",
+          "fix checkpoint",
+          "review checkpoint"
         ],
         "zh": []
       }
@@ -2085,7 +2469,12 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-cost-report"
+          "csp-cost-report",
+          "cost",
+          "cost report",
+          "cost-report",
+          "fix cost report",
+          "review cost report"
         ],
         "zh": []
       }
@@ -2099,9 +2488,14 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-cpp-build"
+          "csp-cpp-build",
+          "cpp build error",
+          "cpp-build",
+          "fix cpp build"
         ],
-        "zh": []
+        "zh": [
+          "cpp 构建错误"
+        ]
       }
     },
     {
@@ -2113,9 +2507,15 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-cpp-review"
+          "csp-cpp-review",
+          "cpp code review",
+          "cpp review",
+          "cpp-review",
+          "review cpp code"
         ],
-        "zh": []
+        "zh": [
+          "cpp 审查"
+        ]
       }
     },
     {
@@ -2127,9 +2527,13 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-cpp-test"
+          "csp-cpp-test",
+          "cpp test",
+          "cpp-test"
         ],
-        "zh": []
+        "zh": [
+          "cpp 测试"
+        ]
       }
     },
     {
@@ -2141,7 +2545,12 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-ecc-guide"
+          "csp-ecc-guide",
+          "ecc",
+          "ecc guide",
+          "ecc-guide",
+          "fix ecc guide",
+          "review ecc guide"
         ],
         "zh": []
       }
@@ -2155,7 +2564,10 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-evolve"
+          "csp-evolve",
+          "evolve",
+          "fix evolve",
+          "review evolve"
         ],
         "zh": []
       }
@@ -2169,9 +2581,15 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-fastapi-review"
+          "csp-fastapi-review",
+          "fastapi code review",
+          "fastapi review",
+          "fastapi-review",
+          "review fastapi code"
         ],
-        "zh": []
+        "zh": [
+          "fastapi 审查"
+        ]
       }
     },
     {
@@ -2183,7 +2601,12 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-feature-dev"
+          "csp-feature-dev",
+          "feature",
+          "feature dev",
+          "feature-dev",
+          "fix feature dev",
+          "review feature dev"
         ],
         "zh": []
       }
@@ -2197,9 +2620,14 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-flutter-build"
+          "csp-flutter-build",
+          "fix flutter build",
+          "flutter build error",
+          "flutter-build"
         ],
-        "zh": []
+        "zh": [
+          "flutter 构建错误"
+        ]
       }
     },
     {
@@ -2211,9 +2639,15 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-flutter-review"
+          "csp-flutter-review",
+          "flutter code review",
+          "flutter review",
+          "flutter-review",
+          "review flutter code"
         ],
-        "zh": []
+        "zh": [
+          "flutter 审查"
+        ]
       }
     },
     {
@@ -2225,9 +2659,14 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-flutter-test"
+          "csp-flutter-test",
+          "flutter test",
+          "flutter testing",
+          "flutter-test"
         ],
-        "zh": []
+        "zh": [
+          "flutter 测试"
+        ]
       }
     },
     {
@@ -2239,9 +2678,14 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-gan-build"
+          "csp-gan-build",
+          "fix gan build",
+          "gan build error",
+          "gan-build"
         ],
-        "zh": []
+        "zh": [
+          "gan 构建错误"
+        ]
       }
     },
     {
@@ -2253,7 +2697,12 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-gan-design"
+          "csp-gan-design",
+          "fix gan design",
+          "gan",
+          "gan design",
+          "gan-design",
+          "review gan design"
         ],
         "zh": []
       }
@@ -2267,9 +2716,14 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-go-build"
+          "csp-go-build",
+          "fix go build",
+          "go build error",
+          "go-build"
         ],
-        "zh": []
+        "zh": [
+          "go 构建错误"
+        ]
       }
     },
     {
@@ -2281,9 +2735,15 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-go-review"
+          "csp-go-review",
+          "go code review",
+          "go review",
+          "go-review",
+          "review go code"
         ],
-        "zh": []
+        "zh": [
+          "go 审查"
+        ]
       }
     },
     {
@@ -2295,9 +2755,14 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-go-test"
+          "csp-go-test",
+          "go test",
+          "go testing",
+          "go-test"
         ],
-        "zh": []
+        "zh": [
+          "go 测试"
+        ]
       }
     },
     {
@@ -2309,9 +2774,14 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-gradle-build"
+          "csp-gradle-build",
+          "fix gradle build",
+          "gradle build error",
+          "gradle-build"
         ],
-        "zh": []
+        "zh": [
+          "gradle 构建错误"
+        ]
       }
     },
     {
@@ -2323,7 +2793,12 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-harness-audit"
+          "csp-harness-audit",
+          "fix harness audit",
+          "harness",
+          "harness audit",
+          "harness-audit",
+          "review harness audit"
         ],
         "zh": []
       }
@@ -2337,7 +2812,12 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-hookify-configure"
+          "csp-hookify-configure",
+          "fix hookify configure",
+          "hookify",
+          "hookify configure",
+          "hookify-configure",
+          "review hookify configure"
         ],
         "zh": []
       }
@@ -2351,7 +2831,12 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-hookify-help"
+          "csp-hookify-help",
+          "fix hookify help",
+          "hookify",
+          "hookify help",
+          "hookify-help",
+          "review hookify help"
         ],
         "zh": []
       }
@@ -2365,7 +2850,12 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-hookify-list"
+          "csp-hookify-list",
+          "fix hookify list",
+          "hookify",
+          "hookify list",
+          "hookify-list",
+          "review hookify list"
         ],
         "zh": []
       }
@@ -2379,7 +2869,10 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-hookify"
+          "csp-hookify",
+          "fix hookify",
+          "hookify",
+          "review hookify"
         ],
         "zh": []
       }
@@ -2393,7 +2886,12 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-instinct-export"
+          "csp-instinct-export",
+          "fix instinct export",
+          "instinct",
+          "instinct export",
+          "instinct-export",
+          "review instinct export"
         ],
         "zh": []
       }
@@ -2407,7 +2905,12 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-instinct-import"
+          "csp-instinct-import",
+          "fix instinct import",
+          "instinct",
+          "instinct import",
+          "instinct-import",
+          "review instinct import"
         ],
         "zh": []
       }
@@ -2421,7 +2924,12 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-instinct-status"
+          "csp-instinct-status",
+          "fix instinct status",
+          "instinct",
+          "instinct status",
+          "instinct-status",
+          "review instinct status"
         ],
         "zh": []
       }
@@ -2435,7 +2943,10 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-jira"
+          "csp-jira",
+          "fix jira",
+          "jira",
+          "review jira"
         ],
         "zh": []
       }
@@ -2449,9 +2960,14 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-kotlin-build"
+          "csp-kotlin-build",
+          "fix kotlin build",
+          "kotlin build error",
+          "kotlin-build"
         ],
-        "zh": []
+        "zh": [
+          "kotlin 构建错误"
+        ]
       }
     },
     {
@@ -2463,9 +2979,15 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-kotlin-review"
+          "csp-kotlin-review",
+          "kotlin code review",
+          "kotlin review",
+          "kotlin-review",
+          "review kotlin code"
         ],
-        "zh": []
+        "zh": [
+          "kotlin 审查"
+        ]
       }
     },
     {
@@ -2477,9 +2999,13 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-kotlin-test"
+          "csp-kotlin-test",
+          "kotlin test",
+          "kotlin-test"
         ],
-        "zh": []
+        "zh": [
+          "kotlin 测试"
+        ]
       }
     },
     {
@@ -2491,7 +3017,12 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-learn-eval"
+          "csp-learn-eval",
+          "fix learn eval",
+          "learn",
+          "learn eval",
+          "learn-eval",
+          "review learn eval"
         ],
         "zh": []
       }
@@ -2505,7 +3036,10 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-learn"
+          "csp-learn",
+          "fix learn",
+          "learn",
+          "review learn"
         ],
         "zh": []
       }
@@ -2519,7 +3053,12 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-loop-start"
+          "csp-loop-start",
+          "fix loop start",
+          "loop",
+          "loop start",
+          "loop-start",
+          "review loop start"
         ],
         "zh": []
       }
@@ -2533,7 +3072,12 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-loop-status"
+          "csp-loop-status",
+          "fix loop status",
+          "loop",
+          "loop status",
+          "loop-status",
+          "review loop status"
         ],
         "zh": []
       }
@@ -2547,7 +3091,12 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-marketing-campaign"
+          "csp-marketing-campaign",
+          "fix marketing campaign",
+          "marketing",
+          "marketing campaign",
+          "marketing-campaign",
+          "review marketing campaign"
         ],
         "zh": []
       }
@@ -2561,7 +3110,11 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-model-route"
+          "csp-model-route",
+          "fix model route",
+          "model route",
+          "model-route",
+          "review model route"
         ],
         "zh": []
       }
@@ -2575,7 +3128,11 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-multi-backend"
+          "csp-multi-backend",
+          "fix multi backend",
+          "multi backend",
+          "multi-backend",
+          "review multi backend"
         ],
         "zh": []
       }
@@ -2589,7 +3146,11 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-multi-execute"
+          "csp-multi-execute",
+          "fix multi execute",
+          "multi execute",
+          "multi-execute",
+          "review multi execute"
         ],
         "zh": []
       }
@@ -2603,7 +3164,11 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-multi-frontend"
+          "csp-multi-frontend",
+          "fix multi frontend",
+          "multi frontend",
+          "multi-frontend",
+          "review multi frontend"
         ],
         "zh": []
       }
@@ -2617,7 +3182,11 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-multi-plan"
+          "csp-multi-plan",
+          "fix multi plan",
+          "multi plan",
+          "multi-plan",
+          "review multi plan"
         ],
         "zh": []
       }
@@ -2631,7 +3200,11 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-multi-workflow"
+          "csp-multi-workflow",
+          "fix multi workflow",
+          "multi workflow",
+          "multi-workflow",
+          "review multi workflow"
         ],
         "zh": []
       }
@@ -2645,7 +3218,12 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-orch-add-feature"
+          "csp-orch-add-feature",
+          "fix orch add feature",
+          "orch",
+          "orch add feature",
+          "orch-add-feature",
+          "review orch add feature"
         ],
         "zh": []
       }
@@ -2659,7 +3237,12 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-orch-build-mvp"
+          "csp-orch-build-mvp",
+          "fix orch build mvp",
+          "orch",
+          "orch build mvp",
+          "orch-build-mvp",
+          "review orch build mvp"
         ],
         "zh": []
       }
@@ -2673,7 +3256,12 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-orch-change-feature"
+          "csp-orch-change-feature",
+          "fix orch change feature",
+          "orch",
+          "orch change feature",
+          "orch-change-feature",
+          "review orch change feature"
         ],
         "zh": []
       }
@@ -2687,7 +3275,12 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-orch-fix-defect"
+          "csp-orch-fix-defect",
+          "fix orch fix defect",
+          "orch",
+          "orch fix defect",
+          "orch-fix-defect",
+          "review orch fix defect"
         ],
         "zh": []
       }
@@ -2701,7 +3294,12 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-orch-refine-code"
+          "csp-orch-refine-code",
+          "fix orch refine code",
+          "orch",
+          "orch refine code",
+          "orch-refine-code",
+          "review orch refine code"
         ],
         "zh": []
       }
@@ -2715,9 +3313,16 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-plan-prd"
+          "csp-plan-prd",
+          "plan",
+          "fix plan prd",
+          "plan prd",
+          "plan-prd",
+          "review plan prd"
         ],
-        "zh": []
+        "zh": [
+          "plan prd 规划"
+        ]
       }
     },
     {
@@ -2729,7 +3334,10 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-pm2"
+          "csp-pm2",
+          "fix pm2",
+          "pm2",
+          "review pm2"
         ],
         "zh": []
       }
@@ -2743,7 +3351,10 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-pr"
+          "csp-pr",
+          "fix pr",
+          "pr",
+          "review pr"
         ],
         "zh": []
       }
@@ -2757,9 +3368,15 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-project-init"
+          "csp-project-init",
+          "fix project init",
+          "project init",
+          "project-init",
+          "review project init"
         ],
-        "zh": []
+        "zh": [
+          "project init 项目"
+        ]
       }
     },
     {
@@ -2771,7 +3388,10 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-projects"
+          "csp-projects",
+          "fix projects",
+          "projects",
+          "review projects"
         ],
         "zh": []
       }
@@ -2785,7 +3405,10 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-promote"
+          "csp-promote",
+          "fix promote",
+          "promote",
+          "review promote"
         ],
         "zh": []
       }
@@ -2799,7 +3422,12 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-prp-commit"
+          "csp-prp-commit",
+          "fix prp commit",
+          "prp",
+          "prp commit",
+          "prp-commit",
+          "review prp commit"
         ],
         "zh": []
       }
@@ -2813,7 +3441,12 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-prp-implement"
+          "csp-prp-implement",
+          "fix prp implement",
+          "prp",
+          "prp implement",
+          "prp-implement",
+          "review prp implement"
         ],
         "zh": []
       }
@@ -2827,7 +3460,12 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-prp-plan"
+          "csp-prp-plan",
+          "fix prp plan",
+          "prp",
+          "prp plan",
+          "prp-plan",
+          "review prp plan"
         ],
         "zh": []
       }
@@ -2841,7 +3479,12 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-prp-pr"
+          "csp-prp-pr",
+          "fix prp pr",
+          "prp",
+          "prp pr",
+          "prp-pr",
+          "review prp pr"
         ],
         "zh": []
       }
@@ -2855,7 +3498,12 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-prp-prd"
+          "csp-prp-prd",
+          "fix prp prd",
+          "prp",
+          "prp prd",
+          "prp-prd",
+          "review prp prd"
         ],
         "zh": []
       }
@@ -2869,7 +3517,10 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-prune"
+          "csp-prune",
+          "fix prune",
+          "prune",
+          "review prune"
         ],
         "zh": []
       }
@@ -2883,9 +3534,15 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-python-review"
+          "csp-python-review",
+          "python code review",
+          "python review",
+          "python-review",
+          "review python code"
         ],
-        "zh": []
+        "zh": [
+          "python 审查"
+        ]
       }
     },
     {
@@ -2897,9 +3554,16 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-quality-gate"
+          "csp-quality-gate",
+          "fix quality gate",
+          "quality",
+          "quality gate",
+          "quality-gate",
+          "review quality gate"
         ],
-        "zh": []
+        "zh": [
+          "quality gate 质量"
+        ]
       }
     },
     {
@@ -2911,9 +3575,14 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-react-build"
+          "csp-react-build",
+          "fix react build",
+          "react build error",
+          "react-build"
         ],
-        "zh": []
+        "zh": [
+          "react 构建错误"
+        ]
       }
     },
     {
@@ -2925,9 +3594,15 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-react-review"
+          "csp-react-review",
+          "react code review",
+          "react review",
+          "react-review",
+          "review react code"
         ],
-        "zh": []
+        "zh": [
+          "react 审查"
+        ]
       }
     },
     {
@@ -2939,9 +3614,13 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-react-test"
+          "csp-react-test",
+          "react test",
+          "react-test"
         ],
-        "zh": []
+        "zh": [
+          "react 测试"
+        ]
       }
     },
     {
@@ -2953,9 +3632,16 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-refactor-clean"
+          "csp-refactor-clean",
+          "refactor",
+          "fix refactor clean",
+          "refactor clean",
+          "refactor-clean",
+          "review refactor clean"
         ],
-        "zh": []
+        "zh": [
+          "refactor clean 重构"
+        ]
       }
     },
     {
@@ -2967,7 +3653,12 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-resume-session"
+          "csp-resume-session",
+          "fix resume session",
+          "resume",
+          "resume session",
+          "resume-session",
+          "review resume session"
         ],
         "zh": []
       }
@@ -2981,9 +3672,16 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-review-pr"
+          "csp-review-pr",
+          "review",
+          "fix review pr",
+          "review pr",
+          "review review pr",
+          "review-pr"
         ],
-        "zh": []
+        "zh": [
+          "review pr 审查"
+        ]
       }
     },
     {
@@ -2995,9 +3693,14 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-rust-build"
+          "csp-rust-build",
+          "fix rust build",
+          "rust build error",
+          "rust-build"
         ],
-        "zh": []
+        "zh": [
+          "rust 构建错误"
+        ]
       }
     },
     {
@@ -3009,9 +3712,15 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-rust-review"
+          "csp-rust-review",
+          "review rust code",
+          "rust code review",
+          "rust review",
+          "rust-review"
         ],
-        "zh": []
+        "zh": [
+          "rust 审查"
+        ]
       }
     },
     {
@@ -3023,9 +3732,13 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-rust-test"
+          "csp-rust-test",
+          "rust test",
+          "rust-test"
         ],
-        "zh": []
+        "zh": [
+          "rust 测试"
+        ]
       }
     },
     {
@@ -3037,7 +3750,12 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-santa-loop"
+          "csp-santa-loop",
+          "fix santa loop",
+          "review santa loop",
+          "santa",
+          "santa loop",
+          "santa-loop"
         ],
         "zh": []
       }
@@ -3051,7 +3769,12 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-save-session"
+          "csp-save-session",
+          "fix save session",
+          "review save session",
+          "save",
+          "save session",
+          "save-session"
         ],
         "zh": []
       }
@@ -3065,9 +3788,16 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-security-scan"
+          "csp-security-scan",
+          "security",
+          "fix security scan",
+          "review security scan",
+          "security scan",
+          "security-scan"
         ],
-        "zh": []
+        "zh": [
+          "security scan 安全"
+        ]
       }
     },
     {
@@ -3079,7 +3809,10 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-sessions"
+          "csp-sessions",
+          "fix sessions",
+          "review sessions",
+          "sessions"
         ],
         "zh": []
       }
@@ -3093,7 +3826,11 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-setup-pm"
+          "csp-setup-pm",
+          "fix setup pm",
+          "review setup pm",
+          "setup pm",
+          "setup-pm"
         ],
         "zh": []
       }
@@ -3107,9 +3844,15 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-skill-create"
+          "csp-skill-create",
+          "fix skill create",
+          "review skill create",
+          "skill create",
+          "skill-create"
         ],
-        "zh": []
+        "zh": [
+          "skill create 技能"
+        ]
       }
     },
     {
@@ -3121,9 +3864,15 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-skill-health"
+          "csp-skill-health",
+          "fix skill health",
+          "review skill health",
+          "skill health",
+          "skill-health"
         ],
-        "zh": []
+        "zh": [
+          "skill health 技能"
+        ]
       }
     },
     {
@@ -3135,9 +3884,16 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-test-coverage"
+          "csp-test-coverage",
+          "test",
+          "fix test coverage",
+          "review test coverage",
+          "test coverage",
+          "test-coverage"
         ],
-        "zh": []
+        "zh": [
+          "test coverage 测试"
+        ]
       }
     },
     {
@@ -3149,9 +3905,16 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-update-codemaps"
+          "csp-update-codemaps",
+          "fix update codemaps",
+          "review update codemaps",
+          "update",
+          "update codemaps",
+          "update-codemaps"
         ],
-        "zh": []
+        "zh": [
+          "update codemaps 更新"
+        ]
       }
     },
     {
@@ -3163,9 +3926,16 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-update-docs"
+          "csp-update-docs",
+          "fix update docs",
+          "review update docs",
+          "update",
+          "update docs",
+          "update-docs"
         ],
-        "zh": []
+        "zh": [
+          "update docs 更新"
+        ]
       }
     },
     {
@@ -3338,6 +4108,22 @@ const CSP_DATA = {
       }
     },
     {
+      "name": "csp-api-governance",
+      "description": "Governs public and internal APIs with rate limiting algorithms, API key management, usage metering, versioning strategies, error standardization, and monitoring for reliable API operations.",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "csp-api-governance",
+          "rate limit",
+          "API key"
+        ],
+        "zh": []
+      }
+    },
+    {
       "name": "csp-article-writing",
       "description": "Write articles, guides, blog posts, tutorials, newsletter issues, and other long-form content in a distinctive voice derived from supplied examples or brand guidance. Use when the user wants polished written content longer than a paragraph, especially when voice consistency, structure, and credibili",
       "category": "patterns",
@@ -3367,7 +4153,7 @@ const CSP_DATA = {
     },
     {
       "name": "csp-backend-patterns",
-      "description": "Backend architecture patterns, API design, database optimization, and server-side best practices for Node.js, Express, and Next.js API routes.",
+      "description": "Language-agnostic backend patterns: layered architecture, dependency injection, repository pattern, error handling and retries, idempotency, rate limiting, caching, transaction boundaries, API design, and background jobs. Use for server-side design regardless of language or framework.",
       "category": "patterns",
       "layer": "L3",
       "layer_name": "Patterns",
@@ -3379,6 +4165,22 @@ const CSP_DATA = {
           "REST",
           "API design",
           "backend"
+        ],
+        "zh": []
+      }
+    },
+    {
+      "name": "csp-backend-performance",
+      "description": "Diagnose and optimize backend application performance using profiling, caching layers, async processing, and scaling patterns. Use when APIs are slow, database queries bottleneck throughput, or services need to handle higher concurrency.",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "csp-backend-performance",
+          "caching",
+          "connection pool"
         ],
         "zh": []
       }
@@ -3426,6 +4228,23 @@ const CSP_DATA = {
       }
     },
     {
+      "name": "csp-changelog-management",
+      "description": "Generate changelogs and manage release notes using changesets, semantic-release, and conventional commits. Use when automating changelog generation, setting up release pipelines, coordinating monorepo versioning, or writing user-facing release notes.",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "csp-changelog-management",
+          "changelog",
+          "changeset",
+          "release notes"
+        ],
+        "zh": []
+      }
+    },
+    {
       "name": "csp-cicd-pipelines",
       "description": "CI/CD pipeline patterns for GitHub Actions, GitLab CI, and CircleCI including matrix builds, reusable workflows, caching strategies, monorepo triggers, deployment gates, and branch protection integration. Use when designing or optimizing continuous integration and delivery pipelines.",
       "category": "patterns",
@@ -3455,7 +4274,7 @@ const CSP_DATA = {
     },
     {
       "name": "csp-code-review",
-      "description": "Comprehensive code review specialist for correctness, reuse, simplification, and efficiency. Use when reviewing code changes, before merging PRs, or when asked to audit code quality.",
+      "description": "Comprehensive code review specialist for correctness, reuse, simplification, and efficiency. Use when reviewing code changes, before merging PRs, or when asked to audit code quality. Supports graph-enhanced mode when a code knowledge graph is available (see csp-code-graph).",
       "category": "patterns",
       "layer": "L3",
       "layer_name": "Patterns",
@@ -3618,6 +4437,24 @@ const CSP_DATA = {
       }
     },
     {
+      "name": "csp-data-analysis",
+      "description": "Implement analytics, data analysis, and visualization best practices using Python, Jupyter, and modern data tools.",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "csp-data-analysis",
+          "data analysis",
+          "data-analysis",
+          "fix data analysis",
+          "review data analysis"
+        ],
+        "zh": []
+      }
+    },
+    {
       "name": "csp-data-pipeline-patterns",
       "description": "Production data pipeline patterns covering Airflow DAG design, dbt transformations, data quality checks, incremental processing, idempotent pipelines, schema evolution, data lineage, ODPS/MaxCompute, data lake/warehouse patterns, and CDC with Debezium. Use when designing, building, or debugging data",
       "category": "patterns",
@@ -3632,15 +4469,49 @@ const CSP_DATA = {
       }
     },
     {
-      "name": "csp-database-migrations",
-      "description": "Database migration best practices for schema changes, data migrations, rollbacks, and zero-downtime deployments across PostgreSQL, MySQL, and common ORMs (Prisma, Drizzle, Django, TypeORM, golang-migrate). Use when planning or implementing database schema changes.",
+      "name": "csp-db-backup",
+      "description": "Implement automated database backup and point-in-time recovery for PostgreSQL and MySQL with encryption, verification, and disaster recovery runbooks.",
       "category": "patterns",
       "layer": "L3",
       "layer_name": "Patterns",
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-database-migrations"
+          "csp-db-backup",
+          "backup",
+          "disaster recovery"
+        ],
+        "zh": []
+      }
+    },
+    {
+      "name": "csp-db-migration",
+      "description": "Database migration best practices for schema changes, data migrations, rollbacks, and zero-downtime deployments across PostgreSQL and MySQL and common ORMs/tools (Prisma, Drizzle, TypeORM, Knex, Django, Alembic, Flyway, golang-migrate, Atlas). Execute zero-downtime migrations using expand-contract p",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "csp-db-migration",
+          "zero-downtime"
+        ],
+        "zh": []
+      }
+    },
+    {
+      "name": "csp-db-performance",
+      "description": "Diagnose and tune database performance using index strategies, query analysis, connection pooling, partitioning, and replication. Use when queries are slow, connections are exhausted, or database metrics indicate resource contention.",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "csp-db-performance",
+          "connection pool",
+          "index strategy",
+          "EXPLAIN ANALYZE"
         ],
         "zh": []
       }
@@ -3745,7 +4616,7 @@ const CSP_DATA = {
     },
     {
       "name": "csp-e2e-testing",
-      "description": "Playwright E2E testing patterns, Page Object Model, configuration, CI/CD integration, artifact management, and flaky test strategies.",
+      "description": "Design, implement, and maintain end-to-end test suites for web applications using Playwright, Cypress, or Selenium. Use when building test automation from scratch, reducing flaky tests, or integrating E2E tests into CI pipelines.",
       "category": "patterns",
       "layer": "L3",
       "layer_name": "Patterns",
@@ -3753,7 +4624,26 @@ const CSP_DATA = {
       "triggers": {
         "en": [
           "csp-e2e-testing",
-          "test"
+          "test",
+          "Playwright",
+          "E2E test",
+          "flaky test"
+        ],
+        "zh": []
+      }
+    },
+    {
+      "name": "csp-email-systems",
+      "description": "Integrates transactional and marketing email systems with provider setup, template rendering, deliverability configuration, bounce handling, and queue-based sending for reliable email delivery.",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "csp-email-systems",
+          "email",
+          "transactional email"
         ],
         "zh": []
       }
@@ -3829,8 +4719,45 @@ const CSP_DATA = {
       }
     },
     {
+      "name": "csp-file-storage",
+      "description": "Design and implement file upload, storage, and processing architectures using S3, R2, and other object storage providers. Use when building file upload flows, configuring presigned URLs, setting up image processing pipelines, or optimizing storage costs and CDN delivery.",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "csp-file-storage",
+          "file upload",
+          "S3",
+          "presigned URL"
+        ],
+        "zh": []
+      }
+    },
+    {
+      "name": "csp-frontend-design",
+      "description": "Create distinctive, production-grade frontend interfaces with high design quality. Use this skill when the user asks to build web components, pages, artifacts, posters, or applications (examples include websites, landing pages, dashboards, React components, HTML/CSS layouts, or when styling/beautify",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "csp-frontend-design",
+          "fix frontend design",
+          "frontend design",
+          "frontend-design",
+          "review frontend design"
+        ],
+        "zh": [
+          "frontend design 前端"
+        ]
+      }
+    },
+    {
       "name": "csp-frontend-patterns",
-      "description": "Frontend development patterns for state management, performance optimization, accessibility, and UI best practices across frameworks.",
+      "description": "Framework-agnostic frontend patterns for component composition, state management, performance, accessibility, forms, and data fetching. Use as the cross-framework entry point; React-specific patterns live in csp-react-patterns.",
       "category": "patterns",
       "layer": "L3",
       "layer_name": "Patterns",
@@ -3838,6 +4765,23 @@ const CSP_DATA = {
       "triggers": {
         "en": [
           "csp-frontend-patterns"
+        ],
+        "zh": []
+      }
+    },
+    {
+      "name": "csp-frontend-performance",
+      "description": "Diagnose and optimize frontend web application performance using Core Web Vitals, bundle analysis, code splitting, and framework-specific patterns. Use when pages feel slow, Lighthouse scores are low, or bundle sizes need reduction.",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "csp-frontend-performance",
+          "Core Web Vitals",
+          "bundle size",
+          "LCP"
         ],
         "zh": []
       }
@@ -3866,6 +4810,42 @@ const CSP_DATA = {
       "triggers": {
         "en": [
           "csp-git-conventions"
+        ],
+        "zh": []
+      }
+    },
+    {
+      "name": "csp-html-prototype",
+      "description": "生成用于 UI 线框图和模型图的交互式 HTML 原型页面。当用户要求创建原型、线框图、模型图、页面设计或 UI 布局时使用。支持移动端、桌面端和平板设备，并可采用高保真或低保真风格。",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "csp-html-prototype",
+          "fix html prototype",
+          "html",
+          "html prototype",
+          "html-prototype",
+          "review html prototype"
+        ],
+        "zh": []
+      }
+    },
+    {
+      "name": "csp-i18n-frameworks",
+      "description": "Select, configure, and integrate internationalization frameworks for React, Next.js, and Vue applications. Use when setting up i18n for a new project, migrating between i18n libraries, or building a translation workflow pipeline.",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "csp-i18n-frameworks",
+          "i18n",
+          "internationalization",
+          "translation"
         ],
         "zh": []
       }
@@ -3927,6 +4907,20 @@ const CSP_DATA = {
       }
     },
     {
+      "name": "csp-java-testing",
+      "description": "Java testing best practices using JUnit 5 (Jupiter), AssertJ fluent assertions, Mockito (mock/spy/verify/ArgumentCaptor), and Testcontainers for integration tests against real dependencies. Covers parameterized and nested tests, lifecycle hooks, Spring Boot test slices (@WebMvcTest, @DataJpaTest), t",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "csp-java-testing"
+        ],
+        "zh": []
+      }
+    },
+    {
       "name": "csp-jpa-patterns",
       "description": "JPA/Hibernate patterns for entity design, relationships, query optimization, transactions, auditing, indexing, pagination, and pooling in Spring Boot.",
       "category": "patterns",
@@ -3964,6 +4958,23 @@ const CSP_DATA = {
       "triggers": {
         "en": [
           "csp-llm-app-development"
+        ],
+        "zh": []
+      }
+    },
+    {
+      "name": "csp-locale-management",
+      "description": "Manage locale data, formatting, and layout patterns including Intl API usage, timezone handling, RTL support, pluralization rules, and locale-based routing. Use when implementing locale-specific formatting, content negotiation, or bidirectional text support in web applications.",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "csp-locale-management",
+          "translation",
+          "locale",
+          "RTL"
         ],
         "zh": []
       }
@@ -4025,6 +5036,57 @@ const CSP_DATA = {
       }
     },
     {
+      "name": "csp-mock-strategies",
+      "description": "Design and implement test doubles, API mocks, and fixture management across unit, integration, and E2E testing layers. Use when setting up MSW handlers, deciding between mock types, implementing contract tests, or building type-safe mock helpers.",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "csp-mock-strategies",
+          "mock",
+          "MSW",
+          "contract test"
+        ],
+        "zh": []
+      }
+    },
+    {
+      "name": "csp-monitoring-alerting",
+      "description": "Set up error tracking, uptime monitoring, APM, log aggregation, and alerting pipelines using free-tier and low-cost observability tools.",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "csp-monitoring-alerting",
+          "monitoring",
+          "Sentry",
+          "alerting"
+        ],
+        "zh": []
+      }
+    },
+    {
+      "name": "csp-monorepo-tooling",
+      "description": "Select, configure, and optimize monorepo tooling including Turborepo, Nx, pnpm workspaces, and Lerna for multi-package JavaScript/TypeScript projects. Use when setting up a monorepo, migrating from polyrepo, or optimizing build orchestration and CI pipelines for multi-package repositories.",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "csp-monorepo-tooling",
+          "monorepo",
+          "Turborepo",
+          "Nx"
+        ],
+        "zh": []
+      }
+    },
+    {
       "name": "csp-nestjs-patterns",
       "description": "NestJS architecture patterns for modules, controllers, providers, DTO validation, guards, interceptors, config, and production-grade TypeScript backends.",
       "category": "patterns",
@@ -4053,6 +5115,22 @@ const CSP_DATA = {
       }
     },
     {
+      "name": "csp-oauth-integration",
+      "description": "Implements OAuth 2.0 and OpenID Connect authentication flows including Authorization Code with PKCE, multi-provider identity, token management, session handling, and social login provider integration.",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "csp-oauth-integration",
+          "OAuth",
+          "social login"
+        ],
+        "zh": []
+      }
+    },
+    {
       "name": "csp-observability-and-instrumentation",
       "description": "Instruments code so production behavior is visible and diagnosable. Use when adding logging, metrics, tracing, or alerting. Use when shipping any feature that runs in production and you need evidence it works. Use when production issues are reported but you can't tell what happened from the availabl",
       "category": "patterns",
@@ -4062,6 +5140,58 @@ const CSP_DATA = {
       "triggers": {
         "en": [
           "csp-observability-and-instrumentation"
+        ],
+        "zh": []
+      }
+    },
+    {
+      "name": "csp-package-publishing",
+      "description": "Configure and automate package publishing workflows for npm, PyPI, and other registries including provenance, pre-release versioning, monorepo publishing, and security controls. Use when setting up CI-based publishing pipelines, managing pre-release channels, or securing registry access tokens.",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "csp-package-publishing",
+          "npm publish",
+          "PyPI"
+        ],
+        "zh": []
+      }
+    },
+    {
+      "name": "csp-paper-reader",
+      "description": "解析、解读、探索、讲解、总结某领域最新论文或某篇具体论文。 触发词：解析论文、解读论文、论文总结、paper review、read paper、论文笔记、最新论文、领域综述、 这篇论文讲了什么、帮我看看这篇paper、XX领域有什么新进展。 输入：论文名称/标题/arXiv ID，或领域关键词。 输出：自包含学术风 HTML 文档 + 原始论文 PDF，含侧边栏目录导航、折叠展开交互、关键图片、代码片段、数据集信息。 不要用于：纯文献检索不需要深度解读、只需要PDF转Wor",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "csp-paper-reader",
+          "fix paper reader",
+          "paper",
+          "paper reader",
+          "paper-reader",
+          "review paper reader"
+        ],
+        "zh": []
+      }
+    },
+    {
+      "name": "csp-payment-integration",
+      "description": "Implements Stripe and LemonSqueezy payment integration patterns including checkout sessions, webhook handling, error recovery, and multi-currency support for SaaS and e-commerce applications.",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "csp-payment-integration",
+          "payment",
+          "stripe",
+          "billing"
         ],
         "zh": []
       }
@@ -4081,6 +5211,23 @@ const CSP_DATA = {
           "优化",
           "性能"
         ]
+      }
+    },
+    {
+      "name": "csp-platform-deploy",
+      "description": "Deploy web applications to modern PaaS platforms (Vercel, Netlify, Railway, Fly.io, Render) with optimal configuration for performance, cost, and developer experience.",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "csp-platform-deploy",
+          "Vercel",
+          "Railway",
+          "Fly.io"
+        ],
+        "zh": []
       }
     },
     {
@@ -4106,7 +5253,29 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-postgres-patterns"
+          "csp-postgres-patterns",
+          "postgres best practices",
+          "postgres patterns",
+          "postgres-patterns"
+        ],
+        "zh": [
+          "postgres 最佳实践"
+        ]
+      }
+    },
+    {
+      "name": "csp-privacy-compliance",
+      "description": "Implement GDPR, CCPA, and privacy compliance features including consent management, data subject access requests, right to erasure, and data portability.",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "csp-privacy-compliance",
+          "GDPR",
+          "privacy",
+          "consent"
         ],
         "zh": []
       }
@@ -4260,7 +5429,8 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-refactorer"
+          "csp-refactorer",
+          "refactor"
         ],
         "zh": []
       }
@@ -4275,6 +5445,25 @@ const CSP_DATA = {
       "triggers": {
         "en": [
           "csp-refactoring-strategies"
+        ],
+        "zh": []
+      }
+    },
+    {
+      "name": "csp-responsive-design",
+      "description": "Implement modern responsive layouts using container queries, fluid typography, CSS Grid, and mobile-first breakpoint strategies. Use when building adaptive interfaces, implementing fluid layouts, or creating component-level responsive behavior.",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "csp-responsive-design",
+          "fix responsive design",
+          "responsive",
+          "responsive design",
+          "responsive-design",
+          "review responsive design"
         ],
         "zh": []
       }
@@ -4353,6 +5542,21 @@ const CSP_DATA = {
       }
     },
     {
+      "name": "csp-seo-engineering",
+      "description": "Engineers technical SEO for web applications including meta tags, structured data, sitemaps, Core Web Vitals optimization, and rendering strategy selection for maximum search visibility.",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "csp-seo-engineering",
+          "SEO"
+        ],
+        "zh": []
+      }
+    },
+    {
       "name": "csp-spec-adr",
       "description": "Lightweight spec and ADR writer. Generates specifications, implementation plans, architectural decision records, and PRDs from natural language descriptions. Use when the team needs structured documentation without a heavy process tool.",
       "category": "patterns",
@@ -4389,7 +5593,11 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-springboot-security"
+          "csp-springboot-security",
+          "fix springboot security",
+          "review springboot security",
+          "springboot security",
+          "springboot-security"
         ],
         "zh": []
       }
@@ -4418,6 +5626,23 @@ const CSP_DATA = {
       "triggers": {
         "en": [
           "csp-strategic-compact"
+        ],
+        "zh": []
+      }
+    },
+    {
+      "name": "csp-subscription-management",
+      "description": "Manages subscription lifecycle patterns including state machines, plan upgrades/downgrades, usage-based billing, dunning strategies, and feature gating for SaaS applications.",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "csp-subscription-management",
+          "payment",
+          "subscription",
+          "billing"
         ],
         "zh": []
       }
@@ -4465,6 +5690,65 @@ const CSP_DATA = {
       }
     },
     {
+      "name": "csp-tech-diagram",
+      "description": "Use when the user asks to create, visualize, or animate a technical diagram — software architecture, data flow, flowcharts, sequence diagrams, C4 models, cloud deployments, event streams, observability traces, agent/memory systems, UML, ER, network topology, timelines, or technical concept maps. Pro",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "csp-tech-diagram"
+        ],
+        "zh": []
+      }
+    },
+    {
+      "name": "csp-typescript-patterns",
+      "description": "TypeScript-specific design patterns and best practices for TypeScript 5.x: the type system (generics, conditional types, `infer`, mapped types, template literal types), `type` vs `interface`, discriminated unions, the `satisfies` operator, strict mode and key tsconfig options, ESM vs CJS, type guard",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "csp-typescript-patterns"
+        ],
+        "zh": []
+      }
+    },
+    {
+      "name": "csp-typescript-testing",
+      "description": "TypeScript testing best practices for TypeScript 5.x: choosing between Vitest and Jest, the Arrange-Act-Assert structure, type-level testing with expectTypeOf and tsd, mocking with vi.mock / jest.mock and module mocks, async testing, coverage with v8 (c8) or istanbul, and pointers to component and E",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "csp-typescript-testing"
+        ],
+        "zh": []
+      }
+    },
+    {
+      "name": "csp-user-analytics",
+      "description": "Designs and implements user analytics systems including event taxonomy, platform integration, retention metrics, funnel tracking, A/B testing, and privacy-compliant data collection.",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "csp-user-analytics",
+          "analytics",
+          "PostHog",
+          "Mixpanel"
+        ],
+        "zh": []
+      }
+    },
+    {
       "name": "csp-video-editing",
       "description": "AI-assisted video editing workflows for cutting, structuring, and augmenting real footage. Covers the full pipeline from raw capture through FFmpeg, Remotion, ElevenLabs, fal.ai, and final polish in Descript or CapCut. Use when the user wants to edit video, cut footage, create vlogs, or build video ",
       "category": "patterns",
@@ -4479,6 +5763,22 @@ const CSP_DATA = {
       }
     },
     {
+      "name": "csp-visual-regression",
+      "description": "Implement visual regression testing and UI change detection using Chromatic, Percy, Playwright screenshots, or BackstopJS. Use when UI changes need automated review, design system components need snapshot coverage, or visual diffs must block unapproved changes in CI.",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "csp-visual-regression",
+          "visual regression",
+          "Chromatic"
+        ],
+        "zh": []
+      }
+    },
+    {
       "name": "csp-vllm-serving",
       "description": "Production vLLM inference serving patterns covering Docker setup, continuous batching, PagedAttention, tensor parallelism, OpenAI-compatible APIs, LoRA multiplexing, quantization, performance tuning, health checks, Kubernetes scaling, and multi-model serving. Use when deploying, optimizing, or opera",
       "category": "patterns",
@@ -4488,6 +5788,59 @@ const CSP_DATA = {
       "triggers": {
         "en": [
           "csp-vllm-serving"
+        ],
+        "zh": []
+      }
+    },
+    {
+      "name": "csp-vps-deploy",
+      "description": "Deploy and manage applications on VPS servers with Nginx reverse proxy, SSL, systemd services, and security hardening for solo developers.",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "csp-vps-deploy",
+          "VPS",
+          "nginx",
+          "systemd"
+        ],
+        "zh": []
+      }
+    },
+    {
+      "name": "csp-web-artifacts",
+      "description": "用于创建复杂、多组件的 HTML 网页，采用现代前端 Web 技术（React、Tailwind CSS、shadcn/ui）。适用于需要状态管理、路由或 shadcn/ui 组件的复杂网页，不适用于简单的单文件 HTML/JSX 网页。",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "csp-web-artifacts",
+          "fix web artifacts",
+          "review web artifacts",
+          "web",
+          "web artifacts",
+          "web-artifacts"
+        ],
+        "zh": [
+          "web artifacts 网页"
+        ]
+      }
+    },
+    {
+      "name": "csp-webhook-architecture",
+      "description": "Designs webhook sending and receiving systems with signature verification, idempotent processing, reliable delivery with retries, management UIs, and monitoring for production-grade event-driven architectures.",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "csp-webhook-architecture",
+          "webhook"
         ],
         "zh": []
       }
@@ -4515,7 +5868,11 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-cursor-rules-common-agents"
+          "csp-cursor-rules-common-agents",
+          "common-agents agents",
+          "common-agents cursor rules",
+          "cursor rules common-agents",
+          "cursor-rules-common-agents"
         ],
         "zh": []
       }
@@ -4529,7 +5886,11 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-cursor-rules-common-coding-style"
+          "csp-cursor-rules-common-coding-style",
+          "common coding style",
+          "common cursor rules",
+          "cursor rules common",
+          "cursor-rules-common-coding-style"
         ],
         "zh": []
       }
@@ -4543,7 +5904,11 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-cursor-rules-common-development-workflow"
+          "csp-cursor-rules-common-development-workflow",
+          "common-development-workflow cursor rules",
+          "common-development-workflow development workflow",
+          "cursor rules common-development-workflow",
+          "cursor-rules-common-development-workflow"
         ],
         "zh": []
       }
@@ -4557,7 +5922,11 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-cursor-rules-common-git-workflow"
+          "csp-cursor-rules-common-git-workflow",
+          "common-git-workflow cursor rules",
+          "common-git-workflow git workflow",
+          "cursor rules common-git-workflow",
+          "cursor-rules-common-git-workflow"
         ],
         "zh": []
       }
@@ -4571,7 +5940,11 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-cursor-rules-common-hooks"
+          "csp-cursor-rules-common-hooks",
+          "common cursor rules",
+          "common hooks",
+          "cursor rules common",
+          "cursor-rules-common-hooks"
         ],
         "zh": []
       }
@@ -4585,7 +5958,11 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-cursor-rules-common-patterns"
+          "csp-cursor-rules-common-patterns",
+          "common cursor rules",
+          "common patterns",
+          "cursor rules common",
+          "cursor-rules-common-patterns"
         ],
         "zh": []
       }
@@ -4599,7 +5976,11 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-cursor-rules-common-performance"
+          "csp-cursor-rules-common-performance",
+          "common-performance cursor rules",
+          "common-performance performance",
+          "cursor rules common-performance",
+          "cursor-rules-common-performance"
         ],
         "zh": []
       }
@@ -4613,7 +5994,11 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-cursor-rules-common-security"
+          "csp-cursor-rules-common-security",
+          "common cursor rules",
+          "common security",
+          "cursor rules common",
+          "cursor-rules-common-security"
         ],
         "zh": []
       }
@@ -4627,7 +6012,11 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-cursor-rules-common-testing"
+          "csp-cursor-rules-common-testing",
+          "common cursor rules",
+          "common testing",
+          "cursor rules common",
+          "cursor-rules-common-testing"
         ],
         "zh": []
       }
@@ -4641,7 +6030,11 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-cursor-rules-golang-coding-style"
+          "csp-cursor-rules-golang-coding-style",
+          "cursor rules golang",
+          "cursor-rules-golang-coding-style",
+          "golang coding style",
+          "golang cursor rules"
         ],
         "zh": []
       }
@@ -4655,7 +6048,11 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-cursor-rules-golang-hooks"
+          "csp-cursor-rules-golang-hooks",
+          "cursor rules golang",
+          "cursor-rules-golang-hooks",
+          "golang cursor rules",
+          "golang hooks"
         ],
         "zh": []
       }
@@ -4669,7 +6066,10 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-cursor-rules-golang-patterns"
+          "csp-cursor-rules-golang-patterns",
+          "cursor rules golang",
+          "cursor-rules-golang-patterns",
+          "golang cursor rules"
         ],
         "zh": []
       }
@@ -4683,7 +6083,11 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-cursor-rules-golang-security"
+          "csp-cursor-rules-golang-security",
+          "cursor rules golang",
+          "cursor-rules-golang-security",
+          "golang cursor rules",
+          "golang security"
         ],
         "zh": []
       }
@@ -4697,7 +6101,10 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-cursor-rules-golang-testing"
+          "csp-cursor-rules-golang-testing",
+          "cursor rules golang",
+          "cursor-rules-golang-testing",
+          "golang cursor rules"
         ],
         "zh": []
       }
@@ -4711,7 +6118,11 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-cursor-rules-kotlin-coding-style"
+          "csp-cursor-rules-kotlin-coding-style",
+          "cursor rules kotlin",
+          "cursor-rules-kotlin-coding-style",
+          "kotlin coding style",
+          "kotlin cursor rules"
         ],
         "zh": []
       }
@@ -4725,7 +6136,11 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-cursor-rules-kotlin-hooks"
+          "csp-cursor-rules-kotlin-hooks",
+          "cursor rules kotlin",
+          "cursor-rules-kotlin-hooks",
+          "kotlin cursor rules",
+          "kotlin hooks"
         ],
         "zh": []
       }
@@ -4739,7 +6154,10 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-cursor-rules-kotlin-patterns"
+          "csp-cursor-rules-kotlin-patterns",
+          "cursor rules kotlin",
+          "cursor-rules-kotlin-patterns",
+          "kotlin cursor rules"
         ],
         "zh": []
       }
@@ -4753,7 +6171,11 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-cursor-rules-kotlin-security"
+          "csp-cursor-rules-kotlin-security",
+          "cursor rules kotlin",
+          "cursor-rules-kotlin-security",
+          "kotlin cursor rules",
+          "kotlin security"
         ],
         "zh": []
       }
@@ -4767,7 +6189,10 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-cursor-rules-kotlin-testing"
+          "csp-cursor-rules-kotlin-testing",
+          "cursor rules kotlin",
+          "cursor-rules-kotlin-testing",
+          "kotlin cursor rules"
         ],
         "zh": []
       }
@@ -4781,7 +6206,11 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-cursor-rules-php-coding-style"
+          "csp-cursor-rules-php-coding-style",
+          "cursor rules php",
+          "cursor-rules-php-coding-style",
+          "php coding style",
+          "php cursor rules"
         ],
         "zh": []
       }
@@ -4795,7 +6224,11 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-cursor-rules-php-hooks"
+          "csp-cursor-rules-php-hooks",
+          "cursor rules php",
+          "cursor-rules-php-hooks",
+          "php cursor rules",
+          "php hooks"
         ],
         "zh": []
       }
@@ -4809,7 +6242,11 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-cursor-rules-php-patterns"
+          "csp-cursor-rules-php-patterns",
+          "cursor rules php",
+          "cursor-rules-php-patterns",
+          "php cursor rules",
+          "php patterns"
         ],
         "zh": []
       }
@@ -4823,7 +6260,11 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-cursor-rules-php-security"
+          "csp-cursor-rules-php-security",
+          "cursor rules php",
+          "cursor-rules-php-security",
+          "php cursor rules",
+          "php security"
         ],
         "zh": []
       }
@@ -4837,7 +6278,11 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-cursor-rules-php-testing"
+          "csp-cursor-rules-php-testing",
+          "cursor rules php",
+          "cursor-rules-php-testing",
+          "php cursor rules",
+          "php testing"
         ],
         "zh": []
       }
@@ -4851,7 +6296,11 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-cursor-rules-python-coding-style"
+          "csp-cursor-rules-python-coding-style",
+          "cursor rules python",
+          "cursor-rules-python-coding-style",
+          "python coding style",
+          "python cursor rules"
         ],
         "zh": []
       }
@@ -4865,7 +6314,11 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-cursor-rules-python-hooks"
+          "csp-cursor-rules-python-hooks",
+          "cursor rules python",
+          "cursor-rules-python-hooks",
+          "python cursor rules",
+          "python hooks"
         ],
         "zh": []
       }
@@ -4879,7 +6332,11 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-cursor-rules-python-patterns"
+          "csp-cursor-rules-python-patterns",
+          "cursor rules python",
+          "cursor-rules-python-patterns",
+          "python cursor rules",
+          "python patterns"
         ],
         "zh": []
       }
@@ -4893,7 +6350,11 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-cursor-rules-python-security"
+          "csp-cursor-rules-python-security",
+          "cursor rules python",
+          "cursor-rules-python-security",
+          "python cursor rules",
+          "python security"
         ],
         "zh": []
       }
@@ -4907,7 +6368,10 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-cursor-rules-python-testing"
+          "csp-cursor-rules-python-testing",
+          "cursor rules python",
+          "cursor-rules-python-testing",
+          "python cursor rules"
         ],
         "zh": []
       }
@@ -4921,7 +6385,11 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-cursor-rules-swift-coding-style"
+          "csp-cursor-rules-swift-coding-style",
+          "cursor rules swift",
+          "cursor-rules-swift-coding-style",
+          "swift coding style",
+          "swift cursor rules"
         ],
         "zh": []
       }
@@ -4935,7 +6403,11 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-cursor-rules-swift-hooks"
+          "csp-cursor-rules-swift-hooks",
+          "cursor rules swift",
+          "cursor-rules-swift-hooks",
+          "swift cursor rules",
+          "swift hooks"
         ],
         "zh": []
       }
@@ -4949,7 +6421,11 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-cursor-rules-swift-patterns"
+          "csp-cursor-rules-swift-patterns",
+          "cursor rules swift",
+          "cursor-rules-swift-patterns",
+          "swift cursor rules",
+          "swift patterns"
         ],
         "zh": []
       }
@@ -4963,7 +6439,11 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-cursor-rules-swift-security"
+          "csp-cursor-rules-swift-security",
+          "cursor rules swift",
+          "cursor-rules-swift-security",
+          "swift cursor rules",
+          "swift security"
         ],
         "zh": []
       }
@@ -4977,7 +6457,11 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-cursor-rules-swift-testing"
+          "csp-cursor-rules-swift-testing",
+          "cursor rules swift",
+          "cursor-rules-swift-testing",
+          "swift cursor rules",
+          "swift testing"
         ],
         "zh": []
       }
@@ -4991,7 +6475,11 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-cursor-rules-typescript-coding-style"
+          "csp-cursor-rules-typescript-coding-style",
+          "cursor rules typescript",
+          "cursor-rules-typescript-coding-style",
+          "typescript coding style",
+          "typescript cursor rules"
         ],
         "zh": []
       }
@@ -5005,7 +6493,11 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-cursor-rules-typescript-hooks"
+          "csp-cursor-rules-typescript-hooks",
+          "cursor rules typescript",
+          "cursor-rules-typescript-hooks",
+          "typescript cursor rules",
+          "typescript hooks"
         ],
         "zh": []
       }
@@ -5019,7 +6511,11 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-cursor-rules-typescript-patterns"
+          "csp-cursor-rules-typescript-patterns",
+          "cursor rules typescript",
+          "cursor-rules-typescript-patterns",
+          "typescript cursor rules",
+          "typescript patterns"
         ],
         "zh": []
       }
@@ -5033,7 +6529,11 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-cursor-rules-typescript-security"
+          "csp-cursor-rules-typescript-security",
+          "cursor rules typescript",
+          "cursor-rules-typescript-security",
+          "typescript cursor rules",
+          "typescript security"
         ],
         "zh": []
       }
@@ -5047,7 +6547,11 @@ const CSP_DATA = {
       "layer_color": "#a855f7",
       "triggers": {
         "en": [
-          "csp-cursor-rules-typescript-testing"
+          "csp-cursor-rules-typescript-testing",
+          "cursor rules typescript",
+          "cursor-rules-typescript-testing",
+          "typescript cursor rules",
+          "typescript testing"
         ],
         "zh": []
       }
@@ -5173,7 +6677,10 @@ const CSP_DATA = {
       "layer_color": "#f97316",
       "triggers": {
         "en": [
-          "csp-critic"
+          "csp-critic",
+          "critic",
+          "fix critic",
+          "review critic"
         ],
         "zh": []
       }
@@ -5187,7 +6694,10 @@ const CSP_DATA = {
       "layer_color": "#f97316",
       "triggers": {
         "en": [
-          "csp-debugger"
+          "csp-debugger",
+          "debugger",
+          "fix debugger",
+          "review debugger"
         ],
         "zh": []
       }
@@ -5201,7 +6711,10 @@ const CSP_DATA = {
       "layer_color": "#f97316",
       "triggers": {
         "en": [
-          "csp-designer"
+          "csp-designer",
+          "designer",
+          "fix designer",
+          "review designer"
         ],
         "zh": []
       }
@@ -5215,7 +6728,11 @@ const CSP_DATA = {
       "layer_color": "#f97316",
       "triggers": {
         "en": [
-          "csp-document-specialist"
+          "csp-document-specialist",
+          "document specialist",
+          "document-specialist",
+          "fix document specialist",
+          "review document specialist"
         ],
         "zh": []
       }
@@ -5229,7 +6746,10 @@ const CSP_DATA = {
       "layer_color": "#f97316",
       "triggers": {
         "en": [
-          "csp-executor"
+          "csp-executor",
+          "executor",
+          "fix executor",
+          "review executor"
         ],
         "zh": []
       }
@@ -5243,7 +6763,12 @@ const CSP_DATA = {
       "layer_color": "#f97316",
       "triggers": {
         "en": [
-          "csp-git-master"
+          "csp-git-master",
+          "fix git master",
+          "git",
+          "git master",
+          "git-master",
+          "review git master"
         ],
         "zh": []
       }
@@ -5257,7 +6782,12 @@ const CSP_DATA = {
       "layer_color": "#f97316",
       "triggers": {
         "en": [
-          "csp-qa-tester"
+          "csp-qa-tester",
+          "fix qa tester",
+          "qa tester",
+          "qa-tester",
+          "review qa tester",
+          "tester"
         ],
         "zh": []
       }
@@ -5285,7 +6815,10 @@ const CSP_DATA = {
       "layer_color": "#f97316",
       "triggers": {
         "en": [
-          "csp-tracer"
+          "csp-tracer",
+          "fix tracer",
+          "review tracer",
+          "tracer"
         ],
         "zh": []
       }
@@ -5299,7 +6832,10 @@ const CSP_DATA = {
       "layer_color": "#f97316",
       "triggers": {
         "en": [
-          "csp-verifier"
+          "csp-verifier",
+          "fix verifier",
+          "review verifier",
+          "verifier"
         ],
         "zh": []
       }
@@ -5313,7 +6849,10 @@ const CSP_DATA = {
       "layer_color": "#f97316",
       "triggers": {
         "en": [
-          "csp-writer"
+          "csp-writer",
+          "fix writer",
+          "review writer",
+          "writer"
         ],
         "zh": []
       }
@@ -5327,7 +6866,9 @@ const CSP_DATA = {
       "layer_color": "#f97316",
       "triggers": {
         "en": [
-          "csp-compact"
+          "csp-compact",
+          "fix compact",
+          "review compact"
         ],
         "zh": []
       }
@@ -5341,7 +6882,10 @@ const CSP_DATA = {
       "layer_color": "#f97316",
       "triggers": {
         "en": [
-          "csp-psm"
+          "csp-psm",
+          "fix psm",
+          "psm",
+          "review psm"
         ],
         "zh": []
       }
@@ -5355,9 +6899,14 @@ const CSP_DATA = {
       "layer_color": "#f97316",
       "triggers": {
         "en": [
-          "csp-verify"
+          "csp-verify",
+          "verify",
+          "fix verify",
+          "review verify"
         ],
-        "zh": []
+        "zh": [
+          "verify 验证"
+        ]
       }
     },
     {
@@ -5453,7 +7002,12 @@ const CSP_DATA = {
       "layer_color": "#f97316",
       "triggers": {
         "en": [
-          "csp-cli-teams"
+          "csp-cli-teams",
+          "cli",
+          "cli teams",
+          "cli-teams",
+          "fix cli teams",
+          "review cli teams"
         ],
         "zh": []
       }
@@ -5579,6 +7133,25 @@ const CSP_DATA = {
       }
     },
     {
+      "name": "csp-file-organizer",
+      "description": "通过理解上下文、查找重复文件、建议更合理的目录结构并自动化清理任务，智能整理你电脑中的文件与文件夹。降低整理负担，让数字工作空间长期保持整洁有序。",
+      "category": "runtime",
+      "layer": "L4",
+      "layer_name": "Runtime",
+      "layer_color": "#f97316",
+      "triggers": {
+        "en": [
+          "csp-file-organizer",
+          "file",
+          "file organizer",
+          "file-organizer",
+          "fix file organizer",
+          "review file organizer"
+        ],
+        "zh": []
+      }
+    },
+    {
       "name": "csp-hud",
       "description": "Configure HUD display options (layout, presets, display elements)",
       "category": "runtime",
@@ -5608,7 +7181,7 @@ const CSP_DATA = {
     },
     {
       "name": "csp-learning-loop",
-      "description": "Automatic session-boundary learning orchestrator. Extracts, classifies, and stores learnings across 5 dimensions (project core, user needs, developer profile, long-term memory, skill feedback). Delegates to csp-remember, csp-learner, skill-optimizer, csp-compound. Runs at Stop/PreCompact/SessionEnd ",
+      "description": "Automatic session-boundary learning orchestrator. Extracts, classifies, and stores learnings across 5 dimensions (project core, user needs, developer profile, long-term memory, skill feedback). Delegates to csp-remember, csp-learner, skill-optimizer, csp-compound. [PLANNED] Runs at Stop/PreCompact/S",
       "category": "runtime",
       "layer": "L4",
       "layer_name": "Runtime",
@@ -5755,7 +7328,10 @@ const CSP_DATA = {
       "layer_color": "#f97316",
       "triggers": {
         "en": [
-          "csp-scientist"
+          "csp-scientist",
+          "fix scientist",
+          "review scientist",
+          "scientist"
         ],
         "zh": []
       }
@@ -5811,9 +7387,13 @@ const CSP_DATA = {
       "layer_color": "#f97316",
       "triggers": {
         "en": [
-          "csp-skill"
+          "csp-skill",
+          "fix skill",
+          "review skill"
         ],
-        "zh": []
+        "zh": [
+          "skill 技能"
+        ]
       }
     },
     {
@@ -5951,7 +7531,12 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-advisor-researcher"
+          "csp-advisor-researcher",
+          "advisor",
+          "advisor researcher",
+          "advisor-researcher",
+          "fix advisor researcher",
+          "review advisor researcher"
         ],
         "zh": []
       }
@@ -5965,7 +7550,12 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-ai-researcher"
+          "csp-ai-researcher",
+          "ai researcher",
+          "ai-researcher",
+          "fix ai researcher",
+          "researcher",
+          "review ai researcher"
         ],
         "zh": []
       }
@@ -5979,7 +7569,12 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-assumptions-analyzer"
+          "csp-assumptions-analyzer",
+          "assumptions",
+          "assumptions analyzer",
+          "assumptions-analyzer",
+          "fix assumptions analyzer",
+          "review assumptions analyzer"
         ],
         "zh": []
       }
@@ -5993,7 +7588,12 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-code-fixer"
+          "csp-code-fixer",
+          "code",
+          "code fixer",
+          "code-fixer",
+          "fix code fixer",
+          "review code fixer"
         ],
         "zh": []
       }
@@ -6021,9 +7621,16 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-debug-session-manager"
+          "csp-debug-session-manager",
+          "debug",
+          "debug session manager",
+          "debug-session-manager",
+          "fix debug session manager",
+          "review debug session manager"
         ],
-        "zh": []
+        "zh": [
+          "debug session manager 调试"
+        ]
       }
     },
     {
@@ -6035,7 +7642,11 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-doc-classifier"
+          "csp-doc-classifier",
+          "doc classifier",
+          "doc-classifier",
+          "fix doc classifier",
+          "review doc classifier"
         ],
         "zh": []
       }
@@ -6049,7 +7660,11 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-doc-synthesizer"
+          "csp-doc-synthesizer",
+          "doc synthesizer",
+          "doc-synthesizer",
+          "fix doc synthesizer",
+          "review doc synthesizer"
         ],
         "zh": []
       }
@@ -6063,7 +7678,11 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-doc-verifier"
+          "csp-doc-verifier",
+          "doc verifier",
+          "doc-verifier",
+          "fix doc verifier",
+          "review doc verifier"
         ],
         "zh": []
       }
@@ -6077,7 +7696,11 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-doc-writer"
+          "csp-doc-writer",
+          "doc writer",
+          "doc-writer",
+          "fix doc writer",
+          "review doc writer"
         ],
         "zh": []
       }
@@ -6091,7 +7714,12 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-domain-researcher"
+          "csp-domain-researcher",
+          "domain",
+          "domain researcher",
+          "domain-researcher",
+          "fix domain researcher",
+          "review domain researcher"
         ],
         "zh": []
       }
@@ -6105,7 +7733,11 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-eval-auditor"
+          "csp-eval-auditor",
+          "eval auditor",
+          "eval-auditor",
+          "fix eval auditor",
+          "review eval auditor"
         ],
         "zh": []
       }
@@ -6119,7 +7751,11 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-eval-planner"
+          "csp-eval-planner",
+          "eval planner",
+          "eval-planner",
+          "fix eval planner",
+          "review eval planner"
         ],
         "zh": []
       }
@@ -6133,7 +7769,12 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-framework-selector"
+          "csp-framework-selector",
+          "fix framework selector",
+          "framework",
+          "framework selector",
+          "framework-selector",
+          "review framework selector"
         ],
         "zh": []
       }
@@ -6147,7 +7788,12 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-integration-checker"
+          "csp-integration-checker",
+          "fix integration checker",
+          "integration",
+          "integration checker",
+          "integration-checker",
+          "review integration checker"
         ],
         "zh": []
       }
@@ -6161,7 +7807,11 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-intel-updater"
+          "csp-intel-updater",
+          "fix intel updater",
+          "intel updater",
+          "intel-updater",
+          "review intel updater"
         ],
         "zh": []
       }
@@ -6175,7 +7825,12 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-nyquist-auditor"
+          "csp-nyquist-auditor",
+          "fix nyquist auditor",
+          "nyquist",
+          "nyquist auditor",
+          "nyquist-auditor",
+          "review nyquist auditor"
         ],
         "zh": []
       }
@@ -6189,7 +7844,12 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-pattern-mapper"
+          "csp-pattern-mapper",
+          "fix pattern mapper",
+          "pattern",
+          "pattern mapper",
+          "pattern-mapper",
+          "review pattern mapper"
         ],
         "zh": []
       }
@@ -6203,9 +7863,16 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-phase-researcher"
+          "csp-phase-researcher",
+          "fix phase researcher",
+          "phase",
+          "phase researcher",
+          "phase-researcher",
+          "review phase researcher"
         ],
-        "zh": []
+        "zh": [
+          "phase researcher 阶段"
+        ]
       }
     },
     {
@@ -6217,9 +7884,16 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-plan-checker"
+          "csp-plan-checker",
+          "plan",
+          "fix plan checker",
+          "plan checker",
+          "plan-checker",
+          "review plan checker"
         ],
-        "zh": []
+        "zh": [
+          "plan checker 规划"
+        ]
       }
     },
     {
@@ -6231,9 +7905,15 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-project-researcher"
+          "csp-project-researcher",
+          "fix project researcher",
+          "project researcher",
+          "project-researcher",
+          "review project researcher"
         ],
-        "zh": []
+        "zh": [
+          "project researcher 项目"
+        ]
       }
     },
     {
@@ -6245,9 +7925,16 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-research-synthesizer"
+          "csp-research-synthesizer",
+          "fix research synthesizer",
+          "research",
+          "research synthesizer",
+          "research-synthesizer",
+          "review research synthesizer"
         ],
-        "zh": []
+        "zh": [
+          "research synthesizer 研究"
+        ]
       }
     },
     {
@@ -6259,7 +7946,10 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-roadmapper"
+          "csp-roadmapper",
+          "fix roadmapper",
+          "review roadmapper",
+          "roadmapper"
         ],
         "zh": []
       }
@@ -6273,9 +7963,16 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-security-auditor"
+          "csp-security-auditor",
+          "security",
+          "fix security auditor",
+          "review security auditor",
+          "security auditor",
+          "security-auditor"
         ],
-        "zh": []
+        "zh": [
+          "security auditor 安全"
+        ]
       }
     },
     {
@@ -6287,7 +7984,11 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-ui-auditor"
+          "csp-ui-auditor",
+          "fix ui auditor",
+          "review ui auditor",
+          "ui auditor",
+          "ui-auditor"
         ],
         "zh": []
       }
@@ -6301,7 +8002,12 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-ui-checker"
+          "csp-ui-checker",
+          "checker",
+          "fix ui checker",
+          "review ui checker",
+          "ui checker",
+          "ui-checker"
         ],
         "zh": []
       }
@@ -6315,7 +8021,12 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-ui-researcher"
+          "csp-ui-researcher",
+          "fix ui researcher",
+          "researcher",
+          "review ui researcher",
+          "ui researcher",
+          "ui-researcher"
         ],
         "zh": []
       }
@@ -6329,7 +8040,12 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-user-profiler"
+          "csp-user-profiler",
+          "fix user profiler",
+          "review user profiler",
+          "user",
+          "user profiler",
+          "user-profiler"
         ],
         "zh": []
       }
@@ -6343,7 +8059,12 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-add-tests"
+          "csp-add-tests",
+          "add",
+          "add tests",
+          "add-tests",
+          "fix add tests",
+          "review add tests"
         ],
         "zh": []
       }
@@ -6357,7 +8078,12 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-ai-integration-phase"
+          "csp-ai-integration-phase",
+          "ai integration phase",
+          "ai-integration-phase",
+          "fix ai integration phase",
+          "integration",
+          "review ai integration phase"
         ],
         "zh": []
       }
@@ -6388,9 +8114,16 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-audit-fix"
+          "csp-audit-fix",
+          "audit",
+          "audit fix",
+          "audit-fix",
+          "fix audit fix",
+          "review audit fix"
         ],
-        "zh": []
+        "zh": [
+          "audit fix 审计"
+        ]
       }
     },
     {
@@ -6402,9 +8135,16 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-audit-milestone"
+          "csp-audit-milestone",
+          "audit",
+          "audit milestone",
+          "audit-milestone",
+          "fix audit milestone",
+          "review audit milestone"
         ],
-        "zh": []
+        "zh": [
+          "audit milestone 审计"
+        ]
       }
     },
     {
@@ -6416,9 +8156,16 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-audit-uat"
+          "csp-audit-uat",
+          "audit",
+          "audit uat",
+          "audit-uat",
+          "fix audit uat",
+          "review audit uat"
         ],
-        "zh": []
+        "zh": [
+          "audit uat 审计"
+        ]
       }
     },
     {
@@ -6430,7 +8177,9 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-autonomous"
+          "csp-autonomous",
+          "fix autonomous",
+          "review autonomous"
         ],
         "zh": []
       }
@@ -6444,7 +8193,10 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-capture"
+          "csp-capture",
+          "capture",
+          "fix capture",
+          "review capture"
         ],
         "zh": []
       }
@@ -6458,7 +8210,10 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-cleanup"
+          "csp-cleanup",
+          "cleanup",
+          "fix cleanup",
+          "review cleanup"
         ],
         "zh": []
       }
@@ -6472,7 +8227,12 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-complete-milestone"
+          "csp-complete-milestone",
+          "complete",
+          "complete milestone",
+          "complete-milestone",
+          "fix complete milestone",
+          "review complete milestone"
         ],
         "zh": []
       }
@@ -6486,9 +8246,14 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-config"
+          "csp-config",
+          "config",
+          "fix config",
+          "review config"
         ],
-        "zh": []
+        "zh": [
+          "config 配置"
+        ]
       }
     },
     {
@@ -6500,7 +8265,12 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-discuss-phase"
+          "csp-discuss-phase",
+          "discuss",
+          "discuss phase",
+          "discuss-phase",
+          "fix discuss phase",
+          "review discuss phase"
         ],
         "zh": []
       }
@@ -6528,9 +8298,15 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-eval-review"
+          "csp-eval-review",
+          "eval code review",
+          "eval review",
+          "eval-review",
+          "review eval code"
         ],
-        "zh": []
+        "zh": [
+          "eval 审查"
+        ]
       }
     },
     {
@@ -6557,7 +8333,11 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-extract-learnings"
+          "csp-extract-learnings",
+          "extract",
+          "extract-learnings",
+          "fix extract learnings",
+          "review extract learnings"
         ],
         "zh": []
       }
@@ -6571,7 +8351,10 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-fast"
+          "csp-fast",
+          "fast",
+          "fix fast",
+          "review fast"
         ],
         "zh": []
       }
@@ -6585,7 +8368,10 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-forensics"
+          "csp-forensics",
+          "fix forensics",
+          "forensics",
+          "review forensics"
         ],
         "zh": []
       }
@@ -6599,7 +8385,10 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-graphify"
+          "csp-graphify",
+          "fix graphify",
+          "graphify",
+          "review graphify"
         ],
         "zh": []
       }
@@ -6613,7 +8402,10 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-health"
+          "csp-health",
+          "fix health",
+          "health",
+          "review health"
         ],
         "zh": []
       }
@@ -6642,7 +8434,10 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-import"
+          "csp-import",
+          "fix import",
+          "import",
+          "review import"
         ],
         "zh": []
       }
@@ -6656,7 +8451,10 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-inbox"
+          "csp-inbox",
+          "fix inbox",
+          "inbox",
+          "review inbox"
         ],
         "zh": []
       }
@@ -6670,7 +8468,29 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-ingest-docs"
+          "csp-ingest-docs",
+          "fix ingest docs",
+          "ingest",
+          "ingest docs",
+          "ingest-docs",
+          "review ingest docs"
+        ],
+        "zh": []
+      }
+    },
+    {
+      "name": "csp-lifecycle",
+      "description": "/csp-lifecycle [需求描述]",
+      "category": "workflow",
+      "layer": "L2",
+      "layer_name": "Workflow",
+      "layer_color": "#22c55e",
+      "triggers": {
+        "en": [
+          "csp-lifecycle",
+          "fix lifecycle",
+          "lifecycle",
+          "review lifecycle"
         ],
         "zh": []
       }
@@ -6684,7 +8504,9 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-manager"
+          "csp-manager",
+          "fix manager",
+          "review manager"
         ],
         "zh": []
       }
@@ -6716,9 +8538,16 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-milestone-summary"
+          "csp-milestone-summary",
+          "fix milestone summary",
+          "milestone",
+          "milestone summary",
+          "milestone-summary",
+          "review milestone summary"
         ],
-        "zh": []
+        "zh": [
+          "milestone summary 里程碑"
+        ]
       }
     },
     {
@@ -6730,7 +8559,12 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-mvp-phase"
+          "csp-mvp-phase",
+          "fix mvp phase",
+          "mvp",
+          "mvp phase",
+          "mvp-phase",
+          "review mvp phase"
         ],
         "zh": []
       }
@@ -6744,7 +8578,12 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-new-milestone"
+          "csp-new-milestone",
+          "fix new milestone",
+          "new",
+          "new milestone",
+          "new-milestone",
+          "review new milestone"
         ],
         "zh": []
       }
@@ -6758,7 +8597,12 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-new-project"
+          "csp-new-project",
+          "fix new project",
+          "new",
+          "new project",
+          "new-project",
+          "review new project"
         ],
         "zh": []
       }
@@ -6772,7 +8616,11 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-ns-context"
+          "csp-ns-context",
+          "fix ns context",
+          "ns context",
+          "ns-context",
+          "review ns context"
         ],
         "zh": []
       }
@@ -6786,7 +8634,12 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-ns-ideate"
+          "csp-ns-ideate",
+          "ideate",
+          "fix ns ideate",
+          "ns ideate",
+          "ns-ideate",
+          "review ns ideate"
         ],
         "zh": []
       }
@@ -6800,7 +8653,12 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-ns-manage"
+          "csp-ns-manage",
+          "fix ns manage",
+          "manage",
+          "ns manage",
+          "ns-manage",
+          "review ns manage"
         ],
         "zh": []
       }
@@ -6814,9 +8672,15 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-ns-project"
+          "csp-ns-project",
+          "fix ns project",
+          "ns project",
+          "ns-project",
+          "review ns project"
         ],
-        "zh": []
+        "zh": [
+          "ns project 项目"
+        ]
       }
     },
     {
@@ -6828,9 +8692,15 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-ns-review"
+          "csp-ns-review",
+          "ns code review",
+          "ns review",
+          "ns-review",
+          "review ns code"
         ],
-        "zh": []
+        "zh": [
+          "ns 审查"
+        ]
       }
     },
     {
@@ -6842,9 +8712,16 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-ns-workflow"
+          "csp-ns-workflow",
+          "fix ns workflow",
+          "ns workflow",
+          "ns-workflow",
+          "review ns workflow",
+          "workflow"
         ],
-        "zh": []
+        "zh": [
+          "ns workflow 工作流"
+        ]
       }
     },
     {
@@ -6856,7 +8733,12 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-pause-work"
+          "csp-pause-work",
+          "fix pause work",
+          "pause",
+          "pause work",
+          "pause-work",
+          "review pause work"
         ],
         "zh": []
       }
@@ -6870,9 +8752,14 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-phase"
+          "csp-phase",
+          "fix phase",
+          "phase",
+          "review phase"
         ],
-        "zh": []
+        "zh": [
+          "phase 阶段"
+        ]
       }
     },
     {
@@ -6909,9 +8796,16 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-plan-review-convergence"
+          "csp-plan-review-convergence",
+          "plan",
+          "fix plan review convergence",
+          "plan review convergence",
+          "plan-review-convergence",
+          "review plan review convergence"
         ],
-        "zh": []
+        "zh": [
+          "plan review convergence 规划"
+        ]
       }
     },
     {
@@ -6943,7 +8837,11 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-pr-branch"
+          "csp-pr-branch",
+          "fix pr branch",
+          "pr branch",
+          "pr-branch",
+          "review pr branch"
         ],
         "zh": []
       }
@@ -6957,7 +8855,12 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-profile-user"
+          "csp-profile-user",
+          "fix profile user",
+          "profile",
+          "profile user",
+          "profile-user",
+          "review profile user"
         ],
         "zh": []
       }
@@ -6971,7 +8874,10 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-progress"
+          "csp-progress",
+          "fix progress",
+          "progress",
+          "review progress"
         ],
         "zh": []
       }
@@ -7005,7 +8911,10 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-quick"
+          "csp-quick",
+          "fix quick",
+          "quick",
+          "review quick"
         ],
         "zh": []
       }
@@ -7019,7 +8928,12 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-resume-work"
+          "csp-resume-work",
+          "fix resume work",
+          "resume",
+          "resume work",
+          "resume-work",
+          "review resume work"
         ],
         "zh": []
       }
@@ -7033,9 +8947,16 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-review-backlog"
+          "csp-review-backlog",
+          "review",
+          "fix review backlog",
+          "review backlog",
+          "review review backlog",
+          "review-backlog"
         ],
-        "zh": []
+        "zh": [
+          "review backlog 审查"
+        ]
       }
     },
     {
@@ -7047,9 +8968,14 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-review"
+          "csp-review",
+          "review",
+          "fix review",
+          "review review"
         ],
-        "zh": []
+        "zh": [
+          "review 审查"
+        ]
       }
     },
     {
@@ -7076,7 +9002,10 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-settings"
+          "csp-settings",
+          "fix settings",
+          "review settings",
+          "settings"
         ],
         "zh": []
       }
@@ -7109,7 +9038,10 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-sketch"
+          "csp-sketch",
+          "fix sketch",
+          "review sketch",
+          "sketch"
         ],
         "zh": []
       }
@@ -7157,7 +9089,10 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-spike"
+          "csp-spike",
+          "fix spike",
+          "review spike",
+          "spike"
         ],
         "zh": []
       }
@@ -7171,7 +9106,10 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-stats"
+          "csp-stats",
+          "fix stats",
+          "review stats",
+          "stats"
         ],
         "zh": []
       }
@@ -7185,7 +9123,10 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-surface"
+          "csp-surface",
+          "fix surface",
+          "review surface",
+          "surface"
         ],
         "zh": []
       }
@@ -7199,7 +9140,10 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-thread"
+          "csp-thread",
+          "fix thread",
+          "review thread",
+          "thread"
         ],
         "zh": []
       }
@@ -7213,9 +9157,16 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-ui-phase"
+          "csp-ui-phase",
+          "fix ui phase",
+          "phase",
+          "review ui phase",
+          "ui phase",
+          "ui-phase"
         ],
-        "zh": []
+        "zh": [
+          "ui phase 阶段"
+        ]
       }
     },
     {
@@ -7227,9 +9178,15 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-ui-review"
+          "csp-ui-review",
+          "review ui code",
+          "ui code review",
+          "ui review",
+          "ui-review"
         ],
-        "zh": []
+        "zh": [
+          "ui 审查"
+        ]
       }
     },
     {
@@ -7241,7 +9198,12 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-ultraplan-phase"
+          "csp-ultraplan-phase",
+          "fix ultraplan phase",
+          "review ultraplan phase",
+          "ultraplan",
+          "ultraplan phase",
+          "ultraplan-phase"
         ],
         "zh": []
       }
@@ -7255,7 +9217,10 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-undo"
+          "csp-undo",
+          "fix undo",
+          "review undo",
+          "undo"
         ],
         "zh": []
       }
@@ -7269,9 +9234,14 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-update"
+          "csp-update",
+          "fix update",
+          "review update",
+          "update"
         ],
-        "zh": []
+        "zh": [
+          "update 更新"
+        ]
       }
     },
     {
@@ -7283,9 +9253,16 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-validate-phase"
+          "csp-validate-phase",
+          "fix validate phase",
+          "review validate phase",
+          "validate",
+          "validate phase",
+          "validate-phase"
         ],
-        "zh": []
+        "zh": [
+          "validate phase 验证"
+        ]
       }
     },
     {
@@ -7297,9 +9274,16 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-verify-work"
+          "csp-verify-work",
+          "verify",
+          "fix verify work",
+          "review verify work",
+          "verify work",
+          "verify-work"
         ],
-        "zh": []
+        "zh": [
+          "verify work 验证"
+        ]
       }
     },
     {
@@ -7311,9 +9295,14 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-workspace"
+          "csp-workspace",
+          "fix workspace",
+          "review workspace",
+          "workspace"
         ],
-        "zh": []
+        "zh": [
+          "workspace 工作区"
+        ]
       }
     },
     {
@@ -7325,7 +9314,29 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-workstreams"
+          "csp-workstreams",
+          "fix workstreams",
+          "review workstreams",
+          "workstreams"
+        ],
+        "zh": []
+      }
+    },
+    {
+      "name": "csp-codebase-audit",
+      "description": "Multi-dimensional codebase audit: parallel Explore agents investigate one dimension each (functionality/architecture/data/frontend/engineering-quality), high-risk findings are verified on-machine, then assembled into a single decision-source document (problem report + design + upgrade plan). Trigger",
+      "category": "workflow",
+      "layer": "L2",
+      "layer_name": "Workflow",
+      "layer_color": "#22c55e",
+      "triggers": {
+        "en": [
+          "csp-codebase-audit",
+          "codebase",
+          "codebase audit",
+          "codebase-audit",
+          "fix codebase audit",
+          "review codebase audit"
         ],
         "zh": []
       }
@@ -7339,7 +9350,11 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-compound-learning"
+          "csp-compound-learning",
+          "compound learning",
+          "compound-learning",
+          "fix compound learning",
+          "review compound learning"
         ],
         "zh": []
       }
@@ -7368,6 +9383,20 @@ const CSP_DATA = {
       "triggers": {
         "en": [
           "csp-deprecation-and-migration"
+        ],
+        "zh": []
+      }
+    },
+    {
+      "name": "csp-doc-lifecycle-manager",
+      "description": "Manage project documentation lifecycle: categorize, archive, index, and prune documents. Use when organizing docs into folders (design/plan/architecture/prototypes/reference), creating INDEX.md files, archiving obsolete docs, or doing documentation health checks. Triggers: 整理文档, doc cleanup, organiz",
+      "category": "workflow",
+      "layer": "L2",
+      "layer_name": "Workflow",
+      "layer_color": "#22c55e",
+      "triggers": {
+        "en": [
+          "csp-doc-lifecycle-manager"
         ],
         "zh": []
       }
@@ -7403,6 +9432,121 @@ const CSP_DATA = {
           "csp-full"
         ],
         "zh": []
+      }
+    },
+    {
+      "name": "csp-fullstack-spec-generator",
+      "description": "全栈技术规格生成器。为每个 Feature 生成完整的、可直接指导实现的技术规格文档，覆盖： UI/UX 原型描述、数据库 Schema（DDL 级）、API 契约（OpenAPI 级）、后端架构设计、 前端组件树、基础设施需求、测试策略、安全考量。 当技术选型完成后需要生成详细实现规格、或用户需要\"每个 feature 的完整技术细节\"时使用。 关键词：全栈spec、fullstack spec、技术规格、implementation spec、详细设计、 数据库设计、API设计、schema design、前端设计、组件设计、接口契约、 generate spec、生成规格、feature",
+      "category": "workflow",
+      "layer": "L2",
+      "layer_name": "Workflow",
+      "layer_color": "#22c55e",
+      "triggers": {
+        "en": [
+          "csp-fullstack-spec-generator",
+          "fix fullstack spec generator",
+          "fullstack",
+          "fullstack spec generator",
+          "fullstack-spec-generator",
+          "review fullstack spec generator"
+        ],
+        "zh": []
+      }
+    },
+    {
+      "name": "csp-graph-architecture",
+      "description": "Codebase architecture analysis via knowledge graph. Use when onboarding to a codebase, understanding module boundaries, detecting coupling issues, identifying hub/bridge nodes, or generating architecture documentation. Covers community detection, centrality analysis, surprise scoring, and visualizat",
+      "category": "workflow",
+      "layer": "L2",
+      "layer_name": "Workflow",
+      "layer_color": "#22c55e",
+      "triggers": {
+        "en": [
+          "csp-graph-architecture",
+          "fix graph architecture",
+          "graph",
+          "graph architecture",
+          "graph-architecture",
+          "review graph architecture"
+        ],
+        "zh": []
+      }
+    },
+    {
+      "name": "csp-graph-build",
+      "description": "Build and maintain the code knowledge graph. Use when indexing a new repository, updating a stale graph after changes, or diagnosing graph health issues. Covers initial build, incremental updates, custom language support, and graph integrity verification.",
+      "category": "workflow",
+      "layer": "L2",
+      "layer_name": "Workflow",
+      "layer_color": "#22c55e",
+      "triggers": {
+        "en": [
+          "csp-graph-build",
+          "fix graph build",
+          "graph build error",
+          "graph-build"
+        ],
+        "zh": [
+          "graph 构建错误"
+        ]
+      }
+    },
+    {
+      "name": "csp-graph-impact",
+      "description": "Graph-powered change impact analysis. Use when a diff or PR is ready and you need to understand blast radius, affected execution flows, and downstream dependents before reviewing. Covers change detection, weighted BFS traversal, flow tracing, and risk scoring.",
+      "category": "workflow",
+      "layer": "L2",
+      "layer_name": "Workflow",
+      "layer_color": "#22c55e",
+      "triggers": {
+        "en": [
+          "csp-graph-impact",
+          "fix graph impact",
+          "graph",
+          "graph impact",
+          "graph-impact",
+          "review graph impact"
+        ],
+        "zh": []
+      }
+    },
+    {
+      "name": "csp-graph-refactor",
+      "description": "Graph-powered safe refactoring. Use when renaming symbols, moving code between modules, extracting functions, detecting dead code, or validating that a refactoring won't break dependents. Covers rename preview, dependency-safe moves, dead code detection, and post-refactor verification.",
+      "category": "workflow",
+      "layer": "L2",
+      "layer_name": "Workflow",
+      "layer_color": "#22c55e",
+      "triggers": {
+        "en": [
+          "csp-graph-refactor",
+          "fix graph refactor",
+          "graph",
+          "graph refactor",
+          "graph-refactor",
+          "review graph refactor"
+        ],
+        "zh": []
+      }
+    },
+    {
+      "name": "csp-graph-review",
+      "description": "Graph-powered code review with minimal context assembly and risk scoring. Use when reviewing a PR or diff with graph support — assembles only the code the reviewer needs, scores risk structurally, and runs pre-merge checks. Enhances csp-code-review with structural awareness.",
+      "category": "workflow",
+      "layer": "L2",
+      "layer_name": "Workflow",
+      "layer_color": "#22c55e",
+      "triggers": {
+        "en": [
+          "csp-graph-review",
+          "graph code review",
+          "graph review",
+          "graph-review",
+          "review graph code"
+        ],
+        "zh": [
+          "graph 审查"
+        ]
       }
     },
     {
@@ -7445,6 +9589,22 @@ const CSP_DATA = {
       }
     },
     {
+      "name": "csp-indie-deploy-ops",
+      "description": "End-to-end deployment workflow for independent developers covering pre-deploy checks, zero-downtime deployment, rollback, and post-deploy verification. Use when deploying a web application, API, or service to production.",
+      "category": "workflow",
+      "layer": "L2",
+      "layer_name": "Workflow",
+      "layer_color": "#22c55e",
+      "triggers": {
+        "en": [
+          "csp-indie-deploy-ops",
+          "rollback",
+          "zero-downtime"
+        ],
+        "zh": []
+      }
+    },
+    {
       "name": "csp-legacy-modernization",
       "description": "End-to-end legacy modernization workflow covering assessment (codebase audit, dependency analysis, architecture review), planning (migration strategy, risk assessment, timeline), execution (incremental migration, strangler fig, parallel run), verification (regression testing, performance comparison,",
       "category": "workflow",
@@ -7459,8 +9619,27 @@ const CSP_DATA = {
       }
     },
     {
+      "name": "csp-lifecycle-orchestrator",
+      "description": "产品全生命周期编排引擎。串联需求拆解→技术选型→全栈Spec→实施规划→并行开发→测试→审查→发布→运维 的完整链路，管理阶段间产物流转、门控检查、动态路由和迭代推进。 是 csp-requirement-decomposition、csp-tech-stack-advisor、csp-fullstack-spec-generator 的 上层编排器，同时与 csp-full 互补（csp-full 侧重执行，本 skill 侧重规格化拆解与选型）。 当用户需要\"从需求到上线的完整流程\"、\"自动化产品开发全链路\"时使用。 关键词：全生命周期、lifecycle、端到端编排、产品迭代、从需求到上",
+      "category": "workflow",
+      "layer": "L2",
+      "layer_name": "Workflow",
+      "layer_color": "#22c55e",
+      "triggers": {
+        "en": [
+          "csp-lifecycle-orchestrator",
+          "fix lifecycle orchestrator",
+          "lifecycle",
+          "lifecycle orchestrator",
+          "lifecycle-orchestrator",
+          "review lifecycle orchestrator"
+        ],
+        "zh": []
+      }
+    },
+    {
       "name": "csp-multi-review",
-      "description": "Structured code review using tiered persona agents, confidence-gated findings, and a merge/dedup pipeline. Use when comprehensive review is needed before creating a PR.",
+      "description": "Structured code review using tiered persona agents, confidence-gated findings, and a merge/dedup pipeline. Use when comprehensive review is needed before creating a PR. Supports graph-enhanced context when code knowledge graph is available.",
       "category": "workflow",
       "layer": "L2",
       "layer_name": "Workflow",
@@ -7501,6 +9680,53 @@ const CSP_DATA = {
       }
     },
     {
+      "name": "csp-project-doc-architect",
+      "description": "Design and maintain project documentation architecture: folder structure, naming conventions, index files, and cross-references. Use when setting up docs for a new project, restructuring existing docs, or creating documentation standards. Triggers: 文档架构, doc structure, 文件夹结构, documentation architect",
+      "category": "workflow",
+      "layer": "L2",
+      "layer_name": "Workflow",
+      "layer_color": "#22c55e",
+      "triggers": {
+        "en": [
+          "csp-project-doc-architect"
+        ],
+        "zh": []
+      }
+    },
+    {
+      "name": "csp-requirement-decomposition",
+      "description": "需求全维度拆解引擎。将模糊需求/PRD/想法彻底分解为原子级 Feature，每个 Feature 附带用户故事、 验收标准、前后端边界、数据实体、技术维度和依赖关系。 当用户给出一个产品需求、功能描述、或想要从零构建系统时，第一步使用此 skill 进行结构化拆解。 关键词：需求拆解、feature 分解、requirement decomposition、break down requirements、 拆解需求、功能拆分、feature breakdown、需求分析、feature list、功能清单、 拆解功能、分解需求、analyze requirements、feature ext",
+      "category": "workflow",
+      "layer": "L2",
+      "layer_name": "Workflow",
+      "layer_color": "#22c55e",
+      "triggers": {
+        "en": [
+          "csp-requirement-decomposition",
+          "fix requirement decomposition",
+          "requirement",
+          "requirement decomposition",
+          "requirement-decomposition",
+          "review requirement decomposition"
+        ],
+        "zh": []
+      }
+    },
+    {
+      "name": "csp-session-knowledge-extractor",
+      "description": "Extract reusable knowledge from development sessions and route to appropriate documentation stores. Use after completing a sprint, finishing a complex task, or when session discoveries should be preserved. Triggers: 提炼经验, 沉淀知识, session review, extract learnings, 会话总结, knowledge capture, 经验提取.",
+      "category": "workflow",
+      "layer": "L2",
+      "layer_name": "Workflow",
+      "layer_color": "#22c55e",
+      "triggers": {
+        "en": [
+          "csp-session-knowledge-extractor"
+        ],
+        "zh": []
+      }
+    },
+    {
       "name": "csp-shipping-and-launch",
       "description": "Prepares production launches. Use when preparing to deploy to production. Use when you need a pre-launch checklist, when setting up monitoring, when planning a staged rollout, or when you need a rollback strategy.",
       "category": "workflow",
@@ -7515,6 +9741,23 @@ const CSP_DATA = {
       }
     },
     {
+      "name": "csp-solo-oncall",
+      "description": "Structured incident response workflow for solo developers and small teams. Use when a production issue is detected, when you're the only person on call, or when you need a calm, repeatable process for diagnosing and resolving live incidents.",
+      "category": "workflow",
+      "layer": "L2",
+      "layer_name": "Workflow",
+      "layer_color": "#22c55e",
+      "triggers": {
+        "en": [
+          "csp-solo-oncall",
+          "on-call",
+          "incident",
+          "production issue"
+        ],
+        "zh": []
+      }
+    },
+    {
       "name": "csp-strategy",
       "description": "Create or maintain STRATEGY.md - the product's target problem, approach, users, key metrics, and tracks of work. Use when starting a new product, updating direction, or when prompts like 'write our strategy', 'update the roadmap', 'what are we working on', or 'set up the strategy doc' come up. Also ",
       "category": "workflow",
@@ -7524,6 +9767,42 @@ const CSP_DATA = {
       "triggers": {
         "en": [
           "csp-strategy"
+        ],
+        "zh": []
+      }
+    },
+    {
+      "name": "csp-tech-debt-paydown",
+      "description": "Structured approach to identifying, prioritizing, and paying down technical debt. Use when the codebase has accumulated cruft, when velocity is declining, or when planning a refactoring sprint. Helps solo developers decide what to fix now vs later.",
+      "category": "workflow",
+      "layer": "L2",
+      "layer_name": "Workflow",
+      "layer_color": "#22c55e",
+      "triggers": {
+        "en": [
+          "csp-tech-debt-paydown",
+          "refactor",
+          "tech debt",
+          "technical debt"
+        ],
+        "zh": []
+      }
+    },
+    {
+      "name": "csp-tech-stack-advisor",
+      "description": "全栈技术选型决策引擎。基于 Feature 需求的技术维度，为每个 Feature 和系统整体推荐最优技术栈： 主语言、Web 框架、数据库、缓存、消息队列、AI 框架、向量库、搜索引擎、实时通信、 对象存储、任务调度、监控可观测性等。输出结构化技术决策记录(ADR)和选型理由。 当需求拆解完成后需要进行技术选型、或用户询问\"用什么技术\"时使用。 关键词：技术选型、tech stack、technology selection、架构选型、技术栈推荐、 用什么数据库、用什么框架、tech decision、ADR、技术决策、选型建议、 消息队列选型、AI框架、向量库选择、database sel",
+      "category": "workflow",
+      "layer": "L2",
+      "layer_name": "Workflow",
+      "layer_color": "#22c55e",
+      "triggers": {
+        "en": [
+          "csp-tech-stack-advisor",
+          "fix tech stack advisor",
+          "review tech stack advisor",
+          "tech",
+          "tech stack advisor",
+          "tech-stack-advisor"
         ],
         "zh": []
       }
@@ -7582,7 +9861,12 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-add-backlog"
+          "csp-add-backlog",
+          "add",
+          "add backlog",
+          "add-backlog",
+          "fix add backlog",
+          "review add backlog"
         ],
         "zh": []
       }
@@ -7596,7 +9880,12 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-add-phase"
+          "csp-add-phase",
+          "add",
+          "add phase",
+          "add-phase",
+          "fix add phase",
+          "review add phase"
         ],
         "zh": []
       }
@@ -7610,7 +9899,12 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-add-todo"
+          "csp-add-todo",
+          "add",
+          "add todo",
+          "add-todo",
+          "fix add todo",
+          "review add todo"
         ],
         "zh": []
       }
@@ -7624,7 +9918,33 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-analyze-dependencies"
+          "csp-analyze-dependencies",
+          "analyze",
+          "analyze dependencies",
+          "analyze-dependencies",
+          "fix analyze dependencies",
+          "review analyze dependencies"
+        ],
+        "zh": [
+          "analyze dependencies 分析"
+        ]
+      }
+    },
+    {
+      "name": "csp-bugfix-chain",
+      "description": "Chains the full bug fix lifecycle — debug → fix → tdd → verify — into a single",
+      "category": "workflow",
+      "layer": "L2",
+      "layer_name": "Workflow",
+      "layer_color": "#22c55e",
+      "triggers": {
+        "en": [
+          "csp-bugfix-chain",
+          "bugfix",
+          "bugfix chain",
+          "bugfix-chain",
+          "fix bugfix chain",
+          "review bugfix chain"
         ],
         "zh": []
       }
@@ -7638,7 +9958,12 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-check-todos"
+          "csp-check-todos",
+          "check",
+          "check todos",
+          "check-todos",
+          "fix check todos",
+          "review check todos"
         ],
         "zh": []
       }
@@ -7652,7 +9977,12 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-code-review-fix"
+          "csp-code-review-fix",
+          "code",
+          "code review fix",
+          "code-review-fix",
+          "fix code review fix",
+          "review code review fix"
         ],
         "zh": []
       }
@@ -7666,7 +9996,12 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-diagnose-issues"
+          "csp-diagnose-issues",
+          "diagnose",
+          "diagnose issues",
+          "diagnose-issues",
+          "fix diagnose issues",
+          "review diagnose issues"
         ],
         "zh": []
       }
@@ -7680,7 +10015,12 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-discovery-phase"
+          "csp-discovery-phase",
+          "discovery",
+          "discovery phase",
+          "discovery-phase",
+          "fix discovery phase",
+          "review discovery phase"
         ],
         "zh": []
       }
@@ -7694,7 +10034,12 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-discuss-phase-assumptions"
+          "csp-discuss-phase-assumptions",
+          "discuss",
+          "discuss phase assumptions",
+          "discuss-phase-assumptions",
+          "fix discuss phase assumptions",
+          "review discuss phase assumptions"
         ],
         "zh": []
       }
@@ -7708,7 +10053,12 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-discuss-phase-power"
+          "csp-discuss-phase-power",
+          "discuss",
+          "discuss phase power",
+          "discuss-phase-power",
+          "fix discuss phase power",
+          "review discuss phase power"
         ],
         "zh": []
       }
@@ -7722,7 +10072,10 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-do"
+          "csp-do",
+          "do",
+          "fix do",
+          "review do"
         ],
         "zh": []
       }
@@ -7736,7 +10089,12 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-edit-phase"
+          "csp-edit-phase",
+          "edit",
+          "edit phase",
+          "edit-phase",
+          "fix edit phase",
+          "review edit phase"
         ],
         "zh": []
       }
@@ -7750,7 +10108,12 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-execute-plan"
+          "csp-execute-plan",
+          "execute",
+          "execute plan",
+          "execute-plan",
+          "fix execute plan",
+          "review execute plan"
         ],
         "zh": []
       }
@@ -7764,7 +10127,10 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-graduation"
+          "csp-graduation",
+          "fix graduation",
+          "graduation",
+          "review graduation"
         ],
         "zh": []
       }
@@ -7778,7 +10144,12 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-insert-phase"
+          "csp-insert-phase",
+          "fix insert phase",
+          "insert",
+          "insert phase",
+          "insert-phase",
+          "review insert phase"
         ],
         "zh": []
       }
@@ -7792,7 +10163,12 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-list-phase-assumptions"
+          "csp-list-phase-assumptions",
+          "fix list phase assumptions",
+          "list",
+          "list phase assumptions",
+          "list-phase-assumptions",
+          "review list phase assumptions"
         ],
         "zh": []
       }
@@ -7806,7 +10182,12 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-list-workspaces"
+          "csp-list-workspaces",
+          "fix list workspaces",
+          "list",
+          "list workspaces",
+          "list-workspaces",
+          "review list workspaces"
         ],
         "zh": []
       }
@@ -7820,7 +10201,12 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-new-workspace"
+          "csp-new-workspace",
+          "fix new workspace",
+          "new",
+          "new workspace",
+          "new-workspace",
+          "review new workspace"
         ],
         "zh": []
       }
@@ -7834,7 +10220,10 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-next"
+          "csp-next",
+          "fix next",
+          "next",
+          "review next"
         ],
         "zh": []
       }
@@ -7848,7 +10237,12 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-node-repair"
+          "csp-node-repair",
+          "fix node repair",
+          "node",
+          "node repair",
+          "node-repair",
+          "review node repair"
         ],
         "zh": []
       }
@@ -7862,7 +10256,10 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-note"
+          "csp-note",
+          "fix note",
+          "note",
+          "review note"
         ],
         "zh": []
       }
@@ -7876,9 +10273,16 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-plan-milestone-gaps"
+          "csp-plan-milestone-gaps",
+          "plan",
+          "fix plan milestone gaps",
+          "plan milestone gaps",
+          "plan-milestone-gaps",
+          "review plan milestone gaps"
         ],
-        "zh": []
+        "zh": [
+          "plan milestone gaps 规划"
+        ]
       }
     },
     {
@@ -7890,7 +10294,12 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-plant-seed"
+          "csp-plant-seed",
+          "fix plant seed",
+          "plant",
+          "plant seed",
+          "plant-seed",
+          "review plant seed"
         ],
         "zh": []
       }
@@ -7904,7 +10313,12 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-reapply-patches"
+          "csp-reapply-patches",
+          "fix reapply patches",
+          "reapply",
+          "reapply patches",
+          "reapply-patches",
+          "review reapply patches"
         ],
         "zh": []
       }
@@ -7918,7 +10332,12 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-remove-phase"
+          "csp-remove-phase",
+          "fix remove phase",
+          "remove",
+          "remove phase",
+          "remove-phase",
+          "review remove phase"
         ],
         "zh": []
       }
@@ -7932,7 +10351,12 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-remove-workspace"
+          "csp-remove-workspace",
+          "fix remove workspace",
+          "remove",
+          "remove workspace",
+          "remove-workspace",
+          "review remove workspace"
         ],
         "zh": []
       }
@@ -7946,7 +10370,12 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-resume-project"
+          "csp-resume-project",
+          "fix resume project",
+          "resume",
+          "resume project",
+          "resume-project",
+          "review resume project"
         ],
         "zh": []
       }
@@ -7960,9 +10389,14 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-scan"
+          "csp-scan",
+          "fix scan",
+          "review scan",
+          "scan"
         ],
-        "zh": []
+        "zh": [
+          "scan 扫描"
+        ]
       }
     },
     {
@@ -7974,9 +10408,16 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-session-report"
+          "csp-session-report",
+          "fix session report",
+          "review session report",
+          "session",
+          "session report",
+          "session-report"
         ],
-        "zh": []
+        "zh": [
+          "session report 会话"
+        ]
       }
     },
     {
@@ -7988,7 +10429,12 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-settings-advanced"
+          "csp-settings-advanced",
+          "fix settings advanced",
+          "review settings advanced",
+          "settings",
+          "settings advanced",
+          "settings-advanced"
         ],
         "zh": []
       }
@@ -8002,7 +10448,12 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-settings-integrations"
+          "csp-settings-integrations",
+          "fix settings integrations",
+          "review settings integrations",
+          "settings",
+          "settings integrations",
+          "settings-integrations"
         ],
         "zh": []
       }
@@ -8016,7 +10467,12 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-sketch-wrap-up"
+          "csp-sketch-wrap-up",
+          "fix sketch wrap up",
+          "review sketch wrap up",
+          "sketch",
+          "sketch wrap up",
+          "sketch-wrap-up"
         ],
         "zh": []
       }
@@ -8030,7 +10486,12 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-spike-wrap-up"
+          "csp-spike-wrap-up",
+          "fix spike wrap up",
+          "review spike wrap up",
+          "spike",
+          "spike wrap up",
+          "spike-wrap-up"
         ],
         "zh": []
       }
@@ -8044,7 +10505,12 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-sync-skills"
+          "csp-sync-skills",
+          "fix sync skills",
+          "review sync skills",
+          "sync",
+          "sync skills",
+          "sync-skills"
         ],
         "zh": []
       }
@@ -8058,7 +10524,10 @@ const CSP_DATA = {
       "layer_color": "#22c55e",
       "triggers": {
         "en": [
-          "csp-transition"
+          "csp-transition",
+          "fix transition",
+          "review transition",
+          "transition"
         ],
         "zh": []
       }

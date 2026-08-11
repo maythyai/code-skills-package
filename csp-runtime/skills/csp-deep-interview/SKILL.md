@@ -6,6 +6,7 @@ pipeline: [deep-interview, plan]
 handoff-policy: approval-required
 handoff: .csp/specs/deep-interview-{slug}.md
 layer: 3
+phase: build
 ---
 
 | Dimension | Question Type | Example |

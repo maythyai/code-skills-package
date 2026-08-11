@@ -21,6 +21,8 @@ description: |
   如果用户只是要求代码审查、bug 修复、解释概念或单文件修改，不要使用。
 layer: 2
 category: workflow
+phase: build
+domain: patterns
 ---
 
 | 维度 | 简单工作流 | 完整工作流 |

@@ -1,8 +1,8 @@
 # Skills, Agents & Scripts 综合索引
 
-> 生成时间：2026-06-20
-> 版本：v0.7.0 — 状态感知路由 + 置信度评分 + SKILL.md v2 规范
-> 状态：585 个技能分布于 5 个层级，支持状态感知和置信度路由
+> 生成时间：2026-08-11
+> 版本：v0.8.0 — 状态感知路由 + 置信度评分 + SKILL.md v2 规范
+> 状态：594 个技能分布于 5 个层级，支持状态感知和置信度路由
 
 ---
 
@@ -302,11 +302,11 @@
 | `ai-slop-cleaner`  **Runtime** | AI 代码清理 | ✅ 保留（独特） |
 | `self-improve`  **Runtime** | 自我改进 | ✅ 保留（独特） |
 | `writing-skills` | SP | 技能撰写方法论 | ✅ 保留 |
-| `csp-workflow-schema` | CSP-Native | 声明式 JSON 工作流引擎 | ✅ v0.7.0 新增 |
-| `csp-budget-enforcer` | CSP-Native | 四级 Token 预算降级管理 | ✅ v0.7.0 新增 |
-| `csp-parallel-worktree` | CSP-Native | 并行任务自动 worktree 分配 | ✅ v0.7.0 新增 |
-| `csp-complexity-classifier` | CSP-Native | 启发式任务复杂度分类 | ✅ v0.7.0 新增 |
-| `csp-model-selector` | CSP-Native | 复杂度→模型自动映射 | ✅ v0.7.0 新增 |
+| `csp-workflow-schema` | CSP-Native | 声明式 JSON 工作流引擎 | ✅ v0.8.0 新增 |
+| `csp-budget-enforcer` | CSP-Native | 四级 Token 预算降级管理 | ✅ v0.8.0 新增 |
+| `csp-parallel-worktree` | CSP-Native | 并行任务自动 worktree 分配 | ✅ v0.8.0 新增 |
+| `csp-complexity-classifier` | CSP-Native | 启发式任务复杂度分类 | ✅ v0.8.0 新增 |
+| `csp-model-selector` | CSP-Native | 复杂度→模型自动映射 | ✅ v0.8.0 新增 |
 
 ### 14. 项目管理（GSD 核心，全部保留）
 

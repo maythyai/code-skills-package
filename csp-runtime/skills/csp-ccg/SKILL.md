@@ -3,6 +3,8 @@ name: csp-ccg
 description: Claude-Codex-Gemini tri-model orchestration via /ask codex + /ask gemini, then Claude synthesizes results
 layer: 5
 category: runtime
+domain: architecture
+phase: build
 ---
 
 # CCG - Claude-Codex-Gemini Tri-Model Orchestration

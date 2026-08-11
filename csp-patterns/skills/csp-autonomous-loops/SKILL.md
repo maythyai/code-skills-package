@@ -4,6 +4,8 @@ description: "Patterns and architectures for autonomous Claude Code loops — fr
 origin: CSP
 layer: 4
 category: patterns
+domain: patterns
+phase: build
 ---
 
 | Pattern | Complexity | Best For |

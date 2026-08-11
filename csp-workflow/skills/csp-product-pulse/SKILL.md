@@ -11,6 +11,8 @@ allowed-tools:
   - AskUserQuestion
 layer: 2
 category: workflow
+domain: patterns
+phase: build
 ---
 
 ## Headless Mode

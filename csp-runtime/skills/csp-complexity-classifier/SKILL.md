@@ -6,6 +6,8 @@ description: >
   and model selection. Use automatically before task execution.
 layer: 4
 category: runtime
+domain: architecture
+phase: build
 ---
 
 # CSP Complexity Classifier

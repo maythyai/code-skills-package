@@ -8,6 +8,8 @@ description: >
 layer: 4
 origin: merged(agent-skills+CSP)
 category: patterns
+domain: patterns
+phase: build
 ---
 
 | Smell | Fix |

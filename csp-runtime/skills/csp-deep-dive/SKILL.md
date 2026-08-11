@@ -13,6 +13,8 @@ next-skill-args: --consensus --direct
 handoff: .csp/specs/deep-dive-{slug}.md
 layer: 5
 category: runtime
+domain: architecture
+phase: build
 ---
 
 | Hypothesis | Evidence | Confidence | Strength | Verdict |

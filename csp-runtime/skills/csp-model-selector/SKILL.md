@@ -7,6 +7,8 @@ description: >
   Use automatically during task routing.
 layer: 4
 category: runtime
+domain: architecture
+phase: build
 ---
 
 # CSP Model Selector

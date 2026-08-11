@@ -5,6 +5,8 @@ metadata:
   origin: CSP
 layer: 4
 category: patterns
+domain: patterns
+phase: build
 ---
 
 # Prompt Engineering

@@ -4,6 +4,8 @@ description: Worktree-first dev environment manager for issues, PRs, and feature
 aliases: [psm]
 layer: 2
 category: workflow
+domain: patterns
+phase: build
 ---
 
 | Command | Purpose | Example |

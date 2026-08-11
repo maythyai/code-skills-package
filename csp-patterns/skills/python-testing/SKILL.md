@@ -9,6 +9,8 @@ metadata:
   globs: ["**/*.py", "**/*.pyi"]
 layer: 4
 category: patterns
+phase: verify
+domain: patterns
 ---
 
 # Python Testing

@@ -4,6 +4,8 @@ description: Extracts what the user actually wants instead of what they think th
 layer: 1
 origin: agent-skills
 category: meta
+phase: plan
+domain: architecture
 ---
 
 | Objection | Response |

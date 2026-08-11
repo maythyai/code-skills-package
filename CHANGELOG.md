@@ -6,7 +6,57 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## Unreleased
 
-### 新增
+_Nothing yet._
+
+## [0.8.0] — 2026-08-11
+
+### Added
+- `csp-codebase-audit` skill (L2 workflow, phase: review, domain: architecture) — multi-dimensional codebase audit: parallel Explore agents per dimension (functionality / architecture / data / frontend / engineering-quality + 6 extension dims) + high-risk on-machine verification + single decision-source report (problem report / design / upgrade plan with testable acceptance criteria). Ported from the external `codebase-multidim-audit` skill and adapted to the SKILL.md v2 spec; reference prompts live in `references/dimensions.md`.
+
+### Security
+- `install.sh`: CSP_BRANCH is now whitelist-validated against `^[A-Za-z0-9._-]+$`. The previous blacklist (rejecting only space / semicolon / pipe) left `$()` and backtick command-substitution live, which expanded inside the double-quoted curl URL and `exec bash` path — a remote code-execution vector for `curl|bash` one-liners. Bootstrap re-exec switched from `exec bash` to a subshell so the EXIT trap reliably cleans the temp clone on any mid-run crash.
+
+### Fixed
+- `scripts/build-skpg.mjs`: guard `related_skills` with `Array.isArray` — `build:graph` no longer crashes with `TypeError: not iterable` on non-array frontmatter; the graph is rebuildable again.
+- `csp-runtime/skills/csp-hud/SKILL.md`: removed invalid `scope: ~/.claude/**` (not a v2 scope enum) — `validate:all` is green again (was red on master).
+- `package.json`: fixed broken npm script paths (`build:registry` / `build:page` / `verify:graph` pointed to `scripts/` but live in `shared/scripts/` → `MODULE_NOT_FOUND`); expanded `build:all` to the full 7-step pipeline (registry → metadata → generate-triggers → fix-triggers → graph → edges → index → page).
+- `bin/csp-sdk.mjs`: generic `verify.*` / `validate.*` / `check.*` fallbacks now return `status: unimplemented`; unknown subcommands throw and exit 1 instead of silently returning success.
+- `npm test` redefined to product tests (`validate:all` + `build:graph`); removed `csp-sdk doctor` from the suite (it gates on user-project dev state, not product health).
+- Synced version 0.7.1 → 0.8.0 across `install.sh` and `CLAUDE.md` via `sync-version.js`.
+- Fixed README `SKILL-INDEX.md` links (root 404 → `./docs/SKILL-INDEX.md`).
+- Rebuilt `skpg/graph.json` (was missing `csp-tech-diagram`; skill_count 584 → 587) and synced the `.csp/skpg/` runtime copy (was missing 1372 `depends_on`/`related_to` edges).
+
+### Changed
+- `package.json` `files` field: replaced the `"csp-router"` directory whitelist with explicit subpaths so `.bak` trigger snapshots no longer ship in the npm tarball (verified via `npm pack --dry-run`: 0 `.bak`).
+- Added `.npmignore` to exclude runtime/dev artifacts (`.csp/`, `.planning/`, `开源项目参考/`, `docs/analysis/`).
+- Added `"lib/"` to `files` so the split install.sh sources resolve after `npm i -g`.
+
+### Refactored (P2 architecture cleanup)
+- `install.sh` split: 1514 → 930 lines; platform metadata + sentinel/bootstrap generators extracted to `lib/platforms.sh` (101 lines, 4 functions) and `lib/bootstrap.sh` (497 lines, 20 functions), sourced via `${SCRIPT_DIR}/lib/*.sh`. `bash -n` clean, `--help`/`--list`/`--version`/`--dry-run` verified.
+- Unified YAML parser: `shared/scripts/lib/yaml.mjs` is now the single frontmatter parser; `build-skpg.mjs`, `validate-skill-v2.mjs`, `build-skill-metadata.mjs` all import it (three ad-hoc copies removed). The shared parser also handles `>-`/`|-` multiline indicators and block arrays under a key, which the old `build-skill-metadata` parser silently dropped — `skill-metadata.yaml` now captures `anti_rationalizations`, `dependencies`, `related_skills` previously lost.
+- `build-skpg.mjs` merged: `build:graph` now runs `build-skpg.mjs && build-skpg-edges.mjs` in one step (produces complete graph + sorted index + heuristic edges); deleted the redundant `rebuild-skpg-index.mjs` (`build-skpg.mjs` already writes a sorted `index.json`). `build:all` simplified from 8 → 6 steps. Graph is now 3913 edges (was 2353 — heuristic depends_on/related_to edges now always applied).
+- V2 frontmatter backfill: new `scripts/backfill-v2-frontmatter.mjs` infers `phase`/`domain` from category + name/description keywords + layer defaults; applied to 171 skills. V2 rate (phase+domain both present) rose from 6.5% → 92.2%.
+- Registry deprecation propagation: `build-registry.mjs` now reads `deprecated`/`redirect` from SKILL.md frontmatter into registry entries (previously the marker lived only in description text). 2 deprecated skills (`csp-code-reviewer`, `csp-planner`) now carry `deprecated: true` + `redirect:` programmatically; router can filter them.
+
+### Added (tooling)
+- `scripts/validate-registry.mjs` — JSON-schema-style validation for `registry.json` (top-level shape + per-skill fields + path existence + layer enum + deprecation-field types). Wired into `validate:all`; negative-tested to confirm it catches broken entries.
+- `test/csp-invariants.test.mjs` — 20 assertion-based invariant tests (registry shape, graph consistency, triggers integrity, version sync across VERSION/package.json/install.sh/CLAUDE.md/README, csp-sdk CLI contract, npm-pack hygiene). Wired into `npm test` via `node --test`.
+- `csp-sdk init-skill <name> --layer <1-4>` — scaffolds a validate-passing SKILL.md (v2 frontmatter + body template) in the right `csp-*/skills/` dir. Rejects invalid names and existing dirs.
+- `scripts/backfill-v2-frontmatter.mjs` — infers `phase`/`domain` from category + name/description keywords + layer defaults; surgical insertion preserves all existing content.
+- `scripts/integrate-qoderwork-skills.mjs` — one-shot port of selected self-contained skills into CSP (adapts frontmatter to v2, drops install metadata).
+- 7 skills ported from a curated skill collection to fill capability gaps: `csp-responsive-design`, `csp-data-analysis`, `csp-paper-reader`, `csp-file-organizer`, `csp-web-artifacts`, `csp-html-prototype`, `csp-frontend-design`. Registry now 594 skills.
+
+### Security (additional)
+- `install.sh` remote bootstrap now supports `CSP_SHA256` integrity pinning: the downloaded archive is hashed (`shasum -a 256` / `sha256sum`) and rejected on mismatch when `CSP_SHA256` is set; the actual hash is always printed so installers can pin it. Previously there was no integrity check at all.
+
+### IDE coverage expansion (18 → 22 platforms)
+- Added 4 platform adapters: **JetBrains (Junie)** → `.junie/guidelines.md`; **Cline** → `.cline/rules/csp.md` (`alwaysApply`); **Roo Code** → `.roo/rules/csp.md`; **Neovim (avante.nvim)** → `.avante/rules/csp.md`. Each adds `platform_name`/`platform_dir`/`platform_detect`/`resolve_alias` (lib/platforms.sh) + a `bootstrap_<name>` generator (lib/bootstrap.sh).
+- **Fixed pre-existing bug**: `install_for_platform_filtered` (the function `main` actually calls) had a bootstrap case covering only 10 of the 18 platforms — Cursor, Codex, DeerFlow, OpenCode, OpenClaw/Claw-Code, Qwen-Code got skills copied but NO routing bootstrap rule. Extracted the bootstrap-file writer into a shared `write_bootstrap_for_platform()` (lib/bootstrap.sh) now called by both install paths; all 22 platforms are covered in one place.
+- Added `shared/references/skill-loading-protocol.md` — the canonical routing contract for platforms lacking Claude Code's native `Skill` tool (the medium-term "Skill-loading compatibility layer" from the IDE-integration review).
+- `test/csp-invariants.test.mjs`: new "platform coverage" test verifies every `ALL_PLATFORMS` slug has metadata + a bootstrap generator + a write-bootstrap case (catches the bug class above).
+- Updated README/README_zh/INSTALL/ARCHITECTURE platform counts (18→22) and show_help/error-message platform lists.
+
+### 新增（prior Unreleased）
 - `csp-tech-diagram` — 确定性技术图引擎（14+ 图类型：架构/流程/序列/C4/云部署/事件流/运维/UML/ER/网络拓扑/时间线/思维导图），5 层几何校验 + 正交 Dijkstra 路由 + 12 风格 + 语义 GIF 动画 + 离线交互 HTML，集成 doc-lifecycle 文档资产管理与 doc-insight 结构提取
 
 ## v0.7.1 — 2026-07-04

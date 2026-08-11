@@ -4,6 +4,8 @@ description: Protocol-based dependency injection for testable Swift code — moc
 origin: CSP
 layer: 4
 category: patterns
+domain: patterns
+phase: build
 ---
 
 # Swift Protocol-Based Dependency Injection for Testing

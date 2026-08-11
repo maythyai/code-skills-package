@@ -4,6 +4,8 @@ description: Review requirements or plan documents using parallel persona agents
 argument-hint: "[mode:headless] [path/to/document.md]"
 layer: 1
 category: meta
+phase: plan
+domain: architecture
 ---
 
 | Placeholder | Content |

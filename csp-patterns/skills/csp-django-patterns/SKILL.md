@@ -4,6 +4,8 @@ description: Django architecture patterns, REST API design with DRF, ORM best pr
 origin: CSP
 layer: 4
 category: patterns
+domain: patterns
+phase: build
 ---
 
 | Pattern | Purpose |

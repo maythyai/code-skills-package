@@ -7,6 +7,8 @@ description: >
   Use when running long sessions or managing token costs.
 layer: 4
 category: runtime
+domain: architecture
+phase: build
 ---
 
 # CSP Budget Enforcer

@@ -4,6 +4,8 @@ description: "Create or maintain STRATEGY.md - the product's target problem, app
 argument-hint: "[optional: section to revisit, e.g. 'metrics' or 'approach']"
 layer: 2
 category: workflow
+phase: define
+domain: patterns
 ---
 
 ## Headless Mode

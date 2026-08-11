@@ -8,6 +8,8 @@ description: >
 layer: 4
 origin: merged(CSP+agent-skills)
 category: patterns
+domain: patterns
+phase: build
 ---
 
 | Rationalization | Counter |

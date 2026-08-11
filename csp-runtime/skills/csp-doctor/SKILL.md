@@ -2,6 +2,7 @@
 name: csp-doctor
 description: Diagnose and fix code-skills-package installation issues
 layer: 3
+phase: build
 ---
 
 ## Report Format

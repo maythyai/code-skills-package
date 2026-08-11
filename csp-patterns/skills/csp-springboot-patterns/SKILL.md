@@ -4,6 +4,8 @@ description: Spring Boot architecture patterns, REST API design, layered service
 origin: CSP
 layer: 4
 category: patterns
+domain: patterns
+phase: build
 ---
 
 # Spring Boot Development Patterns

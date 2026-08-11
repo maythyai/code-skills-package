@@ -4,6 +4,8 @@ description: Thread-safe data persistence in Swift using actors — in-memory ca
 origin: CSP
 layer: 4
 category: patterns
+domain: patterns
+phase: build
 ---
 
 | Decision | Rationale |

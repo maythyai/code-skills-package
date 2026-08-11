@@ -5,6 +5,8 @@ description: >
 version: 0.1.0
 layer: 4
 category: patterns
+phase: build
+domain: patterns
 ---
 
 # Privacy Compliance Implementation

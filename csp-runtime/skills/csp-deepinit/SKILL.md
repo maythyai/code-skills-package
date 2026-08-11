@@ -3,6 +3,8 @@ name: csp-deepinit
 description: Deep codebase initialization with hierarchical AGENTS.md documentation
 layer: 4
 category: patterns
+domain: patterns
+phase: build
 ---
 
 | File | Purpose |

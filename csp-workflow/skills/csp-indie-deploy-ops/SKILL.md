@@ -7,6 +7,8 @@ description: >
 version: 0.1.0
 layer: 2
 category: workflow
+phase: ship
+domain: patterns
 ---
 
 # Indie Deploy Ops

@@ -4,6 +4,8 @@ description: CLI-team runtime for claude, codex, or gemini workers in tmux panes
 aliases: []
 layer: 4
 category: patterns
+domain: patterns
+phase: build
 ---
 
 | Error                        | Cause                                 | Fix                                                                     |

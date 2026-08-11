@@ -4,6 +4,8 @@ description: Next.js 16+ and Turbopack — incremental bundling, FS caching, dev
 origin: CSP
 layer: 4
 category: patterns
+domain: patterns
+phase: build
 ---
 
 # Next.js and Turbopack

@@ -3,6 +3,7 @@
 
 import { readFileSync, readdirSync, statSync, existsSync } from 'node:fs';
 import { join, resolve } from 'node:path';
+import { parseSimpleYaml } from '../shared/scripts/lib/yaml.mjs';
 
 const VALID_PHASES = ['define', 'plan', 'build', 'verify', 'review', 'ship'];
 const VALID_DOMAINS = ['language', 'quality', 'security', 'architecture', 'devops', 'database', 'testing', 'api', 'patterns', 'other'];
@@ -12,115 +13,6 @@ const VALID_MODELS = ['opus', 'sonnet', 'haiku'];
 const VALID_TOOLS = ['Read', 'Write', 'Edit', 'Bash', 'Glob', 'Grep', 'WebFetch', 'WebSearch', 'Agent', 'NotebookEdit'];
 
 // Simple YAML parser for frontmatter (avoids needing external 'yaml' package)
-function parseSimpleYaml(text) {
-  const result = {};
-  const lines = text.split('\n');
-  let currentKey = null;
-  let currentObj = null;
-  let currentArray = null;
-  let inMultiline = false;
-  let multilineKey = null;
-  let multilineValue = [];
-
-  for (let i = 0; i < lines.length; i++) {
-    const line = lines[i];
-
-    // Skip empty lines and comments
-    if (line.trim() === '' || line.trim().startsWith('#')) continue;
-
-    // Check for multiline string continuation
-    if (inMultiline) {
-      if (line.startsWith('  ') || line.startsWith('    ')) {
-        multilineValue.push(line.trim());
-        continue;
-      } else {
-        // End of multiline
-        result[multilineKey] = multilineValue.join('\n');
-        inMultiline = false;
-        multilineKey = null;
-        multilineValue = [];
-      }
-    }
-
-    // Check for key: value pair
-    const match = line.match(/^(\s*)([\w-]+):\s*(.*)$/);
-    if (!match) continue;
-
-    const indent = match[1].length;
-    const key = match[2];
-    let value = match[3].trim();
-
-    // Handle array items
-    if (value.startsWith('- ')) {
-      if (!currentArray) {
-        currentArray = [];
-        result[currentKey] = currentArray;
-      }
-      currentArray.push(value.substring(2).trim().replace(/^["']|["']$/g, ''));
-      continue;
-    }
-
-    // If we have a value
-    if (value) {
-      // Handle inline arrays: [item1, item2, ...]
-      if (value.startsWith('[') && value.endsWith(']')) {
-        const items = value.slice(1, -1).split(',').map(s => s.trim().replace(/^["']|["']$/g, '')).filter(Boolean);
-        if (indent > 0 && currentObj !== null) {
-          currentObj[key] = items;
-        } else {
-          result[key] = items;
-          currentKey = key;
-          currentArray = null;
-          currentObj = null;
-        }
-        continue;
-      }
-
-      // Handle multiline string indicator (>)
-      if (value === '>' || value === '|') {
-        inMultiline = true;
-        multilineKey = key;
-        multilineValue = [];
-        currentKey = key;
-        currentArray = null;
-        currentObj = null;
-        continue;
-      }
-
-      // Remove quotes
-      value = value.replace(/^["']|["']$/g, '');
-
-      // Check for inline object (key: value pairs on same level)
-      if (indent > 0 && currentObj !== null) {
-        currentObj[key] = value;
-        continue;
-      }
-
-      result[key] = value;
-      currentKey = key;
-      currentArray = null;
-      currentObj = null;
-    } else if (indent > 0 && currentKey) {
-      // Nested object
-      if (!currentObj) {
-        currentObj = {};
-        result[currentKey] = currentObj;
-      }
-      currentObj[key] = value;
-    } else {
-      currentKey = key;
-      currentArray = null;
-      currentObj = null;
-    }
-  }
-
-  // Handle any remaining multiline
-  if (inMultiline && multilineKey) {
-    result[multilineKey] = multilineValue.join('\n');
-  }
-
-  return result;
-}
 
 function extractFrontmatter(content) {
   const match = content.match(/^---\n([\s\S]*?)\n---/);

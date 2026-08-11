@@ -4,6 +4,8 @@ description: Full autonomous execution from idea to working code
 argument-hint: "<product idea or task description>"
 layer: 4
 category: patterns
+domain: patterns
+phase: build
 ---
 
 <Purpose>

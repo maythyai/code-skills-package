@@ -3,6 +3,8 @@ name: csp-self-improve
 description: Autonomous evolutionary code improvement engine with tournament selection
 layer: 4
 category: patterns
+domain: patterns
+phase: build
 ---
 
 ## Autonomous Execution Policy

@@ -4,6 +4,8 @@ description: Optimizes agent context setup. Use when starting a new session, whe
 layer: 1
 origin: agent-skills
 category: meta
+domain: architecture
+phase: define
 ---
 
 | MCP Server | Value |

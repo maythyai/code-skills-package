@@ -14,7 +14,7 @@ set -eo pipefail
 #   ./install.sh --list                     List detected platforms
 #   ./install.sh --help                     Show help
 
-readonly VERSION="0.7.1"
+readonly VERSION="0.8.0"
 readonly SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 readonly PROJECT_DIR="$(pwd)"
 
@@ -32,20 +32,54 @@ if [ "$_has_layers" = "false" ]; then
   _csp_tmp="$(mktemp -d)"
   trap 'rm -rf "$_csp_tmp"' EXIT
   _csp_branch="${CSP_BRANCH:-master}"
-  # Security: validate branch name to prevent shell injection via CSP_BRANCH env var.
-  # Reject branches containing spaces, semicolons, or pipe characters.
-  case "$_csp_branch" in
-    *" "*|*";"*|*"|"*)
-      echo "  CSP: error: invalid CSP_BRANCH value (contains illegal characters)" >&2
-      exit 1
-      ;;
-  esac
-  # NOTE: Users should verify the integrity of the downloaded archive (e.g., check
-  # the commit SHA or tag) before running this script in security-sensitive environments.
-  echo "  CSP: downloading full repo..." >&2
-  curl -fsSL "https://github.com/maythyai/code-skills-package/archive/refs/heads/${_csp_branch}.tar.gz" \
-    | tar xz -C "$_csp_tmp"
-  exec bash "$_csp_tmp/code-skills-package-${_csp_branch}/install.sh" "$@"
+  # Security: whitelist-validate branch name to prevent shell injection via CSP_BRANCH.
+  # Only allow git-branch-safe characters. Anything else (including `$()`, backticks,
+  # `&`, newlines, path traversal) is rejected — command substitution inside the
+  # double-quoted curl URL / exec path below would otherwise allow RCE.
+  if ! [[ "$_csp_branch" =~ ^[A-Za-z0-9._-]+$ ]]; then
+    echo "  CSP: error: invalid CSP_BRANCH value (must match ^[A-Za-z0-9._-]+\$)" >&2
+    exit 1
+  fi
+  # NOTE: For supply-chain safety, set CSP_SHA256 to the expected hash of the
+  # archive (obtainable from the GitHub release/tag you trust). When set, the
+  # download is rejected on mismatch. When unset, the actual hash is printed so
+  # you can pin it for next time.
+  echo "  CSP: downloading full repo (branch: ${_csp_branch})..." >&2
+  _csp_tarball="${_csp_tmp}/csp.tar.gz"
+  if ! curl -fsSL "https://github.com/maythyai/code-skills-package/archive/refs/heads/${_csp_branch}.tar.gz" -o "$_csp_tarball"; then
+    echo "  CSP: error: download failed" >&2
+    exit 1
+  fi
+  # Compute SHA256 (portable: shasum on macOS, sha256sum on linux)
+  if command -v shasum >/dev/null 2>&1; then
+    _csp_actual_sha="$(shasum -a 256 "$_csp_tarball" | awk '{print $1}')"
+  elif command -v sha256sum >/dev/null 2>&1; then
+    _csp_actual_sha="$(sha256sum "$_csp_tarball" | awk '{print $1}')"
+  else
+    echo "  CSP: warning: no sha256 tool available — skipping integrity check" >&2
+    _csp_actual_sha=""
+  fi
+  if [ -n "$_csp_actual_sha" ]; then
+    if [ -n "${CSP_SHA256:-}" ]; then
+      if [ "$_csp_actual_sha" != "$CSP_SHA256" ]; then
+        echo "  CSP: error: SHA256 mismatch — expected $CSP_SHA256, got $_csp_actual_sha" >&2
+        echo "  CSP: refusing to install (possible tampering or wrong branch/tag)" >&2
+        exit 1
+      fi
+      echo "  CSP: integrity verified (SHA256 match)" >&2
+    else
+      echo "  CSP: downloaded archive SHA256 = $_csp_actual_sha" >&2
+      echo "  CSP: to pin this, re-run with: CSP_SHA256=$_csp_actual_sha <install command>" >&2
+    fi
+  fi
+  tar xzf "$_csp_tarball" -C "$_csp_tmp"
+  # Run the downloaded installer, then clean up the temp dir regardless of outcome.
+  # (Previously used `exec bash ...` which replaced this process and dropped the EXIT
+  # trap, leaking the full repo clone under /tmp on any mid-run crash.)
+  bash "$_csp_tmp/code-skills-package-${_csp_branch}/install.sh" "$@"
+  _csp_rc=$?
+  rm -rf "$_csp_tmp"
+  exit "$_csp_rc"
 fi
 
 # Sentinel markers
@@ -53,104 +87,10 @@ readonly SENTINEL_BEGIN="<!-- csp-begin (do not edit between these markers) -->"
 readonly SENTINEL_END="<!-- csp-end -->"
 
 # Platform list (slug identifiers)
-readonly ALL_PLATFORMS="claude-code cursor copilot-cli hermes-agent windsurf kiro gemini-cli codex aider trae vscode deerflow opencode openclaw qwen-code antigravity claw-code qoder"
+readonly ALL_PLATFORMS="claude-code cursor copilot-cli hermes-agent windsurf kiro gemini-cli codex aider trae vscode deerflow opencode openclaw qwen-code antigravity claw-code qoder junie cline roo-code neovim"
 
-# ─── Platform Metadata (case-based lookups, bash 3.2 compatible) ──
-
-platform_name() {
-  case "$1" in
-    claude-code)    echo "Claude Code" ;;
-    cursor)         echo "Cursor" ;;
-    copilot-cli)    echo "Copilot CLI" ;;
-    hermes-agent)   echo "Hermes Agent" ;;
-    windsurf)       echo "Windsurf" ;;
-    kiro)           echo "Kiro" ;;
-    gemini-cli)     echo "Gemini CLI" ;;
-    codex)          echo "Codex" ;;
-    aider)          echo "Aider" ;;
-    trae)           echo "Trae" ;;
-    vscode)         echo "VS Code (Copilot)" ;;
-    deerflow)       echo "DeerFlow" ;;
-    opencode)       echo "OpenCode" ;;
-    openclaw)       echo "OpenClaw" ;;
-    qwen-code)      echo "Qwen Code" ;;
-    antigravity)    echo "Antigravity" ;;
-    claw-code)      echo "Claw Code" ;;
-    qoder)          echo "Qoder" ;;
-  esac
-}
-
-platform_dir() {
-  case "$1" in
-    claude-code)    echo ".claude/skills" ;;
-    cursor)         echo ".cursor/skills" ;;
-    copilot-cli)    echo ".claude/skills" ;;
-    hermes-agent)   echo ".hermes/skills" ;;
-    windsurf)       echo ".windsurf/skills" ;;
-    kiro)           echo ".kiro/steering" ;;
-    gemini-cli)     echo ".gemini/skills" ;;
-    codex)          echo ".codex/skills" ;;
-    aider)          echo ".aider/skills" ;;
-    trae)           echo ".trae/skills" ;;
-    vscode)         echo ".github/skills" ;;
-    deerflow)       echo "skills/custom" ;;
-    opencode)       echo ".opencode/skills" ;;
-    openclaw)       echo "skills" ;;
-    qwen-code)      echo ".qwen/skills" ;;
-    antigravity)    echo ".antigravity/skills" ;;
-    claw-code)      echo ".claw/skills" ;;
-    qoder)          echo ".qoder/skills" ;;
-  esac
-}
-
-# Detection paths (space-separated, check if any exists)
-platform_detect() {
-  case "$1" in
-    claude-code)    echo ".claude" ;;
-    cursor)         echo ".cursor .cursorrules" ;;
-    copilot-cli)    echo ".claude" ;;
-    hermes-agent)   echo ".hermes HERMES.md .hermes.md" ;;
-    windsurf)       echo ".windsurf .windsurfrules" ;;
-    kiro)           echo ".kiro" ;;
-    gemini-cli)     echo "GEMINI.md .gemini" ;;
-    codex)          echo ".codex" ;;
-    aider)          echo ".aider .aider.conf.yml CONVENTIONS.md" ;;
-    trae)           echo ".trae" ;;
-    vscode)         echo ".github/copilot-instructions.md .github/.instructions" ;;
-    deerflow)       echo "deer_flow" ;;
-    opencode)       echo ".opencode" ;;
-    openclaw)       echo ".openclaw" ;;
-    qwen-code)      echo ".qwen" ;;
-    antigravity)    echo ".antigravity" ;;
-    claw-code)      echo ".claw CLAW.md" ;;
-    qoder)          echo ".qoder" ;;
-  esac
-}
-
-# Resolve user-facing alias to slug
-resolve_alias() {
-  case "$(echo "$1" | tr '[:upper:]' '[:lower:]')" in
-    claude|claude-code|claudecode)          echo "claude-code" ;;
-    copilot|copilot-cli)                    echo "copilot-cli" ;;
-    cursor)                                 echo "cursor" ;;
-    hermes|hermes-agent)                    echo "hermes-agent" ;;
-    windsurf)                               echo "windsurf" ;;
-    kiro)                                   echo "kiro" ;;
-    gemini|gemini-cli)                      echo "gemini-cli" ;;
-    codex)                                  echo "codex" ;;
-    aider)                                  echo "aider" ;;
-    trae)                                   echo "trae" ;;
-    vscode|vs-code)                         echo "vscode" ;;
-    deerflow)                               echo "deerflow" ;;
-    opencode)                               echo "opencode" ;;
-    openclaw)                               echo "openclaw" ;;
-    qwen|qwen-code)                         echo "qwen-code" ;;
-    antigravity)                            echo "antigravity" ;;
-    claw|claw-code|clawcode)                echo "claw-code" ;;
-    qoder)                                  echo "qoder" ;;
-    *) echo "" ;;
-  esac
-}
+# ─── Platform Metadata (sourced from lib/platforms.sh, bash 3.2 compatible) ──
+source "${SCRIPT_DIR}/lib/platforms.sh"
 
 # ─── Stack-to-Skill Mapping ──────────────────────────────────────────
 # Maps user-friendly stack names to actual skill directories.
@@ -296,499 +236,9 @@ scan_skill_entries() {
   done
 }
 
-# ─── Sentinel Management ──────────────────────────────────────────
+# ─── Sentinel Management + Bootstrap Generators (sourced from lib/bootstrap.sh) ──
+source "${SCRIPT_DIR}/lib/bootstrap.sh"
 
-wrap_with_sentinel() {
-  printf '%s\n%s\n%s\n' "$SENTINEL_BEGIN" "$1" "$SENTINEL_END"
-}
-
-clean_bootstrap_section() {
-  local file="$1"
-  [ -f "$file" ] || return 1
-
-  local content
-  content=$(<"$file")
-
-  # Strategy 1: sentinel markers (v0.3.0+)
-  if echo "$content" | grep -qF "$SENTINEL_BEGIN" && echo "$content" | grep -qF "$SENTINEL_END"; then
-    local before after combined
-    before=$(echo "$content" | sed "/$(echo "$SENTINEL_BEGIN" | sed 's/[[\.*^$()+?{|]/\\&/g')/,\$d")
-    after=$(echo "$content" | sed "1,/$(echo "$SENTINEL_END" | sed 's/[[\.*^$()+?{|]/\\&/g')/d")
-    combined=$(printf '%s\n\n%s' "$before" "$after")
-    # Trim empty lines
-    combined=$(echo "$combined" | sed '/./,$!d' | sed -e :a -e '/^\n*$/{$d;N;ba' -e '}')
-    if [ -z "$(echo "$combined" | tr -d '[:space:]')" ]; then
-      rm -f "$file"
-    else
-      printf '%s\n' "$combined" > "$file"
-    fi
-    return 0
-  fi
-
-  # Strategy 2: heading marker
-  if echo "$content" | grep -qF "# CSP (Code Skills Package)"; then
-    local before
-    before=$(echo "$content" | sed '/# CSP (Code Skills Package)/,$d' | sed -e :a -e '/^\n*$/{$d;N;ba' -e '}')
-    if [ -z "$(echo "$before" | tr -d '[:space:]')" ]; then
-      rm -f "$file"
-    else
-      printf '%s\n' "$before" > "$file"
-    fi
-    return 0
-  fi
-
-  return 1
-}
-
-append_bootstrap_to_file() {
-  local file="$1"
-  local content="$2"
-
-  if [ -f "$file" ]; then
-    if grep -qF "csp-begin" "$file" 2>/dev/null; then
-      clean_bootstrap_section "$file" 2>/dev/null || true
-    fi
-    if [ -f "$file" ]; then
-      if grep -qF "CSP (Code Skills Package)" "$file" 2>/dev/null; then
-        echo "  ✅ $(basename "$file"): 已包含 CSP 引用，跳过"
-        return
-      fi
-      printf '%s\n\n%s\n' "$(<"$file")" "$(wrap_with_sentinel "$content")" > "$file"
-      echo "  ✅ $(basename "$file"): 追加 CSP 引用"
-    else
-      wrap_with_sentinel "$content" > "$file"
-      echo "  ✅ $(basename "$file"): 创建 bootstrap"
-    fi
-  else
-    wrap_with_sentinel "$content" > "$file"
-    echo "  ✅ $(basename "$file"): 创建 bootstrap"
-  fi
-}
-
-# ─── Bootstrap Content Generators ─────────────────────────────────
-
-generate_skill_list() {
-  scan_skill_entries | while IFS='|' read -r name desc; do
-    echo "- **${name}**: ${desc}"
-  done
-}
-
-generate_skill_table() {
-  scan_skill_entries | while IFS='|' read -r name desc; do
-    echo "| ${name} | ${desc} |"
-  done
-}
-
-bootstrap_claude() {
-  local n; n=$(scan_skill_entries | wc -l | tr -d ' ')
-  local list; list=$(generate_skill_list)
-  cat <<EOF
-# CSP (Code Skills Package)
-
-本项目已安装 CSP 技能包（${n} 个 skills，五层架构）。
-
-## 使用方式
-
-在 CLAUDE.md 中添加路由指令即可自动使用：
-
-\`\`\`
-使用 CSP (Code Skills Package) 技能包。当用户给出任务时,先通过 csp-router 路由到合适的 skill 组合。
-\`\`\`
-
-## 核心规则
-
-1. **收到任务时，先通过 csp-router 路由** — 识别任务类型并加载对应 skill 组合
-2. **设计先于编码** — 功能需求先做 brainstorming 和 plan
-3. **测试先于实现** — 写代码前先写测试（TDD）
-4. **验证先于完成** — 声称完成前必须运行验证命令
-
-## 可用 Skills
-
-Skills 位于 \`.claude/skills/\` 目录，按五层架构组织。
-
-${list}
-
-## 如何使用
-
-使用 \`Skill\` 工具加载对应 skill 并严格遵循其流程。如果你认为哪怕只有 1% 的可能性某个 skill 适用，你必须调用该 skill 检查。
-EOF
-}
-
-bootstrap_gemini() {
-  local n; n=$(scan_skill_entries | wc -l | tr -d ' ')
-  local list; list=$(generate_skill_list)
-  cat <<EOF
-# CSP (Code Skills Package)
-
-本项目已安装 CSP 技能包（${n} 个 skills）。
-
-## 核心规则
-
-1. **收到任务时，先检查是否有匹配的 skill**
-2. **设计先于编码**
-3. **测试先于实现**
-4. **验证先于完成**
-
-## 可用 Skills
-
-${list}
-
-## 如何使用
-
-当任务匹配某个 skill 时，读取 \`.gemini/skills/<layer>/<skill>/SKILL.md\` 并遵循其流程。
-EOF
-}
-
-bootstrap_hermes() {
-  local n; n=$(scan_skill_entries | wc -l | tr -d ' ')
-  local list; list=$(generate_skill_list)
-  cat <<EOF
-# CSP (Code Skills Package)
-
-本项目已安装 CSP 技能包（${n} 个 skills）。
-
-## 工具映射
-
-- \`Read\` → \`read_file\` | \`Write\` → \`write_file\` | \`Edit\` → \`patch\`
-- \`Bash\` → \`terminal\` | \`Grep\`/\`Glob\` → \`search_files\`
-- \`Skill\` → \`skill_view\` | \`Task\` → \`delegate_task\`
-- \`WebSearch\` → \`web_search\` | \`WebFetch\` → \`web_extract\`
-- \`TodoWrite\` → \`todo\`
-
-## 核心规则
-
-1. **收到任务时，先检查是否有匹配的 skill**
-2. **设计先于编码**
-3. **测试先于实现**
-4. **验证先于完成**
-
-## 可用 Skills
-
-${list}
-
-## 如何使用
-
-使用 \`skill_view\` 加载对应 skill 并遵循其流程。
-EOF
-}
-
-bootstrap_aider() {
-  local n; n=$(scan_skill_entries | wc -l | tr -d ' ')
-  local list; list=$(generate_skill_list)
-  cat <<EOF
-# CSP (Code Skills Package) 工作方法论
-
-本项目使用 CSP 技能包（${n} 个 skills）。
-
-## 核心规则
-
-1. **收到任务时，先检查是否有匹配的 skill**
-2. **设计先于编码**
-3. **测试先于实现**
-4. **验证先于完成**
-
-## 可用 Skills
-
-${list}
-
-## 如何使用
-
-当任务匹配某个 skill 时，读取 \`.aider/skills/<layer>/<skill>/SKILL.md\` 并遵循其流程。
-EOF
-}
-
-bootstrap_trae() {
-  local n; n=$(scan_skill_entries | wc -l | tr -d ' ')
-  local table; table=$(generate_skill_table)
-  cat <<EOF
----
-alwaysApply: true
----
-
-# CSP (Code Skills Package)
-
-你已加载 CSP 技能框架（${n} 个 skills）。
-
-## 核心规则
-
-1. **收到任务时，先检查是否有匹配的 skill**
-2. **设计先于编码** — 功能需求先用 brainstorming 做需求分析
-3. **测试先于实现** — 写代码前先写测试
-4. **验证先于完成** — 声称完成前必须运行验证命令
-
-## 可用 Skills
-
-| Skill | 触发条件 |
-|-------|---------|
-${table}
-
-## 如何使用
-
-当任务匹配某个 skill 时，读取 \`.trae/skills/<layer>/<skill>/SKILL.md\` 并遵循其流程。
-EOF
-}
-
-bootstrap_qoder() {
-  local n; n=$(scan_skill_entries | wc -l | tr -d ' ')
-  local table; table=$(generate_skill_table)
-  cat <<EOF
----
-trigger: always_on
-alwaysApply: true
----
-
-# CSP (Code Skills Package)
-
-你已加载 CSP 技能框架（${n} 个 skills）。
-
-## 核心规则
-
-1. **收到任务时，先检查是否有匹配的 skill**
-2. **设计先于编码**
-3. **测试先于实现**
-4. **验证先于完成**
-
-## 可用 Skills
-
-| Skill | 触发条件 |
-|-------|---------|
-${table}
-
-## 如何使用
-
-读取 \`.qoder/skills/<layer>/<skill>/SKILL.md\` 并遵循其流程。也可输入 \`/<skill>\` 显式调用。
-EOF
-}
-
-bootstrap_antigravity() {
-  local n; n=$(scan_skill_entries | wc -l | tr -d ' ')
-  local list; list=$(generate_skill_list)
-  cat <<EOF
-# CSP (Code Skills Package)
-
-本项目已安装 CSP 技能包（${n} 个 skills）。
-
-## 核心规则
-
-1. **收到任务时，先检查是否有匹配的 skill**
-2. **设计先于编码**
-3. **测试先于实现**
-4. **验证先于完成**
-
-## 可用 Skills
-
-${list}
-
-## 如何使用
-
-读取 \`.antigravity/skills/<layer>/<skill>/SKILL.md\` 并遵循其流程。
-EOF
-}
-
-bootstrap_windsurf() {
-  local n; n=$(scan_skill_entries | wc -l | tr -d ' ')
-  local list; list=$(generate_skill_list)
-  cat <<EOF
-# CSP (Code Skills Package)
-
-本项目已安装 CSP 技能包（${n} 个 skills）。
-
-## 核心规则
-
-1. **收到任务时，先检查是否有匹配的 skill**
-2. **设计先于编码**
-3. **测试先于实现**
-4. **验证先于完成**
-
-## 可用 Skills
-
-${list}
-
-## 如何使用
-
-读取 \`.windsurf/skills/<layer>/<skill>/SKILL.md\` 并遵循其流程。
-EOF
-}
-
-bootstrap_kiro() {
-  local n; n=$(scan_skill_entries | wc -l | tr -d ' ')
-  local list; list=$(generate_skill_list)
-  cat <<EOF
----
-alwaysApply: true
----
-
-# CSP (Code Skills Package)
-
-本项目已安装 CSP 技能包（${n} 个 skills）。
-
-## 核心规则
-
-1. **收到任务时，先检查是否有匹配的 skill**
-2. **设计先于编码**
-3. **测试先于实现**
-4. **验证先于完成**
-
-## 可用 Skills
-
-${list}
-
-## 如何使用
-
-读取 \`.kiro/steering/<layer>/<skill>/SKILL.md\` 并遵循其流程。
-EOF
-}
-
-bootstrap_vscode() {
-  local n; n=$(scan_skill_entries | wc -l | tr -d ' ')
-  local list; list=$(generate_skill_list)
-  cat <<EOF
-# CSP (Code Skills Package)
-
-本项目已安装 CSP 技能包（${n} 个 skills）。
-
-注意：GitHub Copilot 不支持 Skill 工具或子 Agent 派遣，以下内容作为方法论指导。
-
-## 核心规则
-
-1. **设计先于编码** — 功能需求先做需求分析和规划
-2. **测试先于实现** — 写代码前先写测试
-3. **验证先于完成** — 声称完成前必须验证
-
-## 可用 Skills 参考
-
-${list}
-EOF
-}
-
-bootstrap_cursor() {
-  local n; n=$(scan_skill_entries | wc -l | tr -d ' ')
-  local list; list=$(generate_skill_list)
-  cat <<EOF
----
-alwaysApply: true
----
-
-# CSP (Code Skills Package)
-
-本项目已安装 CSP 技能包（${n} 个 skills）。
-
-## 核心规则
-
-1. **收到任务时，先通过 csp-router 路由** — 识别任务类型并加载对应 skill 组合
-2. **设计先于编码**
-3. **测试先于实现**
-4. **验证先于完成**
-
-## 可用 Skills
-
-${list}
-
-## 如何使用
-
-当任务匹配某个 skill 时，读取 \`.cursor/skills/<layer>/<skill>/SKILL.md\` 并遵循其流程。
-EOF
-}
-
-bootstrap_codex() {
-  local n; n=$(scan_skill_entries | wc -l | tr -d ' ')
-  local list; list=$(generate_skill_list)
-  cat <<EOF
-# CSP (Code Skills Package)
-
-本项目已安装 CSP 技能包（${n} 个 skills）。
-
-## 核心规则
-
-1. **收到任务时，先通过 csp-router 路由** — 识别任务类型并加载对应 skill 组合
-2. **设计先于编码**
-3. **测试先于实现**
-4. **验证先于完成**
-
-## 可用 Skills
-
-${list}
-
-## 如何使用
-
-当任务匹配某个 skill 时，读取 \`.codex/skills/<layer>/<skill>/SKILL.md\` 并遵循其流程。
-EOF
-}
-
-bootstrap_deerflow() {
-  local n; n=$(scan_skill_entries | wc -l | tr -d ' ')
-  local list; list=$(generate_skill_list)
-  cat <<EOF
-# CSP (Code Skills Package)
-
-本项目已安装 CSP 技能包（${n} 个 skills）。
-
-## 核心规则
-
-1. **收到任务时，先通过 csp-router 路由** — 识别任务类型并加载对应 skill 组合
-2. **设计先于编码**
-3. **测试先于实现**
-4. **验证先于完成**
-
-## 可用 Skills
-
-${list}
-
-## 如何使用
-
-当任务匹配某个 skill 时，读取 \`skills/custom/<layer>/<skill>/SKILL.md\` 并遵循其流程。
-EOF
-}
-
-bootstrap_opencode() {
-  local n; n=$(scan_skill_entries | wc -l | tr -d ' ')
-  local list; list=$(generate_skill_list)
-  cat <<EOF
-# CSP (Code Skills Package)
-
-本项目已安装 CSP 技能包（${n} 个 skills）。
-
-## 核心规则
-
-1. **收到任务时，先通过 csp-router 路由** — 识别任务类型并加载对应 skill 组合
-2. **设计先于编码**
-3. **测试先于实现**
-4. **验证先于完成**
-
-## 可用 Skills
-
-${list}
-
-## 如何使用
-
-当任务匹配某个 skill 时，读取 \`.opencode/skills/<layer>/<skill>/SKILL.md\` 并遵循其流程。
-EOF
-}
-
-bootstrap_qwen() {
-  local n; n=$(scan_skill_entries | wc -l | tr -d ' ')
-  local list; list=$(generate_skill_list)
-  cat <<EOF
-# CSP (Code Skills Package)
-
-本项目已安装 CSP 技能包（${n} 个 skills）。
-
-## 核心规则
-
-1. **收到任务时，先通过 csp-router 路由** — 识别任务类型并加载对应 skill 组合
-2. **设计先于编码**
-3. **测试先于实现**
-4. **验证先于完成**
-
-## 可用 Skills
-
-${list}
-
-## 如何使用
-
-当任务匹配某个 skill 时，读取 \`.qwen/skills/<layer>/<skill>/SKILL.md\` 并遵循其流程。
-EOF
-}
 
 # ─── Platform Installation ────────────────────────────────────────
 
@@ -874,6 +324,10 @@ generate_bootstrap_for() {
     opencode)                bootstrap_opencode ;;
     openclaw|claw-code)      bootstrap_claude ;;
     qwen-code)               bootstrap_qwen ;;
+    junie)                   bootstrap_junie ;;
+    cline)                   bootstrap_cline ;;
+    roo-code)                bootstrap_roo ;;
+    neovim)                  bootstrap_neovim ;;
     *)                       echo "" ;;
   esac
 }
@@ -894,73 +348,7 @@ install_for_platform() {
   bootstrap_content=$(generate_bootstrap_for "$slug")
   [ -z "$bootstrap_content" ] && return
 
-  case "$slug" in
-    claude-code|copilot-cli)
-      append_bootstrap_to_file "$base_dir/CLAUDE.md" "$bootstrap_content"
-      ;;
-    gemini-cli)
-      append_bootstrap_to_file "$base_dir/GEMINI.md" "$bootstrap_content"
-      ;;
-    hermes-agent)
-      append_bootstrap_to_file "$base_dir/HERMES.md" "$bootstrap_content"
-      ;;
-    aider)
-      append_bootstrap_to_file "$base_dir/CONVENTIONS.md" "$bootstrap_content"
-      ;;
-    windsurf)
-      append_bootstrap_to_file "$base_dir/.windsurfrules" "$bootstrap_content"
-      ;;
-    trae)
-      mkdir -p "$base_dir/.trae/rules"
-      echo "$bootstrap_content" > "$base_dir/.trae/rules/csp.md"
-      echo "  ✅ Trae: bootstrap rule → .trae/rules/csp.md"
-      ;;
-    qoder)
-      mkdir -p "$base_dir/.qoder/rules"
-      echo "$bootstrap_content" > "$base_dir/.qoder/rules/csp.md"
-      echo "  ✅ Qoder: bootstrap rule → .qoder/rules/csp.md"
-      ;;
-    antigravity)
-      mkdir -p "$base_dir/.antigravity"
-      echo "$bootstrap_content" > "$base_dir/.antigravity/rules.md"
-      echo "  ✅ Antigravity: bootstrap rule → .antigravity/rules.md"
-      ;;
-    kiro)
-      mkdir -p "$base_dir/.kiro/steering"
-      echo "$bootstrap_content" > "$base_dir/.kiro/steering/csp.md"
-      echo "  ✅ Kiro: bootstrap steering → .kiro/steering/csp.md"
-      ;;
-    vscode)
-      mkdir -p "$base_dir/.github"
-      append_bootstrap_to_file "$base_dir/.github/copilot-instructions.md" "$bootstrap_content"
-      ;;
-    cursor)
-      mkdir -p "$base_dir/.cursor/rules"
-      echo "$bootstrap_content" > "$base_dir/.cursor/rules/csp.md"
-      echo "  ✅ Cursor: bootstrap rule → .cursor/rules/csp.md"
-      ;;
-    codex)
-      append_bootstrap_to_file "$base_dir/AGENTS.md" "$bootstrap_content"
-      ;;
-    deerflow)
-      mkdir -p "$base_dir/.deerflow/rules"
-      echo "$bootstrap_content" > "$base_dir/.deerflow/rules/csp.md"
-      echo "  ✅ DeerFlow: bootstrap rule → .deerflow/rules/csp.md"
-      ;;
-    opencode)
-      mkdir -p "$base_dir/.opencode/rules"
-      echo "$bootstrap_content" > "$base_dir/.opencode/rules/csp.md"
-      echo "  ✅ OpenCode: bootstrap rule → .opencode/rules/csp.md"
-      ;;
-    openclaw|claw-code)
-      append_bootstrap_to_file "$base_dir/CLAUDE.md" "$bootstrap_content"
-      ;;
-    qwen-code)
-      mkdir -p "$base_dir/.qwen/rules"
-      echo "$bootstrap_content" > "$base_dir/.qwen/rules/csp.md"
-      echo "  ✅ Qwen Code: bootstrap rule → .qwen/rules/csp.md"
-      ;;
-  esac
+  write_bootstrap_for_platform "$slug" "$base_dir" "$bootstrap_content"
 }
 
 # ─── Auto-detection ───────────────────────────────────────────────
@@ -1082,10 +470,11 @@ show_help() {
     npm install -g code-skills-package
     cd /your/project && csp-install --platform cursor
 
-  支持的平台（18 个）：
+  支持的平台（22 个）：
     claude-code, cursor, copilot-cli, hermes-agent, windsurf, kiro,
     gemini-cli, codex, aider, trae, vscode, deerflow, opencode,
-    openclaw, qwen-code, antigravity, claw-code, qoder
+    openclaw, qwen-code, antigravity, claw-code, qoder,
+    junie, cline, roo-code, neovim
 
   可用技术栈：
     python, typescript/javascript, rust, go/golang, java, kotlin,
@@ -1354,47 +743,8 @@ main() {
     bootstrap_content=$(generate_bootstrap_for "$slug")
     [ -z "$bootstrap_content" ] && return
 
-    case "$slug" in
-      claude-code|copilot-cli)
-        append_bootstrap_to_file "$base_dir/CLAUDE.md" "$bootstrap_content"
-        ;;
-      gemini-cli)
-        append_bootstrap_to_file "$base_dir/GEMINI.md" "$bootstrap_content"
-        ;;
-      hermes-agent)
-        append_bootstrap_to_file "$base_dir/HERMES.md" "$bootstrap_content"
-        ;;
-      aider)
-        append_bootstrap_to_file "$base_dir/CONVENTIONS.md" "$bootstrap_content"
-        ;;
-      windsurf)
-        append_bootstrap_to_file "$base_dir/.windsurfrules" "$bootstrap_content"
-        ;;
-      trae)
-        mkdir -p "$base_dir/.trae/rules"
-        echo "$bootstrap_content" > "$base_dir/.trae/rules/csp.md"
-        echo "  ✅ Trae: bootstrap rule → .trae/rules/csp.md"
-        ;;
-      qoder)
-        mkdir -p "$base_dir/.qoder/rules"
-        echo "$bootstrap_content" > "$base_dir/.qoder/rules/csp.md"
-        echo "  ✅ Qoder: bootstrap rule → .qoder/rules/csp.md"
-        ;;
-      antigravity)
-        mkdir -p "$base_dir/.antigravity"
-        echo "$bootstrap_content" > "$base_dir/.antigravity/rules.md"
-        echo "  ✅ Antigravity: bootstrap rule → .antigravity/rules.md"
-        ;;
-      kiro)
-        mkdir -p "$base_dir/.kiro/steering"
-        echo "$bootstrap_content" > "$base_dir/.kiro/steering/csp.md"
-        echo "  ✅ Kiro: bootstrap steering → .kiro/steering/csp.md"
-        ;;
-      vscode)
-        mkdir -p "$base_dir/.github"
-        append_bootstrap_to_file "$base_dir/.github/copilot-instructions.md" "$bootstrap_content"
-        ;;
-    esac
+    write_bootstrap_for_platform "$slug" "$base_dir" "$bootstrap_content"
+
   }
 
   # Layer-aware + stack-aware install
@@ -1467,6 +817,7 @@ main() {
       echo "  支持: claude-code cursor copilot-cli hermes-agent windsurf kiro"
       echo "        gemini-cli codex aider trae vscode deerflow opencode"
       echo "        openclaw qwen-code antigravity claw-code qoder"
+      echo "        junie cline roo-code neovim"
       exit 1
     fi
     install_for_platform_filtered "$slug" "$base_dir" "$layer_filter" "$stack_filter"

@@ -4,6 +4,8 @@ description: Cache expensive file processing results using SHA-256 content hashe
 origin: CSP
 layer: 4
 category: patterns
+domain: patterns
+phase: build
 ---
 
 | Decision | Rationale |

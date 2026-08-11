@@ -4,6 +4,8 @@ description: Idiomatic Kotlin patterns, best practices, and conventions for buil
 origin: CSP
 layer: 4
 category: patterns
+domain: patterns
+phase: build
 ---
 
 # Kotlin Patterns

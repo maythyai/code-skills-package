@@ -4,6 +4,8 @@ description: React component testing with React Testing Library, Vitest/Jest, MS
 origin: CSP
 layer: 4
 category: patterns
+domain: patterns
+phase: build
 ---
 
 | Runner | Best For | Why |

@@ -3,6 +3,8 @@ name: csp-skill-optimizer
 description: Use when collecting user feedback on skill behavior, identifying skill coverage gaps, or optimizing existing skills based on real usage patterns. Also triggers when user says "this skill doesn't handle X", "skill X missed", "make skill X better", or "optimize skills".
 layer: 1
 category: meta
+phase: verify
+domain: architecture
 ---
 
 | Signal | Meaning | Action |

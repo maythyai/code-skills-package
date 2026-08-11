@@ -4,6 +4,8 @@ description: C++ coding standards based on the C++ Core Guidelines (isocpp.githu
 origin: CSP
 layer: 4
 category: patterns
+phase: build
+domain: patterns
 ---
 
 # C++ Coding Standards (C++ Core Guidelines)

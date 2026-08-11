@@ -4,6 +4,8 @@ description: NestJS architecture patterns for modules, controllers, providers, D
 origin: CSP
 layer: 4
 category: patterns
+domain: patterns
+phase: build
 ---
 
 # NestJS Development Patterns

@@ -5,6 +5,8 @@ argument-hint: "<observation to trace>"
 agent: tracer
 layer: 2
 category: workflow
+domain: patterns
+phase: build
 ---
 
 | Hypothesis | Evidence | Confidence | Strength | Verdict |

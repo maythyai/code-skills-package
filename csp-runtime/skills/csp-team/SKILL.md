@@ -5,6 +5,8 @@ argument-hint: "[N:agent-type] [ralph] <task description>"
 aliases: []
 layer: 4
 category: patterns
+domain: patterns
+phase: build
 ---
 
 | Stage | Workers | Reviewers | Routing Notes |

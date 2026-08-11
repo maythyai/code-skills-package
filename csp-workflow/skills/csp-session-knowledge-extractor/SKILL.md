@@ -4,6 +4,8 @@ description: "Extract reusable knowledge from development sessions and route to 
 layer: 2
 category: workflow
 origin: original
+phase: review
+domain: patterns
 ---
 
 # Session Knowledge Extractor

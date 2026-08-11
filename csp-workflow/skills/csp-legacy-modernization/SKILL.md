@@ -10,6 +10,8 @@ metadata:
   origin: CSP
 layer: 2
 category: workflow
+phase: verify
+domain: patterns
 ---
 
 | Metric | What to Measure | Tool |

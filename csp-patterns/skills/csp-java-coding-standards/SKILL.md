@@ -4,6 +4,8 @@ description: "Java coding standards for Spring Boot and Quarkus services: naming
 origin: CSP
 layer: 4
 category: patterns
+phase: build
+domain: patterns
 ---
 
 # Java Coding Standards

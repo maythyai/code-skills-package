@@ -7,6 +7,8 @@ description: >
 layer: 4
 origin: merged(CSP)
 category: patterns
+domain: patterns
+phase: build
 ---
 
 # Docs Lookup

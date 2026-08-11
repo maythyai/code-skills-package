@@ -3,6 +3,8 @@ name: csp-video-editing
 description: AI-assisted video editing workflows for cutting, structuring, and augmenting real footage. Covers the full pipeline from raw capture through FFmpeg, Remotion, ElevenLabs, fal.ai, and final polish in Descript or CapCut. Use when the user wants to edit video, cut footage, create vlogs, or build video content.
 layer: 4
 category: patterns
+phase: build
+domain: patterns
 ---
 
 | Platform | Aspect Ratio | Resolution |

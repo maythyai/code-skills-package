@@ -4,6 +4,8 @@ description: Invoke parallel document-specialist agents for external web searche
 argument-hint: <search query or topic>
 layer: 4
 category: patterns
+domain: patterns
+phase: build
 ---
 
 # External Context Skill

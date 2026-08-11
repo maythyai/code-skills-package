@@ -4,6 +4,8 @@ description: Idiomatic Rust patterns, ownership, error handling, traits, concurr
 origin: CSP
 layer: 4
 category: patterns
+domain: patterns
+phase: build
 ---
 
 | Principle | Application |

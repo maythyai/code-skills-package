@@ -3,6 +3,7 @@ name: csp-ultraqa
 description: QA cycling workflow - test, verify, fix, repeat until goal met
 argument-hint: "[--tests|--build|--lint|--typecheck|--custom <pattern>] [--interactive]"
 layer: 3
+phase: verify
 ---
 
 | Command | Goal Type | Success Criteria |

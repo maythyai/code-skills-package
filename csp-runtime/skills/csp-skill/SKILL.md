@@ -4,6 +4,8 @@ description: Manage local skills - list, add, remove, search, edit, setup wizard
 argument-hint: "<command> [args]"
 layer: 2
 category: workflow
+domain: patterns
+phase: build
 ---
 
 | Skill Name | Triggers | Quality |

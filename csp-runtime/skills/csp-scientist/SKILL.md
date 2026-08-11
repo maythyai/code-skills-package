@@ -4,6 +4,8 @@ description: Orchestrate parallel scientist agents for comprehensive analysis wi
 argument-hint: <research goal>
 layer: 4
 category: patterns
+domain: patterns
+phase: build
 ---
 
 | Task Type | Agent | Model | Examples |

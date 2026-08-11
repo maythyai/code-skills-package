@@ -6,6 +6,8 @@ description: >
   Use when about to claim work is complete, before committing or creating PRs.
 layer: 1
 category: meta
+phase: build
+domain: architecture
 ---
 
 | Check | Evidence Required | NOT Sufficient |

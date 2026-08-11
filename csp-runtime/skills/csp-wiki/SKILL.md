@@ -4,6 +4,8 @@ description: LLM Wiki — persistent markdown knowledge base that compounds acro
 triggers: ["wiki", "wiki this", "wiki add", "wiki lint", "wiki query"]
 layer: 5
 category: runtime
+domain: architecture
+phase: build
 ---
 
 
