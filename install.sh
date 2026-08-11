@@ -423,7 +423,7 @@ do_uninstall() {
   done
 
   # Delete standalone bootstrap files
-  for file in .trae/rules/csp.md .qoder/rules/csp.md .antigravity/rules.md .kiro/steering/csp.md .cursor/rules/csp.md .deerflow/rules/csp.md .opencode/rules/csp.md .qwen/rules/csp.md; do
+  for file in .trae/rules/csp.md .qoder/rules/csp.md .antigravity/rules.md .kiro/steering/csp.md .cursor/rules/csp.md .deerflow/rules/csp.md .opencode/rules/csp.md .qwen/rules/csp.md .junie/guidelines.md .cline/rules/csp.md .roo/rules/csp.md .avante/rules/csp.md; do
     if [ -f "$base_dir/$file" ]; then
       rm -f "$base_dir/$file"
       echo "  ✅ 删除 bootstrap: $file"
