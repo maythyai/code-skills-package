@@ -6,7 +6,6 @@ description: >
   and package organization. Use when working with Go code to apply idiomatic
   Go patterns.
 metadata:
-  origin: CSP
   globs: ["**/*.go", "**/go.mod", "**/go.sum"]
 layer: 4
 category: patterns

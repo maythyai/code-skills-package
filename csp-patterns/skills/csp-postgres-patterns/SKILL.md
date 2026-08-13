@@ -5,7 +5,6 @@ description: >
   and security. Quick reference for common patterns, index types, data types,
   and anti-pattern detection. Based on Supabase best practices.
 metadata:
-  origin: CSP
   credit: Supabase team (MIT License)
 layer: 4
 category: patterns

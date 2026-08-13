@@ -5,8 +5,6 @@ description: >
   vs Native vs KMP vs MAUI), code sharing strategies, platform adaptation, testing across
   platforms, CI/CD for multi-platform, app store considerations, and when to go native.
   Use when making cross-platform architecture decisions or evaluating technology choices.
-metadata:
-  origin: CSP
 layer: 4
 category: patterns
 domain: patterns

@@ -6,7 +6,6 @@ description: >
   Includes migration recipes from class components, Enzyme→RTL, and legacy Context.
   Use when upgrading React versions or adopting version-specific features.
 metadata:
-  origin: CSP
   source: awesome-copilot/skills/react18-*,react19-*,react-*
   globs: ["**/*.{tsx,jsx}", "**/react*"]
 ---

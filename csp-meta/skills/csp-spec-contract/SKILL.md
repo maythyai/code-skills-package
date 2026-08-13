@@ -2,12 +2,12 @@
 name: csp-spec-contract
 description: Transform ideas, requirements, or discussions into CSP SPEC contracts with traceable requirements and acceptance criteria. Use when formalizing requirements, generating CSPEC inputs, or validating spec completeness. Triggers on "spec", "specification", "contract", "formalize requirements".
 layer: 1
-origin: csp-native
 category: meta
 phase: define
 domain: quality
 scope: design
 tools: [Read, Write, Edit, Glob, Grep]
+related_skills: [csp-product-discovery-orchestrator]
 ---
 
 | Criterion | Rule |

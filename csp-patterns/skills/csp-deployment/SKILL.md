@@ -6,7 +6,6 @@ description: >
   Combines deployment patterns with CI/CD automation and shift-left quality strategy.
   Use when setting up deployment infrastructure, configuring CI pipelines, or planning releases.
 layer: 4
-origin: merged(CSP+agent-skills)
 category: patterns
 domain: patterns
 phase: build

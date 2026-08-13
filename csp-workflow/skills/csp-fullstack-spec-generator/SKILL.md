@@ -22,6 +22,8 @@ dependencies:
 related_skills:
   - csp-requirement-decomposition
   - csp-tech-stack-advisor
+  - csp-tech-solution-design
+  - csp-tech-task-breakdown
   - csp-lifecycle-orchestrator
   - csp-implementation-phase
   - csp-spec-driven-development
@@ -564,11 +566,11 @@ services:
 completion_signal:
   output: .csp/specs/SPEC-INDEX.md
   next_step:
-    recommended: csp-implementation-phase
-    alternatives: [csp-plan-phase, csp-tdd]
+    recommended: csp-tech-task-breakdown
+    alternatives: [csp-implementation-phase, csp-plan-phase, csp-tdd]
   status:
     specs_path: .csp/specs/
     spec_count: "{{count}}"
     phase: plan
-    ready_for: [implementation, task-breakdown]
+    ready_for: [task-breakdown, implementation, planning]
 ```

@@ -1,8 +1,6 @@
 ---
 name: csp-prompt-engineering
 description: Production prompt engineering covering template management with Jinja2/Mustache, version control, evaluation frameworks, prompt pattern libraries (chain-of-thought, few-shot, ReAct, structured output), guardrails and safety, systematic optimization, and multi-model adaptation. Use when designing, testing, versioning, or optimizing prompts for LLM applications.
-metadata:
-  origin: CSP
 layer: 4
 category: patterns
 domain: patterns

@@ -1,7 +1,6 @@
 ---
 name: csp-pytorch-patterns
 description: PyTorch deep learning patterns and best practices for building robust, efficient, and reproducible training pipelines, model architectures, and data loading.
-origin: CSP
 layer: 4
 category: patterns
 domain: patterns

@@ -11,7 +11,7 @@ phase: define
 domain: architecture
 scope: design
 tools: [Read, Write, Edit, Glob, Grep]
-related_skills: [csp-plan-phase, csp-spec-contract]
+related_skills: [csp-plan-phase, csp-spec-contract, csp-product-discovery-orchestrator]
 anti_rationalizations:
   "Let's just start coding": "Design first prevents rework. 30 min brainstorming saves 3 hours."
   "I know what to build": "Assumptions are bugs waiting to happen. Surface them explicitly."

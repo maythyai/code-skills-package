@@ -22,6 +22,7 @@ dependencies:
 related_skills:
   - csp-requirement-decomposition
   - csp-fullstack-spec-generator
+  - csp-tech-solution-design
   - csp-lifecycle-orchestrator
   - csp-full
 
@@ -335,11 +336,11 @@ graph TB
 completion_signal:
   output: .csp/tech-decisions/TECH-DECISIONS-SUMMARY.md
   next_step:
-    recommended: csp-fullstack-spec-generator
-    alternatives: [csp-plan-phase, csp-full]
+    recommended: csp-tech-solution-design
+    alternatives: [csp-fullstack-spec-generator, csp-plan-phase, csp-full]
   status:
     tech_decisions_path: .csp/tech-decisions/
     adr_count: "{{count}}"
     phase: plan
-    ready_for: [spec-generation, implementation-planning]
+    ready_for: [tech-solution-design, spec-generation, implementation-planning]
 ```

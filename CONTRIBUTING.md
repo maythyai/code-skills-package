@@ -42,6 +42,18 @@ Avoid:
 - Use full words, avoid abbreviations
 - Maximum 4 words in the slug
 
+### Content Hygiene (Required)
+
+Skills ship as pure content — no provenance, no persons, no internal infrastructure:
+
+- **No author info**: no `author:` field, personal names, or attribution footers
+- **No LICENSE/NOTICE/COPYING files** inside skill directories — package license is the root `LICENSE` (MIT)
+- **No lineage fields**: `origin:` is forbidden in frontmatter (including nested under `metadata:`); `source:` may only reference public projects (e.g. GitHub repos)
+- **No internal URLs**: `*.alibaba-inc.com`, `*.antfin.com`, etc. are forbidden — parameterize functional URLs with placeholders (e.g. `{CR_API_BASE}`) + environment variables. Public links (github.com, official docs) are kept
+- **No personal-environment hardcoding**: local paths/ports must be parameterized (env vars or relative paths)
+- **No build artifacts**: `__pycache__/`, `*.pyc`, `*.bak`, `.DS_Store` must not be committed
+- **Porting external skills**: verify license compatibility first (content under NC/SA-style restrictions must not be brought into this MIT package); rewrite/genericize content without source attribution
+
 ## Adding a New Skill
 
 ### 1. Create the Skill Directory

@@ -1,7 +1,6 @@
 ---
 name: csp-mle-workflow
 description: Production machine-learning engineering workflow for data contracts, reproducible training, model evaluation, deployment, monitoring, and rollback. Use when building, reviewing, or hardening ML systems beyond one-off notebooks.
-origin: CSP
 layer: 4
 category: patterns
 domain: patterns

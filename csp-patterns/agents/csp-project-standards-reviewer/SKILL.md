@@ -5,7 +5,6 @@ description: >
   identifies high-quality exemplars, and enforces consistency. Use for establishing or
   reviewing project coding standards.
 metadata:
-  origin: CSP
   source: awesome-copilot/skills/review-and-refactor,write-coding-standards-from-file,code-exemplars-blueprint-generator
   globs: ["**/*.{ts,tsx,js,jsx,py,java,kt,go,rs,cs,cpp,rb,php}"]
 ---

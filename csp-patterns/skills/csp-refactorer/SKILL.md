@@ -6,7 +6,6 @@ description: >
   improves maintainability without changing behavior. Triggered by "refactor",
   "clean up this code", "reduce complexity", "extract method".
 metadata:
-  origin: CSP
   source: awesome-copilot/skills/refactor*
   globs: ["**/*.{ts,tsx,js,jsx,py,java,kt,go,rs,cs,cpp,rb,php}"]
 ---

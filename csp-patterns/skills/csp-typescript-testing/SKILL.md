@@ -8,7 +8,6 @@ description: >
   and E2E testing. Use when writing or improving TypeScript tests, setting up a
   test runner, or asserting on types.
 metadata:
-  origin: CSP
   globs:
     ["**/*.ts", "**/*.tsx", "**/*.mts", "**/*.cts", "**/*.test.ts", "**/*.spec.ts"]
 layer: 4

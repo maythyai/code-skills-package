@@ -102,7 +102,7 @@ function saveState(state) {
 
 function initState() {
   const state = {
-    version: '0.8.0',
+    version: '0.9.0',
     phase: null,
     phase_name: null,
     milestone: null,
@@ -441,7 +441,7 @@ function getStats() {
   const state = loadState() || {};
   const completed = roadmap.phases.filter(p => ['done', 'complete', '✅'].includes(p.status)).length;
   return {
-    version: '0.8.0',
+    version: '0.9.0',
     milestone: state.milestone || roadmap.milestone || 'unknown',
     phases_total: roadmap.phases.length,
     phases_completed: completed,
@@ -647,7 +647,7 @@ function main() {
   const args = process.argv.slice(2);
 
   if (args.length === 0 || args[0] === '--help' || args[0] === '-h') {
-    out(`csp-sdk v0.8.0 — CSP workflow orchestration CLI
+    out(`csp-sdk v0.9.0 — CSP workflow orchestration CLI
 
 Usage:
   csp-sdk query <subcommand> [args...] [--flags]
@@ -688,7 +688,7 @@ Subcommands (query):
   }
 
   if (args[0] === 'version' || args[0] === '--version') {
-    out('0.8.0');
+    out('0.9.0');
     process.exit(0);
   }
 

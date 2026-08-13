@@ -46,7 +46,7 @@ trigger_index:
     skills: [csp-plan-phase, csp-brainstorming, csp-solutioning-phase]
     weight: 40
   "test":
-    skills: [csp-tdd, csp-e2e-testing, csp-pr-test-analyzer, csp-test-coverage]
+    skills: [csp-tdd, csp-e2e-testing, csp-pr-test-analyzer, csp-test-coverage, csp-test, csp-qa-test-engineering]
     weight: 45
   "测试":
     skills: [csp-tdd]
@@ -201,7 +201,7 @@ trigger_index:
     skills: [csp-advanced-elicitation]
     weight: 50
   "extract":
-    skills: [csp-advanced-elicitation, csp-extract-learnings]
+    skills: [csp-advanced-elicitation, csp-extract-learnings, csp-extract]
     weight: 45
   "structure":
     skills: [csp-advanced-elicitation, csp-review-editorial-structure]
@@ -594,7 +594,7 @@ trigger_index:
     skills: [csp-assumptions-analyzer]
     weight: 40
   "audit":
-    skills: [csp-audit-fix, csp-audit-milestone, csp-audit-uat]
+    skills: [csp-audit-fix, csp-audit-milestone, csp-audit-uat, csp-audit]
     weight: 40
   "audit fix":
     skills: [csp-audit-fix]
@@ -654,7 +654,7 @@ trigger_index:
     skills: [csp-capture]
     weight: 40
   "check":
-    skills: [csp-check-todos]
+    skills: [csp-check-todos, csp-check]
     weight: 40
   "check todos":
     skills: [csp-check-todos]
@@ -1164,7 +1164,7 @@ trigger_index:
     skills: [csp-document-specialist]
     weight: 40
   "domain":
-    skills: [csp-domain-researcher]
+    skills: [csp-domain-researcher, csp-domain-driven-design]
     weight: 40
   "domain researcher":
     skills: [csp-domain-researcher]
@@ -2358,7 +2358,7 @@ trigger_index:
     skills: [csp-instinct-status]
     weight: 40
   "integration":
-    skills: [csp-ai-integration-phase, csp-integration-checker]
+    skills: [csp-ai-integration-phase, csp-integration-checker, csp-integration-design]
     weight: 40
   "integration checker":
     skills: [csp-integration-checker]
@@ -3168,7 +3168,7 @@ trigger_index:
     skills: [csp-remove-workspace]
     weight: 40
   "requirement":
-    skills: [csp-requirement-decomposition]
+    skills: [csp-requirement-decomposition, csp-requirement-prioritization]
     weight: 40
   "requirement decomposition":
     skills: [csp-requirement-decomposition]
@@ -4275,7 +4275,7 @@ trigger_index:
     skills: [csp-sync-skills]
     weight: 40
   "tech":
-    skills: [csp-tech-stack-advisor, csp-tech-writer]
+    skills: [csp-tech-stack-advisor, csp-tech-writer, csp-tech-risk-assessment, csp-tech-solution-design, csp-tech-task-breakdown]
     weight: 40
   "tech stack advisor":
     skills: [csp-tech-stack-advisor]
@@ -4413,7 +4413,7 @@ trigger_index:
     skills: [csp-update-docs]
     weight: 40
   "user":
-    skills: [csp-user-profiler]
+    skills: [csp-user-profiler, csp-user-story-decomposition, csp-user-feedback-analysis]
     weight: 40
   "user profiler":
     skills: [csp-user-profiler]
@@ -4624,6 +4624,587 @@ trigger_index:
     weight: 40
   "review defect mining":
     skills: [csp-defect-mining]
+    weight: 40
+
+  # ─── auto-generated triggers (generate-triggers.mjs) ───
+  "competitive":
+    skills: [csp-competitive-analysis]
+    weight: 40
+  "competitive analysis":
+    skills: [csp-competitive-analysis]
+    weight: 40
+  "competitive-analysis":
+    skills: [csp-competitive-analysis]
+    weight: 40
+  "fix competitive analysis":
+    skills: [csp-competitive-analysis]
+    weight: 40
+  "fix prd generation":
+    skills: [csp-prd-generation]
+    weight: 40
+  "fix requirement prioritization":
+    skills: [csp-requirement-prioritization]
+    weight: 40
+  "fix user story decomposition":
+    skills: [csp-user-story-decomposition]
+    weight: 40
+  "prd":
+    skills: [csp-prd-generation, csp-prd, csp-prd-change-impact, csp-prd-parser, csp-prd-traceability]
+    weight: 40
+  "prd generation":
+    skills: [csp-prd-generation]
+    weight: 40
+  "prd-generation":
+    skills: [csp-prd-generation]
+    weight: 40
+  "product metrics code review":
+    skills: [csp-product-metrics-review]
+    weight: 40
+  "product metrics review":
+    skills: [csp-product-metrics-review]
+    weight: 40
+  "product metrics 审查":
+    skills: [csp-product-metrics-review]
+    weight: 40
+  "product-metrics-review":
+    skills: [csp-product-metrics-review]
+    weight: 40
+  "requirement prioritization":
+    skills: [csp-requirement-prioritization]
+    weight: 40
+  "requirement-prioritization":
+    skills: [csp-requirement-prioritization]
+    weight: 40
+  "review competitive analysis":
+    skills: [csp-competitive-analysis]
+    weight: 40
+  "review prd generation":
+    skills: [csp-prd-generation]
+    weight: 40
+  "review product metrics code":
+    skills: [csp-product-metrics-review]
+    weight: 40
+  "review requirement prioritization":
+    skills: [csp-requirement-prioritization]
+    weight: 40
+  "review user story decomposition":
+    skills: [csp-user-story-decomposition]
+    weight: 40
+  "user story decomposition":
+    skills: [csp-user-story-decomposition]
+    weight: 40
+  "user-story-decomposition":
+    skills: [csp-user-story-decomposition]
+    weight: 40
+
+  # ─── auto-generated triggers (generate-triggers.mjs) ───
+  "fix roadmap update":
+    skills: [csp-roadmap-update]
+    weight: 40
+  "fix user feedback analysis":
+    skills: [csp-user-feedback-analysis]
+    weight: 40
+  "review roadmap update":
+    skills: [csp-roadmap-update]
+    weight: 40
+  "review user feedback analysis":
+    skills: [csp-user-feedback-analysis]
+    weight: 40
+  "roadmap":
+    skills: [csp-roadmap-update]
+    weight: 40
+  "roadmap update":
+    skills: [csp-roadmap-update]
+    weight: 40
+  "roadmap-update":
+    skills: [csp-roadmap-update]
+    weight: 40
+  "user feedback analysis":
+    skills: [csp-user-feedback-analysis]
+    weight: 40
+  "user-feedback-analysis":
+    skills: [csp-user-feedback-analysis]
+    weight: 40
+
+  # ─── auto-generated triggers (generate-triggers.mjs) ───
+  "access":
+    skills: [csp-access]
+    weight: 40
+  "audit 审计":
+    skills: [csp-audit]
+    weight: 40
+  "avatar":
+    skills: [csp-avatar]
+    weight: 40
+  "bench":
+    skills: [csp-bench]
+    weight: 40
+  "board":
+    skills: [csp-board]
+    weight: 40
+  "brief":
+    skills: [csp-brief]
+    weight: 40
+  "chart":
+    skills: [csp-chart]
+    weight: 40
+  "edge":
+    skills: [csp-edge]
+    weight: 40
+  "fix access":
+    skills: [csp-access]
+    weight: 40
+  "fix audit":
+    skills: [csp-audit]
+    weight: 40
+  "fix avatar":
+    skills: [csp-avatar]
+    weight: 40
+  "fix bench":
+    skills: [csp-bench]
+    weight: 40
+  "fix board":
+    skills: [csp-board]
+    weight: 40
+  "fix brief":
+    skills: [csp-brief]
+    weight: 40
+  "fix chart":
+    skills: [csp-chart]
+    weight: 40
+  "fix check":
+    skills: [csp-check]
+    weight: 40
+  "fix edge":
+    skills: [csp-edge]
+    weight: 40
+  "fix extract":
+    skills: [csp-extract]
+    weight: 40
+  "fix flow mobile":
+    skills: [csp-flow-mobile]
+    weight: 40
+  "fix flow web":
+    skills: [csp-flow-web]
+    weight: 40
+  "fix frame":
+    skills: [csp-frame]
+    weight: 40
+  "fix journey":
+    skills: [csp-journey]
+    weight: 40
+  "fix metric":
+    skills: [csp-metric]
+    weight: 40
+  "fix motion apply":
+    skills: [csp-motion-apply]
+    weight: 40
+  "fix motion plan":
+    skills: [csp-motion-plan]
+    weight: 40
+  "fix pitch":
+    skills: [csp-pitch]
+    weight: 40
+  "fix poster":
+    skills: [csp-poster]
+    weight: 40
+  "fix prd":
+    skills: [csp-prd]
+    weight: 40
+  "fix probe":
+    skills: [csp-probe]
+    weight: 40
+  "fix qa":
+    skills: [csp-qa]
+    weight: 40
+  "fix retro":
+    skills: [csp-retro]
+    weight: 40
+  "fix scope":
+    skills: [csp-scope]
+    weight: 40
+  "fix signal":
+    skills: [csp-signal]
+    weight: 40
+  "fix sitemap":
+    skills: [csp-sitemap]
+    weight: 40
+  "fix stories":
+    skills: [csp-stories]
+    weight: 40
+  "fix test":
+    skills: [csp-test]
+    weight: 40
+  "flow":
+    skills: [csp-flow-mobile, csp-flow-web]
+    weight: 40
+  "flow mobile":
+    skills: [csp-flow-mobile]
+    weight: 40
+  "flow web":
+    skills: [csp-flow-web]
+    weight: 40
+  "flow-mobile":
+    skills: [csp-flow-mobile]
+    weight: 40
+  "flow-web":
+    skills: [csp-flow-web]
+    weight: 40
+  "frame":
+    skills: [csp-frame]
+    weight: 40
+  "journey":
+    skills: [csp-journey]
+    weight: 40
+  "metric":
+    skills: [csp-metric]
+    weight: 40
+  "motion":
+    skills: [csp-motion-apply, csp-motion-plan]
+    weight: 40
+  "motion apply":
+    skills: [csp-motion-apply]
+    weight: 40
+  "motion plan":
+    skills: [csp-motion-plan]
+    weight: 40
+  "motion-apply":
+    skills: [csp-motion-apply]
+    weight: 40
+  "motion-plan":
+    skills: [csp-motion-plan]
+    weight: 40
+  "pitch":
+    skills: [csp-pitch]
+    weight: 40
+  "poster":
+    skills: [csp-poster]
+    weight: 40
+  "probe":
+    skills: [csp-probe]
+    weight: 40
+  "qa":
+    skills: [csp-qa]
+    weight: 40
+  "retro":
+    skills: [csp-retro]
+    weight: 40
+  "review access":
+    skills: [csp-access]
+    weight: 40
+  "review audit":
+    skills: [csp-audit]
+    weight: 40
+  "review avatar":
+    skills: [csp-avatar]
+    weight: 40
+  "review bench":
+    skills: [csp-bench]
+    weight: 40
+  "review board":
+    skills: [csp-board]
+    weight: 40
+  "review brief":
+    skills: [csp-brief]
+    weight: 40
+  "review chart":
+    skills: [csp-chart]
+    weight: 40
+  "review check":
+    skills: [csp-check]
+    weight: 40
+  "review edge":
+    skills: [csp-edge]
+    weight: 40
+  "review extract":
+    skills: [csp-extract]
+    weight: 40
+  "review flow mobile":
+    skills: [csp-flow-mobile]
+    weight: 40
+  "review flow web":
+    skills: [csp-flow-web]
+    weight: 40
+  "review frame":
+    skills: [csp-frame]
+    weight: 40
+  "review journey":
+    skills: [csp-journey]
+    weight: 40
+  "review metric":
+    skills: [csp-metric]
+    weight: 40
+  "review motion apply":
+    skills: [csp-motion-apply]
+    weight: 40
+  "review motion plan":
+    skills: [csp-motion-plan]
+    weight: 40
+  "review pitch":
+    skills: [csp-pitch]
+    weight: 40
+  "review poster":
+    skills: [csp-poster]
+    weight: 40
+  "review prd":
+    skills: [csp-prd]
+    weight: 40
+  "review probe":
+    skills: [csp-probe]
+    weight: 40
+  "review qa":
+    skills: [csp-qa]
+    weight: 40
+  "review retro":
+    skills: [csp-retro]
+    weight: 40
+  "review scope":
+    skills: [csp-scope]
+    weight: 40
+  "review signal":
+    skills: [csp-signal]
+    weight: 40
+  "review sitemap":
+    skills: [csp-sitemap]
+    weight: 40
+  "review stories":
+    skills: [csp-stories]
+    weight: 40
+  "review test":
+    skills: [csp-test]
+    weight: 40
+  "scope":
+    skills: [csp-scope]
+    weight: 40
+  "signal":
+    skills: [csp-signal]
+    weight: 40
+  "sitemap":
+    skills: [csp-sitemap]
+    weight: 40
+  "stories":
+    skills: [csp-stories]
+    weight: 40
+  "test 测试":
+    skills: [csp-test]
+    weight: 40
+
+  # ─── auto-generated triggers (generate-triggers.mjs) ───
+  "create":
+    skills: [csp-create-skill]
+    weight: 40
+  "create skill":
+    skills: [csp-create-skill]
+    weight: 40
+  "create skill 创建":
+    skills: [csp-create-skill]
+    weight: 40
+  "create-skill":
+    skills: [csp-create-skill]
+    weight: 40
+  "fix create skill":
+    skills: [csp-create-skill]
+    weight: 40
+  "fix qa test engineering":
+    skills: [csp-qa-test-engineering]
+    weight: 40
+  "playwright ui test":
+    skills: [csp-playwright-ui-test]
+    weight: 40
+  "playwright ui testing":
+    skills: [csp-playwright-ui-test]
+    weight: 40
+  "playwright ui 测试":
+    skills: [csp-playwright-ui-test]
+    weight: 40
+  "playwright-ui-test":
+    skills: [csp-playwright-ui-test]
+    weight: 40
+  "qa cr code review":
+    skills: [csp-qa-cr-review]
+    weight: 40
+  "qa cr review":
+    skills: [csp-qa-cr-review]
+    weight: 40
+  "qa cr 审查":
+    skills: [csp-qa-cr-review]
+    weight: 40
+  "qa test engineering":
+    skills: [csp-qa-test-engineering]
+    weight: 40
+  "qa test engineering 测试":
+    skills: [csp-qa-test-engineering]
+    weight: 40
+  "qa-cr-review":
+    skills: [csp-qa-cr-review]
+    weight: 40
+  "qa-test-engineering":
+    skills: [csp-qa-test-engineering]
+    weight: 40
+  "review create skill":
+    skills: [csp-create-skill]
+    weight: 40
+  "review qa cr code":
+    skills: [csp-qa-cr-review]
+    weight: 40
+  "review qa test engineering":
+    skills: [csp-qa-test-engineering]
+    weight: 40
+
+  # ─── auto-generated triggers (generate-triggers.mjs) ───
+  "h5 visual test":
+    skills: [csp-h5-visual-testing]
+    weight: 40
+  "h5 visual testing":
+    skills: [csp-h5-visual-testing]
+    weight: 40
+  "h5 visual 测试":
+    skills: [csp-h5-visual-testing]
+    weight: 40
+  "h5-visual-testing":
+    skills: [csp-h5-visual-testing]
+    weight: 40
+
+  # ─── auto-generated triggers (generate-triggers.mjs) ───
+  "fix product discovery orchestrator":
+    skills: [csp-product-discovery-orchestrator]
+    weight: 40
+  "product discovery orchestrator":
+    skills: [csp-product-discovery-orchestrator]
+    weight: 40
+  "product-discovery-orchestrator":
+    skills: [csp-product-discovery-orchestrator]
+    weight: 40
+  "review product discovery orchestrator":
+    skills: [csp-product-discovery-orchestrator]
+    weight: 40
+
+  # ─── auto-generated triggers (generate-triggers.mjs) ───
+  "domain driven design":
+    skills: [csp-domain-driven-design]
+    weight: 40
+  "domain-driven-design":
+    skills: [csp-domain-driven-design]
+    weight: 40
+  "effort":
+    skills: [csp-effort-estimation]
+    weight: 40
+  "effort estimation":
+    skills: [csp-effort-estimation]
+    weight: 40
+  "effort-estimation":
+    skills: [csp-effort-estimation]
+    weight: 40
+  "fix domain driven design":
+    skills: [csp-domain-driven-design]
+    weight: 40
+  "fix effort estimation":
+    skills: [csp-effort-estimation]
+    weight: 40
+  "fix integration design":
+    skills: [csp-integration-design]
+    weight: 40
+  "fix prd change impact":
+    skills: [csp-prd-change-impact]
+    weight: 40
+  "fix prd parser":
+    skills: [csp-prd-parser]
+    weight: 40
+  "fix prd traceability":
+    skills: [csp-prd-traceability]
+    weight: 40
+  "fix tech risk assessment":
+    skills: [csp-tech-risk-assessment]
+    weight: 40
+  "fix tech solution design":
+    skills: [csp-tech-solution-design]
+    weight: 40
+  "fix tech task breakdown":
+    skills: [csp-tech-task-breakdown]
+    weight: 40
+  "integration design":
+    skills: [csp-integration-design]
+    weight: 40
+  "integration-design":
+    skills: [csp-integration-design]
+    weight: 40
+  "prd change impact":
+    skills: [csp-prd-change-impact]
+    weight: 40
+  "prd parser":
+    skills: [csp-prd-parser]
+    weight: 40
+  "prd traceability":
+    skills: [csp-prd-traceability]
+    weight: 40
+  "prd-change-impact":
+    skills: [csp-prd-change-impact]
+    weight: 40
+  "prd-parser":
+    skills: [csp-prd-parser]
+    weight: 40
+  "prd-traceability":
+    skills: [csp-prd-traceability]
+    weight: 40
+  "review domain driven design":
+    skills: [csp-domain-driven-design]
+    weight: 40
+  "review effort estimation":
+    skills: [csp-effort-estimation]
+    weight: 40
+  "review integration design":
+    skills: [csp-integration-design]
+    weight: 40
+  "review prd change impact":
+    skills: [csp-prd-change-impact]
+    weight: 40
+  "review prd parser":
+    skills: [csp-prd-parser]
+    weight: 40
+  "review prd traceability":
+    skills: [csp-prd-traceability]
+    weight: 40
+  "review tech design code":
+    skills: [csp-tech-design-review]
+    weight: 40
+  "review tech risk assessment":
+    skills: [csp-tech-risk-assessment]
+    weight: 40
+  "review tech solution design":
+    skills: [csp-tech-solution-design]
+    weight: 40
+  "review tech task breakdown":
+    skills: [csp-tech-task-breakdown]
+    weight: 40
+  "tech design code review":
+    skills: [csp-tech-design-review]
+    weight: 40
+  "tech design review":
+    skills: [csp-tech-design-review]
+    weight: 40
+  "tech design 审查":
+    skills: [csp-tech-design-review]
+    weight: 40
+  "tech risk assessment":
+    skills: [csp-tech-risk-assessment]
+    weight: 40
+  "tech solution design":
+    skills: [csp-tech-solution-design]
+    weight: 40
+  "tech task breakdown":
+    skills: [csp-tech-task-breakdown]
+    weight: 40
+  "tech-design-review":
+    skills: [csp-tech-design-review]
+    weight: 40
+  "tech-risk-assessment":
+    skills: [csp-tech-risk-assessment]
+    weight: 40
+  "tech-solution-design":
+    skills: [csp-tech-solution-design]
+    weight: 40
+  "tech-task-breakdown":
+    skills: [csp-tech-task-breakdown]
     weight: 40
 stack_rules:
   python:
@@ -4861,7 +5442,7 @@ stack_rules:
     skills: [csp-product-pulse]
     weight: 40
   "product":
-    skills: [csp-product-pulse]
+    skills: [csp-product-pulse, csp-product-discovery-orchestrator]
     weight: 40
   "上线":
     skills: [csp-shipping-and-launch]

@@ -6,7 +6,6 @@ description: >
   and parallel agent dispatch (independent problems solved concurrently).
   Use when executing implementation plans with independent tasks, or facing 2+ independent failures.
 layer: 1
-origin: merged(CSP)
 category: meta
 phase: review
 domain: architecture

@@ -5,6 +5,7 @@ layer: 4
 category: patterns
 domain: patterns
 phase: build
+related_skills: [csp-product-discovery-orchestrator]
 ---
 
 # Market Research

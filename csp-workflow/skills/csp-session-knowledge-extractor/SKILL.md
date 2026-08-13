@@ -3,7 +3,6 @@ name: csp-session-knowledge-extractor
 description: "Extract reusable knowledge from development sessions and route to appropriate documentation stores. Use after completing a sprint, finishing a complex task, or when session discoveries should be preserved. Triggers: 提炼经验, 沉淀知识, session review, extract learnings, 会话总结, knowledge capture, 经验提取."
 layer: 2
 category: workflow
-origin: original
 phase: review
 domain: patterns
 ---

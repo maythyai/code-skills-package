@@ -8,8 +8,6 @@ description: >
   changes, and safe CI/CD pipeline integration. Use when planning or implementing
   database schema changes.
 version: 0.1.0
-metadata:
-  origin: CSP
 layer: 4
 category: patterns
 domain: patterns

@@ -5,8 +5,6 @@ description: >
   matrix builds, reusable workflows, caching strategies, monorepo triggers,
   deployment gates, and branch protection integration. Use when designing or
   optimizing continuous integration and delivery pipelines.
-metadata:
-  origin: CSP
 layer: 4
 category: patterns
 domain: patterns

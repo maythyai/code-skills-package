@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "total_skills": 595,
+  "total_skills": 646,
   "shards": [],
   "skill_metadata": "skill-metadata.yaml",
   "skills": [
@@ -3099,6 +3099,21 @@
       "priority": 10
     },
     {
+      "name": "csp-access",
+      "description": "Full accessibility audit (WCAG 2.1 AA/AAA). Performs a systematic accessibility compliance check Use when working on design tasks related to access.",
+      "layer": 3,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/csp-access/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
       "name": "csp-agent-introspection-debugging",
       "description": "Structured self-debugging workflow for AI agent failures using capture, diagnosis, contained recovery, and introspection reports.",
       "layer": 3,
@@ -3189,6 +3204,21 @@
       "priority": 10
     },
     {
+      "name": "csp-audit",
+      "description": "Product Design Suite · Entry C: Redesign UX Audit. First Skill to launch when a designer Use when working on design tasks related to audit.",
+      "layer": 3,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/csp-audit/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
       "name": "csp-autonomous-loops",
       "description": "Patterns and architectures for autonomous Claude Code loops — from simple sequential pipelines to RFC-driven multi-agent DAG systems.",
       "layer": 3,
@@ -3200,6 +3230,21 @@
       },
       "stack_detection": false,
       "path": "csp-patterns/skills/csp-autonomous-loops/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-avatar",
+      "description": "Digital avatar generation specialist. Supports exactly two style presets (realistic photographic / 3d-cartoon Pixar-Disney 3D-rendered) and two subject types (human / non-human ... Use when working on design tasks related to avatar.",
+      "layer": 3,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/csp-avatar/SKILL.md",
       "deps": [],
       "priority": 10
     },
@@ -3234,6 +3279,36 @@
       "priority": 10
     },
     {
+      "name": "csp-bench",
+      "description": "Product Design Suite · Deep-Dive Tool. First Skill to launch when a designer needs to Use when working on design tasks related to bench.",
+      "layer": 3,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/csp-bench/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-board",
+      "description": "Mood Board generator (Design System starting point). Based on Journey + Stories + Brief Use when working on design tasks related to board.",
+      "layer": 3,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/csp-board/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
       "name": "csp-brand-voice",
       "description": "Build a source-derived writing style profile from real posts, essays, launch notes, docs, or site copy, then reuse that profile across content, outreach, and social workflows. Use when the user wants voice consistency without generic AI writing tropes.",
       "layer": 3,
@@ -3245,6 +3320,21 @@
       },
       "stack_detection": false,
       "path": "csp-patterns/skills/csp-brand-voice/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-brief",
+      "description": "Generates a one-page Design Brief (HTML) that aligns business goals, user needs, design strategy, Use when working on design tasks related to brief.",
+      "layer": 3,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/csp-brief/SKILL.md",
       "deps": [],
       "priority": 10
     },
@@ -3290,6 +3380,36 @@
       },
       "stack_detection": false,
       "path": "csp-patterns/skills/csp-changelog-management/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-chart",
+      "description": "Data visualization design specification. Given a dashboard, report page, or data card requirement, Use when working on design tasks related to chart.",
+      "layer": 3,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/csp-chart/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-check",
+      "description": "Design Review Checklist. After completing a design file, multi-screen flow, or landing page — Use when working on design tasks related to check.",
+      "layer": 3,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/csp-check/SKILL.md",
       "deps": [],
       "priority": 10
     },
@@ -3684,6 +3804,21 @@
       "priority": 10
     },
     {
+      "name": "csp-edge",
+      "description": "Edge case and exception state design. Given a flow or set of screens, proactively exhausts all Use when working on design tasks related to edge.",
+      "layer": 3,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/csp-edge/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
       "name": "csp-email-systems",
       "description": "Integrates transactional and marketing email systems with provider setup, template rendering, deliverability configuration, bounce handling, and queue-based sending for reliable email delivery.",
       "layer": 3,
@@ -3744,6 +3879,21 @@
       "priority": 10
     },
     {
+      "name": "csp-extract",
+      "description": "Design System Extraction. Tri-mode: ① External — thin wrapper around the designlang CLI; reverse-extract complete design tokens (19 categories) from any live site for /bench / /... Use when working on design tasks related to extract.",
+      "layer": 3,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/csp-extract/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
       "name": "csp-fal-ai-media",
       "description": "Unified media generation via fal.ai MCP — image, video, and audio. Covers text-to-image (Nano Banana), text/image-to-video (Seedance, Kling, Veo 3), text-to-speech (CSM-1B), and video-to-audio (ThinkSound). Use when the user wants to generate images, videos, or audio with AI.",
       "layer": 3,
@@ -3785,6 +3935,51 @@
       },
       "stack_detection": false,
       "path": "csp-patterns/skills/csp-file-storage/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-flow-mobile",
+      "description": "Mobile multi-screen flow and page design (H5 / React Native App). Triggers when designing mobile Use when working on design tasks related to flow-mobile.",
+      "layer": 3,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/csp-flow-mobile/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-flow-web",
+      "description": "Web multi-screen flow and page design. Triggers when designing web product flows, information Use when working on design tasks related to flow-web.",
+      "layer": 3,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/csp-flow-web/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-frame",
+      "description": "Product Design Suite · Entry B: New Product Direction Exploration. First Skill to launch when the user is a designer（UX / UI / visual / experience designer）facing a new product ... Use when working on design tasks related to frame.",
+      "layer": 3,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/csp-frame/SKILL.md",
       "deps": [],
       "priority": 10
     },
@@ -3860,6 +4055,21 @@
       },
       "stack_detection": false,
       "path": "csp-patterns/skills/csp-git-conventions/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-h5-visual-testing",
+      "description": "H5/移动端页面自动化视觉走查与截图取证：启动开发服务器、注入 mock 数据，用 Playwright 执行批量截图、多 Tab 遍历、深浅色模式对比、交互录屏，生成标准 HTML 测试报告。 本技能只取证不修码——发现问题一律输出 FIX_SUGGESTION.md 等用户确认，禁止直接改项目代码。 当用户需要自动化截图、H5测试、H5截图、UI走查、视觉回归、深色模式截图、主题切换截图、 Tab分支截图、交互录屏、页面渲染验证时使用。务必在涉及 H5/移动端页面批量视觉取证时使用 此 skill，而不是手动起服务肉眼检查页面。",
+      "layer": 3,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/csp-h5-visual-testing/SKILL.md",
       "deps": [],
       "priority": 10
     },
@@ -3969,6 +4179,21 @@
       "priority": 10
     },
     {
+      "name": "csp-journey",
+      "description": "User Journey Map. Based on Frame.persona + Brief and other upstream outputs, generates an HTML Use when working on design tasks related to journey.",
+      "layer": 3,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/csp-journey/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
       "name": "csp-jpa-patterns",
       "description": "JPA/Hibernate patterns for entity design, relationships, query optimization, transactions, auditing, indexing, pagination, and pooling in Spring Boot.",
       "layer": 3,
@@ -4059,6 +4284,21 @@
       "priority": 10
     },
     {
+      "name": "csp-metric",
+      "description": "Design Metrics Blueprint (cross-discipline: data awareness). Defines measurement in the design Use when working on design tasks related to metric.",
+      "layer": 3,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/csp-metric/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
       "name": "csp-mle-workflow",
       "description": "Production machine-learning engineering workflow for data contracts, reproducible training, model evaluation, deployment, monitoring, and rollback. Use when building, reviewing, or hardening ML systems beyond one-off notebooks.",
       "layer": 3,
@@ -4130,6 +4370,36 @@
       },
       "stack_detection": false,
       "path": "csp-patterns/skills/csp-monorepo-tooling/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-motion-apply",
+      "description": "Motion implementation layer. For React projects, picks and installs React Bits OSS components via `npx shadcn add` based on project context sniffing. For non-React projects (Vue... Use when working on design tasks related to motion-apply.",
+      "layer": 3,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/csp-motion-apply/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-motion-plan",
+      "description": "Motion design principles and strategy layer. Applies Three Pillars (emotional intent / visual narrative / motion craft) + four Motion Personality archetypes (Playful / Premium /... Use when working on design tasks related to motion-plan.",
+      "layer": 3,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/csp-motion-plan/SKILL.md",
       "deps": [],
       "priority": 10
     },
@@ -4254,6 +4524,21 @@
       "priority": 10
     },
     {
+      "name": "csp-pitch",
+      "description": "Design presentation and stakeholder pitch. Reorganizes upstream chain outputs (Frame / Brief / Use when working on design tasks related to pitch.",
+      "layer": 3,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/csp-pitch/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
       "name": "csp-platform-deploy",
       "description": "Deploy web applications to modern PaaS platforms (Vercel, Netlify, Railway, Fly.io, Render) with optimal configuration for performance, cost, and developer experience.",
       "layer": 3,
@@ -4265,6 +4550,36 @@
       },
       "stack_detection": false,
       "path": "csp-patterns/skills/csp-platform-deploy/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-playwright-ui-test",
+      "description": "使用 playwright-cli 驱动真实浏览器执行自动化 UI 功能测试与迭代验证：采集 DOM 快照、 过滤后的网络请求、控制台日志、截图四类证据，按失败签名持续最小修复与回归，直至 complete 或真正 blocked；对低风险共享组件改动默认启用 Fast Path。 当用户需要 UI 自动化测试、页面功能验证、交互回归测试、截图取证、浏览器自动化验证时使用； 用户提到 Playwright、playwright-cli、页面走查、UI 验证、E2E 冒烟、表单/登录/弹窗等 页面功能测试时也应触发。务必在涉及 UI 测试时使用此 skill，而不是仅靠读代码推断页面行为。",
+      "layer": 3,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/csp-playwright-ui-test/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-poster",
+      "description": "Marketing poster generator — from theme to publish-ready PNG with materialized typography. AI directly Use when working on design tasks related to poster.",
+      "layer": 3,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/csp-poster/SKILL.md",
       "deps": [],
       "priority": 10
     },
@@ -4299,6 +4614,21 @@
       "priority": 10
     },
     {
+      "name": "csp-prd",
+      "description": "Product Requirements Document (design-to-engineering bridge). Consolidates aligned design outputs Use when working on design tasks related to prd.",
+      "layer": 3,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/csp-prd/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
       "name": "csp-privacy-compliance",
       "description": "Implement GDPR, CCPA, and privacy compliance features including consent management, data subject access requests, right to erasure, and data portability.",
       "layer": 3,
@@ -4310,6 +4640,21 @@
       },
       "stack_detection": false,
       "path": "csp-patterns/skills/csp-privacy-compliance/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-probe",
+      "description": "Product Design Suite · Deep-Dive Tool. First Skill to launch when a designer wants to Use when working on design tasks related to probe.",
+      "layer": 3,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/csp-probe/SKILL.md",
       "deps": [],
       "priority": 10
     },
@@ -4345,7 +4690,7 @@
     },
     {
       "name": "csp-python-reviewer",
-      "description": "Expert Python code reviewer specializing in PEP 8 compliance, Pythonic idioms, type hints, security, and performance. Use for all Python code changes.",
+      "description": "Python coding specification and code review specialist. Covers PEP 8, type safety, Pythonic idioms, security, performance, async patterns, and enterprise project structure evaluation. Use for all Python code review, project audits, and coding standard enforcement.",
       "layer": 3,
       "category": "patterns",
       "triggers": {
@@ -4370,6 +4715,36 @@
       },
       "stack_detection": false,
       "path": "csp-patterns/skills/csp-pytorch-patterns/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-qa-test-engineering",
+      "description": "全生命周期 QA 测试工程技能。覆盖需求分析→测试计划→测试用例→自动化执行→生产问题调查完整流程。涉及测试规划、测试策略、用例生成、接口测试、回归测试、生产调试、事件分析等场景时使用。",
+      "layer": 3,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/csp-qa-test-engineering/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-qa",
+      "description": "Design QA / Implementation Fidelity Review. After engineering or a coding agent completes the Use when working on design tasks related to qa.",
+      "layer": 3,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/csp-qa/SKILL.md",
       "deps": [],
       "priority": 10
     },
@@ -4509,6 +4884,21 @@
       "priority": 10
     },
     {
+      "name": "csp-retro",
+      "description": "Design Project Retrospective (chain-terminal closure). Run N weeks after launch — reads full chain Use when working on design tasks related to retro.",
+      "layer": 3,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/csp-retro/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
       "name": "csp-ruff-fixer",
       "description": "Iterative Ruff linting fixer. Runs safe then unsafe autofixes in passes, reviews each diff, resolves remaining findings with targeted edits or user decisions, and applies noqa only when justified. Use for Python lint fixes, Ruff rule enforcement, and code quality cleanup.",
       "layer": 3,
@@ -4554,6 +4944,21 @@
       "priority": 10
     },
     {
+      "name": "csp-scope",
+      "description": "Product Design Suite · Entry A: PRD Interpretation. First Skill to launch when a designer Use when working on design tasks related to scope.",
+      "layer": 3,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/csp-scope/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
       "name": "csp-search-first",
       "description": "Research-before-coding workflow. Search for existing tools, libraries, and patterns before writing custom code. Systematizes the \"search for existing solutions before implementing\" approach. Use when starting new features or adding functionality.",
       "layer": 3,
@@ -4595,6 +5000,36 @@
       },
       "stack_detection": false,
       "path": "csp-patterns/skills/csp-seo-engineering/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-signal",
+      "description": "Product Design Suite · Deep-Dive Tool. First Skill to launch when a designer has a pile of Use when working on design tasks related to signal.",
+      "layer": 3,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/csp-signal/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-sitemap",
+      "description": "Information Architecture skeleton (Sitemap). Based on Brief (business goals / users) + Stories Use when working on design tasks related to sitemap.",
+      "layer": 3,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/csp-sitemap/SKILL.md",
       "deps": [],
       "priority": 10
     },
@@ -4655,6 +5090,21 @@
       },
       "stack_detection": false,
       "path": "csp-patterns/skills/csp-sql-reviewer/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-stories",
+      "description": "Breaks an aligned design direction (Brief / Frame) into executable user stories. Each story uses a Use when working on design tasks related to stories.",
+      "layer": 3,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/csp-stories/SKILL.md",
       "deps": [],
       "priority": 10
     },
@@ -4745,6 +5195,21 @@
       },
       "stack_detection": false,
       "path": "csp-patterns/skills/csp-tech-diagram/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-test",
+      "description": "Product Design Suite · Validate. First Skill to launch when a designer wants to run Use when working on design tasks related to test.",
+      "layer": 3,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/csp-test/SKILL.md",
       "deps": [],
       "priority": 10
     },
@@ -5945,6 +6410,21 @@
       },
       "stack_detection": false,
       "path": "csp-runtime/skills/csp-configure-notifications/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-create-skill",
+      "description": "标准技能创建向导 — 交互式引导用户创建高质量 CSP 新技能，自动完成脚手架、注册与校验。当用户想创建/新增/编写/迁移 skill（create skill / new skill / 写一个技能）时使用。",
+      "layer": 4,
+      "category": "runtime",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-runtime/skills/csp-create-skill/SKILL.md",
       "deps": [],
       "priority": 10
     },
@@ -7914,6 +8394,21 @@
       "priority": 10
     },
     {
+      "name": "csp-competitive-analysis",
+      "description": "Generate a structured competitive analysis report with feature comparison matrix, SWOT analysis, Porter's Five Forces, and differentiation strategy. Branches by analysis purpose (product design / fundraising BP / strategic planning / annual review). Use when the user says \"竞品分析\", \"功能对比\", \"竞品调研\", \"竞争",
+      "layer": 2,
+      "category": "workflow",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-workflow/skills/csp-competitive-analysis/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
       "name": "csp-compound-learning",
       "description": "Document a recently solved problem to compound your team's knowledge. Captures solutions in docs/solutions/ with YAML frontmatter for searchability. Use after fixing bugs or establishing patterns.",
       "layer": 2,
@@ -7985,6 +8480,36 @@
       },
       "stack_detection": false,
       "path": "csp-workflow/skills/csp-doc-lifecycle-manager/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-domain-driven-design",
+      "description": "领域驱动设计(DDD)建模引擎。对复杂业务系统进行 DDD 建模，识别限界上下文、 设计聚合根/实体/值对象、建模领域事件、绘制上下文映射。 与 csp-requirement-decomposition 的域划分协同，将业务域映射为技术域。 当业务逻辑复杂需要使用 DDD 方法、或用户需要\"DDD\"、\"领域驱动设计\"、 \"聚合根\"、\"限界上下文\"、\"领域建模\"时使用。 关键词：DDD、领域驱动设计、聚合根、限界上下文、领域建模、domain driven design、 领域事件、上下文映射、aggregate root、bounded context、domain model、 实体设计、",
+      "layer": 2,
+      "category": "workflow",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-workflow/skills/csp-domain-driven-design/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-effort-estimation",
+      "description": "工作量与资源估算引擎。从技术方案和任务拆解出发，推算开发工作量、资源需求和时间线。 支持多种估算方法：类比估算、三点估算(PERT)、COCOMO II。 考虑因素：复杂度、不确定性、团队能力、技术栈熟悉度、并行度。 输出 WBS 工时汇总、甘特图、资源计划、里程碑时间线。 当任务拆解完成后需要估算工作量、或用户需要\"工作量估算\"、\"估时\"、\"排期\"、\"资源计划\"时使用。 关键词：工作量估算、估时、工时估算、排期、资源计划、effort estimation、 work estimation、PERT、三点估算、COCOMO、甘特图、gantt chart、 开发周期、交付时间、人天、stor",
+      "layer": 2,
+      "category": "workflow",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-workflow/skills/csp-effort-estimation/SKILL.md",
       "deps": [],
       "priority": 10
     },
@@ -8154,6 +8679,21 @@
       "priority": 10
     },
     {
+      "name": "csp-integration-design",
+      "description": "跨系统集成方案设计引擎。当 PRD 涉及多个系统/服务时的集成方案设计。 覆盖：系统间接口契约设计（API/消息/事件）、数据一致性策略（分布式事务/Saga/最终一致性）、 集成测试策略、灰度发布与回滚方案、故障隔离与降级策略。 当技术方案涉及多系统集成、或用户需要\"集成方案\"、\"系统对接\"、\"服务间通信\"、\"接口设计\"时使用。 关键词：集成方案、系统集成、系统对接、服务间通信、接口设计、集成设计、 integration design、system integration、service communication、 跨系统、分布式事务、Saga、最终一致性、API 集成、消息集成、事件驱",
+      "layer": 2,
+      "category": "workflow",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-workflow/skills/csp-integration-design/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
       "name": "csp-legacy-modernization",
       "description": "End-to-end legacy modernization workflow covering assessment (codebase audit, dependency analysis, architecture review), planning (migration strategy, risk assessment, timeline), execution (incremental migration, strangler fig, parallel run), verification (regression testing, performance comparison,",
       "layer": 2,
@@ -8214,6 +8754,96 @@
       "priority": 10
     },
     {
+      "name": "csp-prd-change-impact",
+      "description": "PRD 变更影响分析引擎。当 PRD 发生变更时，追踪影响链：PRD 条目 → Feature → Spec → Task → Code， 量化变更影响范围、成本和时间，输出影响分析报告和变更建议。 依赖 csp-prd-traceability 建立的追溯矩阵。 当 PRD 变更需要评估影响、或用户需要\"变更影响分析\"、\"需求变更评估\"、\"影响范围\"时使用。 关键词：变更影响、需求变更、影响分析、change impact、impact analysis、 变更评估、影响范围、需求变更影响、PRD 变更、变更成本、变更风险、 需求变更评估、scope change、变更影响评估。",
+      "layer": 2,
+      "category": "workflow",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-workflow/skills/csp-prd-change-impact/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-prd-generation",
+      "description": "Generate a reviewable Product Requirements Document from feature descriptions. Branches by product type (B2C/B2B/internal-tool/platform) with type-specific emphasis. Use when the user says \"write PRD\", \"product requirements\", \"feature spec\", \"需求文档\", \"产品需求\", \"功能文档\", \"写需求\", \"PRD模板\", \"feature spec\", \"产",
+      "layer": 2,
+      "category": "workflow",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-workflow/skills/csp-prd-generation/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-prd-parser",
+      "description": "多格式 PRD 文档解析器。统一解析多种格式的 PRD 文档（钉钉文档、语雀、Markdown、纯文本）， 提取结构化信息，输出标准化的 PRD-IR（PRD 中间表示），供下游 skill 消费。 支持自动格式检测、章节识别、功能点提取、用户故事提取、约束条件识别。 当用户提供 PRD 文档链接或内容需要解析、或需要\"解析 PRD\"、\"提取需求\"、\"PRD格式化\"时使用。 关键词：解析 PRD、PRD 解析、提取需求、需求提取、PRD 格式化、 文档解析、结构化需求、parse PRD、extract requirements、PRD 结构化、 文档转需求、需求文档解析、PRD 链接解析、p",
+      "layer": 2,
+      "category": "workflow",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-workflow/skills/csp-prd-parser/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-prd-traceability",
+      "description": "PRD 到功能到技术规格的完整追溯矩阵引擎。建立 PRD 条目 → Feature → Spec → Task 的 多级追溯链，支持变更影响分析、覆盖率检查和需求完整性验证。 当 PRD 和 Feature 拆解完成后需要建立追溯关系、或用户需要\"追溯矩阵\"、\"需求追溯\"、 \"RTM\"、\"需求覆盖率\"、\"需求映射\"时使用。 关键词：追溯矩阵、需求追溯、RTM、traceability matrix、需求覆盖率、 需求映射、需求跟踪、覆盖检查、需求闭环、requirement traceability、 需求验证、覆盖率分析、需求关系、prd mapping、feature mapping。",
+      "layer": 2,
+      "category": "workflow",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-workflow/skills/csp-prd-traceability/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-product-discovery-orchestrator",
+      "description": "产品发现与交付前编排引擎。串联市场调研/竞品分析/用户反馈 → 产品策略与路线图 → 需求拆解与优先级 → PRD/用户故事/Spec 契约 → 交付桥接（capability contract）的完整链路，管理阶段间产物流转、门控检查、 动态路由与迭代推进。是 14 个产品管理 skill 的上层编排器，覆盖\"产品需求调研到交付给技术开发之前\" 的全流程；在交付边界把 capability contract 交给 csp-lifecycle-orchestrator 的 S2（技术选型）， 由后者接管 S1 拆解→S9 运维的技术生命周期。 当用户需要\"从调研到开发\"、\"产品发现全流程\"、\"",
+      "layer": 2,
+      "category": "workflow",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-workflow/skills/csp-product-discovery-orchestrator/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-product-metrics-review",
+      "description": "Analyze product metrics for a given time period, output health assessment, trend analysis, attribution analysis, and action recommendations. Includes North Star metric decomposition, retention analysis, conversion funnel, and A/B experiment interpretation. Use when the user says \"指标复盘\", \"数据复盘\", \"DAU",
+      "layer": 2,
+      "category": "workflow",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-workflow/skills/csp-product-metrics-review/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
       "name": "csp-product-pulse",
       "description": "Generate a time-windowed pulse report on what users experienced and how the product performed - usage, quality, errors, signals worth investigating. Use when the user says 'run a pulse', 'show me the pulse', 'how are we doing', 'weekly recap', 'launch-day check', or passes a time window like '24h' o",
       "layer": 2,
@@ -8244,6 +8874,21 @@
       "priority": 10
     },
     {
+      "name": "csp-qa-cr-review",
+      "description": "系统化 Code Review 评审工作流。覆盖影响范围、安全性、代码质量、测试覆盖、性能、可维护性六个维度，支持大 CR 并行模式、蒸馏增强调用链追溯、增量版本评审，以及自动生成 Aone TestHub xlsx 测试用例。",
+      "layer": 2,
+      "category": "workflow",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-workflow/skills/csp-qa-cr-review/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
       "name": "csp-requirement-decomposition",
       "description": "需求全维度拆解引擎。将模糊需求/PRD/想法彻底分解为原子级 Feature，每个 Feature 附带用户故事、 验收标准、前后端边界、数据实体、技术维度和依赖关系。 当用户给出一个产品需求、功能描述、或想要从零构建系统时，第一步使用此 skill 进行结构化拆解。 关键词：需求拆解、feature 分解、requirement decomposition、break down requirements、 拆解需求、功能拆分、feature breakdown、需求分析、feature list、功能清单、 拆解功能、分解需求、analyze requirements、feature ext",
       "layer": 2,
@@ -8255,6 +8900,36 @@
       },
       "stack_detection": false,
       "path": "csp-workflow/skills/csp-requirement-decomposition/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-requirement-prioritization",
+      "description": "Prioritize a list of requirements or user stories using RICE, ICE, MoSCoW, or Kano models. Includes a framework selection decision tree based on data availability and decision context. Use when the user says \"需求排序\", \"优先级\", \"RICE\", \"ICE\", \"需求排期\", \"MoSCoW\", \"排backlog\", \"sprint规划\", \"需求取舍\", \"迭代规划\", \"bac",
+      "layer": 2,
+      "category": "workflow",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-workflow/skills/csp-requirement-prioritization/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-roadmap-update",
+      "description": "Aggregate iteration status, evaluate milestone progress, record priority changes, and output a roadmap update report with next-step planning recommendations. Supports pulling project status from Linear or other project management tools. Use when the user says \"路线图\", \"Roadmap\", \"版本规划\", \"迭代计划\", \"里程碑\",",
+      "layer": 2,
+      "category": "workflow",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-workflow/skills/csp-roadmap-update/SKILL.md",
       "deps": [],
       "priority": 10
     },
@@ -8334,6 +9009,51 @@
       "priority": 10
     },
     {
+      "name": "csp-tech-design-review",
+      "description": "技术方案评审引擎。对技术方案设计文档(TDD)进行多角色并行评审，发现架构层面的问题。 评审角色包括：架构师、安全专家、性能专家、DBA、运维专家、成本分析师。 评审维度：架构合理性、可扩展性、安全性、性能、可维护性、可靠性、成本。 输出分级评审报告（CRITICAL/WARNING/INFO），类似于 code review 但针对设计文档。 当技术方案完成后需要评审、或用户需要\"方案评审\"、\"设计评审\"、\"架构评审\"时使用。 关键词：技术方案评审、设计评审、架构评审、方案评审、tech design review、 design review、architecture review、技术评",
+      "layer": 2,
+      "category": "workflow",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-workflow/skills/csp-tech-design-review/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-tech-risk-assessment",
+      "description": "技术方案风险评估引擎。在设计阶段系统性识别和评估技术风险，制定缓解策略。 覆盖：架构风险、性能风险、安全风险、数据风险、集成风险、运维风险、组织风险。 使用概率 × 影响矩阵评级，输出风险登记册(Risk Register)和缓解计划。 当技术方案设计完成后需要评估风险、或用户需要\"风险评估\"、\"风险分析\"、\"技术风险\"时使用。 关键词：风险评估、技术风险、风险分析、risk assessment、risk analysis、 风险识别、风险登记册、risk register、风险矩阵、风险缓解、技术隐患、 风险排查、技术风险排查、风险点、risk evaluation。",
+      "layer": 2,
+      "category": "workflow",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-workflow/skills/csp-tech-risk-assessment/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-tech-solution-design",
+      "description": "技术方案设计引擎。从 Feature 拆解、技术选型和产品能力约束出发，生成系统级技术方案设计文档(TDD)。 覆盖：系统架构设计、服务/模块划分、部署拓扑、数据架构设计、接口架构设计、安全架构设计、 关键技术难点攻克方案、多方案对比分析。是\"需求拆解→技术选型\"到\"全栈Spec\"之间的关键桥梁。 当需求拆解和技术选型完成后需要输出系统级技术方案、或用户需要\"技术方案设计\"、\"架构设计\"、 \"系统设计\"、\"总体方案\"时使用。 关键词：技术方案、系统架构、架构设计、系统设计、总体方案、技术设计、tech design、 solution design、system architecture、te",
+      "layer": 2,
+      "category": "workflow",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-workflow/skills/csp-tech-solution-design/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
       "name": "csp-tech-stack-advisor",
       "description": "全栈技术选型决策引擎。基于 Feature 需求的技术维度，为每个 Feature 和系统整体推荐最优技术栈： 主语言、Web 框架、数据库、缓存、消息队列、AI 框架、向量库、搜索引擎、实时通信、 对象存储、任务调度、监控可观测性等。输出结构化技术决策记录(ADR)和选型理由。 当需求拆解完成后需要进行技术选型、或用户询问\"用什么技术\"时使用。 关键词：技术选型、tech stack、technology selection、架构选型、技术栈推荐、 用什么数据库、用什么框架、tech decision、ADR、技术决策、选型建议、 消息队列选型、AI框架、向量库选择、database sel",
       "layer": 2,
@@ -8349,6 +9069,21 @@
       "priority": 10
     },
     {
+      "name": "csp-tech-task-breakdown",
+      "description": "技术方案到开发任务拆解引擎。从技术方案和 Feature Spec 出发，拆解为可执行的原子开发任务。 每个任务包含：精确文件路径、技术要点、估时、依赖、优先级、WBS 编号、验收标准。 支持 Waves 划分、并行策略优化、关键路径识别。 当技术方案评审通过后需要拆解任务、或用户需要\"任务拆解\"、\"WBS\"、\"开发计划\"、\"Sprint拆解\"时使用。 关键词：任务拆解、WBS、开发任务、Sprint拆解、任务分解、开发计划、task breakdown、 工作分解、开发排期、task list、任务清单、开发估算、实施计划、拆分任务、 开发任务拆解、编码任务、编程任务清单、开发 backlo",
+      "layer": 2,
+      "category": "workflow",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-workflow/skills/csp-tech-task-breakdown/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
       "name": "csp-tweak",
       "description": "CSP 微调工作流 — 最轻量的变更流程，适用于文案调整、配置修改、文档更新等小改动。 跳过 design 和完整的 build 阶段，直接进入轻量级验证。 Use when: 修改文案、调整配置、更新文档、小范围代码调整。 关键词: tweak, 微调, 小改, 文案调整, 配置修改, minor change",
       "layer": 2,
@@ -8360,6 +9095,36 @@
       },
       "stack_detection": false,
       "path": "csp-workflow/skills/csp-tweak/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-user-feedback-analysis",
+      "description": "Analyze user feedback data (Excel/CSV/text) to auto-classify, extract high-frequency patterns, and output an insight report with sentiment analysis, pain point ranking, and improvement suggestions. Supports topic clustering, trend analysis, and triangulation to extract user personas from feedback. U",
+      "layer": 2,
+      "category": "workflow",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-workflow/skills/csp-user-feedback-analysis/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-user-story-decomposition",
+      "description": "Decompose an Epic or large requirement into independently deliverable User Stories, each with Acceptance Criteria and Story Point estimation. Uses INVEST principle validation and 5 story splitting patterns. Use when the user says \"用户故事\", \"需求拆解\", \"AC\", \"Story拆分\", \"拆需求\", \"拆Epic\", \"写user story\", \"验收标准\"",
+      "layer": 2,
+      "category": "workflow",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-workflow/skills/csp-user-story-decomposition/SKILL.md",
       "deps": [],
       "priority": 10
     },

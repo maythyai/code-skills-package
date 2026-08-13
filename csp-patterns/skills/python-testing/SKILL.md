@@ -5,7 +5,6 @@ description: >
   mocking, coverage analysis, async testing, and test organization. Use when
   writing or improving Python tests.
 metadata:
-  origin: CSP
   globs: ["**/*.py", "**/*.pyi"]
 layer: 4
 category: patterns

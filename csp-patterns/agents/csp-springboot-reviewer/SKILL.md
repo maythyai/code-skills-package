@@ -5,7 +5,6 @@ description: >
   MockMvc, TestContainers, and Kotlin-specific Spring patterns. Use for all Spring Boot
   applications in Java or Kotlin.
 metadata:
-  origin: CSP
   source: awesome-copilot/skills/java-*,kotlin-springboot,spring-boot-testing
   globs: ["**/*.{java,kt}", "**/application*.yml", "**/application*.properties"]
 ---

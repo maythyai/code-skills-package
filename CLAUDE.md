@@ -1,4 +1,4 @@
-# CSP — Code Skills Package v0.8.0
+# CSP — Code Skills Package v0.9.0
 
 Unified AI coding skills from multiple open-source projects with auto-routing, lazy loading, and spec-driven workflows. MIT licensed.
 
@@ -7,11 +7,21 @@ Unified AI coding skills from multiple open-source projects with auto-routing, l
 ```
 L0  csp-router    — task classification + skill selection (always loaded, ~800 tokens)
 L1  csp-meta      — methodology: brainstorming, TDD, debugging, spec-driven (25 skills)
-L2  csp-workflow  — project lifecycle: plan → execute → verify → ship (165 skills)
-L3  csp-patterns  — language/framework patterns, reviewers, build-resolvers (347 skills)
-L4  csp-runtime   — autopilot, ralph, wiki, remember, self-improve (56 skills)
-Total: 595 skills across 5 layers (2 deprecated, carry redirect targets)
+L2  csp-workflow  — project lifecycle: plan → execute → verify → ship (185 skills)
+L3  csp-patterns  — language/framework patterns, reviewers, build-resolvers (378 skills)
+L4  csp-runtime   — autopilot, ralph, wiki, remember, self-improve (57 skills)
+Total: 646 skills across 5 layers (2 deprecated, carry redirect targets)
 ```
+
+## Skill 内容规范（强制，所有新增/移植技能必须遵守）
+
+- **无作者信息**：禁止 `author:` 字段、个人姓名、署名/来源脚注；技能只保留内容本身。
+- **无 LICENSE 文件**：技能目录内不得包含 LICENSE/NOTICE/COPYING；包级许可仅根目录 `LICENSE`（MIT）。
+- **无谱系字段**：frontmatter 禁止 `origin:`（含 `metadata:` 内嵌）；`source:` 仅允许指向公开项目（如 GitHub 开源仓库）。
+- **无内部 URL**：禁止 `*.alibaba-inc.com`、`*.antfin.com` 等内部域名；功能性 URL 用占位符（如 `{CR_API_BASE}`）+ 环境变量参数化。公开链接（github.com、官方文档等）保留。
+- **无个人环境硬编码**：本机路径/端口等用环境变量或相对路径参数化。
+- **无构建产物**：`__pycache__/`、`*.pyc`、`*.bak`、`.DS_Store` 不入库。
+- **移植外部技能**：先确认许可证兼容（MIT 包禁止引入 NC/SA 等限制性条款内容）；内容改写通用化，不带来源归属。
 
 ## Engineering
 
@@ -298,6 +308,16 @@ Skills 位于 `.claude/skills/` 目录，按五层架构组织。
 - **csp-local-build-reminder**: Remind the user to rebuild CSP after editing TypeScript when running from a loca
 - **csp-remember**: Review reusable project knowledge and decide what belongs in project memory, not
 - **csp-cli-teams**: CLI-team runtime for claude, codex, or gemini workers in tmux panes when you nee
+- **csp-tech-solution-design**: >
+- **csp-tech-design-review**: >
+- **csp-tech-task-breakdown**: >
+- **csp-tech-risk-assessment**: >
+- **csp-prd-traceability**: >
+- **csp-prd-parser**: >
+- **csp-effort-estimation**: >
+- **csp-integration-design**: >
+- **csp-domain-driven-design**: >
+- **csp-prd-change-impact**: >
 
 ## 如何使用
 

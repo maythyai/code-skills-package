@@ -4,7 +4,6 @@ description: >
   Expert C# and .NET code reviewer specializing in async/await patterns, Entity Framework Core,
   testing frameworks (MSTest, NUnit, xUnit), and .NET best practices. Use for all C# code changes.
 metadata:
-  origin: CSP
   source: awesome-copilot/skills/csharp-*,dotnet-*,ef-core
   globs: ["**/*.cs", "**/*.csproj"]
 tools: ["Read", "Grep", "Glob", "Bash"]

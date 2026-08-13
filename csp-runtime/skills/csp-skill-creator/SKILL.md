@@ -9,6 +9,11 @@ phase: build
 
 # Skill Creator — 交互式技能创建向导
 
+> ⚠️ **已被取代（SUPERSEDED）**：请使用 [[csp-create-skill]]。
+> 本文档的层级映射（patterns=4/runtime=5）与"手工编辑 registry.json"的步骤均已过时：
+> 现行规范为 **1=meta, 2=workflow, 3=patterns, 4=runtime**，且 registry.json 是衍生文件，
+> 必须通过 `npm run build:registry` 生成，严禁手改。
+
 ## When to Use
 
 - 用户想要创建新的 CSP skill

@@ -10,7 +10,6 @@ description: >
   Use when writing, reviewing, or refactoring TypeScript code to apply
   type-safe, idiomatic patterns.
 metadata:
-  origin: CSP
   globs: ["**/*.ts", "**/*.tsx", "**/*.mts", "**/*.cts"]
 layer: 4
 category: patterns

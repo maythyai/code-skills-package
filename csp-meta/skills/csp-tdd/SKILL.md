@@ -5,7 +5,6 @@ description: >
   Enforces Red-Green-Refactor cycle with 80%+ coverage across unit, integration, and E2E tests.
   Use when implementing any feature, fixing bugs, or refactoring code.
 layer: 1
-origin: merged(CSP+agent-skills)
 category: meta
 phase: build
 domain: testing

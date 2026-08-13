@@ -1,0 +1,162 @@
+@startuml H5 Auto Test Flow
+title H5 项目自动化测试流程
+
+start
+
+:与用户确认测试目标;
+note right
+  截图范围：单页 / 多页
+  深浅色对比：是 / 否
+  viewport 选择
+end note
+
+:分析项目结构;
+note right
+  读取 src/routes.ts
+  确认页面数量和 URL
+end note
+
+:准备 Mock 数据;
+note right
+  方式 A：使用项目 mock 框架
+  方式 B：在脚本中定义
+end note
+
+:启动开发服务器;
+note right
+  ice start / npm run dev
+  等待 localhost:3000 就绪
+end note
+
+:初始化 Playwright;
+:创建浏览器上下文;
+note right
+  默认 viewport: 750×1334
+  DPR: 2（设计稿标准）
+end note
+
+:注入 Mock 数据 (addInitScript);
+note right
+  拦截 MTOP/API 请求
+  返回 mock 响应
+end note
+
+if (多页截图？) then (是)
+  :遍历每个页面;
+  :导航到页面;
+  :等待 networkidle;
+  :等待关键元素渲染;
+else (否)
+  :导航到目标页面;
+  :等待 networkidle;
+  :等待关键元素渲染;
+endif
+
+if (深浅色对比？) then (是)
+  :浅色模式截图;
+  note right
+    screenshots/{page}-light.png
+    fullPage: true
+  end note
+  
+  :切换主题到深色;
+  note right
+    data-theme="dark"
+    或 CSS 变量 / class
+  end note
+  
+  :等待主题切换完成 (500ms);
+  
+  :深色模式截图;
+  note right
+    screenshots/{page}-dark.png
+    fullPage: true
+  end note
+  
+  :切换回浅色模式;
+else (否)
+  :截图;
+  note right
+    screenshots/{page}.png
+    fullPage: true
+  end note
+endif
+
+if (交互录屏？) then (是)
+  :配置 recordVideo;
+  :执行交互操作;
+  note right
+    点击、滑动、表单填写
+    录制完整交互链路
+  end note
+  :关闭页面保存视频;
+  note right
+    videos/<page-id>.webm
+  end note
+else (否)
+endif
+
+:验证截图完整性;
+note right
+  文件大小 > 0
+  文件数量符合预期
+  命名规范检查
+end note
+
+:内容复验;
+note right
+  逐张检查截图
+  排除错误页、空白页
+end note
+
+if (发现问题？) then (是)
+  if (是 Mock 数据问题？) then (是)
+    :补充 Mock 数据;
+    :重新截图;
+    note right
+      调整拦截规则
+      补充缺失字段
+    end note
+  else (不是 Mock 问题)
+    #Pink:🔴 禁止直接修改项目代码;
+    :分析问题根因;
+    :生成 FIX_SUGGESTION.md;
+    note right
+      含代码 diff
+      含验证方法
+      写入 h5-test-output/
+    end note
+    :会话中说明问题摘要;
+    :等待用户决策;
+    if (用户回复？) then (同意)
+      :执行修改;
+      :重新测试;
+    elseif (用户拒绝) then (拒绝)
+      :记录原因，跳过;
+    else (要求调整)
+      :修改建议后重新确认;
+    endif
+  endif
+else (无问题)
+endif
+
+:生成 HTML 测试报告;
+note right
+  npx playwright test --reporter=html
+  自动打开浏览器查看
+end note
+
+:附加截图/视频/错误日志到报告;
+
+:复原 Mock 代码;
+note right
+  优先用备份文件恢复
+  不用 git checkout
+  新增代码用标记删除
+end note
+
+:关闭浏览器;
+
+stop
+
+@enduml

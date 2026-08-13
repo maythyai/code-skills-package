@@ -8,7 +8,7 @@ domain: quality
 role: reviewer
 scope: review
 tools: [Read, Grep, Glob, Bash, Agent]
-related_skills: [csp-code-graph, csp-graph-impact, csp-graph-review, csp-code-review]
+related_skills: [csp-code-graph, csp-graph-impact, csp-graph-review, csp-code-review, csp-qa-cr-review]
 ---
 
 | Priority | Definition | Action |

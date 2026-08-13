@@ -5,8 +5,6 @@ description: >
   Parallel Run, Feature Toggle migration, and classic refactoring patterns. Covers safety
   practices, characterization tests, code smell taxonomy, and incremental migration techniques.
   Use when planning or executing significant refactoring across a codebase.
-metadata:
-  origin: CSP
 layer: 4
 category: patterns
 domain: patterns

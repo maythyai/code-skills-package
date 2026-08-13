@@ -6,8 +6,6 @@ description: >
   execution (incremental migration, strangler fig, parallel run), verification (regression
   testing, performance comparison, data integrity), and common migration scenarios.
   Use when modernizing a legacy system or planning a major migration.
-metadata:
-  origin: CSP
 layer: 2
 category: workflow
 phase: verify

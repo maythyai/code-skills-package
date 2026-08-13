@@ -3,7 +3,6 @@ name: csp-project-doc-architect
 description: "Design and maintain project documentation architecture: folder structure, naming conventions, index files, and cross-references. Use when setting up docs for a new project, restructuring existing docs, or creating documentation standards. Triggers: 文档架构, doc structure, 文件夹结构, documentation architecture, 文档规范."
 layer: 2
 category: workflow
-origin: original
 phase: plan
 domain: patterns
 ---

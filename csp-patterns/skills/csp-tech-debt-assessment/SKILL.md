@@ -5,8 +5,6 @@ description: >
   architecture smells, dependency health, complexity metrics, debt quantification,
   and creating actionable debt reduction roadmaps. Use when assessing codebase health
   or planning debt reduction initiatives.
-metadata:
-  origin: CSP
 layer: 4
 category: patterns
 domain: patterns

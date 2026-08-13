@@ -1,8 +1,6 @@
 ---
 name: csp-rag-architecture
 description: Production RAG architecture patterns covering chunking strategies, embedding model selection, vector databases, hybrid search, reranking, evaluation, and operational concerns. Use when designing, building, reviewing, or optimizing retrieval-augmented generation systems.
-metadata:
-  origin: CSP
 layer: 4
 category: patterns
 domain: patterns

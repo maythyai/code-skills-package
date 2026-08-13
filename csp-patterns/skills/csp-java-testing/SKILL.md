@@ -7,7 +7,6 @@ description: >
   Spring Boot test slices (@WebMvcTest, @DataJpaTest), test naming conventions, and
   JaCoCo coverage. Use when writing or improving tests for Java 17+ services.
 metadata:
-  origin: CSP
   globs: ["**/*Test.java", "**/*Tests.java", "**/src/test/**/*.java"]
 layer: 4
 category: patterns

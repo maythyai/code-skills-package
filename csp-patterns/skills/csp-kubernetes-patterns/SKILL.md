@@ -4,8 +4,6 @@ description: >
   Kubernetes patterns for workload design, autoscaling, security, Helm charts,
   Kustomize overlays, and multi-cluster strategies. Use when designing, deploying,
   or troubleshooting applications running on Kubernetes clusters.
-metadata:
-  origin: CSP
 layer: 4
 category: patterns
 domain: patterns

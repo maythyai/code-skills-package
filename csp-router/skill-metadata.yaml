@@ -4,7 +4,7 @@
 # Regenerate: node scripts/build-skill-metadata.mjs
 
 version: 2.0
-generated_at: 2026-08-11T11:24:46.126Z
+generated_at: 2026-08-13T08:11:10.044Z
 skills:
   csp-agent-teams:
     phase: review
@@ -22,6 +22,7 @@ skills:
     related_skills:
       - csp-plan-phase
       - csp-spec-contract
+      - csp-product-discovery-orchestrator
     anti_rationalizations:
       Let's just start coding: "Design first prevents rework. 30 min brainstorming saves 3 hours."
       I know what to build: "Assumptions are bugs waiting to happen. Surface them explicitly."
@@ -80,6 +81,7 @@ skills:
       - csp-strategy
       - csp-brainstorming
       - csp-plan-phase
+      - csp-product-discovery-orchestrator
     anti_rationalizations:
       We need all these features to be competitive: "Ship one feature and learn. Competitors ship faster because they cut more."
       Users will expect this on day one: "Users don't know what they want until they use something. Ship and iterate."
@@ -127,6 +129,8 @@ skills:
       - Edit
       - Glob
       - Grep
+    related_skills:
+      - csp-product-discovery-orchestrator
   csp-spec-driven-development:
     phase: build
     domain: patterns
@@ -218,6 +222,31 @@ skills:
       I'll just read the code myself: "One context can't hold a large codebase; parallel agents cover more dimensions than a single pass."
       The agent's finding looks right, skip verification: "P0/P1 findings MUST be machine-verified — agents hallucinate dangling refs and missing files."
       Skip the report, just tell the user: "The single decision-source doc is the deliverable; verbal summaries lose the upgrade plan's testable acceptance criteria."
+  csp-competitive-analysis:
+    phase: define
+    domain: patterns
+    scope: analysis
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
+      - Bash
+      - WebFetch
+      - WebSearch
+    dependencies:
+      skills: []
+    related_skills:
+      - csp-prd-generation
+      - csp-brainstorming
+      - csp-strategy
+      - csp-mvp-scoping
+      - csp-product-discovery-orchestrator
+    anti_rationalizations:
+      We don't have real competitors: "Every product has alternatives, including 'do nothing'. Find them."
+      Copying features is enough: "Feature lists miss positioning, pricing, and ecosystem differences."
+      SWOT is too generic: "SWOT is a starting frame, not the final answer. Pair it with Porter's Five Forces."
   csp-compound-learning:
     phase: build
     domain: quality
@@ -262,6 +291,54 @@ skills:
   csp-doc-lifecycle-manager:
     phase: plan
     domain: patterns
+  csp-domain-driven-design:
+    phase: plan
+    domain: architecture
+    scope: design
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
+    dependencies:
+      skills:
+        - csp-requirement-decomposition
+    related_skills:
+      - csp-requirement-decomposition
+      - csp-tech-solution-design
+      - csp-fullstack-spec-generator
+      - csp-lifecycle-orchestrator
+      - csp-full
+    anti_rationalizations:
+      DDD is only for enterprise systems: "DDD is for any system with complex business rules. Complexity is about rules, not scale."
+      We can just use CRUD, it's simpler: "CRUD on complex domains leads to anemic models and scattered business logic. DDD prevents that."
+      DDD is too academic: "DDD's core patterns (aggregates, events, bounded contexts) are practical tools for managing complexity."
+      We don't need formal modeling: "Formal modeling is the difference between 'we think we understand' and 'we have a shared understanding.'"
+  csp-effort-estimation:
+    phase: plan
+    domain: architecture
+    scope: analysis
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
+    dependencies:
+      skills:
+        - csp-tech-solution-design
+        - csp-tech-task-breakdown
+    related_skills:
+      - csp-tech-task-breakdown
+      - csp-tech-solution-design
+      - csp-lifecycle-orchestrator
+      - csp-full
+    anti_rationalizations:
+      I'll just double the developer's estimate: "Padding estimates without analysis creates distrust and doesn't address root causes."
+      Historical data is not available, so estimation is impossible: "Use PERT (O+4M+P)/6 — it's designed for uncertainty."
+      We don't need to estimate, we're agile: "Even agile teams need rough timelines for stakeholder communication and resource planning."
+      One number is enough: "Single-point estimates are always wrong. Use ranges with confidence intervals."
   csp-explore:
     phase: plan
     domain: patterns
@@ -293,6 +370,8 @@ skills:
     related_skills:
       - csp-requirement-decomposition
       - csp-tech-stack-advisor
+      - csp-tech-solution-design
+      - csp-tech-task-breakdown
       - csp-lifecycle-orchestrator
       - csp-implementation-phase
       - csp-spec-driven-development
@@ -420,6 +499,31 @@ skills:
   csp-indie-deploy-ops:
     phase: ship
     domain: patterns
+  csp-integration-design:
+    phase: plan
+    domain: architecture
+    scope: design
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
+      - Bash
+    dependencies:
+      skills:
+        - csp-tech-solution-design
+    related_skills:
+      - csp-tech-solution-design
+      - csp-tech-design-review
+      - csp-fullstack-spec-generator
+      - csp-lifecycle-orchestrator
+      - csp-full
+    anti_rationalizations:
+      We only have one system, no integration needed: "Every system integrates with something — auth, payment, storage, email. These are integrations."
+      We can just call each other's APIs directly: "Direct API calls create tight coupling. Use contracts, events, and circuit breakers."
+      Data consistency is the DBA's problem: "In distributed systems, consistency is a design decision, not a database setting."
+      We'll handle integration during implementation: "Integration design decisions (sync vs async, consistency model) affect architecture. Decide early."
   csp-legacy-modernization:
     phase: verify
     domain: patterns
@@ -438,7 +542,10 @@ skills:
       skills:
         - csp-requirement-decomposition
         - csp-tech-stack-advisor
+        - csp-tech-solution-design
+        - csp-tech-design-review
         - csp-fullstack-spec-generator
+        - csp-tech-task-breakdown
     related_skills:
       - csp-full
       - csp-implementation-phase
@@ -447,6 +554,9 @@ skills:
       - csp-plan-phase
       - csp-tdd
       - csp-code-review
+      - csp-product-discovery-orchestrator
+      - csp-effort-estimation
+      - csp-tech-risk-assessment
     anti_rationalizations:
       Let's skip the spec phase and just code: "Skipping specs causes rework. The spec phase pays for itself."
       We can do tech selection during implementation: "Mid-implementation tech changes are 10x more expensive."
@@ -467,15 +577,200 @@ skills:
       - csp-graph-impact
       - csp-graph-review
       - csp-code-review
+      - csp-qa-cr-review
   csp-parallel-worktree:
     phase: build
     domain: patterns
+  csp-prd-change-impact:
+    phase: plan
+    domain: quality
+    scope: analysis
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
+    dependencies:
+      skills:
+        - csp-prd-traceability
+    related_skills:
+      - csp-prd-traceability
+      - csp-requirement-decomposition
+      - csp-tech-solution-design
+      - csp-lifecycle-orchestrator
+      - csp-full
+    anti_rationalizations:
+      This is a small change, it won't affect much: "Small changes can have large ripple effects. Trace before you assume."
+      We don't need impact analysis, we'll just fix it: "Without impact analysis, you'll miss affected code and introduce regressions."
+      The traceability matrix is out of date, so impact analysis is impossible: "Even a partial matrix is better than no analysis. Update it first."
+      Impact analysis takes too long: "Not doing impact analysis takes longer when you fix the bugs you missed."
+  csp-prd-generation:
+    phase: define
+    domain: architecture
+    scope: design
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
+      - Bash
+    dependencies:
+      skills: []
+    related_skills:
+      - csp-requirement-decomposition
+      - csp-user-story-decomposition
+      - csp-competitive-analysis
+      - csp-requirement-prioritization
+      - csp-mvp-scoping
+      - csp-brainstorming
+      - csp-product-discovery-orchestrator
+    anti_rationalizations:
+      PRD doesn't need to be detailed: "Vague PRDs create vague implementations. Detail prevents rework."
+      I'll skip the background section: "Without 'why', the team cannot make trade-off decisions."
+      Technical implementation belongs in PRD: "PRD describes WHAT, not HOW. Implementation is engineering's decision."
+      One user persona covers everyone: "If you can't name the user, you don't know the user."
+  csp-prd-parser:
+    phase: define
+    domain: architecture
+    scope: analysis
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
+      - Bash
+    dependencies:
+      skills: []
+    related_skills:
+      - csp-spec-contract
+      - csp-requirement-decomposition
+      - csp-product-discovery-orchestrator
+      - csp-prd-generation
+    anti_rationalizations:
+      I can just read the PRD and jump to decomposition: "Manual reading skips structured extraction. The parser catches what humans miss."
+      One format is enough, we don't need multi-format support: "PRDs come from different sources. A single parser unifies them all."
+      Parsing is too simple to need a dedicated skill: "Structured parsing with section detection, feature extraction, and constraint identification is a multi-step process."
+  csp-prd-traceability:
+    phase: plan
+    domain: quality
+    scope: analysis
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
+    dependencies:
+      skills:
+        - csp-requirement-decomposition
+        - csp-prd-generation
+    related_skills:
+      - csp-requirement-decomposition
+      - csp-prd-generation
+      - csp-fullstack-spec-generator
+      - csp-tech-task-breakdown
+      - csp-prd-change-impact
+      - csp-verification
+      - csp-product-discovery-orchestrator
+    anti_rationalizations:
+      Traceability is overkill for small projects: "Even a 5-feature project has hidden coverage gaps. RTM catches them."
+      The PRD is clear enough, mapping is obvious: "Obvious mappings are where assumptions hide. Explicit mapping prevents gaps."
+      We can trace manually when needed: "Manual tracing is 20x slower than an automated RTM. Build it once, use it always."
+  csp-product-discovery-orchestrator:
+    phase: define
+    domain: architecture
+    scope: design
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
+      - Bash
+    dependencies:
+      skills:
+        - csp-market-research
+        - csp-competitive-analysis
+        - csp-user-feedback-analysis
+        - csp-product-pulse
+        - csp-product-metrics-review
+        - csp-strategy
+        - csp-roadmap-update
+        - csp-brainstorming
+        - csp-requirement-decomposition
+        - csp-requirement-prioritization
+        - csp-mvp-scoping
+        - csp-prd-generation
+        - csp-user-story-decomposition
+        - csp-spec-contract
+        - csp-product-capability
+    related_skills:
+      - csp-lifecycle-orchestrator
+      - csp-fullstack-spec-generator
+      - csp-tech-stack-advisor
+      - csp-tech-solution-design
+      - csp-tech-design-review
+      - csp-full
+    anti_rationalizations:
+      调研太慢，直接写 PRD: "跳过调研 = 用猜测替代证据。没有市场/竞品/用户反馈的 PRD 是拍脑袋的需求，返工成本远高于调研成本。"
+      竞品分析没必要，我们没竞品: 没竞品说明要么赛道太新（需验证市场存在性），要么没找全。后者更危险。
+      PRD 里直接写技术实现省一轮沟通: "PRD 描述 WHAT 不描述 HOW。技术实现是工程决策权，混入 PRD 会绑架技术选型、模糊需求边界。"
+      不写 capability contract，直接把 PRD 丢给开发: "PRD 只说做什么，不说实现前必须成立哪些约束/不变量。丢给开发 = 把隐藏假设留给工程师猜，跨服务/跨团队时必出问题。"
+      一次性全量调研再启动: "调研是持续活动不是前置 gate。按 MVP 范围做够支撑决策的最小调研，剩余在迭代中补。"
+  csp-product-metrics-review:
+    phase: review
+    domain: patterns
+    scope: analysis
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
+      - Bash
+    dependencies:
+      skills: []
+    related_skills:
+      - csp-product-pulse
+      - csp-prd-generation
+      - csp-requirement-prioritization
+      - csp-strategy
+      - csp-product-discovery-orchestrator
+    anti_rationalizations:
+      The numbers look fine, no need to dig deeper: "Flat metrics hide churn. Always decompose before concluding."
+      Correlation proves the feature caused the lift: "Correlation suggests. Check for seasonality, external events, and selection bias."
+      We don't have enough data yet: "Work with what you have. State confidence intervals and revisit when data grows."
   csp-product-pulse:
     phase: build
     domain: patterns
+    related_skills:
+      - csp-product-discovery-orchestrator
   csp-project-doc-architect:
     phase: plan
     domain: patterns
+  csp-qa-cr-review:
+    phase: review
+    domain: quality
+    role: reviewer
+    scope: review
+    tools:
+      - Read
+      - Grep
+      - Glob
+      - Bash
+      - Agent
+    related_skills:
+      - csp-code-review
+      - csp-multi-review
+      - csp-python-reviewer
+      - csp-qa-test-engineering
+    anti_rationalizations:
+      代码看着没问题: 六维度逐一检查，不凭第一印象下结论
+      diff 太小不需要深入: "小 diff 可能在 hub 函数上，影响范围可能很大"
+      没有单元测试也行: 评估是否需要建议补充，而不是默认跳过
   csp-requirement-decomposition:
     phase: define
     domain: architecture
@@ -488,21 +783,68 @@ skills:
       - Grep
       - Bash
     dependencies:
-      skills:
-        skills: []
-      agents:
-        agents: []
+      skills: []
+      agents: []
     related_skills:
       - csp-tech-stack-advisor
       - csp-fullstack-spec-generator
       - csp-lifecycle-orchestrator
       - csp-brainstorming
       - csp-interview-me
+      - csp-domain-driven-design
       - csp-full
+      - csp-product-discovery-orchestrator
     anti_rationalizations:
       This requirement is simple enough, no need to decompose: "Even simple requirements have hidden complexity. Decompose first."
       I'll figure out the features during implementation: "Undiscovered features become tech debt. Map them now."
       The user already listed the features: "Validate completeness. Users describe what they want, not everything they need."
+  csp-requirement-prioritization:
+    phase: plan
+    domain: patterns
+    scope: analysis
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
+    dependencies:
+      skills: []
+    related_skills:
+      - csp-user-story-decomposition
+      - csp-prd-generation
+      - csp-mvp-scoping
+      - csp-product-metrics-review
+      - csp-requirement-decomposition
+      - csp-product-discovery-orchestrator
+    anti_rationalizations:
+      Everything is high priority: "If everything is P0, nothing is P0. Force-rank if needed."
+      Let's just do what the loudest stakeholder wants: "Stakeholder volume is not a prioritization framework."
+      We don't have data for RICE: "Use ICE or MoSCoW which work with less data. Absence of data is itself information."
+  csp-roadmap-update:
+    phase: review
+    domain: patterns
+    scope: analysis
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
+      - Bash
+    dependencies:
+      skills: []
+    related_skills:
+      - csp-product-metrics-review
+      - csp-requirement-prioritization
+      - csp-prd-generation
+      - csp-mvp-scoping
+      - csp-strategy
+      - csp-product-discovery-orchestrator
+    anti_rationalizations:
+      The roadmap is just a Gantt chart: "A roadmap is a strategic communication tool, not a project schedule. It shows direction, not dates."
+      We're behind schedule, just update the dates: "If you're consistently behind, the plan is wrong, not the calendar. Investigate root cause."
+      Stakeholders just want to see green status: "Hiding delays destroys trust. Show real status with a recovery plan."
   csp-session-knowledge-extractor:
     phase: review
     domain: patterns
@@ -523,9 +865,89 @@ skills:
   csp-strategy:
     phase: define
     domain: patterns
+    related_skills:
+      - csp-product-discovery-orchestrator
   csp-tech-debt-paydown:
     phase: build
     domain: patterns
+  csp-tech-design-review:
+    phase: review
+    domain: architecture
+    scope: review
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
+    dependencies:
+      skills:
+        - csp-tech-solution-design
+    related_skills:
+      - csp-tech-solution-design
+      - csp-doc-review
+      - csp-code-review
+      - csp-tech-risk-assessment
+      - csp-lifecycle-orchestrator
+      - csp-full
+    anti_rationalizations:
+      The design looks fine, no need for formal review: "Design flaws caught early cost 1x to fix. Caught during implementation cost 10x. Caught in production cost 100x."
+      A single reviewer is enough: "Different perspectives catch different issues. An architect sees what a DBA misses."
+      We can review during code review: "Code review is too late for architecture decisions. Review the design before coding starts."
+      The AI designed it, so it must be correct: "AI-generated designs need adversarial review just like human-generated ones."
+  csp-tech-risk-assessment:
+    phase: plan
+    domain: architecture
+    scope: analysis
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
+    dependencies:
+      skills:
+        - csp-tech-solution-design
+    related_skills:
+      - csp-tech-solution-design
+      - csp-tech-design-review
+      - csp-lifecycle-orchestrator
+      - csp-full
+    anti_rationalizations:
+      This project is too simple for risk assessment: "Even simple projects have risks. A single DB failure can take down the entire app."
+      We'll handle risks as they come up: "Reactive risk handling is 10x more expensive than proactive risk mitigation."
+      The risks are obvious: "Obvious risks are rarely documented, and undocumented risks are forgotten risks."
+      Risk assessment is PM's job: "Technical risks need engineering judgment. PMs can't assess architecture or performance risks."
+  csp-tech-solution-design:
+    phase: plan
+    domain: architecture
+    scope: design
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
+      - Bash
+    dependencies:
+      skills:
+        - csp-requirement-decomposition
+        - csp-tech-stack-advisor
+        - csp-product-capability
+    related_skills:
+      - csp-tech-design-review
+      - csp-fullstack-spec-generator
+      - csp-lifecycle-orchestrator
+      - csp-tech-risk-assessment
+      - csp-integration-design
+      - csp-domain-driven-design
+      - csp-full
+    anti_rationalizations:
+      Let's skip the system design and go straight to coding: "System design catches architectural issues before they become 10x rework cost. Design first."
+      The architecture is obvious, no need to document: "Obvious architectures have hidden assumptions. Documenting forces explicit decisions."
+      One approach is enough, no need to compare alternatives: "Without comparison, there's no evidence the chosen approach is optimal. Compare at least 2 options."
+      The tech stack already defines the architecture: "Tech stack constrains but doesn't define architecture. The same stack can produce very different architectures."
+      We can decide the architecture during implementation: "Architecture decisions made during implementation are shaped by code, not by requirements. Design upfront."
   csp-tech-stack-advisor:
     phase: plan
     domain: architecture
@@ -543,15 +965,90 @@ skills:
     related_skills:
       - csp-requirement-decomposition
       - csp-fullstack-spec-generator
+      - csp-tech-solution-design
       - csp-lifecycle-orchestrator
       - csp-full
     anti_rationalizations:
       I'll just use the same stack as last time: "Different requirements demand different tools. Evaluate fresh."
       This technology is trendy so let's use it: "Trend != fit. Evaluate against actual requirements."
       We don't need a message queue for this: "Async processing, event-driven architecture, and decoupling often need one. Check the requirements."
+  csp-tech-task-breakdown:
+    phase: plan
+    domain: architecture
+    scope: design
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
+      - Bash
+    dependencies:
+      skills:
+        - csp-tech-solution-design
+        - csp-fullstack-spec-generator
+    related_skills:
+      - csp-tech-solution-design
+      - csp-fullstack-spec-generator
+      - csp-writing-plans
+      - csp-effort-estimation
+      - csp-lifecycle-orchestrator
+      - csp-implementation-phase
+      - csp-full
+    anti_rationalizations:
+      We can break down tasks during the sprint: "Undiscovered tasks during sprint = scope creep and missed deadlines. Plan upfront."
+      One task per feature is enough: "Features rarely map 1:1 to tasks. Break down by technical layer (DB/API/UI/Tests)."
+      Task dependencies are obvious: "Implicit dependencies become blockers. Map them explicitly in the DAG."
+      Estimation doesn't matter, we'll just work: "Without estimation, you can't answer 'when will it be done?' or 'should we cut scope?'"
   csp-tweak:
     phase: build
     domain: patterns
+  csp-user-feedback-analysis:
+    phase: review
+    domain: patterns
+    scope: analysis
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
+      - Bash
+    dependencies:
+      skills: []
+    related_skills:
+      - csp-product-metrics-review
+      - csp-prd-generation
+      - csp-requirement-prioritization
+      - csp-competitive-analysis
+      - csp-product-discovery-orchestrator
+    anti_rationalizations:
+      A few complaints don't represent all users: "Even 5% of users complaining about the same thing is a systemic issue."
+      The feedback is too noisy to analyze: "Noise is signal. Categorize first, then filter."
+      We already know what users want: "Assumptions without feedback data are guesses. Validate with evidence."
+  csp-user-story-decomposition:
+    phase: plan
+    domain: patterns
+    scope: design
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
+    dependencies:
+      skills: []
+    related_skills:
+      - csp-prd-generation
+      - csp-requirement-decomposition
+      - csp-requirement-prioritization
+      - csp-mvp-scoping
+      - csp-verification
+      - csp-product-discovery-orchestrator
+    anti_rationalizations:
+      This story is small enough already: "If it can't be done in one sprint, it's not small enough."
+      AC is obvious, no need to write: "Unwritten AC are untested AC. Write them down."
+      We can figure out details during sprint: "Undiscovered details become scope creep or blocked work."
   csp-verify-phase:
     phase: verify
     domain: quality
@@ -569,6 +1066,19 @@ skills:
   csp-workflow-schema:
     phase: define
     domain: patterns
+  csp-access:
+    phase: verify
+    domain: patterns
+    scope: review
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
+      - Bash
+      - WebFetch
+      - WebSearch
   csp-agent-introspection-debugging:
     phase: build
     domain: patterns
@@ -584,18 +1094,77 @@ skills:
   csp-article-writing:
     phase: build
     domain: patterns
+  csp-audit:
+    phase: review
+    domain: patterns
+    scope: review
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
+      - Bash
+      - WebFetch
+      - WebSearch
   csp-autonomous-loops:
     phase: build
     domain: patterns
+  csp-avatar:
+    phase: build
+    domain: patterns
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
+      - Bash
   csp-backend-patterns:
     phase: build
     domain: patterns
   csp-backend-performance:
     phase: build
     domain: patterns
+  csp-bench:
+    phase: define
+    domain: patterns
+    scope: analysis
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
+      - Bash
+      - WebFetch
+      - WebSearch
+  csp-board:
+    phase: plan
+    domain: patterns
+    scope: design
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
+      - Bash
   csp-brand-voice:
     phase: build
     domain: patterns
+  csp-brief:
+    phase: define
+    domain: patterns
+    scope: design
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
+      - Bash
   csp-browser-testing-with-devtools:
     phase: verify
     domain: patterns
@@ -605,6 +1174,28 @@ skills:
   csp-changelog-management:
     phase: ship
     domain: patterns
+  csp-chart:
+    phase: build
+    domain: patterns
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
+      - Bash
+  csp-check:
+    phase: verify
+    domain: patterns
+    scope: review
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
+      - Bash
   csp-cicd-pipelines:
     phase: build
     domain: patterns
@@ -626,6 +1217,8 @@ skills:
       - csp-graph-impact
       - csp-graph-review
       - csp-multi-review
+      - csp-qa-cr-review
+      - csp-qa-test-engineering
     anti_rationalizations:
       This code looks fine: "Looks can deceive. Review for correctness, reuse, and efficiency."
       It works, let's move on: "Working code can still be wasteful or hard to maintain."
@@ -665,8 +1258,7 @@ skills:
       - Bash
       - Glob
       - Grep
-    related_skills:
-      related_skills: []
+    related_skills: []
   csp-data-pipeline-patterns:
     phase: build
     domain: patterns
@@ -703,6 +1295,17 @@ skills:
   csp-e2e-testing:
     phase: build
     domain: patterns
+  csp-edge:
+    phase: build
+    domain: patterns
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
+      - Bash
   csp-email-systems:
     phase: build
     domain: patterns
@@ -715,6 +1318,19 @@ skills:
   csp-exa-search:
     phase: build
     domain: patterns
+  csp-extract:
+    phase: build
+    domain: patterns
+    scope: analysis
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
+      - Bash
+      - WebFetch
+      - WebSearch
   csp-fal-ai-media:
     phase: build
     domain: patterns
@@ -724,6 +1340,39 @@ skills:
   csp-file-storage:
     phase: build
     domain: patterns
+  csp-flow-mobile:
+    phase: build
+    domain: patterns
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
+      - Bash
+  csp-flow-web:
+    phase: build
+    domain: patterns
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
+      - Bash
+  csp-frame:
+    phase: define
+    domain: patterns
+    scope: design
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
+      - Bash
   csp-frontend-design:
     phase: plan
     domain: patterns
@@ -734,8 +1383,7 @@ skills:
       - Edit
       - Glob
       - Grep
-    related_skills:
-      related_skills: []
+    related_skills: []
   csp-frontend-patterns:
     phase: build
     domain: patterns
@@ -745,6 +1393,29 @@ skills:
   csp-frontend-slides:
     phase: build
     domain: patterns
+  csp-h5-visual-testing:
+    phase: verify
+    domain: testing
+    role: expert
+    scope: testing
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
+    related_skills:
+      - csp-playwright-ui-test
+      - csp-e2e-testing
+      - csp-visual-regression
+      - csp-webapp-testing
+    anti_rationalizations:
+      页面看着没问题不用截图: 视觉验证必须以截图为证据，肉眼检查会漏掉空白页/错误页/数据缺失
+      mock 太麻烦直接用真实数据: "mock 必须完成不可放弃，方式 A→B→C 依次降级尝试"
+      失败了我顺手把代码改了: "本技能只取证不修码，必须生成 FIX_SUGGESTION.md 等用户同意"
+      only-on-failure 截图更省事: "必须 screenshot/video 全开，通过的用例同样需要截图作为渲染正确的证据"
+      用 git checkout 恢复 mock 改动: "git checkout 会丢失用户测试期间的新改动，必须用备份文件恢复"
   csp-html-prototype:
     phase: plan
     domain: patterns
@@ -755,8 +1426,7 @@ skills:
       - Edit
       - Glob
       - Grep
-    related_skills:
-      related_skills: []
+    related_skills: []
   csp-i18n-frameworks:
     phase: build
     domain: patterns
@@ -775,6 +1445,17 @@ skills:
   csp-java-testing:
     phase: verify
     domain: testing
+  csp-journey:
+    phase: plan
+    domain: patterns
+    scope: design
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
+      - Bash
   csp-jpa-patterns:
     phase: build
     domain: patterns
@@ -790,9 +1471,22 @@ skills:
   csp-market-research:
     phase: build
     domain: patterns
+    related_skills:
+      - csp-product-discovery-orchestrator
   csp-mcp-server-patterns:
     phase: build
     domain: patterns
+  csp-metric:
+    phase: build
+    domain: patterns
+    scope: design
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
+      - Bash
   csp-mle-workflow:
     phase: build
     domain: patterns
@@ -808,6 +1502,28 @@ skills:
   csp-monorepo-tooling:
     phase: build
     domain: patterns
+  csp-motion-apply:
+    phase: build
+    domain: patterns
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
+      - Bash
+  csp-motion-plan:
+    phase: build
+    domain: patterns
+    scope: design
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
+      - Bash
   csp-nestjs-patterns:
     phase: build
     domain: patterns
@@ -835,8 +1551,7 @@ skills:
       - Grep
       - WebFetch
       - WebSearch
-    related_skills:
-      related_skills: []
+    related_skills: []
   csp-payment-integration:
     phase: build
     domain: patterns
@@ -854,34 +1569,152 @@ skills:
     anti_rationalizations:
       Premature optimization is the root of all evil: "But so is premature pessimism. Profile first."
       This is fast enough: "Fast enough today may not be fast enough tomorrow. Think scale."
+  csp-pitch:
+    phase: review
+    domain: patterns
+    scope: design
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
+      - Bash
   csp-platform-deploy:
     phase: ship
     domain: patterns
+  csp-playwright-ui-test:
+    phase: verify
+    domain: testing
+    role: expert
+    scope: testing
+    tools:
+      - Read
+      - Bash
+      - Grep
+      - Glob
+      - Agent
+    related_skills:
+      - csp-e2e-testing
+      - csp-webapp-testing
+      - csp-qa-test-engineering
+      - csp-verify-phase
+      - csp-react-testing
+      - csp-h5-visual-testing
+    anti_rationalizations:
+      代码逻辑看起来没问题: 页面行为必须以浏览器实测证据为准，读代码不能替代跑页面
+      这个改动很小不用测 UI: "共享组件的小改动可能影响所有使用方，按 Fast Path 快速验证而不是跳过"
+      偶发失败重跑就好了: 先提取失败签名定位根因，盲目重跑会掩盖时序/数据依赖问题
+      环境起不来所以 blocked: "先排查端口/依赖/mock 降级，只有外部依赖确实不可用才算 blocked"
+  csp-poster:
+    phase: build
+    domain: patterns
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
+      - Bash
   csp-postgres-optimizer:
     phase: plan
   csp-postgres-patterns:
     phase: build
     domain: patterns
+  csp-prd:
+    phase: build
+    domain: patterns
+    scope: design
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
+      - Bash
   csp-privacy-compliance:
     phase: build
     domain: patterns
+  csp-probe:
+    phase: define
+    domain: patterns
+    scope: analysis
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
+      - Bash
   csp-product-capability:
     phase: plan
     domain: patterns
+    related_skills:
+      - csp-product-discovery-orchestrator
   csp-prompt-engineering:
     phase: build
     domain: patterns
   csp-python-reviewer:
     phase: review
     domain: language
+    role: reviewer
     scope: review
     tools:
       - Read
       - Grep
       - Glob
+      - Bash
+    dependencies:
+      skills:
+        - csp-python-patterns
+        - csp-python-testing
+    related_skills:
+      - csp-code-review
+      - csp-codebase-audit
+      - csp-graph-review
+    anti_rationalizations:
+      类型标注太麻烦: 静态检查能提前发现90%的类型错误，重构时间减半。
+      这段代码很简单不需要review: 简单代码也有隐患——mutable默认参数、裸except、路径注入在简单代码中更隐蔽。
+      先跑通再优化: 结构债务在早期修复成本是后期的1/10。项目结构第一天就要对。
+      测试之后补: 没有测试的代码是未经验证的假设，不是实现。
   csp-pytorch-patterns:
     phase: build
     domain: patterns
+  csp-qa:
+    phase: verify
+    domain: patterns
+    scope: review
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
+      - Bash
+      - WebFetch
+      - WebSearch
+  csp-qa-test-engineering:
+    phase: verify
+    domain: quality
+    role: expert
+    scope: testing
+    tools:
+      - Read
+      - Grep
+      - Glob
+      - Bash
+      - Agent
+    related_skills:
+      - csp-qa-cr-review
+      - csp-python-reviewer
+      - python-testing
+      - csp-e2e-testing
+      - csp-ultraqa
+    anti_rationalizations:
+      测试足够了: 检查测试金字塔分布和质量门禁是否满足
+      这个不需要测试: 评估风险等级后再决定测试深度
+      E2E 测试太慢就不写了: 下推到集成/单元层，不是放弃覆盖
   csp-rag-architecture:
     phase: build
     domain: patterns
@@ -915,8 +1748,18 @@ skills:
       - Edit
       - Glob
       - Grep
-    related_skills:
-      related_skills: []
+    related_skills: []
+  csp-retro:
+    phase: review
+    domain: patterns
+    scope: analysis
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
+      - Bash
   csp-ruff-fixer:
     phase: review
   csp-rust-patterns:
@@ -925,6 +1768,17 @@ skills:
   csp-rust-testing:
     phase: build
     domain: patterns
+  csp-scope:
+    phase: define
+    domain: patterns
+    scope: analysis
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
+      - Bash
   csp-search-first:
     phase: build
     domain: patterns
@@ -939,6 +1793,28 @@ skills:
   csp-seo-engineering:
     phase: build
     domain: patterns
+  csp-signal:
+    phase: define
+    domain: patterns
+    scope: analysis
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
+      - Bash
+  csp-sitemap:
+    phase: plan
+    domain: patterns
+    scope: design
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
+      - Bash
   csp-springboot-patterns:
     phase: build
     domain: patterns
@@ -947,6 +1823,17 @@ skills:
     domain: patterns
   csp-sql-reviewer:
     phase: review
+  csp-stories:
+    phase: plan
+    domain: patterns
+    scope: design
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
+      - Bash
   csp-strategic-compact:
     phase: build
     domain: patterns
@@ -983,6 +1870,17 @@ skills:
       - "Never skip geometry validation — syntactic SVG validity does not guarantee visual correctness"
       - "Never hardcode node positions without checking for collisions"
       - "Never claim visual review passed without actually reading the PNG"
+  csp-test:
+    phase: verify
+    domain: patterns
+    scope: testing
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
+      - Bash
   csp-typescript-patterns:
     phase: build
     domain: language
@@ -1015,8 +1913,7 @@ skills:
       - Bash
       - Glob
       - Grep
-    related_skills:
-      related_skills: []
+    related_skills: []
   csp-webhook-architecture:
     phase: build
     domain: patterns
@@ -1070,6 +1967,22 @@ skills:
   csp-configure-notifications:
     phase: build
     domain: patterns
+  csp-create-skill:
+    phase: build
+    domain: architecture
+    role: wizard
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
+    related_skills:
+      - csp-writing-skills
+      - csp-skill-optimizer
+      - csp-using-skills
   csp-debug:
     phase: build
     domain: quality
@@ -1105,8 +2018,7 @@ skills:
       - Bash
       - Glob
       - Grep
-    related_skills:
-      related_skills: []
+    related_skills: []
   csp-hud:
     phase: build
     domain: patterns

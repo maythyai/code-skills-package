@@ -4,11 +4,11 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
 [![npm](https://img.shields.io/npm/v/code-skills-package)](https://www.npmjs.com/package/code-skills-package)
-[![v0.8.0](https://img.shields.io/badge/version-0.8.0-green)](./CHANGELOG.md)
-[![Skills: 595](https://img.shields.io/badge/skills-595-orange)](./docs/SKILL-INDEX.md)
+[![v0.9.0](https://img.shields.io/badge/version-0.9.0-green)](./CHANGELOG.md)(./CHANGELOG.md)
+[![Skills: 646](https://img.shields.io/badge/skills-646-orange)](./docs/SKILL-INDEX.md)
 [![Platforms: 22+](https://img.shields.io/badge/platforms-22+-brightgreen)](./docs/INSTALL.md)
 
-**Unified AI Programming Skills · 22+ Platforms · 15+ Languages · 595 Skills**
+**Unified AI Programming Skills · 22+ Platforms · 15+ Languages · 646 Skills**
 
 Integrates capabilities from multiple open-source AI coding projects into a layered, auto-routing framework with extremely low token costs to complete complex development tasks.
 
@@ -22,11 +22,11 @@ Integrates capabilities from multiple open-source AI coding projects into a laye
 
 [![CSP Overview](./assets/page.png)](https://maythyai.github.io/code-skills-package/)
 
-**🔗 [Live Interactive Dashboard](https://maythyai.github.io/code-skills-package/)** — explore all 595 skills by layer, category, and triggers
+**🔗 [Live Interactive Dashboard](https://maythyai.github.io/code-skills-package/)** — explore all 646 skills by layer, category, and triggers
 
 </div>
 
-CSP (Code Skills Package) consolidates the essence of multiple open-source AI programming projects into an integrated solution. It uses a five-layer architecture to load skills on demand, with confidence scoring router and skill knowledge graph, allowing AI programming assistants to load only the minimum skill set required for each task during a session. At the same time, CSP remembers user usage habits and project context, providing increasingly accurate services as the project evolves. With 595 skills spanning full-stack development, DevOps, security, and a dedicated indie developer toolkit covering deployment, monetization, performance, and more, CSP supports the complete journey from idea to production.
+CSP (Code Skills Package) consolidates the essence of multiple open-source AI programming projects into an integrated solution. It uses a five-layer architecture to load skills on demand, with confidence scoring router and skill knowledge graph, allowing AI programming assistants to load only the minimum skill set required for each task during a session. At the same time, CSP remembers user usage habits and project context, providing increasingly accurate services as the project evolves. With 646 skills spanning full-stack development, DevOps, security, and a dedicated indie developer toolkit covering deployment, monetization, performance, and more, CSP supports the complete journey from idea to production.
 
 ## Core Features
 
@@ -36,7 +36,7 @@ CSP (Code Skills Package) consolidates the essence of multiple open-source AI pr
 | **Token Savings** | Five-layer on-demand loading + index sharding, ~500–1,500 tokens per task | Full loading ~12,000+ tokens |
 | **Skill Orchestration** | Static Recipe + Dynamic DAG, supports branching / parallel / rollback / automatic merging | Fixed pipeline / no orchestration |
 | **Continuous Learning** | 5-dimensional knowledge extraction, gets smarter about projects and developers | Stateless, starts from zero each time |
-| **Full-Stack Coverage** | 595 skills · 5 layers · 15+ languages · 22+ platforms | Single language / limited scenarios |
+| **Full-Stack Coverage** | 646 skills · 5 layers · 15+ languages · 22+ platforms | Single language / limited scenarios |
 | **Open Extension** | Custom Skills + Recipe + Creation Wizard | Closed ecosystem / no extension |
 
 ### Smart Routing
@@ -57,7 +57,7 @@ Automatically extracts knowledge in 5 dimensions at session end — project arch
 
 ### Full Development Lifecycle Coverage
 
-595 skills distributed across 5 layers, covering the full process of requirement planning, code implementation, review, debugging, testing, and release, extending to specialized areas such as AI Engineering (RAG/LLM/vLLM), DevOps (CI/CD/IaC/K8s), mobile (React Native/cross-platform), security auditing (STRIDE-A/CodeQL/incident response). Additionally, 31 skills are specifically designed for independent developers, covering deployment (Vercel/Railway/VPS), monetization (Stripe/subscriptions/SEO/analytics), performance tuning, API integration (webhooks/OAuth), testing engineering (E2E/visual regression), internationalization, and monorepo management. Each skill follows the SKILL.md v2 specification, with structured fields like phase/domain/role.
+646 skills distributed across 5 layers, covering the full process of requirement planning, code implementation, review, debugging, testing, and release, extending to specialized areas such as AI Engineering (RAG/LLM/vLLM), DevOps (CI/CD/IaC/K8s), mobile (React Native/cross-platform), security auditing (STRIDE-A/CodeQL/incident response). Additionally, 31 skills are specifically designed for independent developers, covering deployment (Vercel/Railway/VPS), monetization (Stripe/subscriptions/SEO/analytics), performance tuning, API integration (webhooks/OAuth), testing engineering (E2E/visual regression), internationalization, and monorepo management. Each skill follows the SKILL.md v2 specification, with structured fields like phase/domain/role.
 
 ### Open Ecosystem
 
@@ -180,7 +180,7 @@ CSP uses a five-layer layered architecture. Only the router (L0) loads at sessio
 │      Continuous learning · Autonomous execution · Knowledge  │
 │      management · Token budget · File-organizer · Parallel   │
 └──────────────────────────────────────────────────────────────┘
-                    Total: 595 skills
+                    Total: 646 skills
 ```
 
 ### Routing Process
@@ -250,7 +250,7 @@ node bin/csp-sdk.mjs init-skill csp-my-skill --layer 3 --phase build
 | Document | Description |
 |----------|-------------|
 | [ARCHITECTURE.md](./docs/ARCHITECTURE.md) | Complete architecture design (11 chapters · DAG orchestration · SKPG · Token strategy) |
-| [SKILL-INDEX.md](./docs/SKILL-INDEX.md) | Complete index of 595 skills/agents |
+| [SKILL-INDEX.md](./docs/SKILL-INDEX.md) | Complete index of 646 skills/agents |
 | [INSTALL.md](./docs/INSTALL.md) | Complete installation guide (22+ platforms) |
 | [SKILL-AUTHORING.md](./docs/SKILL-AUTHORING.md) | Skill authoring best practices |
 | [SKILL-SPEC.md](./docs/SKILL-SPEC.md) | SKILL.md specification document |

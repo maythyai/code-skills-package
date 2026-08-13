@@ -6,7 +6,6 @@ description: >
   decisions, and applies noqa only when justified. Use for Python lint fixes,
   Ruff rule enforcement, and code quality cleanup.
 metadata:
-  origin: CSP
   source: awesome-copilot/skills/ruff-recursive-fix
   globs: ["**/*.py", "**/*.pyi", "pyproject.toml"]
 phase: review

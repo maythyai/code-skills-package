@@ -1,7 +1,6 @@
 ---
 name: csp-swift-protocol-di-testing
 description: Protocol-based dependency injection for testable Swift code — mock file system, network, and external APIs using focused protocols and Swift Testing.
-origin: CSP
 layer: 4
 category: patterns
 domain: patterns

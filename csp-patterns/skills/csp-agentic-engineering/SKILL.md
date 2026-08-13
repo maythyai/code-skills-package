@@ -4,8 +4,6 @@ description: >
   Operate as an agentic engineer using eval-first execution, decomposition,
   and cost-aware model routing. Use when AI agents perform most implementation
   work and humans enforce quality and risk controls.
-metadata:
-  origin: CSP
 layer: 4
 category: patterns
 domain: patterns

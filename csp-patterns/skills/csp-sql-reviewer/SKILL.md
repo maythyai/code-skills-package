@@ -5,7 +5,6 @@ description: >
   JOIN optimization, NULL handling, transaction isolation, and security (SQL injection,
   privilege escalation). Use for any SQL code change, migration, or new query.
 metadata:
-  origin: CSP
   source: awesome-copilot/skills/sql-*
   globs: ["**/*.sql", "**/migrations/**"]
 phase: review

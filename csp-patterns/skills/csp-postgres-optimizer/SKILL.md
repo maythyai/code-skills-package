@@ -5,7 +5,6 @@ description: >
   index strategy (B-tree, GIN, GiST, BRIN), query plan optimization, connection pooling,
   partitioning, and vacuum tuning. Use when PostgreSQL queries are slow or need optimization.
 metadata:
-  origin: CSP
   source: awesome-copilot/skills/postgresql-*
   globs: ["**/*.sql", "**/migrations/**"]
 phase: plan

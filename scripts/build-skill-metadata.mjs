@@ -66,18 +66,24 @@ function serializeToYaml(obj, indentLevel = 0) {
       if (value === null || value === undefined) continue;
 
       if (typeof value === 'object') {
-        result += `${indent}${key}:\n`;
         if (Array.isArray(value)) {
           if (value.length === 0) {
-            result += `${indent}  ${key}: []\n`;
+            // Empty array → inline `key: []`. Do NOT emit a separate `key:`
+            // line (the old code emitted both, producing `key:\n  key: []`).
+            result += `${indent}${key}: []\n`;
           } else {
+            result += `${indent}${key}:\n`;
             result += value.map(item =>
               typeof item === 'object'
                 ? `${indent}  - ${serializeToYaml(item, indentLevel + 1).trim()}\n`
                 : `${indent}  - ${typeof item === 'string' && item.includes(' ') ? `"${item}"` : String(item)}\n`
             ).join('');
           }
+        } else if (Object.keys(value).length === 0) {
+          // Empty mapping → inline `key: {}` (same rationale as empty array).
+          result += `${indent}${key}: {}\n`;
         } else {
+          result += `${indent}${key}:\n`;
           result += serializeToYaml(value, indentLevel + 1);
         }
       } else {

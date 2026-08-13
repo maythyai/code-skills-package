@@ -5,7 +5,6 @@ description: >
   Use for setup questions, API references, code examples, or when the user names a framework.
   Combines skill methodology with agent execution capability.
 layer: 4
-origin: merged(CSP)
 category: patterns
 domain: patterns
 phase: build

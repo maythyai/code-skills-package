@@ -3,7 +3,6 @@ name: csp-test-engineer
 description: QA engineer specialized in test strategy, test writing, and coverage analysis. Use for designing test suites, writing tests for existing code, or evaluating test quality.
 layer: 4
 csp-type: agent
-origin: agent-skills
 category: patterns
 ---
 

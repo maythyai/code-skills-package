@@ -39,6 +39,15 @@ const TARGETS = [
     replace: (v) => `[![v${v}](https://img.shields.io/badge/version-${v}-green)](./CHANGELOG.md)`,
     extract: (m) => m[0].match(/v[0-9.]+/)[0].slice(1),
   },
+  {
+    // bin/csp-sdk.mjs 硬编码版本号（state/roadmap 的 version 字段、help 横幅、version 子命令）。
+    // 注意只匹配这三类上下文，避免误改 help 文本里的 YAML 示例（如 version: 0.1.0）。
+    path: 'bin/csp-sdk.mjs',
+    match: /(version: '|csp-sdk v|out\(')[0-9]+\.[0-9]+\.[0-9]+/g,
+    // 返回 replacer 函数，配合 /g 标志逐个替换并保留前缀
+    replace: (v) => (_match, prefix) => `${prefix}${v}`,
+    extract: (m) => m[0].match(/[0-9]+\.[0-9]+\.[0-9]+/)[0],
+  },
 ];
 
 // ── Main ─────────────────────────────────────────────────────────────

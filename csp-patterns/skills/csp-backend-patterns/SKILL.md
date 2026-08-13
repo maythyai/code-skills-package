@@ -5,8 +5,6 @@ description: >
   repository pattern, error handling and retries, idempotency, rate limiting,
   caching, transaction boundaries, API design, and background jobs. Use for
   server-side design regardless of language or framework.
-metadata:
-  origin: CSP
 layer: 4
 category: patterns
 domain: patterns

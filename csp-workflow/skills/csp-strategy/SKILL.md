@@ -6,6 +6,7 @@ layer: 2
 category: workflow
 phase: define
 domain: patterns
+related_skills: [csp-product-discovery-orchestrator]
 ---
 
 ## Headless Mode

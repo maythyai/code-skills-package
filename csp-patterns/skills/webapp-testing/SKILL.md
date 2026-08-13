@@ -4,7 +4,6 @@ description: >
   End-to-end web application testing strategies. Covers Cypress, Playwright, and Puppeteer
   for integration and E2E tests. Use for testing full user flows in web applications.
 metadata:
-  origin: CSP
   source: awesome-copilot/skills/csp-webapp-testing
   globs: ["**/*.test.{js,ts,jsx,tsx}", "**/*.spec.{js,ts,jsx,tsx}", "**/cypress/**", "**/playwright/**"]
 phase: verify

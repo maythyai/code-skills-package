@@ -19,7 +19,13 @@ scope: design
 tools: [Read, Write, Edit, Glob, Grep, Bash]
 
 dependencies:
-  skills: [csp-requirement-decomposition, csp-tech-stack-advisor, csp-fullstack-spec-generator]
+  skills:
+    - csp-requirement-decomposition
+    - csp-tech-stack-advisor
+    - csp-tech-solution-design
+    - csp-tech-design-review
+    - csp-fullstack-spec-generator
+    - csp-tech-task-breakdown
 
 related_skills:
   - csp-full
@@ -29,6 +35,9 @@ related_skills:
   - csp-plan-phase
   - csp-tdd
   - csp-code-review
+  - csp-product-discovery-orchestrator
+  - csp-effort-estimation
+  - csp-tech-risk-assessment
 
 triggers:
   keywords: ["全生命周期", "lifecycle", "端到端", "从需求到上线", "完整开发流程",
@@ -59,13 +68,13 @@ anti_rationalizations:
 ├─────────────────────────────────────────────────────────────────┤
 │                                                                   │
 │  ┌──────────────┐  ┌──────────────┐  ┌──────────────────────┐   │
-│  │ requirement- │→│ tech-stack-  │→│ fullstack-spec-       │   │
-│  │ decomposition│  │ advisor      │  │ generator             │   │
+│  │ requirement- │→│ tech-stack-  │→│ tech-solution-       │   │
+│  │ decomposition│  │ advisor      │  │ design               │   │
 │  └──────────────┘  └──────────────┘  └──────────────────────┘   │
-│         ↓                  ↓                    ↓                  │
+│         ↓                                       ↓                  │
 │  ┌──────────────────────────────────────────────────────────┐   │
-│  │              csp-full / csp-implementation-phase           │   │
-│  │              (执行层 — 编码 + 测试 + 审查 + 发布)           │   │
+│  │  tech-design-review  →  fullstack-spec-generator          │   │
+│  │  tech-task-breakdown  →  csp-full / implementation-phase  │   │
 │  └──────────────────────────────────────────────────────────┘   │
 │                                                                   │
 └─────────────────────────────────────────────────────────────────┘
@@ -79,15 +88,17 @@ anti_rationalizations:
 ## 生命周期阶段
 
 ```
-┌─────────────────────────────────────────────────────────────────────┐
-│                                                                       │
-│  S1          S2           S3            S4         S5      S6       │
-│  需求拆解 → 技术选型 → 全栈Spec → 实施规划 → 并行开发 → 质量门控   │
-│                                                                       │
-│  S7          S8           S9                                         │
-│  审查验证 → 发布交付 → 运维监控 → (迭代: 回到 S1 增量)              │
-│                                                                       │
-└─────────────────────────────────────────────────────────────────────┘
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                                                                               │
+│  S1          S2           S2.5         S2.6        S3           S3.5       │
+│  需求拆解 → 技术选型 → 技术方案 → 方案评审 → 全栈Spec → 任务拆解           │
+│                                                                               │
+│  S4          S5           S6           S7          S8           S9          │
+│  实施规划 → 并行开发 → 质量门控 → 审查验证 → 发布交付 → 运维监控           │
+│                                                                               │
+│  (迭代: 回到 S1 增量)                                                         │
+│                                                                               │
+└─────────────────────────────────────────────────────────────────────────────┘
 ```
 
 ### Stage 1: 需求拆解 (Requirement Decomposition)
@@ -116,6 +127,33 @@ anti_rationalizations:
 
 **跳过条件:** 已有 `.csp/tech-decisions/` 或用户指定了完整技术栈
 
+### Stage 2.5: 技术方案设计 (Technical Solution Design)
+
+**执行:** `Skill("csp-tech-solution-design")`
+
+**输入:** `.csp/decomposition/` + `.csp/tech-decisions/` + `PRODUCT.md`
+**输出:** `.csp/tech-design/` 全套产物
+**门控:**
+- 系统架构设计完成（服务/模块划分 + 部署拓扑）
+- 数据架构设计完成（全局 ER 图 + 数据流）
+- 关键技术难点有攻克方案
+- 至少 2 个方案对比有结论
+
+**跳过条件:** 已有 `.csp/tech-design/` 且用户确认复用
+
+### Stage 2.6: 技术方案评审 (Technical Design Review)
+
+**执行:** `Skill("csp-tech-design-review")`
+
+**输入:** `.csp/tech-design/` 全套产物
+**输出:** `.csp/tech-design/REVIEW-FINDINGS.md`
+**门控:**
+- 无 CRITICAL 级别发现
+- WARNING 级别发现 ≤ 3 个
+- 评审结论为 APPROVED 或 APPROVED_WITH_MINOR_CHANGES
+
+**跳过条件:** 项目复杂度为 S 级别（简单 CRUD），或用户确认跳过评审
+
 ### Stage 3: 全栈 Spec 生成 (Full-Stack Spec Generation)
 
 **执行:** `Skill("csp-fullstack-spec-generator")`
@@ -128,6 +166,20 @@ anti_rationalizations:
 - API 契约前后端一致
 
 **跳过条件:** 已有 `.csp/specs/` 且覆盖当前 Feature 集
+
+### Stage 3.5: 任务拆解 (Task Breakdown)
+
+**执行:** `Skill("csp-tech-task-breakdown")`
+
+**输入:** `.csp/tech-design/` + `.csp/specs/`
+**输出:** `.csp/tasks/` 全套产物
+**门控:**
+- 每个 Feature 有对应任务
+- 任务粒度 ≤ 4h
+- 依赖 DAG 无环
+- Waves 划分合理
+
+**跳过条件:** 项目复杂度为 S 级别，或用户已有任务管理工具
 
 ### Stage 4: 实施规划 (Implementation Planning)
 
@@ -230,7 +282,10 @@ lifecycle:
   stages:
     - decomposition
     - tech-selection
+    - tech-solution-design
+    - tech-design-review
     - spec-generation
+    - task-breakdown
     - planning
     - execution
     - quality-gate
@@ -240,9 +295,10 @@ lifecycle:
   
   gates:
     require_user_approval:
-      - after_decomposition    # 拆解后确认 Feature 清单
-      - after_tech_selection   # 选型后确认技术栈
-      - before_ship            # 发布前确认
+      - after_decomposition       # 拆解后确认 Feature 清单
+      - after_tech_selection      # 选型后确认技术栈
+      - after_tech_design_review  # 方案评审后确认技术方案
+      - before_ship               # 发布前确认
     auto_pass:
       - quality_gate           # 测试通过即自动进入下一阶段
       - review                 # 无 CRITICAL 即通过
@@ -268,9 +324,9 @@ lifecycle:
 | 模式 | 适用场景 | 执行阶段 |
 |------|---------|---------|
 | `full` | 全新产品、复杂系统 | S1-S9 全部 |
-| `lightweight` | 小功能、模块集成 | S1(精简) → S3(精简) → S5 → S6 → S7 |
-| `spec-only` | 只需要规格文档，不执行 | S1 → S2 → S3 → S4 |
-| `extend` | 已有系统新增功能 | S1(增量) → S2(增量) → S3 → S5 → S6 → S7 → S8 |
+| `lightweight` | 小功能、模块集成 | S1(精简) → S2(精简) → S3(精简) → S3.5(精简) → S5 → S6 → S7 |
+| `spec-only` | 只需要规格文档，不执行 | S1 → S2 → S2.5 → S2.6 → S3 → S3.5 → S4 |
+| `extend` | 已有系统新增功能 | S1(增量) → S2(增量) → S2.5(增量) → S3 → S3.5 → S5 → S6 → S7 → S8 |
 
 ## 产物流转图
 
@@ -289,11 +345,29 @@ lifecycle:
     ├── ADR/*.md                     │   │   │        │
     └── TECH-DECISIONS-SUMMARY.md ───┤   │   │        │
                                      │   │   │        │
+    ▼ [S2.5: tech-solution-design]   │   │   │        │
+.csp/tech-design/                     │   │   │        │
+    ├── ARCHITECTURE-DESIGN.md ──────┤   │   │        │
+    ├── DATA-ARCHITECTURE.md         │   │   │        │
+    ├── INTERFACE-ARCHITECTURE.md    │   │   │        │
+    └── TECH-DESIGN-SUMMARY.md ──────┤   │   │        │
+                                     │   │   │        │
+    ▼ [S2.6: tech-design-review]     │   │   │        │
+.csp/tech-design/                     │   │   │        │
+    └── REVIEW-FINDINGS.md            │   │   │        │
+                                     │   │   │        │
     ▼ [S3: fullstack-spec-generator] │   │   │        │
 .csp/specs/                          │   │   │        │
     ├── SPEC-F-*.md ◄────────────────┘   │   │        │
     ├── API-OVERVIEW.md                  │   │        │
     └── SPEC-INDEX.md                    │   │        │
+                                         │   │        │
+    ▼ [S3.5: tech-task-breakdown]        │   │        │
+.csp/tasks/                              │   │        │
+    ├── WBS.md                           │   │        │
+    ├── TASK-CARDS/*.md                  │   │        │
+    ├── DEPENDENCY-DAG.md                │   │        │
+    └── TASK-BREAKDOWN-SUMMARY.md ───────┤   │        │
                                          │   │        │
     ▼ [S4: planning]                     │   │        │
 .csp/plan/                               │   │        │
@@ -345,8 +419,17 @@ routing_rules:
       max_retries: 2
     tech_conflict:
       action: retry_S2_with_constraints
+    tech_design_incomplete:
+      action: retry_S2.5
+      max_retries: 2
+    tech_design_review_failed:
+      action: retry_S2.5_or_S2.6
+      max_retries: 3
     spec_misalignment:
       action: retry_S3_for_affected_features
+    task_breakdown_incomplete:
+      action: retry_S3.5
+      max_retries: 2
     test_failure:
       action: insert_debug_before_S6
       max_retries: 5
@@ -456,8 +539,20 @@ Orchestrator 执行:
   4. S2: 技术选型
      - Python + FastAPI / Next.js / PostgreSQL + pgvector / Redis / Meilisearch / LangChain
   5. [门控] 用户确认技术栈 ✓
-  6. S3: 生成 12 份 Feature Spec
-  7. S4: 实施规划 (4 Wave, 3 里程碑)
-  8. S5-S9: 执行 → 测试 → 审查 → 发布
-  9. 输出: 完整可运行的知识库系统 + 全套文档
+  6. S2.5: 技术方案设计
+     - 系统架构: 模块化单体 + 搜索/通知独立服务
+     - 数据架构: 7 个核心实体，全局 ER 图
+     - 接口架构: REST API + WebSocket + 事件驱动
+     - 关键技术难点: 实时协作冲突解决、AI 问答延迟优化
+  7. [门控] 技术方案完整 ✓
+  8. S2.6: 技术方案评审
+     - 架构师: 建议搜索服务独立部署
+     - 安全专家: 需增加文档级 RBAC
+     - DBA: 大文档内容建议用 S3 存储
+     - 评审结论: APPROVED_WITH_MINOR_CHANGES
+  9. S3: 生成 12 份 Feature Spec
+  10. S3.5: 任务拆解 → 42 个开发任务，4 个 Waves
+  11. S4: 实施规划 (4 Wave, 3 里程碑)
+  12. S5-S9: 执行 → 测试 → 审查 → 发布
+  13. 输出: 完整可运行的知识库系统 + 全套文档
 ```

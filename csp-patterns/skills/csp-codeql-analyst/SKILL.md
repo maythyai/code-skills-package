@@ -6,7 +6,6 @@ description: >
   and validates secret scanning configurations. Use for SAST, secret leak detection,
   and supply chain security.
 metadata:
-  origin: CSP
   source: awesome-copilot/skills/codeql,secret-scanning
   globs: ["**/*.{js,ts,py,java,go,cs,cpp,rb}"]
 ---

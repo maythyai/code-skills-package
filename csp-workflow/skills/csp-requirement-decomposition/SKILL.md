@@ -26,7 +26,9 @@ related_skills:
   - csp-lifecycle-orchestrator
   - csp-brainstorming
   - csp-interview-me
+  - csp-domain-driven-design
   - csp-full
+  - csp-product-discovery-orchestrator
 
 triggers:
   keywords: ["需求拆解", "feature分解", "功能拆分", "需求分析", "feature breakdown",

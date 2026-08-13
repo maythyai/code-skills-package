@@ -5,6 +5,7 @@ layer: 4
 category: patterns
 phase: plan
 domain: patterns
+related_skills: [csp-product-discovery-orchestrator]
 ---
 
 # Product Capability

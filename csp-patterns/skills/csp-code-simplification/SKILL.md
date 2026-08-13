@@ -6,7 +6,6 @@ description: >
   and AI slop cleanup workflow. Use when refactoring for clarity, removing unused code,
   or cleaning bloated AI-generated implementations.
 layer: 4
-origin: merged(agent-skills+CSP)
 category: patterns
 domain: patterns
 phase: build

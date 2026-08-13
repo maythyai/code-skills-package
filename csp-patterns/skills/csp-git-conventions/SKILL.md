@@ -5,7 +5,6 @@ description: >
   strategies, commit message quality, and PR hygiene. Use for commit messages,
   branch naming, and git workflow questions.
 metadata:
-  origin: CSP
   source: awesome-copilot/skills/conventional-*,git-commit
   globs: ["**/.git/**", "**/.github/**"]
 ---

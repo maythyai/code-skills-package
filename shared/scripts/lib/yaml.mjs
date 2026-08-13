@@ -25,6 +25,39 @@ export function extractFrontmatter(text) {
 }
 
 /**
+ * Index of the ']' that closes the leading '[' in `s` (top-level, quote-aware:
+ * a ']' inside a quoted item does not close), or -1 if unmatched.
+ */
+function inlineArrayCloseIndex(s) {
+  let depth = 0;
+  let inS = false, inD = false;
+  for (let i = 0; i < s.length; i++) {
+    const c = s[i];
+    if (inS) { if (c === "'") inS = false; continue; }
+    if (inD) { if (c === '"') inD = false; continue; }
+    if (c === "'") inS = true;
+    else if (c === '"') inD = true;
+    else if (c === '[') depth++;
+    else if (c === ']') { depth--; if (depth === 0) return i; }
+  }
+  return -1;
+}
+
+/**
+ * True iff `s` is a complete inline array: starts with '[' AND the matching ']'
+ * is the last non-whitespace character (nothing meaningful trails it). This
+ * avoids misclassifying a scalar like `[note] some text` as an array. Used to
+ * decide whether a value that starts with '[' is a complete inline array or a
+ * multi-line one that still needs more physical lines accumulated.
+ */
+function inlineArrayComplete(s) {
+  if (!s.startsWith('[')) return false;
+  const closeIdx = inlineArrayCloseIndex(s);
+  if (closeIdx === -1) return false;
+  return s.slice(closeIdx + 1).trim() === '';
+}
+
+/**
  * Parse a minimal-YAML frontmatter body into a plain object.
  *
  * @param {string} content — the text between the --- fences
@@ -118,9 +151,26 @@ export function parseSimpleYaml(content, { coerce = false } = {}) {
       continue;
     }
 
-    // Inline array [a, b, c]
-    if (value.startsWith('[') && value.endsWith(']')) {
-      value = value.slice(1, -1).split(',').map(s => s.trim().replace(/^["']|["']$/g, '')).filter(Boolean);
+    // Inline array [a, b, c] — possibly spanning multiple physical lines
+    // (e.g. `keywords: ["a",\n  "b"]`). Decide via bracket balance:
+    //   - balanced AND closing ']' is the last meaningful char → complete array
+    //   - unbalanced (no closing ']' yet) → accumulate subsequent lines, retry
+    //   - balanced but with trailing text (e.g. `[note] text`) → scalar, leave
+    // Quote-aware via inlineArrayCloseIndex/inlineArrayComplete so a ']'
+    // inside a quoted item doesn't close early.
+    if (value.startsWith('[')) {
+      // Accumulate only while brackets are unbalanced (truly incomplete).
+      while (inlineArrayCloseIndex(value) === -1 && i + 1 < lines.length) {
+        value += ' ' + lines[++i].trim();
+      }
+      if (inlineArrayComplete(value)) {
+        const closeIdx = inlineArrayCloseIndex(value);
+        value = value.slice(1, closeIdx)
+          .split(',')
+          .map(s => s.trim().replace(/^["']|["']$/g, ''))
+          .filter(Boolean);
+      }
+      // else: balanced-with-trailing-text or still unbalanced → scalar string
     } else if ((value.startsWith('"') && value.endsWith('"')) || (value.startsWith("'") && value.endsWith("'"))) {
       value = value.slice(1, -1);
     } else if (coerce) {

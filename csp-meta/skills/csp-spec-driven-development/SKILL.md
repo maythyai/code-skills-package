@@ -2,7 +2,6 @@
 name: csp-spec-driven-development
 description: CSP-native spec-driven methodology integrated with CSP phase workflows. Use when formalizing requirements before implementation, managing brownfield requirement deltas, or verifying artifact-to-code alignment. Triggers on "spec-driven", "规范驱动", "write spec before code", "delta requirements".
 layer: 1
-origin: csp-native
 category: meta
 phase: build
 domain: patterns

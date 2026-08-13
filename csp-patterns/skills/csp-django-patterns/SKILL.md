@@ -1,7 +1,6 @@
 ---
 name: csp-django-patterns
 description: Django architecture patterns, REST API design with DRF, ORM best practices, caching, signals, middleware, and production-grade Django apps.
-origin: CSP
 layer: 4
 category: patterns
 domain: patterns

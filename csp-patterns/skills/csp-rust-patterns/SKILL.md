@@ -1,7 +1,6 @@
 ---
 name: csp-rust-patterns
 description: Idiomatic Rust patterns, ownership, error handling, traits, concurrency, and best practices for building safe, performant applications.
-origin: CSP
 layer: 4
 category: patterns
 domain: patterns

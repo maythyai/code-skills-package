@@ -8,7 +8,7 @@ domain: quality
 scope: review
 role: reviewer
 tools: [Read, Grep, Glob, Bash]
-related_skills: [csp-code-graph, csp-graph-impact, csp-graph-review, csp-multi-review]
+related_skills: [csp-code-graph, csp-graph-impact, csp-graph-review, csp-multi-review, csp-qa-cr-review, csp-qa-test-engineering]
 anti_rationalizations:
   "This code looks fine": "Looks can deceive. Review for correctness, reuse, and efficiency."
   "It works, let's move on": "Working code can still be wasteful or hard to maintain."
@@ -156,6 +156,42 @@ Principles:
 **Remember**: the reviewer's job is to protect correctness and long-term
 maintainability while keeping the author moving. Find the real problems, say them
 clearly, label their severity, and let the small stuff be small.
+
+## Language-Specific Extensions
+
+The six review dimensions above are language-agnostic. For language-specific depth, load the corresponding reviewer skill:
+
+| Language | Reviewer Skill | Key Focus Areas |
+|----------|---------------|-----------------|
+| **Python** | `csp-python-reviewer` | Type safety (pyright strict), async patterns (TaskGroup > gather), security (injection/deserialization), enterprise project structure evaluation |
+| **TypeScript** | `csp-typescript-patterns` | Strict mode, generics, discriminated unions, ESM/CJS |
+| **Go** | `csp-golang-patterns` | Error handling, goroutine leaks, interface compliance |
+| **Rust** | `csp-rust-patterns` | Ownership, lifetime annotations, unsafe blocks |
+| **React** | `csp-react-patterns` | Hooks rules, re-render optimization, state management |
+
+### Python Review Enhancement
+
+When reviewing Python code, augment each dimension with:
+
+1. **Correctness** → Type annotations complete? pyright/mypy zero errors? Async pitfalls (GIL blocking, task leaks)?
+2. **Reuse** → stdlib already has this? (`itertools`, `collections`, `pathlib`) Protocol reuse?
+3. **Simplification** → List comprehension viable? Guard clauses vs deep nesting? Over-abstraction (single-impl ABC)?
+4. **Efficiency** → N+1 queries? String concat in loop? Generator vs list for large data? Missing `__slots__`?
+5. **Security** → SQL/command/path injection? Unsafe deserialization? Hardcoded secrets? Input validation at boundaries?
+6. **Testability** → Dependencies injectable? Time/IO mockable? Branch coverage adequate?
+
+For **enterprise project structure** evaluation (project completeness, code organization, CI/CD maturity), reference `csp-python-reviewer/references/python-project-structure.md`.
+
+### QA-Focused Review Extensions
+
+For systematic QA-perspective code review (six-dimension review with test case generation):
+
+| Skill | Focus |
+|-------|-------|
+| `csp-qa-cr-review` | 六维评审（影响范围/安全/质量/测试覆盖/性能/可维护性）+ 蒸馏增强 + Aone TestHub 用例生成 |
+| `csp-qa-test-engineering` | 全生命周期 QA（需求分析→测试计划→用例→自动化→生产问题调查） |
+
+---
 
 ## Graph-Enhanced Review (when knowledge graph is available)
 

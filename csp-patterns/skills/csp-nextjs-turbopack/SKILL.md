@@ -1,7 +1,6 @@
 ---
 name: csp-nextjs-turbopack
 description: Next.js 16+ and Turbopack — incremental bundling, FS caching, dev speed, and when to use Turbopack vs webpack.
-origin: CSP
 layer: 4
 category: patterns
 domain: patterns

@@ -10,7 +10,7 @@ phase: define
 domain: architecture
 scope: design
 tools: [Read, Write, Glob, Grep]
-related_skills: [csp-scope-guard, csp-strategy, csp-brainstorming, csp-plan-phase]
+related_skills: [csp-scope-guard, csp-strategy, csp-brainstorming, csp-plan-phase, csp-product-discovery-orchestrator]
 anti_rationalizations:
   "We need all these features to be competitive": "Ship one feature and learn. Competitors ship faster because they cut more."
   "Users will expect this on day one": "Users don't know what they want until they use something. Ship and iterate."

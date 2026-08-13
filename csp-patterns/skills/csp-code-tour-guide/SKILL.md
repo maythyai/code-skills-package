@@ -6,7 +6,6 @@ description: >
   provides Socratic mentoring for junior developers. Use for "create a tour",
   "onboarding", "explain this code", "mentor me".
 metadata:
-  origin: CSP
   source: awesome-copilot/skills/code-tour,mentoring-juniors,add-educational-comments
   globs: ["**/.tours/**", "**/*.{ts,tsx,js,jsx,py,java,go,rs}"]
 ---

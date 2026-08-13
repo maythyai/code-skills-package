@@ -1,8 +1,8 @@
 # Skills, Agents & Scripts 综合索引
 
-> 生成时间：2026-08-11
-> 版本：v0.8.0 — 状态感知路由 + 置信度评分 + SKILL.md v2 规范
-> 状态：595 个技能分布于 5 个层级，支持状态感知和置信度路由
+> 生成时间：2026-08-13
+> 版本：v0.9.0 — PRD→技术方案 技能链路完善
+> 状态：646 个技能分布于 5 个层级，支持状态感知和置信度路由
 
 ---
 
@@ -16,7 +16,7 @@
 | **superpowers (SP)** | 14 | — | — | ~38 + hooks | 核心元技能（meta-skills） |
 | **spec-kit** | 1 | — | — | — | 规范驱动开发工具 |
 | **awesome-copilot** | ~40 | ~2 | — | — | GitHub Copilot skills & agents |
-| **CSP 总计** | 584 | — | — | — | 5 层架构（L0-L4），状态感知路由 |
+| **CSP 总计** | 594 | — | — | — | 5 层架构（L0-L4），状态感知路由 |
 
 ---
 
@@ -505,6 +505,63 @@
 | `react-testing` | 增加 Jest 高级模式 | `jest-advanced-patterns.md` |
 | `csp-cicd-pipelines` | 增加 GitHub Actions 规范 + CI/CD 最佳实践 | ✅ | `github-actions-specification.md`, `cicd-best-practices.md` |
 | `csp-project-standards-reviewer` | 从现有代码提炼规范 + 代码典范识别 | `standards-extraction.md`, `code-exemplars.md` |
+
+### 22. 技术方案设计 (Tech Solution Design) — v0.9.0 新增
+
+> 10 个全新技能覆盖"PRD 产品功能 → 技术功能拆解 → 技术方案设计"完整链路
+
+| 名称 | 优先级 | 描述 | 依赖 |
+|------|--------|------|------|
+| `csp-prd-parser` | P2 | 多格式 PRD 文档解析器（钉钉/语雀/Markdown/纯文本）→ 结构化 PRD-IR | 无 |
+| `csp-prd-traceability` | P1 | PRD→Feature→Spec→Task 完整追溯矩阵 + 覆盖率检查 + 缺口分析 | csp-requirement-decomposition, csp-prd-generation |
+| `csp-tech-solution-design` | P0 | 技术方案设计引擎：系统架构、数据架构、接口架构、安全架构、多方案对比、关键技术难点攻克 | csp-requirement-decomposition, csp-tech-stack-advisor, csp-product-capability |
+| `csp-tech-design-review` | P0 | 技术方案评审引擎：6 角色并行评审（架构师/安全/性能/DBA/运维/成本），CRITICAL/WARNING/INFO 分级 | csp-tech-solution-design |
+| `csp-tech-risk-assessment` | P1 | 技术方案风险评估：7 维度风险识别、5×5 矩阵评级、缓解计划、风险登记册 | csp-tech-solution-design |
+| `csp-tech-task-breakdown` | P1 | 技术方案→开发任务拆解：WBS、Waves 划分、并行策略、关键路径、Sprint Backlog | csp-tech-solution-design, csp-fullstack-spec-generator |
+| `csp-effort-estimation` | P2 | 工作量与资源估算：类比估算、三点估算(PERT)、COCOMO II、甘特图、资源计划 | csp-tech-solution-design, csp-tech-task-breakdown |
+| `csp-integration-design` | P2 | 跨系统集成方案：接口契约、数据一致性(Saga/2PC)、故障隔离(熔断/降级)、灰度发布回滚 | csp-tech-solution-design |
+| `csp-domain-driven-design` | P3 | 领域驱动设计：限界上下文、聚合根/实体/值对象、领域事件、上下文映射、统一语言 | csp-requirement-decomposition |
+| `csp-prd-change-impact` | P3 | PRD 变更影响分析：全链路追踪(PRD→Feature→Spec→Task→Code)、成本量化工时、风险重评估 | csp-prd-traceability |
+
+#### 22.1 集成链路
+
+```
+PRD/需求输入
+    │
+    ▼ [csp-prd-parser] ───────────→ PRD 结构化 IR
+    │
+    ▼ [csp-requirement-decomposition] → Feature 原子拆解
+    │
+    ├── [csp-prd-traceability] ───→ 追溯矩阵 + 覆盖率
+    ├── [csp-domain-driven-design] → DDD 建模 (复杂业务)
+    │
+    ▼ [csp-tech-stack-advisor] ────→ 技术选型 + ADR
+    │
+    ▼ [csp-tech-solution-design] ──→ 技术方案设计 (🔑 关键桥梁)
+    │
+    ├── [csp-tech-design-review] ──→ 技术方案评审
+    ├── [csp-tech-risk-assessment] ─→ 风险评估
+    ├── [csp-integration-design] ──→ 集成方案 (多系统)
+    │
+    ▼ [csp-fullstack-spec-generator] → Feature 实现规格
+    │
+    ├── [csp-tech-task-breakdown] ──→ 开发任务拆解
+    ├── [csp-effort-estimation] ───→ 工作量估算
+    │
+    ▼ [csp-lifecycle-orchestrator] ─→ 全生命周期编排
+    │
+    ├── [csp-prd-change-impact] ───→ PRD 变更影响分析
+    │
+    ▼ 实现阶段
+```
+
+#### 22.2 与 lifecycle-orchestrator 的集成
+
+新技能在 lifecycle-orchestrator 中的位置：
+- S2.5: `csp-tech-solution-design` (技术选型 → 技术方案设计)
+- S2.6: `csp-tech-design-review` (技术方案评审)
+- S3.5: `csp-tech-task-breakdown` (全栈Spec → 任务拆解)
+- 可选阶段: `csp-tech-risk-assessment`, `csp-integration-design`, `csp-domain-driven-design`, `csp-prd-traceability`, `csp-effort-estimation`
 
 ---
 

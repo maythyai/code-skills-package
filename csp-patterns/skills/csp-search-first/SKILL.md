@@ -5,8 +5,6 @@ description: >
   patterns before writing custom code. Systematizes the "search for existing
   solutions before implementing" approach. Use when starting new features or
   adding functionality.
-metadata:
-  origin: CSP
 layer: 4
 category: patterns
 phase: build

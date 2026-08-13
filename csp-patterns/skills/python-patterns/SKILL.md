@@ -6,7 +6,6 @@ description: >
   package organization. Use when working with Python code to apply Pythonic
   patterns.
 metadata:
-  origin: CSP
   globs: ["**/*.py", "**/*.pyi"]
 layer: 4
 category: patterns

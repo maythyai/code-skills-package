@@ -5,7 +5,6 @@ description: >
   architectural decision records, and PRDs from natural language descriptions.
   Use when the team needs structured documentation without a heavy process tool.
 metadata:
-  origin: CSP
   source: awesome-copilot/skills/create-specification,create-implementation-plan,create-architectural-decision-record,prd
   globs: ["**/*.md", "**/docs/**"]
 ---

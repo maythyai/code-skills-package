@@ -5,8 +5,6 @@ description: >
   containers, managed databases, event-driven architectures, CDN, DNS,
   multi-region deployment, and cost optimization. Use when designing or
   optimizing cloud-native architectures on any major cloud provider.
-metadata:
-  origin: CSP
 layer: 4
 category: patterns
 domain: patterns
