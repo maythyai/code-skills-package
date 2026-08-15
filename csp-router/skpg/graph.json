@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generated_at": "2026-08-13T08:11:20.469Z",
+  "generated_at": "2026-08-15T02:40:24.475Z",
   "nodes": {
     "5b37ecd541b4": {
       "id": "5b37ecd541b4",
@@ -5703,16 +5703,6 @@
         "path": "csp-workflow/commands/csp-phase.md"
       }
     },
-    "6974e0c36c21": {
-      "id": "6974e0c36c21",
-      "kind": "skill",
-      "name": "csp-plan-phase",
-      "metadata": {
-        "layer": 2,
-        "category": "workflow",
-        "path": "csp-workflow/commands/csp-plan-phase.md"
-      }
-    },
     "d8cb259bce19": {
       "id": "d8cb259bce19",
       "kind": "skill",
@@ -6094,7 +6084,7 @@
       "metadata": {
         "layer": 2,
         "category": "workflow",
-        "phase": "plan",
+        "phase": "define",
         "domain": "architecture",
         "path": "csp-workflow/skills/csp-domain-driven-design/SKILL.md"
       }
@@ -6107,7 +6097,7 @@
         "layer": 2,
         "category": "workflow",
         "phase": "plan",
-        "domain": "architecture",
+        "domain": "quality",
         "path": "csp-workflow/skills/csp-effort-estimation/SKILL.md"
       }
     },
@@ -6309,6 +6299,18 @@
         "path": "csp-workflow/skills/csp-parallel-worktree/SKILL.md"
       }
     },
+    "6974e0c36c21": {
+      "id": "6974e0c36c21",
+      "kind": "skill",
+      "name": "csp-plan-phase",
+      "metadata": {
+        "layer": 2,
+        "category": "workflow",
+        "phase": "plan",
+        "domain": "architecture",
+        "path": "csp-workflow/skills/csp-plan-phase/SKILL.md"
+      }
+    },
     "ea95f2f2efaa": {
       "id": "ea95f2f2efaa",
       "kind": "skill",
@@ -6316,7 +6318,7 @@
       "metadata": {
         "layer": 2,
         "category": "workflow",
-        "phase": "plan",
+        "phase": "review",
         "domain": "quality",
         "path": "csp-workflow/skills/csp-prd-change-impact/SKILL.md"
       }
@@ -6352,7 +6354,7 @@
       "metadata": {
         "layer": 2,
         "category": "workflow",
-        "phase": "plan",
+        "phase": "review",
         "domain": "quality",
         "path": "csp-workflow/skills/csp-prd-traceability/SKILL.md"
       }
@@ -6533,8 +6535,8 @@
       "metadata": {
         "layer": 2,
         "category": "workflow",
-        "phase": "plan",
-        "domain": "architecture",
+        "phase": "review",
+        "domain": "quality",
         "path": "csp-workflow/skills/csp-tech-risk-assessment/SKILL.md"
       }
     },
@@ -32096,12 +32098,6 @@
     },
     {
       "source": "caa9d170319b",
-      "target": "6974e0c36c21",
-      "kind": "contains",
-      "metadata": {}
-    },
-    {
-      "source": "caa9d170319b",
       "target": "d8cb259bce19",
       "kind": "contains",
       "metadata": {}
@@ -32421,6 +32417,12 @@
     {
       "source": "caa9d170319b",
       "target": "df1d636b02cd",
+      "kind": "contains",
+      "metadata": {}
+    },
+    {
+      "source": "caa9d170319b",
+      "target": "6974e0c36c21",
       "kind": "contains",
       "metadata": {}
     },
@@ -34105,7 +34107,7 @@
       "metadata": {}
     },
     {
-      "source": "b0245c519a34",
+      "source": "ea5a4594970a",
       "target": "8a0bbf6a83e5",
       "kind": "contains",
       "metadata": {}
@@ -34214,6 +34216,12 @@
     },
     {
       "source": "b0245c519a34",
+      "target": "6974e0c36c21",
+      "kind": "contains",
+      "metadata": {}
+    },
+    {
+      "source": "f297e9873811",
       "target": "ea95f2f2efaa",
       "kind": "contains",
       "metadata": {}
@@ -34231,7 +34239,7 @@
       "metadata": {}
     },
     {
-      "source": "b0245c519a34",
+      "source": "f297e9873811",
       "target": "21516cda84b5",
       "kind": "contains",
       "metadata": {}
@@ -34321,7 +34329,7 @@
       "metadata": {}
     },
     {
-      "source": "b0245c519a34",
+      "source": "f297e9873811",
       "target": "b431b822f300",
       "kind": "contains",
       "metadata": {}
@@ -34610,19 +34618,13 @@
     },
     {
       "source": "8a0bbf6a83e5",
-      "target": "cc5790b1164b",
-      "kind": "related_to",
-      "metadata": {}
-    },
-    {
-      "source": "8a0bbf6a83e5",
       "target": "de3012021006",
       "kind": "related_to",
       "metadata": {}
     },
     {
       "source": "8a0bbf6a83e5",
-      "target": "40489dfdce58",
+      "target": "e612ca87e754",
       "kind": "related_to",
       "metadata": {}
     },
@@ -34640,13 +34642,13 @@
     },
     {
       "source": "4421cabe5f80",
-      "target": "6488bc786564",
+      "target": "c59ec65c51c7",
       "kind": "related_to",
       "metadata": {}
     },
     {
       "source": "4421cabe5f80",
-      "target": "c59ec65c51c7",
+      "target": "6488bc786564",
       "kind": "related_to",
       "metadata": {}
     },
@@ -34658,7 +34660,13 @@
     },
     {
       "source": "4421cabe5f80",
-      "target": "40489dfdce58",
+      "target": "b431b822f300",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "4421cabe5f80",
+      "target": "6974e0c36c21",
       "kind": "related_to",
       "metadata": {}
     },
@@ -34671,6 +34679,12 @@
     {
       "source": "cc5790b1164b",
       "target": "d0f736ab1f3f",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "cc5790b1164b",
+      "target": "c59ec65c51c7",
       "kind": "depends_on",
       "metadata": {}
     },
@@ -34861,6 +34875,24 @@
       "metadata": {}
     },
     {
+      "source": "8e4815103a09",
+      "target": "257082c04855",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "8e4815103a09",
+      "target": "40489dfdce58",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "8e4815103a09",
+      "target": "d8ddd7c38474",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
       "source": "30df39654760",
       "target": "c59ec65c51c7",
       "kind": "depends_on",
@@ -34880,19 +34912,19 @@
     },
     {
       "source": "30df39654760",
-      "target": "cc5790b1164b",
+      "target": "b431b822f300",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "30df39654760",
+      "target": "8e40e8ba269a",
       "kind": "related_to",
       "metadata": {}
     },
     {
       "source": "30df39654760",
       "target": "de3012021006",
-      "kind": "related_to",
-      "metadata": {}
-    },
-    {
-      "source": "30df39654760",
-      "target": "40489dfdce58",
       "kind": "related_to",
       "metadata": {}
     },
@@ -35023,6 +35055,54 @@
       "metadata": {}
     },
     {
+      "source": "6974e0c36c21",
+      "target": "6488bc786564",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "6974e0c36c21",
+      "target": "6488bc786564",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "6974e0c36c21",
+      "target": "4421cabe5f80",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "6974e0c36c21",
+      "target": "af8b06b4e37f",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "6974e0c36c21",
+      "target": "de3012021006",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "6974e0c36c21",
+      "target": "b431b822f300",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "6974e0c36c21",
+      "target": "3c187c080b19",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "6974e0c36c21",
+      "target": "14c63e108d67",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
       "source": "ea95f2f2efaa",
       "target": "21516cda84b5",
       "kind": "depends_on",
@@ -35042,19 +35122,25 @@
     },
     {
       "source": "ea95f2f2efaa",
-      "target": "c59ec65c51c7",
+      "target": "001c580ef5d0",
       "kind": "related_to",
       "metadata": {}
     },
     {
       "source": "ea95f2f2efaa",
-      "target": "de3012021006",
+      "target": "6488bc786564",
       "kind": "related_to",
       "metadata": {}
     },
     {
       "source": "ea95f2f2efaa",
-      "target": "40489dfdce58",
+      "target": "b431b822f300",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "ea95f2f2efaa",
+      "target": "d90eb85a4a0a",
       "kind": "related_to",
       "metadata": {}
     },
@@ -35102,13 +35188,19 @@
     },
     {
       "source": "1589f09662b0",
-      "target": "3827da1ec890",
+      "target": "d2240e68c7ed",
       "kind": "related_to",
       "metadata": {}
     },
     {
       "source": "1589f09662b0",
-      "target": "d2240e68c7ed",
+      "target": "001c580ef5d0",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "1589f09662b0",
+      "target": "21516cda84b5",
       "kind": "related_to",
       "metadata": {}
     },
@@ -35120,7 +35212,7 @@
     },
     {
       "source": "1589f09662b0",
-      "target": "001c580ef5d0",
+      "target": "352980e82ca3",
       "kind": "related_to",
       "metadata": {}
     },
@@ -35145,6 +35237,12 @@
     {
       "source": "21516cda84b5",
       "target": "001c580ef5d0",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "21516cda84b5",
+      "target": "ea95f2f2efaa",
       "kind": "related_to",
       "metadata": {}
     },
@@ -35157,18 +35255,6 @@
     {
       "source": "21516cda84b5",
       "target": "6488bc786564",
-      "kind": "related_to",
-      "metadata": {}
-    },
-    {
-      "source": "21516cda84b5",
-      "target": "ea95f2f2efaa",
-      "kind": "related_to",
-      "metadata": {}
-    },
-    {
-      "source": "21516cda84b5",
-      "target": "4d8ffb285e88",
       "kind": "related_to",
       "metadata": {}
     },
@@ -35528,7 +35614,7 @@
     },
     {
       "source": "2f5a1a3d544e",
-      "target": "40489dfdce58",
+      "target": "e96bb6eb8f05",
       "kind": "related_to",
       "metadata": {}
     },
@@ -35558,7 +35644,13 @@
     },
     {
       "source": "b431b822f300",
-      "target": "40489dfdce58",
+      "target": "1fd378faa32f",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "b431b822f300",
+      "target": "6a0d86c4361f",
       "kind": "related_to",
       "metadata": {}
     },
@@ -35594,19 +35686,13 @@
     },
     {
       "source": "c59ec65c51c7",
+      "target": "6488bc786564",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "c59ec65c51c7",
       "target": "de3012021006",
-      "kind": "related_to",
-      "metadata": {}
-    },
-    {
-      "source": "c59ec65c51c7",
-      "target": "b431b822f300",
-      "kind": "related_to",
-      "metadata": {}
-    },
-    {
-      "source": "c59ec65c51c7",
-      "target": "30df39654760",
       "kind": "related_to",
       "metadata": {}
     },
@@ -35618,7 +35704,13 @@
     },
     {
       "source": "c59ec65c51c7",
-      "target": "40489dfdce58",
+      "target": "30df39654760",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "c59ec65c51c7",
+      "target": "b431b822f300",
       "kind": "related_to",
       "metadata": {}
     },
@@ -35684,7 +35776,13 @@
     },
     {
       "source": "6488bc786564",
-      "target": "e767641de27d",
+      "target": "2f5a1a3d544e",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "6488bc786564",
+      "target": "de3012021006",
       "kind": "related_to",
       "metadata": {}
     },
@@ -35696,19 +35794,13 @@
     },
     {
       "source": "6488bc786564",
-      "target": "de3012021006",
+      "target": "6974e0c36c21",
       "kind": "related_to",
       "metadata": {}
     },
     {
       "source": "6488bc786564",
       "target": "af8b06b4e37f",
-      "kind": "related_to",
-      "metadata": {}
-    },
-    {
-      "source": "6488bc786564",
-      "target": "40489dfdce58",
       "kind": "related_to",
       "metadata": {}
     },
@@ -35811,6 +35903,36 @@
     {
       "source": "9ba4012993c5",
       "target": "32a93f72631a",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "61a220380626",
+      "target": "fa4f6b06444a",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "61a220380626",
+      "target": "5fe5aded5f5d",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "61a220380626",
+      "target": "eaa963d88f42",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "61a220380626",
+      "target": "a7bd8fb1cb5d",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "61a220380626",
+      "target": "9ba4012993c5",
       "kind": "related_to",
       "metadata": {}
     },
@@ -37245,6 +37367,36 @@
     {
       "source": "8e23ae64b35b",
       "target": "1de8b3bf408f",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "61a220380626",
+      "target": "fa4f6b06444a",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "61a220380626",
+      "target": "5fe5aded5f5d",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "61a220380626",
+      "target": "eaa963d88f42",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "61a220380626",
+      "target": "a7bd8fb1cb5d",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "61a220380626",
+      "target": "9ba4012993c5",
       "kind": "depends_on",
       "metadata": {}
     },
@@ -39313,30 +39465,6 @@
       "metadata": {}
     },
     {
-      "source": "6974e0c36c21",
-      "target": "7648612eadf8",
-      "kind": "depends_on",
-      "metadata": {}
-    },
-    {
-      "source": "6974e0c36c21",
-      "target": "d2a16b006a50",
-      "kind": "depends_on",
-      "metadata": {}
-    },
-    {
-      "source": "6974e0c36c21",
-      "target": "451ca472a1ca",
-      "kind": "depends_on",
-      "metadata": {}
-    },
-    {
-      "source": "6974e0c36c21",
-      "target": "699f5b2122fa",
-      "kind": "depends_on",
-      "metadata": {}
-    },
-    {
       "source": "d8cb259bce19",
       "target": "7648612eadf8",
       "kind": "depends_on",
@@ -39590,23 +39718,23 @@
     },
     {
       "source": "8a0bbf6a83e5",
+      "target": "493125e0cd98",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "8a0bbf6a83e5",
+      "target": "e612ca87e754",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "8a0bbf6a83e5",
       "target": "cc5790b1164b",
       "kind": "depends_on",
       "metadata": {}
     },
     {
-      "source": "8a0bbf6a83e5",
-      "target": "493125e0cd98",
-      "kind": "depends_on",
-      "metadata": {}
-    },
-    {
-      "source": "8a0bbf6a83e5",
-      "target": "40489dfdce58",
-      "kind": "depends_on",
-      "metadata": {}
-    },
-    {
       "source": "4421cabe5f80",
       "target": "493125e0cd98",
       "kind": "depends_on",
@@ -39614,7 +39742,13 @@
     },
     {
       "source": "4421cabe5f80",
-      "target": "40489dfdce58",
+      "target": "b431b822f300",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "4421cabe5f80",
+      "target": "7648612eadf8",
       "kind": "depends_on",
       "metadata": {}
     },
@@ -39645,12 +39779,6 @@
     {
       "source": "40489dfdce58",
       "target": "9ba4012993c5",
-      "kind": "depends_on",
-      "metadata": {}
-    },
-    {
-      "source": "cc5790b1164b",
-      "target": "c59ec65c51c7",
       "kind": "depends_on",
       "metadata": {}
     },
@@ -39848,7 +39976,13 @@
     },
     {
       "source": "30df39654760",
-      "target": "cc5790b1164b",
+      "target": "b431b822f300",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "30df39654760",
+      "target": "8e40e8ba269a",
       "kind": "depends_on",
       "metadata": {}
     },
@@ -39860,7 +39994,7 @@
     },
     {
       "source": "30df39654760",
-      "target": "40489dfdce58",
+      "target": "6488bc786564",
       "kind": "depends_on",
       "metadata": {}
     },
@@ -40057,6 +40191,48 @@
       "metadata": {}
     },
     {
+      "source": "6974e0c36c21",
+      "target": "7648612eadf8",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "6974e0c36c21",
+      "target": "af8b06b4e37f",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "6974e0c36c21",
+      "target": "4421cabe5f80",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "6974e0c36c21",
+      "target": "493125e0cd98",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "6974e0c36c21",
+      "target": "b431b822f300",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "6974e0c36c21",
+      "target": "3c187c080b19",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "6974e0c36c21",
+      "target": "9fad9094ab76",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
       "source": "ea95f2f2efaa",
       "target": "a6eb0b1439d6",
       "kind": "depends_on",
@@ -40070,19 +40246,25 @@
     },
     {
       "source": "ea95f2f2efaa",
-      "target": "c59ec65c51c7",
+      "target": "6488bc786564",
       "kind": "depends_on",
       "metadata": {}
     },
     {
       "source": "ea95f2f2efaa",
-      "target": "493125e0cd98",
+      "target": "b431b822f300",
       "kind": "depends_on",
       "metadata": {}
     },
     {
       "source": "ea95f2f2efaa",
-      "target": "40489dfdce58",
+      "target": "d90eb85a4a0a",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "ea95f2f2efaa",
+      "target": "4421cabe5f80",
       "kind": "depends_on",
       "metadata": {}
     },
@@ -40148,12 +40330,6 @@
     },
     {
       "source": "1589f09662b0",
-      "target": "3827da1ec890",
-      "kind": "depends_on",
-      "metadata": {}
-    },
-    {
-      "source": "1589f09662b0",
       "target": "d2240e68c7ed",
       "kind": "depends_on",
       "metadata": {}
@@ -40190,19 +40366,7 @@
     },
     {
       "source": "21516cda84b5",
-      "target": "4d8ffb285e88",
-      "kind": "depends_on",
-      "metadata": {}
-    },
-    {
-      "source": "21516cda84b5",
       "target": "d90eb85a4a0a",
-      "kind": "depends_on",
-      "metadata": {}
-    },
-    {
-      "source": "21516cda84b5",
-      "target": "c59ec65c51c7",
       "kind": "depends_on",
       "metadata": {}
     },
@@ -40562,7 +40726,13 @@
     },
     {
       "source": "2f5a1a3d544e",
-      "target": "40489dfdce58",
+      "target": "e96bb6eb8f05",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "2f5a1a3d544e",
+      "target": "6488bc786564",
       "kind": "depends_on",
       "metadata": {}
     },
@@ -40586,7 +40756,19 @@
     },
     {
       "source": "b431b822f300",
-      "target": "40489dfdce58",
+      "target": "1fd378faa32f",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "b431b822f300",
+      "target": "6a0d86c4361f",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "b431b822f300",
+      "target": "6488bc786564",
       "kind": "depends_on",
       "metadata": {}
     },
@@ -40604,19 +40786,13 @@
     },
     {
       "source": "c59ec65c51c7",
+      "target": "6488bc786564",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "c59ec65c51c7",
       "target": "493125e0cd98",
-      "kind": "depends_on",
-      "metadata": {}
-    },
-    {
-      "source": "c59ec65c51c7",
-      "target": "b431b822f300",
-      "kind": "depends_on",
-      "metadata": {}
-    },
-    {
-      "source": "c59ec65c51c7",
-      "target": "30df39654760",
       "kind": "depends_on",
       "metadata": {}
     },
@@ -40628,13 +40804,13 @@
     },
     {
       "source": "c59ec65c51c7",
-      "target": "40489dfdce58",
+      "target": "30df39654760",
       "kind": "depends_on",
       "metadata": {}
     },
     {
       "source": "c59ec65c51c7",
-      "target": "6488bc786564",
+      "target": "b431b822f300",
       "kind": "depends_on",
       "metadata": {}
     },
@@ -40670,13 +40846,7 @@
     },
     {
       "source": "6488bc786564",
-      "target": "e767641de27d",
-      "kind": "depends_on",
-      "metadata": {}
-    },
-    {
-      "source": "6488bc786564",
-      "target": "4421cabe5f80",
+      "target": "2f5a1a3d544e",
       "kind": "depends_on",
       "metadata": {}
     },
@@ -40688,13 +40858,19 @@
     },
     {
       "source": "6488bc786564",
-      "target": "af8b06b4e37f",
+      "target": "4421cabe5f80",
       "kind": "depends_on",
       "metadata": {}
     },
     {
       "source": "6488bc786564",
-      "target": "40489dfdce58",
+      "target": "7648612eadf8",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "6488bc786564",
+      "target": "af8b06b4e37f",
       "kind": "depends_on",
       "metadata": {}
     },
@@ -43075,12 +43251,6 @@
       "metadata": {}
     },
     {
-      "source": "61a220380626",
-      "target": "fa4f6b06444a",
-      "kind": "related_to",
-      "metadata": {}
-    },
-    {
       "source": "fa4f6b06444a",
       "target": "1ef3df410769",
       "kind": "related_to",
@@ -44738,12 +44908,6 @@
     },
     {
       "source": "92d57845f03f",
-      "target": "6974e0c36c21",
-      "kind": "related_to",
-      "metadata": {}
-    },
-    {
-      "source": "6974e0c36c21",
       "target": "d8cb259bce19",
       "kind": "related_to",
       "metadata": {}
@@ -45062,25 +45226,19 @@
     },
     {
       "source": "df1d636b02cd",
-      "target": "ea95f2f2efaa",
+      "target": "6974e0c36c21",
       "kind": "related_to",
       "metadata": {}
     },
     {
-      "source": "ea95f2f2efaa",
-      "target": "001c580ef5d0",
+      "source": "6974e0c36c21",
+      "target": "ea95f2f2efaa",
       "kind": "related_to",
       "metadata": {}
     },
     {
       "source": "001c580ef5d0",
       "target": "1589f09662b0",
-      "kind": "related_to",
-      "metadata": {}
-    },
-    {
-      "source": "1589f09662b0",
-      "target": "21516cda84b5",
       "kind": "related_to",
       "metadata": {}
     },
@@ -45531,18 +45689,18 @@
   ],
   "stats": {
     "node_count": 2382,
-    "edge_count": 4686,
+    "edge_count": 4712,
     "skill_count": 646,
     "trigger_count": 1726,
     "phase_count": 6,
     "category_count": 5,
-    "depends_on_count": 988,
-    "related_to_count": 871,
+    "depends_on_count": 999,
+    "related_to_count": 885,
     "edge_types": {
-      "contains": 908,
+      "contains": 909,
       "triggers": 1919,
-      "depends_on": 988,
-      "related_to": 871
+      "depends_on": 999,
+      "related_to": 885
     }
   }
 }

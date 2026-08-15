@@ -7929,21 +7929,6 @@
       "priority": 10
     },
     {
-      "name": "csp-plan-phase",
-      "description": "Create detailed phase plan (PLAN.md) with verification loop",
-      "layer": 2,
-      "category": "workflow",
-      "triggers": {
-        "keywords": [],
-        "file_patterns": [],
-        "context": []
-      },
-      "stack_detection": false,
-      "path": "csp-workflow/commands/csp-plan-phase.md",
-      "deps": [],
-      "priority": 10
-    },
-    {
       "name": "csp-plan-review-convergence",
       "description": "Cross-AI plan convergence loop — replan with review feedback until no HIGH concerns remain.",
       "layer": 2,
@@ -8635,7 +8620,7 @@
     },
     {
       "name": "csp-hotfix",
-      "description": "CSP 热修复工作流 — 快速修复线上 bug 的轻量级流程。 跳过 design 阶段，直接进入 build，适用于紧急 bug 修复。 Use when: 需要快速修复生产环境 bug、紧急安全漏洞、线上故障。 关键词: hotfix, 热修复, 紧急修复, 线上 bug, 生产问题, quick fix",
+      "description": "CSP 热修复工作流 — 快速修复线上 bug 的轻量级流程。 跳过 design 阶段，直接进入 build → verify → archive。 适用于紧急 bug 修复、安全漏洞、线上故障。 Use when: 生产环境 bug、紧急安全漏洞、线上故障。 Keywords: hotfix, 热修复, 紧急修复, 线上bug, 生产问题, quick fix, emergency fix",
       "layer": 2,
       "category": "workflow",
       "triggers": {
@@ -8754,6 +8739,21 @@
       "priority": 10
     },
     {
+      "name": "csp-plan-phase",
+      "description": "实施规划阶段引擎。从任务拆解和工作量估算出发，制定详细的实施计划。 包括：里程碑规划、资源分配、风险缓冲、并行策略、进度跟踪方案。 是\"任务拆解→实施执行\"之间的桥梁，为 csp-implementation-phase 提供可执行的计划。 当任务拆解和估时完成需要制定实施计划、或用户需要\"实施计划\"、\"开发计划\"、\"里程碑\"时使用。 关键词：实施计划、开发计划、里程碑、milestone、implementation plan、执行计划、 项目计划、迭代计划、排期、交付计划、release plan、sprint plan。",
+      "layer": 2,
+      "category": "workflow",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-workflow/skills/csp-plan-phase/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
       "name": "csp-prd-change-impact",
       "description": "PRD 变更影响分析引擎。当 PRD 发生变更时，追踪影响链：PRD 条目 → Feature → Spec → Task → Code， 量化变更影响范围、成本和时间，输出影响分析报告和变更建议。 依赖 csp-prd-traceability 建立的追溯矩阵。 当 PRD 变更需要评估影响、或用户需要\"变更影响分析\"、\"需求变更评估\"、\"影响范围\"时使用。 关键词：变更影响、需求变更、影响分析、change impact、impact analysis、 变更评估、影响范围、需求变更影响、PRD 变更、变更成本、变更风险、 需求变更评估、scope change、变更影响评估。",
       "layer": 2,
@@ -8785,7 +8785,7 @@
     },
     {
       "name": "csp-prd-parser",
-      "description": "多格式 PRD 文档解析器。统一解析多种格式的 PRD 文档（钉钉文档、语雀、Markdown、纯文本）， 提取结构化信息，输出标准化的 PRD-IR（PRD 中间表示），供下游 skill 消费。 支持自动格式检测、章节识别、功能点提取、用户故事提取、约束条件识别。 当用户提供 PRD 文档链接或内容需要解析、或需要\"解析 PRD\"、\"提取需求\"、\"PRD格式化\"时使用。 关键词：解析 PRD、PRD 解析、提取需求、需求提取、PRD 格式化、 文档解析、结构化需求、parse PRD、extract requirements、PRD 结构化、 文档转需求、需求文档解析、PRD 链接解析、p",
+      "description": "多格式 PRD 文档解析器。统一解析多种格式的 PRD 文档（语雀、Markdown、纯文本）， 提取结构化信息，输出标准化的 PRD-IR（PRD 中间表示），供下游 skill 消费。 支持自动格式检测、章节识别、功能点提取、用户故事提取、约束条件识别。 当用户提供 PRD 文档链接或内容需要解析、或需要\"解析 PRD\"、\"提取需求\"、\"PRD格式化\"时使用。 关键词：解析 PRD、PRD 解析、提取需求、需求提取、PRD 格式化、 文档解析、结构化需求、parse PRD、extract requirements、PRD 结构化、 文档转需求、需求文档解析、PRD 链接解析、prd pa",
       "layer": 2,
       "category": "workflow",
       "triggers": {

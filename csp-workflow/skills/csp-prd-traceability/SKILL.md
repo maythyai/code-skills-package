@@ -11,246 +11,238 @@ description: |
 version: "1.0.0"
 layer: 2
 category: workflow
-phase: plan
+phase: review
 domain: quality
-scope: analysis
-tools: [Read, Write, Edit, Glob, Grep]
+scope: review
+tools: [Read, Write, Edit, Glob, Grep, Bash]
 
 dependencies:
-  skills: [csp-requirement-decomposition, csp-prd-generation]
+  skills:
+    - csp-requirement-decomposition
+    - csp-prd-generation
 
 related_skills:
   - csp-requirement-decomposition
   - csp-prd-generation
+  - csp-prd-change-impact
   - csp-fullstack-spec-generator
   - csp-tech-task-breakdown
-  - csp-prd-change-impact
-  - csp-verification
   - csp-product-discovery-orchestrator
 
 triggers:
-  keywords: ["追溯矩阵", "需求追溯", "RTM", "traceability", "需求覆盖率",
-             "需求映射", "需求跟踪", "覆盖检查", "需求闭环", "需求验证",
-             "覆盖率分析", "需求关系", "prd mapping", "feature mapping",
-             "requirement traceability", "需求追踪"]
+  keywords: ["追溯矩阵", "需求追溯", "RTM", "traceability matrix", "需求覆盖率",
+             "需求映射", "需求跟踪", "覆盖检查", "requirement traceability",
+             "需求验证", "覆盖率分析", "prd mapping", "feature mapping"]
   intents:
-    - "user wants to trace requirements from PRD to implementation"
-    - "user needs to verify all PRD items are covered by features"
-    - "user wants to build a requirements traceability matrix"
-    - "user needs to check coverage gaps"
+    - "user needs traceability from PRD to tasks"
+    - "user wants to verify requirement coverage"
+    - "user needs impact analysis foundation"
   context:
-    - "after_requirement_decomposition"
-    - "after_prd_generation"
-    - "quality_audit"
+    - "after_prd_and_decomposition"
+    - "after_spec_generation"
 
 anti_rationalizations:
-  "Traceability is overkill for small projects": "Even a 5-feature project has hidden coverage gaps. RTM catches them."
-  "The PRD is clear enough, mapping is obvious": "Obvious mappings are where assumptions hide. Explicit mapping prevents gaps."
-  "We can trace manually when needed": "Manual tracing is 20x slower than an automated RTM. Build it once, use it always."
+  "追溯矩阵太形式化，不需要": "没有追溯矩阵，你无法回答'这个需求有没有被实现'或'这个代码对应哪个需求'。这是需求完整性的基本保障。"
+  "PRD 和 Feature 肯定是一一对应的": "很少有一一对应。一个 PRD 条目可能拆成多个 Feature，也可能多个 PRD 条目合并为一个 Feature。"
+  "覆盖率检查不重要": "缺失的覆盖率 = 遗漏的需求 = 返工。覆盖率检查是需求闭环的最后一道防线。"
 ---
 
 # PRD Traceability
 
-建立 PRD → Feature → Spec → Task 的完整追溯链，确保每个需求都有对应的实现，每个实现都有需求来源。
+PRD 到技术实现的完整追溯矩阵引擎 — 确保每个需求都有对应的实现，每个实现都有对应的需求。
 
 ## 核心理念
 
-需求追溯矩阵(RTM)是需求质量的"安全网"：
-1. **向前追溯** — 每个 PRD 需求是否都有 Feature 对应？
-2. **向后追溯** — 每个 Feature 是否都有 PRD 需求来源？
-3. **覆盖率检查** — 是否所有 PRD 需求都被覆盖？是否有遗漏？
-4. **变更影响** — 修改某个 PRD 需求，会影响哪些 Feature/Spec/Task？
+追溯矩阵回答三个问题：
+1. **这个需求有人实现吗？** — 正向追溯：PRD → Feature → Spec → Task → Code
+2. **这个代码对应哪个需求？** — 反向追溯：Code → Task → Spec → Feature → PRD
+3. **有没有遗漏？** — 覆盖率分析：哪些 PRD 条目没有对应的 Feature/Spec/Task
+
+没有追溯矩阵的后果：
+- PRD 写了但没人实现 → 需求遗漏
+- 代码写了但没对应需求 → 范围蔓延
+- 需求变更时不知道影响哪些代码 → 变更风险
 
 ## 输入
 
 - `docs/prd/PRD-*.md` — PRD 文档
-- `.csp/decomposition/FEATURE-DETAILS/*.yaml` — Feature 拆解
-- `.csp/specs/SPEC-*.md` — Feature Spec（如已有）
-- `.csp/tasks/TASK-CARDS/*.md` — 开发任务（如已有）
+- `.csp/decomposition/FEATURE-DETAILS/*.yaml` — Feature 定义
+- `.csp/specs/SPEC-F-*.md` — 全栈 Spec（如有）
+- `.csp/tasks/TASK-CARDS/*.md` — 任务卡片（如有）
 
-## 执行流程
+## 追溯层级
 
-### Phase 1: PRD 需求条目提取
-
-从 PRD 文档中提取所有可追溯的需求条目：
-
-```markdown
-## PRD 需求条目
-
-### 来源: docs/prd/PRD-feature-management.md
-
-| 需求 ID | 需求描述 | 优先级 | 来源章节 | 类型 |
-|---------|---------|--------|---------|------|
-| PRD-001 | 用户可创建 Feature 并填写标题、描述 | P0 | 3.1 Feature 创建 | 功能需求 |
-| PRD-002 | 用户可查看 Feature 列表，支持分页和筛选 | P0 | 3.2 Feature 列表 | 功能需求 |
-| PRD-003 | 只有管理员可删除 Feature | P0 | 3.3 Feature 删除 | 功能需求 |
-| PRD-004 | Feature 列表加载时间 < 2 秒 | P1 | 4. 非功能需求 | 性能需求 |
-| PRD-005 | 用户操作需通过 JWT 认证 | P0 | 4. 非功能需求 | 安全需求 |
-| PRD-006 | 支持 1000 并发用户同时访问 | P1 | 4. 非功能需求 | 性能需求 |
+```
+PRD Entry (PRD 条目)
+  │
+  ├── 1:1 ──→ Feature (功能)
+  │              │
+  ├── 1:N ──→ Feature (功能)  ← 一个 PRD 条目拆成多个 Feature
+  │              │
+  └── N:1 ──→ Feature (功能)  ← 多个 PRD 条目合并为一个 Feature
+                 │
+                 ├── 1:1 ──→ Spec (技术规格)
+                 │              │
+                 ├── 1:N ──→ Spec (技术规格)
+                 │              │
+                 └── N:1 ──→ Spec (技术规格)
+                                │
+                                ├── 1:1 ──→ Task (开发任务)
+                                └── 1:N ──→ Task (开发任务)
 ```
 
-### Phase 2: 追溯关系建立
+## 追溯矩阵
 
-建立 PRD 条目到 Feature 的映射：
+### 正向追溯 (Forward Traceability)
 
 ```markdown
-## 追溯矩阵 (RTM)
+## Forward Traceability Matrix
 
-### Level 1: PRD → Feature
-
-| 需求 ID | Feature ID | 覆盖状态 | 备注 |
-|---------|-----------|---------|------|
-| PRD-001 | F-A-1 (Feature 创建) | ✅ 已覆盖 | 直接对应 |
-| PRD-002 | F-A-1 (Feature 创建) | ✅ 已覆盖 | 列表功能包含在内 |
-| PRD-003 | F-A-1 (Feature 创建) | ✅ 已覆盖 | 权限控制部分 |
-| PRD-004 | F-A-1 (Feature 创建) | ⚠️ 部分覆盖 | 未明确指定缓存策略 |
-| PRD-005 | F-A-2 (用户认证) | ✅ 已覆盖 | 直接对应 |
-| PRD-006 | F-A-1, F-A-2 | ⚠️ 部分覆盖 | 未明确压测方案 |
-
-### Level 2: Feature → Spec
-
-| Feature ID | Spec ID | 覆盖状态 | 备注 |
-|-----------|---------|---------|------|
-| F-A-1 | SPEC-F-A-1.md | ✅ 已覆盖 | 完整 Spec |
-| F-A-2 | SPEC-F-A-2.md | ✅ 已覆盖 | 完整 Spec |
-
-### Level 3: Spec → Task
-
-| Spec ID | Task ID | 覆盖状态 | 备注 |
-|---------|---------|---------|------|
-| SPEC-F-A-1.md | TASK-2.1.1-2.2.3 | ✅ 已覆盖 | 数据层任务 |
-| SPEC-F-A-1.md | TASK-3.1.1-3.1.5 | ✅ 已覆盖 | 后端 API 任务 |
-| SPEC-F-A-1.md | TASK-4.1.1-4.1.4 | ✅ 已覆盖 | 前端 UI 任务 |
-| SPEC-F-A-2.md | TASK-2.2.4-2.2.6 | ✅ 已覆盖 | 数据层任务 |
-| SPEC-F-A-2.md | TASK-3.2.1-3.2.4 | ✅ 已覆盖 | 后端 API 任务 |
+| PRD Entry | Feature | Spec | Task | Code | 状态 |
+|-----------|---------|------|------|------|------|
+| PRD-1.1 用户注册 | F-A-1 | SPEC-F-A-1 | T-2-1, T-2-2 | auth/register.py | ✅ |
+| PRD-1.2 用户登录 | F-A-1 | SPEC-F-A-1 | T-2-1 | auth/login.py | ✅ |
+| PRD-1.3 密码重置 | F-A-1 | SPEC-F-A-1 | T-2-4 | auth/reset.py | ✅ |
+| PRD-2.1 文档创建 | F-B-1 | SPEC-F-B-1 | T-2-5, T-3-2 | docs/create.py | ✅ |
+| PRD-2.2 文档编辑 | F-B-1 | SPEC-F-B-1 | T-2-6 | docs/edit.py | ⚠️ 进行中 |
+| PRD-2.3 实时协作 | F-B-2 | SPEC-F-B-2 | - | - | ❌ 未开始 |
+| PRD-3.1 全文搜索 | F-C-1 | SPEC-F-C-1 | T-2-10 | search/fulltext.py | ✅ |
+| PRD-3.2 AI 问答 | F-C-2 | - | - | - | ❌ 未开始 |
 ```
 
-### Phase 3: 覆盖率分析
+### 反向追溯 (Backward Traceability)
 
 ```markdown
+## Backward Traceability Matrix
+
+| Code | Task | Spec | Feature | PRD Entry | 状态 |
+|------|------|------|---------|-----------|------|
+| auth/register.py | T-2-1 | SPEC-F-A-1 | F-A-1 | PRD-1.1 | ✅ 有对应需求 |
+| auth/login.py | T-2-1 | SPEC-F-A-1 | F-A-1 | PRD-1.2 | ✅ 有对应需求 |
+| ??? | - | - | - | - | ❌ 无对应需求（范围蔓延） |
+```
+
 ## 覆盖率分析
 
-### 功能需求覆盖
-| 总数 | 已覆盖 | 部分覆盖 | 未覆盖 | 覆盖率 |
-|------|--------|---------|--------|--------|
-| 6 | 3 | 2 | 1 | 50% (83%) |
-
-### 未覆盖需求
-| 需求 ID | 需求描述 | 缺失原因 | 建议 |
-|---------|---------|---------|------|
-| (示例) | | | |
-
-### 部分覆盖需求
-| 需求 ID | 需求描述 | 缺失部分 | 补全建议 |
-|---------|---------|---------|---------|
-| PRD-004 | 列表加载 < 2s | 未指定缓存策略 | 在 SPEC-F-A-1 中增加缓存架构 |
-| PRD-006 | 1000 并发 | 未指定压测方案 | 增加 NFR 测试 Spec |
-
-### 覆盖冗余 (Feature 无 PRD 来源)
-| Feature ID | 描述 | 分析 |
-|-----------|------|------|
-| (如有) | | 可能是隐含需求或过度设计 |
-```
-
-### Phase 4: 追溯图
+### 需求覆盖率
 
 ```markdown
-## 追溯关系图 (Mermaid)
+## Requirement Coverage
+
+### PRD 条目覆盖率
+| 指标 | 数值 |
+|------|------|
+| PRD 总条目数 | 15 |
+| 有 Feature 的条目 | 15 (100%) |
+| 有 Spec 的条目 | 12 (80%) |
+| 有 Task 的条目 | 10 (66.7%) |
+| 有 Code 的条目 | 8 (53.3%) |
+
+### Feature 覆盖率
+| 指标 | 数值 |
+|------|------|
+| Feature 总数 | 12 |
+| 有 PRD 来源的 Feature | 12 (100%) |
+| 有 Spec 的 Feature | 10 (83.3%) |
+| 有 Task 的 Feature | 8 (66.7%) |
+
+### 缺口分析
+| 类型 | 条目 | 原因 | 建议 |
+|------|------|------|------|
+| 无 Spec | PRD-3.2 (AI 问答) | 技术方案未确定 | 先进行技术方案设计 |
+| 无 Task | PRD-2.3 (实时协作) | P2 功能，下一迭代 | 确认迭代计划 |
+| 无 Task | PRD-3.2 (AI 问答) | 依赖 Spec | 先生成 Spec |
+```
+
+### 覆盖率检查规则
+
+```yaml
+coverage_rules:
+  # 正向覆盖率目标
+  forward:
+    prd_to_feature: 100%      # 每个 PRD 条目必须有 Feature
+    prd_to_spec: 100%         # 每个 P0/P1 Feature 必须有 Spec
+    spec_to_task: 100%        # 每个 Spec 必须有 Task
+    task_to_code: 100%        # 每个 Task 必须有 Code
+  
+  # 反向覆盖率目标
+  backward:
+    code_to_prd: 100%         # 每个 Code 必须能追溯到 PRD
+    feature_to_prd: 100%      # 每个 Feature 必须有 PRD 来源
+  
+  # 允许的缺口
+  allowed_gaps:
+    - P2 Feature 可以不生成 Spec（MVP 阶段）
+    - 下一迭代的 Feature 可以不生成 Task
+    - 基础设施代码可以追溯到"基础设施需求"分类
+```
+
+## 追溯图
+
+### Mermaid 追溯图
 
 ```mermaid
 graph LR
     subgraph PRD
-        P001[PRD-001: 创建 Feature]
-        P002[PRD-002: 查询列表]
-        P003[PRD-003: 删除 Feature]
-        P004[PRD-004: 性能 < 2s]
-        P005[PRD-005: JWT 认证]
-        P006[PRD-006: 1000 并发]
+        P1["PRD-1.1 用户注册"]
+        P2["PRD-1.2 用户登录"]
+        P3["PRD-2.1 文档创建"]
+        P4["PRD-3.1 全文搜索"]
     end
-
-    subgraph Features
-        FA1[F-A-1: Feature CRUD]
-        FA2[F-A-2: 用户认证]
+    
+    subgraph Feature
+        F1["F-A-1 用户管理"]
+        F2["F-B-1 文档管理"]
+        F3["F-C-1 搜索"]
     end
-
-    subgraph Specs
-        S1[SPEC-F-A-1]
-        S2[SPEC-F-A-2]
+    
+    subgraph Spec
+        S1["SPEC-F-A-1"]
+        S2["SPEC-F-B-1"]
+        S3["SPEC-F-C-1"]
     end
-
-    subgraph Tasks
-        T1[TASK-2.1.x]
-        T2[TASK-3.1.x]
-        T3[TASK-4.1.x]
-        T4[TASK-2.2.x]
-        T5[TASK-3.2.x]
+    
+    subgraph Task
+        T1["T-2-1 注册/登录 API"]
+        T2["T-2-2 权限管理"]
+        T3["T-2-5 文档 CRUD"]
+        T4["T-2-10 搜索 API"]
     end
-
-    P001 --> FA1
-    P002 --> FA1
-    P003 --> FA1
-    P004 -.-> FA1
-    P005 --> FA2
-    P006 -.-> FA1
-
-    FA1 --> S1
-    FA2 --> S2
-
+    
+    P1 --> F1
+    P2 --> F1
+    P3 --> F2
+    P4 --> F3
+    
+    F1 --> S1
+    F2 --> S2
+    F3 --> S3
+    
     S1 --> T1
     S1 --> T2
-    S1 --> T3
-    S2 --> T4
-    S2 --> T5
+    S2 --> T3
+    S3 --> T4
 ```
 
-图例: 实线 = 已覆盖, 虚线 = 部分覆盖, 红色虚线 = 未覆盖
-```
-
-### Phase 5: 缺口分析
-
-```markdown
-## 缺口分析
-
-### 需求缺口 (PRD 有但 Feature 无)
-| 需求 ID | 需求描述 | 影响 | 建议 |
-|---------|---------|------|------|
-
-### 实现缺口 (Feature 有但 Spec 无)
-| Feature ID | 描述 | 影响 | 建议 |
-|-----------|------|------|------|
-
-### 执行缺口 (Spec 有但 Task 无)
-| Spec ID | 描述 | 影响 | 建议 |
-|---------|------|------|------|
-
-### 过度设计 (Feature 有但 PRD 无)
-| Feature ID | 描述 | 判断 | 建议 |
-|-----------|------|------|------|
-```
-
-### Phase 6: 输出产物
+## 输出产物
 
 ```
 .csp/traceability/
-├── RTM.md                      # 追溯矩阵
-├── COVERAGE-ANALYSIS.md        # 覆盖率分析
-├── TRACEABILITY-GRAPH.md       # 追溯关系图
-├── GAP-ANALYSIS.md             # 缺口分析
-└── TRACEABILITY-SUMMARY.md     # 追溯摘要
+├── FORWARD-MATRIX.md          # 正向追溯矩阵
+├── BACKWARD-MATRIX.md         # 反向追溯矩阵
+├── COVERAGE-REPORT.md         # 覆盖率报告
+├── GAP-ANALYSIS.md            # 缺口分析
+├── TRACEABILITY-GRAPH.md      # 追溯图 (Mermaid)
+└── TRACEABILITY-SUMMARY.md    # 追溯摘要
 ```
 
-## 追溯矩阵的维护
+## 门控检查
 
-```yaml
-maintenance:
-  triggers:
-    prd_changed: "重新运行 Phase 1-2，更新 PRD 条目和映射"
-    feature_added: "追加新的 Feature 映射"
-    feature_removed: "标记为已删除，检查是否有需求成为孤儿"
-    spec_added: "追加 Spec 映射"
-    task_added: "追加 Task 映射"
-  review_frequency: "每个里程碑回顾一次"
-```
+- [ ] 正向追溯：每个 PRD 条目有对应的 Feature
+- [ ] 正向追溯：每个 P0/P1 Feature 有对应的 Spec
+- [ ] 反向追溯：每个 Feature 有 PRD 来源
+- [ ] 覆盖率：PRD→Feature 覆盖率 = 100%
+- [ ] 缺口分析：所有缺口有明确原因和解决计划
 
 ## 完成信号
 
@@ -258,22 +250,45 @@ maintenance:
 completion_signal:
   output: .csp/traceability/TRACEABILITY-SUMMARY.md
   next_step:
-    full_coverage: csp-tech-solution-design
-    has_gaps: "先补全缺口，再进入技术方案设计"
+    recommended: csp-prd-change-impact
+    alternatives: [csp-tech-task-breakdown]
   status:
     traceability_path: .csp/traceability/
-    prd_items: "{{count}}"
-    features: "{{count}}"
-    coverage_rate: "{{rate}}%"
-    gaps: "{{count}}"
-    phase: verify
-    ready_for: [tech-solution-design, gap-resolution]
+    prd_coverage: "{{percentage}}"
+    feature_coverage: "{{percentage}}"
+    total_gaps: "{{count}}"
+    phase: review
+    ready_for: [change-impact-analysis, task-breakdown]
 ```
 
-## 关键原则
+## 与其他 Skill 的协作
 
-1. **双向追溯** — 每个需求可追踪到实现，每个实现可追溯到需求
-2. **缺口即风险** — 未覆盖的需求 = 将来会出现的 Bug
-3. **过度设计也是问题** — 无 PRD 来源的 Feature 可能是范围蔓延
-4. **追溯矩阵是活的** — PRD 变更时同步更新
-5. **覆盖率不是目的** — 100% 覆盖率不等于 100% 正确性，但 < 100% 覆盖率一定有遗漏
+| 上游 Skill | 提供什么 |
+|-----------|---------|
+| csp-prd-generation | PRD 文档 |
+| csp-requirement-decomposition | Feature 定义 |
+| csp-fullstack-spec-generator | Spec 文档 |
+| csp-tech-task-breakdown | Task 卡片 |
+
+| 下游 Skill | 消费什么 |
+|-----------|---------|
+| csp-prd-change-impact | 追溯矩阵（变更影响分析的基础） |
+| csp-tech-task-breakdown | 覆盖率报告（检查缺失任务） |
+
+## 快速开始示例
+
+```
+输入: 知识库系统 PRD 4 个 Feature
+
+输出:
+  正向追溯: 15 个 PRD 条目 → 12 个 Feature → 10 个 Spec → 40 个 Task
+  反向追溯: 40 个 Task → 10 个 Spec → 12 个 Feature → 15 个 PRD 条目
+  覆盖率:
+    PRD→Feature: 100% (15/15)
+    PRD→Spec: 80% (12/15) — 3 个 P2 条目暂不生成 Spec
+    PRD→Task: 66.7% (10/15) — 5 个条目在下一迭代
+  缺口:
+    - PRD-2.3 实时协作 (P2, 下一迭代)
+    - PRD-3.2 AI 问答 (待技术方案确定)
+    - PRD-4.1 数据分析面板 (P2, 下一迭代)
+```

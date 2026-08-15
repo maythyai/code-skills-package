@@ -8,460 +8,493 @@ description: |
   "聚合根"、"限界上下文"、"领域建模"时使用。
   关键词：DDD、领域驱动设计、聚合根、限界上下文、领域建模、domain driven design、
   领域事件、上下文映射、aggregate root、bounded context、domain model、
-  实体设计、值对象、domain event、战略设计、战术设计。
+  实体设计、值对象、领域服务、领域层设计。
 version: "1.0.0"
 layer: 2
 category: workflow
-phase: plan
+phase: define
 domain: architecture
 scope: design
-tools: [Read, Write, Edit, Glob, Grep]
+tools: [Read, Write, Edit, Glob, Grep, Bash]
 
 dependencies:
-  skills: [csp-requirement-decomposition]
+  skills:
+    - csp-requirement-decomposition
 
 related_skills:
   - csp-requirement-decomposition
   - csp-tech-solution-design
-  - csp-fullstack-spec-generator
   - csp-lifecycle-orchestrator
-  - csp-full
+  - csp-brainstorming
 
 triggers:
   keywords: ["DDD", "领域驱动设计", "聚合根", "限界上下文", "领域建模",
              "domain driven design", "领域事件", "上下文映射", "aggregate root",
-             "bounded context", "domain model", "实体设计", "值对象",
-             "domain event", "战略设计", "战术设计"]
+             "bounded context", "domain model", "领域层设计", "统一语言"]
   intents:
-    - "user wants to apply DDD to a complex business domain"
-    - "user needs to identify bounded contexts"
-    - "user wants to design aggregates and domain events"
-    - "user needs to model complex business logic"
+    - "user needs DDD modeling for complex business domain"
+    - "user wants to identify bounded contexts and aggregates"
+    - "user needs domain model design"
   context:
+    - "complex_business_logic"
     - "after_requirement_decomposition"
-    - "complex_business_domain"
 
 anti_rationalizations:
-  "DDD is only for enterprise systems": "DDD is for any system with complex business rules. Complexity is about rules, not scale."
-  "We can just use CRUD, it's simpler": "CRUD on complex domains leads to anemic models and scattered business logic. DDD prevents that."
-  "DDD is too academic": "DDD's core patterns (aggregates, events, bounded contexts) are practical tools for managing complexity."
-  "We don't need formal modeling": "Formal modeling is the difference between 'we think we understand' and 'we have a shared understanding.'"
+  "DDD 太复杂，不适合我们": "DDD 有战术模式和战略模式。简单项目用战术模式的一部分（实体、值对象），复杂项目才需要全量。"
+  "按数据库表建模型就行": "数据库建模 ≠ 领域建模。数据驱动设计导致贫血模型，业务逻辑散落在 Service 层。"
+  "限界上下文就是微服务": "限界上下文是逻辑边界，不一定是物理边界。一个微服务可以包含多个限界上下文，反之亦然。"
 ---
 
 # Domain-Driven Design
 
-对复杂业务系统进行 DDD 建模，将业务域映射为技术域的清晰架构。
+领域驱动设计建模引擎 — 把复杂业务领域映射为清晰的软件模型。
 
 ## 核心理念
 
-DDD 不是方法论，而是一套处理复杂业务域的模式和原则：
-1. **聚焦核心域** — 把最好的设计和精力放在核心业务上
-2. **通过协作探索模型** — 领域专家和开发人员共同构建模型
-3. **在限界上下文中使用统一语言** — 每个上下文有自己的术语
+DDD 不是一套技术，而是一种思维方式。它的核心是**把业务专家的心智模型翻译成代码模型**，让代码结构反映业务结构。
 
-## 何时使用 DDD
-
-| 条件 | 适合 DDD | 不适合 DDD |
-|------|---------|-----------|
-| 业务复杂度 | 复杂业务规则、多状态流转 | 简单 CRUD |
-| 团队规模 | 多人团队、需要对齐 | 个人项目 |
-| 领域知识 | 需要深入理解业务 | 纯技术系统 |
-| 跨团队协作 | 多个团队维护不同子系统 | 单人维护 |
+与 `csp-requirement-decomposition` 的域划分协同：
+- `csp-requirement-decomposition` 按业务能力划分域（Domain A: 用户管理, Domain B: 文档管理...）
+- `csp-domain-driven-design` 将这些域进一步建模为限界上下文、聚合、实体、值对象
 
 ## 输入
 
-- `.csp/decomposition/` — Feature 拆解（域划分）
-- PRD 文档 — 业务需求
-- 与领域专家的讨论结果
+- `.csp/decomposition/DECOMPOSITION-SUMMARY.md` — Feature 清单 + 域划分
+- `.csp/decomposition/FEATURE-DETAILS/*.yaml` — 每个 Feature 的业务规则
+- 领域专家访谈结果（如有）
 
-## 执行流程
+## DDD 核心概念
 
-### Phase 1: 战略设计 — 限界上下文识别
+### 战略设计 (Strategic Design)
 
-从 Feature 拆解的域划分出发，识别限界上下文：
+#### 1. 限界上下文 (Bounded Context)
 
-```markdown
-## 限界上下文 (Bounded Contexts)
+限界上下文是 DDD 的核心概念。每个限界上下文内，术语有明确的含义，模型有清晰的边界。
 
-### 上下文识别方法
+```yaml
+bounded_contexts:
+  - name: "用户身份上下文 (User Identity Context)"
+    description: "管理用户注册、登录、认证、权限"
+    core_domain: false                    # 支撑子域
+    ubiquitous_language:
+      User: "注册用户，拥有唯一 email"
+      Role: "用户角色，如 admin/editor/viewer"
+      Permission: "权限，如 create_document/delete_document"
+    entities:
+      - User
+      - Role
+    services:
+      - AuthenticationService
+      - AuthorizationService
+    events:
+      - UserRegistered
+      - UserRoleChanged
 
-1. **语言边界分析** — 同一个词在不同上下文中的含义不同
-2. **业务能力分析** — 按业务能力分组
-3. **组织边界分析** — 按团队/部门划分
-4. **数据所有权分析** — 按数据归属划分
+  - name: "文档管理上下文 (Document Management Context)"
+    description: "文档的创建、编辑、版本管理、协作"
+    core_domain: true                     # 核心域
+    ubiquitous_language:
+      Document: "用户创建的文档，包含标题、内容、版本"
+      Version: "文档的某个版本快照"
+      Collaboration: "多用户同时编辑文档的会话"
+    entities:
+      - Document
+      - Version
+    aggregates:
+      - Document (根: Document, 实体: Version, Comment)
+    services:
+      - DocumentService
+      - VersionService
+      - CollaborationService
+    events:
+      - DocumentCreated
+      - DocumentUpdated
+      - DocumentVersionCreated
+      - CollaborationStarted
+      - CollaborationEnded
 
-### 上下文清单
+  - name: "搜索上下文 (Search Context)"
+    description: "文档全文搜索和语义搜索"
+    core_domain: false
+    ubiquitous_language:
+      SearchQuery: "用户的搜索请求"
+      SearchResult: "搜索结果，包含文档摘要和相关性分数"
+      Index: "搜索索引"
+    entities:
+      - SearchIndex
+    services:
+      - SearchService
+      - IndexService
+    events:
+      - DocumentIndexed
+      - IndexUpdated
 
-| 上下文 | 核心职责 | 核心域/支撑域/通用域 | 输入语言 | 所属团队 |
-|--------|---------|---------------------|---------|---------|
-| 用户上下文 (User Context) | 用户注册、认证、授权、画像 | 支撑域 | 用户、角色、权限 | 平台团队 |
-| 内容上下文 (Content Context) | Feature 创建、编辑、版本管理 | 核心域 | Feature、状态、优先级 | 业务团队 |
-| 协作上下文 (Collaboration Context) | 评论、@提及、通知 | 支撑域 | 评论、通知、订阅 | 业务团队 |
-| 搜索上下文 (Search Context) | 全文搜索、索引管理 | 通用域 | 索引、查询、排序 | 平台团队 |
-| 分析上下文 (Analytics Context) | 数据统计、报表、趋势 | 支撑域 | 指标、报表、趋势 | 数据团队 |
+  - name: "通知上下文 (Notification Context)"
+    description: "消息推送、邮件、站内通知"
+    core_domain: false
+    ubiquitous_language:
+      Notification: "发送给用户的通知消息"
+      Channel: "通知渠道，如 email/push/in-app"
+      Template: "通知模板"
+    entities:
+      - Notification
+      - Template
+    services:
+      - NotificationService
+      - TemplateService
+    events:
+      - NotificationSent
+      - NotificationRead
+```
 
-### 上下文映射 (Context Map)
+#### 2. 上下文映射 (Context Map)
+
+限界上下文之间的关系：
 
 ```mermaid
 graph TB
-    User[User Context<br/>用户/认证/授权]
-    Content[Content Context<br/>Feature 管理]
-    Collab[Collaboration Context<br/>评论/通知]
-    Search[Search Context<br/>搜索]
-    Analytics[Analytics Context<br/>分析]
-
-    User -->|ACL| Content
-    Content -->|Partnership| Collab
-    Content -->|Published Language| Search
-    Content -->|Published Language| Analytics
-    Collab -->|Conformist| User
-    Search -->|Conformist| Content
-
-    %% 图例
-    subgraph 关系类型
-        ACL[Anti-Corruption Layer<br/>防腐层 — 隔离外部变化]
-        PS[Partnership<br/>合作关系 — 双向协作]
-        PL[Published Language<br/>发布语言 — 上游定义]
-        CF[Conformist<br/>遵从者 — 下游跟随]
+    subgraph "核心域"
+        Doc[文档管理上下文]
     end
+    
+    subgraph "支撑子域"
+        User[用户身份上下文]
+        Search[搜索上下文]
+        Notify[通知上下文]
+    end
+    
+    subgraph "外部系统"
+        AI[AI 服务]
+        Storage[对象存储]
+    end
+    
+    Doc -->|"客户/供应商 (Customer/Supplier)"| User
+    Doc -->|"发布/订阅 (Published Language)"| Search
+    Doc -->|"发布/订阅 (Published Language)"| Notify
+    Doc -->|"防腐层 (Anti-Corruption Layer)"| AI
+    Doc -->|"防腐层 (Anti-Corruption Layer)"| Storage
 ```
 
-### 上下文关系详解
+上下文关系类型：
 
-| 上游 | 下游 | 关系类型 | 集成方式 | 说明 |
-|------|------|---------|---------|------|
-| Content | Search | Published Language | 事件 (feature.*) | Content 发布事件，Search 消费 |
-| Content | Analytics | Published Language | 事件 (feature.*) | Content 发布事件，Analytics 消费 |
-| Content | Collab | Partnership | API + 事件 | 双向协作 |
-| User | Content | ACL | API | Content 通过 ACL 隔离 User 变化 |
-| User | Collab | Conformist | API | Collab 跟随 User 的模型 |
-```
+| 关系类型 | 描述 | 适用场景 |
+|---------|------|---------|
+| 共享内核 (Shared Kernel) | 两个上下文共享部分模型 | 紧密协作的团队 |
+| 客户/供应商 (Customer/Supplier) | 上游提供，下游消费 | 上下游关系明确 |
+| 跟随者 (Conformist) | 下游完全跟随上游模型 | 上游不可控 |
+| 防腐层 (ACL) | 下游翻译上游模型 | 集成遗留系统/外部系统 |
+| 开放主机服务 (OHS) | 上游提供标准化 API | 多下游消费者 |
+| 发布语言 (Published Language) | 通过标准格式(事件/API)通信 | 松耦合集成 |
+| 各行其道 (Separate Ways) | 不集成 | 无协作需求 |
 
-### Phase 2: 战术设计 — 聚合设计
+### 战术设计 (Tactical Design)
 
-对每个核心限界上下文，设计聚合：
+#### 3. 实体 (Entity)
 
-```markdown
-## 聚合设计 — Content Context
-
-### 聚合根: Feature
+有唯一标识、有生命周期的对象：
 
 ```yaml
-Aggregate: Feature
-  Root: Feature
-  Entities:
-    - FeatureVersion (版本快照)
-    - FeatureComment (评论)
-  Value Objects:
-    - FeatureId (UUID)
-    - FeatureTitle (1-255 chars)
-    - FeatureDescription (markdown text)
-    - Priority (0-4, int)
-    - Status (draft/active/archived/deleted)
-    - AcceptanceCriteria (list of AC items)
-    - TechDimensions (技术维度标记)
-    - AuditInfo (created_by, created_at, updated_by, updated_at)
-
-  Invariants (不变量):
-    - Feature 标题不能为空
-    - 优先级必须在 0-4 之间
-    - 已归档的 Feature 不能编辑
-    - 已删除的 Feature 不能归档
-    - 状态转换必须遵循状态机
-
-  Behaviors (行为):
-    - create(title, description, priority): Feature
-    - updateTitle(title): Feature
-    - changePriority(priority): Feature
-    - archive(): Feature
-    - delete(): Feature (soft delete)
-    - addComment(content): FeatureComment
-    - createVersion(): FeatureVersion
-    - restoreVersion(version): Feature
-
-  State Machine:
-    draft → active → archived → deleted
-    draft → deleted
-    active → draft (un-archive)
+entity:
+  Document:
+    identity: "DocumentId (UUID)"        # 唯一标识
+    attributes:
+      - title: "string (1-255)"
+      - content: "string (markdown)"
+      - status: "enum: draft/published/archived"
+      - version: "int (乐观锁)"
+      - created_at: "datetime"
+      - updated_at: "datetime"
+    behavior:
+      - publish(): "将 status 从 draft 改为 published"
+      - archive(): "将 status 改为 archived"
+      - updateContent(content): "更新内容，version++"
+    invariants:                           # 不变量
+      - "已归档的文档不能编辑"
+      - "title 不能为空"
+      - "version 只能递增"
 ```
 
-### 聚合边界
+#### 4. 值对象 (Value Object)
 
-```
-Feature Aggregate (聚合边界)
-├── Feature (聚合根)
-│   ├── FeatureVersion (子实体)
-│   │   └── 通过 Feature 聚合根访问
-│   └── FeatureComment (子实体)
-│       └── 通过 Feature 聚合根访问
-│
-外部引用 (通过 ID，不持有对象引用):
-├── UserId (评论作者)
-├── DomainId (所属域)
-└── TagId (标签)
-```
-
-### 聚合设计原则
-
-1. **小聚合** — 聚合越小越好，只包含必须保持一致的实体
-2. **通过 ID 引用** — 跨聚合引用使用 ID，不持有对象引用
-3. **最终一致性** — 聚合间的一致性通过领域事件保证
-4. **一个事务一个聚合** — 不在一个事务中修改多个聚合
-```
-
-### Phase 3: 领域事件设计
-
-```markdown
-## 领域事件
-
-### 事件清单
-
-| 事件 | 聚合 | 触发时机 | 消费者 |
-|------|------|---------|--------|
-| FeatureCreated | Feature | Feature.create() | Search, Analytics, Notification |
-| FeatureTitleUpdated | Feature | Feature.updateTitle() | Search |
-| FeaturePriorityChanged | Feature | Feature.changePriority() | Analytics |
-| FeatureArchived | Feature | Feature.archive() | Search, Analytics |
-| FeatureDeleted | Feature | Feature.delete() | Search, Analytics |
-| CommentAdded | Feature | Feature.addComment() | Notification |
-| VersionCreated | Feature | Feature.createVersion() | Analytics |
-
-### 事件结构
+无唯一标识、不可变、通过属性值判断相等：
 
 ```yaml
-event: FeatureCreated
-  event_id: "evt_abc123"
-  aggregate_id: "feat_xyz789"
-  aggregate_type: "Feature"
-  event_type: "FeatureCreated"
-  occurred_at: "2026-08-13T10:00:00Z"
-  version: 1
-  payload:
-    feature_id: "feat_xyz789"
-    title: "My Feature"
-    priority: 2
-    status: "draft"
-    created_by: "user_abc"
-    created_at: "2026-08-13T10:00:00Z"
-  metadata:
-    source: "content-context"
-    causation_id: "cmd_create_feature"
-    correlation_id: "req_123"
+value_object:
+  DocumentTitle:
+    value: "string"
+    constraints:
+      - "1-255 字符"
+      - "不能为空"
+      - "不能只包含空白字符"
+    behavior:
+      - slug(): "生成 URL 友好的 slug"
+  
+  DocumentStatus:
+    value: "enum: draft | published | archived"
+    transitions:
+      - "draft → published"
+      - "published → archived"
+      - "draft → archived"
+      - "禁止: archived → draft"
+  
+  SearchQuery:
+    attributes:
+      - keywords: "string"
+      - filters: "map<string, any>"
+      - page: "int (≥1)"
+      - page_size: "int (1-100)"
+    behavior:
+      - validate(): "校验查询参数合法性"
 ```
 
-### 事件处理策略
+#### 5. 聚合 (Aggregate)
 
-| 事件 | 处理方式 | 一致性 | 幂等键 |
-|------|---------|--------|--------|
-| FeatureCreated | 异步 | 最终一致 | event_id |
-| FeatureTitleUpdated | 异步 | 最终一致 | event_id |
-| FeatureArchived | 异步 | 最终一致 | event_id |
+一组相关对象的集合，有一个聚合根 (Aggregate Root) 作为入口：
+
+```yaml
+aggregate:
+  DocumentAggregate:
+    root: "Document (聚合根)"
+    entities:
+      - "Version (通过 Document 访问)"
+      - "Comment (通过 Document 访问)"
+    value_objects:
+      - "DocumentTitle"
+      - "DocumentStatus"
+    invariants:
+      - "一个 Document 最多保留 100 个 Version"
+      - "只有 published 状态的 Document 可以有 Comment"
+      - "删除 Document 时级联删除所有 Version 和 Comment"
+    rules:
+      - "外部只能通过 Document 引用 Version 和 Comment"
+      - "Comment 不能独立于 Document 存在"
+      - "事务边界 = 单个聚合"
+
+  UserAggregate:
+    root: "User"
+    entities:
+      - "UserProfile (1:1)"
+    value_objects:
+      - "Email"
+      - "PasswordHash"
+    invariants:
+      - "Email 全局唯一"
+      - "密码至少 8 位"
 ```
 
-### Phase 4: 仓储模式
+#### 6. 领域事件 (Domain Event)
 
-```markdown
-## 仓储 (Repository)
+领域中发生的重要事情：
 
-### 仓储接口
-
-```python
-# content/domain/repository.py
-
-class FeatureRepository(ABC):
-    """Feature 聚合的仓储接口"""
-    
-    @abstractmethod
-    async def find_by_id(self, feature_id: FeatureId) -> Optional[Feature]:
-        """通过 ID 查找 Feature 聚合"""
-        pass
-    
-    @abstractmethod
-    async def find_by_status(self, status: Status, page: Page) -> List[Feature]:
-        """按状态分页查找"""
-        pass
-    
-    @abstractmethod
-    async def save(self, feature: Feature) -> None:
-        """保存 Feature 聚合 (新增/更新)"""
-        pass
-    
-    @abstractmethod
-    async def delete(self, feature_id: FeatureId) -> None:
-        """删除 Feature (软删除)"""
-        pass
+```yaml
+domain_events:
+  DocumentCreated:
+    aggregate: "DocumentAggregate"
+    payload:
+      document_id: "UUID"
+      title: "string"
+      author_id: "UUID"
+      created_at: "datetime"
+    consumers:
+      - "搜索上下文: 索引新文档"
+      - "通知上下文: 通知关注者"
+  
+  DocumentPublished:
+    aggregate: "DocumentAggregate"
+    payload:
+      document_id: "UUID"
+      published_at: "datetime"
+    consumers:
+      - "搜索上下文: 更新索引状态"
+      - "通知上下文: 通知订阅者"
+  
+  CollaborationStarted:
+    aggregate: "DocumentAggregate"
+    payload:
+      document_id: "UUID"
+      session_id: "UUID"
+      participants: ["UUID"]
+    consumers:
+      - "通知上下文: 通知被邀请者"
+  
+  UserRegistered:
+    aggregate: "UserAggregate"
+    payload:
+      user_id: "UUID"
+      email: "string"
+      registered_at: "datetime"
+    consumers:
+      - "通知上下文: 发送欢迎邮件"
 ```
 
-### 仓储实现
+#### 7. 领域服务 (Domain Service)
 
-```python
-# content/infrastructure/repository.py
+不属于任何实体或值对象的领域逻辑：
 
-class PostgresFeatureRepository(FeatureRepository):
-    """PostgreSQL 实现的 Feature 仓储"""
-    
-    def __init__(self, session: AsyncSession, event_bus: EventBus):
-        self.session = session
-        self.event_bus = event_bus
-    
-    async def save(self, feature: Feature) -> None:
-        # 1. 持久化聚合
-        await self.session.merge(feature.to_orm())
-        
-        # 2. 发布领域事件
-        for event in feature.domain_events:
-            await self.event_bus.publish(event)
-        
-        # 3. 清除事件
-        feature.clear_events()
+```yaml
+domain_services:
+  CollaborationMergeService:
+    description: "合并多个用户的协作编辑结果"
+    input: "原始文档 + 多个编辑操作"
+    output: "合并后的文档"
+    rules:
+      - "基于 OT 算法合并"
+      - "冲突时使用 last-write-wins + 标记冲突"
+      - "合并不改变文档 version"
+  
+  DocumentPermissionService:
+    description: "检查用户对文档的权限"
+    input: "User + Document + Action"
+    output: "boolean"
+    rules:
+      - "owner 拥有所有权限"
+      - "editor 可读写"
+      - "viewer 只读"
+      - "archived 文档所有人只读"
 ```
 
-### 仓储原则
-1. 一个聚合一个仓储
-2. 仓储只处理聚合根
-3. 仓储接口在领域层，实现在基础设施层
-4. 仓储负责发布领域事件
+#### 8. 仓储 (Repository)
+
+聚合的持久化接口：
+
+```yaml
+repositories:
+  DocumentRepository:
+    interface:
+      - save(Document): void
+      - findById(DocumentId): Document?
+      - findByAuthor(UserId, Page): Page<Document>
+      - findByStatus(DocumentStatus, Page): Page<Document>
+      - search(SearchQuery): Page<Document>
+      - delete(DocumentId): void
+    implementation: "PostgresDocumentRepository"
+  
+  UserRepository:
+    interface:
+      - save(User): void
+      - findById(UserId): User?
+      - findByEmail(Email): User?
+    implementation: "PostgresUserRepository"
 ```
 
-### Phase 5: 应用服务与领域服务
-
-```markdown
-## 应用服务 vs 领域服务
-
-### 应用服务 (Application Service)
-- 编排领域对象完成用例
-- 不包含业务逻辑
-- 管理事务边界
-
-```python
-# content/application/service.py
-
-class FeatureApplicationService:
-    def __init__(self, repo: FeatureRepository, user_service: UserService):
-        self.repo = repo
-        self.user_service = user_service
-    
-    async def create_feature(self, cmd: CreateFeatureCommand) -> FeatureId:
-        # 1. 验证用户
-        user = await self.user_service.get_user(cmd.user_id)
-        
-        # 2. 创建聚合
-        feature = Feature.create(
-            title=cmd.title,
-            description=cmd.description,
-            priority=cmd.priority,
-            created_by=user.id
-        )
-        
-        # 3. 持久化
-        await self.repo.save(feature)
-        
-        return feature.id
-```
-
-### 领域服务 (Domain Service)
-- 包含不属于任何聚合的业务逻辑
-- 无状态
-- 操作多个聚合
-
-```python
-# content/domain/service.py
-
-class FeaturePriorityService:
-    """跨 Feature 的优先级调整领域服务"""
-    
-    async def rebalance_priorities(
-        self, 
-        features: List[Feature], 
-        repo: FeatureRepository
-    ) -> None:
-        """当删除一个 Feature 后，重新平衡其他 Feature 的优先级"""
-        for i, feature in enumerate(sorted(features, key=lambda f: f.priority)):
-            feature.change_priority(min(i, 4))
-        for feature in features:
-            await repo.save(feature)
-```
-
-### 分层架构
+## 输出产物
 
 ```
-┌─────────────────────────────────────────────┐
-│  Interface Layer (API/UI)                     │
-│  - Router / Controller / GraphQL Resolver     │
-├─────────────────────────────────────────────┤
-│  Application Layer (用例编排)                  │
-│  - Application Service / Command Handler      │
-│  - DTO / Command / Query                      │
-│  - 事务管理                                    │
-├─────────────────────────────────────────────┤
-│  Domain Layer (核心业务逻辑)                    │
-│  - Aggregate / Entity / Value Object          │
-│  - Domain Service / Domain Event              │
-│  - Repository Interface                       │
-│  - 不依赖任何外部框架                            │
-├─────────────────────────────────────────────┤
-│  Infrastructure Layer (技术实现)               │
-│  - Repository Implementation                  │
-│  - Event Bus / Message Queue                  │
-│  - External Service Client                    │
-│  - ORM / Database                             │
-└─────────────────────────────────────────────┘
-```
-
-### Phase 6: 输出产物
-
-```
-.csp/ddd/
-├── BOUNDED-CONTEXTS.md          # 限界上下文清单
-├── CONTEXT-MAP.md               # 上下文映射
-├── AGGREGATES/                   # 聚合设计
-│   ├── AGGREGATE-Feature.yaml
-│   ├── AGGREGATE-User.yaml
-│   └── ...
-├── DOMAIN-EVENTS.md             # 领域事件清单
-├── REPOSITORIES.md              # 仓储设计
-├── SERVICES.md                  # 领域服务/应用服务
-├── UBIQUITOUS-LANGUAGE.md       # 统一语言词汇表
-└── DDD-SUMMARY.md               # DDD 建模摘要
+.csp/tech-design/
+├── DDD-MODEL.md               # DDD 建模文档
+│   ├── Bounded Contexts
+│   ├── Context Map
+│   ├── Aggregates
+│   ├── Entities
+│   ├── Value Objects
+│   ├── Domain Events
+│   └── Domain Services
+├── UBIQUITOUS-LANGUAGE.md     # 统一语言词汇表
+└── DDD-CONTEXT-MAP.md         # 上下文映射图
 ```
 
 ## 统一语言词汇表
 
 ```markdown
-## Ubiquitous Language — Content Context
+# Ubiquitous Language
 
-| 术语 | 英文 | 定义 | 约束 |
-|------|------|------|------|
-| Feature | Feature | 产品功能需求项 | 有唯一 ID、标题、状态 |
-| 状态 | Status | Feature 的生命周期阶段 | draft/active/archived/deleted |
-| 优先级 | Priority | Feature 的重要程度 | 0-4，0=最低，4=最高 |
-| 验收标准 | Acceptance Criteria | Feature 完成的验证条件 | 至少 1 条，每条可测试 |
-| 版本 | Version | Feature 在某时刻的内容快照 | 只读，不可修改 |
-| 归档 | Archive | 将 Feature 标记为历史状态 | 不可逆 (除非取消归档) |
+## 文档管理上下文
+
+| 术语 | 定义 | 备注 |
+|------|------|------|
+| Document | 用户创建的文档，包含标题、内容、版本 | 核心实体 |
+| Version | 文档的某个版本快照 | 不可变 |
+| Draft | 草稿状态，仅作者可见 | 可编辑 |
+| Published | 已发布状态，所有人可见 | 不可直接编辑 |
+| Archived | 已归档状态，只读 | 不可编辑 |
+| Collaboration | 多用户同时编辑文档的会话 | 实时 |
+| Merge | 合并多个用户的编辑操作 | 冲突时标记 |
+| Publish | 将文档从 Draft 变为 Published | 单向操作 |
+| Archive | 将文档从 Published 变为 Archived | 单向操作 |
+
+## 用户身份上下文
+
+| 术语 | 定义 | 备注 |
+|------|------|------|
+| User | 注册用户 | 唯一 email |
+| Role | 用户角色 | admin/editor/viewer |
+| Permission | 操作权限 | CRUD 细粒度 |
+| Authentication | 身份验证 | JWT 双 token |
+| Authorization | 权限校验 | RBAC |
 ```
+
+## 门控检查
+
+- [ ] 限界上下文已识别，边界清晰
+- [ ] 每个限界上下文有统一语言词汇表
+- [ ] 上下文映射图完整（所有上下文关系）
+- [ ] 聚合根已识别，聚合边界合理
+- [ ] 每个聚合有不变量定义
+- [ ] 领域事件已识别，消费者明确
+- [ ] 与 requirement-decomposition 的域划分一致
 
 ## 完成信号
 
 ```yaml
 completion_signal:
-  output: .csp/ddd/DDD-SUMMARY.md
+  output: .csp/tech-design/DDD-MODEL.md
   next_step:
     recommended: csp-tech-solution-design
     alternatives: [csp-fullstack-spec-generator]
   status:
-    ddd_path: .csp/ddd/
+    ddd_model_path: .csp/tech-design/
     bounded_contexts: "{{count}}"
     aggregates: "{{count}}"
     domain_events: "{{count}}"
-    phase: plan
+    phase: define
     ready_for: [tech-solution-design, spec-generation]
 ```
 
-## 关键原则
+## 与其他 Skill 的协作
 
-1. **不是所有系统都需要 DDD** — 简单 CRUD 不需要，复杂业务逻辑才需要
-2. **聚焦核心域** — 80% 的建模精力放在核心域，支撑域和通用域可以简化
-3. **小聚合** — 聚合越小越好，只包含必须保持一致的实体
-4. **通过 ID 引用** — 跨聚合引用使用 ID，降低耦合
-5. **领域事件驱动集成** — 聚合间通过事件通信，保证最终一致性
-6. **统一语言是核心** — 代码中的术语与业务讨论中的术语一致
+| 上游 Skill | 提供什么 |
+|-----------|---------|
+| csp-requirement-decomposition | 域划分 + Feature 业务规则 |
+
+| 下游 Skill | 消费什么 |
+|-----------|---------|
+| csp-tech-solution-design | 限界上下文 + 聚合 → 模块划分 |
+| csp-fullstack-spec-generator | 聚合 + 实体 + 值对象 → 数据库 Schema |
+
+## 快速开始示例
+
+```
+输入: 知识库系统，4 个业务域
+
+DDD 建模:
+  限界上下文:
+    1. 用户身份上下文 (支撑子域)
+       - 聚合: User
+       - 实体: User, UserProfile, Role
+       - 值对象: Email, PasswordHash
+       - 事件: UserRegistered, UserRoleChanged
+
+    2. 文档管理上下文 (核心域)
+       - 聚合: Document (根), Version, Comment
+       - 实体: Document, Version, Comment
+       - 值对象: DocumentTitle, DocumentStatus
+       - 事件: DocumentCreated, DocumentPublished, CollaborationStarted
+       - 领域服务: CollaborationMergeService, DocumentPermissionService
+
+    3. 搜索上下文 (支撑子域)
+       - 实体: SearchIndex
+       - 值对象: SearchQuery, SearchResult
+       - 事件: DocumentIndexed
+
+    4. 通知上下文 (支撑子域)
+       - 聚合: Notification
+       - 实体: Notification, Template
+       - 值对象: Channel, NotificationStatus
+       - 事件: NotificationSent
+
+  上下文映射:
+    - 文档 → 用户: 客户/供应商
+    - 文档 → 搜索: 发布语言 (事件)
+    - 文档 → 通知: 发布语言 (事件)
+    - 文档 → AI 服务: 防腐层
+```

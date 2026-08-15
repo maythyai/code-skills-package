@@ -8,296 +8,270 @@ description: |
   当任务拆解完成后需要估算工作量、或用户需要"工作量估算"、"估时"、"排期"、"资源计划"时使用。
   关键词：工作量估算、估时、工时估算、排期、资源计划、effort estimation、
   work estimation、PERT、三点估算、COCOMO、甘特图、gantt chart、
-  开发周期、交付时间、人天、story point、工时评估。
+  开发周期、交付时间、人天、story point、估算、工时评估。
 version: "1.0.0"
 layer: 2
 category: workflow
 phase: plan
-domain: architecture
+domain: quality
 scope: analysis
-tools: [Read, Write, Edit, Glob, Grep]
+tools: [Read, Write, Edit, Glob, Grep, Bash]
 
 dependencies:
-  skills: [csp-tech-solution-design, csp-tech-task-breakdown]
+  skills:
+    - csp-tech-solution-design
+    - csp-tech-task-breakdown
 
 related_skills:
-  - csp-tech-task-breakdown
   - csp-tech-solution-design
+  - csp-tech-task-breakdown
   - csp-lifecycle-orchestrator
-  - csp-full
+  - csp-tech-risk-assessment
+  - csp-plan-phase
 
 triggers:
   keywords: ["工作量估算", "估时", "工时估算", "排期", "资源计划", "effort estimation",
-             "work estimation", "PERT", "三点估算", "COCOMO", "甘特图", "gantt chart",
-             "开发周期", "交付时间", "人天", "story point", "工时评估", "人力估算"]
+             "work estimation", "PERT", "三点估算", "COCOMO", "甘特图",
+             "开发周期", "人天", "story point", "工时评估", "交付时间"]
   intents:
-    - "user wants to estimate development effort"
-    - "user needs a project timeline based on task breakdown"
-    - "user wants to determine resource requirements"
-    - "user needs to estimate delivery date"
+    - "user needs effort estimation for development tasks"
+    - "user wants project timeline and resource plan"
+    - "user asks how long development will take"
   context:
     - "after_task_breakdown"
     - "project_planning"
 
 anti_rationalizations:
-  "I'll just double the developer's estimate": "Padding estimates without analysis creates distrust and doesn't address root causes."
-  "Historical data is not available, so estimation is impossible": "Use PERT (O+4M+P)/6 — it's designed for uncertainty."
-  "We don't need to estimate, we're agile": "Even agile teams need rough timelines for stakeholder communication and resource planning."
-  "One number is enough": "Single-point estimates are always wrong. Use ranges with confidence intervals."
+  "估时总是错的，没必要估": "估时不准确是常态，但估算过程本身暴露了不确定性和风险。没有估时就没有管理基线。"
+  "直接给个总数就行": "没有 WBS 的估时是拍脑袋。逐任务估算 + 汇总才有参考价值。"
+  "用经验估就行，不用方法论": "方法论（如 PERT）通过最优/最可能/最差三值量化不确定性，比单一经验值更可靠。"
 ---
 
 # Effort Estimation
 
-从技术方案和任务拆解推算工作量、资源需求和时间线。
+工作量与资源估算引擎 — 从任务拆解出发，推算工作量、资源需求和时间线。
 
 ## 核心理念
 
-估算不是算命，而是基于可用的最佳信息做出合理的预测：
-1. **分解是估算的基础** — 任务拆解得越细，估算越准确
-2. **不确定性需要量化** — 用范围代替单点值，用置信区间代替确定性
-3. **多种方法交叉验证** — 单一方法的结果不可靠，多方法交叉验证提高可信度
-4. **估算需要持续校准** — 随着项目推进，用实际数据更新估算
+估时不是算命，而是**不确定性量化**。好的估算：
+1. 基于 WBS 逐任务估算，而非整体拍脑袋
+2. 使用三点估算 (PERT) 量化不确定性
+3. 考虑团队能力和并行度
+4. 包含风险缓冲
+5. 给出范围而非单点：最优 X 天，最可能 Y 天，最差 Z 天
 
 ## 输入
 
-- `.csp/tasks/` — 任务拆解产物（WBS、TASK-CARDS、DEPENDENCY-DAG）
-- `.csp/tech-design/` — 技术方案设计（评估复杂度）
-- 团队信息（人数、技能、经验）
-- 历史数据（如有类似项目的实际工时数据）
+- `.csp/tasks/WBS.md` — 工作分解结构
+- `.csp/tasks/TASK-CARDS/*.md` — 任务卡片（含逐任务估时）
+- `.csp/tasks/DEPENDENCY-DAG.md` — 任务依赖 DAG
+- `.csp/tech-design/` — 技术方案（评估复杂度）
+- `.csp/tech-design/RISK-REGISTER.md` — 风险登记册（评估风险缓冲）
 
 ## 估算方法
 
-### 方法 1: 类比估算 (Analogy-Based)
+### 1. 类比估算 (Analogous Estimation)
 
-基于类似项目/任务的历史数据进行估算：
+基于历史类似项目的实际工时进行估算：
 
 ```markdown
 ## 类比估算
 
-### 参照项目
-| 参照任务 | 实际工时 | 相似度 | 当前任务 | 估算工时 |
-|---------|---------|--------|---------|---------|
-| 用户 CRUD API (上次项目) | 8h | 90% | 用户 CRUD API (本次) | 7.2h |
-| Feature 列表页 (上次项目) | 12h | 80% | Feature 列表页 (本次) | 9.6h |
+| 参考项目 | 类型 | 模块数 | 任务数 | 实际工时 | 类比系数 |
+|---------|------|--------|--------|---------|---------|
+| 项目 A | 知识库 | 4 | 35 | 300h | 1.0 |
+| 项目 B | CMS | 3 | 28 | 220h | 1.2 |
+| 项目 C | 协作工具 | 5 | 45 | 380h | 0.9 |
 
-### 调整因子
-- 技术栈变化: +10% (新框架)
-- 团队变化: -5% (团队成员更熟悉)
-- 复杂度变化: +20% (多了权限控制)
+| 当前项目 | 模块数 | 预估任务数 | 类比系数 | 类比估算 |
+|---------|--------|-----------|---------|---------|
+| 当前项目 | 4 | 40 | 1.0 | 300h-350h |
 
-### 总估算: 任务数 × 平均工时 × 调整因子
+**适用场景：** 有历史数据、项目类型相似
+**准确度：** ±30%（取决于历史数据质量）
 ```
 
-### 方法 2: 三点估算 (PERT)
+### 2. 三点估算 (PERT — Program Evaluation and Review Technique)
 
-对每个任务估算三个值：
+对每个任务给出三个估算值，加权计算期望值和标准差：
 
 ```markdown
-## 三点估算 (PERT)
+## PERT 三点估算
 
-公式: E = (O + 4M + P) / 6
-标准差: σ = (P - O) / 6
+### 公式
+- 期望值 E = (O + 4M + P) / 6
+- 标准差 σ = (P - O) / 6
+- 置信区间: E ± 1σ (68%), E ± 2σ (95%)
 
-| WBS | 任务 | O (乐观) | M (最可能) | P (悲观) | E (期望) | σ (标准差) |
-|-----|------|---------|-----------|---------|---------|-----------|
-| 1.1 | 项目脚手架 | 1h | 2h | 4h | 2.2h | 0.5h |
-| 2.1.1 | users 表 Migration | 0.3h | 0.5h | 1.5h | 0.6h | 0.2h |
-| 3.1.3 | 用户 Service | 2h | 3h | 8h | 3.7h | 1.0h |
-| 3.1.5 | 用户 API 测试 | 1h | 2h | 5h | 2.3h | 0.7h |
-| 4.2.1 | Feature 列表页 | 2h | 4h | 10h | 4.7h | 1.3h |
+其中:
+- O (Optimistic): 最优情况，一切顺利
+- M (Most likely): 最可能情况，正常节奏
+- P (Pessimistic): 最差情况，遇到阻塞
 
-### 汇总统计
+### 逐任务估算
+
+| Task | O(h) | M(h) | P(h) | E(h) | σ(h) | 风险 |
+|------|------|------|------|------|------|------|
+| T-1-1 创建 users 表 | 0.5 | 1.0 | 2.0 | 1.1 | 0.25 | 低 |
+| T-1-2 创建 features 表 | 1.0 | 1.5 | 3.0 | 1.7 | 0.33 | 低 |
+| T-2-1 注册/登录 API | 1.5 | 2.0 | 4.0 | 2.3 | 0.42 | 中 |
+| T-2-2 权限管理 | 2.0 | 3.0 | 6.0 | 3.3 | 0.67 | 中 |
+| T-3-1 文档列表页 | 2.0 | 3.0 | 5.0 | 3.2 | 0.50 | 中 |
+| T-3-2 文档编辑页 | 3.0 | 4.0 | 8.0 | 4.5 | 0.83 | 高 |
+| ... | ... | ... | ... | ... | ... | ... |
+
+### 汇总
+
 | 指标 | 值 |
 |------|-----|
-| 总期望工时 | ΣE = 152h |
-| 总标准差 | √Σ(σ²) = 12h |
-| 68% 置信区间 | 140h - 164h |
-| 95% 置信区间 | 128h - 176h |
+| 总任务数 | 40 |
+| 期望总工时 E | 74h |
+| 标准差 σ_total | 6.5h |
+| 95% 置信区间 | 61h - 87h |
+| 建议工时 (含 20% 缓冲) | 89h |
+| 建议工时 (含 50% 缓冲，高风险项目) | 111h |
 ```
 
-### 方法 3: COCOMO II (适用于大型项目)
+### 3. COCOMO II (Constructive Cost Model)
+
+适用于大型项目的模型化估算：
 
 ```markdown
 ## COCOMO II 估算
 
 ### 规模估算
-- 预估代码行数 (KSLOC): 15K
-- 规模因子 (Scale Factors):
-  - 先例性 (PREC): 3.72 (有一些经验)
-  - 开发灵活性 (FLEX): 3.04 (中等灵活)
-  - 架构/风险解决 (RESL): 4.24 (基本)
-  - 团队凝聚力 (TEAM): 3.29 (基本)
-  - 过程成熟度 (PMAT): 3.12 (基本)
+| 模块 | 预估 KLOC | 复杂度 |
+|------|----------|--------|
+| 用户与认证 | 2.0 | 中 |
+| 文档管理 | 4.5 | 中 |
+| 搜索与智能 | 3.0 | 高 |
+| 通知与集成 | 1.5 | 低 |
+| 总计 | 11.0 KLOC | - |
 
-### 指数计算
-E = 0.91 + 0.01 × ΣSF = 0.91 + 0.01 × 17.41 = 1.084
+### 模型参数
+| 参数 | 值 | 说明 |
+|------|-----|------|
+| 模型 | Early Design | 早期设计阶段 |
+| 规模因子 | 1.15 | 团队经验、流程成熟度 |
+| 成本因子 | 1.10 | 产品复杂度、平台难度 |
 
-### 工作量估算
-PM = A × (KSLOC)^E × Π(EM)
-= 2.94 × 15^1.084 × 0.88
-= 2.94 × 17.2 × 0.88
-= 44.5 人月
-
-### 工期估算
-TDEV = 3.67 × PM^(0.28+0.002×ΣSF)
-= 3.67 × 44.5^0.318
-= 12.3 个月
-
-### 团队规模
-N = PM / TDEV = 44.5 / 12.3 ≈ 3.6 人
+### 估算结果
+| 指标 | 值 |
+|------|-----|
+| 工作量 (人月) | 4.2 |
+| 开发周期 (月) | 2.5 |
+| 建议团队规模 | 2-3 人 |
 ```
 
-### 方法 4: 综合估算 (推荐)
+## 估算校正因子
 
-结合多种方法，加权平均：
+实际工作量受多种因素影响，需对原始估算进行校正：
 
-```markdown
-## 综合估算
-
-| 方法 | 估算结果 | 权重 | 加权 |
-|------|---------|------|------|
-| 类比估算 | 135h | 0.3 | 40.5 |
-| 三点估算 (PERT) | 152h | 0.5 | 76.0 |
-| COCOMO II | 148h | 0.2 | 29.6 |
-| **综合估算** | | | **146.1h** |
-
-推荐使用 PERT 期望值作为基准，类比和 COCOMO 作为验证。
+```yaml
+correction_factors:
+  team:
+    senior_team: 0.8          # 资深团队，快 20%
+    junior_team: 1.5          # 初级团队，慢 50%
+    mixed_team: 1.0           # 混合团队，基准
+  
+  tech_stack:
+    familiar: 0.9             # 团队熟悉的技术栈
+    new: 1.3                  # 新技术栈，学习成本
+    experimental: 1.8         # 实验性技术
+  
+  domain:
+    familiar: 0.9             # 熟悉的业务领域
+    new: 1.2                  # 新业务领域
+    complex: 1.5              # 复杂业务逻辑
+  
+  process:
+    agile_mature: 0.9         # 成熟的敏捷流程
+    agile_new: 1.1            # 新采用的敏捷流程
+    ad_hoc: 1.3               # 无流程
+  
+  external:
+    third_party_deps: 1.2     # 依赖第三方服务
+    cross_team: 1.3           # 跨团队协作
+    compliance: 1.4           # 合规要求
 ```
 
-## 执行流程
-
-### Phase 1: 任务复杂度评估
-
-对每个任务评估复杂度：
-
-```markdown
-## 复杂度评估
-
-| WBS | 任务 | 复杂度 | 不确定度 | 技术风险 | 综合因子 |
-|-----|------|--------|---------|---------|---------|
-| 1.1 | 项目脚手架 | 低 | 低 | 低 | 1.0x |
-| 2.1.1 | users 表 Migration | 低 | 低 | 低 | 1.0x |
-| 3.1.3 | 用户 Service | 中 | 中 | 低 | 1.2x |
-| 4.2.1 | Feature 列表页 | 中 | 高 | 中 | 1.5x |
-| 5.2 | 性能优化 | 高 | 高 | 高 | 2.0x |
-
-### 因子说明
-- 复杂度: 低=标准CRUD, 中=多规则业务, 高=算法/分布式
-- 不确定度: 低=需求明确, 中=需少量澄清, 高=需大量探索
-- 技术风险: 低=成熟技术, 中=需要学习, 高=首次使用
-```
-
-### Phase 2: 资源需求分析
-
-```markdown
-## 资源需求
-
-### 人力资源
-| 角色 | 人数 | 占用率 | 投入时间 | 关键技能 |
-|------|------|--------|---------|---------|
-| 后端开发 | 2 | 100% | 全程 | Python/FastAPI/PostgreSQL |
-| 前端开发 | 1 | 80% | Wave 4-5 | React/Next.js |
-| 全栈开发 | 1 | 100% | 全程 | 全栈 |
-| QA | 1 | 50% | Wave 5 | 测试 |
-
-### 环境资源
-| 资源 | 规格 | 用途 | 费用(月) |
-|------|------|------|---------|
-| 开发服务器 | 4C8G | 开发环境 | ¥0 (本地) |
-| 测试环境 K8s | 3 节点 | 集成测试 | ¥500 |
-| 数据库 | 2C4G 50GB | 测试 DB | ¥200 |
-
-### 工具和许可证
-| 工具 | 用途 | 费用(月) |
-|------|------|---------|
-| GitHub Team | 代码托管 | ¥28/人 |
-| Sentry | 错误监控 | 免费额度 |
-```
-
-### Phase 3: 时间线生成
-
-```markdown
-## 时间线与甘特图
-
-### 甘特图 (Mermaid)
-
-```mermaid
-gantt
-    title 项目开发时间线
-    dateFormat  YYYY-MM-DD
-    axisFormat  %m/%d
-    
-    section 基础设施
-    项目脚手架           :a1, 2026-08-14, 1d
-    CI/CD 配置           :a2, 2026-08-14, 1d
-    环境配置             :a3, 2026-08-14, 1d
-    
-    section 数据层
-    数据模型 Migration   :b1, after a1, 2d
-    
-    section 后端 API
-    用户 API             :c1, after b1, 3d
-    Feature API          :c2, after b1, 4d
-    
-    section 前端 UI
-    用户页面             :d1, after c1, 3d
-    Feature 页面         :d2, after c2, 4d
-    
-    section 质量保障
-    集成测试             :e1, after d2, 2d
-    性能优化             :e2, after e1, 1d
-    文档                 :e3, after d2, 2d
-```
-
-### 里程碑
-| 里程碑 | 日期 | 交付物 | 验收标准 |
-|--------|------|--------|---------|
-| M1: 基础设施就绪 | 08/15 | 开发环境 + CI/CD | 提交代码可自动构建 |
-| M2: 数据层完成 | 08/17 | 所有表 Migration | Migration 可运行 |
-| M3: 后端 API 完成 | 08/21 | 所有 API 端点 | 集成测试通过 |
-| M4: 前端 UI 完成 | 08/26 | 所有页面 | E2E 测试通过 |
-| M5: 发布就绪 | 08/29 | 完整系统 | 所有测试通过 + 文档 |
-```
-
-### Phase 4: 风险缓冲
-
-```markdown
-## 风险缓冲
-
-### 缓冲策略
-- 项目缓冲: 总工时的 20% (用于项目级风险)
-- 汇入缓冲: 每个 Wave 的 15% (用于 Wave 级风险)
-- 资源缓冲: 每个关键角色的 10% 冗余 (用于人员变动)
-
-### 缓冲分配
-| 位置 | 类型 | 时间 | 用途 |
-|------|------|------|------|
-| 总工期 | 项目缓冲 | +3d | 未知风险、范围蔓延 |
-| Wave 3 | 汇入缓冲 | +0.5d | 后端 API 风险 |
-| Wave 4 | 汇入缓冲 | +0.5d | 前端 UI 风险 |
-| 后端 | 资源缓冲 | 备用 1 人 | 后端人员请假 |
-```
-
-### Phase 5: 输出产物
+## 输出产物
 
 ```
 .csp/estimation/
-├── EFFORT-ESTIMATION.md        # 工作量估算报告
-├── COMPLEXITY-ASSESSMENT.md    # 复杂度评估
-├── RESOURCE-PLAN.md            # 资源计划
-├── TIMELINE.md                 # 时间线 + 甘特图
-├── RISK-BUFFER.md              # 风险缓冲分配
-└── ESTIMATION-SUMMARY.md       # 估算摘要
+├── EFFORT-ESTIMATION.md       # 工作量估算报告
+├── RESOURCE-PLAN.md           # 资源计划
+├── TIMELINE.md                # 时间线 + 甘特图
+└── ESTIMATION-SUMMARY.md      # 估算摘要
 ```
 
-## 估算精度
+### EFFORT-ESTIMATION.md 结构
 
-| 阶段 | 精度范围 | 适用方法 |
-|------|---------|---------|
-| 需求阶段 | ±50% | 类比估算 |
-| 方案设计阶段 | ±30% | 三点估算 (PERT) |
-| 任务拆解后 | ±20% | 自底向上 |
-| 开发中 | ±10% | 实际工时跟踪 |
+```markdown
+# Effort Estimation Report
+
+## 估算方法
+- 主要方法: PERT 三点估算
+- 辅助方法: 类比估算
+- 校正因子: 团队(1.0) × 技术栈(1.0) × 领域(1.2) × 流程(1.0)
+
+## 工作量汇总
+
+| Wave | 任务数 | 期望工时 | 最优 | 最差 |
+|------|--------|---------|------|------|
+| Wave 1 (基础层) | 6 | 8h | 5h | 14h |
+| Wave 2 (核心后端) | 12 | 24h | 18h | 38h |
+| Wave 3 (前端) | 8 | 20h | 14h | 32h |
+| Wave 4 (测试) | 10 | 16h | 10h | 28h |
+| Wave 5 (部署) | 4 | 6h | 4h | 10h |
+| **总计** | **40** | **74h** | **51h** | **122h** |
+
+## 校正后估算
+| 指标 | 原始 | 校正后 |
+|------|------|--------|
+| 总工时 | 74h | 89h (×1.2 领域因子) |
+| 含 20% 缓冲 | 89h | 107h |
+| 含 50% 缓冲 | 107h | 134h |
+
+## 资源计划
+| 角色 | 人数 | 投入度 | 工时占比 |
+|------|------|--------|---------|
+| 后端开发 | 1 | 100% | 45% |
+| 前端开发 | 1 | 100% | 35% |
+| 全栈/DevOps | 0.5 | 50% | 20% |
+```
+
+### 甘特图
+
+```mermaid
+gantt
+    title 开发时间线
+    dateFormat  YYYY-MM-DD
+    section Wave 1 基础层
+    DB Migration        :w1, 2026-01-06, 2d
+    基础设施配置         :w1b, after w1, 1d
+    section Wave 2 核心后端
+    用户管理 API        :w2a, after w1b, 3d
+    文档管理 API        :w2b, after w1b, 3d
+    搜索 API            :w2c, after w2a, 2d
+    section Wave 3 前端
+    列表页 + 详情页     :w3a, after w2b, 3d
+    编辑页 + 表单       :w3b, after w3a, 2d
+    section Wave 4 测试
+    集成测试            :w4a, after w3b, 2d
+    E2E 测试            :w4b, after w4a, 2d
+    section Wave 5 部署
+    部署配置 + 上线     :w5, after w4b, 1d
+```
+
+## 门控检查
+
+- [ ] 每个任务有估算值（O/M/P）
+- [ ] 任务粒度 ≤ 4h（超过则需进一步拆解）
+- [ ] 校正因子已应用
+- [ ] 风险缓冲已包含
+- [ ] 资源计划与团队实际情况匹配
+- [ ] 关键路径上的任务估算更保守（P 值更大）
 
 ## 完成信号
 
@@ -305,23 +279,43 @@ gantt
 completion_signal:
   output: .csp/estimation/ESTIMATION-SUMMARY.md
   next_step:
-    recommended: csp-lifecycle-orchestrator
+    recommended: csp-plan-phase
     alternatives: [csp-implementation-phase]
   status:
     estimation_path: .csp/estimation/
-    total_effort: "{{hours}}h"
-    confidence_interval: "{{low}}h - {{high}}h"
-    estimated_completion: "{{date}}"
-    team_size: "{{count}}"
+    total_hours: "{{sum}}"
+    confidence_interval: "{{range}}"
+    suggested_team_size: "{{number}}"
     phase: plan
-    ready_for: [implementation-planning, sprint-planning]
+    ready_for: [implementation-planning, execution]
 ```
 
-## 关键原则
+## 与其他 Skill 的协作
 
-1. **用范围代替单点** — 永远不给出"X 天"这样的单点估算
-2. **多方法交叉验证** — 至少用 2 种方法，结果越接近越可信
-3. **不确定性要量化** — 用标准差和置信区间，而不是"可能"
-4. **缓冲要透明** — 标注缓冲的位置和用途，不是偷偷加 50%
-5. **持续校准** — 每个里程碑结束后用实际数据重新估算
-6. **不压榨估算** — 估算不是谈判，是工程判断
+| 上游 Skill | 提供什么 |
+|-----------|---------|
+| csp-tech-solution-design | 技术方案（复杂度评估） |
+| csp-tech-task-breakdown | 任务清单 + 逐任务估时 |
+| csp-tech-risk-assessment | 风险登记册（风险缓冲依据） |
+
+| 下游 Skill | 消费什么 |
+|-----------|---------|
+| csp-plan-phase | 时间线 + 资源计划（实施规划） |
+| csp-lifecycle-orchestrator | 工作量汇总（里程碑规划） |
+
+## 快速开始示例
+
+```
+输入: 知识库系统，40 个任务
+
+PERT 三点估算:
+  Wave 1: 6 任务，E=8h, σ=1.5h
+  Wave 2: 12 任务，E=24h, σ=3.2h
+  Wave 3: 8 任务，E=20h, σ=2.8h
+  Wave 4: 10 任务，E=16h, σ=2.5h
+  Wave 5: 4 任务，E=6h, σ=1.0h
+
+总期望工时: 74h (95% CI: 61h-87h)
+校正后总工时: 89h (×1.2 领域因子)
+建议排期: 2-3 人 × 3-4 周
+```

@@ -17,7 +17,7 @@ scope: design
 tools: [Read, Write, Edit, Glob, Grep, Bash]
 
 dependencies:
-  skills: [csp-requirement-decomposition, csp-tech-stack-advisor]
+  skills: [csp-requirement-decomposition, csp-tech-stack-advisor, csp-tech-solution-design]
 
 related_skills:
   - csp-requirement-decomposition

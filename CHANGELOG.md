@@ -13,12 +13,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
   - `csp-tech-task-breakdown` (P1) — 技术方案→开发任务拆解：WBS 分解、Waves 划分、并行策略、关键路径识别、Sprint Backlog 输出。依赖: csp-tech-solution-design, csp-fullstack-spec-generator。
   - `csp-tech-risk-assessment` (P1) — 技术方案风险评估：7 维度风险识别（架构/性能/安全/数据/集成/运维/组织）、5×5 概率×影响矩阵评级、风险登记册、缓解计划。
   - `csp-prd-traceability` (P1) — PRD→Feature→Spec→Task 完整追溯矩阵：双向追溯、覆盖率分析、缺口分析、Mermaid 追溯图、变更影响标记。
-  - `csp-prd-parser` (P2) — 多格式 PRD 文档解析器：支持钉钉文档、语雀、Markdown、纯文本，自动格式检测、章节识别、功能点提取、约束条件识别，输出标准化 PRD-IR。
+  - `csp-prd-parser` (P2) — 多格式 PRD 文档解析器：支持语雀、Markdown、纯文本，自动格式检测、章节识别、功能点提取、约束条件识别，输出标准化 PRD-IR。
   - `csp-effort-estimation` (P2) — 工作量与资源估算：类比估算、三点估算(PERT)、COCOMO II、甘特图、资源计划、风险缓冲。依赖: csp-tech-solution-design, csp-tech-task-breakdown。
   - `csp-integration-design` (P2) — 跨系统集成方案设计：系统间接口契约、数据一致性策略(Saga/2PC/事件溯源)、故障隔离(熔断器/降级/重试)、灰度发布与回滚方案。
   - `csp-domain-driven-design` (P3) — 领域驱动设计：限界上下文识别、聚合根/实体/值对象设计、领域事件建模、上下文映射、统一语言词汇表。与 csp-requirement-decomposition 的域划分协同。
   - `csp-prd-change-impact` (P3) — PRD 变更影响分析：全链路追踪(PRD→Feature→Spec→Task→Code)、变更分类(新增/修改/删除)、成本量化、风险重评估、变更建议。
+- `csp-plan-phase` (L2 workflow, phase: plan, domain: architecture) — 实施规划阶段引擎：从任务拆解和工作量估算出发，制定里程碑规划、资源分配、并行策略、风险缓冲、进度跟踪方案。修复了 10+ 处悬空引用（被 csp-lifecycle-orchestrator / csp-requirement-decomposition / csp-tech-stack-advisor / csp-fullstack-spec-generator / csp-tech-task-breakdown / csp-effort-estimation 引用）。
 - `csp-lifecycle-orchestrator` 集成：新增 S2.5 (tech-solution-design)、S2.6 (tech-design-review)、S3.5 (tech-task-breakdown) 三个阶段，更新定位图、产物流转图、动态路由规则、模式选择、快速开始示例。
+- `csp-fullstack-spec-generator` 依赖增强：新增 `csp-tech-solution-design` 为硬依赖，确保系统级架构设计先于 Feature 级 Spec 生成。
+- 技能边界澄清：`csp-tech-solution-design`（接口架构）↔ `csp-integration-design`（跨系统集成）、`csp-tech-risk-assessment`（概率性风险）↔ `csp-tech-design-review`（确定性缺陷）之间添加明确的定位与分工说明。
 - 6 个现有 skill 的集成关系更新：csp-product-discovery-orchestrator、csp-tech-stack-advisor、csp-requirement-decomposition、csp-fullstack-spec-generator 的 related_skills 和 completion_signal 新增指向新技能。
 - SKILL-INDEX.md 新增 Section 22（Tech Solution Design），更新技能计数 636→646，版本 0.8.0→0.9.0。
 - 版本 0.8.0→0.9.0 同步至 VERSION、CLAUDE.md、SKILL-INDEX.md、CHANGELOG.md。

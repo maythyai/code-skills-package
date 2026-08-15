@@ -7,8 +7,8 @@ description: |
   当需求拆解和技术选型完成后需要输出系统级技术方案、或用户需要"技术方案设计"、"架构设计"、
   "系统设计"、"总体方案"时使用。
   关键词：技术方案、系统架构、架构设计、系统设计、总体方案、技术设计、tech design、
-  solution design、system architecture、technical design document、TDD、架构方案、
-  方案设计、系统架构设计、技术方案设计、模块划分、服务划分、部署架构、技术方案对比。
+  solution design、system architecture、technical design、architecture design、
+  方案设计、技术方案设计、系统方案、总体设计、TDD、技术设计文档。
 version: "1.0.0"
 layer: 2
 category: workflow
@@ -18,389 +18,336 @@ scope: design
 tools: [Read, Write, Edit, Glob, Grep, Bash]
 
 dependencies:
-  skills: [csp-requirement-decomposition, csp-tech-stack-advisor, csp-product-capability]
+  skills:
+    - csp-requirement-decomposition
+    - csp-tech-stack-advisor
+    - csp-product-capability
 
 related_skills:
   - csp-tech-design-review
   - csp-fullstack-spec-generator
+  - csp-tech-task-breakdown
   - csp-lifecycle-orchestrator
-  - csp-tech-risk-assessment
-  - csp-integration-design
   - csp-domain-driven-design
-  - csp-full
+  - csp-integration-design
+  - csp-tech-risk-assessment
 
 triggers:
   keywords: ["技术方案", "系统架构", "架构设计", "系统设计", "总体方案", "技术设计",
-             "tech design", "solution design", "system architecture", "TDD",
-             "架构方案", "方案设计", "系统架构设计", "技术方案设计", "模块划分",
-             "服务划分", "部署架构", "技术方案对比", "architecture design"]
+             "tech design", "solution design", "system architecture", "总体设计",
+             "TDD", "技术方案设计", "系统方案", "architecture design"]
   intents:
-    - "user needs a system-level technical design after feature decomposition"
-    - "user wants to design the overall architecture before spec generation"
-    - "user needs to compare multiple technical approaches"
-    - "user wants to document the technical solution for review"
+    - "user needs system-level technical solution design"
+    - "user wants architecture design document"
+    - "user needs to bridge requirements to specs"
   context:
-    - "after_requirement_decomposition"
     - "after_tech_stack_selection"
-    - "before_fullstack_spec_generation"
+    - "after_requirement_decomposition"
 
 anti_rationalizations:
-  "Let's skip the system design and go straight to coding": "System design catches architectural issues before they become 10x rework cost. Design first."
-  "The architecture is obvious, no need to document": "Obvious architectures have hidden assumptions. Documenting forces explicit decisions."
-  "One approach is enough, no need to compare alternatives": "Without comparison, there's no evidence the chosen approach is optimal. Compare at least 2 options."
-  "The tech stack already defines the architecture": "Tech stack constrains but doesn't define architecture. The same stack can produce very different architectures."
-  "We can decide the architecture during implementation": "Architecture decisions made during implementation are shaped by code, not by requirements. Design upfront."
+  "这个需求很简单，不需要技术方案": "再简单的需求也有架构决策。跳过技术方案=把设计包袱丢给开发阶段，返工成本 10x。"
+  "技术方案等实施时再定": "实施时改变架构决策的成本远高于设计阶段。技术方案就是设计阶段的决策锚点。"
+  "写过技术选型就够用了": "技术选型回答'用什么'，技术方案回答'怎么搭'。两者互补，缺一不可。"
 ---
 
-# Technical Solution Design
+# Tech Solution Design
 
-从 Feature 拆解、技术选型和产品能力约束出发，生成系统级技术方案文档。
+技术方案设计引擎 — 从需求拆解和技术选型出发，生成系统级 TDD（Technical Design Document）。
 
 ## 核心理念
 
-技术方案设计是"需求→代码"之间的关键桥梁。它回答三个问题：
-1. **系统长什么样？** — 服务/模块划分、分层架构、部署拓扑
-2. **系统如何运转？** — 数据流、接口契约、状态机、事件驱动
-3. **为什么这么设计？** — 设计决策的理由、权衡、替代方案
+技术方案设计是需求到代码之间的关键桥梁。它回答的不是"这个功能做什么"（那是 PRD 的事），也不是"用什么技术"（那是 tech-stack-advisor 的事），而是"这个系统怎么搭、组件怎么放、数据怎么流、接口怎么接"。
 
-一份好的技术方案(TDD)应该让任何开发者拿到后能理解系统的全貌，并知道自己的代码如何融入整体架构。
+好的技术方案应该让任何开发者在拿到后能**直接理解系统全貌**，而不需要猜测架构意图。
+
+## 定位与分工
+
+```
+┌──────────────────────────────────────────────────────────────────┐
+│                     csp-tech-solution-design                       │
+│                     (设计层 — 系统架构 + 数据 + 接口 + 安全)        │
+├──────────────────────────────────────────────────────────────────┤
+│                                                                    │
+│  上游: csp-requirement-decomposition  → Feature 清单 + 依赖图     │
+│         csp-tech-stack-advisor        → 技术栈全景 + ADR           │
+│         csp-product-capability        → 产品约束/不变量             │
+│                                                                    │
+│  本 Skill: 系统架构设计 + 数据架构 + 接口架构 + 安全架构 + 方案对比 │
+│                                                                    │
+│  下游: csp-tech-design-review        → 多角色评审                   │
+│         csp-fullstack-spec-generator  → 全栈 Spec                   │
+│         csp-tech-task-breakdown       → 任务拆解                    │
+│                                                                    │
+└──────────────────────────────────────────────────────────────────┘
+```
 
 ## 输入
 
 消费上游产物：
-- `.csp/decomposition/` — Feature 拆解产物（FEATURE-DETAILS、DEPENDENCY-GRAPH、NFR）
-- `.csp/tech-decisions/` — 技术选型产物（TECH-STACK-OVERVIEW、ADR）
-- PRODUCT.md / docs/product/ — 产品能力约束（capability contract）
-- 现有代码库架构（如已有系统）
+- `.csp/decomposition/DECOMPOSITION-SUMMARY.md` — Feature 清单 + 技术维度汇总
+- `.csp/decomposition/FEATURE-DETAILS/*.yaml` — 每个 Feature 的定义
+- `.csp/tech-decisions/TECH-STACK-OVERVIEW.md` — 技术栈全景
+- `.csp/tech-decisions/ADR/*.md` — 架构决策记录
+- `PRODUCT.md` 或 capability contract — 产品约束/不变量（如有）
 
-## 核心流程
+## 设计维度
 
-### Phase 1: 系统上下文分析
+### 1. 系统架构设计
 
-在开始设计前，先确定系统的边界和约束：
+#### 1.1 架构风格选择
 
-```markdown
-## System Context
+| 架构风格 | 适用场景 | 优势 | 劣势 |
+|---------|---------|------|------|
+| 模块化单体 | 小团队、早期验证、简单业务 | 开发快、部署简单、调试方便 | 扩展性受限 |
+| 分层架构 | 中等复杂度、标准业务 | 职责清晰、易于理解 | 层间耦合 |
+| 微服务 | 大团队、独立部署、高扩展 | 独立部署、技术异构 | 运维复杂、分布式挑战 |
+| 事件驱动 | 异步解耦、高吞吐、多系统 | 松耦合、可扩展 | 调试困难、最终一致性 |
+| CQRS | 读写分离、复杂查询 | 读写优化、独立扩展 | 复杂度高 |
+| 六边形架构 | 核心业务独立、高可测性 | 领域逻辑隔离 | 前期投入大 |
 
-### 系统边界
-- 系统范围: [哪些功能在系统内，哪些在系统外]
-- 外部依赖: [依赖的外部系统/服务]
-- 集成方式: [API / 消息 / 事件 / 文件]
+**决策依据：**
+- 团队规模：≤5 人 → 模块化单体/分层架构；5-20 人 → 微服务选型评估；>20 人 → 微服务/事件驱动
+- 扩展需求：单机可承载 → 单体；需独立扩展 → 微服务
+- 业务复杂度：简单 CRUD → 分层架构；复杂领域 → 六边形/DDD
 
-### 关键约束
-- 技术约束: [技术栈限制、平台限制]
-- 业务约束: [合规、数据主权、SLA]
-- 交付约束: [时间线、团队规模、技能分布]
-- 演进约束: [现有系统兼容、灰度策略、回滚要求]
-
-### 架构质量属性
-| 属性 | 目标 | 优先级 | 权衡对象 |
-|------|------|--------|---------|
-| 可用性 | 99.9%+ | P0 | 成本、复杂度 |
-| 性能 | p99 < 200ms | P0 | 缓存一致性 |
-| 可扩展性 | 10x 流量增长 | P1 | 初期复杂度 |
-| 可维护性 | 新开发者 1周上手 | P1 | 抽象层级 |
-| 安全性 | 无 CRITICAL 漏洞 | P0 | 开发速度 |
-| 成本 | 月均 < ¥X | P2 | 冗余、性能 |
-```
-
-### Phase 2: 多方案设计
-
-对关键设计决策，产出 2-3 个可行方案，结构化对比：
+#### 1.2 服务/模块划分
 
 ```markdown
-## 方案对比
+## 模块划分
 
-### 决策点 1: [决策名称，如"服务拆分粒度"]
+### 模块 A: 用户与认证
+- 职责：用户注册、登录、权限管理、会话管理
+- 边界：不涉及业务数据，仅提供身份和权限服务
+- 对外接口：REST API（用户 CRUD、登录/登出、Token 刷新）
+- 内部接口：gRPC（权限校验）
 
-#### 方案 A: [方案名称]
-**描述:** [一句话描述]
-**架构图:**
-```mermaid
-graph TB
-    ...
+### 模块 B: 核心业务
+- 职责：业务实体 CRUD、业务规则引擎、工作流编排
+- 边界：核心业务逻辑，不包含通知/搜索等辅助功能
+- 对外接口：REST API（业务 CRUD、批量操作、导出）
+- 内部接口：事件发布（业务变更通知）
+
+### 模块 C: 搜索与智能
+- 职责：全文搜索、语义搜索、AI 问答、推荐
+- 边界：不直接修改业务数据，只读+索引
+- 对外接口：REST API（搜索、推荐）
+- 内部接口：消费业务变更事件更新索引
+
+### 模块 D: 通知与集成
+- 职责：消息推送、邮件、第三方集成
+- 边界：不包含业务逻辑，仅负责消息路由和投递
+- 对外接口：REST API（通知配置、发送状态）
+- 内部接口：消费各类事件并投递
 ```
 
-**优势:**
-- [优势 1]
-- [优势 2]
-
-**劣势:**
-- [劣势 1]
-- [劣势 2]
-
-**适用条件:**
-- [什么场景下这个方案最优]
-
-#### 方案 B: [方案名称]
-...
-
-#### 方案对比矩阵
-| 维度 | 方案 A | 方案 B | 方案 C |
-|------|--------|--------|--------|
-| 架构复杂度 | 低 | 中 | 高 |
-| 开发效率 | 快 | 中 | 慢 |
-| 扩展性 | 中 | 高 | 高 |
-| 运维成本 | 低 | 中 | 高 |
-| 学习曲线 | 平缓 | 中等 | 陡峭 |
-
-#### 推荐方案
-**推荐:** 方案 A
-**理由:** [基于约束条件的具体理由]
-**风险:** [选此方案的风险]
-```
-
-### Phase 3: 系统架构设计
-
-确定整体架构后，详细设计各层：
-
-```markdown
-## 系统架构
-
-### 架构风格
-- [微服务 / 模块化单体 / 事件驱动 / 分层架构 / 六边形架构 / CQRS / 等等]
-
-### 服务/模块划分
-
-| 服务/模块 | 职责 | 所属域 | 数据存储 | 关键依赖 |
-|-----------|------|--------|---------|---------|
-| user-svc | 用户认证/授权 | 用户管理 | PG: users | - |
-| feature-svc | 核心业务 | 核心业务 | PG: features | user-svc |
-| search-svc | 全文搜索 | 数据服务 | Meilisearch | feature-svc |
-| notification-svc | 通知推送 | 基础设施 | Redis | user-svc |
-
-### 分层架构
-
-```
-┌─────────────────────────────────────────────────────┐
-│                  API Gateway / BFF                    │
-├─────────────────────────────────────────────────────┤
-│  ┌──────────┐  ┌──────────┐  ┌──────────────────┐  │
-│  │  Service   │  │  Service   │  │   Infrastructure  │  │
-│  │  Layer     │  │  Layer     │  │   Layer           │  │
-│  │  (业务)    │  │  (集成)    │  │   (基础设施)      │  │
-│  └──────────┘  └──────────┘  └──────────────────┘  │
-├─────────────────────────────────────────────────────┤
-│                  Data Layer                           │
-│  ┌──────────┐  ┌──────────┐  ┌──────────────────┐  │
-│  │  PG       │  │  Redis    │  │   Meilisearch     │  │
-│  └──────────┘  └──────────┘  └──────────────────┘  │
-└─────────────────────────────────────────────────────┘
-```
-
-### 部署拓扑 (Mermaid)
+#### 1.3 部署拓扑
 
 ```mermaid
 graph TB
-    subgraph "客户端"
-        WEB[Web App]
-        APP[Mobile App]
-    end
-    subgraph "CDN"
-        CDN[Cloudflare CDN]
-    end
-    subgraph "K8s Cluster"
-        GW[API Gateway]
-        US[user-svc: 2 pods]
-        FS[feature-svc: 3 pods]
-        NS[notification-svc: 1 pod]
-        GW --> US
-        GW --> FS
-        FS --> NS
-    end
-    subgraph "Data Layer"
-        PG[(PostgreSQL Primary)]
-        PG_REPL[(PostgreSQL Replica)]
-        RD[(Redis Cluster)]
-        MS[(Meilisearch)]
-    end
-    WEB --> CDN --> GW
-    APP --> GW
-    US --> PG
-    FS --> PG_REPL
-    FS --> RD
-    FS --> MS
+    LB[负载均衡 Nginx/ALB]
+    LB --> Web[Web 服务 2x]
+    LB --> API[API 服务 2x]
+    API --> Worker[后台 Worker 1x]
+    API --> DB[(PostgreSQL 主)]
+    DB --> DB-RO[(PostgreSQL 只读)]
+    API --> Redis[(Redis 缓存)]
+    API --> MQ[消息队列 RabbitMQ]
+    MQ --> Worker
+    Worker --> Search[(Elasticsearch)]
+    API --> OSS[对象存储 MinIO/S3]
 ```
 
-### 关键技术难点
+### 2. 数据架构设计
 
-| 难点 | 方案 | 备选方案 |
-|------|------|---------|
-| [难点 1: 如"高并发写入"] | [方案描述] | [备选] |
-| [难点 2: 如"分布式事务"] | [方案描述] | [备选] |
-| [难点 3: 如"实时同步"] | [方案描述] | [备选] |
-```
+#### 2.1 全局 ER 图
 
-### Phase 4: 数据架构设计
-
-```markdown
-## 数据架构
-
-### 全局 ER 图 (Mermaid)
 ```mermaid
 erDiagram
-    USER ||--o{ FEATURE : creates
-    USER ||--o{ COMMENT : writes
-    FEATURE ||--o{ COMMENT : has
-    FEATURE }o--|| DOMAIN : belongs_to
-    FEATURE }o--o{ TAG : tagged_with
+    User ||--o{ Feature : creates
+    User ||--o{ Comment : writes
+    Feature ||--o{ Comment : has
+    Feature }o--o{ Tag : tagged_with
+    Feature ||--o{ Attachment : has
+    Domain ||--o{ Feature : contains
 ```
 
-### 核心数据流
+#### 2.2 核心实体清单
 
-| 数据流 | 来源 | 途径 | 目标 | 一致性要求 |
-|--------|------|------|------|-----------|
-| 用户创建 Feature | Web/App | API → service → PG | PostgreSQL | 强一致 |
-| 搜索索引更新 | Feature 变更 | CDC → 消息队列 → search-svc | Meilisearch | 最终一致 |
-| 通知推送 | Feature 变更 | 事件 → notification-svc → WebSocket | 用户 | 最终一致 |
+| 实体 | 表名 | 预估量级 | 增长速率 | 存储引擎 |
+|------|------|---------|---------|---------|
+| User | users | 10K | 低 | PostgreSQL |
+| Feature | features | 50K | 中 | PostgreSQL |
+| Comment | comments | 500K | 高 | PostgreSQL (分区) |
+| Tag | tags | 1K | 低 | PostgreSQL |
+| Attachment | attachments | 100K | 中 | 元数据 PG + 文件 S3 |
 
-### 数据治理策略
+#### 2.3 数据流图
 
-| 策略 | 说明 |
-|------|------|
-| 数据所有权 | 每个服务拥有自己的数据存储，不跨服务直接访问 DB |
-| 数据保留 | 核心数据永久保留，日志 90 天，审计日志 365 天 |
-| 数据归档 | 超过 1 年的数据归档到冷存储 |
-| 数据隔离 | 多租户通过 tenant_id 行级隔离 |
-| 加密策略 | 传输中 TLS 1.3，存储中 AES-256，PII 字段加密 |
+```
+用户请求 → API Gateway → 业务服务 → 主库(写)
+                    ↓
+               缓存(读) ← 业务服务 ← 只读库(读)
+                    ↓
+               事件总线 → 搜索索引(异步更新)
+                        → 通知服务(异步投递)
+                        → 审计日志(异步记录)
 ```
 
-### Phase 5: 接口架构设计
+#### 2.4 数据一致性策略
+
+| 场景 | 策略 | 理由 |
+|------|------|------|
+| 业务数据 CRUD | 强一致性（事务） | 核心数据不允许不一致 |
+| 搜索索引更新 | 最终一致性（事件+重试） | 允许秒级延迟 |
+| 缓存失效 | 写穿透 + TTL | 防止缓存与 DB 不一致 |
+| 跨服务操作 | Saga 编排 | 长事务需要补偿机制 |
+
+### 3. 接口架构设计
+
+> **定位与分工：** 本节仅覆盖系统内部接口架构（API 风格选择、版本策略、鉴权体系）。跨系统集成方案（接口契约、数据一致性、故障隔离、灰度发布）由 `csp-integration-design` 负责。如果项目涉及多个系统/服务间的集成，在完成本设计后应继续使用 `csp-integration-design`。
+
+#### 3.1 接口风格选择
+
+| 接口类型 | 使用场景 | 协议 |
+|---------|---------|------|
+| REST API | 前端↔后端、外部集成 | HTTP/JSON |
+| gRPC | 服务间高性能调用 | HTTP/2 + Protobuf |
+| GraphQL | 灵活数据查询、移动端 | HTTP/JSON |
+| WebSocket | 实时推送、协作编辑 | WS |
+| 消息队列 | 异步解耦、事件驱动 | AMQP/Kafka |
+| Webhook | 第三方回调 | HTTP/JSON |
+
+#### 3.2 API 版本策略
+
+- URL 路径版本：`/api/v1/`, `/api/v2/`
+- 破坏性变更必须新版本
+- 旧版本至少维护 6 个月
+- 废弃接口提前 3 个月标记 `Deprecated` header
+
+#### 3.3 接口鉴权体系
+
+```
+                     ┌─────────────┐
+                     │  Auth Service│
+                     └──────┬──────┘
+                            │ JWT 签发/验证
+              ┌─────────────┼─────────────┐
+              ▼             ▼             ▼
+         REST API       gRPC 拦截器    WebSocket
+         Bearer Token   Metadata       Token in handshake
+```
+
+### 4. 安全架构设计
+
+#### 4.1 安全分层
+
+| 层级 | 安全措施 | 实现 |
+|------|---------|------|
+| 网络层 | HTTPS/TLS 1.3, WAF, DDoS 防护 | Nginx/CDN |
+| 应用层 | 输入校验、输出编码、CORS、CSP | 框架中间件 |
+| 认证层 | JWT + Refresh Token、MFA | 认证服务 |
+| 授权层 | RBAC/ABAC、API 限流 | 权限中间件 |
+| 数据层 | 传输加密、静态加密、脱敏、审计 | 数据库/应用 |
+| 运维层 | 密钥管理、漏洞扫描、安全审计 | KMS/CI |
+
+#### 4.2 威胁建模 (STRIDE)
+
+| 威胁类型 | 示例 | 缓解措施 |
+|---------|------|---------|
+| 欺骗 (Spoofing) | 伪造 JWT | Token 签名验证 + 短有效期 |
+| 篡改 (Tampering) | 修改请求参数 | 输入校验 + 签名 |
+| 否认 (Repudiation) | 删除操作后否认 | 审计日志 + 不可删除 |
+| 信息泄露 (Info Disclosure) | API 返回敏感字段 | 响应过滤 + 脱敏 |
+| 拒绝服务 (DoS) | 大量请求 | 限流 + WAF + CDN |
+| 提权 (Elevation) | 普通用户调用管理接口 | RBAC + API 鉴权 |
+
+### 5. 关键技术难点攻克方案
+
+每个难点独立成节：
 
 ```markdown
-## 接口架构
+### 难点 1: 实时协作冲突解决
 
-### 服务间通信
+**问题描述：** 多用户同时编辑同一文档时如何解决冲突？
 
-| 通信模式 | 协议 | 场景 | 示例 |
-|---------|------|------|------|
-| 同步请求 | gRPC / HTTP | 实时查询、命令 | user-svc → feature-svc |
-| 异步事件 | Kafka / Redis Streams | 状态变更通知 | feature-svc → notification-svc |
-| 定时任务 | Cron / Scheduler | 批量处理 | 每日报表生成 |
+**方案对比：**
+| 方案 | 原理 | 优势 | 劣势 | 复杂度 |
+|------|------|------|------|--------|
+| OT (Operational Transformation) | 操作变换 | 成熟、实时 | 依赖中心服务器 | 高 |
+| CRDT (Conflict-free Replicated Data Types) | 无冲突数据结构 | 去中心化、离线 | 内存开销 | 高 |
+| 乐观锁 + 合并 | 版本号+三路合并 | 简单、可控 | 冲突需手动解决 | 中 |
 
-### API 网关策略
+**推荐方案：** 乐观锁 + 自动合并（MVP 阶段）
+- 每个文档带 `version` 字段
+- 保存时检查版本，冲突时尝试自动合并文本
+- 自动合并失败时提示用户手动解决
+- 后续可升级到 CRDT（根据协作频率决定）
 
-- 路由规则: [path → service 映射]
-- 限流策略: [per-user / per-IP / per-service]
-- 认证: [JWT / API Key / OAuth2]
-- 版本管理: [URL 版本 / Header 版本]
-- 熔断: [超时、重试、熔断参数]
-
-### 异步消息契约
-
-| 事件 | 生产者 | 消费者 | Payload 结构 | 保证等级 |
-|------|--------|--------|-------------|---------|
-| feature.created | feature-svc | search-svc, notification-svc | {id, title, status} | at-least-once |
-| feature.updated | feature-svc | search-svc | {id, changes} | at-least-once |
-| feature.deleted | feature-svc | search-svc | {id} | at-least-once |
+**关键技术指标：**
+- 冲突检测延迟：< 100ms
+- 自动合并成功率：> 80%（文本类文档）
+- 手动冲突解决 UI 响应：< 2s
 ```
 
-### Phase 6: 安全架构设计
+### 6. 多方案对比分析
+
+对关键技术决策，至少提供 2 个候选方案并做出推荐：
 
 ```markdown
-## 安全架构
+## 方案对比：前后端通信方式
 
-### 认证授权模型
-- 认证: [JWT / Session / OAuth2 / SSO]
-- 授权: [RBAC / ABAC / ReBAC]
-- 角色/权限矩阵: [角色 → 权限 → 资源]
+| 维度 | REST API | GraphQL | 混合方案 |
+|------|----------|---------|---------|
+| 开发效率 | 高（标准） | 中（学习成本） | 中 |
+| 性能 | 中（可能过度获取） | 高（按需查询） | 高 |
+| 缓存 | 简单（HTTP 缓存） | 复杂（需 Persisted Queries） | 中 |
+| 工具生态 | 成熟 | 成熟 | 需整合 |
+| 移动端适配 | 需多个端点 | 天然适配 | 中 |
+| 团队能力 | 常见 | 需学习 | 需学习 |
 
-### 威胁模型 (STRIDE)
-| 威胁类型 | 风险点 | 缓解措施 | 优先级 |
-|---------|--------|---------|--------|
-| 篡改 | API 请求伪造 | 请求签名验证 | P0 |
-| 信息泄露 | PII 数据泄露 | 字段加密 + 访问审计 | P0 |
-| 拒绝服务 | 接口被刷 | 限流 + WAF | P1 |
-| 权限提升 | 越权访问 | 行级权限检查 | P0 |
-
-### 数据安全
-- 传输加密: TLS 1.3
-- 存储加密: AES-256
-- 密钥管理: KMS / Vault
-- 日志脱敏: 自动过滤 PII 字段
+**推荐：** 混合方案
+- 核心 CRUD → REST API（标准化、缓存简单）
+- 复杂查询/移动端 → GraphQL（按需查询）
+- 实时推送 → WebSocket（独立通道）
 ```
 
-### Phase 7: 关键技术难点详细方案
-
-对系统中最复杂的 2-3 个技术难点，给出详细攻克方案：
-
-```markdown
-## 关键技术难点
-
-### 难点 1: [名称]
-
-**问题描述:**
-[清晰描述问题]
-
-**方案设计:**
-[详细方案，含流程图]
-
-**关键代码/伪代码:**
-```
-[核心实现逻辑]
-```
-
-**边界条件:**
-- [边界 1]
-- [边界 2]
-
-**验证方案:**
-- [如何验证方案正确性]
-- [性能基准]
-```
-
-### Phase 8: 输出产物
-
-最终产出 `.csp/tech-design/` 目录下的结构化文件：
+## 输出产物
 
 ```
 .csp/tech-design/
-├── SYSTEM-CONTEXT.md          # 系统上下文分析
-├── ARCHITECTURE-DESIGN.md     # 系统架构设计
-├── DATA-ARCHITECTURE.md       # 数据架构设计
-├── INTERFACE-ARCHITECTURE.md  # 接口架构设计
-├── SECURITY-ARCHITECTURE.md   # 安全架构设计
-├── KEY-TECHNICAL-CHALLENGES.md # 关键技术难点
-├── DECISION-LOG.md            # 方案对比与决策记录
-└── TECH-DESIGN-SUMMARY.md     # 技术方案摘要（供下游消费）
+├── ARCHITECTURE-DESIGN.md       # 系统架构设计（含架构图、模块划分、部署拓扑）
+├── DATA-ARCHITECTURE.md         # 数据架构设计（ER 图、数据流、一致性策略）
+├── INTERFACE-ARCHITECTURE.md    # 接口架构设计（API 风格、版本、鉴权）
+├── SECURITY-ARCHITECTURE.md     # 安全架构设计（威胁建模、安全分层）
+├── KEY-CHALLENGES.md            # 关键技术难点攻克方案
+├── SOLUTION-COMPARISON.md       # 多方案对比分析
+└── TECH-DESIGN-SUMMARY.md       # 技术方案摘要（供下游消费）
 ```
 
-**TECH-DESIGN-SUMMARY.md 结构：**
+## 执行流程
 
-```markdown
-# Technical Design Summary
-
-## 架构概览
-- 架构风格: [微服务/模块化单体/...]
-- 服务/模块数: N
-- 部署方式: [K8s / 单机 / Serverless]
-
-## 技术决策汇总
-| 决策 | 选择 | 备选 |
-|------|------|------|
-| 服务拆分粒度 | [方案A] | [方案B] |
-| 数据库选型 | PostgreSQL | MySQL |
-| 通信模式 | 同步+异步混合 | 纯同步 |
-
-## 风险与缓解
-| 风险 | 等级 | 缓解策略 |
-|------|------|---------|
-| [风险1] | H/M/L | [策略] |
-
-## 下一步
-→ 使用 csp-tech-design-review 进行技术方案评审
-→ 使用 csp-fullstack-spec-generator 生成 Feature 级实现规格
-→ 使用 csp-tech-task-breakdown 拆解开发任务
+```
+1. 读取上游产物（decomposition + tech-decisions + capability contract）
+2. 识别架构风格（单体/微服务/事件驱动）
+3. 设计系统架构（模块划分 + 部署拓扑）
+4. 设计数据架构（ER 图 + 数据流 + 一致性策略）
+5. 设计接口架构（风格 + 版本 + 鉴权）
+6. 设计安全架构（威胁建模 + 分层防护）
+7. 识别关键技术难点并设计攻克方案
+8. 对关键决策做多方案对比
+9. 输出全套产物到 .csp/tech-design/
+10. 门控检查
 ```
 
-## 复杂度决定深度
+## 门控检查
 
-| 项目复杂度 | 设计深度 | 预估 Token |
-|-----------|---------|-----------|
-| S (简单 CRUD, ≤5 Feature) | 精简版: 系统上下文 + 架构概览 + 核心数据流 | ~2000 |
-| M (中等业务, 6-15 Feature) | 标准版: Phase 1-6 全部 | ~4000 |
-| L (复杂系统, >15 Feature) | 完整版: Phase 1-8 全部 + 多方案对比 | ~8000 |
-| XL (分布式/多系统) | 深度版: 完整版 + 集成方案 + 容灾设计 | ~12000 |
+- [ ] 系统架构设计完成（服务/模块划分 + 部署拓扑）
+- [ ] 数据架构设计完成（全局 ER 图 + 数据流）
+- [ ] 接口架构设计完成（API 风格 + 鉴权方案）
+- [ ] 安全架构设计完成（威胁建模 + 缓解措施）
+- [ ] 每个关键技术难点有攻克方案
+- [ ] 至少 2 个关键决策做了多方案对比并有结论
+- [ ] 技术方案与上游技术选型一致
 
 ## 完成信号
 
@@ -409,18 +356,41 @@ completion_signal:
   output: .csp/tech-design/TECH-DESIGN-SUMMARY.md
   next_step:
     recommended: csp-tech-design-review
-    alternatives: [csp-fullstack-spec-generator, csp-tech-task-breakdown]
+    alternatives: [csp-tech-task-breakdown, csp-fullstack-spec-generator]
   status:
     tech_design_path: .csp/tech-design/
     phase: plan
-    ready_for: [tech-design-review, spec-generation, task-breakdown]
+    ready_for: [tech-design-review, task-breakdown, spec-generation]
 ```
 
-## 设计原则
+## 与其他 Skill 的协作
 
-1. **方案对比是必选项，不是可选项** — 每个关键决策至少比较 2 个方案
-2. **架构图是必须的** — 一图胜千言，Mermaid 图不可省略
-3. **明确标注不确定点** — [TBD] 标记待确认项，不做无依据假设
-4. **权衡透明** — 每个选择都有代价，坦率标注负面后果
-5. **渐进式设计** — 不为未来 3 年可能不需要的场景过度设计
-6. **可验证** — 每个设计决策应能通过测试或评审验证
+| 上游 Skill | 提供什么 |
+|-----------|---------|
+| csp-requirement-decomposition | Feature 清单 + 依赖图 + 技术维度 |
+| csp-tech-stack-advisor | 技术栈全景 + ADR |
+| csp-product-capability | 产品约束/不变量 |
+
+| 下游 Skill | 消费什么 |
+|-----------|---------|
+| csp-tech-design-review | 全套技术方案产物（评审） |
+| csp-fullstack-spec-generator | 系统架构 + 数据架构 + 接口架构（生成 Spec） |
+| csp-tech-task-breakdown | 系统架构 + 模块划分（任务拆解） |
+
+## 快速开始示例
+
+```
+用户: "帮我设计知识库系统的技术方案"
+
+执行:
+  1. 读取 .csp/decomposition/（Feature 清单、技术维度）
+  2. 读取 .csp/tech-decisions/（技术栈：Python+FastAPI / Next.js / PG / Redis / Meilisearch）
+  3. 识别架构风格：模块化单体 + 搜索服务独立
+  4. 系统架构设计：4 个模块（用户/文档/搜索/通知）+ 部署拓扑
+  5. 数据架构设计：7 个核心实体 + ER 图 + 数据流
+  6. 接口架构设计：REST API + WebSocket（实时协作）+ 事件驱动（索引更新）
+  7. 安全架构设计：JWT + RBAC + 威胁建模
+  8. 关键技术难点：实时协作冲突解决（CRDT vs OT vs 乐观锁）
+  9. 多方案对比：PG FTS vs Meilisearch vs Elasticsearch
+  10. 输出 .csp/tech-design/ 全套产物
+```

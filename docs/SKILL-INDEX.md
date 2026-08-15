@@ -522,6 +522,7 @@
 | `csp-integration-design` | P2 | 跨系统集成方案：接口契约、数据一致性(Saga/2PC)、故障隔离(熔断/降级)、灰度发布回滚 | csp-tech-solution-design |
 | `csp-domain-driven-design` | P3 | 领域驱动设计：限界上下文、聚合根/实体/值对象、领域事件、上下文映射、统一语言 | csp-requirement-decomposition |
 | `csp-prd-change-impact` | P3 | PRD 变更影响分析：全链路追踪(PRD→Feature→Spec→Task→Code)、成本量化工时、风险重评估 | csp-prd-traceability |
+| `csp-plan-phase` | P1 | 实施规划阶段引擎：里程碑规划、资源分配、并行策略、风险缓冲、进度跟踪。桥接任务拆解→实施执行 | csp-tech-task-breakdown |
 
 #### 22.1 集成链路
 
@@ -547,6 +548,8 @@ PRD/需求输入
     │
     ├── [csp-tech-task-breakdown] ──→ 开发任务拆解
     ├── [csp-effort-estimation] ───→ 工作量估算
+    │
+    ▼ [csp-plan-phase] ────────────→ 实施规划 (里程碑/资源/缓冲)
     │
     ▼ [csp-lifecycle-orchestrator] ─→ 全生命周期编排
     │

@@ -7,18 +7,19 @@ description: |
   输出分级评审报告（CRITICAL/WARNING/INFO），类似于 code review 但针对设计文档。
   当技术方案完成后需要评审、或用户需要"方案评审"、"设计评审"、"架构评审"时使用。
   关键词：技术方案评审、设计评审、架构评审、方案评审、tech design review、
-  design review、architecture review、技术评审、方案审查、设计审查、
-  架构审查、tech review、方案把关、方案REVIEW、技术方案检查。
+  design review、architecture review、技术评审、方案审核、技术方案审核、
+  设计审核、技术方案评估、方案评估、技术评估。
 version: "1.0.0"
 layer: 2
 category: workflow
 phase: review
 domain: architecture
 scope: review
-tools: [Read, Write, Edit, Glob, Grep]
+tools: [Read, Write, Edit, Glob, Grep, Bash]
 
 dependencies:
-  skills: [csp-tech-solution-design]
+  skills:
+    - csp-tech-solution-design
 
 related_skills:
   - csp-tech-solution-design
@@ -26,246 +27,211 @@ related_skills:
   - csp-code-review
   - csp-tech-risk-assessment
   - csp-lifecycle-orchestrator
-  - csp-full
+  - csp-multi-review
 
 triggers:
   keywords: ["技术方案评审", "设计评审", "架构评审", "方案评审", "技术评审",
-             "方案审查", "设计审查", "架构审查", "方案把关", "方案REVIEW",
-             "design review", "architecture review", "tech design review",
-             "tech review", "技术方案检查", "架构检查"]
+             "tech design review", "design review", "architecture review",
+             "方案审核", "方案评估", "技术方案评估"]
   intents:
-    - "user wants to review a technical design document"
-    - "user needs multi-perspective architecture review"
-    - "user wants to validate the technical solution before implementation"
-    - "user needs to catch design flaws early"
+    - "user needs technical design review"
+    - "user wants architecture review"
+    - "user needs to validate design decisions"
   context:
     - "after_tech_solution_design"
-    - "before_implementation"
 
 anti_rationalizations:
-  "The design looks fine, no need for formal review": "Design flaws caught early cost 1x to fix. Caught during implementation cost 10x. Caught in production cost 100x."
-  "A single reviewer is enough": "Different perspectives catch different issues. An architect sees what a DBA misses."
-  "We can review during code review": "Code review is too late for architecture decisions. Review the design before coding starts."
-  "The AI designed it, so it must be correct": "AI-generated designs need adversarial review just like human-generated ones."
+  "方案是我自己写的，不用评审": "作者偏见是最大的盲区。自己写的方案至少要经过 2 个独立角色评审。"
+  "项目太小不需要评审": "小项目也有架构决策。评审的深度可以缩放，但不能跳过。"
+  "评审太慢，先做起来": "设计阶段的返工成本远低于实施后的返工。现在花 1 小时评审，可能节省 40 小时重写。"
 ---
 
-# Technical Design Review
+# Tech Design Review
 
-对技术方案设计文档进行多角色、多维度并行评审，在设计阶段发现并解决架构问题。
+技术方案评审引擎 — 多角色并行评审，确保技术方案在落地前经过充分验证。
 
-## 定位与分工
+## 核心理念
 
-`csp-tech-design-review` 与 `csp-doc-review` 互补：
-- `csp-doc-review` — 审需求文档（PRD、需求规格），关注"做正确的事"
-- `csp-tech-design-review` — 审技术方案（TDD），关注"正确地做事"
-- `csp-code-review` — 审代码实现，关注"实现是否正确"
+技术方案评审不是找茬，而是**降低技术决策风险**。好的评审：
+1. 发现盲区 — 每个人都有自己的知识盲区，多角色互补
+2. 验证假设 — 技术方案中隐含的假设需要被挑战
+3. 统一认知 — 评审过程也是团队对齐过程
+4. 防止过度设计 — 架构师的方案可能过于复杂，需要实际约束拉回
 
-## 输入
+与 `csp-doc-review` 的分工：
+- `csp-doc-review` 审需求文档（PRD/需求文档），关注需求完整性、一致性
+- `csp-tech-design-review` 审技术方案（TDD），关注架构合理性、可行性
 
-- `.csp/tech-design/` — 技术方案设计产物（SYSTEM-CONTEXT、ARCHITECTURE-DESIGN、DATA-ARCHITECTURE、INTERFACE-ARCHITECTURE、SECURITY-ARCHITECTURE、KEY-TECHNICAL-CHALLENGES、DECISION-LOG）
-- `.csp/decomposition/` — Feature 拆解（用于验证方案覆盖度）
-- `.csp/tech-decisions/` — 技术选型 ADR（用于验证方案一致性）
-- PRODUCT.md — 产品能力约束（用于验证方案是否满足约束）
+## 评审角色
+
+### 6 大评审角色
+
+| 角色 | 关注点 | 典型问题 |
+|------|--------|---------|
+| 架构师 | 系统架构合理性、模块划分、扩展性 | "这个模块职责是否单一？扩展点在哪里？" |
+| 安全专家 | 安全架构、威胁建模、数据保护 | "API 鉴权是否覆盖所有端点？敏感数据是否加密？" |
+| 性能专家 | 性能瓶颈、容量规划、缓存策略 | "这个查询在 100 万数据下需要多久？" |
+| DBA | 数据模型、索引设计、一致性策略 | "这个表设计是否满足第三范式？索引是否合理？" |
+| 运维专家 | 部署方案、监控告警、容灾策略 | "如何滚动升级？回滚方案是什么？" |
+| 成本分析师 | 资源需求、成本估算、优化建议 | "这个架构的月度云成本预估是多少？" |
+
+## 评审输入
+
+- `.csp/tech-design/ARCHITECTURE-DESIGN.md` — 系统架构设计
+- `.csp/tech-design/DATA-ARCHITECTURE.md` — 数据架构设计
+- `.csp/tech-design/INTERFACE-ARCHITECTURE.md` — 接口架构设计
+- `.csp/tech-design/SECURITY-ARCHITECTURE.md` — 安全架构设计
+- `.csp/tech-design/KEY-CHALLENGES.md` — 关键技术难点
+- `.csp/tech-design/SOLUTION-COMPARISON.md` — 方案对比
+- `.csp/tech-decisions/ADR/*.md` — 架构决策记录
 
 ## 评审流程
 
-### Phase 1: 评审范围确定
-
-读取技术方案文档，确定评审范围：
-
-```markdown
-## Review Scope
-
-方案来源: .csp/tech-design/
-方案复杂度: S/M/L/XL
-评审深度: 精简/标准/完整
-评审角色: 架构师 / 安全专家 / 性能专家 / DBA / 运维专家 / 成本分析师
+```
+1. 加载技术方案全套产物
+2. 并行启动 6 个评审角色（每个角色独立审查）
+3. 每个角色输出评审发现（CRITICAL / WARNING / INFO）
+4. 汇总所有发现，去重，按严重程度排序
+5. 生成评审报告
+6. [门控] 无 CRITICAL → 通过；有 CRITICAL → 需要修复
 ```
 
-### Phase 2: 多角色并行评审
+## 评审发现分级
 
-对每个角色，从不同维度审查技术方案。
+### CRITICAL — 必须修改
 
-#### 角色 1: 架构师 (Architect)
+会导致安全事故、数据丢失、系统不可用或无法扩展的设计缺陷：
 
-**审查维度:**
-- [ ] 架构风格选择是否与需求匹配
-- [ ] 服务/模块划分是否合理（高内聚低耦合）
-- [ ] 分层架构是否清晰，层间依赖是否单向
-- [ ] 是否过度设计或不足设计
-- [ ] 抽象层次是否恰当
-- [ ] 方案对比是否充分（至少 2 个方案）
-- [ ] 设计决策理由是否充分
-- [ ] 与现有架构的兼容性
+- 安全漏洞（未鉴权的敏感接口、明文存储密码）
+- 数据一致性风险（缺少事务保护的关键操作）
+- 单点故障（关键服务无冗余）
+- 架构不可扩展（上线即瓶颈）
+- 关键技术难点无攻克方案
 
-**典型发现:**
-```
-WARNING: 服务拆分粒度过细（5 个微服务处理 3 个 Feature），团队 3 人维护 5 个服务运维成本过高。
-建议: 合并为 2 个模块化服务，待团队增长后再拆分。
-```
+### WARNING — 建议修改
 
-#### 角色 2: 安全专家 (Security Expert)
+可能导致性能问题、维护困难或成本过高：
 
-**审查维度:**
-- [ ] 认证授权模型是否满足安全要求
-- [ ] 数据加密策略是否覆盖传输和存储
-- [ ] 威胁模型是否完整（STRIDE）
-- [ ] 是否需要考虑 OWASP Top 10 风险
-- [ ] 敏感数据是否脱敏
-- [ ] 密钥管理方案是否安全
-- [ ] API 安全措施是否到位（限流/防注入/CSRF）
-- [ ] 审计日志是否覆盖关键操作
+- 缺少索引的关键查询
+- 缓存策略不合理
+- 接口设计不规范（缺少版本策略）
+- 部署方案缺少监控/告警
+- 模块耦合度过高
 
-**典型发现:**
-```
-CRITICAL: 安全架构中未提及 API 限流策略，存在被刷风险。
-建议: 在 API 网关层增加 per-user 限流（100 req/min），核心写操作更低（20 req/min）。
-```
+### INFO — 改进建议
 
-#### 角色 3: 性能专家 (Performance Expert)
+不影响功能但可优化的设计建议：
 
-**审查维度:**
-- [ ] 性能目标是否明确（p99 延迟、吞吐量）
-- [ ] 缓存策略是否合理（层级、TTL、失效策略）
-- [ ] 数据库查询是否考虑到性能（索引、连接池、慢查询）
-- [ ] 是否有性能瓶颈单点
-- [ ] 关键路径的响应时间是否满足要求
-- [ ] 异步处理策略是否合理
-- [ ] 静态资源/CDN 策略
+- 命名规范建议
+- 日志策略建议
+- 文档完善建议
+- 代码组织建议
+- 技术选型替代方案（不强制）
 
-**典型发现:**
-```
-WARNING: 缓存设计中所有 Feature 列表共用同一缓存 key，Filter 参数变化导致缓存命中率极低。
-建议: 缓存 key 应包含筛选参数 hash，或使用 Redis 的 Sorted Set 做多维查询缓存。
-```
+## 评审维度矩阵
 
-#### 角色 4: DBA (Database Expert)
+| 维度 | 架构师 | 安全专家 | 性能专家 | DBA | 运维专家 | 成本分析师 |
+|------|--------|---------|---------|-----|---------|-----------|
+| 架构合理性 | ● | ○ | ○ | ○ | ○ | ○ |
+| 可扩展性 | ● | ○ | ● | ● | ○ | ○ |
+| 安全性 | ○ | ● | ○ | ○ | ○ | ○ |
+| 性能 | ○ | ○ | ● | ● | ○ | ○ |
+| 可维护性 | ● | ○ | ○ | ○ | ● | ○ |
+| 可靠性 | ● | ○ | ○ | ○ | ● | ○ |
+| 成本 | ○ | ○ | ○ | ○ | ○ | ● |
 
-**审查维度:**
-- [ ] 数据库选型是否与数据模型匹配
-- [ ] ER 图是否完整，关系建模是否合理
-- [ ] 索引设计是否覆盖核心查询
-- [ ] 数据一致性策略是否明确
-- [ ] 数据量预估和分区策略是否合理
-- [ ] 迁移策略是否安全（在线 DDL、回滚方案）
-- [ ] 连接池配置是否合理
-- [ ] 慢查询监控和优化策略
+● 主要关注 ○ 次要关注
 
-**典型发现:**
-```
-CRITICAL: features 表缺少 search_vector 列用于全文搜索，而当前方案依赖 LIKE 查询。
-建议: 增加 tsvector 生成列 + GIN 索引，或使用 Meilisearch 做外部搜索。
-```
+## 输出产物
 
-#### 角色 5: 运维专家 (Ops/DevOps)
-
-**审查维度:**
-- [ ] 部署拓扑是否高可用
-- [ ] 服务健康检查是否配置
-- [ ] 日志和监控是否覆盖
-- [ ] 告警规则是否合理
-- [ ] 灰度发布和回滚方案是否可行
-- [ ] 资源预估是否合理
-- [ ] 扩容缩容策略
-
-**典型发现:**
-```
-WARNING: 部署拓扑中所有服务只部署了 1 个 pod，无冗余。
-建议: 核心服务至少 2 个 pod，配置 HPA 自动扩缩容，跨可用区部署。
-```
-
-#### 角色 6: 成本分析师 (Cost Analyst)
-
-**审查维度:**
-- [ ] 基础设施成本是否在预算内
-- [ ] 是否过度使用付费服务
-- [ ] 是否可以通过优化降低资源需求
-- [ ] 自建 vs 托管服务的成本对比
-- [ ] 存储成本（数据量 * 保留期）
-
-**典型发现:**
-```
-INFO: 搜索服务使用 Elasticsearch 需要 4C8G 三节点集群，月成本约 ¥3000。
-建议: 如果搜索量 < 100K 文档，可考虑用 Meilisearch（1C2G 单节点，月成本约 ¥200）。
-```
-
-### Phase 3: 发现汇总与分析
-
-汇总所有角色发现，合并重复项，优先级排序：
-
-```markdown
-## Review Findings
-
-### CRITICAL (必须修复)
-| # | 发现 | 来源角色 | 影响范围 | 修复建议 |
-|---|------|---------|---------|---------|
-| 1 | [标题] | [角色] | [影响] | [建议] |
-
-### WARNING (强烈建议修复)
-| # | 发现 | 来源角色 | 影响范围 | 修复建议 |
-|---|------|---------|---------|---------|
-
-### INFO (关注项)
-| # | 发现 | 来源角色 | 影响范围 | 修复建议 |
-|---|------|---------|---------|---------|
-```
-
-### Phase 4: 整体评价
-
-```markdown
-## Overall Assessment
-
-### 方案质量评分
-| 维度 | 评分 (1-5) | 评价 |
-|------|-----------|------|
-| 架构合理性 | 4 | [评价] |
-| 可扩展性 | 3 | [评价] |
-| 安全性 | 4 | [评价] |
-| 性能 | 3 | [评价] |
-| 可维护性 | 4 | [评价] |
-| 可靠性 | 3 | [评价] |
-| 成本效率 | 3 | [评价] |
-| **综合** | **3.4** | [总结] |
-
-### 评审结论
-- 状态: [APPROVED / APPROVED WITH MINOR CHANGES / NEEDS REVISION / REJECTED]
-- 通过条件: [如需修改，列出必须满足的条件]
-- 下一步: [csp-fullstack-spec-generator / 方案修改后重审]
-```
-
-### Phase 5: 输出评审报告
-
-将评审报告输出到 `.csp/tech-design/REVIEW-FINDINGS.md`：
+### REVIEW-FINDINGS.md
 
 ```markdown
 # Technical Design Review Report
 
-**方案来源:** .csp/tech-design/
-**评审日期:** {date}
-**评审角色:** [角色列表]
-**评审结论:** [APPROVED / NEEDS REVISION]
+## 评审概览
+- 评审日期: YYYY-MM-DD
+- 评审范围: .csp/tech-design/
+- 评审角色: 架构师、安全专家、性能专家、DBA、运维专家、成本分析师
+- 发现总数: N
+- 评审结论: APPROVED / APPROVED_WITH_MINOR_CHANGES / NEEDS_REVISION
 
-## Review Summary
-[3-5 行总结]
+## 发现汇总
 
-## Findings
-[CRITICAL / WARNING / INFO 分级]
+| 编号 | 严重程度 | 维度 | 发现 | 影响 | 建议 |
+|------|---------|------|------|------|------|
+| R1 | CRITICAL | 安全 | API 未鉴权 | 数据泄露 | 增加 JWT 中间件 |
+| R2 | WARNING | 性能 | 列表查询无分页 | 大数据量 OOM | 增加分页参数 |
+| R3 | WARNING | 运维 | 无健康检查端点 | 无法自动恢复 | 增加 /health 端点 |
+| R4 | INFO | 架构 | 模块命名建议 | 可读性 | 重命名为 xxx |
 
-## Design Quality Matrix
-[评分矩阵]
+## 分角色评审详情
 
-## Resolution Plan
-[修复计划 + 责任人 + 截止日期]
+### 架构师评审
+**总体评价：** [评价]
+
+**发现：**
+- [R-X] CRITICAL/WARNING/INFO: [描述]
+  - 问题: [具体问题]
+  - 影响: [影响范围]
+  - 建议: [修改建议]
+  - 参考: [相关 ADR 或最佳实践]
+
+### 安全专家评审
+...
+
+### 性能专家评审
+...
+
+### DBA 评审
+...
+
+### 运维专家评审
+...
+
+### 成本分析师评审
+...
+
+## 评审结论
+
+- [ ] APPROVED — 无 CRITICAL，WARNING ≤ 3
+- [ ] APPROVED_WITH_MINOR_CHANGES — 无 CRITICAL，WARNING > 3 但非阻塞
+- [ ] NEEDS_REVISION — 存在 CRITICAL，需修复后重新评审
+
+## 后续行动
+
+| 行动项 | 负责人 | 截止日期 | 状态 |
+|--------|--------|---------|------|
+| 修复 R1 | [name] | YYYY-MM-DD | Pending |
+| 修复 R2 | [name] | YYYY-MM-DD | Pending |
 ```
 
-## 评审深度
+## 评审策略
 
-| 方案复杂度 | 评审角色数 | 评审深度 | 预估 Token |
-|-----------|-----------|---------|-----------|
-| S (简单) | 3 (架构师 + 安全 + DBA) | 精简 | ~1500 |
-| M (中等) | 4 (架构师 + 安全 + 性能 + DBA) | 标准 | ~3000 |
-| L (复杂) | 5 (全部 4 + 运维) | 完整 | ~5000 |
-| XL (分布式) | 6 (全部) | 深度 | ~8000 |
+| 项目复杂度 | 评审深度 | 评审角色 | 评审时间 |
+|-----------|---------|---------|---------|
+| S (简单) | 核心角色 | 架构师 + 安全专家 | 30 min |
+| M (中等) | 完整 6 角色 | 全部 | 1-2 h |
+| L (复杂) | 完整 6 角色 + 专项 | 全部 + 领域专家 | 2-4 h |
+| XL (核心) | 完整 + 外部评审 | 全部 + 外部顾问 | 1-2 d |
+
+## 门控规则
+
+```yaml
+gate:
+  PASS:
+    - no_critical_findings: true
+    - warning_count: <= 3
+    - conclusion: APPROVED or APPROVED_WITH_MINOR_CHANGES
+  
+  FAIL:
+    - has_critical_findings: true  → NEEDS_REVISION
+    - warning_count: > 3 and unaddressed → NEEDS_REVISION
+  
+  RETRY:
+    - after_fix: re-run review for affected dimensions only
+    - max_retries: 3
+```
 
 ## 完成信号
 
@@ -273,21 +239,44 @@ INFO: 搜索服务使用 Elasticsearch 需要 4C8G 三节点集群，月成本�
 completion_signal:
   output: .csp/tech-design/REVIEW-FINDINGS.md
   next_step:
-    APPROVED: csp-fullstack-spec-generator
-    APPROVED_WITH_MINOR_CHANGES: csp-tech-solution-design (修复后) → csp-fullstack-spec-generator
-    NEEDS_REVISION: csp-tech-solution-design (重新设计)
-    REJECTED: csp-tech-solution-design (重新设计)
+    on_approved: csp-tech-task-breakdown or csp-fullstack-spec-generator
+    on_needs_revision: retry csp-tech-solution-design
   status:
-    review_path: .csp/tech-design/REVIEW-FINDINGS.md
+    conclusion: "APPROVED | APPROVED_WITH_MINOR_CHANGES | NEEDS_REVISION"
+    critical_count: "{{count}}"
+    warning_count: "{{count}}"
     phase: review
-    ready_for: [spec-generation, re-design]
+    ready_for: [task-breakdown, spec-generation]
 ```
 
-## 关键原则
+## 与其他 Skill 的协作
 
-1. **评审是设计过程的一部分，不是事后检查** — 早评审、小评审、频繁评审
-2. **每个角色独立评审** — 角色之间不串通，确保独立视角
-3. **必须给出具体修复建议** — 不说"这个设计不好"，说"这个设计的问题是 X，建议改成 Y"
-4. **CRITICAL 必须阻塞后续流程** — 致命问题不修复，后续工作都是浪费
-5. **评分要诚实** — 不因为 AI 生成就放水，不因为团队决策就降低标准
-6. **与 code review 对齐** — 评审发现的结构性问题应反馈到代码规范中
+| 上游 Skill | 提供什么 |
+|-----------|---------|
+| csp-tech-solution-design | 全套技术方案产物 |
+
+| 下游 Skill | 效果 |
+|-----------|------|
+| csp-tech-solution-design | 需要修复 CRITICAL 时回退 |
+| csp-tech-task-breakdown | 评审通过后进入任务拆解 |
+| csp-fullstack-spec-generator | 评审通过后生成全栈 Spec |
+| csp-tech-risk-assessment | 评审发现的风险纳入风险评估 |
+
+## 快速开始示例
+
+```
+用户: "评审刚才的技术方案"
+
+执行:
+  1. 加载 .csp/tech-design/ 全套产物
+  2. 并行启动 6 个评审角色:
+     - 架构师: 发现模块边界模糊，建议明确接口契约
+     - 安全专家: 发现 JWT 无刷新机制，标记 WARNING
+     - 性能专家: 发现列表查询无分页，标记 WARNING
+     - DBA: 发现缺少联合索引，标记 WARNING
+     - 运维专家: 发现无健康检查端点，标记 WARNING
+     - 成本分析师: 预估月成本 $500-800，标记 INFO
+  3. 汇总: 0 CRITICAL, 4 WARNING, 1 INFO
+  4. 评审结论: APPROVED_WITH_MINOR_CHANGES
+  5. 输出 .csp/tech-design/REVIEW-FINDINGS.md
+```

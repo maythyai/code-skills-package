@@ -169,14 +169,14 @@ CSP uses a five-layer layered architecture. Only the router (L0) loads at sessio
 │      Planning · Debugging · TDD · Brainstorming · Scope Guard│
 ├──────────────────────────────────────────────────────────────┤
 │  L2  csp-workflow    Project management (~500 tokens/skill  │
-│      · 165) plan → execute → verify → ship full lifecycle   │
+│      · 185) plan → execute → verify → ship full lifecycle   │
 ├──────────────────────────────────────────────────────────────┤
 │  L3  csp-patterns    Language/Framework (~200-600 tokens    │
-│      · 347) 15+ reviewer · Build fix · Patterns · Security │
+│      · 378) 15+ reviewer · Build fix · Patterns · Security │
 │      · Indie Dev (deploy/monetization/perf/i18n/monorepo)  │
 │      · Responsive/Data-analysis/Paper-reader/UI-design      │
 ├──────────────────────────────────────────────────────────────┤
-│  L4  csp-runtime     Runtime (~300 tokens/skill · 56)      │
+│  L4  csp-runtime     Runtime (~300 tokens/skill · 57)      │
 │      Continuous learning · Autonomous execution · Knowledge  │
 │      management · Token budget · File-organizer · Parallel   │
 └──────────────────────────────────────────────────────────────┘

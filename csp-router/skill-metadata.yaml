@@ -4,7 +4,7 @@
 # Regenerate: node scripts/build-skill-metadata.mjs
 
 version: 2.0
-generated_at: 2026-08-13T08:11:10.044Z
+generated_at: 2026-08-15T02:39:50.546Z
 skills:
   csp-agent-teams:
     phase: review
@@ -292,7 +292,7 @@ skills:
     phase: plan
     domain: patterns
   csp-domain-driven-design:
-    phase: plan
+    phase: define
     domain: architecture
     scope: design
     tools:
@@ -301,23 +301,22 @@ skills:
       - Edit
       - Glob
       - Grep
+      - Bash
     dependencies:
       skills:
         - csp-requirement-decomposition
     related_skills:
       - csp-requirement-decomposition
       - csp-tech-solution-design
-      - csp-fullstack-spec-generator
       - csp-lifecycle-orchestrator
-      - csp-full
+      - csp-brainstorming
     anti_rationalizations:
-      DDD is only for enterprise systems: "DDD is for any system with complex business rules. Complexity is about rules, not scale."
-      We can just use CRUD, it's simpler: "CRUD on complex domains leads to anemic models and scattered business logic. DDD prevents that."
-      DDD is too academic: "DDD's core patterns (aggregates, events, bounded contexts) are practical tools for managing complexity."
-      We don't need formal modeling: "Formal modeling is the difference between 'we think we understand' and 'we have a shared understanding.'"
+      DDD 太复杂，不适合我们: "DDD 有战术模式和战略模式。简单项目用战术模式的一部分（实体、值对象），复杂项目才需要全量。"
+      按数据库表建模型就行: "数据库建模 ≠ 领域建模。数据驱动设计导致贫血模型，业务逻辑散落在 Service 层。"
+      限界上下文就是微服务: 限界上下文是逻辑边界，不一定是物理边界。一个微服务可以包含多个限界上下文，反之亦然。
   csp-effort-estimation:
     phase: plan
-    domain: architecture
+    domain: quality
     scope: analysis
     tools:
       - Read
@@ -325,20 +324,21 @@ skills:
       - Edit
       - Glob
       - Grep
+      - Bash
     dependencies:
       skills:
         - csp-tech-solution-design
         - csp-tech-task-breakdown
     related_skills:
-      - csp-tech-task-breakdown
       - csp-tech-solution-design
+      - csp-tech-task-breakdown
       - csp-lifecycle-orchestrator
-      - csp-full
+      - csp-tech-risk-assessment
+      - csp-plan-phase
     anti_rationalizations:
-      I'll just double the developer's estimate: "Padding estimates without analysis creates distrust and doesn't address root causes."
-      Historical data is not available, so estimation is impossible: "Use PERT (O+4M+P)/6 — it's designed for uncertainty."
-      We don't need to estimate, we're agile: "Even agile teams need rough timelines for stakeholder communication and resource planning."
-      One number is enough: "Single-point estimates are always wrong. Use ranges with confidence intervals."
+      估时总是错的，没必要估: 估时不准确是常态，但估算过程本身暴露了不确定性和风险。没有估时就没有管理基线。
+      直接给个总数就行: "没有 WBS 的估时是拍脑袋。逐任务估算 + 汇总才有参考价值。"
+      用经验估就行，不用方法论: "方法论（如 PERT）通过最优/最可能/最差三值量化不确定性，比单一经验值更可靠。"
   csp-explore:
     phase: plan
     domain: patterns
@@ -367,6 +367,7 @@ skills:
       skills:
         - csp-requirement-decomposition
         - csp-tech-stack-advisor
+        - csp-tech-solution-design
     related_skills:
       - csp-requirement-decomposition
       - csp-tech-stack-advisor
@@ -482,6 +483,20 @@ skills:
   csp-hotfix:
     phase: build
     domain: patterns
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
+      - Bash
+    related_skills:
+      - csp-tweak
+      - csp-full
+      - csp-systematic-debugging
+    anti_rationalizations:
+      I'll do a full review later: "Hotfixes skip review by design. But you MUST add a regression test."
+      This is too small for a formal process: "Small fixes can cause big regressions. The verify step is non-negotiable."
   csp-implementation-phase:
     phase: build
     domain: patterns
@@ -516,14 +531,13 @@ skills:
     related_skills:
       - csp-tech-solution-design
       - csp-tech-design-review
-      - csp-fullstack-spec-generator
+      - csp-tech-risk-assessment
+      - csp-api-tester
       - csp-lifecycle-orchestrator
-      - csp-full
     anti_rationalizations:
-      We only have one system, no integration needed: "Every system integrates with something — auth, payment, storage, email. These are integrations."
-      We can just call each other's APIs directly: "Direct API calls create tight coupling. Use contracts, events, and circuit breakers."
-      Data consistency is the DBA's problem: "In distributed systems, consistency is a design decision, not a database setting."
-      We'll handle integration during implementation: "Integration design decisions (sync vs async, consistency model) affect architecture. Decide early."
+      两个系统直接调 API 就行: 直接调用没有容错、没有降级、没有重试。一旦下游挂了，上游也挂了。
+      分布式事务用 2PC 就行: "2PC 在分布式系统中性能差、有单点故障。大多数场景 Saga 或最终一致性更合适。"
+      灰度发布太复杂，直接全量上: "全量发布 = 出问题影响全部用户。灰度是降低发布风险的基本手段。"
   csp-legacy-modernization:
     phase: verify
     domain: patterns
@@ -581,30 +595,57 @@ skills:
   csp-parallel-worktree:
     phase: build
     domain: patterns
-  csp-prd-change-impact:
+  csp-plan-phase:
     phase: plan
-    domain: quality
-    scope: analysis
+    domain: architecture
+    scope: design
     tools:
       - Read
       - Write
       - Edit
       - Glob
       - Grep
+      - Bash
+    dependencies:
+      skills:
+        - csp-tech-task-breakdown
+    related_skills:
+      - csp-tech-task-breakdown
+      - csp-effort-estimation
+      - csp-implementation-phase
+      - csp-lifecycle-orchestrator
+      - csp-tech-risk-assessment
+      - csp-tdd
+      - csp-verify-phase
+    anti_rationalizations:
+      有任务清单就够了，不用做计划: 任务清单只说做什么，计划说什么时候做、谁来做、做多久。没有计划的任务清单是不可执行的。
+      计划赶不上变化，做了也白做: 计划的价值不在于精确预测，而在于建立基线。有了基线才能衡量偏差，才能调整。
+      小项目不需要里程碑: 即使只有一个里程碑，明确它也能让团队对齐预期。
+  csp-prd-change-impact:
+    phase: review
+    domain: quality
+    scope: review
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
+      - Bash
     dependencies:
       skills:
         - csp-prd-traceability
     related_skills:
       - csp-prd-traceability
       - csp-requirement-decomposition
-      - csp-tech-solution-design
-      - csp-lifecycle-orchestrator
-      - csp-full
+      - csp-prd-generation
+      - csp-tech-task-breakdown
+      - csp-tech-risk-assessment
+      - csp-product-discovery-orchestrator
     anti_rationalizations:
-      This is a small change, it won't affect much: "Small changes can have large ripple effects. Trace before you assume."
-      We don't need impact analysis, we'll just fix it: "Without impact analysis, you'll miss affected code and introduce regressions."
-      The traceability matrix is out of date, so impact analysis is impossible: "Even a partial matrix is better than no analysis. Update it first."
-      Impact analysis takes too long: "Not doing impact analysis takes longer when you fix the bugs you missed."
+      改一个需求而已，影响不大: "需求变更的影响链可能很深。一个 PRD 条目可能关联 3 个 Feature、5 个 Spec、12 个 Task。没有追溯矩阵，你无法判断影响。"
+      做完再评估影响: "事后评估 = 亡羊补牢。变更前评估可以避免浪费已经投入的开发资源。"
+      变更影响主要是代码范围: 除了代码，还需要评估对测试、文档、部署、风险的影响。全链路评估才完整。
   csp-prd-generation:
     phase: define
     domain: architecture
@@ -645,24 +686,25 @@ skills:
     dependencies:
       skills: []
     related_skills:
-      - csp-spec-contract
       - csp-requirement-decomposition
-      - csp-product-discovery-orchestrator
       - csp-prd-generation
+      - csp-prd-traceability
+      - csp-product-discovery-orchestrator
+      - csp-interview-me
     anti_rationalizations:
-      I can just read the PRD and jump to decomposition: "Manual reading skips structured extraction. The parser catches what humans miss."
-      One format is enough, we don't need multi-format support: "PRDs come from different sources. A single parser unifies them all."
-      Parsing is too simple to need a dedicated skill: "Structured parsing with section detection, feature extraction, and constraint identification is a multi-step process."
+      PRD 直接看就行，不用解析: "不同格式的 PRD 结构不同，直接看容易遗漏。标准化解析保证完整性。"
+      手动提取功能点就行: 手动提取容易遗漏约束条件、非功能性需求等隐含信息。结构化解析不会遗漏。
   csp-prd-traceability:
-    phase: plan
+    phase: review
     domain: quality
-    scope: analysis
+    scope: review
     tools:
       - Read
       - Write
       - Edit
       - Glob
       - Grep
+      - Bash
     dependencies:
       skills:
         - csp-requirement-decomposition
@@ -670,15 +712,14 @@ skills:
     related_skills:
       - csp-requirement-decomposition
       - csp-prd-generation
+      - csp-prd-change-impact
       - csp-fullstack-spec-generator
       - csp-tech-task-breakdown
-      - csp-prd-change-impact
-      - csp-verification
       - csp-product-discovery-orchestrator
     anti_rationalizations:
-      Traceability is overkill for small projects: "Even a 5-feature project has hidden coverage gaps. RTM catches them."
-      The PRD is clear enough, mapping is obvious: "Obvious mappings are where assumptions hide. Explicit mapping prevents gaps."
-      We can trace manually when needed: "Manual tracing is 20x slower than an automated RTM. Build it once, use it always."
+      追溯矩阵太形式化，不需要: 没有追溯矩阵，你无法回答'这个需求有没有被实现'或'这个代码对应哪个需求'。这是需求完整性的基本保障。
+      PRD 和 Feature 肯定是一一对应的: "很少有一一对应。一个 PRD 条目可能拆成多个 Feature，也可能多个 PRD 条目合并为一个 Feature。"
+      覆盖率检查不重要: "缺失的覆盖率 = 遗漏的需求 = 返工。覆盖率检查是需求闭环的最后一道防线。"
   csp-product-discovery-orchestrator:
     phase: define
     domain: architecture
@@ -880,6 +921,7 @@ skills:
       - Edit
       - Glob
       - Grep
+      - Bash
     dependencies:
       skills:
         - csp-tech-solution-design
@@ -889,22 +931,22 @@ skills:
       - csp-code-review
       - csp-tech-risk-assessment
       - csp-lifecycle-orchestrator
-      - csp-full
+      - csp-multi-review
     anti_rationalizations:
-      The design looks fine, no need for formal review: "Design flaws caught early cost 1x to fix. Caught during implementation cost 10x. Caught in production cost 100x."
-      A single reviewer is enough: "Different perspectives catch different issues. An architect sees what a DBA misses."
-      We can review during code review: "Code review is too late for architecture decisions. Review the design before coding starts."
-      The AI designed it, so it must be correct: "AI-generated designs need adversarial review just like human-generated ones."
+      方案是我自己写的，不用评审: "作者偏见是最大的盲区。自己写的方案至少要经过 2 个独立角色评审。"
+      项目太小不需要评审: 小项目也有架构决策。评审的深度可以缩放，但不能跳过。
+      评审太慢，先做起来: "设计阶段的返工成本远低于实施后的返工。现在花 1 小时评审，可能节省 40 小时重写。"
   csp-tech-risk-assessment:
-    phase: plan
-    domain: architecture
-    scope: analysis
+    phase: review
+    domain: quality
+    scope: review
     tools:
       - Read
       - Write
       - Edit
       - Glob
       - Grep
+      - Bash
     dependencies:
       skills:
         - csp-tech-solution-design
@@ -912,12 +954,12 @@ skills:
       - csp-tech-solution-design
       - csp-tech-design-review
       - csp-lifecycle-orchestrator
-      - csp-full
+      - csp-security-review
+      - csp-tech-debt-assessment
     anti_rationalizations:
-      This project is too simple for risk assessment: "Even simple projects have risks. A single DB failure can take down the entire app."
-      We'll handle risks as they come up: "Reactive risk handling is 10x more expensive than proactive risk mitigation."
-      The risks are obvious: "Obvious risks are rarely documented, and undocumented risks are forgotten risks."
-      Risk assessment is PM's job: "Technical risks need engineering judgment. PMs can't assess architecture or performance risks."
+      风险看运气，评估了也没用: 已知风险可以通过缓解措施降低概率或影响。评估不是消除风险，是管理风险。
+      项目小没有风险: "小项目也有风险，只是概率和影响不同。跳过评估 = 在风险面前裸奔。"
+      等出了问题再说: "被动应对的成本远高于主动管理。预防 1 小时 = 救火 40 小时。"
   csp-tech-solution-design:
     phase: plan
     domain: architecture
@@ -937,17 +979,15 @@ skills:
     related_skills:
       - csp-tech-design-review
       - csp-fullstack-spec-generator
+      - csp-tech-task-breakdown
       - csp-lifecycle-orchestrator
-      - csp-tech-risk-assessment
-      - csp-integration-design
       - csp-domain-driven-design
-      - csp-full
+      - csp-integration-design
+      - csp-tech-risk-assessment
     anti_rationalizations:
-      Let's skip the system design and go straight to coding: "System design catches architectural issues before they become 10x rework cost. Design first."
-      The architecture is obvious, no need to document: "Obvious architectures have hidden assumptions. Documenting forces explicit decisions."
-      One approach is enough, no need to compare alternatives: "Without comparison, there's no evidence the chosen approach is optimal. Compare at least 2 options."
-      The tech stack already defines the architecture: "Tech stack constrains but doesn't define architecture. The same stack can produce very different architectures."
-      We can decide the architecture during implementation: "Architecture decisions made during implementation are shaped by code, not by requirements. Design upfront."
+      这个需求很简单，不需要技术方案: "再简单的需求也有架构决策。跳过技术方案=把设计包袱丢给开发阶段，返工成本 10x。"
+      技术方案等实施时再定: 实施时改变架构决策的成本远高于设计阶段。技术方案就是设计阶段的决策锚点。
+      写过技术选型就够用了: 技术选型回答'用什么'，技术方案回答'怎么搭'。两者互补，缺一不可。
   csp-tech-stack-advisor:
     phase: plan
     domain: architecture
@@ -990,16 +1030,15 @@ skills:
     related_skills:
       - csp-tech-solution-design
       - csp-fullstack-spec-generator
-      - csp-writing-plans
-      - csp-effort-estimation
+      - csp-tech-design-review
       - csp-lifecycle-orchestrator
+      - csp-effort-estimation
+      - csp-plan-phase
       - csp-implementation-phase
-      - csp-full
     anti_rationalizations:
-      We can break down tasks during the sprint: "Undiscovered tasks during sprint = scope creep and missed deadlines. Plan upfront."
-      One task per feature is enough: "Features rarely map 1:1 to tasks. Break down by technical layer (DB/API/UI/Tests)."
-      Task dependencies are obvious: "Implicit dependencies become blockers. Map them explicitly in the DAG."
-      Estimation doesn't matter, we'll just work: "Without estimation, you can't answer 'when will it be done?' or 'should we cut scope?'"
+      任务拆解太细浪费时间: "粗粒度的任务 = 模糊的估时 = 不可预测的交付。每任务 ≤ 4h 是确保可预测性的最小粒度。"
+      直接按模块分就行: "模块划分 ≠ 开发任务。同一模块内可能有依赖关系，需要进一步拆解并排定顺序。"
+      估时不准，拆了也没用: "估时不准是常态，但拆解本身暴露了依赖和并行机会。即使估时偏 50%，拆解仍比不拆有价值。"
   csp-tweak:
     phase: build
     domain: patterns
@@ -1280,6 +1319,23 @@ skills:
   csp-django-patterns:
     phase: build
     domain: patterns
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
+      - Bash
+    related_skills:
+      - csp-django-security
+      - csp-python-patterns
+      - csp-python-testing
+      - csp-postgres-patterns
+      - csp-code-review
+    anti_rationalizations:
+      Django has built-in admin, no need for API: "Admin is for internal use. APIs are for programmatic access and frontend separation."
+      I'll add select_related later: "N+1 queries in production can bring down the database. Optimize queries from the start."
+      Just put it in the view: "Fat views are the #1 source of untestable Django code. Use service layers."
   csp-django-security:
     phase: build
     domain: patterns
