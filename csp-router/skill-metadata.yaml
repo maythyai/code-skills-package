@@ -4,7 +4,7 @@
 # Regenerate: node scripts/build-skill-metadata.mjs
 
 version: 2.0
-generated_at: 2026-08-15T02:39:50.546Z
+generated_at: 2026-08-15T08:28:57.647Z
 skills:
   csp-agent-teams:
     phase: review
@@ -177,6 +177,25 @@ skills:
       I'll add tests later: "Later never comes. Write tests first."
       This is too simple to test: "Simple code has bugs too. Tests are cheap."
       Tests slow me down: "Tests prevent debugging sessions that take longer."
+  csp-test-methodology:
+    phase: define
+    domain: testing
+    role: architect
+    scope: design
+    related_skills:
+      - csp-cross-layer-testing
+      - csp-tdd
+      - csp-e2e-testing
+      - csp-api-tester
+      - csp-test-engineer
+      - csp-webapp-testing
+      - csp-brainstorming
+      - csp-verification
+    anti_rationalizations:
+      单测过了功能就没问题: "单测只证明纯逻辑对；集成断链、跨层不一致、UI 退化它全看不见——必须按盲点互补再叠一层"
+      E2E 覆盖了关键路径就够了: "E2E 慢且少，过不了边界数据/并发/错误路径；它有盲点，需 property/fuzz/negative 补位"
+      我测了下单这个功能点: "测一个功能点≠测了联动效果——割裂测试正是漏 bug 的主因；见 [[csp-cross-layer-testing]]"
+      测试方法越多越好全上: 联想不是堆砌；按需求风险选最小互补集，广而快的在前，慢而深的在后
   csp-using-git-worktrees:
     phase: define
     domain: architecture
@@ -1280,6 +1299,23 @@ skills:
   csp-cpp-testing:
     phase: verify
     domain: patterns
+  csp-cross-layer-testing:
+    phase: verify
+    domain: testing
+    role: architect
+    scope: testing
+    related_skills:
+      - csp-db-state-assertion
+      - csp-linked-test-runner
+      - csp-playwright-ui-test
+      - csp-e2e-testing
+      - csp-api-tester
+      - csp-verify-phase
+    anti_rationalizations:
+      单测和接口测试都过了，集成没问题: "各层 PASS 不等于链路一致——必须在同一动作下把 UI/API/DB 证据对齐，才能证明一致"
+      E2E 测过登录流就算联动了: "走过场≠断言因果；联动测试必须断言'动作导致了预期 DB 变化且 UI 反映该变化'，而不只是页面跳转"
+      DB 是后端的事，前端测试不碰库: "联动测试的核心就是把 DB 状态纳入同一断言集，否则无法发现'接口成功但落库错/界面读旧数据'的缺陷"
+      用例写了但没对齐 trace_id: 没有对齐键的跨层证据无法证明因果，只能证明'各自都发生了'，等价于没联动
   csp-cross-platform-strategy:
     phase: build
     domain: patterns
@@ -1310,6 +1346,21 @@ skills:
   csp-db-performance:
     phase: build
     domain: patterns
+  csp-db-state-assertion:
+    phase: verify
+    domain: database
+    role: expert
+    scope: testing
+    related_skills:
+      - csp-cross-layer-testing
+      - csp-linked-test-runner
+      - csp-db-migration
+      - csp-db-performance
+    anti_rationalizations:
+      接口 200 就算写库成功: "200 只代表请求被接受；必须查库断言行真的落了、字段值正确，否则无法发现'接口成功但事务回滚/落错表'的缺陷"
+      查一下总数变了就行: 总数变化不等于正确——必须行级断言具体字段值与不变量，否则会漏掉'多写一行+少写一行'的对冲错误
+      用例间共享数据没事: "共享可变状态是 flaky 之首；联动 DB 断言必须事务隔离或独立 seed，否则并行跑必然互相污染"
+      直接连生产库查一下: "只读优先、禁生产写；即使只读也应优先连 test 库(环境变量参数化)，绝不硬编码生产连接串"
   csp-deep-research:
     phase: build
     domain: patterns
@@ -1657,6 +1708,8 @@ skills:
       - csp-verify-phase
       - csp-react-testing
       - csp-h5-visual-testing
+      - csp-cross-layer-testing
+      - csp-linked-test-runner
     anti_rationalizations:
       代码逻辑看起来没问题: 页面行为必须以浏览器实测证据为准，读代码不能替代跑页面
       这个改动很小不用测 UI: "共享组件的小改动可能影响所有使用方，按 Fast Path 快速验证而不是跳过"
@@ -2089,6 +2142,29 @@ skills:
       - Bash
       - Glob
       - Grep
+  csp-linked-test-runner:
+    phase: verify
+    domain: testing
+    role: architect
+    scope: testing
+    tools:
+      - Read
+      - Bash
+      - Grep
+      - Glob
+      - Agent
+    related_skills:
+      - csp-cross-layer-testing
+      - csp-db-state-assertion
+      - csp-playwright-ui-test
+      - csp-visual-verdict
+      - csp-verify-phase
+      - csp-ultraqa
+    anti_rationalizations:
+      分层各自测过就行: 本技能的价值就是把四层串成一个裁决；各自测过≠链路一致，必须同动作对齐
+      环境起不来就 blocked: "先排查端口/依赖/降级 mock，只有外部依赖确实不可用才算 blocked 并写明缺什么"
+      某层失败就停: 记录断点层后可继续后续非依赖层取证，但裁决以断点层为准；不要掩盖断点
+      UI 截图对比靠肉眼: "视觉层用 csp-visual-verdict/csp-visual-regression 做结构化裁决，不靠人眼"
   csp-local-build-reminder:
     phase: build
     domain: architecture

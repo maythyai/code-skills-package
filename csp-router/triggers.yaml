@@ -46,7 +46,7 @@ trigger_index:
     skills: [csp-plan-phase, csp-brainstorming, csp-solutioning-phase]
     weight: 40
   "test":
-    skills: [csp-tdd, csp-e2e-testing, csp-pr-test-analyzer, csp-test-coverage, csp-test, csp-qa-test-engineering]
+    skills: [csp-tdd, csp-e2e-testing, csp-pr-test-analyzer, csp-test-coverage, csp-test, csp-qa-test-engineering, csp-test-methodology]
     weight: 45
   "测试":
     skills: [csp-tdd]
@@ -5205,6 +5205,67 @@ trigger_index:
     weight: 40
   "tech-task-breakdown":
     skills: [csp-tech-task-breakdown]
+    weight: 40
+
+  # ─── auto-generated triggers (generate-triggers.mjs) ───
+  "cross layer test":
+    skills: [csp-cross-layer-testing]
+    weight: 40
+  "cross layer testing":
+    skills: [csp-cross-layer-testing]
+    weight: 40
+  "cross layer 测试":
+    skills: [csp-cross-layer-testing]
+    weight: 40
+  "cross-layer-testing":
+    skills: [csp-cross-layer-testing]
+    weight: 40
+  "db state assertion":
+    skills: [csp-db-state-assertion]
+    weight: 40
+  "db-state-assertion":
+    skills: [csp-db-state-assertion]
+    weight: 40
+  "fix db state assertion":
+    skills: [csp-db-state-assertion]
+    weight: 40
+  "fix linked test runner":
+    skills: [csp-linked-test-runner]
+    weight: 40
+  "linked":
+    skills: [csp-linked-test-runner]
+    weight: 40
+  "linked test runner":
+    skills: [csp-linked-test-runner]
+    weight: 40
+  "linked-test-runner":
+    skills: [csp-linked-test-runner]
+    weight: 40
+  "review db state assertion":
+    skills: [csp-db-state-assertion]
+    weight: 40
+  "review linked test runner":
+    skills: [csp-linked-test-runner]
+    weight: 40
+  "state":
+    skills: [csp-db-state-assertion]
+    weight: 40
+
+  # ─── auto-generated triggers (generate-triggers.mjs) ───
+  "fix test methodology":
+    skills: [csp-test-methodology]
+    weight: 40
+  "review test methodology":
+    skills: [csp-test-methodology]
+    weight: 40
+  "test methodology":
+    skills: [csp-test-methodology]
+    weight: 40
+  "test methodology 测试":
+    skills: [csp-test-methodology]
+    weight: 40
+  "test-methodology":
+    skills: [csp-test-methodology]
     weight: 40
 stack_rules:
   python:

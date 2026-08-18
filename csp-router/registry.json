@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "total_skills": 646,
+  "total_skills": 650,
   "shards": [],
   "skill_metadata": "skill-metadata.yaml",
   "skills": [
@@ -301,6 +301,21 @@
       },
       "stack_detection": false,
       "path": "csp-meta/skills/csp-tdd/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-test-methodology",
+      "description": "Choose and combine testing methods so no requirement falls through the cracks. Use when planning test strategy for a feature, when single-layer tests pass but the feature breaks end-to-end, when deciding smoke vs sanity vs E2E vs integration vs contract vs property vs fuzz vs mutation vs exploratory",
+      "layer": 1,
+      "category": "meta",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-meta/skills/csp-test-methodology/SKILL.md",
       "deps": [],
       "priority": 10
     },
@@ -3579,6 +3594,21 @@
       "priority": 10
     },
     {
+      "name": "csp-cross-layer-testing",
+      "description": "Design and assert full-stack round-trip tests that correlate one user action across the UI, API, and database layers in a single traceable verdict. Use when a feature must be verified end-to-end — e.g. \"click should persist a record and reflect it on screen\", when single-layer tests pass but the int",
+      "layer": 3,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/csp-cross-layer-testing/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
       "name": "csp-cross-platform-strategy",
       "description": "Cross-platform development strategy covering platform selection (React Native vs Flutter vs Native vs KMP vs MAUI), code sharing strategies, platform adaptation, testing across platforms, CI/CD for multi-platform, app store considerations, and when to go native. Use when making cross-platform archit",
       "layer": 3,
@@ -3680,6 +3710,21 @@
       },
       "stack_detection": false,
       "path": "csp-patterns/skills/csp-db-performance/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-db-state-assertion",
+      "description": "Assert database state before and after a single user action, and correlate the changed rows with the API call that triggered the write using a trace id or time window. Use when an integration test must prove \"this click persisted exactly the expected rows and did not break an invariant\", when debugg",
+      "layer": 3,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/csp-db-state-assertion/SKILL.md",
       "deps": [],
       "priority": 10
     },
@@ -6575,6 +6620,21 @@
       },
       "stack_detection": false,
       "path": "csp-runtime/skills/csp-learning-loop/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-linked-test-runner",
+      "description": "Orchestrate a full cross-layer round-trip test for one feature: seed the DB, drive a UI action with Playwright, capture its API request, assert the resulting DB state, verify the UI reflects that state, and emit a single linked verdict that names the broken layer if any. Use when you need to verify ",
+      "layer": 4,
+      "category": "runtime",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-runtime/skills/csp-linked-test-runner/SKILL.md",
       "deps": [],
       "priority": 10
     },

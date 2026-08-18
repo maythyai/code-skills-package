@@ -351,15 +351,15 @@ a { color: var(--layer-1); text-decoration: none; }
 // ═══════════════════════════════════════════════════
 const CSP_DATA = {
   "stats": {
-    "total": 646,
+    "total": 650,
     "by_layer": {
       "Meta": {
-        "count": 25,
+        "count": 26,
         "layer": "L1",
         "color": "#3b82f6"
       },
       "Patterns": {
-        "count": 378,
+        "count": 380,
         "layer": "L3",
         "color": "#a855f7"
       },
@@ -369,7 +369,7 @@ const CSP_DATA = {
         "color": "#ef4444"
       },
       "Runtime": {
-        "count": 57,
+        "count": 58,
         "layer": "L4",
         "color": "#f97316"
       },
@@ -380,10 +380,10 @@ const CSP_DATA = {
       }
     },
     "by_category": {
-      "meta": 25,
-      "patterns": 378,
+      "meta": 26,
+      "patterns": 380,
       "router": 1,
-      "runtime": 57,
+      "runtime": 58,
       "workflow": 185
     },
     "reviewers": 69
@@ -705,6 +705,27 @@ const CSP_DATA = {
         ],
         "zh": [
           "测试"
+        ]
+      }
+    },
+    {
+      "name": "csp-test-methodology",
+      "description": "Choose and combine testing methods so no requirement falls through the cracks. Use when planning test strategy for a feature, when single-layer tests pass but the feature breaks end-to-end, when deciding smoke vs sanity vs E2E vs integration vs contract vs property vs fuzz vs mutation vs exploratory",
+      "category": "meta",
+      "layer": "L1",
+      "layer_name": "Meta",
+      "layer_color": "#3b82f6",
+      "triggers": {
+        "en": [
+          "csp-test-methodology",
+          "test",
+          "fix test methodology",
+          "review test methodology",
+          "test methodology",
+          "test-methodology"
+        ],
+        "zh": [
+          "test methodology 测试"
         ]
       }
     },
@@ -4547,6 +4568,25 @@ const CSP_DATA = {
       }
     },
     {
+      "name": "csp-cross-layer-testing",
+      "description": "Design and assert full-stack round-trip tests that correlate one user action across the UI, API, and database layers in a single traceable verdict. Use when a feature must be verified end-to-end — e.g. \"click should persist a record and reflect it on screen\", when single-layer tests pass but the int",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "csp-cross-layer-testing",
+          "cross layer test",
+          "cross layer testing",
+          "cross-layer-testing"
+        ],
+        "zh": [
+          "cross layer 测试"
+        ]
+      }
+    },
+    {
       "name": "csp-cross-platform-strategy",
       "description": "Cross-platform development strategy covering platform selection (React Native vs Flutter vs Native vs KMP vs MAUI), code sharing strategies, platform adaptation, testing across platforms, CI/CD for multi-platform, app store considerations, and when to go native. Use when making cross-platform archit",
       "category": "patterns",
@@ -4650,6 +4690,25 @@ const CSP_DATA = {
           "connection pool",
           "index strategy",
           "EXPLAIN ANALYZE"
+        ],
+        "zh": []
+      }
+    },
+    {
+      "name": "csp-db-state-assertion",
+      "description": "Assert database state before and after a single user action, and correlate the changed rows with the API call that triggered the write using a trace id or time window. Use when an integration test must prove \"this click persisted exactly the expected rows and did not break an invariant\", when debugg",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "csp-db-state-assertion",
+          "db state assertion",
+          "db-state-assertion",
+          "fix db state assertion",
+          "review db state assertion",
+          "state"
         ],
         "zh": []
       }
@@ -7757,6 +7816,25 @@ const CSP_DATA = {
       "triggers": {
         "en": [
           "csp-learning-loop"
+        ],
+        "zh": []
+      }
+    },
+    {
+      "name": "csp-linked-test-runner",
+      "description": "Orchestrate a full cross-layer round-trip test for one feature: seed the DB, drive a UI action with Playwright, capture its API request, assert the resulting DB state, verify the UI reflects that state, and emit a single linked verdict that names the broken layer if any. Use when you need to verify ",
+      "category": "runtime",
+      "layer": "L4",
+      "layer_name": "Runtime",
+      "layer_color": "#f97316",
+      "triggers": {
+        "en": [
+          "csp-linked-test-runner",
+          "fix linked test runner",
+          "linked",
+          "linked test runner",
+          "linked-test-runner",
+          "review linked test runner"
         ],
         "zh": []
       }

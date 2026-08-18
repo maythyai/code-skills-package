@@ -29,7 +29,7 @@ triggers:
   - "e2e 冒烟"
   - "表单测试"
   - "登录测试"
-related_skills: [csp-e2e-testing, csp-webapp-testing, csp-qa-test-engineering, csp-verify-phase, csp-react-testing, csp-h5-visual-testing]
+related_skills: [csp-e2e-testing, csp-webapp-testing, csp-qa-test-engineering, csp-verify-phase, csp-react-testing, csp-h5-visual-testing, csp-cross-layer-testing, csp-linked-test-runner]
 anti_rationalizations:
   "代码逻辑看起来没问题": "页面行为必须以浏览器实测证据为准，读代码不能替代跑页面"
   "这个改动很小不用测 UI": "共享组件的小改动可能影响所有使用方，按 Fast Path 快速验证而不是跳过"
@@ -316,6 +316,48 @@ playwright-cli kill-all       # 进程残留时强制清理
 要"验证功能并修好"时用本技能。两者都基于 Playwright，但修复权限模型不同：
 本技能允许最小修复，后者禁止直接改项目代码（走 FIX_SUGGESTION 审批）。
 
+## 11. 联动证据输出（供跨层测试消费）
+
+当被 `csp-linked-test-runner` 编排做跨层联动测试时，本技能在执行 UI 动作的同时，
+**额外产出一份 `linked-evidence.json`**，把"这次点击"的网络请求、时间戳、请求/响应体、DOM、截图
+绑定成一组，供下游 `csp-db-state-assertion` 用 trace_id/时间窗与 DB 行变化对齐。
+
+### 11.1 产出格式
+
+```json
+{
+  "test_id": "ORD-001",
+  "action": { "step": "click e15", "ts": 1730000000000 },
+  "network": [
+    {
+      "method": "POST",
+      "path": "/api/orders",
+      "status": 200,
+      "trace_id": "abc123",
+      "request_body": { "productId": "p1", "qty": 1 },
+      "response_body": { "orderId": "o9", "status": "pending" },
+      "ts": 1730000000120
+    }
+  ],
+  "ui_dom": "evidence/ORD-001-after.dom",
+  "screenshot": "evidence/ORD-001-after.png",
+  "console_errors": []
+}
+```
+
+### 11.2 trace_id 从哪取
+
+从请求响应头抓取（约定头名 `x-trace-id` / `traceparent`）；应用未注入时字段为 `null`，
+下游自动降级为"时间窗弱因果"并在裁决里标注。**鼓励被测应用在写路径请求头与落库行上使用同一 trace_id**，
+这是联动测试做强因果对齐的前提。
+
+### 11.3 触发方式
+
+仅在联动模式下输出；独立使用本技能时不产出，避免无谓落盘。判定联动模式：上层 `csp-linked-test-runner`
+传入 `--linked-evidence` 或环境变量 `CSP_LINKED=1`。
+
+相关方法论与契约见 `csp-cross-layer-testing`，DB 侧消费见 `csp-db-state-assertion`。
+
 ## 参考文档索引
 
 | 文档 | 内容 |
@@ -333,3 +375,5 @@ playwright-cli kill-all       # 进程残留时强制清理
 | [references/video-recording.md](references/video-recording.md) | 视频录制 |
 | [references/element-attributes.md](references/element-attributes.md) | 元素属性检查 |
 | [references/running-code.md](references/running-code.md) | 直接执行 Playwright 代码片段 |
+| [csp-cross-layer-testing](../../csp-patterns/skills/csp-cross-layer-testing/SKILL.md) | 跨层联动测试契约与证据矩阵 |
+| [csp-linked-test-runner](../../csp-runtime/skills/csp-linked-test-runner/SKILL.md) | 联动编排器(消费 linked-evidence.json) |
