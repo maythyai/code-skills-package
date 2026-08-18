@@ -1,7 +1,7 @@
 ---
 name: csp-skill-creator
 description: Interactive skill creation wizard — guides users through creating new CSP skills with templates, validation, and registry registration
-layer: 5
+layer: 4
 category: runtime
 domain: architecture
 phase: build
@@ -58,7 +58,7 @@ phase: build
 name: csp-skill-creator
 description: <description>
 version: 0.1.0
-layer: <layer>
+layer: 4
 category: <category>
 ---
 

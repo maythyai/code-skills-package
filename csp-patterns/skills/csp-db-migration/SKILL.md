@@ -8,7 +8,7 @@ description: >
   changes, and safe CI/CD pipeline integration. Use when planning or implementing
   database schema changes.
 version: 0.1.0
-layer: 4
+layer: 3
 category: patterns
 domain: patterns
 phase: build

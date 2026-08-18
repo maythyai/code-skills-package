@@ -5,7 +5,7 @@ description: >
   list/scroll performance, bundle size, battery optimization, profiling tools, and
   frame rate optimization. Applicable to React Native, Flutter, and native iOS/Android
   development. Use when diagnosing or preventing mobile performance issues.
-layer: 4
+layer: 3
 category: patterns
 domain: patterns
 phase: build

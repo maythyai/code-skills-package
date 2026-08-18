@@ -3,7 +3,7 @@ name: csp-user-analytics
 description: >
   Designs and implements user analytics systems including event taxonomy, platform integration, retention metrics, funnel tracking, A/B testing, and privacy-compliant data collection.
 version: 0.1.0
-layer: 4
+layer: 3
 category: patterns
 domain: patterns
 phase: build

@@ -5,7 +5,7 @@ description: >
   Playwright, Cypress, or Selenium. Use when building test automation from scratch,
   reducing flaky tests, or integrating E2E tests into CI pipelines.
 version: 0.1.0
-layer: 4
+layer: 3
 category: patterns
 phase: build
 domain: patterns

@@ -2,7 +2,7 @@
 name: csp-skillify
 aliases: [learner]
 description: Turn a repeatable workflow from the current session into a reusable CSP skill draft
-layer: 5
+layer: 4
 category: runtime
 domain: architecture
 phase: build

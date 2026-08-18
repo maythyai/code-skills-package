@@ -4,7 +4,7 @@ description: >
   Framework-agnostic frontend patterns for component composition, state management,
   performance, accessibility, forms, and data fetching. Use as the cross-framework
   entry point; React-specific patterns live in csp-react-patterns.
-layer: 4
+layer: 3
 category: patterns
 domain: patterns
 phase: build

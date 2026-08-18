@@ -17,7 +17,7 @@
 
 import { readFileSync, writeFileSync, existsSync, mkdirSync, readdirSync, statSync } from 'node:fs';
 import { resolve, join, basename, dirname } from 'node:path';
-import { execSync } from 'node:child_process';
+import { execSync, execFileSync } from 'node:child_process';
 import { randomUUID } from 'node:crypto';
 
 // --- Utilities ---
@@ -171,7 +171,7 @@ function configSet(keyPath, value) {
   let parsed = value;
   if (value === 'true') parsed = true;
   else if (value === 'false') parsed = false;
-  else if (!isNaN(value) && value !== '') parsed = Number(value);
+  else if (value !== '' && value.trim() !== '' && !isNaN(value)) parsed = Number(value);
   obj[keys[keys.length - 1]] = parsed;
   ensureDir(PLANNING_DIR);
   writeJSON(CONFIG_FILE, config);
@@ -390,20 +390,33 @@ function initNewMilestone() {
 
 function doCommit(message, files) {
   const fileList = files ? files.split(/\s+/).filter(Boolean) : [];
+  const gitArgs = (cmd) => ['-C', PROJECT_ROOT, ...cmd];
   if (fileList.length > 0) {
     for (const f of fileList) {
-      git(`add "${f}"`);
+      execFileSync('git', gitArgs(['add', f]), { timeout: 10000 });
     }
   } else {
-    git('add -A');
+    execFileSync('git', gitArgs(['add', '-A']), { timeout: 10000 });
   }
-  const result = git(`commit -m "${message.replace(/"/g, '\\"')}"`);
-  return { success: result.includes('[') || result === '', output: result };
+  try {
+    // Pass message via stdin to avoid shell injection through the -m flag
+    execFileSync('git', gitArgs(['commit', '-F', '-']), {
+      encoding: 'utf-8', timeout: 10000,
+      input: message,
+    });
+    return { success: true, output: 'Commit successful' };
+  } catch (e) {
+    return { success: false, output: (e.stderr || e.message || 'Commit failed').trim() };
+  }
 }
 
 // --- Agent Skills ---
 
 function getAgentSkills(agentName) {
+  // Reject path traversal attempts and non-alphanumeric characters
+  if (!agentName || /[./]/.test(agentName) || agentName.length > 100) {
+    return { name: agentName || '', content: null, error: 'invalid_name' };
+  }
   // Search in csp-runtime/agents/ and csp-patterns/agents/
   const searchDirs = [
     join(PROJECT_ROOT, 'csp-runtime', 'agents'),
@@ -412,8 +425,13 @@ function getAgentSkills(agentName) {
   for (const dir of searchDirs) {
     const mdPath = join(dir, `${agentName}.md`);
     const skillPath = join(dir, agentName, 'SKILL.md');
-    if (existsSync(mdPath)) return { name: agentName, content: readText(mdPath), path: mdPath };
-    if (existsSync(skillPath)) return { name: agentName, content: readText(skillPath), path: skillPath };
+    // Verify resolved path stays within the intended directory
+    if (existsSync(mdPath) && resolve(mdPath).startsWith(resolve(dir))) {
+      return { name: agentName, content: readText(mdPath), path: mdPath };
+    }
+    if (existsSync(skillPath) && resolve(skillPath).startsWith(resolve(dir))) {
+      return { name: agentName, content: readText(skillPath), path: skillPath };
+    }
   }
   return { name: agentName, content: null, error: 'not_found' };
 }
@@ -483,7 +501,9 @@ function verifyArtifacts(phaseArg) {
 
 function verifyCommits(phaseArg) {
   const log = git('log --oneline -20');
-  const phasePattern = new RegExp(`phase.?${phaseArg}|${String(phaseArg).padStart(2, '0')}`, 'i');
+  // Escape regex special characters in user input to prevent SyntaxError
+  const escaped = String(phaseArg).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const phasePattern = new RegExp(`phase.?${escaped}|${String(phaseArg).padStart(2, '0')}`, 'i');
   const relevant = log.split('\n').filter(l => phasePattern.test(l));
   return { status: relevant.length > 0 ? 'pass' : 'warn', commits: relevant, total_recent: log.split('\n').length };
 }
@@ -631,7 +651,12 @@ function budgetEnforceOp() {
 
 function budgetEstimateOp(filePath) {
   if (!filePath) return { error: 'usage', message: 'budget.estimate <file>' };
+  // Resolve and validate path stays within project root
   const resolved = resolve(PROJECT_ROOT, filePath);
+  const projectRoot = resolve(PROJECT_ROOT);
+  if (!resolved.startsWith(projectRoot + '/') && resolved !== projectRoot) {
+    return { error: 'path_traversal', message: 'File must be within the project root' };
+  }
   if (!existsSync(resolved)) return { error: 'file_not_found', path: resolved };
   const content = readText(resolved);
   const ext = resolved.includes('.') ? '.' + resolved.split('.').pop().toLowerCase() : '';
@@ -707,7 +732,8 @@ Subcommands (query):
     for (let i = 0; i < initArgs.length; i++) {
       if (initArgs[i].startsWith('--')) {
         const k = initArgs[i].slice(2);
-        lf[k] = initArgs[i + 1] && !initArgs[i + 1].startsWith('--') ? initArgs[++i] : true;
+        const hasNext = initArgs[i + 1] !== undefined && !initArgs[i + 1].startsWith('--');
+        lf[k] = hasNext ? initArgs[++i] : true;
       } else pos.push(initArgs[i]);
     }
     const name = pos[0] || '';
@@ -778,7 +804,9 @@ related_skills: []
   for (let i = 0; i < rest.length; i++) {
     if (rest[i].startsWith('--')) {
       const key = rest[i].slice(2);
-      flags[key] = rest[i + 1] && !rest[i + 1].startsWith('--') ? rest[++i] : true;
+      // Use !== undefined to avoid treating empty string '' as falsy (missing value)
+      const hasNext = rest[i + 1] !== undefined && !rest[i + 1].startsWith('--');
+      flags[key] = hasNext ? rest[++i] : true;
     } else {
       positional.push(rest[i]);
     }
@@ -797,11 +825,11 @@ related_skills: []
     }
     process.exit(0);
   } catch (e) {
-    if (e.code === 'STATE_NOT_FOUND') {
+    if (e && typeof e === 'object' && e.code === 'STATE_NOT_FOUND') {
       err(e.message);
       process.exit(2);
     }
-    err(e.message);
+    err((e && (e.message || e.toString())) || 'Unknown error');
     process.exit(1);
   }
 }
@@ -1114,15 +1142,18 @@ function routeQuery(sub, args, flags) {
 
   // --- wiki (delegates to scripts/csp-wiki.mjs) ---
   if (sub === 'wiki' || sub.startsWith('wiki.')) {
-    const wikiCmd = sub === 'wiki' ? args[0] : sub.replace('wiki.', '');
+    const wikiCmd = sub === 'wiki' ? (args[0] || '') : sub.replace('wiki.', '');
     const wikiArgs = sub === 'wiki' ? args.slice(1) : args;
     const scriptPath = join(dirname(new URL(import.meta.url).pathname), '..', 'scripts', 'csp-wiki.mjs');
-    if (!existsSync(scriptPath)) return { error: 'not_found', message: `Wiki script not found at ${scriptPath}. Run: node scripts/csp-wiki.mjs ${wikiCmd} ${wikiArgs.join(' ')}` };
+    if (!existsSync(scriptPath)) return { error: 'not_found', message: `Wiki script not found at ${scriptPath}` };
     try {
-      const result = execSync(`node "${scriptPath}" ${wikiCmd} ${wikiArgs.map(a => `"${a}"`).join(' ')}`, { cwd: PROJECT_ROOT, encoding: 'utf-8', timeout: 15000, env: { ...process.env, CSP_PROJECT_ROOT: PROJECT_ROOT } });
+      const result = execFileSync('node', [scriptPath, wikiCmd, ...wikiArgs], {
+        cwd: PROJECT_ROOT, encoding: 'utf-8', timeout: 15000,
+        env: { ...process.env, CSP_PROJECT_ROOT: PROJECT_ROOT },
+      });
       try { return JSON.parse(result); } catch { return { output: result.trim() }; }
     } catch (e) {
-      return { error: 'wiki_error', message: e.stderr || e.message, output: e.stdout || '' };
+      return { error: 'wiki_error', message: (e.stderr || e.message || '').trim(), output: (e.stdout || '').trim() };
     }
   }
 

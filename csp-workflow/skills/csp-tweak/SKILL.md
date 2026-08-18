@@ -5,7 +5,7 @@ description: |
   跳过 design 和完整的 build 阶段，直接进入轻量级验证。
   Use when: 修改文案、调整配置、更新文档、小范围代码调整。
   关键词: tweak, 微调, 小改, 文案调整, 配置修改, minor change
-layer: L2
+layer: 2
 category: workflow
 triggers:
   - tweak

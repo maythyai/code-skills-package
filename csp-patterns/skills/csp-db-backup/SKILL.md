@@ -3,7 +3,7 @@ name: csp-db-backup
 description: >
   Implement automated database backup and point-in-time recovery for PostgreSQL and MySQL with encryption, verification, and disaster recovery runbooks.
 version: 0.1.0
-layer: 4
+layer: 3
 category: patterns
 phase: build
 domain: patterns

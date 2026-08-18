@@ -10,7 +10,7 @@ description: >-
   version-controlled diagram assets and doc-insight for extracting structure
   from technical documents before visualization.
 version: 1.0.0
-layer: 4
+layer: 3
 category: patterns
 phase: build
 domain: architecture

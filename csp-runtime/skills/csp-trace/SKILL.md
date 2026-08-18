@@ -3,7 +3,7 @@ name: csp-trace
 description: Evidence-driven tracing lane that orchestrates competing tracer hypotheses in Claude built-in team mode
 argument-hint: "<observation to trace>"
 agent: tracer
-layer: 2
+layer: 4
 category: workflow
 domain: patterns
 phase: build

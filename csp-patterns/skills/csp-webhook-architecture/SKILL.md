@@ -3,7 +3,7 @@ name: csp-webhook-architecture
 description: >
   Designs webhook sending and receiving systems with signature verification, idempotent processing, reliable delivery with retries, management UIs, and monitoring for production-grade event-driven architectures.
 version: 0.1.0
-layer: 4
+layer: 3
 category: patterns
 domain: patterns
 phase: build

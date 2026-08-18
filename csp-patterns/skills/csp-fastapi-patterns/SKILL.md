@@ -1,7 +1,7 @@
 ---
 name: csp-fastapi-patterns
 description: FastAPI patterns for async APIs, dependency injection, Pydantic request and response models, OpenAPI docs, tests, security, and production readiness.
-layer: 4
+layer: 3
 category: patterns
 domain: patterns
 phase: build

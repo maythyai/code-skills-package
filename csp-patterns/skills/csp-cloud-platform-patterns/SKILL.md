@@ -5,7 +5,7 @@ description: >
   containers, managed databases, event-driven architectures, CDN, DNS,
   multi-region deployment, and cost optimization. Use when designing or
   optimizing cloud-native architectures on any major cloud provider.
-layer: 4
+layer: 3
 category: patterns
 domain: patterns
 phase: build

@@ -1,7 +1,7 @@
 ---
 name: csp-cpp-coding-standards
 description: C++ coding standards based on the C++ Core Guidelines (isocpp.github.io). Use when writing, reviewing, or refactoring C++ code to enforce modern, safe, and idiomatic practices.
-layer: 4
+layer: 3
 category: patterns
 phase: build
 domain: patterns

@@ -5,7 +5,7 @@ description: >
   Next.js, and Vue applications. Use when setting up i18n for a new project,
   migrating between i18n libraries, or building a translation workflow pipeline.
 version: 0.1.0
-layer: 4
+layer: 3
 category: patterns
 domain: patterns
 phase: build

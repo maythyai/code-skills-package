@@ -3,7 +3,7 @@ name: csp-vps-deploy
 description: >
   Deploy and manage applications on VPS servers with Nginx reverse proxy, SSL, systemd services, and security hardening for solo developers.
 version: 0.1.0
-layer: 4
+layer: 3
 category: patterns
 phase: ship
 domain: patterns

@@ -4,7 +4,7 @@ description: >
   Operate as an agentic engineer using eval-first execution, decomposition,
   and cost-aware model routing. Use when AI agents perform most implementation
   work and humans enforce quality and risk controls.
-layer: 4
+layer: 3
 category: patterns
 domain: patterns
 phase: build

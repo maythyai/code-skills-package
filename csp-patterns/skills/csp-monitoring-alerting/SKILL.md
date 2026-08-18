@@ -3,7 +3,7 @@ name: csp-monitoring-alerting
 description: >
   Set up error tracking, uptime monitoring, APM, log aggregation, and alerting pipelines using free-tier and low-cost observability tools.
 version: 0.1.0
-layer: 4
+layer: 3
 category: patterns
 domain: patterns
 phase: build

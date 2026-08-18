@@ -2,7 +2,7 @@
 name: csp-writer-memory
 description: Agentic memory system for writers - track characters, relationships, scenes, and themes
 argument-hint: "init|char|rel|scene|query|validate|synopsis|status|export [args]"
-layer: 7
+layer: 4
 ---
 
 | Command | Description |

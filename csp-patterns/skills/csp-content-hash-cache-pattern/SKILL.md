@@ -1,7 +1,7 @@
 ---
 name: csp-content-hash-cache-pattern
 description: Cache expensive file processing results using SHA-256 content hashes — path-independent, auto-invalidating, with service layer separation.
-layer: 4
+layer: 3
 category: patterns
 domain: patterns
 phase: build

@@ -5,7 +5,7 @@ description: >
   Combines five simplification principles, dead-code detection tools (knip, depcheck, ts-prune),
   and AI slop cleanup workflow. Use when refactoring for clarity, removing unused code,
   or cleaning bloated AI-generated implementations.
-layer: 4
+layer: 3
 category: patterns
 domain: patterns
 phase: build

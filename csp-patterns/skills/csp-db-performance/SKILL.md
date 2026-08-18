@@ -5,7 +5,7 @@ description: >
   connection pooling, partitioning, and replication. Use when queries are slow,
   connections are exhausted, or database metrics indicate resource contention.
 version: 0.1.0
-layer: 4
+layer: 3
 category: patterns
 domain: patterns
 phase: build

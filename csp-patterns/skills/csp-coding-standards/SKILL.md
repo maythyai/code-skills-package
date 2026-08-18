@@ -2,7 +2,7 @@
 name: csp-coding-standards
 description: >
   Universal coding standards, best practices, and patterns for TypeScript, JavaScript, React, and Node.js development.
-layer: 4
+layer: 3
 category: patterns
 phase: build
 domain: patterns

@@ -1,7 +1,7 @@
 ---
 name: csp-setup
 description: Use first for install/update routing — sends setup, doctor, or MCP requests to the correct CSP setup flow
-layer: 2
+layer: 4
 category: workflow
 domain: patterns
 phase: build

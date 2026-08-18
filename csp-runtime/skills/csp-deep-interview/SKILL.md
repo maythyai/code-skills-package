@@ -5,7 +5,7 @@ argument-hint: "[--quick|--standard|--deep] [--autoresearch] <idea or vague desc
 pipeline: [deep-interview, plan]
 handoff-policy: approval-required
 handoff: .csp/specs/deep-interview-{slug}.md
-layer: 3
+layer: 4
 phase: build
 ---
 

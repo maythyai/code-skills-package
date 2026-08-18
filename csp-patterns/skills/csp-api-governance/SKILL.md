@@ -3,7 +3,7 @@ name: csp-api-governance
 description: >
   Governs public and internal APIs with rate limiting algorithms, API key management, usage metering, versioning strategies, error standardization, and monitoring for reliable API operations.
 version: 0.1.0
-layer: 4
+layer: 3
 category: patterns
 domain: patterns
 phase: build

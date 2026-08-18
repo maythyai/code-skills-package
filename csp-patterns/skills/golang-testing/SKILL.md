@@ -6,7 +6,7 @@ description: >
   patterns. Use when writing or improving Go tests.
 metadata:
   globs: ["**/*.go", "**/go.mod", "**/go.sum"]
-layer: 4
+layer: 3
 category: patterns
 phase: verify
 domain: patterns

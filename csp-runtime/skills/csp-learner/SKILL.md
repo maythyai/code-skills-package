@@ -1,7 +1,7 @@
 ---
 name: csp-learner
 description: Extract a learned skill from the current conversation
-layer: 7
+layer: 4
 ---
 
 ## Expertise

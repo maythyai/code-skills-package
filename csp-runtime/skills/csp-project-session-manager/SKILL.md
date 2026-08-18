@@ -2,7 +2,7 @@
 name: csp-project-session-manager
 description: Worktree-first dev environment manager for issues, PRs, and features with optional tmux sessions
 aliases: [psm]
-layer: 2
+layer: 4
 category: workflow
 domain: patterns
 phase: build

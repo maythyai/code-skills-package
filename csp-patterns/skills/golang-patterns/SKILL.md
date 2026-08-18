@@ -7,7 +7,7 @@ description: >
   Go patterns.
 metadata:
   globs: ["**/*.go", "**/go.mod", "**/go.sum"]
-layer: 4
+layer: 3
 category: patterns
 domain: patterns
 phase: build

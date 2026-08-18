@@ -2,7 +2,7 @@
 name: csp-ultragoal
 description: Durable multi-goal workflow that persists plan/ledger artifacts under .csp/ultragoal and prints Claude /goal handoff text for the active session
 argument-hint: "<brief or subcommand>"
-layer: 3
+layer: 4
 category: runtime
 phase: plan
 domain: architecture

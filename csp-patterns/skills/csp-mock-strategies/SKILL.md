@@ -5,7 +5,7 @@ description: >
   integration, and E2E testing layers. Use when setting up MSW handlers, deciding
   between mock types, implementing contract tests, or building type-safe mock helpers.
 version: 0.1.0
-layer: 4
+layer: 3
 category: patterns
 phase: build
 domain: patterns

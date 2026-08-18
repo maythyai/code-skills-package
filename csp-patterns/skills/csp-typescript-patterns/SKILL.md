@@ -11,7 +11,7 @@ description: >
   type-safe, idiomatic patterns.
 metadata:
   globs: ["**/*.ts", "**/*.tsx", "**/*.mts", "**/*.cts"]
-layer: 4
+layer: 3
 category: patterns
 phase: build
 domain: language

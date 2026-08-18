@@ -1,7 +1,7 @@
 ---
 name: csp-remember
 description: Review reusable project knowledge and decide what belongs in project memory, notepad, or durable docs
-layer: 5
+layer: 4
 category: runtime
 phase: review
 domain: architecture

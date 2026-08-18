@@ -5,7 +5,7 @@ description: >
   (Zustand, Jotai, Redux Toolkit), native module bridging (TurboModules, JSI), performance
   (Hermes, FlashList, Reanimated), OTA updates, testing, new architecture (Fabric, TurboModules),
   and Expo vs bare workflow decisions. Use for React Native project architecture and implementation.
-layer: 4
+layer: 3
 category: patterns
 domain: patterns
 phase: build

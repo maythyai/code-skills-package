@@ -3,7 +3,7 @@ name: csp-subscription-management
 description: >
   Manages subscription lifecycle patterns including state machines, plan upgrades/downgrades, usage-based billing, dunning strategies, and feature gating for SaaS applications.
 version: 0.1.0
-layer: 4
+layer: 3
 category: patterns
 phase: plan
 domain: patterns

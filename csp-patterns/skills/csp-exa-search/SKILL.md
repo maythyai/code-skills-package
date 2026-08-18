@@ -1,7 +1,7 @@
 ---
 name: csp-exa-search
 description: Neural search via Exa MCP for web, code, and company research. Use when the user needs web search, code examples, company intel, people lookup, or AI-powered deep research with Exa's neural search engine.
-layer: 4
+layer: 3
 category: patterns
 domain: patterns
 phase: build

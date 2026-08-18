@@ -7,7 +7,7 @@ description: >
   patterns.
 metadata:
   globs: ["**/*.py", "**/*.pyi"]
-layer: 4
+layer: 3
 category: patterns
 domain: patterns
 phase: build

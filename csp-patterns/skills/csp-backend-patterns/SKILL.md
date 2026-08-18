@@ -5,7 +5,7 @@ description: >
   repository pattern, error handling and retries, idempotency, rate limiting,
   caching, transaction boundaries, API design, and background jobs. Use for
   server-side design regardless of language or framework.
-layer: 4
+layer: 3
 category: patterns
 domain: patterns
 phase: build

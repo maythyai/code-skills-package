@@ -227,12 +227,13 @@ scan_skill_entries() {
   for layer in $CSP_LAYERS; do
     local src="$SCRIPT_DIR/$layer"
     [ -d "$src" ] || continue
-    find "$src" -name "SKILL.md" -type f 2>/dev/null | while read -r skill_file; do
+    while read -r skill_file; do
+      [ -z "$skill_file" ] && continue
       local name desc
       name=$(grep -m1 '^name:' "$skill_file" 2>/dev/null | sed 's/^name: *//' | sed "s/^[\"']//;s/[\"']$//" || true)
       desc=$(grep -m1 '^description:' "$skill_file" 2>/dev/null | sed 's/^description: *//' | sed "s/^[\"']//;s/[\"']$//" | cut -c1-80 || true)
       [ -n "$name" ] && echo "${name}|${desc}"
-    done
+    done <<< "$(find "$src" -name "SKILL.md" -type f 2>/dev/null)"
   done
 }
 
@@ -265,8 +266,8 @@ install_skills_to() {
         [ -d "$skill_dir" ] || continue
         local dir_name
         dir_name=$(basename "$skill_dir")
-        # Check if this skill is in the allowed list
-        if echo " $stack_skills " | grep -q " $dir_name "; then
+        # Check if this skill is in the allowed list (use grep -w for exact word match)
+        if echo " $stack_skills " | grep -qw " $dir_name "; then
           [ "$dry_run" = "true" ] || cp -R "$skill_dir" "$target_dir/$layer/"
           local n
           n=$(find "$skill_dir" -name "SKILL.md" -type f 2>/dev/null | wc -l | tr -d ' ')
@@ -605,11 +606,12 @@ main() {
       echo "  ⚠️  未检测到任何已知 AI 编程工具。"
     else
       echo "  检测到的平台："
-      echo "$detected" | while read -r slug; do
+      while read -r slug; do
+        [ -z "$slug" ] && continue
         local name; name=$(platform_name "$slug")
         local dir; dir=$(platform_dir "$slug")
         echo "    ✅ $name → $dir"
-      done
+      done <<< "$detected"
     fi
     echo ""
     exit 0
@@ -642,8 +644,8 @@ main() {
         router|0)     layer_filter="$layer_filter csp-router" ;;
         meta|1)       layer_filter="$layer_filter csp-meta" ;;
         workflow|2)   layer_filter="$layer_filter csp-workflow" ;;
-        patterns|3|4) layer_filter="$layer_filter csp-patterns" ;;
         runtime|4|5)  layer_filter="$layer_filter csp-runtime" ;;
+        patterns|3)   layer_filter="$layer_filter csp-patterns" ;;
         *)            echo "  ⚠️  未知层级: $l (可用: router, meta, workflow, patterns, runtime)" >&2 ;;
       esac
     done
@@ -672,7 +674,7 @@ main() {
   fi
   if [ -n "$stack_filter" ]; then
     echo "  技术栈: $stacks"
-    echo "  匹配 skills: $(echo $stack_filter | wc -w | tr -d ' ') 个"
+    echo "  匹配 skills: $(echo "$stack_filter" | wc -w | tr -d ' ') 个"
   fi
   echo "  源: $total_all skills（五层架构）"
   echo "  目标: $base_dir"
@@ -779,19 +781,20 @@ main() {
           cp -R "$subdir" "$target_dir/$layer/" 2>/dev/null || true
         done
         # Find all skill dirs and filter by stack
-        find "$src" -name "SKILL.md" -type f 2>/dev/null | while read -r skill_file; do
+        while read -r skill_file; do
+          [ -z "$skill_file" ] && continue
           local skill_dir
           skill_dir=$(dirname "$skill_file")
           local dir_name
           dir_name=$(basename "$skill_dir")
-          if echo " $stack_filter " | grep -q " $dir_name "; then
+          if echo " $stack_filter " | grep -qw " $dir_name "; then
             local rel_path
             rel_path=$(echo "$skill_dir" | sed "s|^$src/||")
             local dest_dir="$target_dir/$layer/$rel_path"
             mkdir -p "$dest_dir"
             cp -R "$skill_dir"/* "$dest_dir/" 2>/dev/null || true
           fi
-        done
+        done <<< "$(find "$src" -name "SKILL.md" -type f 2>/dev/null)"
       fi
     done
     find "$target_dir" -name '.DS_Store' -delete 2>/dev/null || true
@@ -833,9 +836,10 @@ main() {
   local installed=0
 
   if [ -n "$detected" ]; then
-    echo "$detected" | while read -r slug; do
+    while read -r slug; do
+      [ -z "$slug" ] && continue
       install_for_platform_filtered "$slug" "$base_dir" "$layer_filter" "$stack_filter"
-    done
+    done <<< "$detected"
     installed=$(echo "$detected" | wc -l | tr -d ' ')
   fi
 

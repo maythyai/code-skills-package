@@ -1,7 +1,7 @@
 ---
 name: csp-kotlin-testing
 description: Kotlin testing patterns with Kotest, MockK, coroutine testing, property-based testing, and Kover coverage. Follows TDD methodology with idiomatic Kotlin practices.
-layer: 4
+layer: 3
 category: patterns
 phase: build
 domain: patterns

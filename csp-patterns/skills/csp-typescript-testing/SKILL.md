@@ -10,7 +10,7 @@ description: >
 metadata:
   globs:
     ["**/*.ts", "**/*.tsx", "**/*.mts", "**/*.cts", "**/*.test.ts", "**/*.spec.ts"]
-layer: 4
+layer: 3
 category: patterns
 phase: verify
 domain: testing

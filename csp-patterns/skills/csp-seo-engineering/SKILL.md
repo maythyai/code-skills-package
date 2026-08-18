@@ -3,7 +3,7 @@ name: csp-seo-engineering
 description: >
   Engineers technical SEO for web applications including meta tags, structured data, sitemaps, Core Web Vitals optimization, and rendering strategy selection for maximum search visibility.
 version: 0.1.0
-layer: 4
+layer: 3
 category: patterns
 domain: patterns
 phase: build

@@ -11,7 +11,7 @@ pipeline: [deep-dive, plan, autopilot]
 next-skill: plan
 next-skill-args: --consensus --direct
 handoff: .csp/specs/deep-dive-{slug}.md
-layer: 5
+layer: 4
 category: runtime
 domain: architecture
 phase: build

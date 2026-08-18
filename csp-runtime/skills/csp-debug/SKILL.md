@@ -1,7 +1,7 @@
 ---
 name: csp-debug
 description: Diagnose the current CSP session or repo state using logs, traces, state, and focused reproduction
-layer: 2
+layer: 4
 category: workflow
 phase: build
 domain: quality

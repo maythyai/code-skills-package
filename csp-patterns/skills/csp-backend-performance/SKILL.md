@@ -5,7 +5,7 @@ description: >
   layers, async processing, and scaling patterns. Use when APIs are slow, database
   queries bottleneck throughput, or services need to handle higher concurrency.
 version: 0.1.0
-layer: 4
+layer: 3
 category: patterns
 domain: patterns
 phase: build

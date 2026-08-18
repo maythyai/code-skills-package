@@ -6,7 +6,7 @@ description: >
   Use when setting up a monorepo, migrating from polyrepo, or optimizing
   build orchestration and CI pipelines for multi-package repositories.
 version: 0.1.0
-layer: 4
+layer: 3
 category: patterns
 phase: build
 domain: patterns

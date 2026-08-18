@@ -6,7 +6,7 @@ description: >
   and anti-pattern detection. Based on Supabase best practices.
 metadata:
   credit: Supabase team (MIT License)
-layer: 4
+layer: 3
 category: patterns
 domain: patterns
 phase: build

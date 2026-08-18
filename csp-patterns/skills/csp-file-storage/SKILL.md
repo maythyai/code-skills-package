@@ -6,7 +6,7 @@ description: >
   flows, configuring presigned URLs, setting up image processing pipelines,
   or optimizing storage costs and CDN delivery.
 version: 0.1.0
-layer: 4
+layer: 3
 category: patterns
 phase: build
 domain: patterns

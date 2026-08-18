@@ -6,7 +6,7 @@ description: >
   writing or improving Python tests.
 metadata:
   globs: ["**/*.py", "**/*.pyi"]
-layer: 4
+layer: 3
 category: patterns
 phase: verify
 domain: patterns

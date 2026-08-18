@@ -5,7 +5,7 @@ argument-hint: "[setup|minimal|focused|full|status]"
 # scope omitted — this skill writes to ~/.claude/ config (statusline), which does not
 # match the v2 scope enum (implementation/review/analysis/design/testing). Validator
 # treats absent scope as valid.
-layer: 2
+layer: 4
 category: workflow
 domain: patterns
 phase: build

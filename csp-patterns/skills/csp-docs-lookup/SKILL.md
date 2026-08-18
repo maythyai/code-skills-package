@@ -4,7 +4,7 @@ description: >
   Fetch up-to-date library and framework docs via Context7 MCP instead of training data.
   Use for setup questions, API references, code examples, or when the user names a framework.
   Combines skill methodology with agent execution capability.
-layer: 4
+layer: 3
 category: patterns
 domain: patterns
 phase: build

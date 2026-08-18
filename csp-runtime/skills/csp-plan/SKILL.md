@@ -4,7 +4,7 @@ description: >
   Strategic planning with optional interview, consensus (Planner/Architect/Critic),
   and review modes. Auto-detects whether to interview the user or plan directly.
   Unified entry point replacing ralplan alias. Use before implementing any non-trivial work.
-layer: 5
+layer: 4
 triggers: ["plan", "plan this", "let's plan", "ralplan", "review this plan"]
 category: runtime
 phase: plan

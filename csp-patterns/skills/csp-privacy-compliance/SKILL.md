@@ -3,7 +3,7 @@ name: csp-privacy-compliance
 description: >
   Implement GDPR, CCPA, and privacy compliance features including consent management, data subject access requests, right to erasure, and data portability.
 version: 0.1.0
-layer: 4
+layer: 3
 category: patterns
 phase: build
 domain: patterns

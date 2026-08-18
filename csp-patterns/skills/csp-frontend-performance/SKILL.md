@@ -5,7 +5,7 @@ description: >
   bundle analysis, code splitting, and framework-specific patterns. Use when pages
   feel slow, Lighthouse scores are low, or bundle sizes need reduction.
 version: 0.1.0
-layer: 4
+layer: 3
 category: patterns
 domain: patterns
 phase: build

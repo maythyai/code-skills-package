@@ -4,7 +4,7 @@ description: >
   Docker and Docker Compose patterns for local development, container security,
   networking, volume strategies, and multi-service orchestration. Use when
   setting up containerized development environments or reviewing Docker configurations.
-layer: 4
+layer: 3
 category: patterns
 domain: patterns
 phase: build

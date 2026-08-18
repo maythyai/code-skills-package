@@ -8,7 +8,7 @@ description: >
   JaCoCo coverage. Use when writing or improving tests for Java 17+ services.
 metadata:
   globs: ["**/*Test.java", "**/*Tests.java", "**/src/test/**/*.java"]
-layer: 4
+layer: 3
 category: patterns
 phase: verify
 domain: testing

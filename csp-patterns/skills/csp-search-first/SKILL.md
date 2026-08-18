@@ -5,7 +5,7 @@ description: >
   patterns before writing custom code. Systematizes the "search for existing
   solutions before implementing" approach. Use when starting new features or
   adding functionality.
-layer: 4
+layer: 3
 category: patterns
 phase: build
 domain: patterns

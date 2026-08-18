@@ -1,7 +1,7 @@
 ---
 name: csp-crosspost
 description: Multi-platform content distribution across X, LinkedIn, Threads, and Bluesky. Adapts content per platform using content-engine patterns. Never posts identical content cross-platform. Use when the user wants to distribute content across social platforms.
-layer: 4
+layer: 3
 category: patterns
 domain: patterns
 phase: build

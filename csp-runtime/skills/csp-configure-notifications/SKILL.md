@@ -13,7 +13,7 @@ triggers:
   - "configure slack"
   - "setup slack"
   - "slack webhook"
-layer: 2
+layer: 4
 category: workflow
 domain: patterns
 phase: build

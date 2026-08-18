@@ -1,7 +1,7 @@
 ---
 name: csp-rust-testing
 description: Rust testing patterns including unit tests, integration tests, async testing, property-based testing, mocking, and coverage. Follows TDD methodology.
-layer: 4
+layer: 3
 category: patterns
 phase: build
 domain: patterns

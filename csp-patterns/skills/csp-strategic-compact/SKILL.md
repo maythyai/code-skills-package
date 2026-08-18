@@ -1,7 +1,7 @@
 ---
 name: csp-strategic-compact
 description: Suggests manual context compaction at logical intervals to preserve context through task phases rather than arbitrary auto-compaction.
-layer: 4
+layer: 3
 category: patterns
 domain: patterns
 phase: build

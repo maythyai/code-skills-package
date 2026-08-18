@@ -3,7 +3,7 @@ name: csp-oauth-integration
 description: >
   Implements OAuth 2.0 and OpenID Connect authentication flows including Authorization Code with PKCE, multi-provider identity, token management, session handling, and social login provider integration.
 version: 0.1.0
-layer: 4
+layer: 3
 category: patterns
 domain: patterns
 phase: build

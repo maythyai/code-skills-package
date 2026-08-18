@@ -2,7 +2,7 @@
 name: csp-skill
 description: Manage local skills - list, add, remove, search, edit, setup wizard
 argument-hint: "<command> [args]"
-layer: 2
+layer: 4
 category: workflow
 domain: patterns
 phase: build

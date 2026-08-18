@@ -1,7 +1,7 @@
 ---
 name: csp-ask
 description: Process-first advisor routing for Claude, Codex, or Gemini via `csp ask`, with artifact capture and no raw CLI assembly
-layer: 5
+layer: 4
 category: runtime
 domain: architecture
 phase: build

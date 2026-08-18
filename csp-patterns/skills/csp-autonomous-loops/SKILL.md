@@ -1,7 +1,7 @@
 ---
 name: csp-autonomous-loops
 description: "Patterns and architectures for autonomous Claude Code loops — from simple sequential pipelines to RFC-driven multi-agent DAG systems."
-layer: 4
+layer: 3
 category: patterns
 domain: patterns
 phase: build

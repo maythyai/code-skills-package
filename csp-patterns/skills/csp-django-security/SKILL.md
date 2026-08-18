@@ -1,7 +1,7 @@
 ---
 name: csp-django-security
 description: Django security best practices, authentication, authorization, CSRF protection, SQL injection prevention, XSS prevention, and secure deployment configurations.
-layer: 4
+layer: 3
 category: patterns
 domain: patterns
 phase: build

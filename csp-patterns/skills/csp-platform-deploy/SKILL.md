@@ -3,7 +3,7 @@ name: csp-platform-deploy
 description: >
   Deploy web applications to modern PaaS platforms (Vercel, Netlify, Railway, Fly.io, Render) with optimal configuration for performance, cost, and developer experience.
 version: 0.1.0
-layer: 4
+layer: 3
 category: patterns
 phase: ship
 domain: patterns

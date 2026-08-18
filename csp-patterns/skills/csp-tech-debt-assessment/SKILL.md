@@ -5,7 +5,7 @@ description: >
   architecture smells, dependency health, complexity metrics, debt quantification,
   and creating actionable debt reduction roadmaps. Use when assessing codebase health
   or planning debt reduction initiatives.
-layer: 4
+layer: 3
 category: patterns
 domain: patterns
 phase: build

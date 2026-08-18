@@ -3,7 +3,7 @@ name: csp-payment-integration
 description: >
   Implements Stripe and LemonSqueezy payment integration patterns including checkout sessions, webhook handling, error recovery, and multi-currency support for SaaS and e-commerce applications.
 version: 0.1.0
-layer: 4
+layer: 3
 category: patterns
 domain: patterns
 phase: build

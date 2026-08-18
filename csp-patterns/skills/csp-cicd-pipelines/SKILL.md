@@ -5,7 +5,7 @@ description: >
   matrix builds, reusable workflows, caching strategies, monorepo triggers,
   deployment gates, and branch protection integration. Use when designing or
   optimizing continuous integration and delivery pipelines.
-layer: 4
+layer: 3
 category: patterns
 domain: patterns
 phase: build

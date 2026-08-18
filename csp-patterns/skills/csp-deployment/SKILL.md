@@ -5,7 +5,7 @@ description: >
   rollback strategies, feature flags, and production readiness checklists.
   Combines deployment patterns with CI/CD automation and shift-left quality strategy.
   Use when setting up deployment infrastructure, configuring CI pipelines, or planning releases.
-layer: 4
+layer: 3
 category: patterns
 domain: patterns
 phase: build

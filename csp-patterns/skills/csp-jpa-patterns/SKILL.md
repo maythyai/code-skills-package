@@ -1,7 +1,7 @@
 ---
 name: csp-jpa-patterns
 description: JPA/Hibernate patterns for entity design, relationships, query optimization, transactions, auditing, indexing, pagination, and pooling in Spring Boot.
-layer: 4
+layer: 3
 category: patterns
 domain: patterns
 phase: build

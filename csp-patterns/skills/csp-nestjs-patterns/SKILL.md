@@ -1,7 +1,7 @@
 ---
 name: csp-nestjs-patterns
 description: NestJS architecture patterns for modules, controllers, providers, DTO validation, guards, interceptors, config, and production-grade TypeScript backends.
-layer: 4
+layer: 3
 category: patterns
 domain: patterns
 phase: build

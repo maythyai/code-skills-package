@@ -3,7 +3,7 @@ name: csp-cancel
 aliases: [cancel-ralph]
 description: Cancel any active CSP mode (autopilot, ralph, ultrawork, ultraqa, swarm, ultrapilot, pipeline, team)
 argument-hint: "[--force|--all]"
-layer: 2
+layer: 4
 category: workflow
 domain: patterns
 phase: build

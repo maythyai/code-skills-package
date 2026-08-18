@@ -6,7 +6,7 @@ description: >
   release pipelines, coordinating monorepo versioning, or writing user-facing
   release notes.
 version: 0.1.0
-layer: 4
+layer: 3
 category: patterns
 phase: ship
 domain: patterns

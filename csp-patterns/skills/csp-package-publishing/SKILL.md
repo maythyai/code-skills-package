@@ -6,7 +6,7 @@ description: >
   and security controls. Use when setting up CI-based publishing pipelines,
   managing pre-release channels, or securing registry access tokens.
 version: 0.1.0
-layer: 4
+layer: 3
 category: patterns
 phase: ship
 domain: patterns

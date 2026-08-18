@@ -6,7 +6,7 @@ description: >
   Use when implementing locale-specific formatting, content negotiation, or
   bidirectional text support in web applications.
 version: 0.1.0
-layer: 4
+layer: 3
 category: patterns
 domain: patterns
 phase: build

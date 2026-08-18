@@ -3,7 +3,7 @@ name: csp-email-systems
 description: >
   Integrates transactional and marketing email systems with provider setup, template rendering, deliverability configuration, bounce handling, and queue-based sending for reliable email delivery.
 version: 0.1.0
-layer: 4
+layer: 3
 category: patterns
 domain: patterns
 phase: build

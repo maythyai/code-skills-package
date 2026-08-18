@@ -1,7 +1,7 @@
 ---
 name: csp-local-build-reminder
 description: Remind the user to rebuild CSP after editing TypeScript when running from a local fork. Triggered automatically by the AI whenever it notices it (or the user) just changed a src/**/*.ts file in an CSP dev install.
-layer: 1
+layer: 4
 category: meta
 phase: build
 domain: architecture
