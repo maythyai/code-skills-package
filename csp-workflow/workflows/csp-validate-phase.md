@@ -94,7 +94,7 @@ Call AskUserQuestion with gap table and options:
 
 ```
 Agent(
-  prompt="Read ~/.claude/agents/csp-nyquist-auditor.md for instructions.\n\n" +
+  prompt="Read {CLAUDE_CONFIG_DIR}/agents/csp-nyquist-auditor.md for instructions.\n\n" +
     "<files_to_read>{PLAN, SUMMARY, impl files, VALIDATION.md}</files_to_read>" +
     "<gaps>{gap list}</gaps>" +
     "<test_infrastructure>{framework, config, commands}</test_infrastructure>" +

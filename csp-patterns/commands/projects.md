@@ -6,20 +6,20 @@ command: true
 
 # Projects Command
 
-List project registry entries and per-project instinct/observation counts for continuous-learning-v2.
+List project registry entries and per-project instinct/observation counts for csp-learning-loop.
 
 ## Implementation
 
 Run the instinct CLI using the plugin root path:
 
 ```bash
-python3 "${CLAUDE_PLUGIN_ROOT}/skills/continuous-learning-v2/scripts/instinct-cli.py" projects
+python3 "${CSP_ROOT}/skills/csp-learning-loop/scripts/csp-intel" projects
 ```
 
-Or if `CLAUDE_PLUGIN_ROOT` is not set (manual installation):
+Or if the CSP root is not auto-detected:
 
 ```bash
-python3 ~/.claude/skills/continuous-learning-v2/scripts/instinct-cli.py projects
+python3 {CSP_SKILLS_DIR}/csp-learning-loop/scripts/csp-intel projects
 ```
 
 ## Usage
@@ -30,7 +30,7 @@ python3 ~/.claude/skills/continuous-learning-v2/scripts/instinct-cli.py projects
 
 ## What to Do
 
-1. Read `~/.claude/homunculus/projects.json`
+1. Read `{CSP_DATA_DIR}/intel/projects.json`
 2. For each project, display:
    - Project name, id, root, remote
    - Personal and inherited instinct counts

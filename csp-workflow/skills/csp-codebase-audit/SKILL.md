@@ -37,7 +37,7 @@ anti_rationalizations:
 - 单文件/单函数的 code review（直接看代码即可）→ 用 `csp-code-review`
 - 仅跑 lint/test（直接执行命令）
 - 已有明确 bug 要修（用调试流程）
-- GSD 工作流内的 map-codebase（输出 .planning/ 规划文档）
+- CSP 工作流内的 map-codebase（输出 .planning/ 规划文档）
 
 ## Phase 0: Context Loading（上下文装载）
 

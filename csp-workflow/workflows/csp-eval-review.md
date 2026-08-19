@@ -78,7 +78,7 @@ Build file list for auditor:
 Build prompt:
 
 ```markdown
-Read ~/.claude/agents/csp-eval-auditor.md for instructions.
+Read {CLAUDE_CONFIG_DIR}/agents/csp-eval-auditor.md for instructions.
 
 <objective>
 Conduct evaluation coverage audit of Phase {phase_number}: {phase_name}

@@ -104,11 +104,11 @@ await page.route('**/h5api**', async (route) => {
 
   // 根据 apiName 返回对应 mock 数据
   const mockDataMap = {
-    'mtop.taobao.detail.getdetail': {
-      item: { title: '测试商品', price: '99.00' },
+    '{API_GATEWAY}/product/detail': {
+      item: { title: 'Mock Product', price: '99.00' },
     },
-    'mtop.taobao.social.feed.aggregate': {
-      feeds: [{ id: 1, content: '测试内容' }],
+    '{API_GATEWAY}/social/feed': {
+      feeds: [{ id: 1, content: 'Mock content' }],
     },
   };
 
@@ -154,8 +154,8 @@ await page.route('**/h5api**', async (route) => {
 await page.addInitScript(() => {
   // 存储 mock 数据
   window.__MOCK_DATA__ = {
-    'mtop.taobao.detail.getdetail': {
-      item: { title: '测试商品', price: '99.00' },
+    '{API_GATEWAY}/product/detail': {
+      item: { title: 'Mock Product', price: '99.00' },
     },
   };
 
@@ -182,7 +182,7 @@ await page.addInitScript(() => {
 ```javascript
 await page.addInitScript(() => {
   const MOCK_MAP = {
-    '/h5/mtop.taobao.detail.getdetail': { item: { title: '测试商品' } },
+    '/h5/{API_GATEWAY}/product/detail': { item: { title: 'Mock Product' } },
     '/api/navigation': { tabs: [{ name: '首页' }, { name: '分类' }] },
   };
 

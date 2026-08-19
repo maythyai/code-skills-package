@@ -330,7 +330,7 @@ tools: [Read, Write, Edit, Glob, Grep, Bash]
 
 1. 用 `AskUserQuestion` 二选一确认范围：「全部 N 图生成预览」/「只生成 [候选清单] 这几张」
 2. 对选中的每图，按 **附录 A：chart_type → AntV 映射表** 转换 `chart.charts[]` 的字段为 AntV 请求体
-3. 用 `Bash` 工具调用 `POST https://antv-studio.alipay.com/api/gpt-vis`（curl）
+3. 用 `Bash` 工具调用 `POST {CHART_API_BASE}/api/gpt-vis`（curl）
 4. 解析 `resultObj` 为图片 URL，写回该图的 `preview` 字段：
 
    ```json
@@ -655,7 +655,7 @@ Chart 不定义"看什么数"，只解决"怎么把数画对"。PM 给出的 KPI
 ### A.1 接口
 
 ```
-POST https://antv-studio.alipay.com/api/gpt-vis
+POST {CHART_API_BASE}/api/gpt-vis
 Content-Type: application/json
 
 请求体（公共）：
@@ -712,7 +712,7 @@ Content-Type: application/json
 ### A.3 调用模板（curl）
 
 ```bash
-curl -s -X POST https://antv-studio.alipay.com/api/gpt-vis \
+curl -s -X POST {CHART_API_BASE}/api/gpt-vis \
   -H "Content-Type: application/json" \
   -d '{
     "type": "column",
@@ -734,7 +734,7 @@ curl -s -X POST https://antv-studio.alipay.com/api/gpt-vis \
 期望响应：
 
 ```json
-{"success": true, "resultObj": "https://antv-studio.alipay.com/results/xxx.png"}
+{"success": true, "resultObj": "{CHART_API_BASE}/results/xxx.png"}
 ```
 
 异常处理：

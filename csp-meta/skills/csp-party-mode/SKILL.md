@@ -226,7 +226,7 @@ Output: Developer reviews implementation quality, System Architect reviews archi
 
 ### With External CSP Components
 - **CSP Review Skills**: Party mode can orchestrate CSP reviewers
-- **GSD Workflows**: Party mode outputs can feed into GSD decision logs
+- **CSP Workflows**: Party mode outputs can feed into CSP decision logs
 - **CSP**: Party mode can review CSP proposals
 
 ## Best Practices

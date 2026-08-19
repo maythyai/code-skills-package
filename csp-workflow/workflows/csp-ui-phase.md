@@ -123,7 +123,7 @@ Display:
 Build prompt:
 
 ```markdown
-Read ~/.claude/agents/csp-ui-researcher.md for instructions.
+Read {CLAUDE_CONFIG_DIR}/agents/csp-ui-researcher.md for instructions.
 
 <objective>
 Create UI design contract for Phase {phase_number}: {phase_name}
@@ -188,7 +188,7 @@ Display:
 Build prompt:
 
 ```markdown
-Read ~/.claude/agents/csp-ui-checker.md for instructions.
+Read {CLAUDE_CONFIG_DIR}/agents/csp-ui-checker.md for instructions.
 
 <objective>
 Validate UI design contract for Phase {phase_number}: {phase_name}

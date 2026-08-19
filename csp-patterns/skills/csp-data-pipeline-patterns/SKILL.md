@@ -770,7 +770,7 @@ odps = ODPS(
     access_id="your_access_id",
     access_key="your_access_key",
     project="your_project",
-    endpoint="http://service.odps.aliyun.com/api",
+    endpoint="{MAXCOMPUTE_ENDPOINT}",
 )
 
 

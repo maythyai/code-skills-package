@@ -13,13 +13,13 @@ Remove expired pending instincts that were auto-generated but never reviewed or 
 Run the instinct CLI using the plugin root path:
 
 ```bash
-python3 "${CLAUDE_PLUGIN_ROOT}/skills/continuous-learning-v2/scripts/instinct-cli.py" prune
+python3 "${CSP_ROOT}/skills/csp-learning-loop/scripts/csp-intel" prune
 ```
 
-Or if `CLAUDE_PLUGIN_ROOT` is not set (manual installation):
+Or if the CSP root is not auto-detected:
 
 ```bash
-python3 ~/.claude/skills/continuous-learning-v2/scripts/instinct-cli.py prune
+python3 {CSP_SKILLS_DIR}/csp-learning-loop/scripts/csp-intel prune
 ```
 
 ## Usage

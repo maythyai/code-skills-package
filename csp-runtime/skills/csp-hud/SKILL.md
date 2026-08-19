@@ -23,12 +23,12 @@ phase: build
 ## Auto-Setup
 
 When you run `/code-skills-package:hud` or `/code-skills-package:hud setup`, the system will automatically:
-1. Check if `~/.claude/hud/csp-hud.mjs` exists
+1. Check if `{CLAUDE_CONFIG_DIR}/hud/csp-hud.mjs` exists
 2. Check if `statusLine` is configured in `~/.claude/settings.json`
 3. If missing, create the HUD wrapper script and configure settings
 4. Report status and prompt to restart Claude Code if changes were made
 
-**IMPORTANT**: If the argument is `setup` OR if the HUD script doesn't exist at `~/.claude/hud/csp-hud.mjs`, you MUST create the HUD files directly using the instructions below.
+**IMPORTANT**: If the argument is `setup` OR if the HUD script doesn't exist at `{CLAUDE_CONFIG_DIR}/hud/csp-hud.mjs`, you MUST create the HUD files directly using the instructions below.
 
 ### Setup Instructions (Run These Commands)
 
@@ -234,7 +234,7 @@ If the HUD is not showing:
 2. Restart Claude Code after setup completes
 3. If still not working, run `/code-skills-package:csp-doctor` for full diagnostics
 
-**Legacy string format migration:** Older CSP versions wrote `statusLine` as a plain string (e.g., `"~/.claude/hud/csp-hud.mjs"`). Modern Claude Code (v2.1+) requires an object format. Running the installer or `/code-skills-package:hud setup` will auto-migrate legacy strings to the correct object format:
+**Legacy string format migration:** Older CSP versions wrote `statusLine` as a plain string (e.g., `"{CLAUDE_CONFIG_DIR}/hud/csp-hud.mjs"`). Modern Claude Code (v2.1+) requires an object format. Running the installer or `/code-skills-package:hud setup` will auto-migrate legacy strings to the correct object format:
 ```json
 {
   "statusLine": {
@@ -247,7 +247,7 @@ If the HUD is not showing:
 **Node 24+ compatibility:** The HUD wrapper script imports `homedir` from `node:os` (not `node:path`). If you encounter `SyntaxError: The requested module 'path' does not provide an export named 'homedir'`, re-run the installer to regenerate `csp-hud.mjs`.
 
 Manual verification:
-- HUD script: `~/.claude/hud/csp-hud.mjs`
+- HUD script: `{CLAUDE_CONFIG_DIR}/hud/csp-hud.mjs`
 - Settings: `~/.claude/settings.json` should have `statusLine` configured as an object with `type` and `command` fields
 
 ---

@@ -1,7 +1,7 @@
 interface:
   display_name: "Code Skills Package"
-  short_description: "Repo workflows for everything-claude-code"
+  short_description: "Repo workflows for JavaScript projects"
   brand_color: "#0EA5E9"
-  default_prompt: "Use $everything-claude-code to follow this repository's conventions and workflows."
+  default_prompt: "Use this skill to follow JavaScript project conventions and workflows."
 policy:
   allow_implicit_invocation: true

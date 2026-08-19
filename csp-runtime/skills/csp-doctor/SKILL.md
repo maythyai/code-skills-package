@@ -21,13 +21,13 @@ After running all checks, output a report:
 |-------|--------|---------|
 | Plugin Version | OK/WARN/CRITICAL | ... |
 | Legacy Hooks (settings.json) | OK/CRITICAL | ... |
-| Legacy Scripts (~/.claude/hooks/) | OK/WARN | ... |
+| Legacy Scripts ({CLAUDE_CONFIG_DIR}/hooks/) | OK/WARN | ... |
 | CLAUDE.md | OK/WARN/CRITICAL | ... |
 | Ralph Ruby Dependency | OK/WARN | ... |
 | Plugin Cache | OK/WARN | ... |
-| Legacy Agents (~/.claude/agents/) | OK/WARN | ... |
-| Legacy Commands (~/.claude/commands/) | OK/WARN | ... |
-| Legacy Skills (~/.claude/skills/) | OK/WARN | ... |
+| Legacy Agents ({CLAUDE_CONFIG_DIR}/agents/) | OK/WARN | ... |
+| Legacy Commands ({CLAUDE_CONFIG_DIR}/commands/) | OK/WARN | ... |
+| Legacy Skills ({CLAUDE_CONFIG_DIR}/skills/) | OK/WARN | ... |
 
 ### Issues Found
 1. [Issue description]

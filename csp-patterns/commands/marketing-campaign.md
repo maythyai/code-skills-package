@@ -126,4 +126,4 @@ This command invokes:
 
 ---
 
-*Part of [Code Skills Package](https://github.com/affaan-m/everything-claude-code)*
+*Part of [Code Skills Package](https://github.com/maythyai/code-skills-package)*

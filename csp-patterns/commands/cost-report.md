@@ -7,12 +7,12 @@ argument-hint: [csv]
 
 Query the local cost-tracking database and present a spending report by day,
 project, tool, and session. This command assumes a cost-tracking hook or plugin
-is already writing usage rows to `~/.claude-cost-tracker/usage.db`.
+is already writing usage rows to `{CSP_DATA_DIR}/cost-tracker/usage.db`.
 
 ## What This Command Does
 
 1. Check that `sqlite3` is available.
-2. Check that `~/.claude-cost-tracker/usage.db` exists.
+2. Check that `{CSP_DATA_DIR}/cost-tracker/usage.db` exists.
 3. Run aggregate queries against the `usage` table.
 4. Present a compact report, or export recent rows as CSV when the argument is
    `csv`.
@@ -24,13 +24,13 @@ tell the user the tracker is not set up and suggest installing or enabling a
 trusted Claude Code cost-tracking hook/plugin first.
 
 ```bash
-test -f ~/.claude-cost-tracker/usage.db && echo "Database found" || echo "Database not found"
+test -f {CSP_DATA_DIR}/cost-tracker/usage.db && echo "Database found" || echo "Database not found"
 ```
 
 ## Summary Query
 
 ```bash
-sqlite3 -header -column ~/.claude-cost-tracker/usage.db "
+sqlite3 -header -column {CSP_DATA_DIR}/cost-tracker/usage.db "
   SELECT
     ROUND(COALESCE(SUM(CASE WHEN date(timestamp) = date('now') THEN cost_usd END), 0), 4) AS today_cost,
     ROUND(COALESCE(SUM(CASE WHEN date(timestamp) = date('now', '-1 day') THEN cost_usd END), 0), 4) AS yesterday_cost,
@@ -44,7 +44,7 @@ sqlite3 -header -column ~/.claude-cost-tracker/usage.db "
 ## Project Breakdown
 
 ```bash
-sqlite3 -header -column ~/.claude-cost-tracker/usage.db "
+sqlite3 -header -column {CSP_DATA_DIR}/cost-tracker/usage.db "
   SELECT project, ROUND(SUM(cost_usd), 4) AS cost, COUNT(*) AS calls
   FROM usage
   GROUP BY project
@@ -55,7 +55,7 @@ sqlite3 -header -column ~/.claude-cost-tracker/usage.db "
 ## Tool Breakdown
 
 ```bash
-sqlite3 -header -column ~/.claude-cost-tracker/usage.db "
+sqlite3 -header -column {CSP_DATA_DIR}/cost-tracker/usage.db "
   SELECT tool_name, ROUND(SUM(cost_usd), 4) AS cost, COUNT(*) AS calls
   FROM usage
   GROUP BY tool_name
@@ -66,7 +66,7 @@ sqlite3 -header -column ~/.claude-cost-tracker/usage.db "
 ## Last Seven Days
 
 ```bash
-sqlite3 -header -column ~/.claude-cost-tracker/usage.db "
+sqlite3 -header -column {CSP_DATA_DIR}/cost-tracker/usage.db "
   SELECT date(timestamp) AS date, ROUND(SUM(cost_usd), 4) AS cost, COUNT(*) AS calls
   FROM usage
   GROUP BY date(timestamp)
@@ -81,7 +81,7 @@ If the user asks for `/cost-report csv`, export the most recent usage rows with
 an explicit column list:
 
 ```bash
-sqlite3 -csv -header ~/.claude-cost-tracker/usage.db "
+sqlite3 -csv -header {CSP_DATA_DIR}/cost-tracker/usage.db "
   SELECT timestamp, project, tool_name, input_tokens, output_tokens, cost_usd, session_id, model
   FROM usage
   ORDER BY timestamp DESC

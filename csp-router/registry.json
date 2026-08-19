@@ -6,7 +6,7 @@
   "skills": [
     {
       "name": "csp-agent-teams",
-      "description": "Orchestrate multiple AI agents for parallel or sequential task execution. Includes subagent-driven development (per-task dispatch with two-stage review) and parallel agent dispatch (independent problems solved concurrently). Use when executing implementation plans with independent tasks, or facing 2",
+      "description": "Orchestrate multiple AI agents for parallel or sequential task execution. Includes CSP agent-team collaboration (per-task dispatch with two-stage review) and parallel agent dispatch (independent problems solved concurrently). Use when executing implementation plans with independent tasks, or facing ",
       "layer": 1,
       "category": "meta",
       "triggers": {
@@ -2875,7 +2875,7 @@
     },
     {
       "name": "csp-save-session",
-      "description": "Save current session state to a dated file in ~/.claude/session-data/ so work can be resumed in a future session with full context.",
+      "description": "Save current session state to a dated file in {CSP_DATA_DIR}/session-data/ so work can be resumed in a future session with full context.",
       "layer": 3,
       "category": "patterns",
       "triggers": {
@@ -3895,7 +3895,7 @@
     },
     {
       "name": "csp-everything-claude-code",
-      "description": "Development conventions and patterns for everything-claude-code. JavaScript project with conventional commits.",
+      "description": "Development conventions and patterns for JavaScript projects with conventional commits.",
       "layer": 3,
       "category": "patterns",
       "triggers": {

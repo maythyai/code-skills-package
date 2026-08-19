@@ -73,7 +73,7 @@ Build file list for auditor:
 Build prompt:
 
 ```markdown
-Read ~/.claude/agents/csp-ui-auditor.md for instructions.
+Read {CLAUDE_CONFIG_DIR}/agents/csp-ui-auditor.md for instructions.
 
 <objective>
 Conduct 6-pillar visual audit of Phase {phase_number}: {phase_name}

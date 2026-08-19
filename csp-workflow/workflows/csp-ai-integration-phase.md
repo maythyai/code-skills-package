@@ -102,7 +102,7 @@ Display:
 
 Spawn `csp-framework-selector` with:
 ```markdown
-Read ~/.claude/agents/csp-framework-selector.md for instructions.
+Read {CLAUDE_CONFIG_DIR}/agents/csp-framework-selector.md for instructions.
 
 <objective>
 Select the right AI framework for Phase {phase_number}: {phase_name}
@@ -148,7 +148,7 @@ Display:
 
 Spawn `csp-ai-researcher` with:
 ```markdown
-Read ~/.claude/agents/csp-ai-researcher.md for instructions.
+Read {CLAUDE_CONFIG_DIR}/agents/csp-ai-researcher.md for instructions.
 
 **Tool discipline (mandatory):**
 Use the Edit tool exclusively when modifying AI-CSPEC.md — NEVER use Write on this file.
@@ -183,7 +183,7 @@ Display:
 
 Spawn `csp-domain-researcher` with:
 ```markdown
-Read ~/.claude/agents/csp-domain-researcher.md for instructions.
+Read {CLAUDE_CONFIG_DIR}/agents/csp-domain-researcher.md for instructions.
 
 **Tool discipline (mandatory):**
 Use the Edit tool exclusively when modifying AI-CSPEC.md — NEVER use Write on this file.
@@ -216,7 +216,7 @@ Display:
 
 Spawn `csp-eval-planner` with:
 ```markdown
-Read ~/.claude/agents/csp-eval-planner.md for instructions.
+Read {CLAUDE_CONFIG_DIR}/agents/csp-eval-planner.md for instructions.
 
 <objective>
 Design evaluation strategy for Phase {phase_number}: {phase_name}

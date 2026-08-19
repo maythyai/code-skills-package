@@ -28,7 +28,7 @@ Use the Skill tool to invoke: `hud` with args: `setup`
 Do not generate, normalize, or patch `statusLine` paths inline in this phase. This is especially important on Windows, where backslash path handling must stay inside the `hud` skill.
 
 This will:
-1. Install the HUD wrapper script to `~/.claude/hud/csp-hud.mjs`
+1. Install the HUD wrapper script to `{CLAUDE_CONFIG_DIR}/hud/csp-hud.mjs`
 2. Configure `statusLine` in `~/.claude/settings.json`
 3. Report status and prompt to restart if needed
 

@@ -13,7 +13,7 @@ Create a safe, reviewable CSP onboarding plan for the current project. This comm
 /project-init --dry-run
 /project-init --target claude
 /project-init --target cursor
-/project-init --skills continuous-learning-v2,security-review
+/project-init --skills csp-learning-loop,security-review
 /project-init --config csp-install.json
 ```
 
