@@ -128,19 +128,31 @@ npm install -g code-skills-package --registry=https://registry.npmjs.org/
 | `./install.sh --dry-run` | 预览安装内容 |
 | `./install.sh --version` | 显示版本号 |
 
-## 支持的平台（18 个）
+## 支持的平台（22 个）
 
-`claude-code`, `cursor`, `copilot-cli`, `hermes-agent`, `windsurf`, `kiro`, `gemini-cli`, `codex`, `aider`, `trae`, `vscode`, `deerflow`, `opencode`, `openclaw`, `qwen-code`, `antigravity`, `claw-code`, `qoder`
+`claude-code`, `cursor`, `copilot-cli`, `hermes-agent`, `windsurf`, `kiro`, `gemini-cli`, `codex`, `aider`, `trae`, `vscode`, `deerflow`, `opencode`, `openclaw`, `qwen-code`, `antigravity`, `claw-code`, `qoder`, `junie`, `cline`, `roo-code`, `neovim`
 
 ## 技能数量
 
-- 总计: 174 个 skills
+- 总计: 650 个 skills
 - csp-router: 1 个
-- csp-meta: 22 个  
-- csp-workflow: 9 个
-- csp-patterns: 105 个
-- csp-runtime: 37 个
+- csp-meta: 26 个
+- csp-workflow: 185 个
+- csp-patterns: 380 个
+- csp-runtime: 58 个
 
 ## 可用技术栈
 
 `python`, `typescript/javascript`, `rust`, `go/golang`, `java`, `kotlin`, `swift`, `cpp/c++`, `react`, `django`, `spring`, `fastapi`, `postgres`, `docker`, `kubernetes/k8s`, `ai/ml`, `mobile`, `devops`, `security`, `testing`, `frontend`
+
+---
+
+### Windows
+
+```powershell
+# PowerShell 安装器（claude-code、cursor、windsurf、vscode）
+.\install.ps1 -Platform cursor -Target C:\path\to\project
+
+# 或使用 WSL2 配合 bash 安装器，获得完整 22 平台支持
+wsl bash install.sh --platform cursor --target /mnt/c/path/to/project
+```

@@ -48,6 +48,8 @@ const checks = [
   { file: 'README_zh.md',              re: /全部\s*(\d+)\s*个/g },
   { file: 'README_zh.md',              re: /总计：(\d+)\s*个技能/g },
   { file: 'docs/SKILL-INDEX.md',       re: /状态：(\d+)\s*个技能/g },
+  { file: 'docs/INSTALL.md',           re: /Total:\s*(\d+)\s+skills/g },
+  { file: 'docs/INSTALL_zh.md',        re: /总计[:：]\s*(\d+)\s*个\s*skills/g },
 ];
 
 const mismatches = [];

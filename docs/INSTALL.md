@@ -1,6 +1,6 @@
 # CSP Installation Guide
 
-> Complete installation instructions supporting 18+ AI programming platforms.
+> Complete installation instructions supporting 22+ AI programming platforms.
 
 ## Prerequisites
 
@@ -128,18 +128,18 @@ Install to user home directory (`~/.xxx/skills/`), available to all projects:
 | `./install.sh --dry-run` | Preview installation content |
 | `./install.sh --version` | Show version number |
 
-## Supported Platforms (18)
+## Supported Platforms (22)
 
-`claude-code`, `cursor`, `copilot-cli`, `hermes-agent`, `windsurf`, `kiro`, `gemini-cli`, `codex`, `aider`, `trae`, `vscode`, `deerflow`, `opencode`, `openclaw`, `qwen-code`, `antigravity`, `claw-code`, `qoder`
+`claude-code`, `cursor`, `copilot-cli`, `hermes-agent`, `windsurf`, `kiro`, `gemini-cli`, `codex`, `aider`, `trae`, `vscode`, `deerflow`, `opencode`, `openclaw`, `qwen-code`, `antigravity`, `claw-code`, `qoder`, `junie`, `cline`, `roo-code`, `neovim`
 
 ## Skill Count
 
-- Total: 585 skills
+- Total: 650 skills
 - csp-router: 1
-- csp-meta: 22  
-- csp-workflow: 9
-- csp-patterns: 105
-- csp-runtime: 37
+- csp-meta: 26
+- csp-workflow: 185
+- csp-patterns: 380
+- csp-runtime: 58
 
 ## Available Tech Stacks
 
@@ -153,6 +153,6 @@ Install to user home directory (`~/.xxx/skills/`), available to all projects:
 # PowerShell installer (claude-code, cursor, windsurf, vscode)
 .\install.ps1 -Platform cursor -Target C:\path\to\project
 
-# Or use WSL2 with the bash installer for full 18-platform support
+# Or use WSL2 with the bash installer for full 22-platform support
 wsl bash install.sh --platform cursor --target /mnt/c/path/to/project
 ```

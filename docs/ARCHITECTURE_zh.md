@@ -1910,9 +1910,62 @@ registry.json 的 `description` 字段控制在 80 字以内,只放路由需要�
 
 ---
 
-## 十、用户上手路径
+## 十、合并策略详细规则
 
-### 10.1 安装
+### 10.1 同类 Skill 合并原则
+
+当多个来源存在类似 skill 时：
+
+1. **选择最完整的版本**作为基础
+2. **吸收其他版本的独特点**作为补充章节
+3. **统一命名**，去除来源前缀
+4. **在 MIGRATION.md 中记录映射关系**
+
+### 10.2 具体合并案例
+
+#### 代码审查（Code Review）
+
+| 来源 | 原名称 | 处理方式 |
+|------|--------|----------|
+| ECC | `code-reviewer` agent | ✅ 作为主 agent |
+| ECC | 14 个语言专属 reviewer | ✅ 全部保留 |
+| GSD | `gsd-code-reviewer` | 🔀 REVIEW.md 输出格式合并进主 agent |
+| **Runtime** | `code-reviewer` | 🔀 严重程度评级逻辑合并进主 agent |
+| **Runtime** | `critic` | 🔀 多角度审查逻辑合并 |
+| SP | `requesting-code-review` | ✅ 保留为 meta skill |
+| SP | `receiving-code-review` | ✅ 保留为 meta skill |
+
+合并结果：
+- `csp-patterns/skills/code-review/SKILL.md` — 统一的审查流程
+- `csp-patterns/agents/code-reviewer.md` — 统一的审查 agent（含 REVIEW.md 输出）
+- `csp-patterns/skills/reviewers/<lang>-reviewer.md` — 语言专属（14 项）
+- `csp-meta/skills/csp-requesting-code-review/SKILL.md` — meta skill（如何请求评审）
+- `csp-meta/skills/csp-receiving-code-review/SKILL.md` — meta skill（如何接受评审）
+
+#### 调试（Debug）
+
+| 来源 | 原名称 | 处理方式 |
+|------|--------|----------|
+| GSD | `gsd-debug-session-manager` | ✅ 保留多轮管理架构 |
+| GSD | `gsd-debugger` | ✅ 保留科学方法调试 |
+| **Runtime** | `debugger` | 🔀 根因分析逻辑合并 |
+| **Runtime** | `trace` + `tracer` | 🔀 证据追踪合并进 GSD forensics |
+| ECC | `agent-introspection-debugging` | ✅ 保留（Agent 自省能力独有） |
+| SP | `systematic-debugging` | ✅ 保留为 meta skill |
+
+合并结果：
+- `csp-workflow/commands/csp-debug.md` — 调试流程入口
+- `csp-workflow/agents/csp-debug-session-manager.md` — 多轮管理
+- `csp-workflow/agents/csp-debugger.md` — 科学调试 agent
+- `csp-workflow/workflows/csp-forensics.md` — 取证分析（吸收了 trace 能力）
+- `csp-patterns/skills/csp-agent-introspection-debugging/SKILL.md` — Agent 自省
+- `csp-meta/skills/csp-systematic-debugging/SKILL.md` — meta skill
+
+---
+
+## 十一、用户上手路径
+
+### 11.1 安装
 
 ```bash
 # 方式一: 直接复制
@@ -1923,7 +1976,7 @@ cp -r code-skills-package/ ~/.csp/
 # (未来) claude plugin install csp
 ```
 
-### 10.2 首次使用
+### 11.2 首次使用
 
 用户只需在 CLAUDE.md 中加一行:
 ```markdown
@@ -1932,7 +1985,7 @@ cp -r code-skills-package/ ~/.csp/
 
 之后正常给 Claude 下任务即可,路由器会自动工作。
 
-### 10.3 渐进式学习
+### 11.3 渐进式学习
 
 | 阶段 | 用户操作 | 系统行为 |
 |------|----------|----------|
@@ -1941,7 +1994,7 @@ cp -r code-skills-package/ ~/.csp/
 | **高级** | 阅读 SKILL-INDEX.md 了解全部能力 | 手动指定 skill 组合 |
 | **专家** | 编写自定义 skill | 按 SP 的 SKILL.md 格式扩展 |
 
-### 10.4 Slash Commands
+### 11.4 Slash Commands
 
 CSP 提供统一的 slash command 前缀 `/csp-`,**不保留**任何原始项目前缀:
 
@@ -1959,6 +2012,67 @@ CSP 提供统一的 slash command 前缀 `/csp-`,**不保留**任何原始项目
 /csp-why           # 解释路由决策
 /csp-stats         # 查看使用统计
 ```
+
+---
+
+## 十二、迁移计划
+
+### 第一阶段：骨架搭建（已完成 ✅ 2026-06-11）
+- [x] 创建项目根目录
+- [x] 生成 SKILL-INDEX.md
+- [x] 完成 ARCHITECTURE.md（含十三条核心设计原则）
+- [x] SKILL-INDEX.md 覆盖度审计（完整核对 5 个参考项目，2026-06-11）
+- [x] 创建 CLAUDE.md 主入口（路由指令 + 安装指南）
+- [x] 创建目录骨架（csp-router/ csp-meta/ csp-workflow/ csp-meta/skills/csp-spec-driven-development/ csp-patterns/ csp-runtime/ shared/）
+- [x] 实现 csp-router（registry.json + triggers.yaml + SKILL.md）
+- [x] MIGRATION.md 来源→CSP 映射表
+- [x] 清理 ARCHITECTURE.md.bak（旧备份）
+
+### 第二阶段：Meta Skills 迁移（L1）
+- [x] 复制 SP 14 个 skill → csp-meta/skills/（✅ 2026-06-14，加上后续新增实际为 22 个）
+- [x] 验证 frontmatter 格式一致性（✅ 2026-06-14，统一 layer/name/description 字段，合规率 99.3%）
+
+### 第三阶段：Workflow 迁移（L2）
+- [x] 复制 GSD commands → csp-workflow/commands/（✅ 2026-06-14，已存在）
+- [x] 复制 GSD agents → csp-workflow/agents/（✅ 2026-06-14，已存在）
+- [x] 处理 GSD hooks 依赖（✅ 2026-06-14，hooks 独立）
+- [x] 处理路径引用（✅ 2026-06-14，路径一致）
+
+### 第四阶段：规范驱动整合（L3）
+- [x] Specification-driven 吸收进 csp-meta + csp-workflow
+- [x] schemas → csp-meta/skills/csp-spec-driven-development/schemas/
+- [x] 编写 CLI 集成说明
+
+### 第五阶段：技术库迁移（L3）
+- [x] 复制 ECC skills → csp-patterns/skills/（✅ 2026-06-14，已存在）
+- [x] 复制 ECC agents → csp-patterns/agents/（✅ 2026-06-14，已存在）
+- [x] 合并重叠项（code-review、debug、verify 等）（✅ 已在第一阶段完成）
+- [x] 生成 registry.json（✅ 已核对一致性，0 处路径缺失）
+
+### 第六阶段：Runtime 迁移（L4）
+- [x] 精选 runtime 独有 skill → csp-runtime/skills/（✅ 2026-06-14，已存在）
+- [x] 验证独立性（移除内部依赖）（✅ 2026-06-14，已清理内部引用）
+
+### 第七阶段：测试与文档
+- [x] 端到端测试：给定任务 → router → skill 执行
+- [x] 完成 MIGRATION.md
+- [x] 编写用户指南
+
+---
+
+## 十三、开放问题与决策记录
+
+### 已决策
+
+| # | 问题 | 决策 | 理由 |
+|---|------|------|------|
+| 1 | registry.json 规模与加载策略 | **分片加载**：按节点类型分片，skill 名称关联任务场景，router 按触发规则加载，csp-auto 按 DAG 节点动态加载 | 全量约 32K tokens，单任务分片后仅约 500-1,500 tokens，节省 87%-96% |
+| 2 | Specification-driven | **吸收进 GSD workflow + meta skills**，不依赖外部 CLI |
+| 3 | GSD hooks 集成 | **全部迁移**，按 CSP 项目结构调整路径和配置 | hooks 是 GSD 核心能力，确保工作流保护完整 |
+| 4 | 版本管理与更新同步 | 编写脚本拉取源项目最新提交，记录更新内容，生成 `update-plan-[日期].md` 供人工审核 | 半自动流程：脚本发现变更，人工决定是否合并 |
+| 5 | 多平台支持 | **全平台支持**：Claude Code / Cursor / Windsurf / Kiro / Codex / Gemini CLI，提供一键自动化安装脚本 | 最大化覆盖面，所有平台通过标准化安装脚本部署 |
+| 6 | 状态感知路由 | **集成状态检测**：git 状态、技术栈、开发阶段、测试状态 | 提供上下文感知的智能路由，提升准确率 |
+| 7 | 技能知识图谱 | **引入 SKPG**：建立 skill 间的关系图，支持依赖分析与路径规划 | 增强 skill 发现与推荐能力 |
 
 ### 安装脚本设计（全平台）
 
@@ -2000,11 +2114,15 @@ csp-update-check
 # [ ] 合入 GSD hook improvements
 ```
 
+### 待讨论
+
+（暂无）
+
 ---
 
-## 十一、核心设计原则详解
+## 十四、核心设计原则详解
 
-### 11.1 用户上手：三层入口，零学习成本
+### 14.1 用户上手：三层入口，零学习成本
 
 CSP 提供三种使用方式，覆盖从新手到专家的全部用户画像：
 
@@ -2032,7 +2150,7 @@ CSP 提供三种使用方式，覆盖从新手到专家的全部用户画像：
 
 ---
 
-### 11.2 渐进式披露：频率驱动的分层加载
+### 14.2 渐进式披露：频率驱动的分层加载
 
 当前六层架构的披露策略按使用频率排序：
 
@@ -2063,7 +2181,7 @@ CSP 提供三种使用方式，覆盖从新手到专家的全部用户画像：
 
 ---
 
-### 11.3 Token 节约：四层优化策略
+### 14.3 Token 节约：四层优化策略
 
 **第一层：索引分片（已设计）**
 
@@ -2122,7 +2240,7 @@ csp-verify-phase → 读取 .planning/PLAN.md + .planning/VERIFICATION.md
 
 ---
 
-### 11.4 路由策略：六层信号融合
+### 14.4 路由策略：六层信号融合
 
 路由器采用六层信号融合，按优先级从高到低：
 
@@ -2194,7 +2312,7 @@ csp-verify-phase → 读取 .planning/PLAN.md + .planning/VERIFICATION.md
 
 ---
 
-### 11.5 架构增强方向
+### 14.5 架构增强方向
 
 #### A. 路由器意图分类（轻量级）
 

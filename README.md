@@ -210,6 +210,51 @@ User input → State detection (Git/tech stack/phase)
 
 Detailed architecture design, DAG orchestration engine, skill knowledge graph, skill retrieval strategy, etc., please refer to [ARCHITECTURE.md](./docs/ARCHITECTURE.md).
 
+## Skill Orchestration
+
+CSP supports two complementary orchestration modes: static Recipes (pre-defined sequences) and dynamic DAG (`csp-auto` makes node-by-node decisions).
+
+### Built-in Recipes
+
+```yaml
+# New feature development
+feature-development:
+  sequence: [brainstorming → plan → spec → implement → tdd → review → verify → ship]
+
+# Bug fix
+bug-fix:
+  sequence: [debug → implement → tdd(regression) → verify]
+
+# Refactoring
+refactor:
+  sequence: [review(analyze) → plan → implement → tdd(no-regression) → review(verify)]
+
+# Quick fix
+quick-fix:
+  sequence: [implement → verify(quick-check)]
+```
+
+### Custom Recipes
+
+Define reusable workflows by creating `.csp/recipes.yaml` in the project root:
+
+```yaml
+recipes:
+  hotfix:
+    description: "Urgent production fix, minimize changes"
+    triggers: ["hotfix", "urgent"]
+    sequence:
+      - skill: csp-debug
+      - skill: csp-implement
+        mode: minimal-change
+      - skill: csp-verify-phase
+        mode: regression-only
+      - skill: csp-ship
+        auto: true
+```
+
+Recipe priority: user-defined → built-in → router's dynamic composition.
+
 ## Troubleshooting
 
 ```bash
@@ -249,13 +294,19 @@ node bin/csp-sdk.mjs init-skill csp-my-skill --layer 3 --phase build
 
 | Document | Description |
 |----------|-------------|
-| [ARCHITECTURE.md](./docs/ARCHITECTURE.md) | Complete architecture design (11 chapters · DAG orchestration · SKPG · Token strategy) |
+| [ARCHITECTURE.md](./docs/ARCHITECTURE.md) | Complete architecture design (14 chapters · DAG orchestration · SKPG · Token strategy) |
 | [SKILL-INDEX.md](./docs/SKILL-INDEX.md) | Complete index of 650 skills/agents |
 | [INSTALL.md](./docs/INSTALL.md) | Complete installation guide (22+ platforms) |
+| [UPDATE.md](./docs/UPDATE.md) | How to keep an installed skill package up to date |
 | [SKILL-AUTHORING.md](./docs/SKILL-AUTHORING.md) | Skill authoring best practices |
 | [SKILL-SPEC.md](./docs/SKILL-SPEC.md) | SKILL.md specification document |
+| [VERSIONING.md](./docs/VERSIONING.md) | Version management policy (X=arch, Y=feature, Z=fix) |
 | [USER-GUIDE.md](./docs/USER-GUIDE.md) | User guide |
-| [project-review-2026-08.md](./docs/analysis/project-review-2026-08.md) | Multi-dimensional audit + upgrade plan |
+| [examples/](./examples/README.md) | Five worked examples (code review, security review, build-fix, simplification, dashboard) |
+| [scripts/](./scripts/README.md) | Build / validation / maintenance tooling reference |
+| [CONTRIBUTING.md](./CONTRIBUTING.md) | How to contribute a skill or fix |
+| [CHANGELOG.md](./CHANGELOG.md) | Release history |
+| [docs/analysis/](./docs/analysis/project-review-2026-08.md) | Audit reports and cross-layer testing case study |
 | [README_zh.md](./README_zh.md) | Chinese Documentation |
 
 ## License

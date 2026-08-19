@@ -36,7 +36,7 @@ CSP（Code Skills Package）将多个开源 AI 编程项目的精华整合为一
 | **Token 节约** | 五层按需加载 + 索引分片，单次任务 ~500–1,500 tokens | 全量加载 ~12,000+ tokens |
 | **技能编排** | 静态 Recipe + 动态 DAG，支持分支 / 并行 / 回退 / 自动合并 | 固定流水线 / 无编排 |
 | **持续学习** | 5 维度知识提取，越用越懂项目和开发者 | 无状态，每次从零开始 |
-| **全栈覆盖** | 650 技能 · 5 层级 · 15+ 语言 · 18+ 平台 | 单一语言 / 有限场景 |
+| **全栈覆盖** | 650 技能 · 5 层级 · 15+ 语言 · 22+ 平台 | 单一语言 / 有限场景 |
 | **开放扩展** | 自定义 Skill + Recipe + 创作向导 | 封闭生态 / 无扩展 |
 
 ### 智能路由
@@ -292,13 +292,19 @@ node bin/csp-sdk.mjs init-skill csp-my-skill --layer 3 --phase build
 
 | 文档 | 说明 |
 |------|------|
-| [ARCHITECTURE_zh.md](./docs/ARCHITECTURE_zh.md) | 完整架构设计（11 章 · DAG 编排 · SKPG · Token 策略） |
+| [ARCHITECTURE_zh.md](./docs/ARCHITECTURE_zh.md) | 完整架构设计（14 章 · DAG 编排 · SKPG · Token 策略） |
 | [SKILL-INDEX.md](./docs/SKILL-INDEX.md) | 全部 650 个 skill/agent 索引 |
-| [INSTALL.md](./docs/INSTALL.md) | 完整安装指南（18+ 平台） |
-| [SKILL-AUTHORING.md](./docs/SKILL-AUTHORING.md) | Skill 编写最佳实践 |
+| [INSTALL.md](./docs/INSTALL.md) / [INSTALL_zh.md](./docs/INSTALL_zh.md) | 完整安装指南（22+ 平台） |
+| [UPDATE.md](./docs/UPDATE.md) | 如何为已安装的技能包获取更新 |
+| [SKILL-AUTHORING_zh.md](./docs/SKILL-AUTHORING_zh.md) | Skill 编写最佳实践 |
 | [SKILL-SPEC.md](./docs/SKILL-SPEC.md) | SKILL.md 规范文档 |
+| [VERSIONING.md](./docs/VERSIONING.md) | 版本管理规范（X=架构，Y=功能，Z=修复） |
 | [USER-GUIDE.md](./docs/USER-GUIDE.md) | 用户使用指南 |
-| [project-review-2026-08.md](./docs/analysis/project-review-2026-08.md) | 多维审查 + 升级方案 |
+| [examples/](./examples/README.md) | 五个真实运行示例（代码审查、安全审查、构建修复、代码简化、仪表盘） |
+| [scripts/](./scripts/README.md) | 构建 / 校验 / 维护工具参考 |
+| [CONTRIBUTING.md](./CONTRIBUTING.md) | 如何贡献 skill 或修复 |
+| [CHANGELOG.md](./CHANGELOG.md) | 发布历史 |
+| [docs/analysis/](./docs/analysis/project-review-2026-08.md) | 审查报告与跨层测试案例研究 |
 | [README.md](./README.md) | English Documentation |
 
 ## 许可证
