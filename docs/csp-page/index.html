@@ -351,7 +351,7 @@ a { color: var(--layer-1); text-decoration: none; }
 // ═══════════════════════════════════════════════════
 const CSP_DATA = {
   "stats": {
-    "total": 650,
+    "total": 653,
     "by_layer": {
       "Meta": {
         "count": 26,
@@ -374,7 +374,7 @@ const CSP_DATA = {
         "color": "#f97316"
       },
       "Workflow": {
-        "count": 185,
+        "count": 188,
         "layer": "L2",
         "color": "#22c55e"
       }
@@ -384,14 +384,14 @@ const CSP_DATA = {
       "patterns": 380,
       "router": 1,
       "runtime": 58,
-      "workflow": 185
+      "workflow": 188
     },
     "reviewers": 69
   },
   "skills": [
     {
       "name": "csp-agent-teams",
-      "description": "Orchestrate multiple AI agents for parallel or sequential task execution. Includes subagent-driven development (per-task dispatch with two-stage review) and parallel agent dispatch (independent problems solved concurrently). Use when executing implementation plans with independent tasks, or facing 2",
+      "description": "Orchestrate multiple AI agents for parallel or sequential task execution. Includes CSP agent-team collaboration (per-task dispatch with two-stage review) and parallel agent dispatch (independent problems solved concurrently). Use when executing implementation plans with independent tasks, or facing ",
       "category": "meta",
       "layer": "L1",
       "layer_name": "Meta",
@@ -3783,7 +3783,7 @@ const CSP_DATA = {
     },
     {
       "name": "csp-save-session",
-      "description": "Save current session state to a dated file in ~/.claude/session-data/ so work can be resumed in a future session with full context.",
+      "description": "Save current session state to a dated file in {CSP_DATA_DIR}/session-data/ so work can be resumed in a future session with full context.",
       "category": "patterns",
       "layer": "L3",
       "layer_name": "Patterns",
@@ -4878,7 +4878,7 @@ const CSP_DATA = {
     },
     {
       "name": "csp-everything-claude-code",
-      "description": "Development conventions and patterns for everything-claude-code. JavaScript project with conventional commits.",
+      "description": "Development conventions and patterns for JavaScript projects with conventional commits.",
       "category": "patterns",
       "layer": "L3",
       "layer_name": "Patterns",
@@ -9944,6 +9944,25 @@ const CSP_DATA = {
       }
     },
     {
+      "name": "csp-code-understanding",
+      "description": "代码理解文档自动生成引擎。产出结构化、可增量更新的代码理解文档（模块依赖图、 关键执行路径、数据流、调用关系、入口点、外部依赖），持久化到 .csp/code-understanding/ 下 system/module/function 三级 Markdown。消费 csp-code-graph 图谱数据（如可用） + csp-explore 探索方法论，支持增量更新（检测代码变更后重新生成受影响部分）。 当用户需要\"代码理解文档\"\"模块依赖图\"\"代码结构文档\"\"onboarding 文档\"时使用。 关键词：代码理解、模块依赖、调用关系、代码结构文档、code understanding、 ",
+      "category": "workflow",
+      "layer": "L2",
+      "layer_name": "Workflow",
+      "layer_color": "#22c55e",
+      "triggers": {
+        "en": [
+          "csp-code-understanding",
+          "code",
+          "code understanding",
+          "code-understanding",
+          "fix code understanding",
+          "review code understanding"
+        ],
+        "zh": []
+      }
+    },
+    {
       "name": "csp-codebase-audit",
       "description": "Multi-dimensional codebase audit: parallel Explore agents investigate one dimension each (functionality/architecture/data/frontend/engineering-quality), high-risk findings are verified on-machine, then assembled into a single decision-source document (problem report + design + upgrade plan). Trigger",
       "category": "workflow",
@@ -10044,6 +10063,27 @@ const CSP_DATA = {
           "csp-deprecation-and-migration"
         ],
         "zh": []
+      }
+    },
+    {
+      "name": "csp-design-hub",
+      "description": "设计方案多模式生成与同步引擎。支持 summary/detailed/rapid/local-rapid/regenerate 五种模式切换 + 模式互切，输出到现有 .csp/tech-design/ 目录。 与 csp-tech-solution-design 协作：本技能做模式分发与设计-实现同步管理， csp-tech-solution-design 做实际 TDD 生成。支持\"设计文档与实现同步\"—— 检测代码漂移，标记需同步的设计章节。 当用户需要\"设计方案多模式切换\"\"设计文档重新生成\"\"概要设计\"\"极速设计\"时使用。 关键词：设计模式切换、概要设计、详细设计、极速设计、本地极速",
+      "category": "workflow",
+      "layer": "L2",
+      "layer_name": "Workflow",
+      "layer_color": "#22c55e",
+      "triggers": {
+        "en": [
+          "csp-design-hub",
+          "design",
+          "design hub",
+          "design-hub",
+          "fix design hub",
+          "review design hub"
+        ],
+        "zh": [
+          "design hub 设计"
+        ]
       }
     },
     {
@@ -10649,6 +10689,25 @@ const CSP_DATA = {
       "triggers": {
         "en": [
           "csp-shipping-and-launch"
+        ],
+        "zh": []
+      }
+    },
+    {
+      "name": "csp-simple-dev",
+      "description": "极简模式直接改码引擎。无 PRD、无设计模式时的一句话需求快速实现入口。 从一句话需求出发：快速定位 → 最小改动实现 → 轻量验证 → 归档。 整合 minimal-change-engineer 纪律（拒绝范围蔓延），按变更类型自动分发到 csp-hotfix（紧急 bug）/ csp-tweak（文案配置）/ 自身默认流程。 当用户说\"极简模式\"\"简单模式\"\"直接改码\"\"无PRD\"\"快速改\"时使用。 关键词：极简模式、简单模式、直接改码、无PRD、快速改、simple dev、 minimal mode、直接改、快速实现、轻量开发。",
+      "category": "workflow",
+      "layer": "L2",
+      "layer_name": "Workflow",
+      "layer_color": "#22c55e",
+      "triggers": {
+        "en": [
+          "csp-simple-dev",
+          "fix simple dev",
+          "review simple dev",
+          "simple",
+          "simple dev",
+          "simple-dev"
         ],
         "zh": []
       }

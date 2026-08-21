@@ -11,7 +11,7 @@ category: workflow
 phase: build
 domain: patterns
 tools: [Read, Write, Edit, Glob, Grep, Bash]
-related_skills: [csp-tweak, csp-full, csp-systematic-debugging]
+related_skills: [csp-tweak, csp-full, csp-systematic-debugging, csp-simple-dev]
 anti_rationalizations:
   "I'll do a full review later": "Hotfixes skip review by design. But you MUST add a regression test."
   "This is too small for a formal process": "Small fixes can cause big regressions. The verify step is non-negotiable."
@@ -135,3 +135,4 @@ open → build → verify → archive
 - [[csp-tweak]] — 更轻量的微调流程（非紧急改进）
 - [[csp-full]] — 完整工作流程（新功能、架构变更）
 - [[csp-systematic-debugging]] — 系统化调试方法论
+- [[csp-simple-dev]] — 极简模式直接改码入口（非紧急场景的快速改码）

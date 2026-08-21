@@ -24,6 +24,7 @@ dependencies:
     - csp-product-capability
 
 related_skills:
+  - csp-design-hub
   - csp-tech-design-review
   - csp-fullstack-spec-generator
   - csp-tech-task-breakdown
@@ -80,6 +81,11 @@ anti_rationalizations:
 │                                                                    │
 └──────────────────────────────────────────────────────────────────┘
 ```
+
+> **与 `csp-design-hub` 的关系：** 本技能是 `csp-design-hub` 的 TDD 生成引擎。
+> `csp-design-hub` 负责模式选择（summary/detailed/rapid/local-rapid/regenerate）
+> 与设计-实现同步管理。当 `csp-design-hub` 调用本技能时，会通过上下文指示
+> 当前模式，本技能据此调整输出精度。直接使用本技能时默认 detailed 模式。
 
 ## 输入
 
@@ -373,6 +379,7 @@ completion_signal:
 
 | 下游 Skill | 消费什么 |
 |-----------|---------|
+| csp-design-hub | 模式分发入口（本技能是 hub 的 TDD 生成引擎） |
 | csp-tech-design-review | 全套技术方案产物（评审） |
 | csp-fullstack-spec-generator | 系统架构 + 数据架构 + 接口架构（生成 Spec） |
 | csp-tech-task-breakdown | 系统架构 + 模块划分（任务拆解） |

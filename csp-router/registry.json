@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "total_skills": 650,
+  "total_skills": 653,
   "shards": [],
   "skill_metadata": "skill-metadata.yaml",
   "skills": [
@@ -8424,6 +8424,21 @@
       "priority": 10
     },
     {
+      "name": "csp-code-understanding",
+      "description": "代码理解文档自动生成引擎。产出结构化、可增量更新的代码理解文档（模块依赖图、 关键执行路径、数据流、调用关系、入口点、外部依赖），持久化到 .csp/code-understanding/ 下 system/module/function 三级 Markdown。消费 csp-code-graph 图谱数据（如可用） + csp-explore 探索方法论，支持增量更新（检测代码变更后重新生成受影响部分）。 当用户需要\"代码理解文档\"\"模块依赖图\"\"代码结构文档\"\"onboarding 文档\"时使用。 关键词：代码理解、模块依赖、调用关系、代码结构文档、code understanding、 ",
+      "layer": 2,
+      "category": "workflow",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-workflow/skills/csp-code-understanding/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
       "name": "csp-codebase-audit",
       "description": "Multi-dimensional codebase audit: parallel Explore agents investigate one dimension each (functionality/architecture/data/frontend/engineering-quality), high-risk findings are verified on-machine, then assembled into a single decision-source document (problem report + design + upgrade plan). Trigger",
       "layer": 2,
@@ -8510,6 +8525,21 @@
       },
       "stack_detection": false,
       "path": "csp-workflow/skills/csp-deprecation-and-migration/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-design-hub",
+      "description": "设计方案多模式生成与同步引擎。支持 summary/detailed/rapid/local-rapid/regenerate 五种模式切换 + 模式互切，输出到现有 .csp/tech-design/ 目录。 与 csp-tech-solution-design 协作：本技能做模式分发与设计-实现同步管理， csp-tech-solution-design 做实际 TDD 生成。支持\"设计文档与实现同步\"—— 检测代码漂移，标记需同步的设计章节。 当用户需要\"设计方案多模式切换\"\"设计文档重新生成\"\"概要设计\"\"极速设计\"时使用。 关键词：设计模式切换、概要设计、详细设计、极速设计、本地极速",
+      "layer": 2,
+      "category": "workflow",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-workflow/skills/csp-design-hub/SKILL.md",
       "deps": [],
       "priority": 10
     },
@@ -9020,6 +9050,21 @@
       },
       "stack_detection": false,
       "path": "csp-workflow/skills/csp-shipping-and-launch/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-simple-dev",
+      "description": "极简模式直接改码引擎。无 PRD、无设计模式时的一句话需求快速实现入口。 从一句话需求出发：快速定位 → 最小改动实现 → 轻量验证 → 归档。 整合 minimal-change-engineer 纪律（拒绝范围蔓延），按变更类型自动分发到 csp-hotfix（紧急 bug）/ csp-tweak（文案配置）/ 自身默认流程。 当用户说\"极简模式\"\"简单模式\"\"直接改码\"\"无PRD\"\"快速改\"时使用。 关键词：极简模式、简单模式、直接改码、无PRD、快速改、simple dev、 minimal mode、直接改、快速实现、轻量开发。",
+      "layer": 2,
+      "category": "workflow",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-workflow/skills/csp-simple-dev/SKILL.md",
       "deps": [],
       "priority": 10
     },

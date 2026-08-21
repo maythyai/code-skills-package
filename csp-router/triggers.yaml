@@ -249,7 +249,7 @@ trigger_index:
     skills: [csp-implementation-phase, csp-implementation-phase]
     weight: 45
   "code":
-    skills: [csp-implementation-phase, csp-implementation-phase, csp-code-architect, csp-code-explorer, csp-code-fixer, csp-code-graph, csp-code-review-fix]
+    skills: [csp-implementation-phase, csp-implementation-phase, csp-code-architect, csp-code-explorer, csp-code-fixer, csp-code-graph, csp-code-review-fix, csp-code-understanding]
     weight: 45
   "api":
     skills: [csp-backend-patterns]
@@ -5266,6 +5266,53 @@ trigger_index:
     weight: 40
   "test-methodology":
     skills: [csp-test-methodology]
+    weight: 40
+
+  # ─── auto-generated triggers (generate-triggers.mjs) ───
+  "code understanding":
+    skills: [csp-code-understanding]
+    weight: 40
+  "code-understanding":
+    skills: [csp-code-understanding]
+    weight: 40
+  "design":
+    skills: [csp-design-hub]
+    weight: 40
+  "design hub":
+    skills: [csp-design-hub]
+    weight: 40
+  "design hub 设计":
+    skills: [csp-design-hub]
+    weight: 40
+  "design-hub":
+    skills: [csp-design-hub]
+    weight: 40
+  "fix code understanding":
+    skills: [csp-code-understanding]
+    weight: 40
+  "fix design hub":
+    skills: [csp-design-hub]
+    weight: 40
+  "fix simple dev":
+    skills: [csp-simple-dev]
+    weight: 40
+  "review code understanding":
+    skills: [csp-code-understanding]
+    weight: 40
+  "review design hub":
+    skills: [csp-design-hub]
+    weight: 40
+  "review simple dev":
+    skills: [csp-simple-dev]
+    weight: 40
+  "simple":
+    skills: [csp-simple-dev]
+    weight: 40
+  "simple dev":
+    skills: [csp-simple-dev]
+    weight: 40
+  "simple-dev":
+    skills: [csp-simple-dev]
     weight: 40
 stack_rules:
   python:

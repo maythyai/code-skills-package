@@ -7,14 +7,15 @@ description: |
   关键词: tweak, 微调, 小改, 文案调整, 配置修改, minor change
 layer: 2
 category: workflow
-triggers:
-  - tweak
-  - 微调
-  - 小改
-  - 文案调整
-  - 配置修改
 phase: build
 domain: patterns
+scope: implementation
+triggers:
+  keywords: ["tweak", "微调", "小改", "文案调整", "配置修改", "minor change"]
+related_skills:
+  - csp-hotfix
+  - csp-simple-dev
+  - csp-full
 ---
 
 # CSP Tweak Workflow
@@ -109,4 +110,5 @@ open → build (light) → verify (light) → archive
 ## 相关技能
 
 - [[csp-hotfix]] — 热修复流程
+- [[csp-simple-dev]] — 极简模式直接改码入口
 - [[csp-full]] — 完整工作流程

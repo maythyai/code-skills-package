@@ -4,7 +4,7 @@
 # Regenerate: node scripts/build-skill-metadata.mjs
 
 version: 2.0
-generated_at: 2026-08-15T08:28:57.647Z
+generated_at: 2026-08-21T05:28:13.466Z
 skills:
   csp-agent-teams:
     phase: review
@@ -218,6 +218,32 @@ skills:
   csp-writing-skills:
     phase: define
     domain: architecture
+  csp-code-understanding:
+    phase: define
+    domain: architecture
+    role: architect
+    scope: analysis
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
+      - Bash
+    dependencies:
+      skills: []
+    related_skills:
+      - csp-explore
+      - csp-code-graph
+      - csp-graph-architecture
+      - csp-codebase-audit
+      - csp-map-codebase
+    anti_rationalizations:
+      代码自己看就行了，不用写文档: "大型代码库一个 context 看不完。持久化的理解文档让下次进入成本从 30 分钟降到 3 分钟。"
+      文档会过时: 本技能支持增量更新——检测代码变更后只重新生成受影响部分，不是全量重写。
+      已有 README 就够了: "README 是项目介绍，不是代码结构理解。模块依赖图、调用关系、执行路径 README 不覆盖。"
+      用 csp-explore 就够了: "csp-explore 产出的是临时对话块，不落盘。本技能把探索结果持久化、结构化、可增量更新。"
+      等架构稳定了再写: 理解文档的价值在架构不稳定时最大——它记录当前真实状态，是后续重构/评审的基线。
   csp-codebase-audit:
     phase: review
     domain: architecture
@@ -307,6 +333,33 @@ skills:
   csp-deprecation-and-migration:
     phase: build
     domain: patterns
+  csp-design-hub:
+    phase: plan
+    domain: architecture
+    role: architect
+    scope: design
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
+      - Bash
+    dependencies:
+      skills:
+        - csp-tech-solution-design
+    related_skills:
+      - csp-tech-solution-design
+      - csp-fullstack-spec-generator
+      - csp-lifecycle-orchestrator
+      - csp-tech-design-review
+      - csp-implementation-phase
+    anti_rationalizations:
+      设计模式切换没必要，一个详细设计走到底: "不同阶段需要不同精度。初期探索需要概要设计快速验证，实施前才需要详细设计。强制统一精度 = 浪费或不足。"
+      设计文档不需要和实现同步: "设计文档过时 = 误导。代码改了但文档没同步，下一个读文档的人会被误导。同步机制是设计文档可信的前提。"
+      重新生成会丢失之前的设计决策: "regenerate 模式会先备份旧版本到 .csp/tech-design/.archive/，再重新生成。不会丢失历史。"
+      极速设计质量不够: "极速设计不是跳过思考，是用更高密度表达。一张架构图 + 3 个关键决策 = 对有经验的团队足够。"
+      模式互切会引入不一致: "互切有明确规则——升级补全、降级提取摘要（不删原文）、regenerate 先备份。互切是受控的，不是随意改写。"
   csp-doc-lifecycle-manager:
     phase: plan
     domain: patterns
@@ -513,6 +566,7 @@ skills:
       - csp-tweak
       - csp-full
       - csp-systematic-debugging
+      - csp-simple-dev
     anti_rationalizations:
       I'll do a full review later: "Hotfixes skip review by design. But you MUST add a regression test."
       This is too small for a formal process: "Small fixes can cause big regressions. The verify step is non-negotiable."
@@ -919,6 +973,31 @@ skills:
       - Bash
       - Glob
       - Grep
+  csp-simple-dev:
+    phase: build
+    domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
+      - Bash
+    dependencies:
+      skills: []
+    related_skills:
+      - csp-hotfix
+      - csp-tweak
+      - csp-minimal-change-engineer
+      - csp-implementation-phase
+      - csp-explore
+    anti_rationalizations:
+      这个改动太小不需要任何流程: 再小的改动也需要定位→改→验证三步。跳过验证是最常见的回归来源。极简模式是精简流程，不是无流程。
+      直接改就好了，不用定位: "不定位就改 = 盲改。快速定位（1-2 分钟 Glob+Read）能避免改错文件、漏改调用方。"
+      既然是极简模式，顺便把旁边的代码也改了: "极简模式的核心纪律就是最小 diff。范围蔓延是极简模式的头号敌人。旁边的代码问题记为 follow-up。"
+      极简模式不用写测试: 极简模式默认不强制测试，但涉及业务逻辑/数据/权限的改动仍需最小回归测试。是否写测试由改动风险决定，不由模式决定。
   csp-solo-oncall:
     phase: build
     domain: patterns
@@ -996,6 +1075,7 @@ skills:
         - csp-tech-stack-advisor
         - csp-product-capability
     related_skills:
+      - csp-design-hub
       - csp-tech-design-review
       - csp-fullstack-spec-generator
       - csp-tech-task-breakdown
@@ -1061,6 +1141,11 @@ skills:
   csp-tweak:
     phase: build
     domain: patterns
+    scope: implementation
+    related_skills:
+      - csp-hotfix
+      - csp-simple-dev
+      - csp-full
   csp-user-feedback-analysis:
     phase: review
     domain: patterns

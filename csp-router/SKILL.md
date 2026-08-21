@@ -14,6 +14,48 @@ tools: [Read, Glob, Grep]
 
 状态感知 + 置信度评分 + 知识图谱增强的智能路由系统。
 
+## 改码类意图路由决策（最高优先级）
+
+> **此段优先级高于下方所有路由规则。** 当用户意图是"修改代码 / 实现需求"时，先按此表路由，再回落到通用置信度路由。
+
+### 信号检测
+
+| 信号 | 检测方式 | 判定 |
+|------|---------|------|
+| 提及 loop / 研发 Loop | 用户输入含 "loop""研发loop""autopilot""自动驾驶""全自动""auto pilot" | → 研发 Loop 路径 |
+| 提供 PRD / 需求链接 | 用户输入含 URL（http/https）、文件路径（.md/.doc/.pdf）、或明确说"这是 PRD""这是需求文档""requirement doc" | → 设计路径 |
+| 指定设计模式 | 用户输入含"标准设计""概要设计""极速设计""本地极速""详细设计""detailed""summary""rapid""regenerate""重新生成" | → 设计路径（csp-design-hub） |
+| 明确极简 | 用户输入含"极简模式""简单模式""直接改码""无PRD""快速改""不用设计" 或 未提供 PRD 且未指定模式 | → 极简路径 |
+
+### 路由决策表
+
+| 检测到的信号 | 路由到 | 理由 |
+|-------------|--------|------|
+| 提及 loop / 研发 Loop | `csp-autopilot` + `csp-lifecycle-orchestrator` | 端到端自动化需要完整生命周期编排 |
+| 提供 PRD / 链接 或 指定标准/极速/本地模式 | `csp-design-hub` | 有需求输入或模式指定 → 设计方案先行 |
+| 无 PRD 且未指定模式 或 明确极简 | `csp-simple-dev` | 无需求文档、无模式 → 极简直接改码 |
+
+### 回退规则
+
+1. 信号冲突（如同时提及"极简"和"PRD"）时，优先级：**显式模式指定 > PRD 提供 > 极简**
+2. 路由到 `csp-simple-dev` 但改动涉及 3+ 文件或架构变更 → 升级到 `csp-design-hub`
+3. 路由到 `csp-design-hub` 但用户说"不用设计了直接改" → 降级到 `csp-simple-dev`
+4. 无法判定 → 回退到下方通用置信度路由流程
+
+### 示例
+
+| 用户输入 | 检测信号 | 路由到 |
+|---------|---------|--------|
+| "帮我改一下登录页按钮文案" | 无PRD、无模式、极简 | `csp-simple-dev` |
+| "这是 PRD：https://xxx/feature.md，帮我设计技术方案" | 有PRD链接 | `csp-design-hub`（detailed） |
+| "用极速模式帮我出个设计" | 指定模式（rapid） | `csp-design-hub`（rapid） |
+| "启动研发 Loop 自动开发" | 提及 loop | `csp-autopilot` + `csp-lifecycle-orchestrator` |
+| "直接改这个 bug，不用 PRD" | 明确极简、无PRD | `csp-simple-dev`（可能分发到 `csp-hotfix`） |
+
+> 详述见 `references/code-modification-routing.md`。
+
+---
+
 ## 路由流程
 
 ### 1. 状态检测 (Pre-Router Hook)
@@ -125,3 +167,4 @@ Context score 考虑:
 | `registry.json` | 全量 skill 注册表 |
 | `csp-router/skpg/graph.json` | 技能知识图谱 |
 | `.csp/state.json` | 当前项目状态快照
+| `references/code-modification-routing.md` | 改码类意图路由决策详述 |
