@@ -1,15 +1,50 @@
 ---
 name: csp-test
 description: >
-  Product Design Suite · Validate. First Skill to launch when a designer wants to run
-  Use when working on design tasks related to test.
-version: "1.0.0"
+  Usability testing & expert heuristic review for design validation. Mode A covers the
+  full lifecycle with real users: Plan → Script → Conduct → Analyze (Nielsen 0-4 severity,
+  task success rates, evidence chains). Mode B (Expert Heuristic Review) is a degradation
+  mode for when no real users are available — conducts code review + Nielsen 10 heuristics
+  evaluation with parallel multi-module scanning, producing findings tagged as
+  `mode: heuristic-review`. Supports 7 test types (Moderated / Unmoderated / RITE /
+  5-Second / First-Click / Wizard of Oz / Heuristic Review).
+version: "2.0.0"
 layer: 3
 category: design
 phase: verify
 domain: patterns
 scope: testing
-tools: [Read, Write, Edit, Glob, Grep, Bash]
+tools: [Read, Write, Edit, Glob, Grep, Bash, AskUserQuestion]
+
+triggers:
+  keywords: ["usability test", "user test", "heuristic review", "expert review", "可用性测试", "启发式评估"]
+  intents:
+    - "user wants to validate a design with real users"
+    - "user wants to do code-based heuristic evaluation without users"
+    - "user wants to write task scenarios or moderator scripts"
+    - "user wants to rate severity of usability issues"
+    - "user wants parallel module usability audit"
+
+anti_rationalizations:
+  "We don't have time for user testing": "Mode B heuristic review can run in hours, not weeks."
+  "We can't find users right now": "Mode B works without users — code review + Nielsen heuristics."
+  "Let's just do a quick walkthrough": "A walkthrough catches ~30% of issues; Mode B catches ~60-75%."
+  "The design is too early to test": "Mode B works on raw code — no prototype needed."
+
+related_skills:
+  - csp-check
+  - csp-access
+  - csp-edge
+  - csp-flow-web
+  - csp-flow-mobile
+  - csp-metric
+  - csp-probe
+  - csp-qa
+  - csp-retro
+  - csp-pitch
+
+dependencies:
+  skills: []
 ---
 
 # 可用性测试
@@ -126,6 +161,9 @@ Test 的输出主要服务于 Edge / Flow / Brief / Metric / Retro：
 - 用户说"做个 5 秒测试 / 第一印象测试 / RITE 迭代测试"
 - 用户说"测试做完了，帮我整理 finding / 排严重度"
 - 用户使用 `/可用性测试` 指令
+- 用户说"没有用户 / 找不到用户 / 没法跑真实测试，帮我用代码审查做可用性评估"
+- 用户说"对代码做启发式评估 / heuristic review / expert review"
+- 用户说"对多个模块做并行可用性审查"
 
 ---
 
@@ -240,6 +278,100 @@ Test 的输出主要服务于 Edge / Flow / Brief / Metric / Retro：
 - 试测（pilot）：1 场（必做，发现剧本问题）
 - 正式：[天数 · 每天 2-3 场，间隔 30 分钟缓冲]
 - 整理：每场对应 0.5-1 天
+
+### Step 1B — Mode B: Expert Heuristic Review（无用户降级）
+
+> **何时进入 Mode B**：当以下条件之一满足时，从 Step 1 直接切换到本段，跳过 Step 2（Script）和 Step 3（Conduct），进入 Step 4（Analyze）时按 Mode B 输出格式执行。
+
+#### 1B.1 触发条件
+
+- 用户明确表示无法招募真实用户（"找不到用户" / "没时间跑测试" / "用户还没上线"）
+- 项目处于早期代码阶段，尚无可用原型或可交互界面
+- 需要对大量模块做全量审查，样本招募成本过高
+- 时间预算不允许跑完整 Moderated 测试（如 1 天内需要产出全量评估）
+
+**进入 Mode B 时必须告知用户**：
+```
+⚠️ 当前无真实用户可测试，将切换为 Mode B（Expert Heuristic Review）——
+基于代码审查 + Nielsen 10 启发式原则进行评估。产出为"早期信号"，
+上线前仍建议补充真实用户测试验证深层问题。
+```
+
+#### 1B.2 方法论基础
+
+| 维度 | Mode A（真实用户测试） | Mode B（启发式评估） |
+| --- | --- | --- |
+| 评估框架 | 任务成功率 + 行为观察 | **Nielsen 10 启发式原则** |
+| 频次来源 | 真实用户遇到问题的比例 | **评估者置信度**（high / medium / low） |
+| 证据形式 | verbatim_quotes（用户原话） | **evidence_code_refs**（代码文件路径 + 行号） |
+| 样本量 | 5-8 人 / segment | **1-2 名评估者**（建议 2 人独立评估后讨论） |
+| 发现率 | ~85% 问题（Nielsen 5 人） | **~60-75% 明显问题**（Nielsen 1994） |
+| 适用阶段 | 高保真原型 / 上线前 | **代码完成 / 早期开发 / 全量摸底** |
+
+**Nielsen 10 启发式原则速查**（详细版见 `shared/references/usability-heuristics-checklist.md`）：
+
+| # | 原则 | 代码审查关注点 |
+| --- | --- | --- |
+| 1 | 系统状态可见性 | loading / error / empty / success 状态处理；API 调用进度反馈 |
+| 2 | 系统与现实匹配 | 文案用用户语言而非技术术语；错误码翻译为人话 |
+| 3 | 用户控制与自由 | 撤销/重做/返回/取消操作；危险操作退出通道 |
+| 4 | 一致性与标准 | 组件复用一致性；交互模式跨页面统一；平台规范遵循 |
+| 5 | 错误预防 | 表单校验；危险操作确认弹窗；防误触设计 |
+| 6 | 识别而非回忆 | 导航清晰度；操作入口可发现性；历史信息可见性 |
+| 7 | 使用灵活性与效率 | 快捷键/批量操作/默认值；新手和专家不同路径 |
+| 8 | 美学与极简设计 | 无关信息干扰；页面信息密度合理性 |
+| 9 | 帮助用户识别和恢复错误 | 错误提示具体可操作；告知下一步该做什么 |
+| 10 | 帮助与文档 | 复杂流程引导/帮助入口；空状态操作指引 |
+
+#### 1B.3 执行步骤
+
+**Step B1 — 模块分组**
+
+按路由 / 功能域将项目拆分为 3-5 个模块组。分组原则：
+- 每组规模相当（避免一组过大导致审查质量下降）
+- 按用户流程相邻的页面分在同一组（便于发现跨模块一致性问题）
+- 前端页面 + 对应的后端 API 分在同一组（便于发现端到端问题）
+
+**Step B2 — 并行代码审查**
+
+每个模块组启动一个独立 Agent，并行执行审查：
+1. 读取该模块的所有页面组件、路由文件、状态管理代码
+2. 按 Nielsen 10 启发式原则逐条检查，记录违反项
+3. 每条违反记录包含：原则编号（1-10）、代码位置（文件路径 + 行号）、问题描述（用户视角语言）、严重度初评（Nielsen 0-4）、置信度（high / medium / low）
+
+**辅助工具**：可先运行 `shared/scripts/heuristic-eval-scan.sh <project-dir>` 做自动化预扫描，快速定位缺失的错误状态、加载状态、表单校验等常见问题，再人工深入审查。
+
+**Step B3 — Finding 合并与校准**
+
+1. **去重**：跨模块相同问题合并为 1 条 finding
+2. **严重度校准**：若有多名评估者，差异 ≥ 2 级的讨论后取共识
+3. **分类汇总**：按 severity × confidence 排序
+
+**Step B4 — 输出**
+
+复用 Mode A 的 findings / severity_summary / redesign_recommendations 结构，但：
+- `sessions` → `review_sessions`（记录模块组审查范围和评估者）
+- `task_metrics` 标记 `"mode": "heuristic-review"`，success_rate 等填 `null`
+- 每条 finding 新增 `heuristic_principle: number`
+- `evidence_quotes` → `evidence_code_refs: string[]`
+- `frequency` → `confidence: "high" | "medium" | "low"`
+
+#### 1B.4 Mode B Finding 模板
+
+```yaml
+- id: "F1"
+  task_id: null
+  module: "模块 C：创作中心"
+  description: "编辑器页面提交后无任何反馈，用户无法判断操作是否成功"
+  heuristic_principle: 1           # 违反原则 1：系统状态可见性
+  severity: 3-critical
+  confidence: high
+  evidence_code_refs:
+    - "apps/web/src/app/(app)/editor/page.tsx:L142-L158"
+    - "apps/web/src/stores/studio-store.ts:L89"
+  suggested_fix_direction: "提交后显示 loading → 成功后 toast → 失败后显示错误原因和重试按钮"
+  recommended_next_skill: edge
+```
 
 ### Step 2 — Script 任务剧本与主持人脚本
 
@@ -694,6 +826,9 @@ Test 已保存：project=[name]，[N] 人 × [M] 任务 → [K] 条 finding（ca
 11. **cosmetic 不等于不值得修**（Judd Antin / Airbnb 7 字案例：改 7 个字符赚百万）：cosmetic finding 若涉及 CTA / 转化路径 / 信任感关键词，必须单独标注商业杠杆，不能简单丢进 P3
 12. **多方案对比时不孤立打分**：Kristen Berman 原则 —— 同一参与者内做相对评估，看哪个版本完成率更高、卡点更少，而不是只给每个方案打孤立的"5 分制"评分
 13. **观察团必到场**：PM / 工程 / 设计同事至少 1 人同步观看，避免事后转述失真
+14. **Mode B 每条 finding 必须标注违反的启发式原则编号**：不能只写"可用性差"，要写"违反原则 6（识别而非回忆）——用户需要记住隐藏的操作入口"
+15. **Mode B 必须标注 confidence 等级**：无真实用户时频次无意义，改用评估者置信度（high = 多人独立确认或问题极其明显 / medium = 单人确认但论据充分 / low = 推测可能存在，需用户测试验证）
+16. **Mode B 必须引用代码证据**：evidence_code_refs 必须包含具体文件路径和行号，不能凭空断言问题存在
 
 ## 红线规则
 
@@ -705,6 +840,8 @@ Test 已保存：project=[name]，[N] 人 × [M] 任务 → [K] 条 finding（ca
 6. **不下"全部用户"结论**：8 人样本不能说"用户都觉得"，说"8 人中 6 人卡住"
 7. **不替代真实可用性测试**：本 Skill 提供方案 + 整理方法，不能替代亲眼观察用户操作
 8. **不替代专业 UX 研究团队**：跨文化 / 敏感人群 / 高风险场景测试建议找专业用研
+9. **Mode B 不伪装成 Mode A**：降级模式的输出必须明确标注 `mode: heuristic-review`，禁止将启发式评估结果呈现为"基于用户测试的结论"
+10. **Mode B 不替代 Mode A**：降级产出是"早期信号"，发现率约 60-75%，无法捕获心智模型不匹配等深层问题——上线前仍应尽量安排真实用户测试验证
 
 ---
 
@@ -770,7 +907,7 @@ Test 已保存：project=[name]，[N] 人 × [M] 任务 → [K] 条 finding（ca
 - **AI 不能替你做主持**：本 Skill 提供脚本和方法，主持需要真人对真人
 - **AI 不能替你看录屏**：finding 提炼依赖人工 / 团队回看视频和笔记
 - **小样本结论有偏差**：5-8 人不代表全体用户，关键决策需 Unmoderated 大样本或上线后 Metric 验证
-- **不替代真实可用性测试观察**：纯文本记录会丢失"用户在哪屏停了 3 秒"这类行为信号
+- **不替代真实可用性测试观察**：纯文本记录会丢失"用户在哪屏停了 3 秒"这类行为信号。Mode B（Expert Heuristic Review）作为无用户时的降级通道，能发现 ~60-75% 的明显可用性问题（Nielsen 1994），但无法捕获"用户心智模型与系统模型不匹配"等深层问题——上线前仍建议补充真实用户测试
 - **Unmoderated 缺失"为什么"维度**：自动化工具给指标但不给原因，建议混合使用
 - **严重度评级带主观性**：Nielsen 0-4 级仍有判断空间，建议团队 2 人独立打分后讨论
 - **不替代专业用研团队**：跨文化 / 高风险 / 敏感人群 / 大规模定量需专业资源
