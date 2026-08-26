@@ -14,7 +14,7 @@ set -eo pipefail
 #   ./install.sh --list                     List detected platforms
 #   ./install.sh --help                     Show help
 
-readonly VERSION="0.9.0"
+readonly VERSION="0.10.0"
 readonly SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 readonly PROJECT_DIR="$(pwd)"
 
@@ -441,6 +441,77 @@ do_uninstall() {
   echo ""
 }
 
+# ─── Update ─────────────────────────────────────────────────────────
+# Self-contained update: detect installed version, check npm latest,
+# back up custom (non-csp-*) files, then reinstall (overwrite in place).
+# Mirrors the /csp-update workflow but usable directly from the shell.
+do_update() {
+  local base_dir="$1"
+  echo ""
+  echo "  CSP v${VERSION} — 更新检查"
+  echo "  目标目录: $base_dir"
+  echo ""
+
+  # 1. Detect installed version by scanning managed skills dirs for a VERSION file.
+  local installed="0.0.0"
+  for slug in $ALL_PLATFORMS; do
+    local pdir; pdir=$(platform_dir "$slug")
+    local vfile="$base_dir/$pdir/csp-router/VERSION"
+    [ -f "$vfile" ] || vfile="$base_dir/$pdir/VERSION"
+    if [ -f "$vfile" ] && grep -Eq '^[0-9]+\.[0-9]+\.[0-9]+' "$vfile" 2>/dev/null; then
+      installed="$(cat "$vfile" | tr -d '[:space:]')"
+      break
+    fi
+  done
+  echo "  已装版本: $installed"
+
+  # 2. Check npm latest via the bundled checker.
+  local checker="$SCRIPT_DIR/bin/check-latest-version.cjs"
+  local latest=""
+  if [ -f "$checker" ] && command -v node >/dev/null 2>&1; then
+    latest=$(node "$checker" 2>/dev/null || echo "")
+  fi
+  if [ -z "$latest" ]; then
+    echo "  ⚠️  无法查询 npm 最新版（网络不可达或 node 缺失）。"
+    echo "     可直接重新运行安装器覆盖更新：./install.sh --platform <name> [--global | --target <dir>]"
+    echo ""
+    exit 0
+  fi
+  echo "  npm 最新: $latest"
+  echo ""
+
+  if [ "$installed" = "$latest" ]; then
+    echo "  ✅ 已是最新版本。"
+    echo ""
+    exit 0
+  fi
+
+  # 3. Back up custom (non-csp-*) files in managed skills dirs before overwrite.
+  local backed_up=0
+  for slug in $ALL_PLATFORMS; do
+    local pdir; pdir=$(platform_dir "$slug")
+    local skills_root="$base_dir/$pdir"
+    [ -d "$skills_root" ] || continue
+    local backup_dir="$skills_root/csp-user-files-backup"
+    for entry in "$skills_root"/*; do
+      [ -e "$entry" ] || continue
+      local name; name="$(basename "$entry")"
+      case "$name" in
+        csp-router|csp-meta|csp-workflow|csp-patterns|csp-runtime|csp-user-files-backup) continue ;;
+      esac
+      mkdir -p "$backup_dir"
+      cp -R "$entry" "$backup_dir/" 2>/dev/null || true
+      backed_up=$((backed_up + 1))
+      echo "  📦 备份自定义文件: $pdir/$name"
+    done
+  done
+  [ "$backed_up" -gt 0 ] && echo "  已备份 ${backed_up} 个自定义项到各平台的 csp-user-files-backup/。" || echo "  无自定义文件需备份。"
+  echo ""
+
+  echo "  ⏬ 开始覆盖更新（安装 v${latest}）..."
+  echo ""
+}
+
 # ─── Help ──────────────────────────────────────────────────────────
 
 show_help() {
@@ -454,6 +525,7 @@ show_help() {
     ./install.sh --target <dir>         安装到指定目录（无需克隆本项目）
     ./install.sh --global               安装到全局（~/.xxx/skills/）
     ./install.sh --uninstall            卸载当前目录的 CSP
+    ./install.sh --update               检查新版→备份自定义→覆盖更新
     ./install.sh --list                 列出检测到的平台
     ./install.sh --help                 显示帮助
     ./install.sh --version              显示版本
@@ -537,6 +609,10 @@ main() {
         mode="uninstall"
         shift
         ;;
+      --update|-U)
+        mode="update"
+        shift
+        ;;
       --list|-l)
         mode="list"
         shift
@@ -591,6 +667,14 @@ main() {
   if [ "$mode" = "uninstall" ]; then
     do_uninstall "$base_dir"
     exit 0
+  fi
+
+  # Update
+  if [ "$mode" = "update" ]; then
+    do_update "$base_dir"
+    # After pre-update checks/backup, fall through to a normal (overwrite) install
+    # for the same target so the new version lands in place.
+    mode="auto"
   fi
 
   # List
@@ -825,7 +909,13 @@ main() {
     fi
     install_for_platform_filtered "$slug" "$base_dir" "$layer_filter" "$stack_filter"
     echo ""
-    echo "  安装完成！重启 AI 编程工具即可生效。"
+    echo "  ✅ 安装完成！CSP v${VERSION}（${total_all} skills）已就绪。"
+    echo ""
+    echo "  下一步："
+    echo "    • 重启 AI 编程工具使新技能生效"
+    echo "    • 在项目 CLAUDE.md / .cursorrules 加一行：使用 CSP 技能，通过 csp-router 路由任务"
+    echo "    • 用 /csp-search <关键词> 探索技能，/csp-doctor 检查安装健康度"
+    echo "    • 后续更新：/csp-update 或 ./install.sh --update"
     echo ""
     exit 0
   fi
@@ -856,7 +946,13 @@ main() {
   fi
 
   echo ""
-  echo "  安装完成！重启 AI 编程工具即可生效。"
+  echo "  ✅ 安装完成！CSP v${VERSION}（${total_all} skills）已就绪。"
+  echo ""
+  echo "  下一步："
+  echo "    • 重启 AI 编程工具使新技能生效"
+  echo "    • 在项目 CLAUDE.md / .cursorrules 加一行：使用 CSP 技能，通过 csp-router 路由任务"
+  echo "    • 用 /csp-search <关键词> 探索技能，/csp-doctor 检查安装健康度"
+  echo "    • 后续更新：/csp-update 或 ./install.sh --update"
   echo ""
 }
 

@@ -391,33 +391,50 @@ my_language:
 
 ## 更新 CSP
 
-### 检查更新
+### 一键更新（推荐）
+
+在任意已安装 CSP 的 AI 编程工具中运行：
+
+```
+/csp-update
+```
+
+工作流自动完成：检测已装版本 → 查询 npm 最新版 → 显示变更日志 → 备份自定义文件到 `csp-user-files-backup/` → 覆盖安装 → 清理缓存。详见 [UPDATE.md](./UPDATE.md)。
+
+### 更新后恢复本地修改
+
+```
+/csp-update --reapply
+```
+
+把更新前备份的自定义文件（非 `csp-*`）从 `csp-user-files-backup/` 恢回原位；与现有文件冲突时列出双方路径供手动合并。
+
+### 跨运行时同步
+
+在多个 AI 工具中安装了 CSP（如同时用 Cursor 和 Claude Code），更新一个后同步到其他：
+
+```
+/csp-sync-skills --from claude --to cursor --dry-run   # 预览
+/csp-sync-skills --from claude --to cursor --apply      # 执行
+/csp-sync-skills --from claude --to all --apply          # 同步到所有运行时
+```
+
+### 手动更新（源码安装 / `/csp-update` 不可用）
 
 ```bash
-# 检查并生成更新计划
-csp-update-check
-
-# 输出: update-plan-2026-06-11.md
-# - ECC: 3 new skills, 2 bug fixes since last sync
-# - CSP: 1 new workflow, hook improvements
+cd /path/to/code-skills-package && git pull
+./install.sh --update --platform cursor --global   # 检测版本→备份→覆盖
+# 或直接覆盖安装
+./install.sh --platform cursor --global
 ```
 
-### 应用更新
-
-```bash
-# 人工审查后执行更新
-csp-update-apply --plan update-plan-2026-06-11.md
-```
-
-### 版本锁定
-
-项目根目录 `.csp/versions.lock` 记录当前使用的 skill 版本:
+### 健康检查
 
 ```
-csp-plan-phase@1.2.3
-csp-code-review@2.0.1
-csp-debug@1.5.0
+/csp-doctor        # 或 csp-sdk doctor
 ```
+
+> **注：** `csp-*` 管理的技能文件在更新时会被覆盖；你的自定义技能（非 `csp-` 前缀）、CLAUDE.md 哨兵段外的内容、自定义 hooks 均不受影响。修改 `csp-*` 文件本身不会备份（无 manifest 基线），如需持久化定制请放在非 `csp-*` 路径下。
 
 ---
 

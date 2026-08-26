@@ -1,16 +1,29 @@
 # Reapply Local Patches Workflow
 
-Invoked by `/csp-update --reapply` (`commands/csp/update.md`).
+Invoked by `/csp-update --reapply` (`commands/csp-update.md`).
 
-After a CSP update wipes and reinstalls files, this workflow merges user's previously saved local modifications back into the new version. Uses three-way comparison (pristine baseline, user-modified backup, newly installed version) to reliably distinguish user customizations from version drift.
+After a CSP update, this workflow restores user-backed-up custom files from
+`csp-user-files-backup/` back to their original locations inside the runtime's
+CSP-managed skill directories.
 
-**Critical invariant:** Every file in `csp-local-patches/` was backed up because the installer's hash comparison detected it was modified. The workflow must NEVER conclude "no custom content" for any backed-up file — that is a logical contradiction. When in doubt, classify as CONFLICT requiring user review, not SKIP.
+> **install.sh-native scope:** This repo's installer (`install.sh`) overwrites
+> the `csp-*` layer dirs in place via `cp -R`; it does **not** wipe custom
+> (non-`csp-*`) files, and it has no file manifest. Therefore:
+> - Custom files (non-`csp-*`) are usually **preserved in place** by the update;
+>   this workflow restores them only if they were lost (e.g. a prior `--uninstall`
+>   removed them, or the user manually cleared the dir).
+> - Modifications the user made **to `csp-*` managed files** are NOT tracked
+>   (no pristine-hash baseline) and will be overwritten by updates. To keep
+>   customizations durable, put them in non-`csp-*` files (custom skills,
+>   CLAUDE.md sections outside the sentinel markers, custom hooks).
 
 <process>
 
-## Step 1: Detect backed-up patches
+## Step 1: Resolve the backup directory
 
-Check for local patches directory:
+`csp-update` writes backups to `$RUNTIME_DIR/csp-user-files-backup/`, where
+`RUNTIME_DIR` is the runtime config directory detected during the update
+(e.g. `~/.claude`, `~/.cursor`, `~/.config/opencode`).
 
 ```bash
 expand_home() {
@@ -20,407 +33,119 @@ expand_home() {
   esac
 }
 
-PATCHES_DIR=""
-
-# Env overrides first — covers custom config directories used with --config-dir
-if [ -n "$KILO_CONFIG_DIR" ]; then
-  candidate="$(expand_home "$KILO_CONFIG_DIR")/csp-local-patches"
-  if [ -d "$candidate" ]; then
-    PATCHES_DIR="$candidate"
+# Reuse the same env-override + default detection as csp-update.
+BACKUP_DIR=""
+for candidate in \
+  "${CLAUDE_CONFIG_DIR:+$(expand_home "$CLAUDE_CONFIG_DIR")/csp-user-files-backup}" \
+  "${ANTIGRAVITY_CONFIG_DIR:+$(expand_home "$ANTIGRAVITY_CONFIG_DIR")/csp-user-files-backup}" \
+  "${GEMINI_CONFIG_DIR:+$(expand_home "$GEMINI_CONFIG_DIR")/csp-user-files-backup}" \
+  "${KILO_CONFIG_DIR:+$(expand_home "$KILO_CONFIG_DIR")/csp-user-files-backup}" \
+  "${OPENCODE_CONFIG_DIR:+$(expand_home "$OPENCODE_CONFIG_DIR")/csp-user-files-backup}" \
+  "${CODEX_HOME:+$(expand_home "$CODEX_HOME")/csp-user-files-backup}" \
+  "$HOME/.claude/csp-user-files-backup" \
+  "$HOME/.cursor/csp-user-files-backup"; do
+  if [ -n "$candidate" ] && [ -d "$candidate" ]; then
+    BACKUP_DIR="$candidate"
+    break
   fi
-elif [ -n "$KILO_CONFIG" ]; then
-  candidate="$(dirname "$(expand_home "$KILO_CONFIG")")/csp-local-patches"
-  if [ -d "$candidate" ]; then
-    PATCHES_DIR="$candidate"
-  fi
-elif [ -n "$XDG_CONFIG_HOME" ]; then
-  candidate="$(expand_home "$XDG_CONFIG_HOME")/kilo/csp-local-patches"
-  if [ -d "$candidate" ]; then
-    PATCHES_DIR="$candidate"
-  fi
-fi
-
-if [ -z "$PATCHES_DIR" ] && [ -n "$OPENCODE_CONFIG_DIR" ]; then
-  candidate="$(expand_home "$OPENCODE_CONFIG_DIR")/csp-local-patches"
-  if [ -d "$candidate" ]; then
-    PATCHES_DIR="$candidate"
-  fi
-elif [ -z "$PATCHES_DIR" ] && [ -n "$OPENCODE_CONFIG" ]; then
-  candidate="$(dirname "$(expand_home "$OPENCODE_CONFIG")")/csp-local-patches"
-  if [ -d "$candidate" ]; then
-    PATCHES_DIR="$candidate"
-  fi
-elif [ -z "$PATCHES_DIR" ] && [ -n "$XDG_CONFIG_HOME" ]; then
-  candidate="$(expand_home "$XDG_CONFIG_HOME")/opencode/csp-local-patches"
-  if [ -d "$candidate" ]; then
-    PATCHES_DIR="$candidate"
-  fi
-fi
-
-if [ -z "$PATCHES_DIR" ] && [ -n "$GEMINI_CONFIG_DIR" ]; then
-  candidate="$(expand_home "$GEMINI_CONFIG_DIR")/csp-local-patches"
-  if [ -d "$candidate" ]; then
-    PATCHES_DIR="$candidate"
-  fi
-fi
-
-if [ -z "$PATCHES_DIR" ] && [ -n "$CODEX_HOME" ]; then
-  candidate="$(expand_home "$CODEX_HOME")/csp-local-patches"
-  if [ -d "$candidate" ]; then
-    PATCHES_DIR="$candidate"
-  fi
-fi
-
-if [ -z "$PATCHES_DIR" ] && [ -n "$CLAUDE_CONFIG_DIR" ]; then
-  candidate="$(expand_home "$CLAUDE_CONFIG_DIR")/csp-local-patches"
-  if [ -d "$candidate" ]; then
-    PATCHES_DIR="$candidate"
-  fi
-fi
-
-# Global install — detect runtime config directory defaults
-if [ -z "$PATCHES_DIR" ]; then
-  if [ -d "$HOME/.config/kilo/csp-local-patches" ]; then
-    PATCHES_DIR="$HOME/.config/kilo/csp-local-patches"
-  elif [ -d "$HOME/.config/opencode/csp-local-patches" ]; then
-    PATCHES_DIR="$HOME/.config/opencode/csp-local-patches"
-  elif [ -d "$HOME/.opencode/csp-local-patches" ]; then
-    PATCHES_DIR="$HOME/.opencode/csp-local-patches"
-  elif [ -d "$HOME/.gemini/csp-local-patches" ]; then
-    PATCHES_DIR="$HOME/.gemini/csp-local-patches"
-  elif [ -d "$HOME/.codex/csp-local-patches" ]; then
-    PATCHES_DIR="$HOME/.codex/csp-local-patches"
-  else
-    PATCHES_DIR="$HOME/.claude/csp-local-patches"
-  fi
-fi
-# Local install fallback — check all runtime directories
-if [ ! -d "$PATCHES_DIR" ]; then
-  for dir in .config/kilo .kilo .config/opencode .opencode .gemini .codex .claude; do
-    if [ -d "./$dir/csp-local-patches" ]; then
-      PATCHES_DIR="./$dir/csp-local-patches"
-      break
-    fi
-  done
-fi
+done
 ```
 
-Read `backup-meta.json` from the patches directory.
-
-**If no patches found:**
+If `BACKUP_DIR` is empty (no backup found):
 ```
-No local patches found. Nothing to reapply.
+## Reapply — Nothing to Restore
 
-Local patches are automatically saved when you run /csp-update
-after modifying any CSP workflow, command, or agent files.
+No `csp-user-files-backup/` directory found in any detected runtime config dir.
+Either no custom files were backed up during the last update, or the backup
+was already removed. Nothing to reapply.
 ```
 Exit.
 
-## Step 2: Determine baseline for three-way comparison
+## Step 2: Enumerate backed-up files
 
-The quality of the merge depends on having a **pristine baseline** — the original unmodified version of each file from the pre-update CSP release. This enables three-way comparison:
-- **Pristine baseline** (original CSP file before any user edits)
-- **User's version** (backed up in `csp-local-patches/`)
-- **New version** (freshly installed after update)
-
-Check for baseline sources in priority order:
-
-### Option A: Pristine hash from backup-meta.json + git history (most reliable)
-If the config directory is a git repository:
-```bash
-CONFIG_DIR=$(dirname "$PATCHES_DIR")
-if git -C "$CONFIG_DIR" rev-parse --git-dir >/dev/null 2>&1; then
-  HAS_GIT=true
-fi
-```
-When `HAS_GIT=true`, use the `pristine_hashes` recorded in `backup-meta.json` to locate the correct baseline commit. For each file, iterate commits that touched it and find the one whose blob SHA-256 matches the recorded pristine hash:
-```bash
-# Get the expected pristine SHA-256 from backup-meta.json
-PRISTINE_HASH=$(jq -r ".pristine_hashes[\"${file_path}\"] // empty" "$PATCHES_DIR/backup-meta.json")
-
-BASELINE_COMMIT=""
-if [ -n "$PRISTINE_HASH" ]; then
-  # Walk commits that touched this file, pick the one matching the pristine hash
-  while IFS= read -r commit_hash; do
-    blob_hash=$(git -C "$CONFIG_DIR" show "${commit_hash}:${file_path}" 2>/dev/null | sha256sum | cut -d' ' -f1)
-    if [ "$blob_hash" = "$PRISTINE_HASH" ]; then
-      BASELINE_COMMIT="$commit_hash"
-      break
-    fi
-  done < <(git -C "$CONFIG_DIR" log --format="%H" -- "${file_path}")
-fi
-
-# Fallback: if no pristine hash in backup-meta (older installer), use first-add commit
-if [ -z "$BASELINE_COMMIT" ]; then
-  BASELINE_COMMIT=$(git -C "$CONFIG_DIR" log --diff-filter=A --format="%H" -- "${file_path}" | tail -1)
-fi
-```
-Extract the pristine version from the matched commit:
-```bash
-git -C "$CONFIG_DIR" show "${BASELINE_COMMIT}:${file_path}"
-```
-
-**Why this matters:** `git log --diff-filter=A` returns the commit that *first added* the file, which is the wrong baseline on repos that have been through multiple CSP update cycles. The `pristine_hashes` field in `backup-meta.json` records the SHA-256 of the file as it existed in the pre-update CSP release — matching against it finds the correct baseline regardless of how many updates have occurred.
-
-### Option B: Pristine snapshot directory
-Check if a `csp-pristine/` directory exists alongside `csp-local-patches/`:
-```bash
-PRISTINE_DIR="$CONFIG_DIR/csp-pristine"
-```
-If it exists, the installer saved pristine copies at install time. Use these as the baseline.
-
-### Option C: No baseline available (two-way fallback)
-If neither git history nor pristine snapshots are available, fall back to two-way comparison — but with **strengthened heuristics** (see Step 3).
-
-## Step 3: Show patch summary
-
-```
-## Local Patches to Reapply
-
-**Backed up from:** v{from_version}
-**Current version:** {read VERSION file}
-**Files modified:** {count}
-**Merge strategy:** {three-way (git) | three-way (pristine) | two-way (enhanced)}
-
-| # | File | Status |
-|---|------|--------|
-| 1 | {file_path} | Pending |
-| 2 | {file_path} | Pending |
-```
-
-## Step 4: Merge each file
-
-For each file in `backup-meta.json`:
-
-1. **Read the backed-up version** (user's modified copy from `csp-local-patches/`)
-2. **Read the newly installed version** (current file after update)
-3. **If available, read the pristine baseline** (from git history or `csp-pristine/`)
-
-### Three-way merge (when baseline is available)
-
-Compare the three versions to isolate changes:
-- **User changes** = diff(pristine → user's version) — these are the customizations to preserve
-- **Upstream changes** = diff(pristine → new version) — these are version updates to accept
-
-**Merge rules:**
-- Sections changed only by user → apply user's version
-- Sections changed only by upstream → accept upstream version
-- Sections changed by both → flag as CONFLICT, show both, ask user
-- Sections unchanged by either → use new version (identical to all three)
-
-### Two-way merge (fallback when no baseline)
-
-When no pristine baseline is available, use these **strengthened heuristics**:
-
-**CRITICAL RULE: Every file in this backup directory was explicitly detected as modified by the installer's SHA-256 hash comparison. "No custom content" is never a valid conclusion.**
-
-For each file:
-a. Read both versions completely
-b. Identify ALL differences, then classify each as:
-   - **Mechanical drift** — path substitutions (e.g. `/Users/xxx/.claude/` → `$HOME/.claude/`), variable additions (`${CSP_WS}`, `${AGENT_SKILLS_*}`), error handling additions (`|| true`)
-   - **User customization** — added steps/sections, removed sections, reordered content, changed behavior, added frontmatter fields, modified instructions
-
-c. **If ANY differences remain after filtering out mechanical drift → those are user customizations. Merge them.**
-d. **If ALL differences appear to be mechanical drift → still flag as CONFLICT.** The installer's hash check already proved this file was modified. Ask the user: "This file appears to only have path/variable differences. Were there intentional customizations?" Do NOT silently skip.
-
-### Git-enhanced two-way merge
-
-When the config directory is a git repo but the pristine install commit can't be found, use commit history to identify user changes:
-```bash
-# Find non-update commits that touched this file
-git -C "$CONFIG_DIR" log --oneline --no-merges -- "{file_path}" | grep -v "csp:update\|csp-update\|CSP update\|csp-install"
-```
-Each matching commit represents an intentional user modification. Use the commit messages and diffs to understand what was changed and why.
-
-4. **Write merged result** to the installed location
-
-### Post-merge verification
-
-After writing each merged file, verify that user modifications survived the merge:
-
-1. **Line-count check:** Count lines in the backup and the merged result. If the merged result has fewer lines than the backup minus the expected upstream removals, flag for review.
-2. **Hunk presence check:** For each user-added section identified during diff analysis, search the merged output for at least the first significant line (non-blank, non-comment) of each addition. Missing signature lines indicate a dropped hunk.
-3. **Report warnings inline** (do not block):
-   ```
-   ⚠ Potential dropped content in {file_path}:
-     - Missing hunk near line {N}: "{first_line_preview}..." ({line_count} lines)
-     - Backup available: {patches_dir}/{file_path}
-   ```
-4. **Produce a Hunk Verification Table** — one row per hunk per file. This table is **mandatory output** and must be produced before Step 5 can proceed. Format:
-
-   | file | hunk_id | signature_line | line_count | verified |
-   |------|---------|----------------|------------|----------|
-   | {file_path} | {N} | {first_significant_line} | {count} | yes |
-   | {file_path} | {N} | {first_significant_line} | {count} | no |
-
-   - `hunk_id` — sequential integer per file (1, 2, 3…)
-   - `signature_line` — first non-blank, non-comment line of the user-added section
-   - `line_count` — total lines in the hunk
-   - `verified` — `yes` if the signature_line is present in the merged output, `no` otherwise
-
-5. **Track verification status** — add to per-file report: `Merged (verified)` vs `Merged (⚠ {N} hunks may be missing)`
-
-6. **Report status per file:**
-   - `Merged` — user modifications applied cleanly (show summary of what was preserved)
-   - `Conflict` — user reviewed and chose resolution
-   - `Incorporated` — user's modification was already adopted upstream (only valid when pristine baseline confirms this)
-
-**Never report `Skipped — no custom content`.** If a file is in the backup, it has custom content.
-
-## Step 5: Hunk Verification Gate
-
-Two layered gates. Both must pass before proceeding to cleanup.
-
-### 5a: Deterministic verifier (binding gate, #2969)
-
-Run the deterministic verifier script. Do NOT rely solely on the free-text `verified: yes/no` Hunk Verification Table from Step 4 — bug #2969 traced repeated false-positive `verified: yes` reports to that table being filled in without an actual content-presence check. The script performs the check structurally and exits non-zero on any miss.
-
-Run the verifier as a child process (the csp-tools binary directory is not required — the script ships under `code-skills-package/bin/` in the source repo and is installed to `${CSP_HOME}/code-skills-package/bin/`; it is also exposed via the SDK at `sdk/dist/cli.js verify-reapply` when present):
+List every file under the backup dir. Each file's path **relative to the
+backup dir** is also its path relative to the runtime config dir (the backup
+preserved the directory structure):
 
 ```bash
-PRISTINE_DIR="${CONFIG_DIR}/csp-pristine"
-
-# Build args as a bash array so paths with spaces survive expansion intact
-# (string-concat + unquoted expansion would split incorrectly on whitespace).
-VERIFY_ARGS=(
-  --patches-dir "$PATCHES_DIR"
-  --config-dir  "$CONFIG_DIR"
-)
-if [ -d "$PRISTINE_DIR" ]; then
-  VERIFY_ARGS+=(--pristine-dir "$PRISTINE_DIR")
-fi
-VERIFY_ARGS+=(--json)
-
-# Capture stdout (the structured JSON report) separately from stderr so that
-# Node warnings, deprecation notices, or stack traces do not corrupt the
-# JSON parse downstream. Stderr is preserved on the controlling terminal
-# for operator visibility.
-VERIFY_OUTPUT="$(node "${CSP_HOME}/code-skills-package/bin/verify-reapply-patches.cjs" "${VERIFY_ARGS[@]}")"
-VERIFY_STATUS=$?
+mapfile -t BACKED_UP_FILES < <(cd "$BACKUP_DIR" && find . -type f | sed 's|^\./||')
 ```
 
-**Step 5a: drift check** — even when `VERIFY_STATUS` is 0, the report may signal that one or more files were skipped due to pristine-snapshot drift (Bug #3657). Parse the JSON and check:
+If the list is empty:
+```
+## Reapply — Backup Empty
+`csp-user-files-backup/` exists but contains no files. Nothing to reapply.
+```
+Exit.
+
+## Step 3: Restore each file (two-way copy-back)
+
+For each backed-up file, restore it to its original location. The runtime
+config dir is the **parent** of the backup dir (`BACKUP_DIR` =
+`<RUNTIME_DIR>/csp-user-files-backup`), so the destination is
+`<RUNTIME_DIR>/<relative-path>`:
 
 ```bash
-DRIFTED_COUNT="$(echo "$VERIFY_OUTPUT" | node -e "const d=JSON.parse(require('fs').readFileSync('/dev/stdin','utf8'));process.stdout.write(String(d.drifted||0))")"
-DRIFTED_FILES="$(echo "$VERIFY_OUTPUT"  | node -e "const d=JSON.parse(require('fs').readFileSync('/dev/stdin','utf8'));(d.drifted_files||[]).forEach(f=>process.stdout.write(f+'\n'))")"
+RUNTIME_DIR="$(dirname "$BACKUP_DIR")"
+RESTORED=0
+SKIPPED=0
+CONFLICTS=0
+
+for rel in "${BACKED_UP_FILES[@]}"; do
+  src="$BACKUP_DIR/$rel"
+  dst="$RUNTIME_DIR/$rel"
+
+  # Destination already exists and differs from backup → conflict (user may
+  # have re-created the file post-update). Prompt rather than clobber.
+  if [ -f "$dst" ] && ! cmp -s "$src" "$dst"; then
+    echo "CONFLICT: $rel (target differs from backup)"
+    CONFLICTS=$((CONFLICTS + 1))
+    # In text mode, list conflicts for the user to resolve manually.
+    continue
+  fi
+
+  mkdir -p "$(dirname "$dst")"
+  cp -p "$src" "$dst"
+  echo "restored: $rel"
+  RESTORED=$((RESTORED + 1))
+done
 ```
 
-**If `DRIFTED_COUNT` is greater than 0**, STOP and report to the user, then set `DRIFT_DETECTED=true` and halt — do not proceed to 5b or cleanup:
-
-```text
-HALT: {DRIFTED_COUNT} file(s) were skipped by the deterministic verifier because the
-csp-pristine/ snapshot on disk does not match the hash recorded in backup-meta.json
-(pristine drift — the snapshot was refreshed to a newer CSP version after the backup
-was captured).  These files were NOT diff-verified; their user customisations may or
-may not have survived the merge.
-
-Drifted files:
-  {each path in DRIFTED_FILES, one per line, indented two spaces}
-
-Resolve before re-running:
-  (a) Re-anchor the pristine snapshot to the version recorded in backup-meta.json, or
-  (b) Restore the affected file(s) from backup and re-merge manually:
-        cp {patches_dir}/{file} {installed_path}  # then re-apply customisations
-  (c) If the upstream changes are acceptable, update the backup-meta.json
-      pristine_hashes entry for each drifted file to the current on-disk hash, then
-      re-run /csp-update --reapply to re-verify with the refreshed baseline.
-
-Then re-run /csp-update --reapply to re-verify.
-```
-
-```bash
-DRIFT_DETECTED=true
-# Abort — subsequent steps must not execute when drift is unresolved.
-exit 1
-```
-
-**If `VERIFY_STATUS` is non-zero**, STOP and report to the user, parsing the JSON output:
-
-```text
-ERROR: {failures} file(s) failed deterministic post-merge verification (#2969 gate).
-
-The verifier compared user-added lines (computed from the diff between
-the backup and the pristine baseline) against the merged installed file.
-Lines listed below are present in the backup but absent from the merged result.
-
-For each failed file:
-  {file}
-    missing: {first significant missing line, up to 5 per file}
-    backup:  {patches_dir}/{file}
-
-Resolve before proceeding:
-  (a) Re-merge the missing content into the installed file by hand, or
-  (b) Restore from backup: cp {patches_dir}/{file} {installed_path}
-
-Then re-run /csp-update --reapply to re-verify.
-```
-
-Do not proceed to cleanup until the verifier exits 0.
-
-**Only when `VERIFY_STATUS` is 0** (or when all files had zero significant user-added lines, which the verifier reports as `Failures: 0`) may execution continue to gate 5b.
-
-### 5b: Hunk Verification Table review (advisory gate, #1999)
-
-The Hunk Verification Table produced in Step 4 must also be reviewed before proceeding. This is advisory after the script gate but is preserved as a defense-in-depth check — if the script ever has a bug or the pristine baseline is unavailable, the table-based gate still catches obvious regressions.
-
-**If the Hunk Verification Table is absent** (Step 4 silently produced nothing), STOP and report:
+## Step 4: Report
 
 ```
-ERROR: Hunk Verification Table is missing — Step 4 did not produce it.
-The deterministic verifier (5a) may still have passed, but a missing table
-means post-merge verification was not fully completed. Rerun
-/csp-update --reapply to retry with full verification.
+## Reapply Complete
+
+- Restored:   N file(s)
+- Skipped:    M (already in place, identical)
+- Conflicts:  K (target differs from backup — resolve manually)
+
+Backup retained at: <BACKUP_DIR>
+Review the conflicts above and merge by hand if any.
 ```
 
-A missing table absent from the workflow output cannot bypass this gate.
-
-**If any row in the Hunk Verification Table shows `verified: no`**, STOP and report:
-
-```
-ERROR: {N} hunk(s) failed Step 5b verification — content may have been dropped during merge.
-
-Unverified hunks:
-  {file} hunk {hunk_id}: signature line "{signature_line}" not found in merged output
-
-The backup is preserved at: {patches_dir}/{file}
-Review the merged file manually, then either:
-  (a) Re-merge the missing content by hand, or
-  (b) Restore from backup: cp {patches_dir}/{file} {installed_path}
-```
-
-Do not proceed to cleanup until both gates (5a and 5b) pass.
-
-**Why both gates?** 5a (the script) is the binding gate — it does the actual substring check structurally and cannot be shortcut by the LLM. 5b (the table review) is the advisory gate — it provides a redundant safety net via the Step 4 prose summary, ensuring that even a script regression or absent pristine baseline cannot silently allow a `verified: no` row to slip past, nor can a missing table go unnoticed. Layered gates favour false-positive halts (recoverable) over silent successes on lost content (unrecoverable).
-
-## Step 6: Cleanup option
-
-Ask user:
-- "Keep patch backups for reference?" → preserve `csp-local-patches/`
-- "Clean up patch backups?" → remove `csp-local-patches/` directory
-
-## Step 7: Report
+**Conflict handling:** A conflict means the file now on disk (after the update)
+differs from the user's backed-up version. Do not silently overwrite. Surface
+both paths so the user can merge manually:
 
 ```
-## Patches Reapplied
-
-| # | File | Result | User Changes Preserved |
-|---|------|--------|----------------------|
-| 1 | {file_path} | Merged | Added step X, modified section Y |
-| 2 | {file_path} | Incorporated | Already in upstream v{version} |
-| 3 | {file_path} | Conflict resolved | User chose: keep custom section |
-
-{count} file(s) updated. Your local modifications are active again.
+  backup: <BACKUP_DIR>/<rel>
+  current: <RUNTIME_DIR>/<rel>
 ```
-
 </process>
 
 <success_criteria>
-- [ ] All backed-up patches processed — zero files left unhandled
-- [ ] No file classified as "no custom content" or "SKIP" — every backed-up file is definitionally modified
-- [ ] Three-way merge used when pristine baseline available (git history or csp-pristine/)
-- [ ] User modifications identified and merged into new version
-- [ ] Conflicts surfaced to user with both versions shown
-- [ ] Status reported for each file with summary of what was preserved
-- [ ] Post-merge verification checks each file for dropped hunks and warns if content appears missing
+- [ ] Backup directory resolved or "nothing to restore" reported
+- [ ] Each backed-up file either restored, skipped (identical), or flagged as conflict
+- [ ] No on-disk file silently clobbered when it differs from the backup
+- [ ] Conflicts listed with both paths for manual resolution
 </success_criteria>
+
+<limitations>
+- This workflow restores **non-`csp-*` custom files** only — the set captured
+  by `csp-sdk query detect-custom-files`.
+- It does **not** recover user modifications to `csp-*` managed files
+  (overwritten by the update; no pristine baseline exists without a manifest).
+  Keep durable customizations outside `csp-*` paths or in CLAUDE.md sections
+  outside the `<!-- csp-begin -->` / `<!-- csp-end -->` sentinel markers.
+</limitations>

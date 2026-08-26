@@ -4,7 +4,7 @@
 # Regenerate: node scripts/build-skill-metadata.mjs
 
 version: 2.0
-generated_at: 2026-08-21T05:28:13.466Z
+generated_at: 2026-08-26T07:52:29.269Z
 skills:
   csp-agent-teams:
     phase: review
@@ -2075,6 +2075,25 @@ skills:
       - Glob
       - Grep
       - Bash
+      - AskUserQuestion
+    dependencies:
+      skills: []
+    related_skills:
+      - csp-check
+      - csp-access
+      - csp-edge
+      - csp-flow-web
+      - csp-flow-mobile
+      - csp-metric
+      - csp-probe
+      - csp-qa
+      - csp-retro
+      - csp-pitch
+    anti_rationalizations:
+      We don't have time for user testing: "Mode B heuristic review can run in hours, not weeks."
+      We can't find users right now: "Mode B works without users — code review + Nielsen heuristics."
+      Let's just do a quick walkthrough: "A walkthrough catches ~30% of issues; Mode B catches ~60-75%."
+      The design is too early to test: "Mode B works on raw code — no prototype needed."
   csp-typescript-patterns:
     phase: build
     domain: language

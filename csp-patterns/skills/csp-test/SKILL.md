@@ -14,7 +14,7 @@ category: design
 phase: verify
 domain: patterns
 scope: testing
-tools: [Read, Write, Edit, Glob, Grep, Bash, AskUserQuestion]
+tools: [Read, Write, Edit, Glob, Grep, Bash]
 
 triggers:
   keywords: ["usability test", "user test", "heuristic review", "expert review", "可用性测试", "启发式评估"]

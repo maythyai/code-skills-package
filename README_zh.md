@@ -4,7 +4,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
 [![npm](https://img.shields.io/npm/v/code-skills-package)](https://www.npmjs.com/package/code-skills-package)
-[![v0.9.0](https://img.shields.io/badge/version-0.9.0-green)](./CHANGELOG.md)(./CHANGELOG.md)
+[![v0.10.0](https://img.shields.io/badge/version-0.10.0-green)](./CHANGELOG.md)(./CHANGELOG.md)(./CHANGELOG.md)
 [![Skills: 653](https://img.shields.io/badge/skills-653-orange)](./docs/SKILL-INDEX.md)
 [![Platforms: 22+](https://img.shields.io/badge/platforms-22+-brightgreen)](./docs/INSTALL.md)
 
@@ -144,6 +144,10 @@ cd /your/project && csp-install --platform cursor
 /csp-execute-phase # 执行计划
 /csp-verify        # 验证实现
 /csp-search <query> # 搜索 skill 索引
+/csp-update        # 检查 npm 最新版并安装
+/csp-sync-skills --from claude --to cursor --apply  # 跨运行时同步 csp-* 技能
+/csp-doctor        # 诊断安装健康度
+/csp-help          # 浏览命令帮助
 /csp-why           # 解释路由决策
 /csp-stats         # 使用统计
 ```

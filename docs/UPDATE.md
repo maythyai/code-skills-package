@@ -6,7 +6,7 @@
 
 ## 快速开始
 
-> **Note:** `/csp-doctor` is available via `csp-sdk doctor`. `/csp-update` and `/csp-sync-skills` are planned for v0.9.0.
+> **Note:** `/csp-doctor` via `csp-sdk doctor`. `/csp-update`, `/csp-sync-skills`, and `/csp-update --reapply` are available as of v0.10.0 (install.sh-native: they call the bundled `install.sh`, `bin/check-latest-version.cjs`, and `csp-sdk query detect-custom-files` — no separate plugin runtime required).
 
 在已安装 CSP 的项目中运行以下命令即可更新：
 
@@ -64,11 +64,12 @@ npx -y --package=code-skills-package@latest -- code-skills-package --<runtime> -
 
 ---
 
-## 方法二：重新安装
+## 方法二：重新安装（覆盖更新）
 
 适用于以下场景：
 - 从源码仓库安装（克隆了 CSP 项目）
 - 需要更换安装参数（如平台、技术栈等）
+- `/csp-update` 不可用时手动更新
 
 ```bash
 # 进入 CSP 仓库目录
@@ -80,6 +81,9 @@ git pull
 # 重新安装（覆盖旧版本）
 ./install.sh --platform cursor
 ./install.sh --platform cursor --global
+
+# 或用 --update 一步到位：检测已装版本 → 查 npm 最新 → 备份自定义 → 覆盖
+./install.sh --update --platform cursor --global
 ```
 
 远程安装同样支持重新安装：

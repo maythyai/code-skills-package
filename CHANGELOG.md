@@ -6,7 +6,20 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## Unreleased
 
+## [0.10.0] — 2026-08-26
+
 ### Added
+- **改码类意图路由（最高优先级）** — `csp-router/SKILL.md` 新增"改码类意图路由决策"段：按"是否提供 PRD/链接、是否指定设计模式、是否极简、是否 loop"四类信号路由到 `csp-design-hub` / `csp-simple-dev` / `csp-autopilot`，含信号检测表、路由决策表、回退规则、示例。配套 `csp-router/references/code-modification-routing.md` 详述信号检测算法与边界用例。
+- `csp-simple-dev` (L2 workflow, phase: build, domain: patterns, scope: implementation) — 极简模式直接改码引擎：无 PRD/无设计模式时的一句话需求快速实现入口。统一 `csp-hotfix`/`csp-tweak`/`csp-minimal-change-engineer` 为单入口，含分发逻辑、定位→最小改动→轻量验证流程、范围自检、升级路径。
+- `csp-code-understanding` (L2 workflow, phase: define, domain: architecture, scope: analysis) — 代码理解文档自动生成引擎：产出结构化、可增量更新的代码理解文档（模块依赖图、关键执行路径、数据流、调用关系），持久化到 `.csp/code-understanding/` 三级 Markdown。`csp-explore` 的持久化版，优先消费 `csp-code-graph` 图谱数据回退手动探索，附 `reference/` 4 个文档模板。
+- `csp-design-hub` (L2 workflow, phase: plan, domain: architecture, scope: design) — 设计方案多模式生成与同步引擎：支持 summary/detailed/rapid/local-rapid/regenerate 五模式切换 + 模式互切 + 设计-实现漂移检测（SYNC-REPORT）。控制器/引擎分离——detailed 委派 `csp-tech-solution-design`，rapid 本技能直生成。
+- **更新自动化打通（install.sh 原生）** — 新增 `bin/check-latest-version.cjs`（查 npm 最新版，零依赖，`--json` 契约）；`csp-sdk` 新增 `query detect-custom-files --config-dir` 子命令（扫描非 `csp-*` 自定义文件）；改造 `csp-update`/`csp-sync-skills`/`csp-reapply-patches` 三个 workflow 去掉对插件版基础设施（`code-skills-package-cc`/`install.js`/`csp-tools.cjs`/`csp-file-manifest.json`）的依赖，改为调用本仓库 `install.sh` + `csp-sdk` + `check-latest-version.cjs`。
+- `install.sh --update` 便捷模式：检测已装版本→查 npm 最新→备份非 `csp-*` 自定义文件到 `csp-user-files-backup/`→覆盖安装；安装完成打印"下一步"引导（`/csp-search` 探索、`/csp-doctor` 体检、`/csp-update` 更新）。
+- `csp-hotfix`/`csp-tweak`/`csp-tech-solution-design` 交叉引用更新：`related_skills` 新增 `csp-simple-dev`/`csp-design-hub`；修复 `csp-tweak` 非标准 `triggers` 为 v2 `triggers.keywords` 对象，补 `scope`/`related_skills`。
+- 技能计数 650→653 已同步 CLAUDE.md/README/README_zh/SKILL-INDEX/INSTALL/INSTALL_zh。
+
+### Changed
+- 版本号 0.9.0→0.10.0 同步至 VERSION、package.json、install.sh、CLAUDE.md、README、README_zh、bin/csp-sdk.mjs（经 `scripts/sync-version.js`）。
 - 10 个全新技能覆盖"PRD 产品功能 → 技术功能拆解 → 技术方案设计"完整链路（L2 workflow, phase: plan/define/review, domain: architecture/quality）：
   - `csp-tech-solution-design` (P0) — 技术方案设计引擎：系统架构设计、数据架构设计、接口架构设计、安全架构设计、多方案对比分析、关键技术难点攻克方案。输出 `.csp/tech-design/` 全套产物。依赖: csp-requirement-decomposition, csp-tech-stack-advisor, csp-product-capability。
   - `csp-tech-design-review` (P0) — 技术方案评审引擎：6 角色并行评审（架构师/安全专家/性能专家/DBA/运维专家/成本分析师），CRITICAL/WARNING/INFO 分级。与 `csp-doc-review` 互补（doc-review 审需求，tech-design-review 审方案）。

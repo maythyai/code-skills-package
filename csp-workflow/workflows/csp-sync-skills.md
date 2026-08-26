@@ -55,18 +55,44 @@ fi
 
 ## Step 2: Resolve Skills Roots
 
-Use `install.js --skills-root` to resolve paths — this reuses the single authoritative path table rather than duplicating it:
+Resolve each runtime's skills root with an inline `skills_root_for()` function
+that mirrors `lib/platforms.sh`'s `platform_dir` table (the single source of
+truth for install paths). This avoids depending on a separate installer binary:
 
 ```bash
-INSTALL_JS="$(dirname "$0")/../code-skills-package/bin/install.js"
-# If running from a global install, resolve relative to the CSP package
-INSTALL_JS_GLOBAL="$HOME/.claude/code-skills-package/bin/install.js"
-[[ ! -f "$INSTALL_JS" ]] && INSTALL_JS="$INSTALL_JS_GLOBAL"
+skills_root_for() {
+  # $1 = runtime slug, $2 = scope ("global"|"local"); defaults to global
+  local runtime="$1" scope="${2:-global}"
+  local dir
+  case "$runtime" in
+    claude|copilot)      dir=".claude/skills" ;;
+    cursor)              dir=".cursor/skills" ;;
+    windsurf)            dir=".windsurf/skills" ;;
+    gemini)              dir=".gemini/skills" ;;
+    codex)               dir=".codex/skills" ;;
+    opencode)            dir=".opencode/skills" ;;
+    kilo)                dir=".kiro/steering" ;;
+    trae)                dir=".trae/skills" ;;
+    qwen)                dir=".qwen/skills" ;;
+    cline)               dir=".cline/rules" ;;
+    antigravity)         dir=".antigravity/skills" ;;
+    grok)                dir=".agents" ;;          # grok uses ~/.agents layout
+    augment)             dir=".augment/skills" ;;
+    codebuddy)           dir=".codebuddy/skills" ;;
+    *) echo ""; return 1 ;;
+  esac
+  if [ "$scope" = "local" ]; then
+    echo "./$dir"
+  else
+    echo "$HOME/$dir"
+  fi
+}
 
-SRC_SKILLS_ROOT=$(node "$INSTALL_JS" --skills-root "$FROM_RUNTIME")
+SRC_SKILLS_ROOT=$(skills_root_for "$FROM_RUNTIME")
+[ -z "$SRC_SKILLS_ROOT" ] && { echo "error: unknown source runtime: $FROM_RUNTIME"; exit 1; }
 
 for DEST_RUNTIME in "${TO_RUNTIMES[@]}"; do
-  DEST_SKILLS_ROOTS["$DEST_RUNTIME"]=$(node "$INSTALL_JS" --skills-root "$DEST_RUNTIME")
+  DEST_SKILLS_ROOTS["$DEST_RUNTIME"]=$(skills_root_for "$DEST_RUNTIME")
 done
 ```
 
@@ -74,7 +100,7 @@ done
 ```
 error: source skills root not found: <path>
        Is CSP installed globally for the '<runtime>' runtime?
-       Run: node ~/.claude/code-skills-package/csp-workflow/bin/install.js --global --<runtime>
+       Run: ./install.sh --platform <runtime> --global
 ```
 Then exit.
 

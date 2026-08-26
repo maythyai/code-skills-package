@@ -4,7 +4,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
 [![npm](https://img.shields.io/npm/v/code-skills-package)](https://www.npmjs.com/package/code-skills-package)
-[![v0.9.0](https://img.shields.io/badge/version-0.9.0-green)](./CHANGELOG.md)(./CHANGELOG.md)
+[![v0.10.0](https://img.shields.io/badge/version-0.10.0-green)](./CHANGELOG.md)(./CHANGELOG.md)(./CHANGELOG.md)
 [![Skills: 653](https://img.shields.io/badge/skills-653-orange)](./docs/SKILL-INDEX.md)
 [![Platforms: 22+](https://img.shields.io/badge/platforms-22+-brightgreen)](./docs/INSTALL.md)
 
@@ -146,6 +146,10 @@ After that, simply give tasks to AI normally, the router will work automatically
 /csp-execute-phase # Execute plan
 /csp-verify        # Verify implementation
 /csp-search <query> # Search skill index
+/csp-update        # Check npm for a newer CSP release and install it
+/csp-sync-skills --from claude --to cursor --apply  # Sync csp-* skills across runtimes
+/csp-doctor        # Diagnose installation health
+/csp-help          # Browse command help
 ```
 
 ### Direct Invocation

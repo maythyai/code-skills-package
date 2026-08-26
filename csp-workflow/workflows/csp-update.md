@@ -326,7 +326,7 @@ fi
 ```text
 Couldn't check for updates (reason: {LATEST_REASON}, exit: {LATEST_STATUS}).
 
-To update manually: `npx -y --package=code-skills-package-cc@latest -- code-skills-package-cc --global`
+To update manually: `npx -y --package=code-skills-package@latest -- csp-install --platform claude --global`
 ```
 
 Exit.
@@ -360,7 +360,7 @@ If you see a "⚠ dev install — re-run installer to sync hooks" warning in
 your statusline, your hook files are older than your VERSION file. Fix it
 by re-running the local installer from your dev branch:
 
-    node bin/install.js --global --claude
+    ./install.sh --platform claude --global   # from a clone of this repo
 
 Running /csp-update would install the npm release (A.B.C) and downgrade
 your dev version — do NOT use it to resolve this warning.
@@ -412,7 +412,9 @@ Your custom files in other locations are preserved:
 - Custom hooks ✓
 - Your CLAUDE.md files ✓
 
-If you've modified any CSP files directly, they'll be automatically backed up to `csp-local-patches/` and can be reapplied with `/csp-update --reapply` after the update.
+If you've modified any CSP files directly, custom files inside managed skill
+directories were backed up to `csp-user-files-backup/` before the update and
+can be reapplied with `/csp-update --reapply` after the update.
 ```
 
 
@@ -436,8 +438,7 @@ installer does not know about and will delete during the wipe.
 inline** — those patterns fail when `$RUNTIME_DIR` is unset and the stripped
 relative path may not match manifest key format, which causes CUSTOM_COUNT=0
 even when custom files exist (bug #1997). Use `csp-sdk query detect-custom-files`
-when `csp-sdk` is on `PATH`, or the bundled `csp-tools.cjs detect-custom-files`
-otherwise — both resolve paths reliably with Node.js `path.relative()`.
+(ships with the CSP install) — it resolves paths reliably with Node.js `path.relative()`.
 
 First, resolve the config directory (`RUNTIME_DIR`) from the install scope
 detected in `get_installed_version`:
@@ -458,15 +459,16 @@ fi
 If `RUNTIME_DIR` is empty or does not exist, skip this step (no config dir to
 inspect).
 
-Otherwise run `detect-custom-files` (prefer SDK when available):
+Otherwise run `detect-custom-files` via `csp-sdk` (prefer the one on PATH;
+fall back to the copy shipped inside the install):
 
 ```bash
-CSP_TOOLS="$RUNTIME_DIR/code-skills-package/bin/csp-tools.cjs"
+CSP_SDK_BIN="$RUNTIME_DIR/code-skills-package/bin/csp-sdk.mjs"
 CUSTOM_JSON=''
 if [ -n "$RUNTIME_DIR" ] && command -v csp-sdk >/dev/null 2>&1; then
   CUSTOM_JSON=$(csp-sdk query detect-custom-files --config-dir "$RUNTIME_DIR" 2>/dev/null)
-elif [ -f "$CSP_TOOLS" ] && [ -n "$RUNTIME_DIR" ]; then
-  CUSTOM_JSON=$(node "$CSP_TOOLS" detect-custom-files --config-dir "$RUNTIME_DIR" 2>/dev/null)
+elif [ -f "$CSP_SDK_BIN" ] && [ -n "$RUNTIME_DIR" ]; then
+  CUSTOM_JSON=$(node "$CSP_SDK_BIN" query detect-custom-files --config-dir "$RUNTIME_DIR" 2>/dev/null)
 fi
 if [ -z "$CUSTOM_JSON" ]; then
   CUSTOM_JSON='{"custom_files":[],"custom_count":0}'
@@ -518,29 +520,38 @@ Then inform the user:
 </step>
 
 <step name="run_update">
-Run the update using the install type detected in step 1:
+Run the update using the install type detected in step 1.
 
-Build runtime flag from step 1:
+This repo's installer is `install.sh` (npm bin `csp-install`). Map the detected
+runtime to a `--platform` slug accepted by `resolve_alias` (claude/cursor/gemini/
+codex/opencode/kiro — note `kilo` → `kiro`):
+
 ```bash
-RUNTIME_FLAG="--$TARGET_RUNTIME"
+case "$TARGET_RUNTIME" in
+  kilo) PLATFORM="kiro" ;;
+  *)    PLATFORM="$TARGET_RUNTIME" ;;
+esac
 ```
 
-**If LOCAL install:**
+**If LOCAL install** (run from the project directory so `.cursor/skills` etc. land in CWD):
 ```bash
-npx -y --package=code-skills-package-cc@latest -- code-skills-package-cc "$RUNTIME_FLAG" --local
+npx -y --package=code-skills-package@latest -- csp-install --platform "$PLATFORM" --target .
 ```
 
 **If GLOBAL install:**
 ```bash
-npx -y --package=code-skills-package-cc@latest -- code-skills-package-cc "$RUNTIME_FLAG" --global
+npx -y --package=code-skills-package@latest -- csp-install --platform "$PLATFORM" --global
 ```
 
-**If UNKNOWN install:**
+**If UNKNOWN install** (fresh install, default to Claude global):
 ```bash
-npx -y --package=code-skills-package-cc@latest -- code-skills-package-cc --claude --global
+npx -y --package=code-skills-package@latest -- csp-install --platform claude --global
 ```
 
 Capture output. If install fails, show error and exit.
+The installer overwrites the `csp-*` layer dirs in place; custom (non-`csp-`)
+files are preserved, and the backup step above already copied any custom files
+inside managed locations to `csp-user-files-backup/`.
 
 Clear the update cache so statusline indicator disappears:
 
@@ -611,17 +622,17 @@ Format completion message (changelog was already shown in confirmation step):
 
 ⚠️  Restart your runtime to pick up the new commands.
 
-[View full changelog](https://github.com/csp-build/code-skills-package/blob/main/CHANGELOG.md)
+[View full changelog](https://github.com/maythyai/code-skills-package/blob/master/CHANGELOG.md)
 ```
 </step>
 
 
 <step name="check_local_patches">
-After update completes, check if the installer detected and backed up any locally modified files:
+After update completes, check if the update workflow backed up any custom files:
 
-Check for csp-local-patches/backup-meta.json in the config directory.
+Check for `csp-user-files-backup/` in the config directory (`$RUNTIME_DIR`).
 
-**If patches found:**
+**If backups found:**
 
 ```
 Local patches were backed up before the update.

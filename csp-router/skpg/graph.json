@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generated_at": "2026-08-21T05:28:55.000Z",
+  "generated_at": "2026-08-26T07:54:58.410Z",
   "nodes": {
     "5b37ecd541b4": {
       "id": "5b37ecd541b4",
@@ -36922,6 +36922,66 @@
       "metadata": {}
     },
     {
+      "source": "f248367726e7",
+      "target": "69d216d0a290",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "f248367726e7",
+      "target": "9679e0e03f5f",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "f248367726e7",
+      "target": "c026209eb059",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "f248367726e7",
+      "target": "ff241b2ba482",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "f248367726e7",
+      "target": "13d20e8336c0",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "f248367726e7",
+      "target": "539e5af38d08",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "f248367726e7",
+      "target": "9666a6253616",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "f248367726e7",
+      "target": "abaff530dbcf",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "f248367726e7",
+      "target": "8e6ab4658286",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "f248367726e7",
+      "target": "23110203578e",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
       "source": "1bf64862e4de",
       "target": "3e6c5a67a97b",
       "kind": "related_to",
@@ -39282,6 +39342,66 @@
     {
       "source": "3f0de07d6842",
       "target": "bc4e3e3ab62c",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "f248367726e7",
+      "target": "69d216d0a290",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "f248367726e7",
+      "target": "9679e0e03f5f",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "f248367726e7",
+      "target": "c026209eb059",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "f248367726e7",
+      "target": "ff241b2ba482",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "f248367726e7",
+      "target": "13d20e8336c0",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "f248367726e7",
+      "target": "539e5af38d08",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "f248367726e7",
+      "target": "9666a6253616",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "f248367726e7",
+      "target": "abaff530dbcf",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "f248367726e7",
+      "target": "8e6ab4658286",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "f248367726e7",
+      "target": "23110203578e",
       "kind": "depends_on",
       "metadata": {}
     },
@@ -47106,18 +47226,18 @@
   ],
   "stats": {
     "node_count": 2423,
-    "edge_count": 4899,
+    "edge_count": 4919,
     "skill_count": 653,
     "trigger_count": 1760,
     "phase_count": 6,
     "category_count": 5,
-    "depends_on_count": 1084,
-    "related_to_count": 937,
+    "depends_on_count": 1094,
+    "related_to_count": 947,
     "edge_types": {
       "contains": 923,
       "triggers": 1955,
-      "depends_on": 1084,
-      "related_to": 937
+      "depends_on": 1094,
+      "related_to": 947
     }
   }
 }

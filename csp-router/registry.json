@@ -5245,7 +5245,7 @@
     },
     {
       "name": "csp-test",
-      "description": "Product Design Suite · Validate. First Skill to launch when a designer wants to run Use when working on design tasks related to test.",
+      "description": "Usability testing & expert heuristic review for design validation. Mode A covers the full lifecycle with real users: Plan → Script → Conduct → Analyze (Nielsen 0-4 severity, task success rates, evidence chains). Mode B (Expert Heuristic Review) is a degradation mode for when no real users are availa",
       "layer": 3,
       "category": "patterns",
       "triggers": {
@@ -9625,7 +9625,7 @@
     },
     {
       "name": "csp-reapply-patches",
-      "description": "Invoked by `/csp-update --reapply` (`commands/csp/update",
+      "description": "Invoked by `/csp-update --reapply` (`commands/csp-update",
       "layer": 2,
       "category": "workflow",
       "triggers": {

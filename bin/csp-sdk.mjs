@@ -89,6 +89,62 @@ function findMarkdownFiles(dir) {
   return results;
 }
 
+// --- Custom File Detection (for csp-update backup) ---
+// Scans a runtime config directory for user-added files inside CSP-managed
+// skill locations. "Custom" = files/dirs NOT prefixed `csp-` (the 5 managed
+// layer dirs are csp-router/csp-meta/csp-workflow/csp-patterns/csp-runtime).
+// install.sh overwrites the csp-* layer dirs on update; non-csp-* siblings
+// are left untouched, but we surface them so the update workflow can back
+// them up defensively. Returns POSIX-relative paths under the config dir.
+const CSP_LAYER_DIRS = new Set(['csp-router', 'csp-meta', 'csp-workflow', 'csp-patterns', 'csp-runtime']);
+const SKILLS_SUBDIR_CANDIDATES = [
+  'skills',            // claude-code, cursor (.cursor/skills), windsurf
+  'code-skills-package', // direct install layout
+];
+
+function detectCustomFiles(configDir) {
+  const root = configDir ? resolve(expandHome(configDir)) : '';
+  if (!root || !existsSync(root)) {
+    return { custom_files: [], custom_count: 0 };
+  }
+  const customFiles = [];
+  const collect = (baseDir, relBase) => {
+    let entries;
+    try { entries = readdirSync(baseDir, { withFileTypes: true }); } catch { return; }
+    for (const entry of entries) {
+      // Skip CSP-managed layer dirs entirely
+      if (CSP_LAYER_DIRS.has(entry.name)) continue;
+      const rel = relBase ? `${relBase}/${entry.name}` : entry.name;
+      if (entry.isDirectory()) {
+        // A non-csp-* directory in a skills root is a custom skill/agent dir —
+        // record its path and descend to catch loose custom files too.
+        customFiles.push(rel + '/');
+        collect(join(baseDir, entry.name), rel);
+      } else {
+        // Skip noise
+        if (entry.name === '.DS_Store' || entry.name.endsWith('.bak')) continue;
+        customFiles.push(rel);
+      }
+    }
+  };
+  for (const sub of SKILLS_SUBDIR_CANDIDATES) {
+    const skillsDir = join(root, sub);
+    if (existsSync(skillsDir) && statSync(skillsDir).isDirectory()) {
+      collect(skillsDir, sub);
+    }
+  }
+  // Deduplicate (dirs recorded both as `dir/` and via their children)
+  const dedup = [...new Set(customFiles)].sort();
+  return { custom_files: dedup, custom_count: dedup.length };
+}
+
+function expandHome(p) {
+  if (!p) return p;
+  if (p === '~') return process.env.HOME || '~';
+  if (p.startsWith('~/')) return join(process.env.HOME || '', p.slice(2));
+  return p;
+}
+
 // --- State Management ---
 
 function loadState() {
@@ -102,7 +158,7 @@ function saveState(state) {
 
 function initState() {
   const state = {
-    version: '0.9.0',
+    version: '0.10.0',
     phase: null,
     phase_name: null,
     milestone: null,
@@ -459,7 +515,7 @@ function getStats() {
   const state = loadState() || {};
   const completed = roadmap.phases.filter(p => ['done', 'complete', '✅'].includes(p.status)).length;
   return {
-    version: '0.9.0',
+    version: '0.10.0',
     milestone: state.milestone || roadmap.milestone || 'unknown',
     phases_total: roadmap.phases.length,
     phases_completed: completed,
@@ -672,7 +728,7 @@ function main() {
   const args = process.argv.slice(2);
 
   if (args.length === 0 || args[0] === '--help' || args[0] === '-h') {
-    out(`csp-sdk v0.9.0 — CSP workflow orchestration CLI
+    out(`csp-sdk v0.10.0 — CSP workflow orchestration CLI
 
 Usage:
   csp-sdk query <subcommand> [args...] [--flags]
@@ -713,7 +769,7 @@ Subcommands (query):
   }
 
   if (args[0] === 'version' || args[0] === '--version') {
-    out('0.9.0');
+    out('0.10.0');
     process.exit(0);
   }
 
@@ -1059,7 +1115,7 @@ function routeQuery(sub, args, flags) {
   // --- utilities ---
   if (sub === 'generate-slug') return slugify(args.join(' '));
   if (sub === 'current-timestamp') return timestamp();
-  if (sub === 'detect-custom-files') return { custom_files: [] };
+  if (sub === 'detect-custom-files') return detectCustomFiles(flags['config-dir'] || flags.configDir || '');
   if (sub === 'generate-claude-md' || sub === 'generate-claude-profile' || sub === 'generate-dev-preferences') {
     return { status: 'ok', message: 'Generation delegated to AI agent' };
   }
