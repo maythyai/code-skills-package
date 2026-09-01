@@ -46,7 +46,7 @@ trigger_index:
     skills: [csp-plan-phase, csp-brainstorming, csp-solutioning-phase]
     weight: 40
   "test":
-    skills: [csp-tdd, csp-e2e-testing, csp-pr-test-analyzer, csp-test-coverage, csp-test, csp-qa-test-engineering, csp-test-methodology]
+    skills: [csp-tdd, csp-e2e-testing, csp-pr-test-analyzer, csp-test-coverage, csp-test, csp-qa-test-engineering, csp-test-methodology, csp-test-spec]
     weight: 45
   "测试":
     skills: [csp-tdd]
@@ -249,7 +249,7 @@ trigger_index:
     skills: [csp-implementation-phase, csp-implementation-phase]
     weight: 45
   "code":
-    skills: [csp-implementation-phase, csp-implementation-phase, csp-code-architect, csp-code-explorer, csp-code-fixer, csp-code-graph, csp-code-review-fix, csp-code-understanding]
+    skills: [csp-implementation-phase, csp-implementation-phase, csp-code-architect, csp-code-explorer, csp-code-fixer, csp-code-graph, csp-code-review-fix, csp-code-understanding, csp-code-spec, csp-code-wiki]
     weight: 45
   "api":
     skills: [csp-backend-patterns]
@@ -5314,6 +5314,106 @@ trigger_index:
   "simple-dev":
     skills: [csp-simple-dev]
     weight: 40
+
+  # ─── auto-generated triggers (generate-triggers.mjs) ───
+  "code spec":
+    skills: [csp-code-spec]
+    weight: 40
+  "code-spec":
+    skills: [csp-code-spec]
+    weight: 40
+  "fix code spec":
+    skills: [csp-code-spec]
+    weight: 40
+  "fix product spec":
+    skills: [csp-product-spec]
+    weight: 40
+  "fix test spec":
+    skills: [csp-test-spec]
+    weight: 40
+  "product spec":
+    skills: [csp-product-spec]
+    weight: 40
+  "product-spec":
+    skills: [csp-product-spec]
+    weight: 40
+  "review code spec":
+    skills: [csp-code-spec]
+    weight: 40
+  "review product spec":
+    skills: [csp-product-spec]
+    weight: 40
+  "review test spec":
+    skills: [csp-test-spec]
+    weight: 40
+  "test spec":
+    skills: [csp-test-spec]
+    weight: 40
+  "test spec 测试":
+    skills: [csp-test-spec]
+    weight: 40
+  "test-spec":
+    skills: [csp-test-spec]
+    weight: 40
+
+  # ─── auto-generated triggers (generate-triggers.mjs) ───
+  "code wiki":
+    skills: [csp-code-wiki]
+    weight: 40
+  "code-wiki":
+    skills: [csp-code-wiki]
+    weight: 40
+  "fix code wiki":
+    skills: [csp-code-wiki]
+    weight: 40
+  "review code wiki":
+    skills: [csp-code-wiki]
+    weight: 40
+
+  # ─── auto-generated triggers (generate-triggers.mjs) ───
+  "fix knowledge hub":
+    skills: [csp-knowledge-hub]
+    weight: 40
+  "knowledge":
+    skills: [csp-knowledge-hub]
+    weight: 40
+  "knowledge hub":
+    skills: [csp-knowledge-hub]
+    weight: 40
+  "knowledge-hub":
+    skills: [csp-knowledge-hub]
+    weight: 40
+  "review knowledge hub":
+    skills: [csp-knowledge-hub]
+    weight: 40
+
+  # ─── auto-generated triggers (generate-triggers.mjs) ───
+  "fix hub":
+    skills: [csp-hub]
+    weight: 40
+  "hub":
+    skills: [csp-hub]
+    weight: 40
+  "review hub":
+    skills: [csp-hub]
+    weight: 40
+
+  # ─── auto-generated triggers (generate-triggers.mjs) ───
+  "fix python coding standards":
+    skills: [csp-python-coding-standards]
+    weight: 40
+  "python":
+    skills: [csp-python-coding-standards]
+    weight: 40
+  "python coding standards":
+    skills: [csp-python-coding-standards]
+    weight: 40
+  "python-coding-standards":
+    skills: [csp-python-coding-standards]
+    weight: 40
+  "review python coding standards":
+    skills: [csp-python-coding-standards]
+    weight: 40
 stack_rules:
   python:
     files: ["pyproject.toml", "setup.py", "requirements.txt", "Pipfile"]
@@ -5550,7 +5650,7 @@ stack_rules:
     skills: [csp-product-pulse]
     weight: 40
   "product":
-    skills: [csp-product-pulse, csp-product-discovery-orchestrator]
+    skills: [csp-product-pulse, csp-product-discovery-orchestrator, csp-product-spec]
     weight: 40
   "上线":
     skills: [csp-shipping-and-launch]

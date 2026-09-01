@@ -4,7 +4,7 @@
 # Regenerate: node scripts/build-skill-metadata.mjs
 
 version: 2.0
-generated_at: 2026-08-26T07:52:29.269Z
+generated_at: 2026-08-31T06:35:14.214Z
 skills:
   csp-agent-teams:
     phase: review
@@ -218,6 +218,46 @@ skills:
   csp-writing-skills:
     phase: define
     domain: architecture
+  csp-code-spec:
+    phase: define
+    domain: architecture
+    role: architect
+    scope: analysis
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
+      - Bash
+    dependencies:
+      skills: []
+    related_skills:
+      - csp-product-spec
+      - csp-test-spec
+      - csp-fullstack-spec-generator
+      - csp-tech-solution-design
+      - csp-tech-task-breakdown
+      - csp-qa-cr-review
+      - csp-codebase-audit
+      - csp-code-understanding
+      - csp-graph-architecture
+      - csp-implementation-phase
+      - csp-graph-build
+      - csp-graph-impact
+      - csp-graph-review
+      - csp-graph-refactor
+      - csp-tech-debt-paydown
+      - csp-legacy-modernization
+      - csp-deprecation-and-migration
+      - csp-source-driven-development
+      - csp-integration-design
+      - csp-multi-review
+    anti_rationalizations:
+      看代码就行，不需要代码说明书: "一个上下文装不下大库；说明书是入口点/调用链的权威地图，让设计/拆分/生码/CR 不对着想象中的代码库干活。"
+      说明书生成一次就永久有效: "代码在变，说明书会过期。必须每次 ship 后 re-align（delta），否则下游设计基于陈旧地图。"
+      蒸馏可以靠 Agent 凭印象写: "Agent 会臆造不存在的引用和文件。每条结论必须有 file:line 出处，高危结论必须实机核验。"
+      说明书包含具体业务实现: "CMS 描述代码结构/入口/调用链/约定，不替代 feature spec。业务行为归 PMS 与 feature spec。"
   csp-code-understanding:
     phase: define
     domain: architecture
@@ -244,6 +284,37 @@ skills:
       已有 README 就够了: "README 是项目介绍，不是代码结构理解。模块依赖图、调用关系、执行路径 README 不覆盖。"
       用 csp-explore 就够了: "csp-explore 产出的是临时对话块，不落盘。本技能把探索结果持久化、结构化、可增量更新。"
       等架构稳定了再写: 理解文档的价值在架构不稳定时最大——它记录当前真实状态，是后续重构/评审的基线。
+  csp-code-wiki:
+    phase: build
+    domain: architecture
+    role: architect
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
+      - Bash
+      - Agent
+    dependencies:
+      skills: []
+    related_skills:
+      - csp-wiki
+      - csp-code-spec
+      - csp-code-understanding
+      - csp-graph-build
+      - csp-graph-architecture
+      - csp-codebase-audit
+      - csp-doc-lifecycle-manager
+      - csp-tech-task-breakdown
+      - csp-multi-review
+    anti_rationalizations:
+      按源码目录一个文件一页就行: 按拥有的系统/概念/工作流组织，不镜像源码树。跨仓库的运行时域不得压成一个仓库一页。
+      引用写 path: "line 就行": "不够。每条源文件引用必须是锚定到冻结 commit 的 markdown 链接 `/blob/<sha>/<path>#Lx`；裸 path:line 读者无法直接跳转。""
+      同一域研究两次省事: "禁止。一个域一次证据遍历写完；reviewers 永不编辑计划/Markdown/Git。"
+      图错了无所谓: "stale/无效的 Mermaid 图是内容缺陷，必须修或删，不是装饰。"
+      源码和知识文档冲突我选一个: 保留作用域冲突，不静默选边；窄证据边界要明说，不把推断当事实。
   csp-codebase-audit:
     phase: review
     domain: architecture
@@ -611,6 +682,43 @@ skills:
       两个系统直接调 API 就行: 直接调用没有容错、没有降级、没有重试。一旦下游挂了，上游也挂了。
       分布式事务用 2PC 就行: "2PC 在分布式系统中性能差、有单点故障。大多数场景 Saga 或最终一致性更合适。"
       灰度发布太复杂，直接全量上: "全量发布 = 出问题影响全部用户。灰度是降低发布风险的基本手段。"
+  csp-knowledge-hub:
+    phase: define
+    domain: architecture
+    role: architect
+    scope: design
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
+      - Bash
+    dependencies:
+      skills:
+        - csp-product-spec
+        - csp-code-spec
+        - csp-test-spec
+    related_skills:
+      - csp-product-spec
+      - csp-code-spec
+      - csp-test-spec
+      - csp-wiki
+      - csp-code-wiki
+      - csp-remember
+      - csp-writer-memory
+      - csp-session-knowledge-extractor
+      - csp-doc-lifecycle-manager
+      - csp-project-doc-architect
+      - csp-lifecycle-orchestrator
+      - csp-prd-traceability
+    anti_rationalizations:
+      知识直接散在 docs/ 就行: "散落文档无索引、无 manifest、无路由 → Agent 找不到、对不齐。hub 用 manifest + AGENTS.md 让 spec 可定位、可追溯、可增量。"
+      用平台知识库存就行: "平台耦合（鉴权/域名/专有 API）不可本地复现、不可离线、不可 git 治理。本 hub 全本地 markdown+git，可离线、可审计、可 PR。"
+      manifest 用 mtime 判变化: "禁止。mtime/文件大小不可靠；用稳定 source_id + content_hash(git blob) 判 added/changed/removed。"
+      wiki/spec 各存各的 .meta.json: "废弃侧车。元数据内联进 .md 顶部 YAML frontmatter，每页自包含。"
+      生成 Python 代码操作知识: "禁止。用 hub_manifest.sh 脚本（纯 git+grep，零依赖），比生成代码快 10x 且可复现。"
+      写知识前不查冲突: "禁止。add 前必先 search 现有页；命中冲突自动 update，不问'删旧的?'。"
   csp-legacy-modernization:
     phase: verify
     domain: patterns
@@ -644,6 +752,10 @@ skills:
       - csp-product-discovery-orchestrator
       - csp-effort-estimation
       - csp-tech-risk-assessment
+      - csp-product-spec
+      - csp-code-spec
+      - csp-test-spec
+      - csp-knowledge-hub
     anti_rationalizations:
       Let's skip the spec phase and just code: "Skipping specs causes rework. The spec phase pays for itself."
       We can do tech selection during implementation: "Mid-implementation tech changes are 10x more expensive."
@@ -862,6 +974,50 @@ skills:
     domain: patterns
     related_skills:
       - csp-product-discovery-orchestrator
+  csp-product-spec:
+    phase: define
+    domain: architecture
+    role: architect
+    scope: design
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
+      - Bash
+    dependencies:
+      skills: []
+    related_skills:
+      - csp-prd-generation
+      - csp-prd-parser
+      - csp-prd-traceability
+      - csp-prd-change-impact
+      - csp-requirement-decomposition
+      - csp-code-spec
+      - csp-test-spec
+      - csp-lifecycle-orchestrator
+      - csp-domain-driven-design
+      - csp-user-story-decomposition
+      - csp-requirement-prioritization
+      - csp-competitive-analysis
+      - csp-product-discovery-orchestrator
+      - csp-roadmap-update
+      - csp-product-pulse
+      - csp-product-metrics-review
+      - csp-user-feedback-analysis
+      - csp-strategy
+      - csp-effort-estimation
+      - csp-tech-risk-assessment
+      - csp-doc-lifecycle-manager
+      - csp-project-doc-architect
+      - csp-brainstorming
+      - csp-interview-me
+    anti_rationalizations:
+      每个 PRD 自己写就行，不需要产品基线: "没有基线，PRD 之间模块边界打架、验收标准漂移、迭代间无法对齐。PMS 是 PRD 质量的决定因素，不是可选文档。"
+      PMS 写一次就不用再动: "PMS 是 living baseline，每次模块变更以 delta 形式增量更新，迭代间折叠进 canonical。写完就忘 = 基线失效。"
+      模块边界可以边写 PRD 边定: "边界事后定 = 跨模块需求冲突、重复实现、职责重叠。必须先定边界再写 PRD。"
+      PMS 直接写技术实现: "PMS 描述 WHAT 与边界，不描述 HOW（不写 DB/语言/框架）。技术细节归 CMS 与 feature spec。"
   csp-project-doc-architect:
     phase: plan
     domain: patterns
@@ -1138,6 +1294,45 @@ skills:
       任务拆解太细浪费时间: "粗粒度的任务 = 模糊的估时 = 不可预测的交付。每任务 ≤ 4h 是确保可预测性的最小粒度。"
       直接按模块分就行: "模块划分 ≠ 开发任务。同一模块内可能有依赖关系，需要进一步拆解并排定顺序。"
       估时不准，拆了也没用: "估时不准是常态，但拆解本身暴露了依赖和并行机会。即使估时偏 50%，拆解仍比不拆有价值。"
+  csp-test-spec:
+    phase: verify
+    domain: testing
+    role: architect
+    scope: testing
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
+      - Bash
+    dependencies:
+      skills:
+        - csp-product-spec
+    related_skills:
+      - csp-product-spec
+      - csp-code-spec
+      - csp-test-methodology
+      - csp-qa-test-engineering
+      - csp-qa-cr-review
+      - csp-prd-traceability
+      - csp-prd-change-impact
+      - csp-tdd
+      - csp-verification
+      - csp-e2e-testing
+      - csp-api-tester
+      - csp-cross-layer-testing
+      - csp-visual-regression
+      - csp-db-state-assertion
+      - csp-linked-test-runner
+      - csp-defect-mining
+      - csp-security-review
+      - csp-ultraqa
+    anti_rationalizations:
+      每次变更重新生成全套用例就行: "全量重写 = 浪费 + 不可追溯。TMS 维护存量基线，只对 delta 产出增量，回归有边界。"
+      绿测试 = 覆盖了需求: "绿测试可能没映射需求。需求可追溯缺口分析才是覆盖真相；未映射需求 = 潜在功能缺失。"
+      TMS 和 PMS 无关: "TMS 是 PMS 的分支：测试面继承 PMS 模块边界与验收形态，不得发明 PMS 未声明的模块。"
+      用例随便列就行: "用例矩阵式组织（入口×状态），命名完整叙事句；割裂测试（只测功能点不测联动）是漏 bug 主因。"
   csp-tweak:
     phase: build
     domain: patterns
@@ -1468,6 +1663,7 @@ skills:
       - csp-python-testing
       - csp-postgres-patterns
       - csp-code-review
+      - csp-python-coding-standards
     anti_rationalizations:
       Django has built-in admin, no need for API: "Admin is for internal use. APIs are for programmatic access and frontend separation."
       I'll add select_related later: "N+1 queries in production can bring down the database. Optimize queries from the start."
@@ -1475,6 +1671,8 @@ skills:
   csp-django-security:
     phase: build
     domain: patterns
+    related_skills:
+      - csp-python-coding-standards
   csp-dmux-workflows:
     phase: build
     domain: patterns
@@ -1849,6 +2047,16 @@ skills:
   csp-prompt-engineering:
     phase: build
     domain: patterns
+  csp-python-coding-standards:
+    phase: build
+    domain: patterns
+    related_skills:
+      - csp-python-testing
+      - csp-python-patterns
+      - csp-python-reviewer
+      - csp-ruff-fixer
+      - csp-django-patterns
+      - csp-django-security
   csp-python-reviewer:
     phase: review
     domain: language
@@ -1867,6 +2075,7 @@ skills:
       - csp-code-review
       - csp-codebase-audit
       - csp-graph-review
+      - csp-python-coding-standards
     anti_rationalizations:
       类型标注太麻烦: 静态检查能提前发现90%的类型错误，重构时间减半。
       这段代码很简单不需要review: 简单代码也有隐患——mutable默认参数、裸except、路径注入在简单代码中更隐蔽。
@@ -1956,6 +2165,8 @@ skills:
       - Bash
   csp-ruff-fixer:
     phase: review
+    related_skills:
+      - csp-python-coding-standards
   csp-rust-patterns:
     phase: build
     domain: patterns
@@ -2075,7 +2286,6 @@ skills:
       - Glob
       - Grep
       - Bash
-      - AskUserQuestion
     dependencies:
       skills: []
     related_skills:
@@ -2148,9 +2358,13 @@ skills:
   python-patterns:
     phase: build
     domain: patterns
+    related_skills:
+      - csp-python-coding-standards
   python-testing:
     phase: verify
     domain: patterns
+    related_skills:
+      - csp-python-coding-standards
   webapp-testing:
     phase: verify
   csp-ask:
@@ -2342,3 +2556,24 @@ skills:
   csp-wiki:
     phase: build
     domain: architecture
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
+      - Bash
+    related_skills:
+      - csp-code-wiki
+      - csp-remember
+      - csp-writer-memory
+      - csp-session-knowledge-extractor
+      - csp-doc-lifecycle-manager
+      - csp-project-doc-architect
+    anti_rationalizations:
+      wiki 直接引用别的 wiki 页就行: "Wiki 禁引 Wiki（递归失稳）。sources 只能引原始文档；唯有 archive 类型可快照 wiki 内容。"
+      有矛盾我自己裁决哪个对: "不裁决。标注矛盾并列出各源说法；矛盾未决 → confidence=low。"
+      log 写错了改一下: "log.md 只追加不修改，是编译历史的唯一事实源。"
+      源文档信息太少也凑合用: "低信息源（空/仅占位/信息不足）不得作主 sources，必须切同主题备选。"
+      ingest 建好骨架就结束: "首次编译至少 3 篇实质内容页，禁止仅建骨架。"

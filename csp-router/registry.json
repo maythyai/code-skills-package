@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "total_skills": 653,
+  "total_skills": 660,
   "shards": [],
   "skill_metadata": "skill-metadata.yaml",
   "skills": [
@@ -4734,6 +4734,21 @@
       "priority": 10
     },
     {
+      "name": "csp-python-coding-standards",
+      "description": "Python coding standards (Python 3.10+) covering naming & style (PEP 8), type annotations (PEP 484+), language features, exceptions & logging, modern syntax & concurrency, security, unit testing, project structure (pyproject.toml), and toolchain (Ruff/mypy). Use when writing, reviewing, or refactorin",
+      "layer": 3,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/csp-python-coding-standards/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
       "name": "csp-python-reviewer",
       "description": "Python coding specification and code review specialist. Covers PEP 8, type safety, Pythonic idioms, security, performance, async patterns, and enterprise project structure evaluation. Use for all Python code review, project audits, and coding standard enforcement.",
       "layer": 3,
@@ -6955,7 +6970,7 @@
     },
     {
       "name": "csp-wiki",
-      "description": "LLM Wiki — persistent markdown knowledge base that compounds across sessions (Karpathy model)",
+      "description": "LLM Wiki — persistent, self-maintained markdown knowledge base that compounds across sessions (Karpathy model). Two-layer: raw source docs (read-only truth) vs an AI-maintained _wiki layer (index.md + append-only log.md + topic pages). Ingest compiles sources into structured pages; lint checks healt",
       "layer": 4,
       "category": "runtime",
       "triggers": {
@@ -7719,6 +7734,21 @@
       "priority": 10
     },
     {
+      "name": "csp-hub",
+      "description": "Initialize or operate the local-first Knowledge Hub — a git-managed markdown workspace indexing specs (PMS/CMS/TMS) + wiki + memory, closing the 需求→code→test loop. Lifecycle Stage 0.",
+      "layer": 2,
+      "category": "workflow",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-workflow/commands/csp-hub.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
       "name": "csp-import",
       "description": "Ingest external plans with conflict detection against project decisions before writing anything.",
       "layer": 2,
@@ -8424,6 +8454,21 @@
       "priority": 10
     },
     {
+      "name": "csp-code-spec",
+      "description": "Code Module Spec (CMS / 代码说明书). The per-application living baseline distilled from the codebase and auto-aligned to ground truth. One CMS per application/repo. It maps entry points, call chains, module boundaries, and conventions, and feeds design / task-split / code generation / code review with an",
+      "layer": 2,
+      "category": "workflow",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-workflow/skills/csp-code-spec/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
       "name": "csp-code-understanding",
       "description": "代码理解文档自动生成引擎。产出结构化、可增量更新的代码理解文档（模块依赖图、 关键执行路径、数据流、调用关系、入口点、外部依赖），持久化到 .csp/code-understanding/ 下 system/module/function 三级 Markdown。消费 csp-code-graph 图谱数据（如可用） + csp-explore 探索方法论，支持增量更新（检测代码变更后重新生成受影响部分）。 当用户需要\"代码理解文档\"\"模块依赖图\"\"代码结构文档\"\"onboarding 文档\"时使用。 关键词：代码理解、模块依赖、调用关系、代码结构文档、code understanding、 ",
       "layer": 2,
@@ -8435,6 +8480,21 @@
       },
       "stack_detection": false,
       "path": "csp-workflow/skills/csp-code-understanding/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-code-wiki",
+      "description": "Source-grounded Code Wiki — generate/maintain a Git-native Q&A knowledge wiki from one logical code system (one or more repos), with optional knowledge-doc dependencies. Every material claim cites a frozen commit (`/blob/<sha>/<path>#Lx`); pages are organized by owned systems/concepts/workflows, not",
+      "layer": 2,
+      "category": "workflow",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-workflow/skills/csp-code-wiki/SKILL.md",
       "deps": [],
       "priority": 10
     },
@@ -8769,6 +8829,21 @@
       "priority": 10
     },
     {
+      "name": "csp-knowledge-hub",
+      "description": "Local-first Knowledge Hub — a git-managed markdown workspace that unifies spec (PMS/CMS/TMS), wiki, and memory into one indexed, queryable hub to accelerate Agent codebase understanding, fast spec location/read/generation, and a closed loop: 需求对齐(文档spec记录) → code开发 → 测试. Platform-decoupled: replaces",
+      "layer": 2,
+      "category": "workflow",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-workflow/skills/csp-knowledge-hub/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
       "name": "csp-legacy-modernization",
       "description": "End-to-end legacy modernization workflow covering assessment (codebase audit, dependency analysis, architecture review), planning (migration strategy, risk assessment, timeline), execution (incremental migration, strangler fig, parallel run), verification (regression testing, performance comparison,",
       "layer": 2,
@@ -8945,6 +9020,21 @@
       },
       "stack_detection": false,
       "path": "csp-workflow/skills/csp-product-pulse/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-product-spec",
+      "description": "Product Module Spec (PMS / 产品说明书). The living, versioned baseline that governs PRD generation quality for a product. Defines module decomposition, boundaries, and the acceptance standard every PRD must meet; downstream skills (PRD generation, decomposition, traceability, change-impact) read it befor",
+      "layer": 2,
+      "category": "workflow",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-workflow/skills/csp-product-spec/SKILL.md",
       "deps": [],
       "priority": 10
     },
@@ -9185,6 +9275,21 @@
       },
       "stack_detection": false,
       "path": "csp-workflow/skills/csp-tech-task-breakdown/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-test-spec",
+      "description": "Test Module Spec (TMS / 测试说明书). The per-module living test baseline — a branch of PMS. Maintains the stock (existing) test-case inventory and the requirement→method trace matrix, and generates stock + incremental test cases from requirement/design docs. When a change lands, TMS emits only the increm",
+      "layer": 2,
+      "category": "workflow",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-workflow/skills/csp-test-spec/SKILL.md",
       "deps": [],
       "priority": 10
     },

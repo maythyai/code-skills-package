@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generated_at": "2026-08-26T07:54:58.410Z",
+  "generated_at": "2026-08-31T06:36:23.314Z",
   "nodes": {
     "5b37ecd541b4": {
       "id": "5b37ecd541b4",
@@ -3418,6 +3418,18 @@
         "path": "csp-patterns/skills/csp-prompt-engineering/SKILL.md"
       }
     },
+    "b41480baf6a8": {
+      "id": "b41480baf6a8",
+      "kind": "skill",
+      "name": "csp-python-coding-standards",
+      "metadata": {
+        "layer": 3,
+        "category": "patterns",
+        "phase": "build",
+        "domain": "patterns",
+        "path": "csp-patterns/skills/csp-python-coding-standards/SKILL.md"
+      }
+    },
     "86c9d3db05ba": {
       "id": "86c9d3db05ba",
       "kind": "skill",
@@ -5575,6 +5587,16 @@
         "path": "csp-workflow/commands/csp-help.md"
       }
     },
+    "76b33df56340": {
+      "id": "76b33df56340",
+      "kind": "skill",
+      "name": "csp-hub",
+      "metadata": {
+        "layer": 2,
+        "category": "workflow",
+        "path": "csp-workflow/commands/csp-hub.md"
+      }
+    },
     "f0110e67fe24": {
       "id": "f0110e67fe24",
       "kind": "skill",
@@ -6045,6 +6067,19 @@
         "path": "csp-workflow/commands/csp-workstreams.md"
       }
     },
+    "b22e7e4159f5": {
+      "id": "b22e7e4159f5",
+      "kind": "skill",
+      "name": "csp-code-spec",
+      "metadata": {
+        "layer": 2,
+        "category": "workflow",
+        "phase": "define",
+        "domain": "architecture",
+        "role": "architect",
+        "path": "csp-workflow/skills/csp-code-spec/SKILL.md"
+      }
+    },
     "3e7e58b784ef": {
       "id": "3e7e58b784ef",
       "kind": "skill",
@@ -6056,6 +6091,19 @@
         "domain": "architecture",
         "role": "architect",
         "path": "csp-workflow/skills/csp-code-understanding/SKILL.md"
+      }
+    },
+    "6e52183d1edb": {
+      "id": "6e52183d1edb",
+      "kind": "skill",
+      "name": "csp-code-wiki",
+      "metadata": {
+        "layer": 2,
+        "category": "workflow",
+        "phase": "build",
+        "domain": "architecture",
+        "role": "architect",
+        "path": "csp-workflow/skills/csp-code-wiki/SKILL.md"
       }
     },
     "1179b083c804": {
@@ -6328,6 +6376,19 @@
         "path": "csp-workflow/skills/csp-integration-design/SKILL.md"
       }
     },
+    "6fccb1bf47c8": {
+      "id": "6fccb1bf47c8",
+      "kind": "skill",
+      "name": "csp-knowledge-hub",
+      "metadata": {
+        "layer": 2,
+        "category": "workflow",
+        "phase": "define",
+        "domain": "architecture",
+        "role": "architect",
+        "path": "csp-workflow/skills/csp-knowledge-hub/SKILL.md"
+      }
+    },
     "cc4976e63742": {
       "id": "cc4976e63742",
       "kind": "skill",
@@ -6471,6 +6532,19 @@
         "phase": "build",
         "domain": "patterns",
         "path": "csp-workflow/skills/csp-product-pulse/SKILL.md"
+      }
+    },
+    "2b2d802ccdd6": {
+      "id": "2b2d802ccdd6",
+      "kind": "skill",
+      "name": "csp-product-spec",
+      "metadata": {
+        "layer": 2,
+        "category": "workflow",
+        "phase": "define",
+        "domain": "architecture",
+        "role": "architect",
+        "path": "csp-workflow/skills/csp-product-spec/SKILL.md"
       }
     },
     "0b46cfff3365": {
@@ -6665,6 +6739,19 @@
         "phase": "plan",
         "domain": "architecture",
         "path": "csp-workflow/skills/csp-tech-task-breakdown/SKILL.md"
+      }
+    },
+    "3a9051ed70ce": {
+      "id": "3a9051ed70ce",
+      "kind": "skill",
+      "name": "csp-test-spec",
+      "metadata": {
+        "layer": 2,
+        "category": "workflow",
+        "phase": "verify",
+        "domain": "testing",
+        "role": "architect",
+        "path": "csp-workflow/skills/csp-test-spec/SKILL.md"
       }
     },
     "257082c04855": {
@@ -17706,6 +17793,186 @@
       "kind": "trigger",
       "name": "simple-dev",
       "metadata": {}
+    },
+    "4c217fcee69b": {
+      "id": "4c217fcee69b",
+      "kind": "trigger",
+      "name": "code spec",
+      "metadata": {}
+    },
+    "634968b31ded": {
+      "id": "634968b31ded",
+      "kind": "trigger",
+      "name": "code-spec",
+      "metadata": {}
+    },
+    "ed25faf288e1": {
+      "id": "ed25faf288e1",
+      "kind": "trigger",
+      "name": "fix code spec",
+      "metadata": {}
+    },
+    "ee3ef213dc67": {
+      "id": "ee3ef213dc67",
+      "kind": "trigger",
+      "name": "fix product spec",
+      "metadata": {}
+    },
+    "4333e61b3f65": {
+      "id": "4333e61b3f65",
+      "kind": "trigger",
+      "name": "fix test spec",
+      "metadata": {}
+    },
+    "e925a97046d6": {
+      "id": "e925a97046d6",
+      "kind": "trigger",
+      "name": "product spec",
+      "metadata": {}
+    },
+    "63b80d9e15bb": {
+      "id": "63b80d9e15bb",
+      "kind": "trigger",
+      "name": "product-spec",
+      "metadata": {}
+    },
+    "e1f00b3ef1ce": {
+      "id": "e1f00b3ef1ce",
+      "kind": "trigger",
+      "name": "review code spec",
+      "metadata": {}
+    },
+    "bb08e6ec34e5": {
+      "id": "bb08e6ec34e5",
+      "kind": "trigger",
+      "name": "review product spec",
+      "metadata": {}
+    },
+    "17cc1bed0ea2": {
+      "id": "17cc1bed0ea2",
+      "kind": "trigger",
+      "name": "review test spec",
+      "metadata": {}
+    },
+    "1d629324e450": {
+      "id": "1d629324e450",
+      "kind": "trigger",
+      "name": "test spec",
+      "metadata": {}
+    },
+    "770a958e15f5": {
+      "id": "770a958e15f5",
+      "kind": "trigger",
+      "name": "test spec 测试",
+      "metadata": {}
+    },
+    "6cc68b527aa0": {
+      "id": "6cc68b527aa0",
+      "kind": "trigger",
+      "name": "test-spec",
+      "metadata": {}
+    },
+    "44acddb42c83": {
+      "id": "44acddb42c83",
+      "kind": "trigger",
+      "name": "code wiki",
+      "metadata": {}
+    },
+    "8df5134f259d": {
+      "id": "8df5134f259d",
+      "kind": "trigger",
+      "name": "code-wiki",
+      "metadata": {}
+    },
+    "fbdd93573550": {
+      "id": "fbdd93573550",
+      "kind": "trigger",
+      "name": "fix code wiki",
+      "metadata": {}
+    },
+    "8eaf26d432b0": {
+      "id": "8eaf26d432b0",
+      "kind": "trigger",
+      "name": "review code wiki",
+      "metadata": {}
+    },
+    "141cee0d6770": {
+      "id": "141cee0d6770",
+      "kind": "trigger",
+      "name": "fix knowledge hub",
+      "metadata": {}
+    },
+    "b2d2691c8eb4": {
+      "id": "b2d2691c8eb4",
+      "kind": "trigger",
+      "name": "knowledge",
+      "metadata": {}
+    },
+    "50623f8982a6": {
+      "id": "50623f8982a6",
+      "kind": "trigger",
+      "name": "knowledge hub",
+      "metadata": {}
+    },
+    "f5eae547e829": {
+      "id": "f5eae547e829",
+      "kind": "trigger",
+      "name": "knowledge-hub",
+      "metadata": {}
+    },
+    "5eb153edf502": {
+      "id": "5eb153edf502",
+      "kind": "trigger",
+      "name": "review knowledge hub",
+      "metadata": {}
+    },
+    "424017e8c60f": {
+      "id": "424017e8c60f",
+      "kind": "trigger",
+      "name": "fix hub",
+      "metadata": {}
+    },
+    "5087dc1ba166": {
+      "id": "5087dc1ba166",
+      "kind": "trigger",
+      "name": "hub",
+      "metadata": {}
+    },
+    "dc97cfbd8285": {
+      "id": "dc97cfbd8285",
+      "kind": "trigger",
+      "name": "review hub",
+      "metadata": {}
+    },
+    "08bbe6a1c682": {
+      "id": "08bbe6a1c682",
+      "kind": "trigger",
+      "name": "fix python coding standards",
+      "metadata": {}
+    },
+    "01f5d6813a09": {
+      "id": "01f5d6813a09",
+      "kind": "trigger",
+      "name": "python",
+      "metadata": {}
+    },
+    "991b9760b0b5": {
+      "id": "991b9760b0b5",
+      "kind": "trigger",
+      "name": "python coding standards",
+      "metadata": {}
+    },
+    "02febc52ee7b": {
+      "id": "02febc52ee7b",
+      "kind": "trigger",
+      "name": "python-coding-standards",
+      "metadata": {}
+    },
+    "b0924744d685": {
+      "id": "b0924744d685",
+      "kind": "trigger",
+      "name": "review python coding standards",
+      "metadata": {}
     }
   },
   "edges": [
@@ -17922,6 +18189,12 @@
     {
       "source": "63bf271dfb9a",
       "target": "418ee149ca3b",
+      "kind": "triggers",
+      "metadata": {}
+    },
+    {
+      "source": "63bf271dfb9a",
+      "target": "3a9051ed70ce",
       "kind": "triggers",
       "metadata": {}
     },
@@ -18552,6 +18825,18 @@
     {
       "source": "cf7f23e14ba4",
       "target": "3e7e58b784ef",
+      "kind": "triggers",
+      "metadata": {}
+    },
+    {
+      "source": "cf7f23e14ba4",
+      "target": "b22e7e4159f5",
+      "kind": "triggers",
+      "metadata": {}
+    },
+    {
+      "source": "cf7f23e14ba4",
+      "target": "6e52183d1edb",
       "kind": "triggers",
       "metadata": {}
     },
@@ -29440,6 +29725,186 @@
       "metadata": {}
     },
     {
+      "source": "4c217fcee69b",
+      "target": "b22e7e4159f5",
+      "kind": "triggers",
+      "metadata": {}
+    },
+    {
+      "source": "634968b31ded",
+      "target": "b22e7e4159f5",
+      "kind": "triggers",
+      "metadata": {}
+    },
+    {
+      "source": "ed25faf288e1",
+      "target": "b22e7e4159f5",
+      "kind": "triggers",
+      "metadata": {}
+    },
+    {
+      "source": "ee3ef213dc67",
+      "target": "2b2d802ccdd6",
+      "kind": "triggers",
+      "metadata": {}
+    },
+    {
+      "source": "4333e61b3f65",
+      "target": "3a9051ed70ce",
+      "kind": "triggers",
+      "metadata": {}
+    },
+    {
+      "source": "e925a97046d6",
+      "target": "2b2d802ccdd6",
+      "kind": "triggers",
+      "metadata": {}
+    },
+    {
+      "source": "63b80d9e15bb",
+      "target": "2b2d802ccdd6",
+      "kind": "triggers",
+      "metadata": {}
+    },
+    {
+      "source": "e1f00b3ef1ce",
+      "target": "b22e7e4159f5",
+      "kind": "triggers",
+      "metadata": {}
+    },
+    {
+      "source": "bb08e6ec34e5",
+      "target": "2b2d802ccdd6",
+      "kind": "triggers",
+      "metadata": {}
+    },
+    {
+      "source": "17cc1bed0ea2",
+      "target": "3a9051ed70ce",
+      "kind": "triggers",
+      "metadata": {}
+    },
+    {
+      "source": "1d629324e450",
+      "target": "3a9051ed70ce",
+      "kind": "triggers",
+      "metadata": {}
+    },
+    {
+      "source": "770a958e15f5",
+      "target": "3a9051ed70ce",
+      "kind": "triggers",
+      "metadata": {}
+    },
+    {
+      "source": "6cc68b527aa0",
+      "target": "3a9051ed70ce",
+      "kind": "triggers",
+      "metadata": {}
+    },
+    {
+      "source": "44acddb42c83",
+      "target": "6e52183d1edb",
+      "kind": "triggers",
+      "metadata": {}
+    },
+    {
+      "source": "8df5134f259d",
+      "target": "6e52183d1edb",
+      "kind": "triggers",
+      "metadata": {}
+    },
+    {
+      "source": "fbdd93573550",
+      "target": "6e52183d1edb",
+      "kind": "triggers",
+      "metadata": {}
+    },
+    {
+      "source": "8eaf26d432b0",
+      "target": "6e52183d1edb",
+      "kind": "triggers",
+      "metadata": {}
+    },
+    {
+      "source": "141cee0d6770",
+      "target": "6fccb1bf47c8",
+      "kind": "triggers",
+      "metadata": {}
+    },
+    {
+      "source": "b2d2691c8eb4",
+      "target": "6fccb1bf47c8",
+      "kind": "triggers",
+      "metadata": {}
+    },
+    {
+      "source": "50623f8982a6",
+      "target": "6fccb1bf47c8",
+      "kind": "triggers",
+      "metadata": {}
+    },
+    {
+      "source": "f5eae547e829",
+      "target": "6fccb1bf47c8",
+      "kind": "triggers",
+      "metadata": {}
+    },
+    {
+      "source": "5eb153edf502",
+      "target": "6fccb1bf47c8",
+      "kind": "triggers",
+      "metadata": {}
+    },
+    {
+      "source": "424017e8c60f",
+      "target": "76b33df56340",
+      "kind": "triggers",
+      "metadata": {}
+    },
+    {
+      "source": "5087dc1ba166",
+      "target": "76b33df56340",
+      "kind": "triggers",
+      "metadata": {}
+    },
+    {
+      "source": "dc97cfbd8285",
+      "target": "76b33df56340",
+      "kind": "triggers",
+      "metadata": {}
+    },
+    {
+      "source": "08bbe6a1c682",
+      "target": "b41480baf6a8",
+      "kind": "triggers",
+      "metadata": {}
+    },
+    {
+      "source": "01f5d6813a09",
+      "target": "b41480baf6a8",
+      "kind": "triggers",
+      "metadata": {}
+    },
+    {
+      "source": "991b9760b0b5",
+      "target": "b41480baf6a8",
+      "kind": "triggers",
+      "metadata": {}
+    },
+    {
+      "source": "02febc52ee7b",
+      "target": "b41480baf6a8",
+      "kind": "triggers",
+      "metadata": {}
+    },
+    {
+      "source": "b0924744d685",
+      "target": "b41480baf6a8",
+      "kind": "triggers",
+      "metadata": {}
+    },
+    {
       "source": "b2e754d45580",
       "target": "5b37ecd541b4",
       "kind": "contains",
@@ -31331,6 +31796,12 @@
     },
     {
       "source": "e94f651cc1ba",
+      "target": "b41480baf6a8",
+      "kind": "contains",
+      "metadata": {}
+    },
+    {
+      "source": "e94f651cc1ba",
       "target": "86c9d3db05ba",
       "kind": "contains",
       "metadata": {}
@@ -32525,6 +32996,12 @@
     },
     {
       "source": "caa9d170319b",
+      "target": "76b33df56340",
+      "kind": "contains",
+      "metadata": {}
+    },
+    {
+      "source": "caa9d170319b",
       "target": "f0110e67fe24",
       "kind": "contains",
       "metadata": {}
@@ -32807,7 +33284,19 @@
     },
     {
       "source": "caa9d170319b",
+      "target": "b22e7e4159f5",
+      "kind": "contains",
+      "metadata": {}
+    },
+    {
+      "source": "caa9d170319b",
       "target": "3e7e58b784ef",
+      "kind": "contains",
+      "metadata": {}
+    },
+    {
+      "source": "caa9d170319b",
+      "target": "6e52183d1edb",
       "kind": "contains",
       "metadata": {}
     },
@@ -32945,6 +33434,12 @@
     },
     {
       "source": "caa9d170319b",
+      "target": "6fccb1bf47c8",
+      "kind": "contains",
+      "metadata": {}
+    },
+    {
+      "source": "caa9d170319b",
       "target": "cc4976e63742",
       "kind": "contains",
       "metadata": {}
@@ -33012,6 +33507,12 @@
     {
       "source": "caa9d170319b",
       "target": "5051c3e24124",
+      "kind": "contains",
+      "metadata": {}
+    },
+    {
+      "source": "caa9d170319b",
+      "target": "2b2d802ccdd6",
       "kind": "contains",
       "metadata": {}
     },
@@ -33108,6 +33609,12 @@
     {
       "source": "caa9d170319b",
       "target": "6488bc786564",
+      "kind": "contains",
+      "metadata": {}
+    },
+    {
+      "source": "caa9d170319b",
+      "target": "3a9051ed70ce",
       "kind": "contains",
       "metadata": {}
     },
@@ -34138,6 +34645,12 @@
       "metadata": {}
     },
     {
+      "source": "4df9fd7d77be",
+      "target": "b41480baf6a8",
+      "kind": "contains",
+      "metadata": {}
+    },
+    {
       "source": "f297e9873811",
       "target": "86c9d3db05ba",
       "kind": "contains",
@@ -34643,7 +35156,19 @@
     },
     {
       "source": "ea5a4594970a",
+      "target": "b22e7e4159f5",
+      "kind": "contains",
+      "metadata": {}
+    },
+    {
+      "source": "ea5a4594970a",
       "target": "3e7e58b784ef",
+      "kind": "contains",
+      "metadata": {}
+    },
+    {
+      "source": "4df9fd7d77be",
+      "target": "6e52183d1edb",
       "kind": "contains",
       "metadata": {}
     },
@@ -34780,6 +35305,12 @@
       "metadata": {}
     },
     {
+      "source": "ea5a4594970a",
+      "target": "6fccb1bf47c8",
+      "kind": "contains",
+      "metadata": {}
+    },
+    {
       "source": "207aa78c0c90",
       "target": "cc4976e63742",
       "kind": "contains",
@@ -34848,6 +35379,12 @@
     {
       "source": "4df9fd7d77be",
       "target": "5051c3e24124",
+      "kind": "contains",
+      "metadata": {}
+    },
+    {
+      "source": "ea5a4594970a",
+      "target": "2b2d802ccdd6",
       "kind": "contains",
       "metadata": {}
     },
@@ -34944,6 +35481,12 @@
     {
       "source": "b0245c519a34",
       "target": "6488bc786564",
+      "kind": "contains",
+      "metadata": {}
+    },
+    {
+      "source": "207aa78c0c90",
+      "target": "3a9051ed70ce",
       "kind": "contains",
       "metadata": {}
     },
@@ -35158,6 +35701,126 @@
       "metadata": {}
     },
     {
+      "source": "b22e7e4159f5",
+      "target": "2b2d802ccdd6",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "b22e7e4159f5",
+      "target": "3a9051ed70ce",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "b22e7e4159f5",
+      "target": "cc5790b1164b",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "b22e7e4159f5",
+      "target": "c59ec65c51c7",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "b22e7e4159f5",
+      "target": "6488bc786564",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "b22e7e4159f5",
+      "target": "63227189de83",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "b22e7e4159f5",
+      "target": "1179b083c804",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "b22e7e4159f5",
+      "target": "3e7e58b784ef",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "b22e7e4159f5",
+      "target": "bc4e3e3ab62c",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "b22e7e4159f5",
+      "target": "af8b06b4e37f",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "b22e7e4159f5",
+      "target": "05bae6198490",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "b22e7e4159f5",
+      "target": "08dda2bbc01e",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "b22e7e4159f5",
+      "target": "ca46fb9ce2fd",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "b22e7e4159f5",
+      "target": "d44c56576ec3",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "b22e7e4159f5",
+      "target": "bec6f5e4a8f7",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "b22e7e4159f5",
+      "target": "cc4976e63742",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "b22e7e4159f5",
+      "target": "fa9d3e39dbff",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "b22e7e4159f5",
+      "target": "4cec5d7b3356",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "b22e7e4159f5",
+      "target": "30df39654760",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "b22e7e4159f5",
+      "target": "e96bb6eb8f05",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
       "source": "3e7e58b784ef",
       "target": "c70c4a875502",
       "kind": "related_to",
@@ -35184,6 +35847,60 @@
     {
       "source": "3e7e58b784ef",
       "target": "76861a432839",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "6e52183d1edb",
+      "target": "3d37c529a99c",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "6e52183d1edb",
+      "target": "b22e7e4159f5",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "6e52183d1edb",
+      "target": "3e7e58b784ef",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "6e52183d1edb",
+      "target": "05bae6198490",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "6e52183d1edb",
+      "target": "bc4e3e3ab62c",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "6e52183d1edb",
+      "target": "1179b083c804",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "6e52183d1edb",
+      "target": "950450288068",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "6e52183d1edb",
+      "target": "6488bc786564",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "6e52183d1edb",
+      "target": "e96bb6eb8f05",
       "kind": "related_to",
       "metadata": {}
     },
@@ -35644,6 +36361,96 @@
       "metadata": {}
     },
     {
+      "source": "6fccb1bf47c8",
+      "target": "2b2d802ccdd6",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "6fccb1bf47c8",
+      "target": "b22e7e4159f5",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "6fccb1bf47c8",
+      "target": "3a9051ed70ce",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "6fccb1bf47c8",
+      "target": "2b2d802ccdd6",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "6fccb1bf47c8",
+      "target": "b22e7e4159f5",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "6fccb1bf47c8",
+      "target": "3a9051ed70ce",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "6fccb1bf47c8",
+      "target": "3d37c529a99c",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "6fccb1bf47c8",
+      "target": "6e52183d1edb",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "6fccb1bf47c8",
+      "target": "5b8fb8b948e2",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "6fccb1bf47c8",
+      "target": "78b96d730672",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "6fccb1bf47c8",
+      "target": "bbd85c33cf13",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "6fccb1bf47c8",
+      "target": "950450288068",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "6fccb1bf47c8",
+      "target": "0b46cfff3365",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "6fccb1bf47c8",
+      "target": "de3012021006",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "6fccb1bf47c8",
+      "target": "21516cda84b5",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
       "source": "de3012021006",
       "target": "d2240e68c7ed",
       "kind": "depends_on",
@@ -35736,6 +36543,30 @@
     {
       "source": "de3012021006",
       "target": "b431b822f300",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "de3012021006",
+      "target": "2b2d802ccdd6",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "de3012021006",
+      "target": "b22e7e4159f5",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "de3012021006",
+      "target": "3a9051ed70ce",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "de3012021006",
+      "target": "6fccb1bf47c8",
       "kind": "related_to",
       "metadata": {}
     },
@@ -36138,6 +36969,150 @@
     {
       "source": "5051c3e24124",
       "target": "d90eb85a4a0a",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "2b2d802ccdd6",
+      "target": "001c580ef5d0",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "2b2d802ccdd6",
+      "target": "1589f09662b0",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "2b2d802ccdd6",
+      "target": "21516cda84b5",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "2b2d802ccdd6",
+      "target": "ea95f2f2efaa",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "2b2d802ccdd6",
+      "target": "d2240e68c7ed",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "2b2d802ccdd6",
+      "target": "b22e7e4159f5",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "2b2d802ccdd6",
+      "target": "3a9051ed70ce",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "2b2d802ccdd6",
+      "target": "de3012021006",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "2b2d802ccdd6",
+      "target": "8a0bbf6a83e5",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "2b2d802ccdd6",
+      "target": "93a7cbd0854c",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "2b2d802ccdd6",
+      "target": "eec8af5a38d1",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "2b2d802ccdd6",
+      "target": "ee550ccf695a",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "2b2d802ccdd6",
+      "target": "d90eb85a4a0a",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "2b2d802ccdd6",
+      "target": "23c62050d68e",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "2b2d802ccdd6",
+      "target": "5051c3e24124",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "2b2d802ccdd6",
+      "target": "2237d75bb913",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "2b2d802ccdd6",
+      "target": "6e66517805b7",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "2b2d802ccdd6",
+      "target": "e9e1e2af8e75",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "2b2d802ccdd6",
+      "target": "4421cabe5f80",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "2b2d802ccdd6",
+      "target": "b431b822f300",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "2b2d802ccdd6",
+      "target": "950450288068",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "2b2d802ccdd6",
+      "target": "0b46cfff3365",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "2b2d802ccdd6",
+      "target": "e612ca87e754",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "2b2d802ccdd6",
+      "target": "352980e82ca3",
       "kind": "related_to",
       "metadata": {}
     },
@@ -36556,6 +37531,120 @@
       "metadata": {}
     },
     {
+      "source": "3a9051ed70ce",
+      "target": "2b2d802ccdd6",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "3a9051ed70ce",
+      "target": "2b2d802ccdd6",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "3a9051ed70ce",
+      "target": "b22e7e4159f5",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "3a9051ed70ce",
+      "target": "418ee149ca3b",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "3a9051ed70ce",
+      "target": "32a93f72631a",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "3a9051ed70ce",
+      "target": "63227189de83",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "3a9051ed70ce",
+      "target": "21516cda84b5",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "3a9051ed70ce",
+      "target": "ea95f2f2efaa",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "3a9051ed70ce",
+      "target": "3c187c080b19",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "3a9051ed70ce",
+      "target": "4d8ffb285e88",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "3a9051ed70ce",
+      "target": "254b9286a000",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "3a9051ed70ce",
+      "target": "8e40e8ba269a",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "3a9051ed70ce",
+      "target": "366e9b0583cd",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "3a9051ed70ce",
+      "target": "e288a7772e3c",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "3a9051ed70ce",
+      "target": "585e021a1a66",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "3a9051ed70ce",
+      "target": "ac0aca348df2",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "3a9051ed70ce",
+      "target": "480c8767f617",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "3a9051ed70ce",
+      "target": "1fd378faa32f",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "3a9051ed70ce",
+      "target": "6ed77fefcdc0",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
       "source": "257082c04855",
       "target": "8e4815103a09",
       "kind": "related_to",
@@ -36766,6 +37855,18 @@
       "metadata": {}
     },
     {
+      "source": "61a220380626",
+      "target": "b41480baf6a8",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "fa4f6b06444a",
+      "target": "b41480baf6a8",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
       "source": "7755ebec1efc",
       "target": "21ff55b99207",
       "kind": "related_to",
@@ -36850,6 +37951,42 @@
       "metadata": {}
     },
     {
+      "source": "b41480baf6a8",
+      "target": "eaa963d88f42",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "b41480baf6a8",
+      "target": "5fe5aded5f5d",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "b41480baf6a8",
+      "target": "86c9d3db05ba",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "b41480baf6a8",
+      "target": "f04499268a5f",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "b41480baf6a8",
+      "target": "61a220380626",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "b41480baf6a8",
+      "target": "fa4f6b06444a",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
       "source": "86c9d3db05ba",
       "target": "5fe5aded5f5d",
       "kind": "depends_on",
@@ -36880,6 +38017,12 @@
       "metadata": {}
     },
     {
+      "source": "86c9d3db05ba",
+      "target": "b41480baf6a8",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
       "source": "32a93f72631a",
       "target": "63227189de83",
       "kind": "related_to",
@@ -36900,6 +38043,12 @@
     {
       "source": "32a93f72631a",
       "target": "6ed77fefcdc0",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "f04499268a5f",
+      "target": "b41480baf6a8",
       "kind": "related_to",
       "metadata": {}
     },
@@ -37032,6 +38181,42 @@
     {
       "source": "ac0aca348df2",
       "target": "6ed77fefcdc0",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "3d37c529a99c",
+      "target": "6e52183d1edb",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "3d37c529a99c",
+      "target": "5b8fb8b948e2",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "3d37c529a99c",
+      "target": "78b96d730672",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "3d37c529a99c",
+      "target": "bbd85c33cf13",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "3d37c529a99c",
+      "target": "950450288068",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "3d37c529a99c",
+      "target": "0b46cfff3365",
       "kind": "related_to",
       "metadata": {}
     },
@@ -37228,6 +38413,12 @@
       "metadata": {}
     },
     {
+      "source": "b22e7e4159f5",
+      "target": "e767641de27d",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
       "source": "cc5790b1164b",
       "target": "e767641de27d",
       "kind": "depends_on",
@@ -37264,6 +38455,12 @@
       "metadata": {}
     },
     {
+      "source": "2b2d802ccdd6",
+      "target": "e767641de27d",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
       "source": "63227189de83",
       "target": "bd8529dfd53d",
       "kind": "depends_on",
@@ -37272,6 +38469,12 @@
     {
       "source": "2f5a1a3d544e",
       "target": "bd8529dfd53d",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "3a9051ed70ce",
+      "target": "e767641de27d",
       "kind": "depends_on",
       "metadata": {}
     },
@@ -38536,6 +39739,18 @@
       "metadata": {}
     },
     {
+      "source": "61a220380626",
+      "target": "b41480baf6a8",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "fa4f6b06444a",
+      "target": "b41480baf6a8",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
       "source": "254b9286a000",
       "target": "e288a7772e3c",
       "kind": "depends_on",
@@ -39124,6 +40339,42 @@
       "metadata": {}
     },
     {
+      "source": "b41480baf6a8",
+      "target": "eaa963d88f42",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "b41480baf6a8",
+      "target": "5fe5aded5f5d",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "b41480baf6a8",
+      "target": "86c9d3db05ba",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "b41480baf6a8",
+      "target": "f04499268a5f",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "b41480baf6a8",
+      "target": "61a220380626",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "b41480baf6a8",
+      "target": "fa4f6b06444a",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
       "source": "86c9d3db05ba",
       "target": "9ba4012993c5",
       "kind": "depends_on",
@@ -39138,6 +40389,12 @@
     {
       "source": "86c9d3db05ba",
       "target": "ca46fb9ce2fd",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "86c9d3db05ba",
+      "target": "b41480baf6a8",
       "kind": "depends_on",
       "metadata": {}
     },
@@ -39246,6 +40503,12 @@
     {
       "source": "1f7a641a1f89",
       "target": "3c187c080b19",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "f04499268a5f",
+      "target": "b41480baf6a8",
       "kind": "depends_on",
       "metadata": {}
     },
@@ -39510,6 +40773,18 @@
     {
       "source": "b5b0dc69d676",
       "target": "b305f5d9f71c",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "5fe5aded5f5d",
+      "target": "b41480baf6a8",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "eaa963d88f42",
+      "target": "b41480baf6a8",
       "kind": "depends_on",
       "metadata": {}
     },
@@ -39882,6 +41157,42 @@
     {
       "source": "ff669dc65507",
       "target": "563d72c1e163",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "3d37c529a99c",
+      "target": "6e52183d1edb",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "3d37c529a99c",
+      "target": "5b8fb8b948e2",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "3d37c529a99c",
+      "target": "86d56f158fa3",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "3d37c529a99c",
+      "target": "bbd85c33cf13",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "3d37c529a99c",
+      "target": "950450288068",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "3d37c529a99c",
+      "target": "0b46cfff3365",
       "kind": "depends_on",
       "metadata": {}
     },
@@ -40374,6 +41685,42 @@
     {
       "source": "629c3a0bde6b",
       "target": "1ad884169f78",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "76b33df56340",
+      "target": "6fccb1bf47c8",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "76b33df56340",
+      "target": "2b2d802ccdd6",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "76b33df56340",
+      "target": "b22e7e4159f5",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "76b33df56340",
+      "target": "f248367726e7",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "76b33df56340",
+      "target": "3d37c529a99c",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "76b33df56340",
+      "target": "6e52183d1edb",
       "kind": "depends_on",
       "metadata": {}
     },
@@ -40894,6 +42241,132 @@
       "metadata": {}
     },
     {
+      "source": "b22e7e4159f5",
+      "target": "2b2d802ccdd6",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "b22e7e4159f5",
+      "target": "f248367726e7",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "b22e7e4159f5",
+      "target": "cc5790b1164b",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "b22e7e4159f5",
+      "target": "c59ec65c51c7",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "b22e7e4159f5",
+      "target": "6488bc786564",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "b22e7e4159f5",
+      "target": "abaff530dbcf",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "b22e7e4159f5",
+      "target": "1179b083c804",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "b22e7e4159f5",
+      "target": "3e7e58b784ef",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "b22e7e4159f5",
+      "target": "bc4e3e3ab62c",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "b22e7e4159f5",
+      "target": "af8b06b4e37f",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "b22e7e4159f5",
+      "target": "05bae6198490",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "b22e7e4159f5",
+      "target": "08dda2bbc01e",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "b22e7e4159f5",
+      "target": "ca46fb9ce2fd",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "b22e7e4159f5",
+      "target": "d44c56576ec3",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "b22e7e4159f5",
+      "target": "bec6f5e4a8f7",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "b22e7e4159f5",
+      "target": "cc4976e63742",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "b22e7e4159f5",
+      "target": "fa9d3e39dbff",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "b22e7e4159f5",
+      "target": "4cec5d7b3356",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "b22e7e4159f5",
+      "target": "30df39654760",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "b22e7e4159f5",
+      "target": "e96bb6eb8f05",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "b22e7e4159f5",
+      "target": "9ba4012993c5",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
       "source": "3e7e58b784ef",
       "target": "91c598dea98d",
       "kind": "depends_on",
@@ -40938,6 +42411,60 @@
     {
       "source": "3e7e58b784ef",
       "target": "c59ec65c51c7",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "6e52183d1edb",
+      "target": "3d37c529a99c",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "6e52183d1edb",
+      "target": "b22e7e4159f5",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "6e52183d1edb",
+      "target": "3e7e58b784ef",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "6e52183d1edb",
+      "target": "05bae6198490",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "6e52183d1edb",
+      "target": "bc4e3e3ab62c",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "6e52183d1edb",
+      "target": "1179b083c804",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "6e52183d1edb",
+      "target": "950450288068",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "6e52183d1edb",
+      "target": "6488bc786564",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "6e52183d1edb",
+      "target": "e96bb6eb8f05",
       "kind": "depends_on",
       "metadata": {}
     },
@@ -41404,6 +42931,66 @@
       "metadata": {}
     },
     {
+      "source": "6fccb1bf47c8",
+      "target": "f248367726e7",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "6fccb1bf47c8",
+      "target": "3d37c529a99c",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "6fccb1bf47c8",
+      "target": "6e52183d1edb",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "6fccb1bf47c8",
+      "target": "5b8fb8b948e2",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "6fccb1bf47c8",
+      "target": "86d56f158fa3",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "6fccb1bf47c8",
+      "target": "bbd85c33cf13",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "6fccb1bf47c8",
+      "target": "950450288068",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "6fccb1bf47c8",
+      "target": "0b46cfff3365",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "6fccb1bf47c8",
+      "target": "493125e0cd98",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "6fccb1bf47c8",
+      "target": "a6eb0b1439d6",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
       "source": "cc4976e63742",
       "target": "6a0d86c4361f",
       "kind": "depends_on",
@@ -41496,6 +43083,30 @@
     {
       "source": "de3012021006",
       "target": "b431b822f300",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "de3012021006",
+      "target": "2b2d802ccdd6",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "de3012021006",
+      "target": "b22e7e4159f5",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "de3012021006",
+      "target": "f248367726e7",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "de3012021006",
+      "target": "6fccb1bf47c8",
       "kind": "depends_on",
       "metadata": {}
     },
@@ -41862,6 +43473,144 @@
     {
       "source": "5051c3e24124",
       "target": "e9e1e2af8e75",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "2b2d802ccdd6",
+      "target": "a6eb0b1439d6",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "2b2d802ccdd6",
+      "target": "d2240e68c7ed",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "2b2d802ccdd6",
+      "target": "b22e7e4159f5",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "2b2d802ccdd6",
+      "target": "f248367726e7",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "2b2d802ccdd6",
+      "target": "493125e0cd98",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "2b2d802ccdd6",
+      "target": "8a0bbf6a83e5",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "2b2d802ccdd6",
+      "target": "93a7cbd0854c",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "2b2d802ccdd6",
+      "target": "eec8af5a38d1",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "2b2d802ccdd6",
+      "target": "ee550ccf695a",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "2b2d802ccdd6",
+      "target": "d90eb85a4a0a",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "2b2d802ccdd6",
+      "target": "23c62050d68e",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "2b2d802ccdd6",
+      "target": "5051c3e24124",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "2b2d802ccdd6",
+      "target": "2237d75bb913",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "2b2d802ccdd6",
+      "target": "6e66517805b7",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "2b2d802ccdd6",
+      "target": "e9e1e2af8e75",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "2b2d802ccdd6",
+      "target": "4421cabe5f80",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "2b2d802ccdd6",
+      "target": "b431b822f300",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "2b2d802ccdd6",
+      "target": "950450288068",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "2b2d802ccdd6",
+      "target": "0b46cfff3365",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "2b2d802ccdd6",
+      "target": "e612ca87e754",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "2b2d802ccdd6",
+      "target": "352980e82ca3",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "2b2d802ccdd6",
+      "target": "c59ec65c51c7",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "2b2d802ccdd6",
+      "target": "cc5790b1164b",
       "kind": "depends_on",
       "metadata": {}
     },
@@ -42366,6 +44115,108 @@
     {
       "source": "6488bc786564",
       "target": "af8b06b4e37f",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "3a9051ed70ce",
+      "target": "f248367726e7",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "3a9051ed70ce",
+      "target": "b22e7e4159f5",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "3a9051ed70ce",
+      "target": "418ee149ca3b",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "3a9051ed70ce",
+      "target": "32a93f72631a",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "3a9051ed70ce",
+      "target": "abaff530dbcf",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "3a9051ed70ce",
+      "target": "a6eb0b1439d6",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "3a9051ed70ce",
+      "target": "3c187c080b19",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "3a9051ed70ce",
+      "target": "4d8ffb285e88",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "3a9051ed70ce",
+      "target": "254b9286a000",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "3a9051ed70ce",
+      "target": "8e40e8ba269a",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "3a9051ed70ce",
+      "target": "366e9b0583cd",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "3a9051ed70ce",
+      "target": "e288a7772e3c",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "3a9051ed70ce",
+      "target": "585e021a1a66",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "3a9051ed70ce",
+      "target": "ac0aca348df2",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "3a9051ed70ce",
+      "target": "480c8767f617",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "3a9051ed70ce",
+      "target": "1fd378faa32f",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "3a9051ed70ce",
+      "target": "6ed77fefcdc0",
       "kind": "depends_on",
       "metadata": {}
     },
@@ -45149,7 +47000,7 @@
     },
     {
       "source": "234c283e75d0",
-      "target": "86c9d3db05ba",
+      "target": "b41480baf6a8",
       "kind": "related_to",
       "metadata": {}
     },
@@ -46030,12 +47881,6 @@
       "metadata": {}
     },
     {
-      "source": "3d37c529a99c",
-      "target": "78b96d730672",
-      "kind": "related_to",
-      "metadata": {}
-    },
-    {
       "source": "d557eb5766f4",
       "target": "6d59500a0821",
       "kind": "related_to",
@@ -46325,6 +48170,12 @@
     },
     {
       "source": "a651b54808a5",
+      "target": "76b33df56340",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "76b33df56340",
       "target": "f0110e67fe24",
       "kind": "related_to",
       "metadata": {}
@@ -46607,7 +48458,13 @@
     },
     {
       "source": "6ece17318850",
-      "target": "3e7e58b784ef",
+      "target": "b22e7e4159f5",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "3e7e58b784ef",
+      "target": "6e52183d1edb",
       "kind": "related_to",
       "metadata": {}
     },
@@ -46733,6 +48590,12 @@
     },
     {
       "source": "30df39654760",
+      "target": "6fccb1bf47c8",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "6fccb1bf47c8",
       "target": "cc4976e63742",
       "kind": "related_to",
       "metadata": {}
@@ -46781,7 +48644,7 @@
     },
     {
       "source": "5051c3e24124",
-      "target": "0b46cfff3365",
+      "target": "2b2d802ccdd6",
       "kind": "related_to",
       "metadata": {}
     },
@@ -46865,6 +48728,12 @@
     },
     {
       "source": "6488bc786564",
+      "target": "3a9051ed70ce",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "3a9051ed70ce",
       "target": "257082c04855",
       "kind": "related_to",
       "metadata": {}
@@ -47213,7 +49082,7 @@
     },
     {
       "source": "32306541d840",
-      "target": "86c9d3db05ba",
+      "target": "b41480baf6a8",
       "kind": "related_to",
       "metadata": {}
     },
@@ -47225,19 +49094,19 @@
     }
   ],
   "stats": {
-    "node_count": 2423,
-    "edge_count": 4919,
-    "skill_count": 653,
-    "trigger_count": 1760,
+    "node_count": 2460,
+    "edge_count": 5186,
+    "skill_count": 660,
+    "trigger_count": 1790,
     "phase_count": 6,
     "category_count": 5,
-    "depends_on_count": 1094,
-    "related_to_count": 947,
+    "depends_on_count": 1209,
+    "related_to_count": 1053,
     "edge_types": {
-      "contains": 923,
-      "triggers": 1955,
-      "depends_on": 1094,
-      "related_to": 947
+      "contains": 936,
+      "triggers": 1988,
+      "depends_on": 1209,
+      "related_to": 1053
     }
   }
 }

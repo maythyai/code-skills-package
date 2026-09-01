@@ -2,7 +2,7 @@
 
 > 生成时间：2026-08-13
 > 版本：v0.9.0 — PRD→技术方案 技能链路完善
-> 状态：653 个技能分布于 5 个层级，支持状态感知和置信度路由
+> 状态：660 个技能分布于 5 个层级，支持状态感知和置信度路由
 
 ---
 
@@ -399,6 +399,9 @@
 
 | 名称 | 来源 | 类型 | 描述 | V2 | 合并建议 |
 |------|------|------|------|----|----------|
+| `csp-product-spec` | CSP/workflow | Skill | 产品说明书 (PMS)：living baseline，定义模块分解/边界/验收形态，决定 PRD 生成质量 | ✅ | ✅ 保留（治理层，新增） |
+| `csp-code-spec` | CSP/workflow | Skill | 代码说明书 (CMS)：每应用一份，蒸馏入口点/调用链/约定并 auto-align，支撑设计/拆分/生码/CR | ✅ | ✅ 保留（治理层，新增） |
+| `csp-test-spec` | CSP/workflow | Skill | 测试说明书 (TMS)：PMS 分支，存量用例清单 + 需求→方法矩阵，生成存量与增量用例 | ✅ | ✅ 保留（治理层，新增） |
 | `csp-spec-driven-development` | CSP/meta | Skill | 规范驱动方法论 + delta specs + 工件 DAG | ✅ | ✅ 保留（核心方法论） |
 | `csp-spec-contract` | CSP/meta | Skill | 输入 → SPEC 契约生成 | ✅ | ✅ 保留 |
 | `csp-spec-phase` | GSD/workflow | Workflow | 苏格拉底访谈 + 模糊度评分 → CSPEC.md | ✅ | ✅ 保留（需求澄清） |

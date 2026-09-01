@@ -10,6 +10,7 @@ layer: 3
 category: patterns
 phase: verify
 domain: patterns
+related_skills: [csp-python-coding-standards]
 ---
 
 # Python Testing

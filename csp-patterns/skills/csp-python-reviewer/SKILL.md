@@ -15,7 +15,7 @@ triggers:
   intents: ["review Python code", "enforce Python coding standards", "audit Python project structure"]
 dependencies:
   skills: [csp-python-patterns, csp-python-testing]
-related_skills: [csp-code-review, csp-codebase-audit, csp-graph-review]
+related_skills: [csp-code-review, csp-codebase-audit, csp-graph-review, csp-python-coding-standards]
 anti_rationalizations:
   "类型标注太麻烦": "静态检查能提前发现90%的类型错误，重构时间减半。"
   "这段代码很简单不需要review": "简单代码也有隐患——mutable默认参数、裸except、路径注入在简单代码中更隐蔽。"

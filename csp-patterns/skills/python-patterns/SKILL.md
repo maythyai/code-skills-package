@@ -11,6 +11,7 @@ layer: 3
 category: patterns
 domain: patterns
 phase: build
+related_skills: [csp-python-coding-standards]
 ---
 
 

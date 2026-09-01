@@ -6,7 +6,7 @@ category: patterns
 domain: patterns
 phase: build
 tools: [Read, Write, Edit, Glob, Grep, Bash]
-related_skills: [csp-django-security, csp-python-patterns, csp-python-testing, csp-postgres-patterns, csp-code-review]
+related_skills: [csp-django-security, csp-python-patterns, csp-python-testing, csp-postgres-patterns, csp-code-review, csp-python-coding-standards]
 anti_rationalizations:
   "Django has built-in admin, no need for API": "Admin is for internal use. APIs are for programmatic access and frontend separation."
   "I'll add select_related later": "N+1 queries in production can bring down the database. Optimize queries from the start."

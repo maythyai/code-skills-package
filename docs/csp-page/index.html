@@ -351,7 +351,7 @@ a { color: var(--layer-1); text-decoration: none; }
 // ═══════════════════════════════════════════════════
 const CSP_DATA = {
   "stats": {
-    "total": 653,
+    "total": 660,
     "by_layer": {
       "Meta": {
         "count": 26,
@@ -359,7 +359,7 @@ const CSP_DATA = {
         "color": "#3b82f6"
       },
       "Patterns": {
-        "count": 380,
+        "count": 381,
         "layer": "L3",
         "color": "#a855f7"
       },
@@ -374,17 +374,17 @@ const CSP_DATA = {
         "color": "#f97316"
       },
       "Workflow": {
-        "count": 188,
+        "count": 194,
         "layer": "L2",
         "color": "#22c55e"
       }
     },
     "by_category": {
       "meta": 26,
-      "patterns": 380,
+      "patterns": 381,
       "router": 1,
       "runtime": 58,
-      "workflow": 188
+      "workflow": 194
     },
     "reviewers": 69
   },
@@ -5773,6 +5773,25 @@ const CSP_DATA = {
       }
     },
     {
+      "name": "csp-python-coding-standards",
+      "description": "Python coding standards (Python 3.10+) covering naming & style (PEP 8), type annotations (PEP 484+), language features, exceptions & logging, modern syntax & concurrency, security, unit testing, project structure (pyproject.toml), and toolchain (Ruff/mypy). Use when writing, reviewing, or refactorin",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "csp-python-coding-standards",
+          "fix python coding standards",
+          "python",
+          "python coding standards",
+          "python-coding-standards",
+          "review python coding standards"
+        ],
+        "zh": []
+      }
+    },
+    {
       "name": "csp-python-reviewer",
       "description": "Python coding specification and code review specialist. Covers PEP 8, type safety, Pythonic idioms, security, performance, async patterns, and enterprise project structure evaluation. Use for all Python code review, project audits, and coding standard enforcement.",
       "category": "patterns",
@@ -8142,7 +8161,7 @@ const CSP_DATA = {
     },
     {
       "name": "csp-wiki",
-      "description": "LLM Wiki — persistent markdown knowledge base that compounds across sessions (Karpathy model)",
+      "description": "LLM Wiki — persistent, self-maintained markdown knowledge base that compounds across sessions (Karpathy model). Two-layer: raw source docs (read-only truth) vs an AI-maintained _wiki layer (index.md + append-only log.md + topic pages). Ingest compiles sources into structured pages; lint checks healt",
       "category": "runtime",
       "layer": "L4",
       "layer_name": "Runtime",
@@ -9072,6 +9091,23 @@ const CSP_DATA = {
       }
     },
     {
+      "name": "csp-hub",
+      "description": "Initialize or operate the local-first Knowledge Hub — a git-managed markdown workspace indexing specs (PMS/CMS/TMS) + wiki + memory, closing the 需求→code→test loop. Lifecycle Stage 0.",
+      "category": "workflow",
+      "layer": "L2",
+      "layer_name": "Workflow",
+      "layer_color": "#22c55e",
+      "triggers": {
+        "en": [
+          "csp-hub",
+          "fix hub",
+          "hub",
+          "review hub"
+        ],
+        "zh": []
+      }
+    },
+    {
       "name": "csp-import",
       "description": "Ingest external plans with conflict detection against project decisions before writing anything.",
       "category": "workflow",
@@ -9944,6 +9980,25 @@ const CSP_DATA = {
       }
     },
     {
+      "name": "csp-code-spec",
+      "description": "Code Module Spec (CMS / 代码说明书). The per-application living baseline distilled from the codebase and auto-aligned to ground truth. One CMS per application/repo. It maps entry points, call chains, module boundaries, and conventions, and feeds design / task-split / code generation / code review with an",
+      "category": "workflow",
+      "layer": "L2",
+      "layer_name": "Workflow",
+      "layer_color": "#22c55e",
+      "triggers": {
+        "en": [
+          "csp-code-spec",
+          "code",
+          "code spec",
+          "code-spec",
+          "fix code spec",
+          "review code spec"
+        ],
+        "zh": []
+      }
+    },
+    {
       "name": "csp-code-understanding",
       "description": "代码理解文档自动生成引擎。产出结构化、可增量更新的代码理解文档（模块依赖图、 关键执行路径、数据流、调用关系、入口点、外部依赖），持久化到 .csp/code-understanding/ 下 system/module/function 三级 Markdown。消费 csp-code-graph 图谱数据（如可用） + csp-explore 探索方法论，支持增量更新（检测代码变更后重新生成受影响部分）。 当用户需要\"代码理解文档\"\"模块依赖图\"\"代码结构文档\"\"onboarding 文档\"时使用。 关键词：代码理解、模块依赖、调用关系、代码结构文档、code understanding、 ",
       "category": "workflow",
@@ -9958,6 +10013,25 @@ const CSP_DATA = {
           "code-understanding",
           "fix code understanding",
           "review code understanding"
+        ],
+        "zh": []
+      }
+    },
+    {
+      "name": "csp-code-wiki",
+      "description": "Source-grounded Code Wiki — generate/maintain a Git-native Q&A knowledge wiki from one logical code system (one or more repos), with optional knowledge-doc dependencies. Every material claim cites a frozen commit (`/blob/<sha>/<path>#Lx`); pages are organized by owned systems/concepts/workflows, not",
+      "category": "workflow",
+      "layer": "L2",
+      "layer_name": "Workflow",
+      "layer_color": "#22c55e",
+      "triggers": {
+        "en": [
+          "csp-code-wiki",
+          "code",
+          "code wiki",
+          "code-wiki",
+          "fix code wiki",
+          "review code wiki"
         ],
         "zh": []
       }
@@ -10361,6 +10435,25 @@ const CSP_DATA = {
       }
     },
     {
+      "name": "csp-knowledge-hub",
+      "description": "Local-first Knowledge Hub — a git-managed markdown workspace that unifies spec (PMS/CMS/TMS), wiki, and memory into one indexed, queryable hub to accelerate Agent codebase understanding, fast spec location/read/generation, and a closed loop: 需求对齐(文档spec记录) → code开发 → 测试. Platform-decoupled: replaces",
+      "category": "workflow",
+      "layer": "L2",
+      "layer_name": "Workflow",
+      "layer_color": "#22c55e",
+      "triggers": {
+        "en": [
+          "csp-knowledge-hub",
+          "fix knowledge hub",
+          "knowledge",
+          "knowledge hub",
+          "knowledge-hub",
+          "review knowledge hub"
+        ],
+        "zh": []
+      }
+    },
+    {
       "name": "csp-legacy-modernization",
       "description": "End-to-end legacy modernization workflow covering assessment (codebase audit, dependency analysis, architecture review), planning (migration strategy, risk assessment, timeline), execution (incremental migration, strangler fig, parallel run), verification (regression testing, performance comparison,",
       "category": "workflow",
@@ -10570,6 +10663,24 @@ const CSP_DATA = {
       "triggers": {
         "en": [
           "csp-product-pulse"
+        ],
+        "zh": []
+      }
+    },
+    {
+      "name": "csp-product-spec",
+      "description": "Product Module Spec (PMS / 产品说明书). The living, versioned baseline that governs PRD generation quality for a product. Defines module decomposition, boundaries, and the acceptance standard every PRD must meet; downstream skills (PRD generation, decomposition, traceability, change-impact) read it befor",
+      "category": "workflow",
+      "layer": "L2",
+      "layer_name": "Workflow",
+      "layer_color": "#22c55e",
+      "triggers": {
+        "en": [
+          "csp-product-spec",
+          "fix product spec",
+          "product spec",
+          "product-spec",
+          "review product spec"
         ],
         "zh": []
       }
@@ -10854,6 +10965,27 @@ const CSP_DATA = {
           "tech-task-breakdown"
         ],
         "zh": []
+      }
+    },
+    {
+      "name": "csp-test-spec",
+      "description": "Test Module Spec (TMS / 测试说明书). The per-module living test baseline — a branch of PMS. Maintains the stock (existing) test-case inventory and the requirement→method trace matrix, and generates stock + incremental test cases from requirement/design docs. When a change lands, TMS emits only the increm",
+      "category": "workflow",
+      "layer": "L2",
+      "layer_name": "Workflow",
+      "layer_color": "#22c55e",
+      "triggers": {
+        "en": [
+          "csp-test-spec",
+          "test",
+          "fix test spec",
+          "review test spec",
+          "test spec",
+          "test-spec"
+        ],
+        "zh": [
+          "test spec 测试"
+        ]
       }
     },
     {

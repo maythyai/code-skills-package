@@ -38,6 +38,10 @@ related_skills:
   - csp-product-discovery-orchestrator
   - csp-effort-estimation
   - csp-tech-risk-assessment
+  - csp-product-spec
+  - csp-code-spec
+  - csp-test-spec
+  - csp-knowledge-hub
 
 triggers:
   keywords: ["全生命周期", "lifecycle", "端到端", "从需求到上线", "完整开发流程",
@@ -85,21 +89,61 @@ anti_rationalizations:
 - `csp-lifecycle-orchestrator` = 规格化导向（深度拆解 + 选型 + Spec，适合需求模糊或系统复杂的场景）
 - 两者可串联：orchestrator 完成 Spec 后，交给 csp-full 的 P4+ 执行
 
+## Module Spec 治理层（PMS / CMS / TMS）
+
+与 S1–S9 并行运行的**治理层** —— 三个 living baseline 说明书，由对应 skill 维护，下游阶段读它们再产出：
+
+| 说明书 | Skill | 治理对象 | 在生命周期中的角色 |
+|--------|-------|---------|-------------------|
+| **PMS** 产品说明书 | `csp-product-spec` | PRD 生成质量 | S1 前建立模块边界 + 验收形态；S13 增量 delta |
+| **CMS** 代码说明书 | `csp-code-spec` | 设计/拆分/生码/CR | 棕地接手时蒸馏；每次 ship 后 auto-align |
+| **TMS** 测试说明书 | `csp-test-spec` | 测试用例（存量+增量） | PMS 分支；S5 后建存量；变更只产出增量 |
+
+**与阶段的关系（不是额外阶段，是治理旁路）：**
+
+- S1 需求拆解 → 读 PMS 模块边界（不得越界）
+- S3 技术方案 → 读 CMS 入口点/调用链（ground design，不靠想象）
+- S5 全栈 Spec → 读 CMS 交叉引用入口；种子 TMS 需求矩阵
+- S8 并行开发 → 生码读 CMS 约定（匹配既有模式）
+- S10 审查验证 → CR 读 CMS 追溯调用链；读 TMS 存量只产增量用例
+- S11 发布 → PMS 闭环（每条验收可追溯到需求）
+- S13 变更/迭代 → 三说明书均以 delta 增量，里程碑折叠进 canonical
+
+详细行为准则见 `csp-workflow/references/module-spec-lifecycle-norms.md`；
+运行时纪律（断点续跑、文件边界、双重门禁、原子单元）见 `csp-workflow/references/module-spec-operational-protocol.md`。
+
 ## 生命周期阶段
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
 │                                                                               │
-│  S1          S2           S2.5         S2.6        S3           S3.5       │
-│  需求拆解 → 技术选型 → 技术方案 → 方案评审 → 全栈Spec → 任务拆解           │
+│  S0  hub init │ S1          S2           S2.5         S2.6        S3    S3.5 │
+│  知识中枢初始化│ 需求拆解 → 技术选型 → 技术方案 → 方案评审 → 全栈Spec → 任务拆解│
+│  (本地 markdown│                                                              │
+│   +git+manifest)│ S4          S5           S6           S7          S8   S9  │
+│               │ 实施规划 → 并行开发 → 质量门控 → 审查验证 → 发布交付 → 运维监控│
 │                                                                               │
-│  S4          S5           S6           S7          S8           S9          │
-│  实施规划 → 并行开发 → 质量门控 → 审查验证 → 发布交付 → 运维监控           │
-│                                                                               │
-│  (迭代: 回到 S1 增量)                                                         │
+│  (迭代: 回到 S1 增量，hub 持续索引每阶段产物)                                  │
 │                                                                               │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
+
+### Stage 0: Hub 初始化 (Knowledge Hub Init)
+
+**执行:** `Skill("csp-knowledge-hub")`
+
+**定位:** 生命周期的**第一步**。建立本地知识中枢（`.csp/AGENTS.md` + `manifest.json`），让后续每阶段的 spec/wiki/memory 产物可索引、可定位、可追溯，闭环需求→code→test。
+
+**输入:** 项目根（git 仓库）、资料源根（docs/）、项目名
+**输出:** `.csp/AGENTS.md`（路由契约）、`.csp/manifest.json`（唯一索引）、hub 工作区骨架
+**门控:**
+- `AGENTS.md` 6 节齐全 + 操作路由表
+- `manifest.json` 存在且 schemaVersion 记录
+- git 仓库可写（`CSP_GIT_REMOTE` 默认 github.com）
+
+**跳过条件:** `.csp/AGENTS.md` + `manifest.json` 已存在且 `doctor` 通过 → 复用，不重建
+
+**与治理层关系:** hub init 在 PMS 建立模块边界**之前**；PMS/CMS/TMS 产物生成后回写 manifest `build_status=built`，使 hub 成为三说明书的统一索引层。
 
 ### Stage 1: 需求拆解 (Requirement Decomposition)
 
@@ -392,6 +436,9 @@ lifecycle:
 routing_rules:
   # 输入评估 → 起始阶段
   input_assessment:
+    no_hub:            # .csp/AGENTS.md + manifest.json 不存在
+      start: S0        # 先 hub init 再进生命周期
+      mode: full
     vague_idea:        # "帮我做一个XX"
       start: S1
       mode: full
@@ -436,6 +483,32 @@ routing_rules:
     review_critical:
       action: insert_fix_before_S7
       max_retries: 2
+
+  # Module Spec 治理旁路（与 S1–S9 并行，不是额外阶段）
+  # 三个 living baseline 说明书：每个阶段读对应说明书再产出，ship/变更后写回 delta。
+  # 详见 csp-workflow/references/module-spec-lifecycle-norms.md
+  module_spec_governance:
+    hub:                         # 知识中枢 — Stage 0 前置 + 全阶段统一索引
+      skill: csp-knowledge-hub
+      init_at: S0                # 生命周期第一步
+      index_at: [S1, S2, S2.5, S3, S3.5, S8, S10, S11, S13]  # 每阶段产物回写 manifest
+      gate: hub_doctor_pass      # AGENTS.md 6 节 + frontmatter + 无 sidecar
+    pms:                      # 产品说明书 — 治理 PRD 质量
+      skill: csp-product-spec
+      read_at: [S1, S2, S2.5, S3]        # 模块边界 + 验收形态
+      write_back_at: [S11, S13]          # 闭环 + 增量 delta
+      gate: prd_to_module_coverage == 100%
+    cms:                      # 代码说明书 — 治理 设计/拆分/生码/CR
+      skill: csp-code-spec
+      read_at: [S2, S3, S5, S8, S10]     # 入口点/调用链/约定
+      write_back_at: [S8, S13]           # ship 后 auto-align + 增量
+      gate: cms_idempotent_align        # 未变更源 → 零 delta
+    tms:                      # 测试说明书 — 治理 用例（存量+增量），PMS 分支
+      skill: csp-test-spec
+      read_at: [S5, S9, S10]            # 需求矩阵 + 存量基线
+      write_back_at: [S10, S12, S13]    # 增量用例 + 事件回归 + delta
+      gate: requirement_coverage_gap == 0
+    routing_principle: "治理旁路不阻塞主链；门控失败时，先查对应说明书是否陈旧（CMS 未 align / TMS 缺口）"
 ```
 
 ## 迭代管理

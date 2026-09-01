@@ -9,6 +9,7 @@ metadata:
   source: awesome-copilot/skills/ruff-recursive-fix
   globs: ["**/*.py", "**/*.pyi", "pyproject.toml"]
 phase: review
+related_skills: [csp-python-coding-standards]
 ---
 
 # CSP Ruff Fixer
