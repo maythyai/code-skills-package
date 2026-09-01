@@ -207,7 +207,7 @@ product_type: B2C|B2B|internal-tool|platform
 feature_count: {N}
 mvp_scope: [{slug}, ...]
 thin_sections: [{section编号}, ...]
-upstream_source: docs/ARCHITECTURE.md | spark-output/context/stories.json | user-input
+upstream_source: docs/ARCHITECTURE.md | spark-output/context/stories.json | user-input | .csp/review/REVIEW-FINDINGS-{milestone}.json#F-NN（若采纳 07 复盘 findings）
 related_pms: [.csp/product-spec/PMS-{module-slug}.md, ...]
 related_specs: []   # 下游技术方案生成后回填
 ---

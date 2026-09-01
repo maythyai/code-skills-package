@@ -134,6 +134,7 @@
 - **优先级**：P0-P3。
 - **建议**（可执行）：具体落地路径，给出修改方向或伪代码。
 - **回流阶段**（可选）：修复后建议回流到哪个阶段（01 PRD / 02 decomposition / 03 tech-design / 05 implementation）。
+- **状态**：`open`（未处理）/ `adopted`（被新 PRD 采纳，附 `adopted_by` 指向新 PRD/Feature/Task id）/ `deferred`（推迟）/ `wontfix`（关闭+理由）/ `stale`（证据漂移待重核）/ `superseded`（被新报告覆盖，附新 finding id）。默认 `open`；跨迭代管理见「07 产物跨迭代管理」节。
 ```
 
 ## 九、交付报告格式
@@ -168,6 +169,29 @@ docs/solutions/
 2. **lifecycle**：写 `.csp/lifecycle-state.json`——07 `done` + `progress`（findings 总数/P0-P3 分布）+ `current_stage` 指向下一迭代 `01-prd`（若 findings 触发新需求）或保持 `milestone-archive`。
 3. **回流标记**：每条 finding 的 `回流阶段` 字段汇聚成下一迭代 backlog，写入 `docs/solutions/REVIEW-SUMMARY-{slug}.md` 的"下一步建议"。
 4. **不越 PMS**：审查发现涉及模块边界缺失 → 标"建议回 01 改 PMS"，不在审查期擅判。
+
+## 十.五、07 产物跨迭代管理（findings 被新一轮 01 采纳后）
+
+当新一轮 01 PRD 采纳本审查 findings 并执行后续流程时，按下述管理，确保"采纳可追、证据不漂、归档不丢、覆盖不乱"：
+
+**1. 迭代作用域命名**：07 产物以里程碑/迭代 slug 命名（`REVIEW-REPORT-{milestone}.md`、`REVIEW-FINDINGS-{milestone}.json`）。新迭代产出新文件，**不冲突、不覆盖**旧报告。
+
+**2. 采纳 = 反向链接 + 逐条状态更新（核心）**：
+- 新 PRD front-matter `upstream_source` 引用采纳的 finding：`.csp/review/REVIEW-FINDINGS-{milestone}.json#F-NN`，并在正文该需求处注明"源自 07 finding F-NN"。
+- 本 findings JSON 逐条更新 `status`：
+  - `adopted`（被采纳）+ `adopted_by`（指向新 PRD/Feature/Task id）
+  - `deferred`（推迟到后续迭代）
+  - `wontfix`（关闭 + 理由）
+  - `open`（未处理，进下一轮 backlog）
+- manifest 对应 item `build_status`：adopted→`consumed`、deferred→`degraded`、wontfix→`closed`。
+
+**3. 留存 + 归档（living，不 mv）**：07 产物留在 `.csp/review/`（**不 mv 走**，保持新 PRD 的引用稳定）；新迭代发布（06）时按 B 类 `cp` 快照到 `.csp/milestones/{new-m}/review/`。原件长期留存供审计与追溯。
+
+**4. 证据时效（防漂移）**：finding 的 `file:line` 证据基于审查时代码快照，以 git tag `{milestone}` 锚定。后续迭代代码漂移后该证据可能失效 → 该 finding 标 `status=stale`，重新核验或作废，**不假装仍有效**。
+
+**5. 覆盖与去重**：新迭代的 07 审查若重复发现旧 finding → 旧标 `superseded`（被新报告覆盖）+ 指向新 finding id；**不删除**旧报告。
+
+**6. 采纳闭环校验**（新迭代 06 发布前对账时执行）：所有 `adopted` findings 必须有 `adopted_by` 链追到新 PRD→Spec→Task→commit；未闭环的 `adopted` → 标 `degraded`，对账报缺口，不放过"说采纳了但没做"。
 
 ## 十一、反模式
 

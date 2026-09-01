@@ -172,6 +172,7 @@
 | 02 | status=done | `.csp/decomposition/DEPENDENCY-GRAPH.md` | DAG 无环、PRD AC 全归属（无未归属 AC） |
 | 03 | status=done | `.csp/specs/SPEC-INDEX.md` + `COVERAGE-REPORT.md` | Spec 数 == decomposition 原子 Feature 数（1:1）；每 Spec ac_coverage 无缺口 |
 | 05 | status=done | `.csp/tasks/WBS.md` + git commit | WBS 中全部 Task == done；commits 覆盖全部 Wave；未完 Task → 05 置 `blocked`，**禁止归档** |
+| 07（上一轮复盘） | adopted findings | `.csp/review/REVIEW-FINDINGS-{prev-m}.json` | 所有 `adopted` findings 的 `adopted_by` 链可追到本轮 PRD→Spec→Task→commit；未闭环 → 标 `degraded` 报缺口 |
 | 05 | status=in_progress | 本阶段产物 | S6 门控六项全过 + S7 无 CRITICAL + 回滚就绪 + 监控就绪 |
 
 **对账动作**：
