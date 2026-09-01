@@ -11,7 +11,7 @@
 5. **宁可拆分，不可含糊**：需求过大拆 MVP / V1.1 / V2，v1 聚焦 3–5 个核心功能，禁止一个 PRD 堆 50 功能点。
 6. **业务规则必须穷举**：禁止"等""其他情况""按业务规则处理"；每条规则写明触发条件、处理逻辑、边界值。
 7. **PMS 同源**：PRD 的功能模块边界 = PMS 的模块边界，二者必须一致；下游拆解 Feature 不得越出 PRD 划定的模块。
-8. **批准 gate**：01 标 done / 进 02 前必须 PRD 评审通过（front-matter `status: Approved`，无未解 Critical finding）；未批准不标 done、02 不接收。评审见「PRD 评审」节。
+8. **评审 gate（默认自动，不等人）**：01 标 done / 进 02 前自动跑 PRD 评审；findings 自动应用——Critical 自动回 01 修→重审（循环至无未解 Critical），非 Critical 标改进项不阻塞；**无未解 Critical → 自动 `status: Approved` → 进 02，不要求人工批准**。仅 `Rejected`（需求根本问题无法 auto-resolve）才人工澄清。评审见「PRD 评审」节。
 
 ## 二、触发与路由
 
@@ -252,17 +252,17 @@ related_specs: []   # 下游技术方案生成后回填
 
 **严重度**：Critical（需求根本错误 / 漏核心场景 / AC 不可测 / 越界写 HOW）/ High / Medium / Low。
 
-**决策**（三选一）：
-- `Approved` → PRD front-matter `status: Approved` → 标 01 done → 进 02。
-- `Changes-Requested` → 回 01 按 findings 修改 → 重审（status: Reviewing → Approved）。
-- `Rejected` → 需求根本问题 → 回上游（用户/00）澄清重写。
+**决策（默认自动，不等人确认）**：
+- 评审 auto-run → findings auto-应用：**Critical → 01 自动修 → 重审**（循环至无未解 Critical）；非 Critical → 标改进项不阻塞、不阻断。
+- **无未解 Critical → 自动 `Approved`**，status 流转 `Draft → Reviewing → Approved`，直接进 02，**不要求人工批准**。
+- `Rejected`（需求根本问题，无法 auto-resolve）→ 才人工澄清重写。**这是唯一人工拍板**。
 
 **红线**：
-1. 不替作者改 PRD——reviewer 只出 findings，修改归 01。
-2. 有未解 Critical finding → 必 `Changes-Requested`，**不假装通过**。
+1. 不替作者改 PRD——reviewer 只出 findings，修改归 01（但 01 按 findings 自动修是默认行为，不需人指令）。
+2. 有未解 Critical → 自动 `Changes-Requested` 回 01 修重审，**不假装通过、也不等人批准**——自己改到无 Critical 再 Approved。
 3. 证据必引 PRD `section` 编号，不泛泛。
 4. reviewer ≠ author（派 sub-agent），避免自审偏差。
-5. 未 `Approved` → 01 不标 done、02 不接收（02 探测要求 `status: Approved`）。
+5. **默认不阻塞下游**：评审跑完无 Critical 即自动进 02；Draft 但已评审通过 → 视同 Approved；Draft 且未评审 → 自动触发评审，不等人。
 
 **闭环**：findings 采纳后回 01 修改，重审；通过后 `status: Approved`，进 02。PRD-REVIEW 报告回写 manifest `source_type=doc`、`build_status=built`；PRD front-matter status 流转 `Draft → Reviewing → Approved`（发布后 06 标 `Released`）。
 
