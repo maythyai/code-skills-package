@@ -21,6 +21,7 @@
 - 用户只说"拆任务"未指明范围 → **引导模式**：列 `.csp/specs/SPEC-INDEX.md` 让用户选定 Feature 范围。
 - 用户已指明 Spec → 读取 Spec + decomposition + tech-decisions + PMS + CMS（若有），进入**拆解模式**。
 - 无 `.csp/specs/` → 先建议回 03 技术方案，不臆造 Task。
+- **任何 Feature 缺 Spec**（`SPEC-INDEX` 数 ≠ decomposition Feature 数，或某 Feature 无对应 Spec）→ **停步路由回 03 补全**，不臆造 Task、不留尾巴。03 必须穷尽产出全部 Spec。
 - **知识中枢前置**：若 `.csp/AGENTS.md` 不存在 → 提示先执行 00 知识中枢初始化建立索引。
 
 ## 三、项目上下文探测（强制前置）
@@ -79,6 +80,7 @@
 - 输出 `WBS.md`（任务分解）+ `TASK-BREAKDOWN-SUMMARY.md`（供 05 消费）。
 
 ### 5.3 拆解门控
+- [ ] **Spec 完整性**：每个 P0/P1 Feature 都有对应 Spec（`SPEC-INDEX` == decomposition Feature 数）；任何缺 Spec → 停步回 03 补全，不拆无 Spec 的 Task
 - [ ] 每个 P0/P1 Feature 的 Spec 都有对应 Task
 - [ ] Task 粒度 ≤4h
 - [ ] DAG 无环；Task 依赖与 decomposition Feature 依赖一致

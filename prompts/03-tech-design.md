@@ -165,6 +165,15 @@
 - [ ] ≥2 决策做多方案对比有结论
 - [ ] 与 `.csp/tech-decisions/` 一致；若有 CMS，关键架构决策标注 CMS 出处
 
+### Spec 穷尽门控（硬停步——未过禁止标 03 done、禁止写 lifecycle `03→04`）
+- [ ] **decomposition 每个原子 Feature 都有一份 Spec**（`SPEC-INDEX.md` Spec 数 == decomposition 原子 Feature 数，1:1；逐 Feature 比对 `FEATURE-DETAILS/*.yaml` 的 `id`，缺一即停）。
+- [ ] 每个 P0/P1 Feature 的 Spec 含全部所需维度（S 精简 / M 标准 8 维 / L+ 状态机 / XL+ 性能容灾）。
+- [ ] **任何 Feature 缺 Spec → 当场补全再完成**；不允许"部分 Spec 先进 04、剩余后补"——Spec 是 04 任务拆解与 05 实施的唯一输入，缺则下游无法拆/无法实施，必返工。
+- [ ] 每份 Spec `ac_coverage` 自检（无未覆盖 AC，或缺口显式标 `[TBD]`）。
+- [ ] `SPEC-INDEX.md`、追溯矩阵、PRD front-matter `related_specs` 三处同步回填，且 Spec 数一致。
+
+> **穷尽原则**：本阶段必须为 decomposition 全部 Feature 产出 Spec 才算完成。不遗留尾巴到 04/05。
+
 ## 七、第二层：每 Feature 全栈 Spec → `.csp/specs/SPEC-F-{group}-{seq}.md`
 
 按复杂度调整深度：S（简单 CRUD）精简版；M 标准 8 维度；L 全 8 维度+详细状态机；XL 全 8 维度+性能方案+容灾。
