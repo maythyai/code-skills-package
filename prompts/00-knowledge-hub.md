@@ -231,6 +231,7 @@ git branch -d csp/hub-init   # 清理已合并的侧分支
 | 阶段 | 产出 | manifest 回写 |
 |---|---|---|
 | 01 PRD | `.csp/product-spec/PMS-{module}.md` | `source_type=pms`、`build_status=built` |
+| 01 PRD 评审 | `.csp/review/PRD-REVIEW-{slug}.md` | `source_type=doc`、`build_status=built`（status: Approved 闭环） |
 | 02 需求拆解 | `.csp/decomposition/FEATURE-DETAILS/*.yaml` | `source_type=doc`、`kind=feature` |
 | 03 技术方案 | `.csp/specs/SPEC-F-*-n.md` / `.csp/test-spec/TMS-{module}.md` | `source_type` 对应、`build_status=built` |
 | 03 技术选型 | `.csp/tech-decisions/ADR/*.md` | `source_type=doc` |

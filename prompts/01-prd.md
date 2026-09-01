@@ -11,6 +11,7 @@
 5. **宁可拆分，不可含糊**：需求过大拆 MVP / V1.1 / V2，v1 聚焦 3–5 个核心功能，禁止一个 PRD 堆 50 功能点。
 6. **业务规则必须穷举**：禁止"等""其他情况""按业务规则处理"；每条规则写明触发条件、处理逻辑、边界值。
 7. **PMS 同源**：PRD 的功能模块边界 = PMS 的模块边界，二者必须一致；下游拆解 Feature 不得越出 PRD 划定的模块。
+8. **批准 gate**：01 标 done / 进 02 前必须 PRD 评审通过（front-matter `status: Approved`，无未解 Critical finding）；未批准不标 done、02 不接收。评审见「PRD 评审」节。
 
 ## 二、触发与路由
 
@@ -230,6 +231,43 @@ related_specs: []   # 下游技术方案生成后回填
 | 9 | 优先级明确 | P0/P1/P2 标注 |
 | 10 | 排期有据 | 覆盖开发/测试/集成阶段 |
 
+## 十三.五、PRD 评审（01 完成前 gate——未批准禁止标 done / 进 02）
+
+> 定位：工程前的人工决策 gate（同 06 的 Git 发布 gate 性质），不是自主构建阶段。PRD 出 draft 后、标 01 done 前必须过评审。
+
+**触发**：01 产出 PRD draft（front-matter `status: Draft`）后、写 lifecycle `01 done` 前。
+
+**评审者**：**reviewer ≠ author**——派 reviewer sub-agent（或加载 prd-review companion）做评审，不由作者自审，避免偏差。作者只负责按 findings 修改。
+
+**多视角评审**（每视角出 findings）：
+- **产品完整性**：是否覆盖所有角色与场景；MVP 范围是否合理；隐藏需求清单逐项核对无遗漏。
+- **需求正确性**：用户故事/AC 是否可测（Given-When-Then）；业务规则是否穷举无黑洞；异常路径是否覆盖（每功能≥2）。
+- **范围与优先级**：P0/P1/P2 是否合理；是否镀金；MVP 是否 3–5 核心。
+- **技术边界**：PRD 是否越界写 HOW（应只 WHAT）；性能要求是否可测；非功能是否合理。
+- **设计/交互**：交互流程是否完整；状态设计是否覆盖；是否越界规定视觉（颜色/字号）。
+- **测试/数据**：AC 是否可测；埋点是否完整；数据需求是否合理。
+- **合规/安全**：权限/隐私/合规是否考虑。
+
+**产出**：`.csp/review/PRD-REVIEW-{slug}.md`（findings + 决策）。每条 finding：`维度 / 问题 / 证据（PRD section 编号）/ 影响 / 严重度 / 建议`。
+
+**严重度**：Critical（需求根本错误 / 漏核心场景 / AC 不可测 / 越界写 HOW）/ High / Medium / Low。
+
+**决策**（三选一）：
+- `Approved` → PRD front-matter `status: Approved` → 标 01 done → 进 02。
+- `Changes-Requested` → 回 01 按 findings 修改 → 重审（status: Reviewing → Approved）。
+- `Rejected` → 需求根本问题 → 回上游（用户/00）澄清重写。
+
+**红线**：
+1. 不替作者改 PRD——reviewer 只出 findings，修改归 01。
+2. 有未解 Critical finding → 必 `Changes-Requested`，**不假装通过**。
+3. 证据必引 PRD `section` 编号，不泛泛。
+4. reviewer ≠ author（派 sub-agent），避免自审偏差。
+5. 未 `Approved` → 01 不标 done、02 不接收（02 探测要求 `status: Approved`）。
+
+**闭环**：findings 采纳后回 01 修改，重审；通过后 `status: Approved`，进 02。PRD-REVIEW 报告回写 manifest `source_type=doc`、`build_status=built`；PRD front-matter status 流转 `Draft → Reviewing → Approved`（发布后 06 标 `Released`）。
+
+> **与 07 区别**：07 评**已上线产品**（产品+技术，迭代探索，里程碑后）；PRD 评审评**未工程 PRD**（需求对不对，工程前 gate）。
+
 ## 十四、反模式
 
 | 反模式 | 症状 | 正确做法 |
@@ -250,7 +288,7 @@ PRD 评审通过后输出建议块：
 - [ ] 需求过大 → 先圈定 MVP 范围再拆
 - [ ] 既有 PRD 解析 → 标准化中间表示落 .csp/artifacts/
 - [ ] 进入 03 技术方案（含选型）→ 读 PRD + decomposition + PMS，按需选型 + 产出 TDD + Spec
-当前产物：docs/prd/PRD-{slug}.md + .csp/product-spec/（PMS）+ docs/prd/PRD-INDEX.md 已登记。已写 .csp/lifecycle-state.json：01 done，current_stage=02-decomposition。
+当前产物：docs/prd/PRD-{slug}.md（status: Approved）+ .csp/product-spec/（PMS）+ .csp/review/PRD-REVIEW-{slug}.md（评审通过）+ docs/prd/PRD-INDEX.md 已登记。已写 .csp/lifecycle-state.json：01 done，current_stage=02-decomposition。
 ```
 
 ## 输出风格
