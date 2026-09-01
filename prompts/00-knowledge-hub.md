@@ -136,7 +136,7 @@ created: "2026-08-28"
 updated: "2026-08-28"
 ---
 ```
-> 全链路约定：01 的 PMS 页 `type: module-spec`、03 的 Spec 页 `type: feature-spec`、03 的 TMS 页 `type: test-spec`、04 的 CMS 页同。所有阶段产出实质页必须带 frontmatter 并回写 manifest（见「manifest 回写约定」节）。
+> 全链路约定：01 的 PMS 页 `type: module-spec`、03 的 Spec 页 `type: feature-spec`、03 的 TMS 页 `type: test-spec`、05 的 CMS 页同。所有阶段产出实质页必须带 frontmatter 并回写 manifest（见「manifest 回写约定」节）。
 
 ### Phase 4：闭环（需求→code→test）
 ```
@@ -183,7 +183,7 @@ bash $SCRIPT list --type cms     # 按 source_type 列项
 └── .hub-run/<run-id>/             # 运行工作区（不提交）：source-lock/coverage/audit
 ```
 
-**lifecycle-state.json 初始化责任**：本阶段完成时若该文件不存在，则创建它——`pipeline_version`、`milestone`、`current_stage=01-prd`、`stages[]` 全链路 6 阶段（00 标 `done`，其余 `pending`）。后续每阶段读它定位、完成时写它推进。
+**lifecycle-state.json 初始化责任**：本阶段完成时若该文件不存在，则创建它——`pipeline_version`、`milestone`、`current_stage=01-prd`、`stages[]` 全链路 7 阶段（00 标 `done`，01–06 `pending`）。后续每阶段读它定位、完成时写它推进。
 
 **路径原则**：单一事实源（manifest 唯一）；可发现性（manifest 即索引）；路径即语义（`.csp/` 给 agent）；幂等（重跑 doctor 通过即复用）；不污染根目录。
 
@@ -197,8 +197,9 @@ bash $SCRIPT list --type cms     # 按 source_type 列项
 | 02 需求拆解 | `.csp/decomposition/FEATURE-DETAILS/*.yaml` | `source_type=doc`、`kind=feature` |
 | 03 技术方案 | `.csp/specs/SPEC-F-*-n.md` / `.csp/test-spec/TMS-{module}.md` | `source_type` 对应、`build_status=built` |
 | 03 技术选型 | `.csp/tech-decisions/ADR/*.md` | `source_type=doc` |
-| 04 实施 | `.csp/code-spec/{app}/*.md`（CMS） | `source_type=cms`、`build_status=built`、auto-align |
-| 05 发布 | `.csp/milestones/{m}/` 快照 | `source_type=archive` |
+| 04 任务拆解 | `.csp/tasks/WBS.md` 等 | `source_type=doc`、`kind=feature`、`build_status=built` |
+| 05 实施 | `.csp/code-spec/{app}/*.md`（CMS） | `source_type=cms`、`build_status=built`、auto-align |
+| 06 发布 | `.csp/milestones/{m}/` 快照 | `source_type=archive` |
 
 > 各阶段提示词在"产物路径/一致性"节已内嵌此回写要求；本节是全链路总约定。
 
@@ -206,7 +207,7 @@ bash $SCRIPT list --type cms     # 按 source_type 列项
 
 - [ ] `AGENTS.md` 6 节齐全 + 操作路由表
 - [ ] `manifest.json` 唯一索引，item 字段完整（source_id/content_hash/build_status）
-- [ ] `lifecycle-state.json` 已初始化（6 阶段，00=done，current_stage=01-prd）
+- [ ] `lifecycle-state.json` 已初始化（7 阶段，00=done，current_stage=01-prd）
 - [ ] 实质页 frontmatter 内联（无 `.meta.json` 侧车）
 - [ ] 增量用 content_hash（非 mtime）
 - [ ] raw 只读；查询只读

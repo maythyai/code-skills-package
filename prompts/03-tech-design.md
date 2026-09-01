@@ -34,7 +34,7 @@
 
 ### 探测顺序（读到即停）
 0. **知识中枢**：`.csp/AGENTS.md` + `.csp/manifest.json`；不存在 → 提示先执行 00。
-0.5 **阶段状态**：读 `.csp/lifecycle-state.json`，确认前置阶段（02）status==`done`；未完成 → 路由回上游；明确"我是第 3 步（技术方案+选型+Spec），下一步 → 04 实施开发"。读后按 README「进度播报」格式播报当前进度。
+0.5 **阶段状态**：读 `.csp/lifecycle-state.json`，确认前置阶段（02）status==`done`；未完成 → 路由回上游；明确"我是第 3 步（技术方案+选型+Spec），下一步 → 04 任务拆解"。读后按 README「进度播报」格式播报当前进度。
 1. **PRD + front-matter**：`docs/prd/PRD-{slug}.md`（`id`/`product_type`/`feature_count`/`mvp_scope`/`thin_sections`/`related_specs`/`related_pms`）。
 2. **需求拆解**：`.csp/decomposition/DECOMPOSITION-SUMMARY.md`、`FEATURE-DETAILS/*.yaml`（技术维度标记）、`NFR.md`、`DEPENDENCY-GRAPH.md`。
 3. **PMS**：`.csp/product-spec/PMS-INDEX.md` + `PMS-{module}.md` → 模块边界，**不得越界**。
@@ -309,10 +309,10 @@ ac_coverage: {已映射 AC 数}/{PRD 该 Feature AC 总数}
 ```markdown
 ### 下一步建议
 - [ ] TDD 评审 → 多角色技术评审，意见落 .csp/tech-design/REVIEW-FINDINGS.md，回填后进实现
-- [ ] 任务拆解 → 04 实施开发 Phase 0：每 Spec 拆可分配可估时任务落 .csp/tasks/（WBS.md/TASK-BREAKDOWN-SUMMARY.md/DEPENDENCY-DAG.md/WAVE-PLAN.md）
+- [ ] 任务拆解 → 04：每 Spec 拆可分配可估时任务落 .csp/tasks/（WBS.md/TASK-BREAKDOWN-SUMMARY.md/DEPENDENCY-DAG.md/WAVE-PLAN.md）
 - [ ] 跨系统集成 → 补 .csp/tech-design/INTEGRATION-DESIGN.md
 - [ ] PRD 变更 → 沿 .csp/traceability/ 评估变更影响
-当前产物：[选型+]TDD（{N} 章）+ Spec（{M} 份）+ TMS + 追溯矩阵；已回填 docs/prd/PRD-{slug}.md 的 related_specs；已回写 manifest。已写 .csp/lifecycle-state.json：03 done，current_stage=04-implementation。
+当前产物：[选型+]TDD（{N} 章）+ Spec（{M} 份）+ TMS + 追溯矩阵；已回填 docs/prd/PRD-{slug}.md 的 related_specs；已回写 manifest。已写 .csp/lifecycle-state.json：03 done，current_stage=04-task-breakdown。
 ```
 
 ## 十四、反模式
@@ -334,7 +334,7 @@ ac_coverage: {已映射 AC 数}/{PRD 该 Feature AC 总数}
 
 ## 十五、下游衔接（主动建议）
 
-- 选型+TDD+Spec 完成 → 04 实施开发 Phase 0 任务拆解落 `.csp/tasks/`，按 `DEPENDENCY-DAG.md` 排波次 `WAVE-PLAN.md`。
+- 选型+TDD+Spec 完成 → 04 任务拆解落 `.csp/tasks/`，按 `DEPENDENCY-DAG.md` 排波次 `WAVE-PLAN.md`；05 实施开发消费。
 - TDD 评审 → 意见落 `.csp/tech-design/REVIEW-FINDINGS.md`，回填后进实现。
 - 跨系统集成 → `INTEGRATION-DESIGN.md`。
 - 领域复杂 → DDD `DDD-MODEL.md`，先于 schema。

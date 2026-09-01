@@ -286,7 +286,7 @@ PRD feature_count（产品级模块数）
 ## 十三、下游衔接（主动建议）
 
 - 技术方案（含选型）→ 读 decomposition + PRD + PMS；缺选型时按技术维度选型出 ADR 落 `.csp/tech-decisions/`；TDD 模块边界对齐域边界；每原子 Feature 出一份 Spec（Spec 数 = 原子 Feature 数）。
-- 任务拆解 → 04 实施开发 Phase 0：读 `DEPENDENCY-GRAPH.md` + Spec，按 Wave 拆 Task，落 `.csp/tasks/`。
+- 任务拆解 → 04：读 `DEPENDENCY-GRAPH.md` + Spec，按 Wave 拆 Task，落 `.csp/tasks/`。
 - 既有系统扩展 → 读 CMS 既有 Feature，标"复用"，不重复拆解。
 
 ## 输出风格

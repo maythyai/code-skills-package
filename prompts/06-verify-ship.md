@@ -28,7 +28,7 @@
 
 ### 探测顺序（读到即停）
 0. **知识中枢**：`.csp/AGENTS.md` + `.csp/manifest.json`；不存在 → 提示先执行 00。
-0.5 **阶段状态**：读 `.csp/lifecycle-state.json`，确认前置阶段（04）status==`done`；未完成 → 路由回上游；明确"我是第 5 步（审查·测试·发布·运维），下一步 → 里程碑归档/下一迭代"。读后按 README「进度播报」格式播报当前进度。
+0.5 **阶段状态**：读 `.csp/lifecycle-state.json`，确认前置阶段（05 实施）status==`done`；未完成 → 路由回上游；明确"我是第 6 步（审查·测试·发布·运维），下一步 → 里程碑归档/下一迭代"。读后按 README「进度播报」格式播报当前进度。
 1. **Spec + dev 产物**：`.csp/specs/SPEC-F-*-n.md`（AC/维度 7 测试策略）、`.csp/artifacts/implement.md`（DEV-LOG 偏离记录）、`.csp/artifacts/verify/test-results.md`。
 2. **任务计划**：`.csp/tasks/WBS.md`、`WAVE-PLAN.md` → 确认本 Wave Task 全 done。
 3. **TMS 基线**：`.csp/test-spec/TMS-{module}.md` + `TEST-INDEX.md` → 存量用例与 AC 覆盖率。
@@ -171,7 +171,7 @@
 | 01 | status=done | `docs/prd/PRD-{slug}.md` front-matter | PRD status==Approved/Released；feature_count == Section 3 模块数 |
 | 02 | status=done | `.csp/decomposition/DEPENDENCY-GRAPH.md` | DAG 无环、PRD AC 全归属（无未归属 AC） |
 | 03 | status=done | `.csp/specs/SPEC-INDEX.md` + `COVERAGE-REPORT.md` | Spec 数 == decomposition 原子 Feature 数（1:1）；每 Spec ac_coverage 无缺口 |
-| 04 | status=done | `.csp/tasks/WBS.md` + git commit | WBS 中全部 Task == done；commits 覆盖全部 Wave；未完 Task → 04 置 `blocked`，**禁止归档** |
+| 05 | status=done | `.csp/tasks/WBS.md` + git commit | WBS 中全部 Task == done；commits 覆盖全部 Wave；未完 Task → 05 置 `blocked`，**禁止归档** |
 | 05 | status=in_progress | 本阶段产物 | S6 门控六项全过 + S7 无 CRITICAL + 回滚就绪 + 监控就绪 |
 
 **对账动作**：
@@ -326,7 +326,7 @@
 - [ ] 若已发布 → S9 监控第一小时稳定后，转入常态化运维
 - [ ] 下一迭代 → 从 KNOWN-ISSUES + AC 缺口 + 性能瓶颈提炼 backlog
 - [ ] CMS re-align 完成 → 下一轮设计基于新 ground truth
-当前产物：.csp/artifacts/verify/ + review/ + .csp/ship/ + .csp/ops/ + .csp/milestones/{milestone}/（已归档）；CMS re-aligned；追溯闭环到 commit。已对账并写 .csp/lifecycle-state.json：reconciled=true，05 done，current_stage=milestone-archive/next-iteration；已随里程碑快照归档。
+当前产物：.csp/artifacts/verify/ + review/ + .csp/ship/ + .csp/ops/ + .csp/milestones/{milestone}/（已归档）；CMS re-aligned；追溯闭环到 commit。已对账并写 .csp/lifecycle-state.json：reconciled=true，06 done，current_stage=milestone-archive/next-iteration；已随里程碑快照归档。
 ```
 
 ## 十六、下游衔接（主动建议）
