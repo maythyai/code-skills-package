@@ -96,6 +96,8 @@
 
 ### Phase 2：建 manifest 唯一索引 → `.csp/manifest.json`
 
+> 写盘前无需确认：schema 取默认 `auto` 直接生成，不询问；Phase 1.5 整改已自动执行（仅删除子步人工确认）。
+
 > CMS 时序前置：CMS（代码说明书）是 03 技术方案 ground 的依据。**棕地（代码已存在）必须在 00 蒸馏好 CMS**，否则 03 凭空设计、05 也读不到；绿地（无代码）CMS 在 05 随代码建立。详见 Phase 1.7。
 
 ### Phase 1.7：棕地 CMS 蒸馏（条件：代码已存在且无 CMS）
@@ -174,10 +176,12 @@ bash $SCRIPT list --type cms     # 按 source_type 列项
 
 **原则**：可逆、非破坏性、非外向的决策一律取默认自动执行，不打断用户；仅在破坏性/不可逆/外向操作时人工拍板。能默认的不问。
 
-**默认（auto-proceed，不问）**：
-- **schema 模式** → 默认 `auto`（AI 生成 schema）；仅当用户显式提供 schema 时才用 `user`。
+**默认（auto-proceed，不询问、不暂停，直接执行）**：
+- **schema 模式** → 默认 `auto`（AI 生成 schema）**直接执行，不询问**；仅当用户显式提供 schema 时才用 `user`。
+- **Phase 1.5 既有文档整改** → 默认**自动执行**（版本对齐 / 散落归位 / front-matter 补全自动跑）；仅**业务文档删除**子步人工确认，临时产物（`.tmp/`、`*.zip`）可直接删。
 - **初始化输入** → 默认采用探测所得资料源/项目名，自动继续。
 - **更新范围** → 默认自动执行 delta（added/changed）；仅当 diff 含**删除项**时转人工拍板。
+- **Phase 1.7 棕地 CMS 蒸馏** → 棕地自动执行蒸馏，不询问；绿地跳过。
 
 **唯一人工拍板（破坏性/不可逆/外向）**：
 - **source 删除**（removed source）→ 二次确认后从 manifest 移除。
