@@ -158,15 +158,19 @@ bash $SCRIPT diff                # 自上次同步的 added/changed/removed（co
 bash $SCRIPT list --type cms     # 按 source_type 列项
 ```
 
-## 六、Confirmation Gates（用户卡点）
+## 六、Confirmation Gates（默认优先，仅破坏性/不可逆操作才人工拍板）
 
-| 卡点 | 触发 | 决策 |
-|---|---|---|
-| 初始化输入确认 | 收集完资料源/项目名/workspace | 确认/修改 |
-| schema 模式 | 首次或重建 | `auto`(AI 生成) / `user`(用户提供) |
-| 更新范围 | diff 计算后 | 确认/暂停 |
-| source 删除 | removed source | 二次确认 |
-| Git 发布 | 编译确认后 | 确认发布/保留本地 |
+**原则**：可逆、非破坏性、非外向的决策一律取默认自动执行，不打断用户；仅在破坏性/不可逆/外向操作时人工拍板。能默认的不问。
+
+**默认（auto-proceed，不问）**：
+- **schema 模式** → 默认 `auto`（AI 生成 schema）；仅当用户显式提供 schema 时才用 `user`。
+- **初始化输入** → 默认采用探测所得资料源/项目名，自动继续。
+- **更新范围** → 默认自动执行 delta（added/changed）；仅当 diff 含**删除项**时转人工拍板。
+
+**唯一人工拍板（破坏性/不可逆/外向）**：
+- **source 删除**（removed source）→ 二次确认后从 manifest 移除。
+- **Git 发布** → 默认 `off`（不自动发布）；仅当用户显式触发发布时，必须人工确认后才 push。
+- **业务文档删除**（Phase 1.5 整改）→ 人工确认；临时产物（`.tmp/`、`*.zip`）可直接删。
 
 ## 七、产物路径规范（与全链路同构）
 
