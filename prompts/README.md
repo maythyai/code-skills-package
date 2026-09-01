@@ -41,7 +41,7 @@
 - **跨文档引用**：用**节标题**引用（稳定），不用节号数字（避免增删节后错位）。
 - **默认优先**：可逆/非破坏/非外向的决策一律取默认自动执行，不打断用户；仅在破坏性/不可逆/外向操作（删除来源、Git 发布、删业务文档）时人工拍板。各阶段"引导模式"的问询仅针对**输入真缺失**，不针对可默认的偏好。
 - **阶段穷尽**：每阶段必须**穷尽完成本阶段全部任务**才可标 `done`、写 lifecycle 进下一阶段，不遗留尾巴到下游。例：03 必须为 decomposition 每个 Feature 产出 Spec（硬门控 Spec 数 == Feature 数）；04 必须为每个 P0/P1 Spec 拆 Task；05 必须按全部 Wave 实施完。下游探测发现上游有缺漏 → 停步路由回上游补全，不臆造、不绕过。
-- **评审/批准 gate（默认自动，不等人）**：① **PRD 评审**（01 完成前，reviewer≠author，auto 跑、findings 自动应用、无未解 Critical 自动 `Approved` 进 02，**不要求人工批准**；仅 Rejected fundamental 才人工）；② **Git 发布**（06，默认 off 需人工确认，tag+GitHub Release 一起做）；③ **07 复盘**（里程碑后可选触发）。gate 不替代阶段穷尽——评审跑完无 Critical 即自动推进，不阻塞下游等人。
+- **评审/批准 gate（默认自动，不等人）**：① **PRD 评审**（01 完成前，reviewer≠author，auto 跑、findings 自动应用、无未解 Critical 自动 `Approved` 进 02，**不要求人工批准**；仅 Rejected fundamental 才人工）；② **Git 发布**（06，S6 质量门控+S7 审查+对账全过后**自动 push+GitHub Release**，gate 即授权，不再二次人工确认；版本号一致性见 06「版本与发布规范」节）；③ **07 复盘**（里程碑后可选触发）。**仅无前置 gate 的纯破坏操作（删 source、删业务文档）才人工拍板。**
 
 ## 文档与图规范（全链路 Markdown 产物遵守）
 

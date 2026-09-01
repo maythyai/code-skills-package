@@ -159,13 +159,16 @@
 - 回滚计划 → `.csp/ship/ROLLBACK-PLAN-{milestone}.md`。
 - `git tag -a v{milestone}`（本地 annotated tag，附发布说明）。
 
-**Git 发布（outward/不可逆，人工拍板，遵循 00「Confirmation Gates」Git 发布）——tag push 与 GitHub Release 一起做，不分离**：
-- `git push origin v{milestone}`（推 tag）。
+**Git 发布（S6 质量门控 + S7 审查 + 7.6 对账全过后自动执行——gate 即授权，不二次人工确认）——tag push 与 GitHub Release 一起做，不分离**：
+- `git push origin v{milestone}`（推 tag；若也推 main 则 `git push origin main --tags`）。
 - **创建 GitHub Release**：`gh release create v{milestone} --title "v{milestone}" --notes-file .csp/ship/RELEASE-NOTES-{milestone}.md`（或 CI release workflow 触发，见「版本与发布规范」节）；将 Release 与 tag 关联，发布说明上墙。
 - 上传构建产物到 Release（如有：`gh release create ... --files dist/*`，或 CI 上传）。
-- ⚠️ **禁止只推 tag 不建 Release**——tag 与 Release 是一次发布的两面。只推 tag 会让远端"有 tag 无 Release"（用户在 Releases 页看不到发布说明/产物，等于半发布）。若 CI 自动建 Release → 确认 workflow 已触发且成功；否则手动 `gh release create` 补齐。
+- ⚠️ **禁止只推 tag 不建 Release**——tag 与 Release 是一次发布的两面。只推 tag 会让远端"有 tag 无 Release"（等于半发布）。若 CI 自动建 Release → 确认 workflow 已触发且成功；否则手动 `gh release create` 补齐。
+- **版本号一致性**：发布前确认 VERSION/package.json/各 app/CHANGELOG/Tag 版本一致（见「版本与发布规范」节），自动执行无需人工再确认。
 
 **Release 创建后验证**：Releases 页面可见、与 tag 关联、发布说明正确、产物已挂；失败则按回滚策略回退。
+
+> 原则：审核通过对账通过即默认完成发布动作。外向/不可逆操作的授权来自前置质量 gate 通过，不再二次人工确认；仅无前置 gate 的纯破坏操作（删 source、删业务文档）或无解（PRD Rejected）才人工。
 
 ### 7.5 发布后第一小时验证
 健康端点 200 → 错误监控无新类型 → 延迟无退化 → 手测关键用户流程 → 日志可读 → 回滚机制 dry-run 验证。

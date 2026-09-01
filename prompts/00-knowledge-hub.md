@@ -10,7 +10,7 @@
 4. **raw 只读、查询只读**：raw（原始资料快照）下载后任何 skill 不得改；query 不写入，未覆盖明确说缺口，不编造。
 5. **CLI 脚本优先**：用 `hub_manifest.sh`（纯 git+grep，零依赖）；**禁生成 Python 操作代码**（慢 10x 且不可复现）。
 6. **写前查冲突**：add 前必 `locate`/`search` 现有页；命中同主题 → 自动 update，不问"删旧的?"。
-7. **不写凭证/token**：凭据不入 workspace；Git 发布必须用户确认。
+7. **不写凭证/token**：凭据不入 workspace；00 hub 不自动 push remote（local commit 即可），06 release 在审核通过对账通过后自动 push+release。
 8. **不臆造**：grep 不到的不写；推断标 `[TBD]`；高危结论实机核验。
 
 ## 二、触发与路由
@@ -185,7 +185,7 @@ bash $SCRIPT list --type cms     # 按 source_type 列项
 
 **唯一人工拍板（破坏性/不可逆/外向）**：
 - **source 删除**（removed source）→ 二次确认后从 manifest 移除。
-- **Git 发布** → 默认 `off`（不自动发布）；仅当用户显式触发发布时，必须人工确认后才 push。
+- **00 hub 远程推送** → 默认 `off`（hub 基础设施 local commit 即可，不自动 push remote；显式推送才人工确认）。**注：06 release 的 push + GitHub Release 在 S6/S7/对账全过后自动执行（gate 即授权），不走本 gate。**
 - **业务文档删除**（Phase 1.5 整改）→ 人工确认；临时产物（`.tmp/`、`*.zip`）可直接删。
 
 ## 七、产物路径规范（与全链路同构）
@@ -273,7 +273,7 @@ git branch -d csp/hub-init   # 清理已合并的侧分支
 | 侧车 .meta.json | 元数据分裂 | frontmatter 内联，每页自包含 |
 | 生成 Python 操作 | 慢且不可复现 | hub_manifest.sh（纯 git+grep） |
 | 写前不查冲突 | 同主题重复页 | add 前 locate，命中即 update |
-| 凭据入 workspace | 安全风险 | 凭据不写入；Git 发布用户确认 |
+| 凭据入 workspace | 安全风险 | 凭据不写入；00 hub 不自动 push，06 release 审核通过后自动 |
 | 各阶段不回写 manifest | 索引失效 | 产出实质页即回写 build_status |
 | 放任散落/版本漂移 | 文档散落各地、版本不一致、重复陈旧堆积 | Phase 1.5 整改：归位/版本对齐/删冗/修 front-matter，清单入册 |
 | 00 越权改正文 | 改业务内容语义 | 只动治理层（路径/版本/索引/front-matter）；正文归对应阶段 |
