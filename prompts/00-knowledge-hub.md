@@ -187,6 +187,27 @@ bash $SCRIPT list --type cms     # 按 source_type 列项
 
 **路径原则**：单一事实源（manifest 唯一）；可发现性（manifest 即索引）；路径即语义（`.csp/` 给 agent）；幂等（重跑 doctor 通过即复用）；不污染根目录。
 
+## 七.五、Git 工作流（知识产物走主干，代码走 feat 分支）
+
+**两类产物，两种策略**：
+- **`.csp/` 知识产物**（AGENTS.md / manifest / lifecycle-state / specs / tasks / PMS / CMS / TMS / traceability / 归档）= **共享基础设施**，每阶段都读 → **提交到主干（master/main）**，本地 commit 即可，不 push（Git 发布默认 off）。**不建 side branch 存放**——否则后续阶段在主干上读不到。
+- **`src/` 代码** = 05 实施开发阶段走 `feat/<scope>` worktree 分支，PR 合回主干（见 05「工程规范基线」）。
+
+**00 自身**：hub 初始化产物直接 commit 到当前主干。若已误建 side branch（如 `csp/hub-init`），**合并回主干后再进 01**：
+```bash
+git checkout master          # 切回主干
+git merge --no-ff csp/hub-init   # 把 hub 基础设施并入主干
+git branch -d csp/hub-init   # 清理已合并的侧分支
+```
+合并后 01+ 才能在主干读到 `.csp/AGENTS.md` + `manifest.json` + `lifecycle-state.json`。
+
+**禁止**：把 hub 基础设施留在未合并的 side branch 上就进下一阶段——会导致后续阶段探测 step 0 读不到 AGENTS.md 而"路由回 00"死循环。
+
+**回答常见疑问**：
+- 为何不长期在 `csp/hub-init` 分支开发？→ `.csp/` 是全链路共享只读基座，必须在主干可见；feat 分支只用于 `src/` 代码（05 阶段）。
+- 切回主干后怎么访问分支内容？→ `git merge` 把分支并入主干即可在主干访问；不需要也不应该留在分支上读。
+- Git 发布（push）默认 off，那本地 commit 算不算"发布"？→ 不算。本地 commit 到主干是正常操作；push 到 remote 才需人工确认（见「Confirmation Gates」节）。
+
 ## 八、manifest 回写约定（全链路必须遵守）
 
 本阶段建立 manifest 后，**后续每阶段产出实质页必须回写 manifest**：
@@ -214,6 +235,7 @@ bash $SCRIPT list --type cms     # 按 source_type 列项
 - [ ] 闭环：每条 spec 可 manifest 定位；ship 后 PMS 闭环
 - [ ] 无平台名/域名/鉴权耦合（git + CSP_GIT_REMOTE）
 - [ ] 既有文档已整改（版本一致、散落归位、重复/陈旧清理、front-matter 完整）；整改清单 `.csp/artifacts/reconcile-log.md` 已出
+- [ ] hub 产物（AGENTS.md/manifest/lifecycle-state）已在主干提交，未滞留未合并 side branch
 
 ## 十、变更同步（迭代回路）
 
@@ -238,6 +260,7 @@ bash $SCRIPT list --type cms     # 按 source_type 列项
 | 放任散落/版本漂移 | 文档散落各地、版本不一致、重复陈旧堆积 | Phase 1.5 整改：归位/版本对齐/删冗/修 front-matter，清单入册 |
 | 00 越权改正文 | 改业务内容语义 | 只动治理层（路径/版本/索引/front-matter）；正文归对应阶段 |
 | 删除不经确认 | 误删业务文档 | 临时产物可直接删；业务文档删除必须人工二次确认 |
+| hub 留未合并侧分支 | 建 `csp/hub-init` 不合并就进 01 | `.csp/` 知识产物走主干；合并回 master 再进下一阶段，否则下游读不到 AGENTS.md 死循环 |
 
 ## 十二、下游衔接（主动建议）
 
