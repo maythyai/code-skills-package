@@ -48,7 +48,7 @@
 ├── AGENTS.md                      # 路由契约（6 节 + 操作路由表）
 ├── manifest.json                  # 唯一 source index
 ├── product-spec/                  # PMS（01 阶段产物）
-├── code-spec/{app}/               # CMS（04 阶段产物/增量）
+├── code-spec/{app}/               # CMS（00 棕地蒸馏 / 05 增量对齐）
 ├── test-spec/{module}/            # TMS（03 阶段产物）
 ├── specs/                         # 全栈 feature spec（03 阶段产物）
 ├── decomposition/                # 需求拆解（02 阶段产物）
@@ -95,6 +95,18 @@
 > 该阶段是"知识与文档治理"的体现——确保 hub 始终基于一致、整洁、符合最新约定的文档，而非放任散落与版本漂移。
 
 ### Phase 2：建 manifest 唯一索引 → `.csp/manifest.json`
+
+> CMS 时序前置：CMS（代码说明书）是 03 技术方案 ground 的依据。**棕地（代码已存在）必须在 00 蒸馏好 CMS**，否则 03 凭空设计、05 也读不到；绿地（无代码）CMS 在 05 随代码建立。详见 Phase 1.7。
+
+### Phase 1.7：棕地 CMS 蒸馏（条件：代码已存在且无 CMS）
+
+若项目已有代码（棕地）但 `.csp/code-spec/{app}/` 不存在 → 蒸馏 CMS 作为 hub 的一部分：
+1. **入口点蒸馏**：扫对外入口（HTTP `@app.route`/`router.get`、RPC `@Service`/`@grpc`、CLI `argparse`/`click`/`cobra`、定时 `@Scheduled`/`celery beat`、消息/事件 `@KafkaListener`/`@EventListener`），每入口输出 `{类型, 标识, file:line, 业务场景(推断,不确定标 [TBD])}`。
+2. **调用链追溯**：从每入口向下追溯至叶子（DB/外部 API/IO），输出 `entry-points.jsonl` + `knowledge-graph.json`（节点=符号、边=调用，边带 `file:line`）；高危结论（"死代码""从未调用"）实机核验。
+3. **模块边界与约定**：按 PMS 模块边界对齐代码归属；蒸馏分层职责（Router/Service/Repository 禁止项）、命名、错误处理、日志规范；标注 PMS 边界与代码实际的 boundary drift。
+4. **生成 canonical CMS**：`.csp/code-spec/{app}/CODE-MODULE-SPEC.md` + `knowledge-graph.json` + `entry-points.jsonl`；每条结论带 `file:line`，**禁臆造**（grep 不到不写）；回写 manifest `source_type=cms`、`build_status=built`。
+
+> 理由：03 技术方案与 05 实施都依赖 CMS ground。棕地 CMS 必须在 00 建好——这是"知识中枢"的应有之义（含代码知识），不是 05 的事。绿地（无代码）跳过本步，CMS 在 05 随代码增量建立。
 ```json
 {
   "manifest_id": "<project>-hub",
@@ -267,7 +279,7 @@ git branch -d csp/hub-init   # 清理已合并的侧分支
 ```markdown
 ### 下一步建议
 - [ ] hub 已就绪 → 进入 01 PRD 生成（首条 PMS 入 manifest）
-- [ ] 棕地项目 → 先蒸馏 CMS（04 阶段能力）再设计
+- [ ] 棕地项目 → 已蒸馏 CMS（见 Phase 1.7），03 可据此 ground 设计
 - [ ] 既有 spec → 批量入 manifest 后做 closed-loop 校验
 - [ ] 各阶段产物持续回写 manifest，保持索引实时
 当前产物：.csp/AGENTS.md + .csp/manifest.json（{N} items，{built} built，{pending} pending）+ .csp/lifecycle-state.json（初始化：00 done，current_stage=01-prd）。

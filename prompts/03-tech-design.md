@@ -17,7 +17,7 @@
 3. **Spec 必须实现级**：DB Schema 到 DDL 级（索引/约束/分区）；API 到 OpenAPI 级（请求/响应/错误码/限流）；前端到组件树+状态+路由级。
 4. **与 PRD/PMS 同源同构**：技术产物的路径、slug、feature-id、追溯锚点必须与上游 PRD 严格对齐；**Feature 划分以 decomposition 为准，不增不减，不得越出 PMS 模块边界**；PRD 在 `docs/prd/`，技术产物在 `.csp/` 约定目录，禁止散落到自定义目录。
 5. **TMS 同步建立**：测试基线随 Spec 同步产出，每条 PRD 验收标准至少映射 1 条测试用例；"绿测试 ≠ 覆盖了需求"，未映射的需求即功能缺口。
-6. **CMS 参考优先**：若 `.csp/code-spec/` 存在，架构与 Spec 必须 reference 既有入口点/调用链/模式，标注"源自 CMS"；不得凭空设计忽略既有代码现实。
+6. **CMS 参考优先**：棕地必须有 CMS（00 已蒸馏），架构与 Spec 必须 reference 既有入口点/调用链/模式，标注"源自 CMS"；**棕地无 CMS → 停步回 00 Phase 1.7 蒸馏，不凭空设计**。绿地无 CMS 可接受。
 7. **不臆造数据**：量级/增长率/QPS 未提供标 `[TBD]`，末尾汇总。
 8. **简单也要 spec**：schema 变更级联，先设计后实现。
 
@@ -39,7 +39,7 @@
 2. **需求拆解**：`.csp/decomposition/DECOMPOSITION-SUMMARY.md`、`FEATURE-DETAILS/*.yaml`（技术维度标记）、`NFR.md`、`DEPENDENCY-GRAPH.md`。
 3. **PMS**：`.csp/product-spec/PMS-INDEX.md` + `PMS-{module}.md` → 模块边界，**不得越界**。
 4. **技术选型（决定是否跑「技术选型（S2）」节）**：`.csp/tech-decisions/TECH-STACK-OVERVIEW.md`、`PER-FEATURE-STACK.md`、`TECH-DECISIONS-SUMMARY.md`、`ADR/*.md`。**已选型 → 复用不重写；缺失 → 「技术选型（S2）」节选型。**
-5. **CMS（若存在）**：`.csp/code-spec/` → 既有代码地图、入口点、调用链、既有模式；**ground 设计**。
+5. **CMS（棕地必须）**：`.csp/code-spec/{app}/` → 既有入口点/调用链/分层约定/既有模式；**ground 设计**。**棕地必须有 CMS（00 已蒸馏），不存在 → 停步路由回 00 Phase 1.7 蒸馏**；绿地（无代码）无 CMS 可接受。
 6. **既有技术产物**：`.csp/tech-design/`、`.csp/specs/SPEC-INDEX.md`、`.csp/test-spec/` → 判断新增还是增量变更。
 7. **项目级 docs**：`docs/ARCHITECTURE.md`、`docs/USER-GUIDE.md`、`docs/analysis/`、`README.md`/`CLAUDE.md`。
 
@@ -52,7 +52,7 @@
 - 技术栈：{已定→复用 / [TBD]→「技术选型（S2）」节选型}
 - NFR：{性能/安全/可用性要点，来源 NFR.md}
 - PMS 模块边界：{列出，或"无"}
-- CMS 代码地图：{有/无；有无则参考入口点/调用链}
+- CMS 代码地图：{棕地必须有，无则回 00 蒸馏；绿地可无}
 - 本次定位：{新增架构 / 增量扩展 / 变更影响}
 - 缺口：{仍缺的选型/NFR/Feature 定义，决定是否进入引导模式}
 ```
