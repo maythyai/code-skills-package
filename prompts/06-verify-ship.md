@@ -153,10 +153,19 @@
 - DB：migration 必有 down()；新功能插入的数据标"保留/清理"。
 
 ### 7.4 发布产物
-- git tag（`v{milestone}`）
-- CHANGELOG.md 追加条目（趁热写，不"以后补"）
-- release notes → `.csp/ship/RELEASE-NOTES-{milestone}.md`
-- 回滚计划 → `.csp/ship/ROLLBACK-PLAN-{milestone}.md`
+**本地（auto，可逆）**：
+- CHANGELOG.md 追加条目（趁热写，不"以后补"，遵循 Keep a Changelog）。
+- release notes → `.csp/ship/RELEASE-NOTES-{milestone}.md`。
+- 回滚计划 → `.csp/ship/ROLLBACK-PLAN-{milestone}.md`。
+- `git tag -a v{milestone}`（本地 annotated tag，附发布说明）。
+
+**Git 发布（outward/不可逆，人工拍板，遵循 00「Confirmation Gates」Git 发布）——tag push 与 GitHub Release 一起做，不分离**：
+- `git push origin v{milestone}`（推 tag）。
+- **创建 GitHub Release**：`gh release create v{milestone} --title "v{milestone}" --notes-file .csp/ship/RELEASE-NOTES-{milestone}.md`（或 CI release workflow 触发，见「版本与发布规范」节）；将 Release 与 tag 关联，发布说明上墙。
+- 上传构建产物到 Release（如有：`gh release create ... --files dist/*`，或 CI 上传）。
+- ⚠️ **禁止只推 tag 不建 Release**——tag 与 Release 是一次发布的两面。只推 tag 会让远端"有 tag 无 Release"（用户在 Releases 页看不到发布说明/产物，等于半发布）。若 CI 自动建 Release → 确认 workflow 已触发且成功；否则手动 `gh release create` 补齐。
+
+**Release 创建后验证**：Releases 页面可见、与 tag 关联、发布说明正确、产物已挂；失败则按回滚策略回退。
 
 ### 7.5 发布后第一小时验证
 健康端点 200 → 错误监控无新类型 → 延迟无退化 → 手测关键用户流程 → 日志可读 → 回滚机制 dry-run 验证。
@@ -189,7 +198,7 @@
 **多平台版本同步**：根/各 app package.json、tauri.conf.json、iOS pbxproj、Docker tag、GitHub Release tag 必须一致；用脚本校验禁止人工同步。
 **CHANGELOG**：遵循 Keep a Changelog——Added/Changed/Deprecated/Removed/Fixed/Security；推荐 release-please/bot 基于 conventional commits 自动生成，贡献者不手动编辑。
 **预发布与灰度**：alpha（功能未完成内部测）/beta（功能完成公开测）/rc（发布候选）；NPM dist-tags（alpha/beta/latest）；质量分级 exploration→insider→stable。
-**Release Checklist**：main CI 全绿 / 版本号已更新 / CHANGELOG 已更新 / 多平台构建成功 / 安装冒烟通过 / 安全审计无高危 / Release Notes 已撰 / Tag 已推 / 产物已上传。
+**Release Checklist**：main CI 全绿 / 版本号已更新 / CHANGELOG 已更新 / 多平台构建成功 / 安装冒烟通过 / 安全审计无高危 / Release Notes 已撰 / Tag 已推 / **GitHub Release 已建（与 tag 关联）** / 产物已上传到 Release。
 
 ### 7.8 CI/CD 与供应链安全
 **CI 模式**：detect → fan-out → 单一 gate job 聚合（分支保护只配一个 required check）；快速反馈优先分层（lint+typecheck 第一层 2–5min、单测第二层、集成/E2E 第三层、构建第四层）；并发取消同 PR 旧 run（cancel-in-progress）；依赖缓存（pnpm/uv）；矩阵 fail-fast:false。
@@ -306,6 +315,7 @@
 | diff 小跳过影响 | hub 函数小改 | CMS 追溯调用链影响 |
 | 无回滚发布 | "出问题再说" | 发布前必有回滚计划 |
 | 大爆炸发布 | 一次全量 | feature flag + 灰度分阶段 |
+| 只推 tag 不建 Release | 远端"有 tag 无 Release"，半发布 | tag push 与 `gh release create` 一起做；CI 建 Release 则确认 workflow 成功 |
 | 周五发布 | 临下班上线 | 不在周末前发布 |
 | 监控以后补 | "先上再说" | 发布前装好监控 |
 | 文档以后补 | "follow-up" | 趁热写 CHANGELOG/文档 |
