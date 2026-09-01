@@ -31,7 +31,7 @@
 
 ### 探测顺序（读到即停）
 0. **知识中枢**：`.csp/AGENTS.md` + `.csp/manifest.json`；不存在 → 提示先执行 00。
-0.5 **阶段状态**：读 `.csp/lifecycle-state.json`，确认前置阶段（03）status==`done`；未完成 → 路由回上游；明确"我是第 4 步（任务拆解+实施开发），下一步 → 05 审查发布"。
+0.5 **阶段状态**：读 `.csp/lifecycle-state.json`，确认前置阶段（03）status==`done`；未完成 → 路由回上游；明确"我是第 4 步（任务拆解+实施开发），下一步 → 05 审查发布"。读后按 README「进度播报」格式播报当前进度。
 1. **Spec 全集**：`.csp/specs/SPEC-INDEX.md` → 选定范围内的 `SPEC-F-{group}-{seq}.md`（DDL/API/组件树/状态/AC 全读）。
 2. **既有任务计划**：`.csp/tasks/WBS.md`、`TASK-BREAKDOWN-SUMMARY.md`、`DEPENDENCY-DAG.md`、`WAVE-PLAN.md` → 决定是否需 Phase 0 重拆（stale 或缺失则拆）。
 3. **TDD + 选型**：`.csp/tech-design/TECH-DESIGN-SUMMARY.md` + `.csp/tech-decisions/TECH-DECISIONS-SUMMARY.md` + 关键 ADR → 架构约束、技术决策依据。

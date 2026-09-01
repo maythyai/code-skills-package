@@ -28,7 +28,7 @@
 
 ### 探测顺序（读到即停）
 0. **知识中枢**：`.csp/AGENTS.md` + `.csp/manifest.json`；不存在 → 提示先执行 00。
-0.5 **阶段状态**：读 `.csp/lifecycle-state.json`，确认前置阶段（04）status==`done`；未完成 → 路由回上游；明确"我是第 5 步（审查·测试·发布·运维），下一步 → 里程碑归档/下一迭代"。
+0.5 **阶段状态**：读 `.csp/lifecycle-state.json`，确认前置阶段（04）status==`done`；未完成 → 路由回上游；明确"我是第 5 步（审查·测试·发布·运维），下一步 → 里程碑归档/下一迭代"。读后按 README「进度播报」格式播报当前进度。
 1. **Spec + dev 产物**：`.csp/specs/SPEC-F-*-n.md`（AC/维度 7 测试策略）、`.csp/artifacts/implement.md`（DEV-LOG 偏离记录）、`.csp/artifacts/verify/test-results.md`。
 2. **任务计划**：`.csp/tasks/WBS.md`、`WAVE-PLAN.md` → 确认本 Wave Task 全 done。
 3. **TMS 基线**：`.csp/test-spec/TMS-{module}.md` + `TEST-INDEX.md` → 存量用例与 AC 覆盖率。

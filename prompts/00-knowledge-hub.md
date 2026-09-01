@@ -24,7 +24,7 @@
 ## 三、前置与项目上下文探测
 
 ### 探测顺序
-0.5 **阶段状态**：读 `.csp/lifecycle-state.json`；若不存在（首次启动）→ 本阶段负责初始化它（见「产物路径规范」节）。
+0.5 **阶段状态**：读 `.csp/lifecycle-state.json`；若不存在（首次启动）→ 本阶段负责初始化它（见「产物路径规范」节）。读后按 README「进度播报」格式向用户播报当前进度（开始：00 为 `▶`，01–05 为 `○`）。
 1. **git 仓库**：项目根是否 git 仓库可写（`CSP_GIT_REMOTE` 默认 github.com）；不可写则提示用户初始化。
 2. **资料源根**：`docs/`（PRD/ARCHITECTURE/USER-GUIDE/analysis 等）、`README.md`/`CLAUDE.md`、既有 `.csp/` 产物。
 3. **既有 hub**：`.csp/AGENTS.md`、`.csp/manifest.json` 是否存在、`schemaVersion`。

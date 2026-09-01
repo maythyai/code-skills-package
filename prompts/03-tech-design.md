@@ -34,7 +34,7 @@
 
 ### 探测顺序（读到即停）
 0. **知识中枢**：`.csp/AGENTS.md` + `.csp/manifest.json`；不存在 → 提示先执行 00。
-0.5 **阶段状态**：读 `.csp/lifecycle-state.json`，确认前置阶段（02）status==`done`；未完成 → 路由回上游；明确"我是第 3 步（技术方案+选型+Spec），下一步 → 04 实施开发"。
+0.5 **阶段状态**：读 `.csp/lifecycle-state.json`，确认前置阶段（02）status==`done`；未完成 → 路由回上游；明确"我是第 3 步（技术方案+选型+Spec），下一步 → 04 实施开发"。读后按 README「进度播报」格式播报当前进度。
 1. **PRD + front-matter**：`docs/prd/PRD-{slug}.md`（`id`/`product_type`/`feature_count`/`mvp_scope`/`thin_sections`/`related_specs`/`related_pms`）。
 2. **需求拆解**：`.csp/decomposition/DECOMPOSITION-SUMMARY.md`、`FEATURE-DETAILS/*.yaml`（技术维度标记）、`NFR.md`、`DEPENDENCY-GRAPH.md`。
 3. **PMS**：`.csp/product-spec/PMS-INDEX.md` + `PMS-{module}.md` → 模块边界，**不得越界**。

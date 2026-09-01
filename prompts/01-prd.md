@@ -27,7 +27,7 @@
 
 ### 探测顺序（读到即停）
 0. **知识中枢**：`.csp/AGENTS.md` + `.csp/manifest.json`；不存在 → 提示先执行 00。
-0.5 **阶段状态**：读 `.csp/lifecycle-state.json`，确认前置阶段（00）status==`done`；未完成 → 路由回上游；明确"我是第 1 步（PRD），下一步 → 02 需求拆解"。
+0.5 **阶段状态**：读 `.csp/lifecycle-state.json`，确认前置阶段（00）status==`done`；未完成 → 路由回上游；明确"我是第 1 步（PRD），下一步 → 02 需求拆解"。读后按 README「进度播报」格式播报当前进度。
 1. **PRD 索引**：`docs/prd/PRD-INDEX.md` → 找既有 PRD，判断新增还是变更。
 2. **产品说明书**：`.csp/product-spec/PMS-INDEX.md` + `PMS-{module}.md` → 读既有模块边界与验收形态，**新需求不得越界既有 PMS 模块**。
 3. **项目级 docs**：`docs/ARCHITECTURE.md`/`docs/ARCHITECTURE_zh.md`（判断功能边界是否越界）、`docs/USER-GUIDE.md`（复用既有能力）、`docs/analysis/`（背景素材）、`README.md`/`CLAUDE.md`（核心定位）。
