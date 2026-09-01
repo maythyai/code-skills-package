@@ -1,6 +1,6 @@
 # 系统提示词集（端到端交付链路）
 
-一套自包含的系统提示词，覆盖从知识中枢初始化到上线运维的完整交付链路。七份提示词同源同构：统一目录约定（`docs/prd/` + `.csp/`）、统一 slug/feature-id 命名、统一 front-matter 双向互链、manifest 唯一索引、PMS/CMS/TMS 三说明书全程 living 治理、归档就绪、变更 delta 同步。
+一套自包含的系统提示词，覆盖从知识中枢初始化到上线运维与整体复盘的完整交付链路。八份提示词同源同构：统一目录约定（`docs/prd/` + `.csp/`）、统一 slug/feature-id 命名、统一 front-matter 双向互链、manifest 唯一索引、PMS/CMS/TMS 三说明书全程 living 治理、归档就绪、变更 delta 同步。
 
 ## 链路与文件
 
@@ -13,6 +13,9 @@
 | 4 | 任务拆解 + 实施规划 | [04-task-breakdown.md](./04-task-breakdown.md) | `.csp/tasks/`（WBS/DAG/WAVE-PLAN） |
 | 5 | 实施开发（多 Agent 团队） | [05-implementation.md](./05-implementation.md) | 代码（git worktree）+ `.csp/code-spec/`（CMS 增量）+ `.csp/artifacts/` |
 | 6 | 审查·测试·发布交付·运维 | [06-verify-ship.md](./06-verify-ship.md) | `.csp/artifacts/{verify,review}/` + `.csp/ship/` + `.csp/ops/` + `.csp/milestones/` |
+| 7 | 整体复盘审查（产品+技术，迭代探索） | [07-reviewer.md](./07-reviewer.md) | `.csp/review/` + `docs/solutions/`（摘要） |
+
+> **06 vs 07**：06 是**发布前符合性验证**（实现是否满足 PRD/Spec/AC、能否上线），是门控；07 是**里程碑后整体复盘**（产品对不对、架构稳不稳、下一步做什么），探索性/战略性，不卡发布。07 从用户视角+技术视角发现 Spec 之外的新问题，findings 回流下一迭代 01-05。
 
 ## 阶段并入说明
 
@@ -54,7 +57,7 @@
 
 ## 阶段状态追踪（Agent 如何知道"现在第几步、下一步去哪"）
 
-全链路用**单一状态文件** `.csp/lifecycle-state.json` 记录流水线进度，由 00 初始化、各阶段读/写、06 对账闭环。
+全链路用**单一状态文件** `.csp/lifecycle-state.json` 记录流水线进度，由 00 初始化、各阶段读/写、06 对账闭环、07 复盘回流。
 
 **粒度原则**：lifecycle-state 只记**阶段级 + 每阶段 progress 摘要（指针/计数）**，不存全量任务/用例。细粒度状态各有归属：Task 在 `.csp/tasks/WBS.md`、AC 覆盖在 `.csp/traceability/COVERAGE-REPORT.md`、产物 build_status 在 `.csp/manifest.json`。lifecycle-state 是导航摘要，避免重复臃肿。
 
@@ -72,12 +75,14 @@
     {"id":"03-tech-design","name":"技术选型+技术方案+Spec","status":"in_progress","prompt":"03-tech-design.md","progress":{"tech_decisions":"built","tdd_chapters":6,"specs":0,"ac_coverage":"0/34"}},
     {"id":"04-task-breakdown","name":"任务拆解+实施规划","status":"pending","prompt":"04-task-breakdown.md","progress":{"tasks_total":0,"waves":0,"dag_acyclic":null}},
     {"id":"05-implementation","name":"实施开发","status":"pending","prompt":"05-implementation.md","progress":{"tasks_done":0,"commits":0,"waves_done":0}},
-    {"id":"06-verify-ship","name":"审查测试发布运维","status":"pending","prompt":"06-verify-ship.md","progress":{"quality_gate":"pending","review":"pending","shipped":false}}
+    {"id":"06-verify-ship","name":"审查测试发布运维","status":"pending","prompt":"06-verify-ship.md","progress":{"quality_gate":"pending","review":"pending","shipped":false}},
+    {"id":"07-reviewer","name":"整体复盘审查","status":"pending","prompt":"07-reviewer.md","progress":{"findings_total":0,"p0":0,"p1":0,"next_iteration":false}}
   ]
 }
 ```
 
 - **status 取值**：`pending`（未开始）/ `in_progress`（进行中）/ `done`（完成）/ `blocked`（阻塞）/ `stale`（上游变更需重跑）。
+- **07 为可选触发阶段**：不在 00→06 的强制线性链路上；里程碑发布（06 done）后由用户触发复盘。07 的 findings 通过 `回流阶段` 字段驱动下一迭代 01-05。
 - **每阶段开始（探测 step 0.5）**：读 `lifecycle-state.json`，确认本阶段前置阶段 status==`done`；未完成 → 路由回上游；明确"我是第 N 步、下一步是 Y"。
 - **每阶段完成**：写 `lifecycle-state.json`——本阶段 status=`done` + 补 `progress` 摘要（计数/指针，非全量）、`current_stage` 指向下一阶段 id、`last_updated` 更新、`reconciled=false`（待 06 对账）。
 - **06 对账闭环（发布归档前必做）**：06 读 lifecycle-state + WBS + COVERAGE-REPORT + manifest + traceability 交叉核对，纠正不一致（如某阶段声称 done 但细粒度未达），写回对账后的 lifecycle-state 并置 `reconciled=true`，再快照归档。详见 06「阶段状态对账与闭环」节。
@@ -90,7 +95,7 @@
 每阶段在 **step 0.5 读 lifecycle-state 后**（开始播报）与**完成写 state 后**（结束播报）各向用户输出一次紧凑进度条，让用户随时知道"现在第几步、已完成哪些、剩哪些"：
 
 ```
-📊 进度 [00✓][01✓][02✓][03▶][04○][05○][06○] 当前:03 技术方案 | 已完成:00,01,02 | 剩余:04,05,06
+📊 进度 [00✓][01✓][02✓][03✓][04✓][05✓][06✓][07▶] 当前:07 整体复盘 | 已完成:00-06 | 剩余:下一迭代
 ```
 
 - 图例：`✓` done / `▶` in_progress / `○` pending / `⛔` blocked / `↻` stale。
