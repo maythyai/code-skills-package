@@ -4,6 +4,12 @@
 
 > **定位**：不在 00-07 线性链路内，但**借用其约定**（`docs/`+`.csp/` 目录、front-matter、slug、manifest 回写、lifecycle-state 感知、默认优先、节标题引用），保证统一可用。01 PRD 读 ROADMAP 定位本版本主题；06 release 用 ROADMAP 的版本号规则；07 复盘 findings 回流更新 ROADMAP 下一迭代主题。
 
+## 全流程定位
+
+**全流程**：外环 `roadmap`（战略锚点+版本号规则+1/3年路径，跑一次）→ 内环 `00` 知识中枢 → `01` PRD → `02` 需求拆解 → `03` 技术方案+Spec → `04` 任务拆解 → `05` 实施 → `06` 审查·发布 → `07` 复盘（findings 回流 roadmap/下一轮 01）。
+
+**你现在在：外环 `roadmap`**（先于 00；每个项目跑一次，07 回流/战略调整时增量更新；下一步 → 内环 `00` 知识中枢）。
+
 ## 一、使命与硬边界（红线）
 
 1. **Anchor, not plan**：战略 = 产品是什么/为什么/为谁（Rumelt kernel：诊断→指导方针→连贯行动）。**不是 feature list、不是排期**——功能细节归 01 PRD/spec，排期归任务管理。规划只给"方向 + 版本主题 + 关键价值"，不放详细 PRD。
@@ -31,6 +37,7 @@
 4. **07 复盘 findings**：`.csp/review/REVIEW-FINDINGS-*.json`（status=open/deferred）→ 回流为下一版本主题输入。
 5. **项目级 docs**：`README.md`/`CLAUDE.md`/`docs/ARCHITECTURE.md` → 产品定位/架构现状。
 6. **lifecycle-state**：`.csp/lifecycle-state.json` → 当前迭代到哪步，规划与在跑版本对齐。
+7. **参考/竞品文件夹**：扫 `开源项目参考/`、`references/`、`竞品/`、`vendor/`、`inspire/` 等（项目特征命名）→ 若有，列参考项目，Phase 0.5 提炼借鉴输入。
 
 ### 探测后输出"规划就绪卡"
 ```markdown
@@ -39,6 +46,7 @@
 - 已发布版本：{git tag 列表，或"无"}
 - 07 回流 findings：{open/deferred 数，或"无"}
 - 产品定位来源：{README/ARCHITECTURE，或 [TBD]}
+- 参考项目文件夹：{列出，或"无"} → {跑 Phase 0.5 借鉴 / 跳过}
 - 本次定位：{首次规划 / 增量更新 / 定点更新}
 ```
 
@@ -54,6 +62,15 @@
 6. **Not working on（可选）**：明确不做什么（聚焦的代价）。
 
 > STRATEGY.md 短而硬：anchor，不扩成 feature list。下游 01 PRD 读它 ground。
+
+### Phase 0.5：参考/竞品借鉴（条件：探测发现参考项目文件夹）
+若探测发现参考项目文件夹（`开源项目参考/`/`竞品/`/`references/`/`vendor/`/`inspire/` 等）→ 提炼借鉴输入：
+1. **feature 借鉴**：扫参考项目的 features/README/skills/PRD/CHANGELOG，提炼可借鉴的功能/能力模式；标注来源项目+路径。
+2. **竞品差异化**：对比参考项目定位/做法，识别本产品差异化机会（填入 STRATEGY 的 approach/tracks）。
+3. **版本主题输入**：借鉴的 feature/themes 映射到 ROADMAP 版本主题（哪些版本做、如何差异化落地，不照抄）。
+产出 `docs/analysis/COMPETITIVE-REFERENCE.md`（借鉴清单：`来源项目 | feature/做法 | 借鉴点 | 差异化判断 | 拟纳入版本`）。
+
+**红线**：①**借鉴非复制**——竞品 feature 必须判断"是否适合本产品定位 + 差异化"，不照抄；②标来源路径，可追溯；③**开源协议兼容**（MIT/Apache 可借鉴，GPL 审慎避免传染）；④参考只是输入，战略选择仍归 Phase 0。
 
 ### Phase 1：版本号规则（产出 ROADMAP.md 的"版本号规则"节）
 **方案选择**：
@@ -92,8 +109,8 @@
 方向性叙事：产品终局、护城河、可持续性。一段话，不细化。
 
 ### Phase 5：产出 + 回写 + 衔接
-- 写 `docs/strategy/STRATEGY.md`（锚点）+ `docs/strategy/ROADMAP.md`（版本号规则 + 1y/3y/长期路径 + 版本-主题表）。
-- 回写 `.csp/manifest.json`：两文件 item `source_type=doc`、`build_status=built` + `content_hash`。
+- 写 `docs/strategy/STRATEGY.md`（锚点）+ `docs/strategy/ROADMAP.md`（版本号规则 + 1y/3y/长期路径 + 版本-主题表）；若有参考文件夹，另写 `docs/analysis/COMPETITIVE-REFERENCE.md`（借鉴清单）。
+- 回写 `.csp/manifest.json`：strategy/roadmap/competitive-reference item `source_type=doc`、`build_status=built` + `content_hash`。
 - 衔接声明：01 PRD 读 ROADMAP 定位本版本主题；06 release 用版本号规则；07 复盘 findings 回流更新 ROADMAP 下一版本主题。
 
 ## 五、产物路径规范（与 00-07 同构）
@@ -103,7 +120,9 @@
 ├── docs/strategy/
 │   ├── STRATEGY.md          # 战略锚点（target problem/approach/who/metrics/tracks/not-doing）
 │   └── ROADMAP.md           # 版本号规则 + 1y/3y/长期路径 + 版本-主题表
-└── .csp/manifest.json       # 回写 strategy/roadmap item
+├── docs/analysis/
+│   └── COMPETITIVE-REFERENCE.md  # 参考/竞品借鉴清单（若有参考文件夹，Phase 0.5 产出）
+└── .csp/manifest.json       # 回写 strategy/roadmap/competitive-reference item
 ```
 
 **front-matter**（两文件头部）：
@@ -142,6 +161,8 @@ see_also: docs/prd/PRD-INDEX.md | .csp/review/REVIEW-FINDINGS-*.json
 | 推倒重写 | 每次更新全重写 | durable rerunnable，in-place 增量更新 |
 | 臆造指标 | 编 DAU/收入目标 | 未定标 [TBD] |
 | 07 findings 不回流 | 复盘发现不进下一版本主题 | 07 open/deferred findings → ROADMAP 下版本主题 |
+| 照抄竞品 | 参考项目 feature 直接搬 | 借鉴非复制：判断适合本定位+差异化，标来源，协议兼容 |
+| 忽略参考文件夹 | 有开源参考却没借鉴 | 探测参考文件夹，Phase 0.5 提炼 feature/差异化输入 |
 | 过度问人 | 每节反复确认 | 默认优先，只在战略根本模糊时人工澄清 |
 
 ## 输出风格
