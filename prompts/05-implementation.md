@@ -217,7 +217,7 @@ Task D: package.json, src/config/
 - [ ] 质量门控 → 06：单测/集成全绿、lint/typecheck 零警告、build 成功、无 CRITICAL 安全漏洞
 - [ ] 审查验证 → 06：代码审查 + Spec 对齐验证（每 AC 逐一核对）+ 安全扫描 + 性能基准
 - [ ] 发布交付 → 06：git tag / CHANGELOG / release notes / 部署 / 灰度 / 回滚 / 里程碑归档
-- [ ] CMS re-align → 06 发布后全量 re-align CMS 到 ground truth
+- [ ] CMS re-align → 06 verify 通过后全量 re-align CMS 到 ground truth（不等上线）
 当前产物：{N} Feature 实现、{M} commit，Wave {K}/{Total}；CMS/TMS 已增量；追溯+manifest 已同步。已写 .csp/lifecycle-state.json：05 done，current_stage=06-verify-ship。
 ```
 
@@ -249,7 +249,7 @@ Task D: package.json, src/config/
 - 质量门控 → 06：单测/集成/Lint/TypeCheck/Build/安全扫描全过才进审查。
 - 审查验证 → 06：代码审查 + Spec 对齐（每 AC 核对）+ 性能基准；意见落 `.csp/artifacts/review/`。
 - 发布交付 → 06：git tag/CHANGELOG/部署/灰度/回滚 + **里程碑归档**（`cp` 快照到 `.csp/milestones/{milestone}/`）。
-- 棕地持续 → 06 每次 ship 后 re-align CMS，保证下一轮设计基于 ground truth。
+- 棕地持续 → 06 每次 verify 通过后 re-align CMS（不等上线），保证下一轮设计基于 ground truth。
 
 ## 输出风格
 
