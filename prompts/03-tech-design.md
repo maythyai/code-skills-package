@@ -26,6 +26,7 @@
 6. **CMS 参考优先**：棕地必须有 CMS（00 已蒸馏），架构与 Spec 必须 reference 既有入口点/调用链/模式，标注"源自 CMS"；**棕地无 CMS → 停步回 00 Phase 1.7 蒸馏，不凭空设计**。绿地无 CMS 可接受。
 7. **不臆造数据**：量级/增长率/QPS 未提供标 `[TBD]`，末尾汇总。
 8. **简单也要 spec**：schema 变更级联，先设计后实现。
+9. **TDD 评审 gate（默认自动，不等人）**：TDD+Spec 产出后 auto 跑评审（reviewer≠author），findings 自动应用——Critical 自动修→重审（循环至无 Critical），非 Critical 标改进项不阻塞；**无未解 Critical → 自动通过 → 进 04，不要求人工批准**。仅架构根本问题无法 auto-resolve 才人工。评审见「TDD 评审」节。
 
 ## 二、触发与路由
 
@@ -320,14 +321,36 @@ ac_coverage: {已映射 AC 数}/{PRD 该 Feature AC 总数}
 4. **CMS 反向同步**：若实现期代码变更已沉淀到 CMS，本阶段重读 CMS 校准设计漂移，标记需同步的设计章节（写 `.csp/tech-design/.sync-status.yaml`）。
 5. **归档就绪**：产物落固定 `.csp/` 路径，便于 05 发布时按归档规则 `cp` 快照到 `.csp/milestones/{milestone}/`。
 
+## 十二.五、TDD 评审（auto gate——标 03 done 前，不等人）
+
+> 同 01 PRD 评审：reviewer≠author，auto 跑、findings 自动应用、无 Critical 自动进 04，**不要求人工批准**。
+
+**触发**：TDD + Spec 全部产出后、标 03 done 前。
+
+**评审者**：reviewer ≠ author——派 reviewer sub-agent 多视角评审，不由作者自审。
+
+**多视角**：架构（分层/模块边界/部署拓扑）/ 数据（ER/一致性/分区）/ 接口（风格/版本/鉴权）/ 安全（STRIDE 缓解）/ 性能（热点/扩展瓶颈）/ 可测性（AC 覆盖）/ Spec 完整性（8 维度/AC 覆盖）/ 选型合理性（ADR 对比）。
+
+**产出**：`.csp/tech-design/REVIEW-FINDINGS.md`（findings + 决策）。每条：`维度 / 问题 / 证据（TDD/Spec section 或 file:line）/ 影响 / 严重度 / 建议`。
+
+**严重度**：Critical（架构根本错误 / 数据风险 / 安全漏洞 / Spec 缺关键维度无法实施）/ High / Medium / Low。
+
+**决策（默认自动，不等人）**：
+- Critical → 03 自动修 → 重审（循环至无 Critical）；非 Critical → 标改进项不阻塞。
+- **无未解 Critical → 自动通过**，标 03 done → 进 04，**不要求人工批准**。
+- 仅架构根本问题无法 auto-resolve → 才人工澄清（唯一人工拍板）。
+
+**红线**：reviewer≠author；不替作者改 TDD（findings 自动应用是默认）；有未解 Critical 必修不假装通过；证据引 section/file:line。
+
+> **与 07 区别**：07 评已上线产品；TDD 评审评未实施的设计（工程前 gate）。
+
 ## 十三、生成后输出"下一步建议块"
 ```markdown
 ### 下一步建议
-- [ ] TDD 评审 → 多角色技术评审，意见落 .csp/tech-design/REVIEW-FINDINGS.md，回填后进实现
-- [ ] 任务拆解 → 04：每 Spec 拆可分配可估时任务落 .csp/tasks/（WBS.md/TASK-BREAKDOWN-SUMMARY.md/DEPENDENCY-DAG.md/WAVE-PLAN.md）
-- [ ] 跨系统集成 → 补 .csp/tech-design/INTEGRATION-DESIGN.md
+- ✅ TDD 评审已自动完成（findings 落 .csp/tech-design/REVIEW-FINDINGS.md，无未解 Critical，自动进 04）
+- [ ] 跨系统集成 → 补 .csp/tech-design/INTEGRATION-DESIGN.md（按需）
 - [ ] PRD 变更 → 沿 .csp/traceability/ 评估变更影响
-当前产物：[选型+]TDD（{N} 章）+ Spec（{M} 份）+ TMS + 追溯矩阵；已回填 docs/prd/PRD-{slug}.md 的 related_specs；已回写 manifest。已写 .csp/lifecycle-state.json：03 done，current_stage=04-task-breakdown。
+当前产物：[选型+]TDD（{N} 章）+ Spec（{M} 份）+ TMS + 追溯矩阵 + REVIEW-FINDINGS（已 auto 通过）；已回填 docs/prd/PRD-{slug}.md 的 related_specs；已回写 manifest。已写 .csp/lifecycle-state.json：03 done，current_stage=04-task-breakdown。
 ```
 
 ## 十四、反模式
@@ -349,11 +372,11 @@ ac_coverage: {已映射 AC 数}/{PRD 该 Feature AC 总数}
 
 ## 十五、下游衔接（主动建议）
 
-- 选型+TDD+Spec 完成 → 04 任务拆解落 `.csp/tasks/`，按 `DEPENDENCY-DAG.md` 排波次 `WAVE-PLAN.md`；05 实施开发消费。
-- TDD 评审 → 意见落 `.csp/tech-design/REVIEW-FINDINGS.md`，回填后进实现。
+- 选型+TDD+Spec 完成 → 04 任务拆解落 `.csp/tasks/`，按 `DEPENDENCY-DAG.md` 排波次 `WAVE-PLAN.md`；05 实施开发消费（TDD 评审已 auto 通过，无需人工回填即进 04）。
+- TDD 评审 → auto，findings 落 `.csp/tech-design/REVIEW-FINDINGS.md`，无 Critical 自动进 04。
 - 跨系统集成 → `INTEGRATION-DESIGN.md`。
 - 领域复杂 → DDD `DDD-MODEL.md`，先于 schema。
-- 实现期 CMS 更新 → 04 开发阶段及时回写 `.csp/code-spec/` + manifest，下一轮设计据此校准。
+- 实现期 CMS 更新 → 05 开发阶段及时回写 `.csp/code-spec/` + manifest，下一轮设计据此校准。
 
 ## 输出风格
 
