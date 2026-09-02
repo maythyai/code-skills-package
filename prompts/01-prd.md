@@ -28,6 +28,7 @@
 
 ### 探测顺序（读到即停）
 0. **知识中枢**：`.csp/AGENTS.md` + `.csp/manifest.json`；不存在 → 提示先执行 00。
+0.3 **长期规划**：`docs/strategy/ROADMAP.md` + `STRATEGY.md`（外环）→ 定位本 PRD 实现哪个版本/主题，背景/价值对齐 roadmap；不存在 → 提示先跑 roadmap 规划（或本 PRD 标 `[TBD]` 待规划补）。
 0.5 **阶段状态**：读 `.csp/lifecycle-state.json`，确认前置阶段（00）status==`done`；未完成 → 路由回上游；明确"我是第 1 步（PRD），下一步 → 02 需求拆解"。读后按 README「进度播报」格式播报当前进度。
 1. **PRD 索引**：`docs/prd/PRD-INDEX.md` → 找既有 PRD，判断新增还是变更。
 2. **产品说明书**：`.csp/product-spec/PMS-INDEX.md` + `PMS-{module}.md` → 读既有模块边界与验收形态，**新需求不得越界既有 PMS 模块**。
@@ -209,6 +210,8 @@ feature_count: {N}
 mvp_scope: [{slug}, ...]
 thin_sections: [{section编号}, ...]
 upstream_source: docs/ARCHITECTURE.md | spark-output/context/stories.json | user-input | .csp/review/REVIEW-FINDINGS-{milestone}.json#F-NN（若采纳 07 复盘 findings）
+roadmap_ref: docs/strategy/ROADMAP.md#vX.Y.Z（本 PRD 实现的版本/主题；外环规划，无则 [TBD]）
+target_version: vX.Y.Z（对应 ROADMAP 版本号规则）
 related_pms: [.csp/product-spec/PMS-{module-slug}.md, ...]
 related_specs: []   # 下游技术方案生成后回填
 ---

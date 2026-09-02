@@ -211,6 +211,7 @@ docs/solutions/
 ## 十二、下游衔接（主动建议）
 
 - findings 回流下一迭代：`回流阶段=01` 的 → 进 01 PRD 生成新需求；`=02` → 02 decomposition 拆 Feature；`=03` → 03 tech-design 补 ADR/重构方案；`=05` → 05 implementation 修复（可经 04 拆 task）。
+- **findings 回流 roadmap**：`status=open/deferred` 的 findings 汇总为 `docs/strategy/ROADMAP.md` 下一版本主题输入（更新版本-主题表 status + 引 finding id）；触发 roadmap 增量更新。
 - P0/P1 findings → 优先纳入下一里程碑 01 PRD 的 MVP 范围。
 - 可用性 heuristic 发现 → 建议补真实用户测试（Mode A）验证。
 - 报告归档：下一里程碑发布（06）时，本审查报告随 `.csp/review/` 快照归档进 `.csp/milestones/{m}/review/`。
