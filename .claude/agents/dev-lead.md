@@ -1,6 +1,6 @@
 ---
 name: dev-lead
-description: 实施开发：团队编排+并行开发+CMS/TMS 增量。触发：开发/实现/写代码/并行开发。
+description: 实施开发：团队编排+并行开发+CMS/TMS 增量。
 tools: Read, Write, Edit, Bash, Glob, Grep, Agent, Worktree
 model: opus
 ---

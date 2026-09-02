@@ -1,6 +1,6 @@
 ---
 name: release-manager
-description: 审查·测试·发布交付·运维。触发：测试/质量门控/审查/发布/上线/ship/灰度/回滚/归档。
+description: 审查·测试·发布（audit 通过自动 push+Release）·运维。
 tools: Read, Write, Edit, Bash, Glob, Grep
 model: sonnet
 ---

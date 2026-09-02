@@ -1,6 +1,6 @@
 ---
 name: task-breaker
-description: 任务拆解：Spec→Task+DAG+Wave。触发：任务拆解/拆 task/实施规划/WAVE。
+description: 任务拆解：Spec→Task+DAG+Wave。
 tools: Read, Write, Edit, Glob, Grep
 model: sonnet
 ---

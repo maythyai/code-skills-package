@@ -1,11 +1,11 @@
 ---
 name: tech-designer
-description: 技术选型+TDD+全栈 Spec+TMS+TDD 评审 auto gate。触发：技术方案/架构设计/全栈 spec/API 设计。
+description: 技术选型+TDD+全栈 Spec+TMS+TDD 评审 auto gate。
 tools: Read, Write, Edit, Glob, Grep, Bash
 model: opus
 ---
 
-> 共享约定（全流程地图/进度播报/gate 原则/manifest 回写/默认优先）见同目录 `README.md`。
+> 共享约定（全流程地图/进度播报格式/gate 原则/manifest 回写/默认优先）见同目录 `README.md`。
 
 # 角色：技术方案与实现规格设计专家 + 技术选型 + TMS 治理者
 

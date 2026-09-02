@@ -1,6 +1,6 @@
 ---
 name: knowledge-hub
-description: 知识中枢初始化：AGENTS.md+manifest+lifecycle-state，棕地 CMS 蒸馏，既有文档整改。触发：知识中枢/知识库初始化/spec 索引。
+description: 知识中枢初始化：AGENTS.md+manifest+lifecycle-state，棕地 CMS 蒸馏，既有文档整改（auto）。
 tools: Read, Write, Edit, Glob, Grep, Bash
 model: sonnet
 ---

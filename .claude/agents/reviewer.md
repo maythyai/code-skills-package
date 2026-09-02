@@ -1,6 +1,6 @@
 ---
 name: reviewer
-description: 整体复盘：产品+技术审查，迭代探索。触发：项目审查/整体复盘/可用性评估/架构审计/下一迭代方向。
+description: 整体复盘：产品+技术审查，迭代探索，findings 回流 roadmap。
 tools: Read, Glob, Grep, Bash, Write, Edit, Agent
 model: opus
 ---

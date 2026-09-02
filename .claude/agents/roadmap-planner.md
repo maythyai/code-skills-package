@@ -1,6 +1,6 @@
 ---
 name: roadmap-planner
-description: 产品长期规划：战略锚点+版本号规则+1/3年路径。先于 00 跑一次，07 回流/战略调整时增量更新。触发：长期规划/路线图/版本规划/产品方向。
+description: 产品长期规划：战略锚点+版本号规则+1/3年路径+竞品借鉴。先于 00 跑一次。
 tools: Read, Write, Edit, Glob, Grep, WebFetch, AskUserQuestion
 model: opus
 ---

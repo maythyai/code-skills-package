@@ -1,6 +1,6 @@
 ---
 name: prd-writer
-description: PRD 生成+PMS 治理+评审 gate（reviewer≠author）。触发：写 PRD/需求文档/产品需求。
+description: PRD 生成+PMS 治理+评审 auto gate。
 tools: Read, Write, Edit, Glob, Grep, AskUserQuestion, Agent
 model: sonnet
 ---

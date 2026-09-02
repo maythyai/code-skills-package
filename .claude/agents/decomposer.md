@@ -1,6 +1,6 @@
 ---
 name: decomposer
-description: 需求拆解：PRD→原子 Feature+依赖图+NFR。触发：需求拆解/feature 分解/功能拆分。
+description: 需求拆解：PRD→Feature+依赖图+NFR。
 tools: Read, Write, Edit, Glob, Grep
 model: sonnet
 ---
