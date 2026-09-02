@@ -87,10 +87,16 @@
 
 **整改红线**：
 1. **不改业务内容**：只动治理层（路径、版本号、索引、front-matter、重复/陈旧清理），不动文档正文语义；正文需改归对应阶段，不在 00 越权。
-2. **改前 diff、删前二次确认**：每处改动记录"改了什么/为什么"；删除前二次确认（临时产物如 `.tmp/`、`*.zip` 可直接删，业务文档删除必须人工确认）。
+2. **归档移动 ≠ 删除**：A 类 `mv` 进 `.csp/milestones/` 的文件 → manifest item **自动 re-point** 到归档路径（改 `output_path` 指向 milestones），保追溯，**不问"删还是 re-point"**；仅**真正删除**（无归档、无价值）才二次确认（临时产物 `.tmp/`/`*.zip` 可直接删，业务文档删除必须人工确认）。
 3. **可回滚**：所有整改在 git 工作区进行，可 `git checkout` 回滚；不直接 force 覆盖未提交的既有内容。
-4. **整改清单入册**：产出 `.csp/artifacts/reconcile-log.md`（或写入 manifest 备注）：每行"路径 | 类型(moved/renamed/version-bumped/deleted/frontmatter-fixed) | 理由"，并在 manifest 把受影响 item 标 `build_status=degraded` 待 re-align。
+4. **整改清单入册**：产出 `.csp/artifacts/reconcile-log.md`（或写入 manifest 备注）：每行"路径 | 类型(moved/renamed/version-bumped/repointed/deleted/frontmatter-fixed) | 理由"，并在 manifest 把受影响 item 标 `build_status=degraded` 待 re-align。
 5. **幂等**：重跑只处理新 delta，已整改项不重复动。
+
+**默认自动解决规则（不问人，除非真无解）**：
+- **phantom item（归档后悬空）**：manifest item 指向的文件已被 A 类 `mv` 进 milestones → **自动 re-point 到归档路径**，不问。仅当文件彻底消失无归档 → 才标 `status=blocked` 报缺口。
+- **版本漂移**：package.json / VERSION 与**已发布 git tag** 不一致 → **以已发布 tag 为 canonical**，自动 bump package.json/VERSION 到 tag 版本（保持 SemVer/CalVer 一致），CHANGELOG 补条目，不问。仅多 tag 冲突/canonical 不明 → 才人工。
+- **未推送 commits / 未建 Release**：**不属 00 范围** → 标记"待 06 release 处理"并**路由 06**（06 audit+对账通过自动 push+GitHub Release，gate 即授权）；00 不提议 push、不拍板、不替 06 发布。
+- **其他可判定项**：能从既有产物/git 历史判定的，一律自动整改；仅真正无解（canonical 不明、真删业务文档、需求根本 Rejected）才人工。
 
 > 该阶段是"知识与文档治理"的体现——确保 hub 始终基于一致、整洁、符合最新约定的文档，而非放任散落与版本漂移。
 
@@ -184,7 +190,7 @@ bash $SCRIPT list --type cms     # 按 source_type 列项
 - **Phase 1.7 棕地 CMS 蒸馏** → 棕地自动执行蒸馏，不询问；绿地跳过。
 
 **唯一人工拍板（破坏性/不可逆/外向）**：
-- **source 删除**（removed source）→ 二次确认后从 manifest 移除。
+- **source 真正删除**（无归档、无价值）→ 二次确认后从 manifest 移除；**归档移动（A 类 mv 进 milestones）→ 自动 re-point，不确认**（见 Phase 1.5「默认自动解决规则」）。
 - **00 hub 远程推送** → 默认 `off`（hub 基础设施 local commit 即可，不自动 push remote；显式推送才人工确认）。**注：06 release 的 push + GitHub Release 在 S6/S7/对账全过后自动执行（gate 即授权），不走本 gate。**
 - **业务文档删除**（Phase 1.5 整改）→ 人工确认；临时产物（`.tmp/`、`*.zip`）可直接删。
 
@@ -278,6 +284,9 @@ git branch -d csp/hub-init   # 清理已合并的侧分支
 | 放任散落/版本漂移 | 文档散落各地、版本不一致、重复陈旧堆积 | Phase 1.5 整改：归位/版本对齐/删冗/修 front-matter，清单入册 |
 | 00 越权改正文 | 改业务内容语义 | 只动治理层（路径/版本/索引/front-matter）；正文归对应阶段 |
 | 删除不经确认 | 误删业务文档 | 临时产物可直接删；业务文档删除必须人工二次确认 |
+| 归档移动当删除问人 | A 类 mv 后问"删还是 re-point" | 归档移动自动 re-point 到 milestones 路径，不问 |
+| 版本漂移问人 | package.json vs tag 不一致问是否 bump | 以已发布 tag 为 canonical 自动 bump，不问 |
+| 00 替 06 发布 | 整改时提议 push/Release 并拍板 | push/Release 不属 00 → 路由 06（audit 通过自动发布），00 不拍板 |
 | hub 留未合并侧分支 | 建 `csp/hub-init` 不合并就进 01 | `.csp/` 知识产物走主干；合并回 master 再进下一阶段，否则下游读不到 AGENTS.md 死循环 |
 
 ## 十二、下游衔接（主动建议）
