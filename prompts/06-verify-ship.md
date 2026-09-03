@@ -231,7 +231,7 @@ verify/review 发现需 fix 时按下述闭环，**不 ship、不问人怎么修
 **门控**：`reconciled==true` 且无阶段 `blocked` 才允许执行里程碑归档。
 
 ### 7.7 版本与发布规范
-**版本方案**：以 `docs/strategy/ROADMAP.md`「版本号规则」节为权威（SemVer/CalVer/混合 + X.Y.Z 含义 + Tag + 预发布 + 质量分级）；本节只补**发布执行**细节。被他人依赖的库/SDK → SemVer；终端应用 → CalVer；内部工具任选一致。
+**版本方案**：以 `docs/strategy/ROADMAP.md`「版本号规则」节为权威，**默认 SemVer（X.Y.Z）**，不自动用日期形式 tag；CalVer 仅用户显式 opt-in。tag 取 **roadmap 规划的版本号**（不以今日日期生成；提前交付仍是规划版本号）。本节只补**发布执行**细节（多平台同步/CHANGELOG/dist-tags/Release Checklist）。
 **版本漂移自动校正**：package.json / VERSION 与**已发布 git tag** 不一致 → 以 tag 为 canonical，自动 bump 到 tag 版本（多平台同步校验脚本），不问；仅多 tag 冲突/canonical 不明才人工。
 **Tag**：`v` 前缀 + annotated tag（`-a`，附发布说明）+ 不可变（已推送不移动/删除）；CI 通过后打 tag 触发 Release workflow。
 **多平台版本同步**：根/各 app package.json、tauri.conf.json、iOS pbxproj、Docker tag、GitHub Release tag 必须一致；用脚本校验禁止人工同步。

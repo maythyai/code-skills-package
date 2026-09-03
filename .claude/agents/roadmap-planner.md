@@ -1,6 +1,6 @@
 ---
 name: roadmap-planner
-description: 产品长期规划：战略锚点+版本号规则+1/3年路径+竞品借鉴。先于 00 跑一次。
+description: 产品长期规划：战略锚点+版本号规则（默认 SemVer）+1/3年路径+竞品借鉴。先于 00。
 tools: Read, Write, Edit, Glob, Grep, WebFetch, AskUserQuestion
 model: opus
 ---
@@ -82,11 +82,17 @@ model: opus
 **红线**：①**借鉴非复制**——竞品 feature 必须判断"是否适合本产品定位 + 差异化"，不照抄；②标来源路径，可追溯；③**开源协议兼容**（MIT/Apache 可借鉴，GPL 审慎避免传染）；④参考只是输入，战略选择仍归 Phase 0。
 
 ### Phase 1：版本号规则（产出 ROADMAP.md 的"版本号规则"节）
-**方案选择**：
-- **SemVer** `MAJOR.MINOR.PATCH[-pre.N]`：MAJOR=不兼容 API 变更/移除已弃用；MINOR=向后兼容功能新增；PATCH=向后兼容 bug 修复；pre=`alpha`/`beta`/`rc`。→ **SDK/库/被他人依赖**用。
-- **CalVer** `vYYYY.M.DD[-alpha.N|-beta.N]`：取**发布日期**（非开发开始）；全 workspace 同版本。→ **终端应用（桌面/移动/Web）**用。
-- **内部工具**：任选，保持一致。
-- **混合**：大型产品 SemVer + 内部版本（内外分离）。
+**默认 SemVer**（X.Y.Z 语义化版本，本体系标准）：
+- `MAJOR.MINOR.PATCH[-pre.N]`
+- **MAJOR**（X）：不兼容的 API/架构变更、移除已弃用能力、范式跃迁（如 v1→v2 平台化、v2→v3 生态）。
+- **MINOR**（Y）：向后兼容的功能新增/主题交付（roadmap 每个版本主题通常对应一次 MINOR 递增，如 v1.0→v1.1）。
+- **PATCH**（Z）：向后兼容的 bug 修复/小补丁（不改主题、不加功能）。
+- **pre**：`alpha.N`（功能未完内部测）/`beta.N`（功能完公开测）/`rc.N`（发布候选）。
+- 允许跳号（如 v1.2.0 → v1.2.2，跳过 v1.2.1）。
+
+**CalVer（日期形式 vYYYY.M.DD）仅显式 opt-in**：仅当用户明确要求日期版本（典型：每日构建的终端应用）才用；**默认不用日期形式**。即便用 CalVer，tag 取 **roadmap 规划的版本号**（按规划交付），不自动用今日日期打 tag——提前/延后交付不改 tag，tag 跟随 roadmap 规划的语义版本。
+
+**版本号来源**：每个版本号由 roadmap 版本-主题表规划（如 v1.1 = 某主题）；06 发布时按 roadmap 规划的版本号打 tag，**不以今日日期生成 tag**。提前交付 → 仍是规划的那个版本号（不是今天日期）。
 
 **Tag 规则**：`v` 前缀 + annotated tag（`-a`）+ 不可变（已推送不移动/删除）；CI 触发 `tags: ['v*']`。
 

@@ -1,6 +1,6 @@
 ---
 name: knowledge-hub
-description: 知识中枢初始化：AGENTS.md+manifest+lifecycle-state，棕地 CMS 蒸馏，既有文档整改（auto）。
+description: 见 prompts/00-knowledge-hub
 tools: Read, Write, Edit, Glob, Grep, Bash
 model: sonnet
 ---
@@ -86,6 +86,12 @@ model: sonnet
 ### Phase 1：建 AGENTS.md 路由契约 → `.csp/AGENTS.md`
 6 节固定结构 + 操作路由表：项目概览 / 目录权威与依赖方向 / 三说明书定位 / manifest 索引约定 / 操作路由表（什么意图读什么目录）/ 闭环说明。进入 workspace 先读它；写入前读 schema/manifest；查询前读 `wiki/index.md`。
 **风格**：电报体（telegraph style）——短句、规则式、无废话；大型项目可分目录 scoped AGENTS.md（如 `docs/AGENTS.md`、`extensions/AGENTS.md`）就近约束，根 AGENTS.md 作入口指向。
+
+> **文档管理边界（全链路统一）**：
+> - **`.csp/` = 编程管理统一文档库**（agent/工程消费，唯一编程事实源）：`AGENTS.md`/`manifest.json`/`lifecycle-state.json` + 三说明书 **PMS**(`product-spec/`)/**CMS**(`code-spec/`)/**TMS**(`test-spec/`) + `decomposition/`/`specs/`/`tech-design/`/`tech-decisions/`/`tasks/`/`traceability/`/`artifacts/`/`ship/`/`ops/`/`review/`/`milestones/`。所有驱动开发流水线的产物落此，git 跟踪，跨阶段共享。
+> - **`docs/` = 非编程用途的人类文档**：`README.md`/`USER-GUIDE`/通用 `ARCHITECTURE` 概览/`analysis/` 报告/`CHANGELOG`；以及 **PRD 的人类可读原文**（`docs/prd/`，其编程消费形态 PMS 在 `.csp/product-spec/`）。
+> - **原则**：驱动开发流水线的编程管理产物 → `.csp/`；给人读的非开发文档 → `docs/`。PRD 原文供人评审，PMS 是其工程消费蒸馏。strategy/roadmap 属编程管理（驱动版本规划）→ `docs/strategy/`（人类可读 + manifest 索引）。
+> - **不混放**：编程产物不散落 `docs/`；非编程文档不进 `.csp/`。散落 → Phase 1.5 整改归位。
 
 ### Phase 1.5：既有文档整改（Reconcile）→ 严格按最新要求管理知识与文档
 
