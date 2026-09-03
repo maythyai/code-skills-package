@@ -216,6 +216,14 @@ Task D: package.json, src/config/
 4. **代码漂移检测**：若实现已偏离 Spec（CMS 与 .sync-status.yaml 标漂移），先校准设计或校准代码，再继续。
 5. **归档就绪**：commit 链 + `.csp/artifacts/` + CMS/TMS delta 落固定路径，便于 06 归档。
 
+### Fix 模式（06 回流修复）
+06 verify/review 发现需 fix 时回流本阶段：
+- **只改失败/受影响 Task**（按 06 Fix Loop 路由决策树的根因），不重做已完成 Wave、不动未变 Feature。
+- lifecycle：05 标 `in_progress`（fix 模式）；fix 完重新写 05 done → 06 重验。
+- fix 用 `fix(scope): ...` 原子提交；CMS/TMS delta；不臆造、不带红回 06。
+- Spec 缺口 → 先回 03 更新 Spec（`status=Updated`）再修；不擅改 Spec 当接口。
+- 超过 3 轮未收敛 → 标 `blocked` 报用户（可能需 03 重新设计或 04 重拆 Task）。
+
 ## 十一、生成后输出"下一步建议块"
 
 ```markdown

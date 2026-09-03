@@ -134,8 +134,35 @@
 - **性能回归**：可配置 baseline commit + 回归阈值（如 20%）。
 - **Mock 策略**：只 mock 外部依赖（API/DB/FS），不 mock 内部逻辑；测试数据用 fixtures + 工厂函数，不硬编码。
 
-**门控**：代码审查无 CRITICAL + Spec 对齐 ≥90% + 安全/性能达标 → 进 S8。
+**门控**：代码审查无 CRITICAL + Spec 对齐 ≥90% + 安全/性能达标 → 进 S8；任一不过 → 进 Fix Loop（见下）。
 评审意见落 `.csp/artifacts/review/comments.md`；安全发现落 `.csp/artifacts/review/security-findings.md`。
+
+## 六.五、Fix Loop（S6/S7 发现需修复 → 回 05 → 重验，pre-ship 闭环）
+
+verify/review 发现需 fix 时按下述闭环，**不 ship、不问人怎么修**（除非根本问题）：
+
+**路由决策树**（按 finding 根因）：
+- **实现缺陷**（代码 bug/测试红/lint/类型错误）→ 回 05 dev-lead 修（delta，只改失败/受影响 Task）。
+- **Spec 缺口/错误**（实现偏离因 Spec 不对）→ 更新 Spec（03，`status=Updated` + `.csp/tech-design/.sync-status.yaml`）+ 回 05 对齐。
+- **PRD/需求问题**（罕发，根因在需求）→ 回 01（走 Rejected 路径）。
+- **基础设施/环境**（DB/配置）→ 回 05 infra Task 修。
+
+**Fix scope（delta only，不重做 05）**：
+- 只改失败/受影响 Task；未变 Feature 不动；不重跑已完成 Wave（仅受影响回归）。
+- CMS/TMS 只对 delta 增量；fix 单独原子提交（`fix(scope): ...` conventional）。
+
+**Re-verify scope（不盲目全量，除非核心路径）**：
+- 只跑受影响测试 + 失败的 gate（S6 对应项 / S7 对应维度）；核心路径（支付/编排/安全/发布）全量回归。
+- 全过 → 继续原 S6→S7→re-align CMS→S8 流程；不过 → 再回 05（循环到全过）。
+
+**lifecycle 处理**：
+- 06 未过 → 06 保持 `in_progress`（不标 done）；05 标 `in_progress`（fix 模式）或 `stale`（Spec 改了）。
+- fix 完重跑 06 S6/S7 → 过则 06 继续（re-align CMS → S8 发布）。
+- orchestrator 读 05 done（fix 完）→ 重新 spawn release-manager 续验。
+
+**多轮**：循环到 S6+S7 全过；**禁止带红 ship**；超 3 轮未收敛 → 标 `blocked` 报用户（可能需重新设计/拆 Task）。
+
+> **与 07 区别**：06 Fix Loop = pre-ship 闭环（修完才发）；07 = post-ship findings → 下一迭代（已发，下轮修）。
 
 ## 七、S8 发布交付（含里程碑归档）
 

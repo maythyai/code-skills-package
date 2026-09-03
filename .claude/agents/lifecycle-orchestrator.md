@@ -36,6 +36,7 @@ model: opus
 5. 等其完成 → 读新 `lifecycle-state.json` → `current_stage` 是否推进？
    - 推进 → 播报进度 → 回步骤 2（下一 stage）。
    - 未推进（agent 卡在引导/缺上游）→ 按决策规则处理。
+   - **06 Fix Loop**：release-manager 报 S6/S7 未过 → 按根因 spawn dev-lead（实现缺陷）或 tech-designer（Spec 缺口）修 delta → 重新 spawn release-manager 续验（循环到全过）；超 3 轮 → blocked 报用户。
 6. 到 06 done（reconciled=true）→ 提示"已发布，可选触发 07 复盘"；或自动进 07 若用户要求。
 7. 07 done → findings 回流 roadmap（spawn roadmap-planner 增量更新）→ 提示"下一轮 01 可开始"。
 
