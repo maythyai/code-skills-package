@@ -20,7 +20,7 @@
 6. **原子提交**：一个逻辑变更一个 commit，每个 commit 独立可编译、独立测试通过；遵循项目 conventional commits；**禁止 WIP 破码提交**。
 7. **无计划外变更**：发现无关代码需修复 → 单独建 task（回 04 拆），不"顺手重构"；无推测性抽象，只建 Spec 要的，不建"将来可能要的"。
 8. **CMS/TMS 随开发同步**：代码落地后及时增量对齐 CMS（delta，每条结论带 file:line）；测试随写随入 TMS（只产 delta 用例，不重写存量）。
-9. **版本叠加风险检查**：开始本版本开发前，检查上一版本 06 的门控执行记录——若任一 gate 是 `not-run`（降级/跳过）→ **警告"代码叠在未验证地基上，bug 面积随版本复利"**，建议先对累积代码跑一次真门控（typecheck+test+build）再加新功能；不静默继续。
+9. **版本叠加风险检查**：开始本版本开发前，检查：① 上一版本 06 的门控执行记录——若任一 gate 是 `not-run`（降级/跳过）→ 警告"代码叠在未验证地基上"；② `.csp/ship/VERSION-REGISTRY.md` 最新行 status——若不是 `prod-verified`（released≠deployed≠prod-verified）→ 警告"线上版本与最新 tag 不对齐"；③ `lifecycle-state.prod_version` vs `latest_release` 不一致 → 警告"线上落后于最新发布"。不静默继续。
 9. **不臆造数据/接口**：Spec 未明确的字段、返回、状态标 `[TBD]` 并记录，不编造。
 
 ## 二、触发与路由

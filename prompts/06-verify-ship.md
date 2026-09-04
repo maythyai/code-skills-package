@@ -228,7 +228,26 @@ verify/review 发现需 fix 时按下述闭环，**不 ship、不问人怎么修
 > 原则：审核通过对账通过即默认完成发布动作。外向/不可逆操作的授权来自前置质量 gate 通过，不再二次人工确认；仅无前置 gate 的纯破坏操作（删 source、删业务文档）或无解（PRD Rejected）才人工。
 
 ### 7.5 发布后第一小时验证
-健康端点 200 → 错误监控无新类型 → 延迟无退化 → 手测关键用户流程 → 日志可读 → 回滚机制 dry-run 验证。
+健康端点 200 → **健康端点报告的版本号 == tag**（版本对齐）→ 错误监控无新类型 → 延迟无退化 → 手测关键用户流程 → 日志可读 → 回滚机制 dry-run 验证。
+
+### 7.5.5 版本注册表 + 版本对齐（发布后/部署后必做）
+
+**版本注册表** → `.csp/ship/VERSION-REGISTRY.md`：每版本一行，记录全生命周期：
+
+| SemVer | Tag | Status | Released | Deployed | Prod-Verified | Main Features（实际交付） | Breaking | Rollback | Roadmap 主题 |
+|---|---|---|---|---|---|---|---|---|---|
+| vX.Y.Z | vX.Y.Z | released→deployed→prod-verified→rolled-back | 日期 | 日期/null | 日期/null | 从 commits/CHANGELOG 回填 | Yes/No | Yes/No | 战略主题 |
+
+**Status 流转**：`planned`（roadmap 规划）→ `released`（tag+GitHub Release 推送）→ `deployed`（灰度/全量部署到 prod）→ `prod-verified`（健康端点报告版本==tag + 第一小时指标稳定）→ `rolled-back`（回滚+原因）。**released ≠ deployed ≠ prod-verified**——tag 推了不等于线上在跑。
+
+**版本对齐检查**（四方对齐）：
+1. `git tag` == `package.json` version == `VERSION` 文件 == GitHub Release tag。
+2. **prod 健康端点报告的版本号** == tag（`curl /health | jq .version` 验证线上跑的是哪个版本）。
+3. CHANGELOG 最新条目 == tag。
+4. VERSION-REGISTRY 最新行 status == prod-verified。
+→ 任一不一致 → 标 `misaligned` 报告，不标 prod-verified。
+
+**实际交付回填**：从 `git log <prev-tag>..<tag> --oneline` + CHANGELOG 回填"Main Features"到 registry + roadmap version-主题表（`实际交付` 字段），与规划对比标"planned vs delivered"差异。
 
 ### 7.6 阶段状态对账与闭环（归档前必做）
 
@@ -242,6 +261,7 @@ verify/review 发现需 fix 时按下述闭环，**不 ship、不问人怎么修
 | 03 | status=done | `.csp/specs/SPEC-INDEX.md` + `COVERAGE-REPORT.md` | Spec 数 == decomposition 原子 Feature 数（1:1）；每 Spec ac_coverage 无缺口 |
 | 05 | status=done | `.csp/tasks/WBS.md` + git commit | WBS 中全部 Task == done；commits 覆盖全部 Wave；未完 Task → 05 置 `blocked`，**禁止归档** |
 | 07（上一轮复盘） | adopted findings | `.csp/review/REVIEW-FINDINGS-{prev-m}.json` | 所有 `adopted` findings 的 `adopted_by` 链可追到本轮 PRD→Spec→Task→commit；未闭环 → 标 `degraded` 报缺口 |
+| **版本注册表** | prod-verified | `.csp/ship/VERSION-REGISTRY.md` | 最新行 status==prod-verified + 四方对齐（tag/package.json/prod health/CHANGELOG）；不对齐 → 标 misaligned |
 | 05 | status=in_progress | 本阶段产物 | S6 门控六项全过 + S7 无 CRITICAL + 回滚就绪 + 监控就绪 |
 
 **对账动作**：
@@ -348,7 +368,8 @@ verify/review 发现需 fix 时按下述闭环，**不 ship、不问人怎么修
 │   └── review/comments.md, security-findings.md  # S7 评审（发布后 mv 归档）
 ├── .csp/ship/                             # S8 发布产物（发布后 mv 归档）
 │   ├── RELEASE-NOTES-{milestone}.md
-│   └── ROLLBACK-PLAN-{milestone}.md
+│   ├── ROLLBACK-PLAN-{milestone}.md
+│   └── VERSION-REGISTRY.md                # 版本注册表（每版本全生命周期 ledger）
 ├── .csp/ops/                              # S9 运维
 │   ├── MONITORING-{app}.md / ALERTS-{app}.md
 │   └── KNOWN-ISSUES.md
@@ -383,6 +404,7 @@ verify/review 发现需 fix 时按下述闭环，**不 ship、不问人怎么修
 | **静默门控降级** | pnpm install 死→用 grep 替代 typecheck/test/build→假装"通过"→release 未验证代码 | **工具链不可用=BLOCKED**，不降级；`not-run`=阻断发布，tag 标 -draft；grep ≠ typecheck ≠ build |
 | **版本叠在未验证地基** | 上版 not-run→本版叠上去→bug 面积随版本复利 | 开始本版前检查上版 06 门控执行记录，有 not-run→先跑真门控对齐再加新功能 |
 | **战略号当 SemVer 打 tag** | sprint 做了起步标 v2.0.0（MAJOR）但无 breaking | additive→MINOR 增量；MAJOR 只在真实 breaking API 变更时；战略愿景≠发布号 |
+| **released 当 deployed** | tag 推了就以为线上在跑 | released≠deployed≠prod-verified；VERSION-REGISTRY 四方对齐 + prod health 验证版本 |
 | 周五发布 | 临下班上线 | 不在周末前发布 |
 | 监控以后补 | "先上再说" | 发布前装好监控 |
 | 文档以后补 | "follow-up" | 趁热写 CHANGELOG/文档 |

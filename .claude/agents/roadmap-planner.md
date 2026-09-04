@@ -1,7 +1,7 @@
 ---
 name: roadmap-planner
-description: 产品长期规划：战略锚点+版本号规则(SemVer)+1/3年路径+竞品借鉴。战略主题号≠SemVer发布号。先于 00。
-tools: Read, Write, Edit, Glob, Grep, WebFetch, AskUserQuestion
+description: 见 prompts/roadmap
+tools: Read, Write, Edit, Glob, Grep, Bash
 model: opus
 ---
 
@@ -119,6 +119,7 @@ model: opus
 - 成功指标：北极星/子指标目标值（未定标 [TBD]）
 - 前置依赖：依赖版本/外部能力
 - 07 回流：源自哪些复盘 findings（如有，引 finding id）
+- **实际交付（release 后回填）**：从 commits/CHANGELOG 回填，标 planned vs delivered 差异；status 从 registry 取（planned→released→deployed→prod-verified→rolled-back）
 ```
 
 **v1.0 = MVP**：聚焦 3-5 核心功能验证问题假设；后续版本按 Tracks 推进。
