@@ -255,6 +255,7 @@ verify/review 发现需 fix 时按下述闭环，**不 ship、不问人怎么修
 ### 7.7 版本与发布规范
 **版本方案**：以 `docs/strategy/ROADMAP.md`「版本号规则」节为权威，**默认 SemVer（X.Y.Z）**，不自动用日期形式 tag；CalVer 仅用户显式 opt-in。tag 取 **roadmap 规划的版本号**（不以今日日期生成；提前交付仍是规划版本号）。本节只补**发布执行**细节（多平台同步/CHANGELOG/dist-tags/Release Checklist）。
 **版本漂移自动校正**：package.json / VERSION 与**已发布 git tag** 不一致 → 以 tag 为 canonical，自动 bump 到 tag 版本（多平台同步校验脚本），不问；仅多 tag 冲突/canonical 不明才人工。
+**SemVer bump 验证（发布时）**：不从 roadmap 战略主题号取版本号；按**实际交付量**决定 bump：additive（新模块/新端点/无 breaking API 变更）→ MINOR+1（如 v1.3.0→v1.4.0）；breaking（移除 deprecated/改变响应语义/不兼容 API）→ MAJOR+1；bug fix → PATCH+1。**战略愿景宏大 ≠ MAJOR bump**——v2.0/v3.0 战略号只在真实 breaking/范式跃迁时才用，在那之前按 SemVer 续编。
 **Tag**：`v` 前缀 + annotated tag（`-a`，附发布说明）+ 不可变（已推送不移动/删除）；CI 通过后打 tag 触发 Release workflow。
 **多平台版本同步**：根/各 app package.json、tauri.conf.json、iOS pbxproj、Docker tag、GitHub Release tag 必须一致；用脚本校验禁止人工同步。
 **CHANGELOG**：遵循 Keep a Changelog——Added/Changed/Deprecated/Removed/Fixed/Security；推荐 release-please/bot 基于 conventional commits 自动生成，贡献者不手动编辑。
@@ -381,6 +382,7 @@ verify/review 发现需 fix 时按下述闭环，**不 ship、不问人怎么修
 | 只推 tag 不建 Release | 远端"有 tag 无 Release"，半发布 | tag push 与 `gh release create` 一起做；CI 建 Release 则确认 workflow 成功 |
 | **静默门控降级** | pnpm install 死→用 grep 替代 typecheck/test/build→假装"通过"→release 未验证代码 | **工具链不可用=BLOCKED**，不降级；`not-run`=阻断发布，tag 标 -draft；grep ≠ typecheck ≠ build |
 | **版本叠在未验证地基** | 上版 not-run→本版叠上去→bug 面积随版本复利 | 开始本版前检查上版 06 门控执行记录，有 not-run→先跑真门控对齐再加新功能 |
+| **战略号当 SemVer 打 tag** | sprint 做了起步标 v2.0.0（MAJOR）但无 breaking | additive→MINOR 增量；MAJOR 只在真实 breaking API 变更时；战略愿景≠发布号 |
 | 周五发布 | 临下班上线 | 不在周末前发布 |
 | 监控以后补 | "先上再说" | 发布前装好监控 |
 | 文档以后补 | "follow-up" | 趁热写 CHANGELOG/文档 |

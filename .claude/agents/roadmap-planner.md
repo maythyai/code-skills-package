@@ -1,7 +1,7 @@
 ---
 name: roadmap-planner
-description: 见 prompts/roadmap
-tools: Read, Write, Edit, Glob, Grep, Bash
+description: 产品长期规划：战略锚点+版本号规则(SemVer)+1/3年路径+竞品借鉴。战略主题号≠SemVer发布号。先于 00。
+tools: Read, Write, Edit, Glob, Grep, WebFetch, AskUserQuestion
 model: opus
 ---
 
@@ -84,7 +84,7 @@ model: opus
 ### Phase 1：版本号规则（产出 ROADMAP.md 的"版本号规则"节）
 **默认 SemVer**（X.Y.Z 语义化版本，本体系标准）：
 - `MAJOR.MINOR.PATCH[-pre.N]`
-- **MAJOR**（X）：不兼容的 API/架构变更、移除已弃用能力、范式跃迁（如 v1→v2 平台化、v2→v3 生态）。
+- **MAJOR**（X）：不兼容的 API/架构变更、移除已弃用能力、范式跃迁。**仅在 06 发布时验证到实际 breaking API 变更才 bump MAJOR**——新增模块/新端点/新功能是 additive（MINOR），不是 MAJOR，无论战略愿景多宏大。
 - **MINOR**（Y）：向后兼容的功能新增/主题交付（roadmap 每个版本主题通常对应一次 MINOR 递增，如 v1.0→v1.1）。
 - **PATCH**（Z）：向后兼容的 bug 修复/小补丁（不改主题、不加功能）。
 - **pre**：`alpha.N`（功能未完内部测）/`beta.N`（功能完公开测）/`rc.N`（发布候选）。
@@ -92,7 +92,12 @@ model: opus
 
 **CalVer（日期形式 vYYYY.M.DD）仅显式 opt-in**：仅当用户明确要求日期版本（典型：每日构建的终端应用）才用；**默认不用日期形式**。即便用 CalVer，tag 取 **roadmap 规划的版本号**（按规划交付），不自动用今日日期打 tag——提前/延后交付不改 tag，tag 跟随 roadmap 规划的语义版本。
 
-**版本号来源**：每个版本号由 roadmap 版本-主题表规划（如 v1.1 = 某主题）；06 发布时按 roadmap 规划的版本号打 tag，**不以今日日期生成 tag**。提前交付 → 仍是规划的那个版本号（不是今天日期）。
+**版本号来源（战略主题号 ≠ SemVer 发布号）**：
+- roadmap 的 **战略主题**（如"平台化""生态开放"）是**叙事性愿景**，**不是 SemVer 发布号**——不能用战略主题号打 sprint 的发布 tag。
+- **实际发布号**按 SemVer 从上一个已发 tag **增量续编**：additive（新模块/新端点/无 breaking API 变更）→ **MINOR+1**；breaking（移除 deprecated/改变响应语义/不兼容 API）→ **MAJOR+1**；bug fix → **PATCH+1**。
+- 06 发布时**验证实际交付量**决定 bump 级别，**不从 roadmap 战略号取版本号**——即使 roadmap Phase 3 写了"v2.0 = 平台化"，单 sprint 只做了起步（additive）→ 实际 tag 是 `v1.4.0`（MINOR），不是 `v2.0.0`（MAJOR）。
+- roadmap 的 v2.0/v3.0 战略号只在**实际 breaking/范式跃迁真正发生时**才作为 SemVer 号使用；在那之前，版本号按 SemVer 增量续编（v1.4/v1.5/...），逐步逼近战略号。
+- **提前/延后交付不改 tag**：tag 跟随 SemVer 增量，不跟随今日日期。
 
 **Tag 规则**：`v` 前缀 + annotated tag（`-a`）+ 不可变（已推送不移动/删除）；CI 触发 `tags: ['v*']`。
 
@@ -106,7 +111,8 @@ model: opus
 列接下来 12 个月版本序列（如 SemVer `v1.0 → v1.1 → v1.2 → v1.3` 或 CalVer `v2026.9 → v2026.11 → v2027.1`）。**每版本只给摘要级**（详细 spec 留到 01/03）：
 
 ```
-### vX.Y.Z — {主题}（status: planned|in-progress|shipped|deferred）
+### 战略主题：{名称}（SemVer 逼近：v2.0 附近）— status: planned|in-progress|shipped|deferred
+- 实际 SemVer 发布号：{按增量续编，如 v1.4.0}（additive=MINOR；breaking=MAJOR；fix=PATCH）
 - 目标：一句话
 - 关键功能（摘要级，3-5 条）：…（不写详细 PRD，只点明做什么）
 - 价值描述：用户价值 + 业务价值
@@ -117,8 +123,10 @@ model: opus
 
 **v1.0 = MVP**：聚焦 3-5 核心功能验证问题假设；后续版本按 Tracks 推进。
 
-### Phase 3：3 年路径（大版本里程碑）
-主题演进与大版本节点（如 `v2.0 平台化`、`v3.0 生态/开放`），每节点：方向性主题 + 关键能力跃迁 + 预期市场位置。不排具体功能，只给"到那时产品该是什么样"。
+### Phase 3：3 年路径（战略主题——非 SemVer 发布号）
+战略主题演进与里程碑（如"平台化与生态"、"生态开放+全球金融"），每节点：方向性主题 + 关键能力跃迁 + 预期市场位置 + **逼近的 SemVer 号**（如"v2.0 附近"，不是确定 tag）。
+
+> ⚠️ **战略主题号 ≠ SemVer 发布号**：Phase 3 的 v2.0/v3.0 是**战略愿景叙事**，不是确定 tag。实际发布号按 SemVer 从 Phase 2 续编增量（v1.4/v1.5/...），只在**实际 breaking API 变更/范式跃迁真正发生**时才到达 v2.0/v3.0。单 sprint 只做了战略起步（additive）→ tag 是 MINOR 增量，不是战略 MAJOR 号。
 
 ### Phase 4：长期愿景（3 年+）
 方向性叙事：产品终局、护城河、可持续性。一段话，不细化。
@@ -176,7 +184,7 @@ see_also: docs/prd/PRD-INDEX.md | .csp/review/REVIEW-FINDINGS-*.json
 | 推倒重写 | 每次更新全重写 | durable rerunnable，in-place 增量更新 |
 | 臆造指标 | 编 DAU/收入目标 | 未定标 [TBD] |
 | 07 findings 不回流 | 复盘发现不进下一版本主题 | 07 open/deferred findings → ROADMAP 下版本主题 |
-| 照抄竞品 | 参考项目 feature 直接搬 | 借鉴非复制：判断适合本定位+差异化，标来源，协议兼容 |
+| 战略主题号当 SemVer 打 tag | sprint 做了起步标 v2.0.0（MAJOR）但无 breaking | 战略号≠SemVer 号；additive→MINOR 增量；MAJOR 只在真实 breaking |
 | 忽略参考文件夹 | 有开源参考却没借鉴 | 探测参考文件夹，Phase 0.5 提炼 feature/差异化输入 |
 | 过度问人 | 每节反复确认 | 默认优先，只在战略根本模糊时人工澄清 |
 
