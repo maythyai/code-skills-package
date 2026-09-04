@@ -31,6 +31,8 @@ model: sonnet
 6. **三说明书 re-align（verify 通过即做，不等上线）**：S6 质量门控 + S7 审查通过 = 代码定稿 → **立即全量 re-align CMS 到 ground truth**（不等上线/灰度/发布结果；push ≠ 上线）；PMS/TMS 增量 delta；追溯链闭环到 commit。re-align 在发布（S8）之前完成。
 7. **里程碑归档**：发布确认后按归档规范（见「里程碑归档规范」节）落 `.csp/milestones/{milestone-slug}/`，原件规则明确（mv vs cp）。
 8. **不臆造**：指标基线、覆盖率、安全扫描结果未跑出来标 `[TBD]`，不编造。
+9. **禁止静默门控降级（铁律）**：如果 typecheck/test/build **无法运行**（工具链坏：pnpm install 死、runner 不在、tsc 不在、build 工具缺），**必须报告 `BLOCKED: 工具链不可用`**，**禁止**用 grep/code review/静态替代动态验证后假装"通过"。**门控没跑 = 门控失败 = BLOCKED = 不发布**。grep+review ≠ typecheck ≠ build。auto-proceed 只认**真实执行**（有命令+exit code 输出），不认降级。
+10. **版本叠加风险**：开始本版本验证前，检查上一版本 06 的门控执行记录——若任一 gate 是 `not-run`（降级/跳过）→ 警告"代码叠在未验证地基上"，建议先对累积代码跑一次真门控再加新功能。
 
 ## 二、触发与路由
 
@@ -81,16 +83,28 @@ model: sonnet
 
 ## 五、S6 质量门控（管道式，任一失败即停）
 
+### Phase 0.5：工具链健康检查（S6 前置，不过禁止跑门控）
+验证工具链可用——**工具链坏 = BLOCKED = 不降级、不发布**：
+- [ ] 依赖安装：`pnpm install` / `npm ci` / `pip install` / `uv sync` 成功？失败 → `BLOCKED: pnpm install failed at link stage`，不继续。
+- [ ] 类型检查器可用：`tsc`/`mypy`/`pyright` 在 PATH？不在 → BLOCKED。
+- [ ] 测试 runner 可用：`pnpm test`/`pytest` 能发现测试？不能 → BLOCKED。
+- [ ] 构建工具可用：`pnpm build`/`vite build`/`tsc --build` 可执行？不能 → BLOCKED。
+- [ ] Lint 可用：`oxlint`/`eslint`/`ruff` 在？不在 → BLOCKED。
+
+> **工具链故障 = 环境 BLOCKER，不是代码 bug**——不路由 05 fix（Fix Loop 的"基础设施/环境"路由仅限代码内配置问题；工具链本身不可用需人工/infra 修，标 BLOCKED 报用户）。**禁止用 grep/code review 替代动态验证。** 若 pnpm install 死在 link：尝试 `pnpm store prune` + 升 pnpm + `pnpm --filter <单包> install` 隔离诊断，但不降级门控。
+
 按序执行，每步产出证据：
 
-| # | 检查 | 通过标准 | 证据 |
+| # | 检查 | 通过标准 | 证据+执行方式 |
 |---|---|---|---|
-| 1 | 测试 | 单测+集成+E2E 全绿，零"为通过而 skip"的测试 | 全量测试输出 exit code 0 |
-| 2 | Lint | 零错误、零新增警告（存量警告追踪但不忽略） | lint 输出 |
-| 3 | Build | 构建无错误、无新增警告 | 构建日志 |
-| 4 | TypeCheck | 零类型错误，改的代码无 `any`/无理由 `type: ignore` | typecheck 全量输出 |
+| 1 | 测试 | 单测+集成+E2E 全绿，零"为通过而 skip"的测试 | `ran: <test cmd> exit 0` 全量输出；**禁止** `not-run: 替代为 grep` |
+| 2 | Lint | 零错误、零新增警告（存量警告追踪但不忽略） | `ran: <lint cmd> exit 0` |
+| 3 | Build | 构建无错误、无新增警告 | `ran: <build cmd> exit 0` 构建日志 |
+| 4 | TypeCheck | 零类型错误，改的代码无 `any`/无理由 `type: ignore` | `ran: <tsc/mypy> exit 0` 全量输出 |
 | 5 | AC 逐条 | 每条 AC 可演示（测试输出/截图/日志），"应该能工作"不算 | 逐条演示证据 |
 | 6 | 文档 | 改动触及的 README/API 文档/ADR/内联注释准确反映现状，无陈旧引用 | 文档 diff |
+
+> **执行方式纪律**：每项必须标 `ran: <实际命令> exit <code>` 或 `not-run: <原因>`。**`not-run` = `BLOCKED` = 不发布**。grep/code review 不能替代 1–4 项的动态验证（typecheck 才能抓类型错、build 才能抓模板/响应式错、test 才能抓运行时行为）。
 
 **回归检查**（宣布完成前对照基线）：测试总数不降、覆盖率不降、跑相邻模块测试（改 auth 要跑 session/permissions）、性能热路径无新 N+1/无谓分配。
 
@@ -151,10 +165,11 @@ model: sonnet
 verify/review 发现需 fix 时按下述闭环，**不 ship、不问人怎么修**（除非根本问题）：
 
 **路由决策树**（按 finding 根因）：
+- **工具链/环境不可用**（pnpm install 死、runner 缺失、tsc 不在）→ **BLOCKED 报用户，不路由 05**（环境问题不当代码 bug 修；需人工/infra 修环境后才重验）。禁止降级为 grep。
 - **实现缺陷**（代码 bug/测试红/lint/类型错误）→ 回 05 dev-lead 修（delta，只改失败/受影响 Task）。
 - **Spec 缺口/错误**（实现偏离因 Spec 不对）→ 更新 Spec（03，`status=Updated` + `.csp/tech-design/.sync-status.yaml`）+ 回 05 对齐。
 - **PRD/需求问题**（罕发，根因在需求）→ 回 01（走 Rejected 路径）。
-- **基础设施/环境**（DB/配置）→ 回 05 infra Task 修。
+- **基础设施/配置**（DB/配置文件内的代码问题）→ 回 05 infra Task 修。
 
 **Fix scope（delta only，不重做 05）**：
 - 只改失败/受影响 Task；未变 Feature 不动；不重跑已完成 Wave（仅受影响回归）。
@@ -176,7 +191,14 @@ verify/review 发现需 fix 时按下述闭环，**不 ship、不问人怎么修
 ## 七、S8 发布交付（含里程碑归档）
 
 ### 7.1 发布前清单
-- [ ] S6/S7 全部门控过、证据已提交
+- [ ] **发布裁决**（S8 前 rollup）：
+  ```
+  裁决：[阻断发布 | 有条件发布 | 放行]
+  致命 X / 严重 Y / 一般 Z / 提示 W / 缺口 K / 门控-not-run N
+  一句话依据：___
+  ```
+  > **任何 S6/S7 gate `not-run`（工具链不可用/降级为 grep）→ 裁决=阻断发布**，tag 标 `v{milestone}-draft`/`unverified`，release notes 标"未验证脚手架/draft"。auto-proceed **不触发**（仅认 ran+exit 0）。
+- [ ] S6/S7 全部门控 `ran` 通过（不是 `not-run`）、证据已提交
 - [ ] feature flag 配置好（kill switch，设过期时间与 owner）
 - [ ] 回滚计划文档化（触发条件/步骤/时间预算/DB 回滚）
 - [ ] 监控大盘 + 错误上报就绪
@@ -366,6 +388,8 @@ verify/review 发现需 fix 时按下述闭环，**不 ship、不问人怎么修
 | 无回滚发布 | "出问题再说" | 发布前必有回滚计划 |
 | 大爆炸发布 | 一次全量 | feature flag + 灰度分阶段 |
 | 只推 tag 不建 Release | 远端"有 tag 无 Release"，半发布 | tag push 与 `gh release create` 一起做；CI 建 Release 则确认 workflow 成功 |
+| **静默门控降级** | pnpm install 死→用 grep 替代 typecheck/test/build→假装"通过"→release 未验证代码 | **工具链不可用=BLOCKED**，不降级；`not-run`=阻断发布，tag 标 -draft；grep ≠ typecheck ≠ build |
+| **版本叠在未验证地基** | 上版 not-run→本版叠上去→bug 面积随版本复利 | 开始本版前检查上版 06 门控执行记录，有 not-run→先跑真门控对齐再加新功能 |
 | 周五发布 | 临下班上线 | 不在周末前发布 |
 | 监控以后补 | "先上再说" | 发布前装好监控 |
 | 文档以后补 | "follow-up" | 趁热写 CHANGELOG/文档 |

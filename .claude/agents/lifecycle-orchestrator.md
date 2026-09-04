@@ -33,6 +33,7 @@ model: opus
 2. 取 `current_stage` + 各 stage `status`。
 3. **前置检查**：本 stage 前置 stage 是否 `done`？否 → spawn 上游 stage agent 补；有 `stale`/`blocked` → 先处理。
 4. **spawn 本 stage agent**（`Agent(subagent_type: "<对应 name>")`），传"读 .csp/ 重建上下文 + 完成写 lifecycle"。
+   - **06 BLOCKED（工具链不可用）**：release-manager 报 `BLOCKED: 工具链不可用`（pnpm install 死/runner 缺失/tsc 不在）→ **不 auto-proceed 到发布**，不降级为 grep，报用户修环境；环境修好重新 spawn release-manager 续验。**工具链 BLOCKER ≠ 代码 fix**——不 spawn dev-lead 修。
 5. 等其完成 → 读新 `lifecycle-state.json` → `current_stage` 是否推进？
    - 推进 → 播报进度 → 回步骤 2（下一 stage）。
    - 未推进（agent 卡在引导/缺上游）→ 按决策规则处理。

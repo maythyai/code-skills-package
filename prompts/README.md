@@ -52,6 +52,7 @@
 - **audit 衔接**：audit P0 findings（`快速修复=true`）→ orchestrator 直发 04 拆 fix task（`fix(audit-F-NN)`）→ 05 fix → 06 verify（不等 roadmap/01）；P1/P2 → roadmap 版本-主题表，下一轮走 01→04→05。04 读 `.csp/audit/AUDIT-FINDINGS-{milestone-slug}.json` 拆 fix task。
 - **阶段穷尽**：每阶段必须**穷尽完成本阶段全部任务**才可标 `done`、写 lifecycle 进下一阶段，不遗留尾巴到下游。例：03 必须为 decomposition 每个 Feature 产出 Spec（硬门控 Spec 数 == Feature 数）；04 必须为每个 P0/P1 Spec 拆 Task；05 必须按全部 Wave 实施完。下游探测发现上游有缺漏 → 停步路由回上游补全，不臆造、不绕过。
 - **评审/批准 gate（默认自动，不等人）**：① **PRD 评审**（01 完成前，reviewer≠author，auto 跑、findings 自动应用、无未解 Critical 自动 `Approved` 进 02，**不要求人工批准**；仅 Rejected fundamental 才人工）；② **Git 发布**（06，S6 质量门控+S7 审查+对账全过后**自动 push+GitHub Release**，gate 即授权，不再二次人工确认；版本号一致性见 06「版本与发布规范」节）；③ **07 复盘**（里程碑后可选触发）。**仅无前置 gate 的纯破坏操作（删 source、删业务文档）才人工拍板。**
+- **门控执行完整性（禁止静默降级）**：auto-proceed 只认**真实执行**（`ran: <命令> exit <code>`），不认降级（grep 替代 typecheck/test/build）。工具链不可用→`BLOCKED`→不发布、tag 标 `-draft`。`not-run`=阻断。版本叠加：上版 not-run→本版警告先对齐再加新功能。
 
 ## 文档与图规范（全链路 Markdown 产物遵守）
 
