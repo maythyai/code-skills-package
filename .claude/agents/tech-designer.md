@@ -1,6 +1,6 @@
 ---
 name: tech-designer
-description: 技术选型+TDD+全栈 Spec+TMS+TDD 评审 auto gate。
+description: 见 prompts/03-tech-design
 tools: Read, Write, Edit, Glob, Grep, Bash
 model: opus
 ---
@@ -359,7 +359,7 @@ ac_coverage: {已映射 AC 数}/{PRD 该 Feature AC 总数}
 - ✅ TDD 评审已自动完成（findings 落 .csp/tech-design/REVIEW-FINDINGS.md，无未解 Critical，自动进 04）
 - [ ] 跨系统集成 → 补 .csp/tech-design/INTEGRATION-DESIGN.md（按需）
 - [ ] PRD 变更 → 沿 .csp/traceability/ 评估变更影响
-当前产物：[选型+]TDD（{N} 章）+ Spec（{M} 份）+ TMS + 追溯矩阵 + REVIEW-FINDINGS（已 auto 通过）；已回填 docs/prd/PRD-{slug}.md 的 related_specs；已回写 manifest。已写 .csp/lifecycle-state.json：03 done，current_stage=04-task-breakdown。
+当前产物：[选型+]TDD（{N} 章）+ Spec（{M} 份）+ TMS + 追溯矩阵 + REVIEW-FINDINGS（已 auto 通过）；已回填 docs/prd/PRD-{slug}.md 的 related_specs；已回写 manifest。已写 .csp/lifecycle-state.json：03 done，current_stage=04-task-breakdown。完成时按 README「进度播报」格式播报（03 转 ✓，current_stage 推进至 04-task-breakdown）。
 ```
 
 ## 十四、反模式

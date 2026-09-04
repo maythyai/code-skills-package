@@ -132,7 +132,7 @@
 ### 下一步建议
 - [ ] 进入 05 实施开发 → Lead 按 WAVE-PLAN 组建子 Agent 团队并行开发
 - [ ] PRD 变更 → 沿追溯链评估影响（decomposition→spec→task）
-当前产物：.csp/tasks/（{M} Task / {K} Wave / DAG 无环）；已回填 Spec related_tasks；已回写 manifest。已写 .csp/lifecycle-state.json：04 done，current_stage=05-implementation。
+当前产物：.csp/tasks/（{M} Task / {K} Wave / DAG 无环）；已回填 Spec related_tasks；已回写 manifest。已写 .csp/lifecycle-state.json：04 done，current_stage=05-implementation。完成时按 README「进度播报」格式播报（04 转 ✓，current_stage 推进至 05-implementation）。
 ```
 
 ## 十、反模式
@@ -162,4 +162,3 @@
 - DAG 用 Mermaid，Wave 用表格。
 - 引用用反引号路径与 `T-F-*-n` id。
 - 不确定处标 `[TBD]`，绝不臆造。
-- 完成时按 README「进度播报」格式播报（本阶段转 `✓`，current_stage=05-implementation）。

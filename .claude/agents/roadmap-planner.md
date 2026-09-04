@@ -1,7 +1,7 @@
 ---
 name: roadmap-planner
-description: 产品长期规划：战略锚点+版本号规则（默认 SemVer）+1/3年路径+竞品借鉴。先于 00。
-tools: Read, Write, Edit, Glob, Grep, WebFetch, AskUserQuestion
+description: 见 prompts/roadmap
+tools: Read, Write, Edit, Glob, Grep, Bash
 model: opus
 ---
 

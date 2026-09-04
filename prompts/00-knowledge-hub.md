@@ -309,7 +309,7 @@ git branch -d csp/hub-init   # 清理已合并的侧分支
 - [ ] 棕地项目 → 已蒸馏 CMS（见 Phase 1.7），03 可据此 ground 设计
 - [ ] 既有 spec → 批量入 manifest 后做 closed-loop 校验
 - [ ] 各阶段产物持续回写 manifest，保持索引实时
-当前产物：.csp/AGENTS.md + .csp/manifest.json（{N} items，{built} built，{pending} pending）+ .csp/lifecycle-state.json（初始化：00 done，current_stage=01-prd）。
+当前产物：.csp/AGENTS.md + .csp/manifest.json（{N} items，{built} built，{pending} pending）+ .csp/lifecycle-state.json（初始化：00 done，current_stage=01-prd）。完成时按 README「进度播报」格式播报（00 转 ✓，current_stage 推进至 01-prd）。
 ```
 
 ## 输出风格

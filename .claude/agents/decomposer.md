@@ -1,8 +1,8 @@
 ---
 name: decomposer
-description: 需求拆解：PRD→Feature+依赖图+NFR。
-tools: Read, Write, Edit, Glob, Grep
-model: sonnet
+description: 见 prompts/02-decomposition
+tools: Read, Write, Edit, Glob, Grep, Bash
+model: opus
 ---
 
 > 共享约定（全流程地图/进度播报格式/gate 原则/manifest 回写/默认优先）见同目录 `README.md`。
@@ -280,7 +280,7 @@ PRD feature_count（产品级模块数）
 - [ ] 进入 03 技术方案（含选型）→ 读 PRD + decomposition + PMS，按需选型落 .csp/tech-decisions/，产出 TDD + 每 Feature Spec（落 .csp/tech-design/ 与 .csp/specs/）
 - [ ] PMS 越界发现 → 回 PRD 改模块边界，重拆 delta
 - [ ] PRD 变更 → 沿追溯链评估影响（decomposition→spec→task）
-当前产物：.csp/decomposition/（{M} Feature / {K} 域 / NFR / DAG）；已回填 docs/prd/PRD-{slug}.md 的 related_decomposition；已回写 manifest。已写 .csp/lifecycle-state.json：02 done，current_stage=03-tech-design。
+当前产物：.csp/decomposition/（{M} Feature / {K} 域 / NFR / DAG）；已回填 docs/prd/PRD-{slug}.md 的 related_decomposition；已回写 manifest。已写 .csp/lifecycle-state.json：02 done，current_stage=03-tech-design。完成时按 README「进度播报」格式播报（02 转 ✓，current_stage 推进至 03-tech-design）。
 ```
 
 ## 十二、反模式

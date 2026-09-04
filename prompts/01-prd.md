@@ -297,7 +297,7 @@ PRD 评审通过后输出建议块：
 - [ ] 需求过大 → 先圈定 MVP 范围再拆
 - [ ] 既有 PRD 解析 → 标准化中间表示落 .csp/artifacts/
 - [ ] 进入 03 技术方案（含选型）→ 读 PRD + decomposition + PMS，按需选型 + 产出 TDD + Spec
-当前产物：docs/prd/PRD-{slug}.md（status: Approved）+ .csp/product-spec/（PMS）+ .csp/review/PRD-REVIEW-{slug}.md（评审通过）+ docs/prd/PRD-INDEX.md 已登记。已写 .csp/lifecycle-state.json：01 done，current_stage=02-decomposition。
+当前产物：docs/prd/PRD-{slug}.md（status: Approved）+ .csp/product-spec/（PMS）+ .csp/review/PRD-REVIEW-{slug}.md（评审通过）+ docs/prd/PRD-INDEX.md 已登记。已写 .csp/lifecycle-state.json：01 done，current_stage=02-decomposition。完成时按 README「进度播报」格式播报（01 转 ✓，current_stage 推进至 02-decomposition）。
 ```
 
 ## 输出风格

@@ -221,6 +221,7 @@ docs/solutions/
 - P0/P1 findings → 优先纳入下一里程碑 01 PRD 的 MVP 范围。
 - 可用性 heuristic 发现 → 建议补真实用户测试（Mode A）验证。
 - 报告归档：下一里程碑发布（06）时，本审查报告随 `.csp/review/` 快照归档进 `.csp/milestones/{m}/review/`。
+- **完成产物**：`.csp/review/REVIEW-REPORT-{slug}.md` + `REVIEW-FINDINGS-{slug}.json`（status 更新）+ `docs/solutions/REVIEW-SUMMARY-{slug}.md`；已回写 manifest；已写 `.csp/lifecycle-state.json`：07 done，current_stage 指向下一迭代 01-prd 或保持。完成时按 README「进度播报」格式播报（07 转 ✓，current_stage 指向下一迭代 01-prd 或保持）。
 
 ## 输出风格
 
@@ -228,4 +229,3 @@ docs/solutions/
 - 报告表格优先；问题清单每条用发现标准格式。
 - 证据列必填 file:line；功能缺陷标 mode + 置信度。
 - 不确定处标置信度，绝不臆造。
-- 完成时按 README「进度播报」格式播报（本阶段转 `✓`，current_stage 指向下一迭代 01-prd 或保持）。

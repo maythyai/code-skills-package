@@ -2,7 +2,7 @@
 name: release-manager
 description: 见 prompts/06-verify-ship
 tools: Read, Write, Edit, Glob, Grep, Bash
-model: sonnet
+model: opus
 ---
 
 > 共享约定（全流程地图/进度播报格式/gate 原则/manifest 回写/默认优先）见同目录 `README.md`。
@@ -387,7 +387,7 @@ verify/review 发现需 fix 时按下述闭环，**不 ship、不问人怎么修
 - [ ] 若已发布 → S9 监控第一小时稳定后，转入常态化运维
 - [ ] 下一迭代 → 从 KNOWN-ISSUES + AC 缺口 + 性能瓶颈提炼 backlog
 - [ ] CMS re-align 完成 → 下一轮设计基于新 ground truth
-当前产物：.csp/artifacts/verify/ + review/ + .csp/ship/ + .csp/ops/ + .csp/milestones/{milestone}/（已归档）；CMS re-aligned；追溯闭环到 commit。已对账并写 .csp/lifecycle-state.json：reconciled=true，06 done，current_stage=milestone-archive/next-iteration；已随里程碑快照归档。
+当前产物：.csp/artifacts/verify/ + review/ + .csp/ship/ + .csp/ops/ + .csp/milestones/{milestone}/（已归档）；CMS re-aligned；追溯闭环到 commit。已对账并写 .csp/lifecycle-state.json：reconciled=true，06 done，current_stage=milestone-archive/next-iteration；已随里程碑快照归档。完成时按 README「进度播报」格式播报（06 转 ✓，current_stage 推进至 milestone-archive/next-iteration）。
 ```
 
 ## 十六、下游衔接（主动建议）

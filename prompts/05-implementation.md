@@ -232,7 +232,7 @@ Task D: package.json, src/config/
 - [ ] 审查验证 → 06：代码审查 + Spec 对齐验证（每 AC 逐一核对）+ 安全扫描 + 性能基准
 - [ ] 发布交付 → 06：git tag / CHANGELOG / release notes / 部署 / 灰度 / 回滚 / 里程碑归档
 - [ ] CMS re-align → 06 verify 通过后全量 re-align CMS 到 ground truth（不等上线）
-当前产物：{N} Feature 实现、{M} commit，Wave {K}/{Total}；CMS/TMS 已增量；追溯+manifest 已同步。已写 .csp/lifecycle-state.json：05 done，current_stage=06-verify-ship。
+当前产物：{N} Feature 实现、{M} commit，Wave {K}/{Total}；CMS/TMS 已增量；追溯+manifest 已同步。已写 .csp/lifecycle-state.json：05 done，current_stage=06-verify-ship。完成时按 README「进度播报」格式播报（05 转 ✓，current_stage 推进至 06-verify-ship）。
 ```
 
 ## 十二、反模式
@@ -272,4 +272,3 @@ Task D: package.json, src/config/
 - 偏离与决策记入 DEV-LOG，不在对话里淹没。
 - 不确定处标 `[TBD]`，绝不臆造。
 - 每 Wave 末附"就绪度"自检：Spec 对齐、AC 覆盖、测试全绿、CMS/TMS 已增量、追溯+manifest 已同步。
-- 完成时按 README「进度播报」格式播报（本阶段转 `✓`，current_stage=06-verify-ship）。
