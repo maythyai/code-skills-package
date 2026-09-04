@@ -50,3 +50,29 @@ npm test               # validate:all + build:graph + node --test test/ (20 inva
 - [CONTRIBUTING.md](./CONTRIBUTING.md) — how to contribute a skill or fix
 - [scripts/README.md](./scripts/README.md) — build/validate/maintenance tooling reference
 - [docs/analysis/](./docs/analysis/project-review-2026-08.md) — audit reports + upgrade plans (project-review-2026-08, REVIEW-PROGRAMMING-SKILLS, cross-layer-testing-case-study)
+
+## CSP 知识中枢 & Agent 团队
+
+本项目用 `.csp/` 作为**编程管理统一文档库**（PMS/CMS/TMS + 流水线产物），`.claude/agents/` 为多智能体团队。约定详见 `.claude/agents/README.md`。
+
+### 知识中枢（进入 workspace 先读）
+- `.csp/AGENTS.md`：路由契约。
+- `.csp/manifest.json`：唯一产物索引（`source_id`+`content_hash`+`build_status`）。
+- `.csp/lifecycle-state.json`：流水线阶段状态（现在第几步、下一步谁）。
+- **若 `.csp/AGENTS.md` 不存在** → 先运行 `knowledge-hub` agent 初始化：建 `AGENTS.md`/`manifest.json`/`lifecycle-state.json` + 棕地 CMS 蒸馏（`.csp/code-spec/`）+ 既有文档整改（Phase 1.5）。这是整条链路（00→07）的第一步，未初始化不进 01。
+
+### Agent 团队（`.claude/agents/`）
+- 外环 `roadmap-planner`（战略锚点+版本号规则+1/3年路径，跑一次）
+- 内环：`knowledge-hub`(00) → `prd-writer`(01) → `decomposer`(02) → `tech-designer`(03) → `task-breaker`(04) → `dev-lead`(05) → `release-manager`(06) → `reviewer`(07)
+- 主调度：`lifecycle-orchestrator`（读 lifecycle-state 自动派 agent；gate 即授权，仅破坏性/无解才问人）
+- 05 角色：`backend-engineer`/`frontend-engineer`/`db-engineer`/`qa-engineer`（由 dev-lead spawn + worktree 并行）
+
+### 文档边界
+- `.csp/` = 编程管理产物（PMS/CMS/TMS + specs/tasks/tech-design/traceability/artifacts/ship/ops/milestones），git 跟踪。
+- `docs/` = 非编程人类文档（README/USER-GUIDE/PRD 原文/CHANGELOG）。
+- 版本号默认 SemVer（X.Y.Z），不自动用日期形式 tag。
+
+### 用法
+- 端到端：说"跑流程/从 00 开始/推进" → `lifecycle-orchestrator` 自动推进到 06 发布。
+- 单阶段：说"写 PRD/拆 task/发版/复盘" → 对应 agent。
+- 产物遵循 `.csp/` 格式（front-matter 互链 + manifest 回写 + lifecycle-state 推进）。
