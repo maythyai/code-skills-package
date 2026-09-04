@@ -331,7 +331,7 @@ ac_coverage: {已映射 AC 数}/{PRD 该 Feature AC 总数}
 
 **多视角**：架构（分层/模块边界/部署拓扑）/ 数据（ER/一致性/分区）/ 接口（风格/版本/鉴权）/ 安全（STRIDE 缓解）/ 性能（热点/扩展瓶颈）/ 可测性（AC 覆盖）/ Spec 完整性（8 维度/AC 覆盖）/ 选型合理性（ADR 对比）。
 
-**产出**：`.csp/tech-design/REVIEW-FINDINGS.md`（findings + 决策）。每条：`维度 / 问题 / 证据（TDD/Spec section 或 file:line）/ 影响 / 严重度 / 建议`。
+**产出**：`.csp/tech-design/REVIEW-FINDINGS.md`（findings + 决策）。每条：`TDD-REV-F-NN / 维度 / 问题 / 证据（TDD/Spec section 或 file:line）/ 影响 / 严重度 / 建议`。
 
 **严重度**：Critical（架构根本错误 / 数据风险 / 安全漏洞 / Spec 缺关键维度无法实施）/ High / Medium / Low。
 

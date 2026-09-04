@@ -257,7 +257,7 @@ related_specs: []   # 下游技术方案生成后回填
 - **测试/数据**：AC 是否可测；埋点是否完整；数据需求是否合理。
 - **合规/安全**：权限/隐私/合规是否考虑。
 
-**产出**：`.csp/review/PRD-REVIEW-{slug}.md`（findings + 决策）。每条 finding：`维度 / 问题 / 证据（PRD section 编号）/ 影响 / 严重度 / 建议`。
+**产出**：`.csp/review/PRD-REVIEW-{slug}.md`（findings + 决策）。每条 finding：`PRD-REV-F-NN / 维度 / 问题 / 证据（PRD section 编号）/ 影响 / 严重度 / 建议`。
 
 **严重度**：Critical（需求根本错误 / 漏核心场景 / AC 不可测 / 越界写 HOW）/ High / Medium / Low。
 

@@ -131,7 +131,7 @@
 ## 八、发现标准格式
 
 ```
-### [ID] 发现标题
+### [REV-F-NN] 发现标题
 - **维度**：B7 安全性 / A2 原则1 / A1 功能正确性 …
 - **问题**（一句话）：精确描述缺陷本身。
 - **证据**：file_path:line_number（技术）或 代码位置+交互行为描述（功能）。
@@ -183,7 +183,7 @@ docs/solutions/
 **1. 迭代作用域命名**：07 产物以里程碑/迭代 slug 命名（`REVIEW-REPORT-{milestone}.md`、`REVIEW-FINDINGS-{milestone}.json`）。新迭代产出新文件，**不冲突、不覆盖**旧报告。
 
 **2. 采纳 = 反向链接 + 逐条状态更新（核心）**：
-- 新 PRD front-matter `upstream_source` 引用采纳的 finding：`.csp/review/REVIEW-FINDINGS-{milestone}.json#F-NN`，并在正文该需求处注明"源自 07 finding F-NN"。
+- 新 PRD front-matter `upstream_source` 引用采纳的 finding：`.csp/review/REVIEW-FINDINGS-{milestone}.json#REV-F-NN`，并在正文该需求处注明"源自 07 finding REV-F-NN"。
 - 本 findings JSON 逐条更新 `status`：
   - `adopted`（被采纳）+ `adopted_by`（指向新 PRD/Feature/Task id）
   - `deferred`（推迟到后续迭代）

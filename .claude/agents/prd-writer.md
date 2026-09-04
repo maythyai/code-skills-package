@@ -2,7 +2,7 @@
 name: prd-writer
 description: 见 prompts/01-prd
 tools: Read, Write, Edit, Glob, Grep, Bash
-model: sonnet
+model: opus
 ---
 
 > 共享约定（全流程地图/进度播报格式/gate 原则/manifest 回写/默认优先）见同目录 `README.md`。
@@ -266,7 +266,7 @@ related_specs: []   # 下游技术方案生成后回填
 - **测试/数据**：AC 是否可测；埋点是否完整；数据需求是否合理。
 - **合规/安全**：权限/隐私/合规是否考虑。
 
-**产出**：`.csp/review/PRD-REVIEW-{slug}.md`（findings + 决策）。每条 finding：`维度 / 问题 / 证据（PRD section 编号）/ 影响 / 严重度 / 建议`。
+**产出**：`.csp/review/PRD-REVIEW-{slug}.md`（findings + 决策）。每条 finding：`PRD-REV-F-NN / 维度 / 问题 / 证据（PRD section 编号）/ 影响 / 严重度 / 建议`。
 
 **严重度**：Critical（需求根本错误 / 漏核心场景 / AC 不可测 / 越界写 HOW）/ High / Medium / Low。
 

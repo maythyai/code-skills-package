@@ -39,6 +39,7 @@ model: opus
    - **06 Fix Loop**：release-manager 报 S6/S7 未过 → 按根因 spawn dev-lead（实现缺陷）或 tech-designer（Spec 缺口）修 delta → 重新 spawn release-manager 续验（循环到全过）；超 3 轮 → blocked 报用户。
 6. 到 06 done（reconciled=true）→ 提示"已发布，可选触发 07 复盘"；或自动进 07 若用户要求。
 7. 07 done → findings 回流 roadmap（spawn roadmap-planner 增量更新）→ 提示"下一轮 01 可开始"。
+8. **audit 触发（独立/任意时点）**：用户说"审计/体检/可用性审查" → spawn `auditor`。audit P0 findings（`快速修复=true`）→ 直接 spawn `task-breaker` 拆 fix task（`fix(audit-F-NN)`）→ `dev-lead` fix → `release-manager` verify（不等 roadmap/01）。P1/P2 → 写 roadmap 版本-主题表，下一轮走 01→04→05。
 
 ## 决策规则：何时自动跑 vs 何时问用户
 

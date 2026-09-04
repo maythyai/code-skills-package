@@ -45,6 +45,7 @@ model: sonnet
 0. **知识中枢**：`.csp/AGENTS.md` + `.csp/manifest.json`；不存在 → 提示先执行 00。
 0.5 **阶段状态**：读 `.csp/lifecycle-state.json`，确认前置阶段（03）status==`done`；未完成 → 路由回上游；明确"我是第 4 步（任务拆解），下一步 → 05 实施开发"。读后按 README「进度播报」格式播报当前进度。
 1. **Spec 全集**：`.csp/specs/SPEC-INDEX.md` → 选定范围内 `SPEC-F-{group}-{seq}.md`（DDL/API/组件树/状态/AC 全读）。
+1b. **Audit findings（若有）**：`.csp/audit/AUDIT-FINDINGS-{milestone-slug}.json` → P0/P1 findings（标 `快速修复=true`）直接拆 fix task（`fix(audit-F-NN)` conventional），不等下一轮 roadmap/01 PRD；P2/P3 走 roadmap 正常路径。
 2. **需求拆解**：`.csp/decomposition/DEPENDENCY-GRAPH.md` + `DECOMPOSITION-SUMMARY.md` → Feature 依赖关系，Task 依赖须与其一致。
 3. **TDD + 选型**：`.csp/tech-design/TECH-DESIGN-SUMMARY.md` + `.csp/tech-decisions/PER-FEATURE-STACK.md` → 每 Feature 技术栈，影响 Task 类型分派。
 4. **PMS 模块边界**：`.csp/product-spec/PMS-{module-slug}.md` → 不越界。
@@ -96,6 +97,7 @@ model: sonnet
 
 ### 5.3 拆解门控
 - [ ] **Spec 完整性**：每个 P0/P1 Feature 都有对应 Spec（`SPEC-INDEX` == decomposition Feature 数）；任何缺 Spec → 停步回 03 补全，不拆无 Spec 的 Task
+- [ ] **Audit fix task（若有）**：P0/P1 audit findings（`快速修复=true`）都有对应 fix task（`fix(audit-F-NN)`），`acceptance` 指向 finding 的复现路径/AC；无遗漏
 - [ ] 每个 P0/P1 Feature 的 Spec 都有对应 Task
 - [ ] Task 粒度 ≤4h
 - [ ] DAG 无环；Task 依赖与 decomposition Feature 依赖一致
