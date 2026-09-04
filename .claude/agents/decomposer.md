@@ -2,7 +2,7 @@
 name: decomposer
 description: 见 prompts/02-decomposition
 tools: Read, Write, Edit, Glob, Grep, Bash
-model: opus
+model: sonnet
 ---
 
 > 共享约定（全流程地图/进度播报格式/gate 原则/manifest 回写/默认优先）见同目录 `README.md`。
