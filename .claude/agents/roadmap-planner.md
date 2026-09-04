@@ -1,7 +1,7 @@
 ---
 name: roadmap-planner
-description: 见 prompts/roadmap
-tools: Read, Write, Edit, Glob, Grep, Bash
+description: 产品长期规划+版本号规则(五方一致)。先于 00。
+tools: Read, Write, Edit, Glob, Grep, WebFetch, AskUserQuestion
 model: opus
 ---
 
@@ -103,7 +103,7 @@ model: opus
 
 **预发布与质量分级**：`alpha`（功能未完内部测）/`beta`（功能完公开测）/`rc`（发布候选）；NPM dist-tags（alpha/beta/latest）；质量分级 `exploration → insider → stable`。
 
-**多平台版本同步**：根/各 app `package.json`、`tauri.conf.json`、`pyproject.toml`、iOS `CURRENT_PROJECT_VERSION`、Docker tag、GitHub Release tag 必须一致；用脚本校验禁止人工同步（执行细节见 06「版本与发布规范」节）。
+**多平台版本同步**：根/各 app `package.json`、`tauri.conf.json`、`pyproject.toml`、iOS `CURRENT_PROJECT_VERSION`、Docker tag、GitHub Release tag_name、GitHub Release title、`VERSION` 文件必须**完全一致**（同一字符串）；用脚本校验禁止人工同步（执行细节见 06「版本与发布规范」节）。
 
 > 本节是**版本号规则的权威定义**；06 发布执行 reference 此节，不另立方案。
 

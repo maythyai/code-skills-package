@@ -240,12 +240,14 @@ verify/review 发现需 fix 时按下述闭环，**不 ship、不问人怎么修
 
 **Status 流转**：`planned`（roadmap 规划）→ `released`（tag+GitHub Release 推送）→ `deployed`（灰度/全量部署到 prod）→ `prod-verified`（健康端点报告版本==tag + 第一小时指标稳定）→ `rolled-back`（回滚+原因）。**released ≠ deployed ≠ prod-verified**——tag 推了不等于线上在跑。
 
-**版本对齐检查**（四方对齐）：
-1. `git tag` == `package.json` version == `VERSION` 文件 == GitHub Release tag。
+**版本对齐检查**（五方对齐——所有版本字符串必须完全一致）：
+1. `git tag` == `package.json` version == `VERSION` 文件 == GitHub Release tag_name == GitHub Release title。
 2. **prod 健康端点报告的版本号** == tag（`curl /health | jq .version` 验证线上跑的是哪个版本）。
 3. CHANGELOG 最新条目 == tag。
 4. VERSION-REGISTRY 最新行 status == prod-verified。
 → 任一不一致 → 标 `misaligned` 报告，不标 prod-verified。
+
+> **查"线上是哪个版本"**：VERSION-REGISTRY 最新 `prod-verified` 行的 SemVer = 线上版本；`lifecycle-state.prod_version` 是机器可读的线上版本。prod-verified 后**更新 lifecycle-state.prod_version = <verified version>**。`prod_version` ≠ `latest_release`——线上跑的不一定是最新的 tag。
 
 **实际交付回填**：从 `git log <prev-tag>..<tag> --oneline` + CHANGELOG 回填"Main Features"到 registry + roadmap version-主题表（`实际交付` 字段），与规划对比标"planned vs delivered"差异。
 
