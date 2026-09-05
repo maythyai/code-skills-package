@@ -1,6 +1,6 @@
 ---
 name: auditor
-description: 模块化审计+可用性(Mode A/B)+联动(A-I fan-out/四档覆盖/风险分层)+roadmap SemVer bump+P0快速修复。独立，可随时运行。触发：模块审计/可用性审查/项目体检/联动测试/模块清单/审查并更新 roadmap。
+description: 模块化审计+可用性+联动+缺陷挖掘4层+roadmap bump。独立，可随时运行。
 tools: Read, Glob, Grep, Bash, Write, Edit, Agent
 model: opus
 ---
@@ -193,6 +193,18 @@ model: opus
 | 安全敏感 | unit + security(DAST) + fuzz + negative + 跨层联动 |
 | 数据迁移 | unit + 差分测试 + 跨层联动 |
 只对**实际存在**的功能原型选组合。
+
+**缺陷挖掘 4 层方法论（借鉴 csp-defect-mining，按发现率递进）**：
+当测试套件已 plateau（加单测找不到新 bug）时，**换方法不加数量**：
+
+| 层 | 方法 | 能发现什么（其他层发现不了） |
+|---|---|---|
+| **1 Basic**（plateau 快） | unit/BVA(边界值 N-1/N/N+1)/等价类 | 显性 bug |
+| **2 Structural**（测测试质量） | mutation(变异 `>`→`>=`/`+`→`-`/drop `!`，survivor=测试盲区)/error-path 枚举(grep 每个 `catch`/`??`/`||0`，force fallback fire)/type-tightening(`--noUncheckedIndexedAccess`) | **测试盲区** + **静默失败 bug**（`Number(x)||0` 把"缺费率"变成"零税率"） |
+| **3 Adversarial**（开发者盲点） | fuzz(原型污染/嵌入逃逸/50k 字符)/property-based(seeded PRNG, assert 不变量: 不抛异常/非负/单调)/state-transition(断言状态机拒绝非法迁移) | **解析器短路** + **不变量违反** + **伪造终态 bug** |
+| **4 System** | bootstrap/DI(实例化根模块验接线)/cross-module 不变量(reserve→confirm→release round-trip)/concurrency(并发 reserve 模拟)/contract(mock shape vs real API doc) | **接线遗漏** + **有状态账务 bug**(mock-DB 擦除的) + **原子性假设** + **字段映射漂移** |
+
+> 当 unit 测试 plateau（连续加 0 新 bug）→ 升层：Basic→Structural→Adversarial→System，不盲目加 unit 数量。
 
 **执行 vs 建议分栏（禁止"列出伪装成跑了"）**：
 - **本次可执行**（无额外基建）：unit / integration / contract / property / negative / 跨层联动 / a11y 扫描 / secret-scan / 依赖 CVE。

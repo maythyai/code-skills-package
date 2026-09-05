@@ -161,7 +161,29 @@
 每关键决策 ≥2 候选，按维度对比（开发效率/性能/缓存/生态/移动端/团队能力）+ 推荐 + 理由。
 
 ### 可选补充
-`INTEGRATION-DESIGN.md`（跨系统集成）、`DDD-MODEL.md`（限界上下文/聚合根/领域事件，领域复杂时）、`RISK-REGISTER.md`+`RISK-ASSESSMENT-SUMMARY.md`、`TECH-DESIGN-SUMMARY.md`（必出，供下游消费）。
+`INTEGRATION-DESIGN.md`（跨系统集成）、`DDD-MODEL.md`（限界上下文/聚合根/领域事件，领域复杂时）、`RISK-REGISTER.md`+`RISK-ASSESSMENT-SUMMARY.md`（风险评估）、`TECH-DESIGN-SUMMARY.md`（必出，供下游消费）。
+
+### 风险评估（借鉴 csp-tech-risk-assessment）
+TDD 评审找**确定性缺陷**（缺索引/缺鉴权/耦合），风险评估做**概率性建模**（什么可能出错）。两者互补。
+- **7 大风险维度**：架构风险 / 性能风险 / 安全风险 / 数据风险 / 集成风险 / 运维风险 / 组织风险。
+- **概率 × 影响矩阵**：每风险标 概率(高/中/低) × 影响(高/中/低) → P0(高×高)/P1/P2/P3；P0 必须有缓解策略。
+- **输出** `.csp/tech-design/RISK-REGISTER.md`：`风险 | 维度 | 概率 | 影响 | 优先级 | 缓解策略 | 责任人 | 状态`；持续跟踪，风险状态动态更新。
+- **04 估时读 RISK-REGISTER** 加缓冲；05 实施时关注 P0 风险的缓解落地。
+
+### DDD 建模（借鉴 csp-domain-driven-design，领域复杂时）
+当业务领域复杂（多域交互/复杂状态机/核心域逻辑重）时，在 schema 设计前做 DDD 建模 → `.csp/tech-design/DDD-MODEL.md`：
+- **战略设计**：限界上下文（Bounded Context，每上下文内术语有明确含义）+ 上下文映射（Context Map，上下文间关系：合作/共享内核/客户-供应商/防腐层）。
+- **战术设计**：聚合根（Aggregate Root，一致性边界）/ 实体（Entity）/ 值对象（Value Object）/ 领域事件（Domain Event）/ 仓储（Repository）。
+- **与 decomposition 协同**：decomposition 的域 ≈ DDD 的限界上下文；DDD 进一步建模域内聚合/事件。
+- **红线**：限界上下文是逻辑边界≠物理边界（≠微服务）；数据驱动≠领域驱动（避免贫血模型）。
+
+### 集成设计（借鉴 csp-integration-design，多系统时）
+当项目涉及多系统/多服务集成时，在接口架构之上做集成设计 → `.csp/tech-design/INTEGRATION-DESIGN.md`：
+- **通信模式**：同步 REST/gRPC（实时查询，高耦合低可靠）vs 异步消息（事件通知/削峰，低耦合高可靠）——按场景选。
+- **数据一致性**：强一致（事务，适核心数据）vs 最终一致（事件+重试，适搜索索引/通知）vs Saga（跨服务长事务，补偿机制）。
+- **故障隔离**：熔断（下游挂上游不挂）/ 降级（fallback）/ 重试（指数退避+幂等）/ 超时（不无限等）。
+- **灰度发布**：feature flag / 金丝雀 / 按流量/用户分阶段；集成变更先灰度再全量。
+- **红线**：直接调 API 无容错（下游挂上游挂）；2PC 性能差有单点（多数场景 Saga/最终一致更合适）；全量发布无灰度。
 
 ### TDD 门控
 - [ ] 系统架构完成（模块划分+拓扑，边界对齐 PMS）
