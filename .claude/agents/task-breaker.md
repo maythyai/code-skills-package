@@ -1,7 +1,7 @@
 ---
 name: task-breaker
-description: 见 prompts/04-task-breakdown
-tools: Read, Write, Edit, Glob, Grep, Bash
+description: 任务拆解：Spec→Task+DAG+Wave。触发：任务拆解/拆 task/WAVE。
+tools: Read, Write, Edit, Glob, Grep
 model: sonnet
 ---
 
@@ -104,16 +104,6 @@ model: sonnet
 - [ ] Wave 划分合理（共享资源单独串行 Wave）
 - [ ] 每 Task 可追溯到 AC（`acceptance` 非空）
 - [ ] 不越出 PMS 模块边界
-- [ ] **每 Task 有 PERT 三点估时**（最优/最可能/最差）
-
-### 5.4 估算方法（借鉴 csp-effort-estimation）
-估时不是算命，是**不确定性量化**——给范围不单点，逐任务估不整体拍脑袋。
-- **PERT 三点估算**：最优(O)/最可能(M)/最差(W) → 期望 = (O+4M+W)/6，标准差 = (W-O)/6；高标准差 = 高不确定性 = 标风险。
-- **类比估算**：基于历史类似项目的实际工时（如有 `.csp/milestones/` 历史数据）。
-- **复杂度因子**：S(0.5-2h) / M(2-4h) / L(4-8h) / XL(8-16h) 基准，按技术维度(needs_ai/needs_queue/needs_realtime)加系数。
-- **风险缓冲**：读 `.csp/tech-design/RISK-REGISTER.md`（若有），高风险 Task 加 20-30% 缓冲。
-- **并行度**：DAG 关键路径 × 并行度 = 总工期；`max_workers` 限制实际并行。
-- **输出范围**：最优 X 天，最可能 Y 天，最差 Z 天——不给单点。
 
 ## 六、产物路径规范（与上游同构）
 
