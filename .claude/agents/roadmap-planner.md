@@ -1,6 +1,6 @@
 ---
 name: roadmap-planner
-description: 产品长期规划+版本号规则(五方一致)。先于 00。
+description: 产品长期规划+版本号规则(顺序递增不跳跃,大数字正常)。先于 00。
 tools: Read, Write, Edit, Glob, Grep, WebFetch, AskUserQuestion
 model: opus
 ---
@@ -88,7 +88,9 @@ model: opus
 - **MINOR**（Y）：向后兼容的功能新增/主题交付（roadmap 每个版本主题通常对应一次 MINOR 递增，如 v1.0→v1.1）。
 - **PATCH**（Z）：向后兼容的 bug 修复/小补丁（不改主题、不加功能）。
 - **pre**：`alpha.N`（功能未完内部测）/`beta.N`（功能完公开测）/`rc.N`（发布候选）。
-- 允许跳号（如 v1.2.0 → v1.2.2，跳过 v1.2.1）。
+- 允许跳 PATCH 号（如 v1.2.0 → v1.2.2，跳过 v1.2.1）。**但 MINOR/MAJOR 不跳跃**——MINOR 从上一已发 tag +1 顺序递增，**不因"这版很重要/很大"跳 MINOR 或跳 MAJOR**。
+- **版本号是顺序计数器，不是"宏大程度"指示器**：v1.105.269 完全正常——做了 105 次 MINOR 递增、269 次 PATCH 修复是正常的迭代节奏；大数字≠大版本，只代表迭代次数多。
+- **不轻易跳 MAJOR**：MAJOR 只在**实际 breaking API 变更**时 +1。additive（新模块/新端点/新功能）永远 MINOR+1，哪怕 MINOR 已经是 105。
 
 **CalVer（日期形式 vYYYY.M.DD）仅显式 opt-in**：仅当用户明确要求日期版本（典型：每日构建的终端应用）才用；**默认不用日期形式**。即便用 CalVer，tag 取 **roadmap 规划的版本号**（按规划交付），不自动用今日日期打 tag——提前/延后交付不改 tag，tag 跟随 roadmap 规划的语义版本。
 
