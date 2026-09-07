@@ -121,7 +121,7 @@ Use mid-tier model for routine reviewers, strongest model for correctness and ad
 
 This skill supports `mode:headless` for non-interactive automation. See `shared/references/headless-mode-protocol.md` for the unified protocol.
 
-## Advanced Features (from Compound Engineering)
+## Advanced Features
 
 ### Stage 2b: Plan Discovery (Requirements Verification)
 

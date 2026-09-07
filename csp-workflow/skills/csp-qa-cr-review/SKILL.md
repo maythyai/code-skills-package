@@ -1,6 +1,6 @@
 ---
 name: csp-qa-cr-review
-description: "系统化 Code Review 评审工作流。覆盖影响范围、安全性、代码质量、测试覆盖、性能、可维护性六个维度，支持大 CR 并行模式、蒸馏增强调用链追溯、增量版本评审，以及自动生成 Aone TestHub xlsx 测试用例。"
+description: "系统化 Code Review 评审工作流。覆盖影响范围、安全性、代码质量、测试覆盖、性能、可维护性六个维度，支持大 CR 并行模式、蒸馏增强调用链追溯、增量版本评审，以及自动生成测试用例平台 xlsx 用例。"
 version: 1.11.0
 layer: 2
 category: workflow
@@ -155,7 +155,7 @@ python $SCRIPT gen-report <data.json> -o outputs/cr-review-{cr_id}.md
 | 入口追溯 | grep callers 建入口维度（文件夹） |
 | 状态组合 | 组合场景优先，单枚举仅用于特殊分支 |
 
-输出格式：Aone TestHub xlsx（A~J 列），文件名 `{app}_{描述}_CR{cr_id}_测试用例.xlsx`
+输出格式：测试用例平台 xlsx（A~J 列），文件名 `{app}_{描述}_CR{cr_id}_测试用例.xlsx`
 
 ## 性能与负载控制
 

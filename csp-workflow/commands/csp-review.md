@@ -31,7 +31,7 @@ Phase number: extracted from $ARGUMENTS (required)
 - `--claude` — Include Claude CLI review (uses separate session)
 - `--codex` — Include Codex CLI review
 - `--opencode` — Include OpenCode review (uses model from user's OpenCode config)
-- `--qwen` — Include Qwen Code review (Alibaba Qwen models)
+- `--qwen` — Include Qwen Code review (Qwen models)
 - `--cursor` — Include Cursor agent review
 - `--all` — Include all available CLIs
 </context>

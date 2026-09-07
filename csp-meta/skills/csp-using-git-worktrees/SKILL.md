@@ -70,9 +70,7 @@ phase: define
 
 ---
 
-## AI Agent 高速生成代码的版本控制 (agent-skills 增强)
-
-> 来源: agent-skills/git-workflow-and-versioning
+## AI Agent 高速生成代码的版本控制
 
 AI agent 以人类无法匹配的速度生成代码。纪律性的版本控制是让变更可管理、可审查、可回滚的唯一机制。
 

@@ -188,7 +188,7 @@ For systematic QA-perspective code review (six-dimension review with test case g
 
 | Skill | Focus |
 |-------|-------|
-| `csp-qa-cr-review` | 六维评审（影响范围/安全/质量/测试覆盖/性能/可维护性）+ 蒸馏增强 + Aone TestHub 用例生成 |
+| `csp-qa-cr-review` | 六维评审（影响范围/安全/质量/测试覆盖/性能/可维护性）+ 蒸馏增强 + 测试用例平台用例生成 |
 | `csp-qa-test-engineering` | 全生命周期 QA（需求分析→测试计划→用例→自动化→生产问题调查） |
 
 ---

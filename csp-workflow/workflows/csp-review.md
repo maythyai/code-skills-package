@@ -70,7 +70,7 @@ No external AI CLIs found. Install at least one:
 - codex: https://github.com/openai/codex
 - claude: https://github.com/anthropics/claude-code
 - opencode: https://opencode.ai (leverages GitHub Copilot subscription models)
-- qwen: https://github.com/nicepkg/qwen-code (Alibaba Qwen models)
+- qwen: https://github.com/nicepkg/qwen-code (Qwen models)
 - cursor: https://cursor.com (Cursor IDE agent mode)
 
 Then run /csp-review again.

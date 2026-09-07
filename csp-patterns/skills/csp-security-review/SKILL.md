@@ -14,9 +14,7 @@ tools: [Read, Grep, Glob]
 
 ---
 
-## STRIDE 威胁建模快速表 (agent-skills 增强)
-
-> 来源: agent-skills/security-and-hardening
+## STRIDE 威胁建模快速表
 
 在加固之前,先花 5 分钟像攻击者一样思考:
 

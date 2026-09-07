@@ -6,7 +6,6 @@ description: >
   and API plugin scaffolding. Use for "generate from OpenAPI", "create API from spec",
   "TypeSpec to code".
 metadata:
-  source: awesome-copilot/skills/openapi-to-application-code,typespec-*
   globs: ["**/*.{yaml,yml,json}", "**/openapi*", "**/typespec*"]
 ---
 
