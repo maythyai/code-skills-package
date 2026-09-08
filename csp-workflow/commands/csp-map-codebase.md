@@ -1,6 +1,6 @@
 ---
 name: csp-map-codebase
-description: Analyze codebase with parallel mapper agents to produce .planning/codebase/ documents
+description: Analyze codebase with parallel mapper agents to produce .csp/planning/codebase/ documents
 argument-hint: "[--fast [--focus tech|arch|quality|concerns]] [--query <term>|status|diff|refresh] [area]"
 allowed-tools:
   - Read
@@ -15,9 +15,9 @@ requires: [config, new-project, plan-phase]
 <objective>
 Analyze existing codebase using parallel csp-codebase-mapper agents to produce structured codebase documents.
 
-Each mapper agent explores a focus area and **writes documents directly** to `.planning/codebase/`. The orchestrator only receives confirmations, keeping context usage minimal.
+Each mapper agent explores a focus area and **writes documents directly** to `.csp/planning/codebase/`. The orchestrator only receives confirmations, keeping context usage minimal.
 
-Output: .planning/codebase/ folder with 7 structured documents about the codebase state.
+Output: .csp/planning/codebase/ folder with 7 structured documents about the codebase state.
 </objective>
 
 <execution_context>
@@ -39,7 +39,7 @@ Parse the first token of $ARGUMENTS:
 - Otherwise: pass all of $ARGUMENTS as focus area to the map-codebase workflow.
 
 **Load project state if exists:**
-Check for .planning/STATE.md - loads context if project already initialized
+Check for .csp/planning/STATE.md - loads context if project already initialized
 
 **This command can run:**
 - Before /csp-new-project (brownfield codebases) - creates codebase map first
@@ -61,8 +61,8 @@ Check for .planning/STATE.md - loads context if project already initialized
 </when_to_use>
 
 <process>
-1. Check if .planning/codebase/ already exists (offer to refresh or skip)
-2. Create .planning/codebase/ directory structure
+1. Check if .csp/planning/codebase/ already exists (offer to refresh or skip)
+2. Create .csp/planning/codebase/ directory structure
 3. Spawn 4 parallel csp-codebase-mapper agents:
    - Agent 1: tech focus → writes STACK.md, INTEGRATIONS.md
    - Agent 2: arch focus → writes ARCHITECTURE.md, STRUCTURE.md
@@ -75,7 +75,7 @@ Check for .planning/STATE.md - loads context if project already initialized
 </process>
 
 <success_criteria>
-- [ ] .planning/codebase/ directory created
+- [ ] .csp/planning/codebase/ directory created
 - [ ] All 7 codebase documents written by mapper agents
 - [ ] Documents follow template structure
 - [ ] Parallel agents completed without errors

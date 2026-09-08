@@ -13,7 +13,7 @@ allowed-tools:
 Manage CSP workspaces with a single consolidated command.
 
 Mode routing:
-- **--new**: Create an isolated workspace with repo copies and independent .planning/ → new-workspace workflow
+- **--new**: Create an isolated workspace with repo copies and independent .csp/planning/ → new-workspace workflow
 - **--list**: List active CSP workspaces and their status → list-workspaces workflow
 - **--remove**: Remove a CSP workspace and clean up worktrees → remove-workspace workflow
 </objective>

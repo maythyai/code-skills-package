@@ -49,7 +49,7 @@ tools: [Read, Write, Edit, Glob, Grep, Bash]
 Retro 几乎吃满整条链。按以下顺序读取：
 
 1. 扫描会话中的 marker：所有 14 个 Skill
-2. 读取项目目录 `spark-output/context/*.json`
+2. 读取项目目录 `.csp/spark/context/*.json`
 3. 至少要读到 **brief + metric**（最低门槛——没有这两个就无法对照"当初标准 vs 实际结果"），否则降级到 Step 1
 
 **字段映射（复盘 7 段如何消费上游）**：
@@ -73,20 +73,20 @@ Retro 几乎吃满整条链。按以下顺序读取：
 
 按 [chain-protocol.md](../../chain-protocol.md) §2.1 v1.1 智能适配规则：
 
-1. **写盘到 `spark-output/context/retro.json`**（必做，主持久化通道；目录不存在先创建）
+1. **写盘到 `.csp/spark/context/retro.json`**（必做，主持久化通道；目录不存在先创建）
 2. **chat 输出紧凑 marker**（⛔ 不要在 chat 内输出完整 JSON）：
 
    ```
-   <!-- spark-context:retro ref="spark-output/context/retro.json" -->
+   <!-- spark-context:retro ref=".csp/spark/context/retro.json" -->
    Retro 已保存：project=[project_name]，[N] decision_validation，[M] what_worked / [K] what_didnt / [S] surprises，[R] recommendations
    <!-- /spark-context:retro -->
    ```
 
 降级 fallback：若写盘失败，输出完整 JSON marker（无 ref）。详见 §2.1。
 
-3. **额外保存 Markdown 报告**：`spark-output/retro/[project-slug].md`，含完整复盘 + Lessons Learned 卡片。
+3. **额外保存 Markdown 报告**：`.csp/spark/retro/[project-slug].md`，含完整复盘 + Lessons Learned 卡片。
 
-⛔ 报告**必须**保存到 `spark-output/retro/` 目录下，禁止保存到项目根目录或 `outputs/` 等其他路径。目录不存在时先创建。
+⛔ 报告**必须**保存到 `.csp/spark/retro/` 目录下，禁止保存到项目根目录或 `outputs/` 等其他路径。目录不存在时先创建。
 
 下游消费：**下个项目的 Frame Skill 可读 retro.recommendations** 作为方向参考 / 避坑提示；团队级 Skill / 组织级知识库可定期汇总 retro.what_worked + what_didnt 作为团队智慧。
 
@@ -109,18 +109,18 @@ Retro 几乎吃满整条链。按以下顺序读取：
 > **协议依据**：chain-protocol.md §九「面板自动生成约定」。本步在 Handoff 之前执行；**告知用户的提示必须作为独立段落输出，禁止折叠进 Handoff 末尾、禁止静默跳过**。
 
 1. **找模板**：定位 `_shared/dashboard-template.html`（依次：相对套件根 → `glob dashboard-template.html` 搜套件安装目录 → 三轮都失败时，**用独立段落醒目告知用户**：`⚠️ 链路面板模板未找到（套件安装可能不完整，建议重装）。本 Skill 已正常完成，下游链路不受影响。` 然后跳过本步、继续 Handoff，**不阻断 Skill 完成**）。
-2. **聚合 STATE**：扫 `spark-output/context/*.json`，聚合为 `{"project":"<brief.project_name 或 frame.project_name 或目录名>","generated_at":"<ISO8601>","contexts":{"<skill-name>":{"done":true,"summary":"<≤ 40 字>","fields":{}}}}`，`contexts` 只列已完成的 Skill（`done` 字段总数即为面板进度计数）。
-3. **克隆模板**到 `spark-output/dashboard.html`（覆盖），用正则 `/\/\*__SPARK_STATE_INJECT__\*\/null/` 替换为 `/*__SPARK_STATE_INJECT__*/<JSON.stringify(STATE)>`。
+2. **聚合 STATE**：扫 `.csp/spark/context/*.json`，聚合为 `{"project":"<brief.project_name 或 frame.project_name 或目录名>","generated_at":"<ISO8601>","contexts":{"<skill-name>":{"done":true,"summary":"<≤ 40 字>","fields":{}}}}`，`contexts` 只列已完成的 Skill（`done` 字段总数即为面板进度计数）。
+3. **克隆模板**到 `.csp/spark/dashboard.html`（覆盖），用正则 `/\/\*__SPARK_STATE_INJECT__\*\/null/` 替换为 `/*__SPARK_STATE_INJECT__*/<JSON.stringify(STATE)>`。
 4. **独立段落告知用户**（强提示，单独成段，与 Handoff 之间空一行；根据 `Object.keys(STATE.contexts).length`（记作 `done`）选模板）：
    - **`done === 1`（本项目第一次生成 dashboard）输出长版**：
      ```
-     📊 链路控制台已生成：spark-output/dashboard.html（双击在浏览器打开）
+     📊 链路控制台已生成：.csp/spark/dashboard.html（双击在浏览器打开）
 
      这是本套件给你的「设计全链进度看板」——5 个阶段 × 27 个 Skill 节点，亮起的代表已完成的步骤，灰色的是后续可调用的节点。每跑完一个 Skill 都会自动更新，建议钉在浏览器一个标签页里随时回看，能看清「现在在哪一步、下游还差什么、链路是否健康」。
      ```
    - **`done > 1`（后续更新）输出短版**：
      ```
-     📊 链路面板已更新 · 进度 [done]/27 · spark-output/dashboard.html
+     📊 链路面板已更新 · 进度 [done]/27 · .csp/spark/dashboard.html
      ```
 5. **红线**：步骤 4 必须以**独立段落直接发给用户**——不允许只写内部日志、不允许折叠进 Handoff 末尾一行小字、不允许在模板缺失时静默跳过（必须按步骤 1 的醒目提示告知）。
 
@@ -140,7 +140,7 @@ Retro 几乎吃满整条链。按以下顺序读取：
 本 Skill 在完全离线、无任何连接器的场景下即可完整交付，所有方法论与输出形态不依赖外部系统：
 
 - **全链 19 Skill 反思**：Project Summary / Decision Validation / Assumption Validation / What Worked / What Didn't / Surprises / Skill Usage 七段式模板
-- **链式上下文双通道**：写入 `spark-output/context/retro.json` + 会话内 marker block
+- **链式上下文双通道**：写入 `.csp/spark/context/retro.json` + 会话内 marker block
 - **经验沉淀本地完成**：决策与教训以结构化形式输出，可直接进入团队知识库
 
 > 红线：缺连接器时 **绝不 abort**，所有引导与输出路径必须照常完成。
@@ -151,7 +151,7 @@ Retro 几乎吃满整条链。按以下顺序读取：
 
 | 连接器 | 阶段 | 增强能力 | 降级路径 |
 | --- | --- | --- | --- |
-| **Notion / 飞书文档** | 执行流程输出后 | 复盘报告一键写入团队 wiki，建立项目历史档案 | 未装时输出本地 `retro-{project}.md`，提示手动归档 |
+| **Notion / 飞书** | 执行流程输出后 | 复盘报告一键写入团队 wiki，建立项目历史档案 | 未装时输出本地 `retro-{project}.md`，提示手动归档 |
 | **Linear / Jira** | 执行流程（数据回填阶段） | 拉迭代实际数据（任务延期率 / 缺陷数 / sprint 完成率）作为 What Didn't 的事实依据 | 未装时让用户手动输入迭代数据 |
 | **Analytics（GA / Mixpanel / 神策）** | 执行流程（数据回填阶段） | 拉上线后真实表现数据（North Star / Driver Metric 实际值）作为 Decision Validation 的事实依据 | 未装时由用户手动输入数据或附 PM 提供的截图 |
 
@@ -159,7 +159,7 @@ Retro 几乎吃满整条链。按以下顺序读取：
 
 **字段流向变化**：
 
-- 启用 **Notion / 飞书文档** → `chain.schema` 新增可选字段 `wiki_page_url: string`
+- 启用 **Notion / 飞书** → `chain.schema` 新增可选字段 `wiki_page_url: string`
 - 启用 **Linear / Jira** → `chain.schema` 新增可选字段 `sprint_actuals: array<{sprint_id, delay_rate, defect_count}>`
 - 启用 **Analytics** → `chain.schema` 新增可选字段 `metric_actuals: array<{metric_id, target, actual, source_url}>`
 
@@ -343,7 +343,7 @@ Retro 几乎吃满整条链。按以下顺序读取：
 
 **audience 优先级**：self > team > next-project > organization（前两个必有，后两个可选）
 
-#### 8.2 Markdown 报告（输出到对话 + 保存到 `spark-output/retro/[project-slug].md`）
+#### 8.2 Markdown 报告（输出到对话 + 保存到 `.csp/spark/retro/[project-slug].md`）
 
 ```markdown
 # Retro — [项目名]
@@ -426,7 +426,7 @@ Retro 几乎吃满整条链。按以下顺序读取：
 
 按 [chain-protocol.md](../../chain-protocol.md) 第 2.1 节执行。
 
-**Step 1 — 写盘到 `spark-output/context/retro.json`**（必做，主持久化通道；目录不存在先创建）。写入以下完整 JSON：
+**Step 1 — 写盘到 `.csp/spark/context/retro.json`**（必做，主持久化通道；目录不存在先创建）。写入以下完整 JSON：
 
 ```
 {
@@ -447,7 +447,7 @@ Retro 几乎吃满整条链。按以下顺序读取：
 **Step 2 — chat 输出紧凑 marker**（必做，⛔ **不要在 chat 内重复输出 Step 1 的完整 JSON**）：
 
 ```
-<!-- spark-context:retro ref="spark-output/context/retro.json" -->
+<!-- spark-context:retro ref=".csp/spark/context/retro.json" -->
 Retro 已保存：project=[project_name]，[N] decisions（[validated]/[refuted]/[inconclusive]），[M] what_worked / [K] what_didnt / [S] surprises，[R] recommendations
 <!-- /spark-context:retro -->
 ```
@@ -463,7 +463,7 @@ Retro 已保存：project=[project_name]，[N] decisions（[validated]/[refuted]
 **本 Skill 的 `next_hint`**（来自 skill-graph.json，**不可在此 SKILL.md 内硬编码覆盖**）：
 
 - **preferred**：（终端节点）
-- **优先理由**：本项目链路已闭环。可考虑：归档 spark-output/ 到项目仓库 / 把 Retro 摘要复制到团队 wiki / 开启下一个项目（清空 spark-output/context/）。
+- **优先理由**：本项目链路已闭环。可考虑：归档 .csp/spark/ 到项目仓库 / 把 Retro 摘要复制到团队 wiki / 开启下一个项目（清空 .csp/spark/context/）。
 - **alternatives**：（无）
 - **emoji**：🔁
 

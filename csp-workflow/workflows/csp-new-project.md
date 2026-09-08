@@ -184,7 +184,7 @@ AskUserQuestion([
     multiSelect: false,
     options: [
       { label: "Yes (Recommended)", description: "Planning docs tracked in version control" },
-      { label: "No", description: "Keep .planning/ local-only (add to .gitignore)" }
+      { label: "No", description: "Keep .csp/planning/ local-only (add to .gitignore)" }
     ]
   }
 ])
@@ -259,20 +259,20 @@ AskUserQuestion([
 
 Build `ship.pr_body_sections` from those choices. For selected options, set `enabled: true`; for seeded but unselected options, set `enabled: false`. If the user selects none, use `"ship":{"pr_body_sections":[]}`.
 
-Create `.planning/config.json` with all settings (CLI fills in remaining defaults automatically):
+Create `.csp/planning/config.json` with all settings (CLI fills in remaining defaults automatically):
 
 ```bash
-mkdir -p .planning
+mkdir -p .csp/planning
 csp-sdk query config-new-project '{"mode":"yolo","granularity":"[selected]","parallelization":true|false,"commit_docs":true|false,"model_profile":"quality|balanced|budget|inherit","workflow":{"research":true|false,"plan_check":true|false,"verifier":true|false,"nyquist_validation":true|false,"auto_advance":true},"ship":{"pr_body_sections":[{"heading":"User Stories & Acceptance Criteria","enabled":true|false,"source":"REQUIREMENTS.md ## User Stories || REQUIREMENTS.md ## Acceptance Criteria","fallback":"- Acceptance criteria are covered by the linked requirements and verification evidence."},{"heading":"Risks & Dependencies","enabled":true|false,"source":"PLAN.md ## Risks || PLAN.md ## Dependencies","fallback":"- No known high-risk rollout dependencies."},{"heading":"Success Metrics & Release Criteria","enabled":true|false,"source":"REQUIREMENTS.md ## Definition of Done || VERIFICATION.md ## Release Criteria","fallback":"- Release when automated verification and required manual checks pass."},{"heading":"Stakeholder Review & Approval","enabled":true|false,"template":"- Product owner approval pending for {phase_name}."}]}}'
 ```
 
-**If commit_docs = No:** Add `.planning/` to `.gitignore`.
+**If commit_docs = No:** Add `.csp/planning/` to `.gitignore`.
 
 **Commit config.json:**
 
 ```bash
-mkdir -p .planning
-csp-sdk query commit "chore: add project config" --files .planning/config.json
+mkdir -p .csp/planning
+csp-sdk query commit "chore: add project config" --files .csp/planning/config.json
 ```
 
 **Persist auto-advance chain flag to config (survives context compaction):**
@@ -294,9 +294,9 @@ CSPIKE_SKILL=$(ls ./.claude/skills/spike-findings-*/SKILL.md 2>/dev/null | head 
 # Check for sketch findings skill (project-local)
 SKETCH_SKILL=$(ls ./.claude/skills/sketch-findings-*/SKILL.md 2>/dev/null | head -1 || true)
 
-# Check for raw spikes/sketches in .planning/
-HAS_CSPIKES=$(ls .planning/spikes/MANIFEST.md 2>/dev/null)
-HAS_SKETCHES=$(ls .planning/sketches/MANIFEST.md 2>/dev/null)
+# Check for raw spikes/sketches in .csp/planning/
+HAS_CSPIKES=$(ls .csp/planning/spikes/MANIFEST.md 2>/dev/null)
+HAS_SKETCHES=$(ls .csp/planning/sketches/MANIFEST.md 2>/dev/null)
 ```
 
 If any of these exist, surface them before questioning:
@@ -305,8 +305,8 @@ If any of these exist, surface them before questioning:
 ⚡ Prior exploration detected:
 {if CSPIKE_SKILL}  ✓ Spike findings skill: {path} — validated patterns from experiments
 {if SKETCH_SKILL}  ✓ Sketch findings skill: {path} — validated design decisions
-{if HAS_CSPIKES && !CSPIKE_SKILL}  ◆ Raw spikes in .planning/spikes/ — consider `/csp-spike --wrap-up` to package findings
-{if HAS_SKETCHES && !SKETCH_SKILL}  ◆ Raw sketches in .planning/sketches/ — consider `/csp-sketch --wrap-up` to package findings
+{if HAS_CSPIKES && !CSPIKE_SKILL}  ◆ Raw spikes in .csp/planning/spikes/ — consider `/csp-spike --wrap-up` to package findings
+{if HAS_SKETCHES && !SKETCH_SKILL}  ◆ Raw sketches in .csp/planning/sketches/ — consider `/csp-sketch --wrap-up` to package findings
 
 These findings will be incorporated into project context and available to planning agents.
 ```
@@ -333,7 +333,7 @@ Ask inline (freeform, NOT AskUserQuestion):
 
 Wait for their response. This gives you the context needed to ask intelligent follow-up questions.
 
-**Research-before-questions mode:** Check if `workflow.research_before_questions` is enabled in `.planning/config.json` (or the config from init context). When enabled, before asking follow-up questions about a topic area:
+**Research-before-questions mode:** Check if `workflow.research_before_questions` is enabled in `.csp/planning/config.json` (or the config from init context). When enabled, before asking follow-up questions about a topic area:
 
 1. Do a brief web search for best practices related to what the user described
 2. Mention key findings naturally as you ask questions (e.g., "Most projects like this use X — is that what you're thinking, or something different?")
@@ -383,7 +383,7 @@ Loop until "Create PROJECT.md" selected.
 
 **If auto mode:** Synthesize from provided document. No "Ready?" gate was shown — proceed directly to commit.
 
-Synthesize all context into `.planning/PROJECT.md` using the template from `templates/project.md`.
+Synthesize all context into `.csp/planning/PROJECT.md` using the template from `templates/project.md`.
 
 **For greenfield projects:**
 
@@ -414,7 +414,7 @@ All Active requirements are hypotheses until shipped and validated.
 
 Infer Validated requirements from existing code:
 
-1. Read `.planning/codebase/ARCHITECTURE.md` and `STACK.md`
+1. Read `.csp/planning/codebase/ARCHITECTURE.md` and `STACK.md`
 2. Identify what the codebase already does
 3. These become the initial Validated set
 
@@ -482,8 +482,8 @@ Do not compress. Capture everything gathered.
 **Commit PROJECT.md:**
 
 ```bash
-mkdir -p .planning
-csp-sdk query commit "docs: initialize project" --files .planning/PROJECT.md
+mkdir -p .csp/planning
+csp-sdk query commit "docs: initialize project" --files .csp/planning/PROJECT.md
 ```
 
 ## 5. Workflow Preferences
@@ -620,7 +620,7 @@ questions: [
     multiSelect: false,
     options: [
       { label: "Yes (Recommended)", description: "Planning docs tracked in version control" },
-      { label: "No", description: "Keep .planning/ local-only (add to .gitignore)" }
+      { label: "No", description: "Keep .csp/planning/ local-only (add to .gitignore)" }
     ]
   }
 ]
@@ -690,10 +690,10 @@ Recommended options:
 - `Success Metrics & Release Criteria`
 - `Stakeholder Review & Approval`
 
-Create `.planning/config.json` with all settings (CLI fills in remaining defaults automatically):
+Create `.csp/planning/config.json` with all settings (CLI fills in remaining defaults automatically):
 
 ```bash
-mkdir -p .planning
+mkdir -p .csp/planning
 csp-sdk query config-new-project '{"mode":"[yolo|interactive]","granularity":"[selected]","parallelization":true|false,"commit_docs":true|false,"model_profile":"quality|balanced|budget|inherit","workflow":{"research":true|false,"plan_check":true|false,"verifier":true|false,"nyquist_validation":[false if granularity=coarse, true otherwise]},"ship":{"pr_body_sections":[{"heading":"User Stories & Acceptance Criteria","enabled":true|false,"source":"REQUIREMENTS.md ## User Stories || REQUIREMENTS.md ## Acceptance Criteria","fallback":"- Acceptance criteria are covered by the linked requirements and verification evidence."},{"heading":"Risks & Dependencies","enabled":true|false,"source":"PLAN.md ## Risks || PLAN.md ## Dependencies","fallback":"- No known high-risk rollout dependencies."},{"heading":"Success Metrics & Release Criteria","enabled":true|false,"source":"REQUIREMENTS.md ## Definition of Done || VERIFICATION.md ## Release Criteria","fallback":"- Release when automated verification and required manual checks pass."},{"heading":"Stakeholder Review & Approval","enabled":true|false,"template":"- Product owner approval pending for {phase_name}."}]}}'
 ```
 
@@ -702,7 +702,7 @@ csp-sdk query config-new-project '{"mode":"[yolo|interactive]","granularity":"[s
 **If commit_docs = No:**
 
 - Set `commit_docs: false` in config.json
-- Add `.planning/` to `.gitignore` (create if needed)
+- Add `.csp/planning/` to `.gitignore` (create if needed)
 
 **If commit_docs = Yes:**
 
@@ -711,7 +711,7 @@ csp-sdk query config-new-project '{"mode":"[yolo|interactive]","granularity":"[s
 **Commit config.json:**
 
 ```bash
-csp-sdk query commit "chore: add project config" --files .planning/config.json
+csp-sdk query commit "chore: add project config" --files .csp/planning/config.json
 ```
 
 ## 5.1. Sub-Repo Detection
@@ -740,7 +740,7 @@ Use AskUserQuestion:
 
 - Set `planning.sub_repos` in config.json to the selected directory names array (e.g., `["backend", "frontend"]`)
 - Auto-set `planning.commit_docs` to `false` (planning docs stay local in multi-repo workspaces)
-- Add `.planning/` to `.gitignore` if not already present
+- Add `.csp/planning/` to `.gitignore` if not already present
 
 Config changes are saved locally — no commit needed since `commit_docs` is `false` in multi-repo mode.
 
@@ -777,7 +777,7 @@ Researching [domain] ecosystem...
 Create research directory:
 
 ```bash
-mkdir -p .planning/research
+mkdir -p .csp/planning/research
 ```
 
 **Determine milestone context:**
@@ -835,7 +835,7 @@ Your STACK.md feeds into roadmap creation. Be prescriptive:
 </quality_gate>
 
 <output>
-Write to: .planning/research/STACK.md
+Write to: .csp/planning/research/STACK.md
 Use template: ~/.claude/code-skills-package/csp-workflow/templates/research-project/STACK.md
 </output>
 ", subagent_type="csp-project-researcher", model="{researcher_model}", description="Stack research")
@@ -875,7 +875,7 @@ Your FEATURES.md feeds into requirements definition. Categorize clearly:
 </quality_gate>
 
 <output>
-Write to: .planning/research/FEATURES.md
+Write to: .csp/planning/research/FEATURES.md
 Use template: ~/.claude/code-skills-package/csp-workflow/templates/research-project/FEATURES.md
 </output>
 ", subagent_type="csp-project-researcher", model="{researcher_model}", description="Features research")
@@ -915,7 +915,7 @@ Your ARCHITECTURE.md informs phase structure in roadmap. Include:
 </quality_gate>
 
 <output>
-Write to: .planning/research/ARCHITECTURE.md
+Write to: .csp/planning/research/ARCHITECTURE.md
 Use template: ~/.claude/code-skills-package/csp-workflow/templates/research-project/ARCHITECTURE.md
 </output>
 ", subagent_type="csp-project-researcher", model="{researcher_model}", description="Architecture research")
@@ -955,7 +955,7 @@ Your PITFALLS.md prevents mistakes in roadmap/planning. For each pitfall:
 </quality_gate>
 
 <output>
-Write to: .planning/research/PITFALLS.md
+Write to: .csp/planning/research/PITFALLS.md
 Use template: ~/.claude/code-skills-package/csp-workflow/templates/research-project/PITFALLS.md
 </output>
 ", subagent_type="csp-project-researcher", model="{researcher_model}", description="Pitfalls research")
@@ -972,16 +972,16 @@ Synthesize research outputs into SUMMARY.md.
 </task>
 
 <files_to_read>
-- .planning/research/STACK.md
-- .planning/research/FEATURES.md
-- .planning/research/ARCHITECTURE.md
-- .planning/research/PITFALLS.md
+- .csp/planning/research/STACK.md
+- .csp/planning/research/FEATURES.md
+- .csp/planning/research/ARCHITECTURE.md
+- .csp/planning/research/PITFALLS.md
 </files_to_read>
 
 ${AGENT_SKILLS_SYNTHESIZER}
 
 <output>
-Write to: .planning/research/SUMMARY.md
+Write to: .csp/planning/research/SUMMARY.md
 Use template: ~/.claude/code-skills-package/csp-workflow/templates/research-project/SUMMARY.md
 Commit after writing.
 </output>
@@ -1003,7 +1003,7 @@ Display research complete banner and key findings:
 **Table Stakes:** [from SUMMARY.md]
 **Watch Out For:** [from SUMMARY.md]
 
-Files: `.planning/research/`
+Files: `.csp/planning/research/`
 ```
 
 **If "Skip research":** Continue to Step 7.
@@ -1108,7 +1108,7 @@ Cross-check requirements against Core Value from PROJECT.md. If gaps detected, s
 
 **Generate REQUIREMENTS.md:**
 
-Create `.planning/REQUIREMENTS.md` with:
+Create `.csp/planning/REQUIREMENTS.md` with:
 
 - v1 Requirements grouped by category (checkboxes, REQ-IDs)
 - v2 Requirements (deferred)
@@ -1159,7 +1159,7 @@ If "adjust": Return to scoping.
 **Commit requirements:**
 
 ```bash
-csp-sdk query commit "docs: define v1 requirements" --files .planning/REQUIREMENTS.md
+csp-sdk query commit "docs: define v1 requirements" --files .csp/planning/REQUIREMENTS.md
 ```
 
 ## 7.5. Project Structure Mode
@@ -1213,10 +1213,10 @@ Agent(prompt="
 <planning_context>
 
 <files_to_read>
-- .planning/PROJECT.md (Project context)
-- .planning/REQUIREMENTS.md (v1 Requirements)
-- .planning/research/SUMMARY.md (Research findings - if exists)
-- .planning/config.json (Granularity and mode settings)
+- .csp/planning/PROJECT.md (Project context)
+- .csp/planning/REQUIREMENTS.md (v1 Requirements)
+- .csp/planning/research/SUMMARY.md (Research findings - if exists)
+- .csp/planning/config.json (Granularity and mode settings)
 </files_to_read>
 
 ${AGENT_SKILLS_ROADMAPPER}
@@ -1314,7 +1314,7 @@ Use AskUserQuestion:
   [user's notes]
 
   <files_to_read>
-  - .planning/ROADMAP.md (Current roadmap to revise)
+  - .csp/planning/ROADMAP.md (Current roadmap to revise)
   </files_to_read>
 
   ${AGENT_SKILLS_ROADMAPPER}
@@ -1330,7 +1330,7 @@ Use AskUserQuestion:
 - Present revised roadmap
 - Loop until user approves
 
-**If "Review full file":** Display raw `cat .planning/ROADMAP.md`, then re-ask.
+**If "Review full file":** Display raw `cat .csp/planning/ROADMAP.md`, then re-ask.
 
 **Generate or refresh project instruction file before final commit:**
 
@@ -1343,7 +1343,7 @@ This ensures new projects get the default CSP workflow-enforcement guidance and 
 **Commit roadmap (after approval or auto mode):**
 
 ```bash
-csp-sdk query commit "docs: create roadmap ([N] phases)" --files .planning/ROADMAP.md .planning/STATE.md .planning/REQUIREMENTS.md "$INSTRUCTION_FILE"
+csp-sdk query commit "docs: create roadmap ([N] phases)" --files .csp/planning/ROADMAP.md .csp/planning/STATE.md .csp/planning/REQUIREMENTS.md "$INSTRUCTION_FILE"
 ```
 
 ## 9. Done
@@ -1359,11 +1359,11 @@ Present completion summary:
 
 | Artifact       | Location                    |
 |----------------|-----------------------------|
-| Project        | `.planning/PROJECT.md`      |
-| Config         | `.planning/config.json`     |
-| Research       | `.planning/research/`       |
-| Requirements   | `.planning/REQUIREMENTS.md` |
-| Roadmap        | `.planning/ROADMAP.md`      |
+| Project        | `.csp/planning/PROJECT.md`      |
+| Config         | `.csp/planning/config.json`     |
+| Research       | `.csp/planning/research/`       |
+| Requirements   | `.csp/planning/REQUIREMENTS.md` |
+| Roadmap        | `.csp/planning/ROADMAP.md`      |
 | Project guide  | `$INSTRUCTION_FILE`         |
 
 **[N] phases** | **[X] requirements** | Ready to build ✓
@@ -1435,24 +1435,24 @@ PHASE1_HAS_UI=$(echo "$PHASE1_SECTION" | grep -qi "UI hint.*yes" && echo "true" 
 
 <output>
 
-- `.planning/PROJECT.md`
-- `.planning/config.json`
-- `.planning/research/` (if research selected)
+- `.csp/planning/PROJECT.md`
+- `.csp/planning/config.json`
+- `.csp/planning/research/` (if research selected)
   - `STACK.md`
   - `FEATURES.md`
   - `ARCHITECTURE.md`
   - `PITFALLS.md`
   - `SUMMARY.md`
-- `.planning/REQUIREMENTS.md`
-- `.planning/ROADMAP.md`
-- `.planning/STATE.md`
+- `.csp/planning/REQUIREMENTS.md`
+- `.csp/planning/ROADMAP.md`
+- `.csp/planning/STATE.md`
 - `$INSTRUCTION_FILE` (`AGENTS.md` for Codex, `CLAUDE.md` for all other runtimes)
 
 </output>
 
 <success_criteria>
 
-- [ ] .planning/ directory created
+- [ ] .csp/planning/ directory created
 - [ ] Git repo initialized
 - [ ] Brownfield detection completed
 - [ ] Deep questioning completed (threads followed, not rushed)

@@ -48,7 +48,7 @@ X/Y plans complete (Z%)
 - **Project age:** N days
 ```
 
-If no `.planning/` directory exists, inform the user to run `/csp-new-project` first.
+If no `.csp/planning/` directory exists, inform the user to run `/csp-new-project` first.
 </step>
 
 <step name="mvp_summary">

@@ -29,9 +29,9 @@ tools: [Read, Write, Edit, Glob, Grep, Bash]
 按以下顺序尝试读取上下文：
 
 1. 扫描会话中的 `<!-- spark-context:brief -->` / `<!-- spark-context:sitemap -->` / `<!-- spark-context:stories -->` marker
-2. 读取项目目录 `spark-output/context/brief.json` / `sitemap.json` / `stories.json`
-3. **向上查找**：若当前目录无 `spark-output/context/`，依次检查 `../` 和 `../../` 下的 `spark-output/context/`（覆盖 Phase A 创建新项目目录后 context 不在当前目录的场景）
-4. 读取 `spark-output/context/_session-state.json`（Compaction 恢复通道）——若存在，从中获取 `workspace_path` 定位上游 context 目录，再按渠道 2 重试
+2. 读取项目目录 `.csp/spark/context/brief.json` / `sitemap.json` / `stories.json`
+3. **向上查找**：若当前目录无 `.csp/spark/context/`，依次检查 `../` 和 `../../` 下的 `.csp/spark/context/`（覆盖 Phase A 创建新项目目录后 context 不在当前目录的场景）
+4. 读取 `.csp/spark/context/_session-state.json`（Compaction 恢复通道）——若存在，从中获取 `workspace_path` 定位上游 context 目录，再按渠道 2 重试
 5. 都没有则跳过，按无上下文流程执行（进入 Step 1）
 
 可复用字段映射（找到 brief 时）：
@@ -48,12 +48,12 @@ tools: [Read, Write, Edit, Glob, Grep, Bash]
 
 按 [chain-protocol.md](../../chain-protocol.md) §2.1 v1.1 智能适配规则：
 
-**Step 1 — 写盘到 `spark-output/context/flow-web.json`**（必做，主持久化通道；目录不存在先创建）。写入完整 JSON（schema 见本 SKILL.md frontmatter `chain.schema` 字段）。
+**Step 1 — 写盘到 `.csp/spark/context/flow-web.json`**（必做，主持久化通道；目录不存在先创建）。写入完整 JSON（schema 见本 SKILL.md frontmatter `chain.schema` 字段）。
 
 **Step 2 — chat 输出紧凑 marker**（必做，⛔ **不要在 chat 内重复输出 Step 1 的完整 JSON**）：
 
 ```
-<!-- spark-context:flow-web ref="spark-output/context/flow-web.json" -->
+<!-- spark-context:flow-web ref=".csp/spark/context/flow-web.json" -->
 Flow Web 已保存：project=[project_name]，scenario=[scenario]，组件库=[component_library]，[N] 个 flows / [M] 个 .tsx 文件输出
 <!-- /spark-context:flow-web -->
 ```
@@ -62,7 +62,7 @@ Flow Web 已保存：project=[project_name]，scenario=[scenario]，组件库=[c
 
 **Step 3 — 写入 session state（必做，Compaction 恢复通道）**：
 
-每次写盘 `flow-web.json` 时，同步写入 `spark-output/context/_session-state.json`：
+每次写盘 `flow-web.json` 时，同步写入 `.csp/spark/context/_session-state.json`：
 
 ```json
 {
@@ -96,7 +96,7 @@ Flow Web 已保存：project=[project_name]，scenario=[scenario]，组件库=[c
 本 Skill 在完全离线、无任何连接器的场景下即可完整交付，所有方法论与输出形态不依赖外部系统：
 
 - **IA + 导航 + 内容层级 + SparkDesign 组件规格**：四件套完整方法论
-- **链式上下文双通道**：写入 `spark-output/context/flow-web.json` + 会话内 marker block，下游 Check / Edge / Chart / PRD / QA 可直接读取
+- **链式上下文双通道**：写入 `.csp/spark/context/flow-web.json` + 会话内 marker block，下游 Check / Edge / Chart / PRD / QA 可直接读取
 - **多屏 Flow 代码生成**：基于 SparkDesign 组件库本地生成完整 React 代码（含 boilerplate）
 - **白屏排查清单**：用户端 troubleshooting 全本地化文档
 - **最小可运行项目模板**：boilerplate 内置，无需外部脚手架
@@ -110,7 +110,7 @@ Flow Web 已保存：project=[project_name]，scenario=[scenario]，组件库=[c
 | 连接器 | 阶段 | 增强能力 | 降级路径 |
 | --- | --- | --- | --- |
 | **Figma** | Step 1 INTAKE / Step 3 ARCHITECT | 读取现有 Figma 页面 frame 作为视觉对照与 IA 输入，避免重复设计；ARCHITECT 阶段可对照 Figma 校验组件覆盖率 | 未装时让用户粘贴 Figma 链接或描述现有页面结构 |
-| **GitHub** | Step 4 GENERATE 之后 | 生成的 SparkDesign 代码直接开 PR 到目标仓库，附 Skill 元数据 commit message 便于 review | 未装时输出代码到本地 `spark-output/flow-web/` 目录，用户手动 commit |
+| **GitHub** | Step 4 GENERATE 之后 | 生成的 SparkDesign 代码直接开 PR 到目标仓库，附 Skill 元数据 commit message 便于 review | 未装时输出代码到本地 `.csp/spark/flow-web/` 目录，用户手动 commit |
 
 **接入触发**：用户首次调用 `/Web页面设计` 时，Skill 主动检测已认证的连接器并显示「已检测到：XXX，将自动启用增强模式」提示，用户可在该次会话中选择关闭。
 
@@ -604,17 +604,17 @@ src/
 
 #### A.5.1 继承上游上下文（必做）
 
-> **解决的问题**：Phase A 创建新项目目录并 `cd` 进去后，上游 `spark-output/context/*.json` 不在当前目录，导致下游 Skill（Check / QA / Retro）读不到 brief 等上下文，链路断裂。
+> **解决的问题**：Phase A 创建新项目目录并 `cd` 进去后，上游 `.csp/spark/context/*.json` 不在当前目录，导致下游 Skill（Check / QA / Retro）读不到 brief 等上下文，链路断裂。
 
 **执行逻辑**：
 
 1. 检查 Step 0 是否读取到了上游 context（brief / sitemap / stories 至少一个）
 2. 若读取到，且当前已 `cd` 到新项目目录（即 `pwd` ≠ Step 0 读取 context 时的目录）：
    ```bash
-   mkdir -p spark-output/context
-   cp ../spark-output/context/*.json spark-output/context/ 2>/dev/null || true
+   mkdir -p .csp/spark/context
+   cp ../.csp/spark/context/*.json .csp/spark/context/ 2>/dev/null || true
    ```
-3. 验证复制结果：`ls spark-output/context/` 确认文件已到位
+3. 验证复制结果：`ls .csp/spark/context/` 确认文件已到位
 4. 若 Step 0 未读取到任何 context，跳过本步
 
 **红线**：
@@ -968,18 +968,18 @@ production 部署：npm run build → 应干净通过无 TS error。
 > **协议依据**：chain-protocol.md §九「面板自动生成约定」。本步在 Handoff 之前执行；**告知用户的提示必须作为独立段落输出，禁止折叠进 Handoff 末尾、禁止静默跳过**。
 
 1. **找模板**：定位 `_shared/dashboard-template.html`（依次：相对套件根 → `glob dashboard-template.html` 搜套件安装目录 → 三轮都失败时，**用独立段落醒目告知用户**：`⚠️ 链路面板模板未找到（套件安装可能不完整，建议重装）。本 Skill 已正常完成，下游链路不受影响。` 然后跳过本步、继续 Handoff，**不阻断 Skill 完成**）。
-2. **聚合 STATE**：扫 `spark-output/context/*.json`，聚合为 `{"project":"<brief.project_name 或 frame.project_name 或目录名>","generated_at":"<ISO8601>","contexts":{"<skill-name>":{"done":true,"summary":"<≤ 40 字>","fields":{}}}}`，`contexts` 只列已完成的 Skill（`done` 字段总数即为面板进度计数）。
-3. **克隆模板**到 `spark-output/dashboard.html`（覆盖），用正则 `/\/\*__SPARK_STATE_INJECT__\*\/null/` 替换为 `/*__SPARK_STATE_INJECT__*/<JSON.stringify(STATE)>`。
+2. **聚合 STATE**：扫 `.csp/spark/context/*.json`，聚合为 `{"project":"<brief.project_name 或 frame.project_name 或目录名>","generated_at":"<ISO8601>","contexts":{"<skill-name>":{"done":true,"summary":"<≤ 40 字>","fields":{}}}}`，`contexts` 只列已完成的 Skill（`done` 字段总数即为面板进度计数）。
+3. **克隆模板**到 `.csp/spark/dashboard.html`（覆盖），用正则 `/\/\*__SPARK_STATE_INJECT__\*\/null/` 替换为 `/*__SPARK_STATE_INJECT__*/<JSON.stringify(STATE)>`。
 4. **独立段落告知用户**（强提示，单独成段，与 Handoff 之间空一行；根据 `Object.keys(STATE.contexts).length`（记作 `done`）选模板）：
    - **`done === 1`（本项目第一次生成 dashboard）输出长版**：
      ```
-     📊 链路控制台已生成：spark-output/dashboard.html（双击在浏览器打开）
+     📊 链路控制台已生成：.csp/spark/dashboard.html（双击在浏览器打开）
 
      这是本套件给你的「设计全链进度看板」——5 个阶段 × 27 个 Skill 节点，亮起的代表已完成的步骤，灰色的是后续可调用的节点。每跑完一个 Skill 都会自动更新，建议钉在浏览器一个标签页里随时回看，能看清「现在在哪一步、下游还差什么、链路是否健康」。
      ```
    - **`done > 1`（后续更新）输出短版**：
      ```
-     📊 链路面板已更新 · 进度 [done]/27 · spark-output/dashboard.html
+     📊 链路面板已更新 · 进度 [done]/27 · .csp/spark/dashboard.html
      ```
 5. **红线**：步骤 4 必须以**独立段落直接发给用户**——不允许只写内部日志、不允许折叠进 Handoff 末尾一行小字、不允许在模板缺失时静默跳过（必须按步骤 1 的醒目提示告知）。
 

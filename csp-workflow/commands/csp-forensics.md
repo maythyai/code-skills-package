@@ -13,10 +13,10 @@ requires: [phase, progress, update]
 ---
 
 <objective>
-Investigate what went wrong during a CSP workflow execution. Analyzes git history, `.planning/` artifacts, and file system state to detect anomalies and generate a structured diagnostic report.
+Investigate what went wrong during a CSP workflow execution. Analyzes git history, `.csp/planning/` artifacts, and file system state to detect anomalies and generate a structured diagnostic report.
 
 Purpose: Diagnose failed or stuck workflows so the user can understand root cause and take corrective action.
-Output: Forensic report saved to `.planning/forensics/`, presented inline, with optional issue creation.
+Output: Forensic report saved to `.csp/planning/forensics/`, presented inline, with optional issue creation.
 </objective>
 
 <execution_context>
@@ -27,10 +27,10 @@ Output: Forensic report saved to `.planning/forensics/`, presented inline, with 
 **Data sources:**
 - `git log` (recent commits, patterns, time gaps)
 - `git status` / `git diff` (uncommitted work, conflicts)
-- `.planning/STATE.md` (current position, session history)
-- `.planning/ROADMAP.md` (phase scope and progress)
-- `.planning/phases/*/` (PLAN.md, SUMMARY.md, VERIFICATION.md, CONTEXT.md)
-- `.planning/reports/SESSION_REPORT.md` (last session outcomes)
+- `.csp/planning/STATE.md` (current position, session history)
+- `.csp/planning/ROADMAP.md` (phase scope and progress)
+- `.csp/planning/phases/*/` (PLAN.md, SUMMARY.md, VERIFICATION.md, CONTEXT.md)
+- `.csp/planning/reports/SESSION_REPORT.md` (last session outcomes)
 
 **User input:**
 - Problem description: $ARGUMENTS (optional — will ask if not provided)
@@ -43,7 +43,7 @@ Execute end-to-end.
 <success_criteria>
 - Evidence gathered from all available data sources
 - At least 4 anomaly types checked (stuck loop, missing artifacts, abandoned work, crash/interruption)
-- Structured forensic report written to `.planning/forensics/report-{timestamp}.md`
+- Structured forensic report written to `.csp/planning/forensics/report-{timestamp}.md`
 - Report presented inline with findings, anomalies, and recommendations
 - Interactive investigation offered for deeper analysis
 - GitHub issue creation offered if actionable findings exist

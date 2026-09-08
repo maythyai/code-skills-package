@@ -33,6 +33,7 @@ model: sonnet
 8. **不臆造**：指标基线、覆盖率、安全扫描结果未跑出来标 `[TBD]`，不编造。
 9. **禁止静默门控降级（铁律）**：如果 typecheck/test/build **无法运行**（工具链坏：pnpm install 死、runner 不在、tsc 不在、build 工具缺），**必须报告 `BLOCKED: 工具链不可用`**，**禁止**用 grep/code review/静态替代动态验证后假装"通过"。**门控没跑 = 门控失败 = BLOCKED = 不发布**。grep+review ≠ typecheck ≠ build。auto-proceed 只认**真实执行**（有命令+exit code 输出），不认降级。
 10. **版本叠加风险**：开始本版本验证前，检查上一版本 06 的门控执行记录——若任一 gate 是 `not-run`（降级/跳过）→ 警告"代码叠在未验证地基上"，建议先对累积代码跑一次真门控再加新功能。
+11. **增量质量工作不当轮延后（铁律）**：审计/验证定级为"增量/增强、非 bug"的项（覆盖率阈值 bump、Setting/E2E/契约测试补齐、可观测性埋点等）若属于本版本质量基线，**必须当轮完成或显式 BLOCKED**（写明真实外部阻塞），不得以"gate 已全绿/可上线/需要的话再补"为由延后到下一轮。"P0 已修 + gate 全绿"不构成跳过这些项的理由——它们是质量 bar 的一部分，不是可选增强。仅当某项**确实无法当轮完成**（依赖未就绪/跨团队契约未签/需要真实流量数据）时，标 `deferred: <item>` 并附**具体阻塞原因 + 谁解除 + 下一轮入口**，且 `deferred` 项计入发布裁决的"缺口 K"并写进 release notes，不得隐瞒。
 
 ## 二、触发与路由
 
@@ -103,6 +104,14 @@ model: sonnet
 | 4 | TypeCheck | 零类型错误，改的代码无 `any`/无理由 `type: ignore` | `ran: <tsc/mypy> exit 0` 全量输出 |
 | 5 | AC 逐条 | 每条 AC 可演示（测试输出/截图/日志），"应该能工作"不算 | 逐条演示证据 |
 | 6 | 文档 | 改动触及的 README/API 文档/ADR/内联注释准确反映现状，无陈旧引用 | 文档 diff |
+| 7 | **Visual Regression**（UI 改动适用） | 基线截图 vs 当前 diff ≤ 阈值，新组件有 snapshot | `ran: chromatic test / npx playwright test --project=visual` |
+| 8 | **Accessibility**（面向用户 UI 适用） | WCAG 2.2 AA 零 CRITICAL 违规 | `ran: axe-core / pa11y` 报告 |
+| 9 | **Contract Tests**（跨服务/跨团队/MCP tool 适用） | Provider ↔ Consumer 契约无漂移；MCP tool schema 与实现一致 | `ran: pact verify / mcp-contract-runner` |
+| 10 | **Mutation Score**（核心模块：支付/权限/编排） | 核心模块 ≥ 80%；equivalent mutants 已标注 | `ran: stryker run` 报告 |
+| 11 | **可观测性校验** | 关键路径有 OTEL span；结构化日志；trace_id 贯通 | `ran: otel-validator / 检查 instrumentation 配置` |
+
+> 7–11 项**适用时必检**，不适用要在 verification-report 写明理由（如"纯后端服务无 UI，跳过 7、8"）。
+> 跳过无理由 = BLOCKED。
 
 > **执行方式纪律**：每项必须标 `ran: <实际命令> exit <code>` 或 `not-run: <原因>`。**`not-run` = `BLOCKED` = 不发布**。grep/code review 不能替代 1–4 项的动态验证（typecheck 才能抓类型错、build 才能抓模板/响应式错、test 才能抓运行时行为）。
 
@@ -160,6 +169,149 @@ model: sonnet
 **门控**：代码审查无 CRITICAL + Spec 对齐 ≥90% + 安全/性能达标 → 进 S8；任一不过 → 进 Fix Loop（见下）。
 评审意见落 `.csp/artifacts/review/comments.md`；安全发现落 `.csp/artifacts/review/security-findings.md`。
 
+### 6.6 非功能性验证维度（适用时必检）
+
+> 以下维度按项目形态选用。无 UI 的服务可跳过 a11y/visual；但**契约/可观测性/性能回归对所有系统适用**。
+> 选用即纳入 S6 门控证据，不选要说明理由（写进 verification-report.md）。
+
+| 维度 | 适用场景 | 通过标准 | 工具 |
+|---|---|---|---|
+| **Accessibility (a11y)** | 任何面向用户的 UI | WCAG 2.2 AA 零 CRITICAL 违规；所有交互元素有 accessible name；heading 不跳级 | axe-core / Pa11y / Playwright `@axe-core/playwright` |
+| **国际化 (i18n/l10n)** | 多语言产品 | 所有用户可见字符串走 i18n key；伪本地化（pseudo-locale）跑通无硬编码；RTL 布局不破 | i18next/pseudo-locale / `i18n-check` |
+| **视觉回归 (Visual Regression)** | UI 改动 / 设计系统 | 基线截图 vs 当前 diff ≤ 阈值；新组件有 snapshot | Chromatic / Percy / Playwright `toHaveScreenshot` |
+| **可观测性 (Observability)** | 所有生产服务 | 关键路径有 OpenTelemetry span；错误有结构化日志；指标有 label；trace_id 贯通请求链 | OTEL SDK / `@opentelemetry/auto-instrumentations-node` |
+| **契约测试 (Contract)** | 跨服务/跨团队/插件/MCP 工具 | Provider ↔ Consumer 契约无漂移；MCP tool schema 与实现一致 | Pact / TypeBox-Zod schema diff / MCP contract runner |
+| **变异测试 (Mutation)** | 核心模块（支付/权限/编排） | Mutation Score ≥ 80%（核心）；equivalent mutants 已标注 | Stryker (JS/TS) / mutmut (Python) |
+| **Property-based 测试** | 有数学不变式的函数（解析器/序列化/状态机） | 至少 100 个随机输入下不变式成立；shrinking 可复现反例 | fast-check (JS) / hypothesis (Python) |
+| **AI/MCP 工具验证** | 使用 LLM tool-use / MCP server | Tool schema ↔ 实际入参/出参一致性；幻觉率 ≤ 阈值；拒绝注入测试 | 契约测试 + 红队注入测试 |
+
+## 六.七、现代测试方法论与工程实践（2025–2026）
+
+> 本节为 S6/S7 提供方法论支撑，决定**选哪种测试**、**何时跑**、**如何治理**，而不只是"测试要绿"。
+
+### 6.7.1 测试方法论目录（按场景选用）
+
+| 方法论 | 解决什么问题 | 典型场景 | 引入成本 | 价值密度 |
+|---|---|---|---|---|
+| **Property-based** | 边界/组合爆炸人工想不到 | 解析器、序列化、状态机、调度算法、金额计算 | 低（库+few props） | 高（发现隐藏 corner） |
+| **Mutation** | 测试质量假象（覆盖率 80% 但断言弱） | 核心业务逻辑、金融、权限、状态机 | 中（跑分慢） | 高（量化测试有效性） |
+| **Contract (Consumer-driven)** | 服务间/模块间接口悄悄漂移 | 微服务、插件系统、SDK、**MCP tool schema** | 中（需双方签约） | 高（防集成事故） |
+| **Chaos Engineering** | 分布式系统隐含单点/超时/级联故障 | K8s、多副本、依赖外部服务的生产系统 | 中-高 | 高（提前暴露恢复盲区） |
+| **Observability-driven** | 测试"看起来通过"但生产看不见 | 所有生产服务；S6 门控证据链 | 低（埋点） | 高（证据可追溯） |
+| **Shift-right (生产采样)** | staging 与 prod 不一致 | 真实流量、真实数据分布 | 中（需采样管道） | 高（抓 staging 漏的 bug） |
+| **Visual Regression** | CSS/UI 改动无人工走查 | 设计系统、品牌页、营销页 | 低（截图基线） | 中-高 |
+| **Performance Regression** | 性能退化悄悄上线 | 热路径、bundle size、DB 查询 | 低（baseline + 阈值） | 高 |
+| **AI-assisted Test Generation** | 用例设计耗时、边界想不全 | LLM 生成草案 → 人工审 → 入库 | 低 | 中（需人工把关） |
+| **Shadow Traffic (镜像流量)** | 新旧版本对比验证 | 重写、迁移、重构 | 中（需流量镜像） | 高（迁移安全网） |
+
+### 6.7.2 测试选择策略（Test Impact Analysis）
+
+**不要每次 PR 都跑全量 E2E**——按改动影响选测试，CI 才能 ≤10 min 反馈：
+
+```
+改动文件 → 模块依赖图（CMS knowledge-graph.json）→ 受影响模块
+   ↓
+受影响模块的 TMS 增量用例 + 上游调用方契约测试
+   ↓
+若影响核心路径（auth/payment/orchestration）→ 全量回归
+否则 → 只跑受影响切片 + 冒烟
+```
+
+- **Test Impact Analysis (TIA)**：用代码依赖图 + 测试到代码的反向映射，选出覆盖本次 diff 的最小子集。
+- **风险评分**：diff 涉及 hub 函数（CMS 入度≥5）→ 风险×2 → 强制全量回归 + 评审必须 reviewer≠author。
+- **分层预算**：PR CI ≤ 10min（lint+typecheck+单元+契约）；main CI ≤ 30min（+集成+E2E 冒烟）；nightly ≤ 2h（全量 E2E+变异+性能基线）。
+
+### 6.7.3 测试金字塔与反模式
+
+**健康金字塔**（代码量 / 执行时间 / 反馈速度）：
+
+```
+        ┌──────┐
+        │ E2E  │  5%   · 慢 · 贵 · 真用户路径
+        ├──────┤
+        │集成  │ 20%   · 中 · 跨模块契约
+        ├──────┤
+        │ 单元 │ 75%   · 快 · 便宜 · 业务逻辑
+        └──────┘
+```
+
+**倒置金字塔反模式**（E2E heavy）：
+- 症状：E2E 占 60%、PR 反馈 >30min、flaky rate >5%、开发绕过测试。
+- 根因：单测难写（紧耦合）、集成缺 fixture、E2E 看着"像用户"。
+- 修复：先拆单测（业务逻辑）→ 集成（API/DB 边界）→ E2E 只留关键用户路径（≤20 个核心 journey）。
+- **E2E 不是验证业务逻辑的地方**——业务逻辑归单测，E2E 验证"这些模块拼起来用户能走完"。
+
+### 6.7.4 测试数据管理
+
+| 策略 | 适用 | 反模式 |
+|---|---|---|
+| **Factories + fixtures** | 单测/集成 | 硬编码 `{id: 1, name: "test"}` 散落各文件 |
+| **Database seeding per test** | 集成/E2E | 共用全局 seed（测试相互污染） |
+| **Testcontainers** | 集成/E2E（DB/MQ/Redis） | mock 数据库行为（与实际不一致） |
+| **Synthetic data (Faker)** | 大量随机场景 | 用真实用户数据（合规风险） |
+| **Production snapshot (脱敏)** | 复现 prod bug | 直接连 prod DB |
+
+**黄金规则**：每个测试自己建数据、自己清；不依赖其他测试留下的状态。并行跑才可能。
+
+### 6.7.5 Flaky 测试治理
+
+**Flaky 不是"重跑就好"——是 bug**：
+
+- **立即 quarantine**：`test.skip('flaky', { issue: 'JIRA-1234' })`，不让它污染主分支绿度。
+- **根因分类**（按频率排序）：① 时间依赖（`Date.now` / `setTimeout`）② 顺序依赖（共享数据）③ 资源竞争（端口/文件锁）④ 网络/外部服务抖动 ⑤ 动画/渲染时序。
+- **禁止 silent retry**：CI 配置 `retries: 2` 但**每次重试都上报 dashboard**；retry 次数作为 flaky 指标。
+- **修复 SLA**：quarantine 后 7 天内必须修复或删除；不修就是 bug 藏在那里。
+- **flaky rate >5% 阻断发布**：发布前查 flaky dashboard，超阈值 → 不 ship。
+
+### 6.7.6 Progressive Delivery（渐进式交付）
+
+| 模式 | 机制 | 适用 | 工具 |
+|---|---|---|---|
+| **Canary** | 小比例流量进新版本，按指标自动扩 | 所有生产部署 | Argo Rollouts / Flagger / AWS CodeDeploy |
+| **Blue/Green** | 完整新版本并行，开关切换 | 数据库 schema 大改 | K8s + service mesh |
+| **Shadow Traffic** | 镜像真实流量到新版本（不返回用户） | 重写/迁移，验证行为一致 | Istio mirroring / GoReplay |
+| **Feature Flags** | 功能级开关，按用户群灰度 | 产品功能、A/B | LaunchDarkly / Unleash / PostHog |
+| **Dark Launch** | 后台运行但不暴露给用户 | 验证生产稳定性 | Feature flags + 遥测 |
+| **Strangler Fig** | 旧系统逐功能迁移到新系统 | 大型重构 | 路由层按路径分流 |
+
+**自动金丝雀分析**（Canary Analysis）：
+- 采集 canary vs baseline 的指标（错误率/延迟/资源）；Kayenta/Flagger 自动计算 p-value。
+- **Promotion criteria**：指标绿 ≥ X 分钟自动扩到下一档（5%→25%→100%）；任一红自动回滚。
+- **遥测闭环**：每次 promotion/rollback 事件落 `VERSION-REGISTRY.md` 与 S9 监控。
+
+### 6.7.7 AI/MCP 工具的专项验证
+
+> 当代码使用 LLM tool-use、MCP server、agent pipeline 时，传统测试不够。
+
+- **Tool schema ↔ 实现一致性**：MCP `tools/list` 返回的 schema 与实际 handler 入参/出参做契约测试（Zod/TypeBox schema diff）。
+- **拒绝注入测试**：prompt injection 红队用例（`ignore previous instructions`、jailbreak 模式）→ 期望 tool 拒绝或安全响应。
+- **幻觉率基线**：对固定评测集，tool 输出"事实正确率"有基线，回归则阻断。
+- **工具链可观测**：每次 tool 调用落 trace（input/output/latency/token count）到 OTEL，做 drift 检测。
+
+### 6.7.8 证据标准化（evidence schema）
+
+每个 S6 门控项落 `verification-report.md` 时，**附结构化 evidence** 便于归档/对账：
+
+```json
+{
+  "gate": "typecheck",
+  "command": "tsc --noEmit -p tsconfig.json",
+  "exit_code": 0,
+  "stdout_sha256": "a3f2...（截断）",
+  "duration_ms": 12430,
+  "ran_at": "2026-09-07T10:22:01Z",
+  "ran_by": "agent-s6",
+  "artifacts": [
+    "test-results/typecheck.log",
+    "test-results/typecheck-junit.xml"
+  ],
+  "notes": "zero errors, zero warnings; 1 pre-existing any in legacy/foo.ts (tracked ISSUE-42)"
+}
+```
+
+> `not-run` 必须显式写明原因（`"reason": "tsc binary not in PATH after pnpm install link failure"`），
+> 禁止省略。**任何 `not-run` 都触发 BLOCKED，不进 S7。**
+
 ## 六.五、Fix Loop（S6/S7 发现需修复 → 回 05 → 重验，pre-ship 闭环）
 
 verify/review 发现需 fix 时按下述闭环，**不 ship、不问人怎么修**（除非根本问题）：
@@ -170,6 +322,7 @@ verify/review 发现需 fix 时按下述闭环，**不 ship、不问人怎么修
 - **Spec 缺口/错误**（实现偏离因 Spec 不对）→ 更新 Spec（03，`status=Updated` + `.csp/tech-design/.sync-status.yaml`）+ 回 05 对齐。
 - **PRD/需求问题**（罕发，根因在需求）→ 回 01（走 Rejected 路径）。
 - **基础设施/配置**（DB/配置文件内的代码问题）→ 回 05 infra Task 修。
+- **增量质量项（不当轮延后）**：S7/审计标为"增量/增强"但属本版质量基线的 gate 邻接项（覆盖率阈值 bump、Setting/E2E/契约测试、可观测性埋点）→ **回 05 当轮补齐**，不归入"deferred 下一轮"。仅真实外部阻塞才允许 deferred（见硬边界 11），且必须写明阻塞原因 + 解除条件 + 下一轮入口。
 
 **Fix scope（delta only，不重做 05）**：
 - 只改失败/受影响 Task；未变 Feature 不动；不重跑已完成 Wave（仅受影响回归）。
@@ -198,6 +351,7 @@ verify/review 发现需 fix 时按下述闭环，**不 ship、不问人怎么修
   一句话依据：___
   ```
   > **任何 S6/S7 gate `not-run`（工具链不可用/降级为 grep）→ 裁决=阻断发布**，tag 标 `v{milestone}-draft`/`unverified`，release notes 标"未验证脚手架/draft"。auto-proceed **不触发**（仅认 ran+exit 0）。
+  > **`deferred` 增量项（硬边界 11）计入缺口 K**：有 `deferred` 项 → 裁决不得为"放行"，至少"有条件发布"，且 release notes 列明每项 deferred 的阻塞原因 + 解除条件 + 下一轮入口，不得隐瞒。
 - [ ] S6/S7 全部门控 `ran` 通过（不是 `not-run`）、证据已提交
 - [ ] feature flag 配置好（kill switch，设过期时间与 owner）
 - [ ] 回滚计划文档化（触发条件/步骤/时间预算/DB 回滚）
@@ -205,13 +359,36 @@ verify/review 发现需 fix 时按下述闭环，**不 ship、不问人怎么修
 - [ ] 团队通知发布窗口
 - [ ] 非"周五下午"
 
-### 7.2 灰度分阶段 + 指标看板
-| 指标 | 绿（放行） | 黄（观察） | 红（回滚） |
+### 7.2 灰度分阶段 + 指标看板 + Progressive Delivery
+
+> 默认采用 **Progressive Delivery**（见 §6.7.6）：canary + 自动金丝雀分析 + 自动 promotion/rollback。
+> 以下指标看板是**自动金丝雀分析的输入**，不是人工盯盘。
+
+| 指标 | 绿（放行/promote） | 黄（观察/hold） | 红（回滚/rollback） |
 |---|---|---|---|
 | 错误率 | ≤基线+10% | 基线+10–100% | >2×基线 |
 | P95 延迟 | ≤基线+20% | +20–50% | >+50% |
 | 客户端 JS 错误 | 无新类型 | <0.1% 会话 | >0.1% 会话 |
 | 业务指标 | 中性或正向 | 下降<5% | 下降>5% |
+| 资源消耗（CPU/内存） | ≤基线+10% | +10–30% | >+30% |
+| Trace 错误 span 占比 | ≤0.1% | 0.1–1% | >1% |
+
+**灰度分档**（默认，可按业务调）：
+```
+5% (5min 观察) → 25% (10min) → 50% (30min) → 100% (正式发布)
+         ↑ 任一档红 → 自动 rollback → 通知 → 不回人工等
+```
+
+**金丝雀分析自动化**（Kayenta / Flagger / Prometheus + PromQL）：
+- 对比 canary vs baseline 同期指标；计算 p-value / effect size。
+- **promotion gate 必须机器判定**，人工盯盘只作辅助；人工 override 必须留审计。
+- 每次 promotion/rollback 事件落 `VERSION-REGISTRY.md` 与 `.csp/ops/CANARY-EVENTS.md`。
+
+**Shadow Traffic 校验**（重写/迁移场景）：
+- 镜像真实流量到新版本（不返回用户）→ 对比响应 diff（忽略非确定性字段如 timestamp/request-id）。
+- diff 率 < 0.1% → 视为行为一致；超阈值 → 阻断 cutover。
+
+
 
 ### 7.3 回滚策略（发布前必有）
 - 触发：错误率>2×基线 / P95>+50% / 用户上报激增 / 数据完整性 / 安全漏洞。
@@ -323,6 +500,9 @@ verify/review 发现需 fix 时按下述闭环，**不 ship、不问人怎么修
 .csp/ship/RELEASE-NOTES-{milestone}.md   → mv → milestones/{m}/ship/
 .csp/ship/ROLLBACK-PLAN-{milestone}.md   → mv → milestones/{m}/ship/
 .csp/artifacts/verify/verification-report.md   → mv → milestones/{m}/verify/
+.csp/artifacts/verify/ui-test-report.md        → mv → milestones/{m}/verify/
+.csp/artifacts/verify/linked-verdict-*.md      → mv → milestones/{m}/verify/
+.csp/artifacts/verify/evidence/                → mv → milestones/{m}/verify/evidence/
 .csp/artifacts/review/comments.md              → mv → milestones/{m}/review/
 .csp/artifacts/review/security-findings.md     → mv → milestones/{m}/review/
 ```
@@ -348,7 +528,7 @@ verify/review 发现需 fix 时按下述闭环，**不 ship、不问人怎么修
 3. **归档时机**：S8 发布确认后、S9 监控稳定前；未确认发布不归档。
 4. **幂等**：同 milestone 重跑覆盖快照；不产生 `-v2` 拗留。
 5. **git tag 锚定**：归档前先打 `v{milestone}` tag，归档清单记录该 tag，使快照可回到代码状态。
-6. **禁止归档活动工作区**：`.csp/artifacts/` 中 dev 进行中产物（implement.md 等）不归档，仅归档 verify/review 产物。
+6. **禁止归档活动工作区**：`.csp/artifacts/` 中 dev 进行中产物（`implement.md`、`ui-test-progress.json`、`linked-test-state.json` 等进行中态）不归档，仅归档 verify/review 终态产物。
 
 ## 十一、三说明书与追溯治理（全程 living）
 
@@ -429,6 +609,15 @@ verify/review 发现需 fix 时按下述闭环，**不 ship、不问人怎么修
 | Actions 用 tag 引用 | `uses: x@v1` 可被篡改 | SHA pin |
 | 依赖无上界 | `>=x` 可被 major 破坏 | 精确锁定 + `<next_major` 上界 |
 | 轻量选重 | Electron 100MB 能用也选 | 满足需求选更轻量（如 Tauri） |
+| **增量当非 bug 延后** | "覆盖率 bump/E2E/Setting 是增量非 bug，gate 全绿可上线，下轮再补" | 属本版质量基线的增量项当轮完成或 BLOCKED（硬边界 11）；`deferred` 项计入缺口 K 并写进 release notes，不得隐瞒 |
+| **Flaky silent retry** | CI 配 `retries: 2` 假装"绿了"，不报 flaky rate | retry 次数上报 dashboard；quarantine + 7 天修复 SLA；flaky rate >5% 阻断发布 |
+| **测试金字塔倒置** | E2E 占 60%，PR 反馈 >30min，flaky >5% | 业务逻辑归单测、契约归集成、E2E 只留关键用户路径（≤20 个核心 journey） |
+| **人工盯盘当灰度** | "我盯着日志看半小时"代替自动金丝雀分析 | Progressive Delivery + 机器判定 promotion gate；人工 override 必须留审计 |
+| **Mock 一切** | 测试全 mock，跑过 ≠ 真能用 | 只 mock 外部依赖（API/DB/FS）；集成用 Testcontainers 真 DB；核心路径用 shadow traffic 验证 |
+| **Mutation score 不查** | 覆盖率 80% 但断言全是 `assert(true)` | 核心模块跑 Stryker/mutmut，Mutation Score ≥ 80% |
+| **Contract 靠人盯** | 服务升级时手查"下游有没有在用这个字段" | Consumer-driven contract（Pact）；MCP tool 用 schema diff |
+| **Observability 上线后补** | "先上再装监控" | S6 门控即要求关键路径有 OTEL span + 结构化日志 + trace_id 贯通 |
+| **Evidence 省略** | verification-report 只写"全过"，无证据 | 每项门控附 evidence schema（command/exit/sha256/artifacts）；`not-run` 必写理由且 BLOCKED |
 
 ## 十五、生成后输出"下一步建议块"
 

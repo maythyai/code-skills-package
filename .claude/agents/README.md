@@ -20,6 +20,8 @@
 | `frontend-engineer` | 05 角色 | Read,Write,Edit,Bash,Glob,Grep | sonnet | 由 dev-lead spawn |
 | `db-engineer` | 05 角色 | Read,Write,Edit,Bash,Glob,Grep | sonnet | 由 dev-lead spawn |
 | `qa-engineer` | 05 角色 | Read,Write,Edit,Bash,Glob,Grep | sonnet | 由 dev-lead spawn |
+| `auditor` | 独立 | Read,Write,Edit,Bash,Glob,Grep,Agent | opus | 模块审计/可用性审查/项目体检 |
+| `brownfield-integrator` | 棕地(独立) | Read,Write,Edit,Glob,Grep,Bash | sonnet | 棕地文档整合/把 docs 整合进 .csp |
 
 ## 二、全流程
 
@@ -70,6 +72,8 @@
 - **A 不直接喊 B**：A 完成后写 `lifecycle-state`（done）+ 产物；orchestrator 读 state → spawn B，B 读 A 的产物重建上下文。
 - spawn 时只传一句："读 `.csp/AGENTS.md`+`lifecycle-state.json` 重建上下文，执行本阶段，完成写 lifecycle+产物+manifest。" 不复述历史。
 - 产物 front-matter 互链（`prd_ref`→`related_specs`→`related_tasks`→`adopted_by`）让下游可追溯到上游。
+
+> **棕地项目**：已有 `docs/` 人类文档但未建 `.csp/` 时，00 建中枢后可 spawn `brownfield-integrator`（见 `prompts/brownfield-doc-integration.md`）把 `docs/` 的 prd/strategy/solutions/analysis 蒸馏+索引进 `.csp/`（PRD→PMS、strategy→lifecycle、solutions→specs、analysis→audit），原文留 docs/ 不复制全文。`auditor`（见 `prompts/audit.md`）则可随时做深度模块审计。
 
 ## 四、何时自动跑 / 何时问用户
 
@@ -125,3 +129,14 @@ orchestrator 只 spawn `dev-lead` 一次；dev-lead 内部按 Wave + 文件无�
 ## 九、迁移到其他项目
 
 本目录可整目录 `cp -r` 到任意项目的 `.claude/agents/`，agent 自包含（共享约定在本 README，全流程定位在每个 agent 顶部），不依赖 prompts/。
+
+## 十、完成纪律（不当轮延后）
+
+**铁律**：属本阶段质量基线/完成标准的工作，必须当轮完成或显式 BLOCKED（写明真实外部阻塞 + 谁解除 + 下一轮入口），不得以"非 bug/增量/增强/gate 已全绿/可上线/需要的话再补"为由延后到下一轮。
+
+- **gate 邻接项不是可选增强**：覆盖率阈值 bump、Setting/E2E/契约测试补齐、可观测性埋点、文档同步——若属本版质量 bar，当轮做完；只有真实外部阻塞（依赖未就绪/跨团队契约未签/需真实流量）才 `deferred`，且 `deferred` 项计入发布裁决缺口、写进 release notes，不得隐瞒。
+- **不积小 TODO**：每轮收尾时，剩余项要么 `done`、要么 `BLOCKED`（附阻塞原因）、要么 `deferred`（附解除条件 + 下一轮入口）。禁止"下轮再说/以后补/可选项先放"——这些是下一轮的隐性债。
+- **"gate 全绿"不等于"可交付"**：gate 全绿只证明已设门控通过；未纳入门控的本轮规划项（如本轮要补的 E2E/覆盖率 bump）仍须本轮完成，不能用 gate 全绿掩盖它们未做。
+- **诚实交代 ≠ 合法延后**：列出未做项是诚实，但"诚实交代"不改变它们仍属本轮质量 bar 的事实——要么当轮补齐，要么升格为显式 `deferred`/`BLOCKED` 并计入缺口，不要用"诚实交代"换取"可上线"。
+
+此纪律在 `release-manager`(06) 硬边界 11 + Fix Loop + 发布裁决已落地；其他阶段 agent（dev-lead/reviewer/qa-engineer 等）同样适用——本阶段该做的别留到下一阶段。

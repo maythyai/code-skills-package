@@ -140,9 +140,9 @@ Read project-level and prior phase context to avoid re-asking decided questions.
 
 **Step 1: Read project-level files**
 ```bash
-cat .planning/PROJECT.md 2>/dev/null || true
-cat .planning/REQUIREMENTS.md 2>/dev/null || true
-cat .planning/STATE.md 2>/dev/null || true
+cat .csp/planning/PROJECT.md 2>/dev/null || true
+cat .csp/planning/REQUIREMENTS.md 2>/dev/null || true
+cat .csp/planning/STATE.md 2>/dev/null || true
 ```
 
 Extract from these:
@@ -152,7 +152,7 @@ Extract from these:
 
 **Step 2: Read all prior CONTEXT.md files**
 ```bash
-(find .planning/phases -name "*-CONTEXT.md" 2>/dev/null || true) | sort
+(find .csp/planning/phases -name "*-CONTEXT.md" 2>/dev/null || true) | sort
 ```
 
 For each CONTEXT.md where phase number < current phase:
@@ -191,7 +191,7 @@ Read the project-level methodology file if it exists. This must happen before as
 so that active lenses shape how assumptions are generated and evaluated.
 
 ```bash
-cat .planning/METHODOLOGY.md 2>/dev/null || true
+cat .csp/planning/METHODOLOGY.md 2>/dev/null || true
 ```
 
 **If METHODOLOGY.md exists:**
@@ -209,7 +209,7 @@ Lightweight scan of existing code to inform assumption generation.
 
 **Step 1: Check for existing codebase maps**
 ```bash
-ls .planning/codebase/*.md 2>/dev/null || true
+ls .csp/planning/codebase/*.md 2>/dev/null || true
 ```
 
 **If codebase maps exist:** Read relevant ones (CONVENTIONS.md, STRUCTURE.md, STACK.md). Extract reusable components, patterns, integration points. Skip to Step 3.
@@ -570,7 +570,7 @@ csp-sdk query state.record-session \
 Commit STATE.md:
 
 ```bash
-csp-sdk query commit "docs(state): record phase ${PHASE} context session" --files .planning/STATE.md
+csp-sdk query commit "docs(state): record phase ${PHASE} context session" --files .csp/planning/STATE.md
 ```
 </step>
 
@@ -578,7 +578,7 @@ csp-sdk query commit "docs(state): record phase ${PHASE} context session" --file
 Present summary and next steps:
 
 ```
-Created: .planning/phases/${PADDED_PHASE}-${SLUG}/${PADDED_PHASE}-CONTEXT.md
+Created: .csp/planning/phases/${PADDED_PHASE}-${SLUG}/${PADDED_PHASE}-CONTEXT.md
 
 ## Decisions Captured (Assumptions Mode)
 

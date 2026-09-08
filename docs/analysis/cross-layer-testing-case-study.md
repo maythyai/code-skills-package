@@ -123,8 +123,8 @@ trace_id: orders.trace_id=abc123 == 请求 abc123 → 强因果 ✅
 断点：库存扣减未在订单创建事务内执行
 
 ## 证据
-- UI:  evidence/ORD-001-action.png
-- API: linked-evidence.json#network[0]
+- UI:  .csp/artifacts/verify/evidence/ORD-001-action.png
+- API: linked-evidence-ORD-001.json#network[0]
 - DB:  pre=stock:10 / post=stock:10（预期 9）
 ```
 

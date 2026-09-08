@@ -2,7 +2,7 @@
 
 > The hub's lightweight entry. `AGENTS.md` at `.csp/AGENTS.md` routes, it does not
 > carry compile/query/skill-lifecycle detail. Generalized to git + CSP skills
-> (no `a1`/plugin-install coupling).
+> (no platform-specific installer coupling).
 
 ## 1. Fixed H2 sections (in order, each with real content)
 

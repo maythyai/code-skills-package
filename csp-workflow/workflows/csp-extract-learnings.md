@@ -37,7 +37,7 @@ If PLAN.md or SUMMARY.md files are not found or missing, exit with error: "Requi
 **Optional artifacts (read if available, skip if not found):**
 - `${PHASE_DIR}/*-VERIFICATION.md` — verification results
 - `${PHASE_DIR}/*-UAT.md` — user acceptance test results
-- `.planning/STATE.md` — project state with decisions and blockers
+- `.csp/planning/STATE.md` — project state with decisions and blockers
 
 Track which optional artifacts are missing for the `missing_artifacts` frontmatter field.
 </step>

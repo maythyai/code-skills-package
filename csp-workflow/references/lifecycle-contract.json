@@ -1,0 +1,151 @@
+{
+  "version": 1,
+  "description": "CSP lifecycle state machine — the machine-readable form of the S0-S9 chain declared in csp-lifecycle-orchestrator skill. Read by `csp-sdk drive.*` to turn advisory skill handoff into enforced state transitions: a stage cannot advance until its gate (artifacts + commands) passes.",
+  "modes": {
+    "full":        { "stages": ["S0","S1","S2","S2.5","S2.6","S3","S3.5","S4","S5","S6","S7","S8","S9"] },
+    "lightweight": { "stages": ["S0","S1","S2","S2.5","S3","S3.5","S4","S5","S6","S7","S8"] },
+    "spec-only":   { "stages": ["S0","S1","S2","S2.5","S2.6","S3","S3.5","S4"] },
+    "extend":      { "stages": ["S1","S2","S2.5","S3","S3.5","S4","S5","S6","S7","S8"] }
+  },
+  "stages": [
+    {
+      "id": "S0", "name": "Hub Init", "skill": "csp-knowledge-hub",
+      "mode_in": ["full","lightweight","spec-only"],
+      "gate": {
+        "artifacts": [".csp/AGENTS.md", ".csp/manifest.json"],
+        "commands": []
+      },
+      "skip_if": "AGENTS.md + manifest.json exist and `csp-sdk doctor` passes",
+      "max_retries": 1, "next": "S1"
+    },
+    {
+      "id": "S1", "name": "Requirement Decomposition", "skill": "csp-requirement-decomposition",
+      "mode_in": ["full","lightweight","spec-only","extend"],
+      "gate": {
+        "artifacts": [".csp/decomposition/DECOMPOSITION-SUMMARY.md", ".csp/decomposition/DEPENDENCY-GRAPH.md"],
+        "commands": []
+      },
+      "skip_if": ".csp/decomposition/ exists and user confirms reuse",
+      "max_retries": 2, "next": "S2"
+    },
+    {
+      "id": "S2", "name": "Tech Stack Selection", "skill": "csp-tech-stack-advisor",
+      "mode_in": ["full","lightweight","spec-only","extend"],
+      "gate": {
+        "artifacts": [".csp/tech-decisions/TECH-STACK-OVERVIEW.md"],
+        "commands": []
+      },
+      "skip_if": ".csp/tech-decisions/ exists or user supplied full stack",
+      "max_retries": 2, "next": "S2.5"
+    },
+    {
+      "id": "S2.5", "name": "Technical Solution Design", "skill": "csp-tech-solution-design",
+      "mode_in": ["full","lightweight","spec-only","extend"],
+      "gate": {
+        "artifacts": [".csp/tech-design/ARCHITECTURE-DESIGN.md", ".csp/tech-design/DATA-ARCHITECTURE.md", ".csp/tech-design/INTERFACE-ARCHITECTURE.md"],
+        "commands": []
+      },
+      "skip_if": ".csp/tech-design/ exists and user confirms reuse",
+      "max_retries": 2, "next": "S2.6"
+    },
+    {
+      "id": "S2.6", "name": "Technical Design Review", "skill": "csp-tech-design-review",
+      "mode_in": ["full","spec-only"],
+      "gate": {
+        "artifacts": [".csp/tech-design/REVIEW-FINDINGS.md"],
+        "commands": []
+      },
+      "skip_if": "project scale is S (simple CRUD) or user confirms skip",
+      "max_retries": 3, "next": "S3"
+    },
+    {
+      "id": "S3", "name": "Full-Stack Spec Generation", "skill": "csp-fullstack-spec-generator",
+      "mode_in": ["full","lightweight","spec-only","extend"],
+      "gate": {
+        "artifacts": [".csp/specs/SPEC-INDEX.md", ".csp/specs/API-OVERVIEW.md"],
+        "commands": []
+      },
+      "skip_if": ".csp/specs/ covers current feature set",
+      "max_retries": 2, "next": "S3.5"
+    },
+    {
+      "id": "S3.5", "name": "Task Breakdown", "skill": "csp-tech-task-breakdown",
+      "mode_in": ["full","lightweight","spec-only","extend"],
+      "gate": {
+        "artifacts": [".csp/tasks/WBS.md", ".csp/tasks/DEPENDENCY-DAG.md"],
+        "commands": []
+      },
+      "skip_if": "project scale S or user has external task tool",
+      "max_retries": 2, "next": "S4"
+    },
+    {
+      "id": "S4", "name": "Implementation Planning", "skill": "csp-plan-phase",
+      "mode_in": ["full","lightweight","spec-only","extend"],
+      "gate": {
+        "artifacts": [".csp/plan/IMPLEMENTATION-PLAN.md"],
+        "commands": []
+      },
+      "skip_if": null,
+      "max_retries": 2, "next": "S5"
+    },
+    {
+      "id": "S5", "name": "Parallel Execution", "skill": "csp-implementation-phase",
+      "mode_in": ["full","lightweight","extend"],
+      "gate": {
+        "artifacts": [],
+        "commands": []
+      },
+      "skip_if": null,
+      "max_retries": 3, "next": "S6",
+      "note": "Gate is build-passes, checked at S6; S5 advances on all tasks committed (per-task atomic commit)."
+    },
+    {
+      "id": "S6", "name": "Quality Gate", "skill": "csp-tdd",
+      "mode_in": ["full","lightweight","extend"],
+      "gate": {
+        "artifacts": [],
+        "commands": ["npm test"]
+      },
+      "skip_if": null,
+      "max_retries": 5, "next": "S7",
+      "note": "Build/test/lint gate. command override via gate.commands in .csp/lifecycle-state.json."
+    },
+    {
+      "id": "S7", "name": "Review & Validation", "skill": "csp-verify-phase",
+      "mode_in": ["full","lightweight","extend"],
+      "gate": {
+        "artifacts": [".csp/verification/VERIFICATION.md"],
+        "commands": []
+      },
+      "skip_if": null,
+      "max_retries": 2, "next": "S8"
+    },
+    {
+      "id": "S8", "name": "Ship & Deliver", "skill": "csp-ship",
+      "mode_in": ["full","lightweight","extend"],
+      "gate": {
+        "artifacts": [],
+        "commands": ["git rev-parse --verify HEAD"]
+      },
+      "skip_if": null,
+      "max_retries": 1, "next": "S9"
+    },
+    {
+      "id": "S9", "name": "Post-Launch", "skill": "csp-indie-deploy-ops",
+      "mode_in": ["full"],
+      "gate": {
+        "artifacts": [],
+        "commands": []
+      },
+      "skip_if": "lightweight/spec-only/extend modes skip S9",
+      "max_retries": 1, "next": null,
+      "note": "Advisory stage — monitoring config + next-iteration suggestion. Terminal in this milestone."
+    }
+  ],
+  "governance": {
+    "pms": { "skill": "csp-product-spec", "read_at": ["S1","S2","S2.5","S3"], "write_back_at": ["S8"], "gate": "prd_to_module_coverage == 100%", "gate_at": ["S1","S8"], "gate_spec": ".csp/product-spec/PRODUCT-MODULE-SPEC.md" },
+    "cms": { "skill": "csp-code-spec", "read_at": ["S2","S3","S5","S7"], "write_back_at": ["S5","S8"], "gate": "cms_idempotent_align", "gate_at": ["S5","S7"], "gate_spec": ".csp/code-spec/{app}/CODE-MODULE-SPEC.md" },
+    "tms": { "skill": "csp-test-spec", "read_at": ["S3","S6","S7"], "write_back_at": ["S6","S7"], "gate": "requirement_coverage_gap == 0", "gate_at": ["S6","S7"], "gate_spec": ".csp/test-spec/{module}/requirement-matrix.md" }
+  },
+  "enforcement_model": "drive.advance refuses to set current_stage=next unless the current stage's gate (artifacts exist + commands exit 0) passes. If an agent skips a stage, drive.next keeps returning that stage (state never advanced), repointing the agent. The state machine does not lie — advisory handoff becomes enforced handoff."
+}

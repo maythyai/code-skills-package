@@ -1,6 +1,6 @@
 ---
 name: csp-pr-branch
-description: Create a clean PR branch by filtering out .planning/ commits — ready for code review
+description: Create a clean PR branch by filtering out .csp/planning/ commits — ready for code review
 argument-hint: "[target branch, default: main]"
 allowed-tools:
   - Bash
@@ -10,7 +10,7 @@ requires: [review]
 ---
 
 <objective>
-Create a clean branch suitable for pull requests by filtering out .planning/ commits
+Create a clean branch suitable for pull requests by filtering out .csp/planning/ commits
 from the current branch. Reviewers see only code changes, not CSP planning artifacts.
 
 This solves the problem of PR diffs being cluttered with PLAN.md, SUMMARY.md, STATE.md

@@ -1,0 +1,23 @@
+{
+  "_comment": "业务术语库：把行业术语映射到别名与使用场景，辅助元素定位。按项目实际扩充。条目格式见 terminology/README.md",
+  "用户名": {
+    "user_scenario": "登录、用户管理、个人中心等场景下用户身份标识的输入",
+    "aliases": ["username", "账号", "登录账号", "user id"],
+    "notes": "可能是邮箱、手机号或工号；定位时优先 getByLabel('用户名')"
+  },
+  "商品名称": {
+    "user_scenario": "电商/库存系统中商品的显示名称，用于搜索、详情、编辑场景",
+    "aliases": ["商品名", "product name", "SKU名称", "品名"],
+    "notes": "列表与表单都可能用到；搜索框 placeholder 常为「请输入商品名称」"
+  },
+  "订单状态": {
+    "user_scenario": "订单管理系统中订单当前流转状态（待付款/已发货/已完成等）",
+    "aliases": ["状态", "order status", "流转状态"],
+    "notes": "常见为下拉筛选或标签展示；自定义下拉需 click→选 option 两步"
+  },
+  "创建时间": {
+    "user_scenario": "记录创建时间，列表筛选、详情展示常用",
+    "aliases": ["创建日期", "create time", "提交时间"],
+    "notes": "时间选择器常为 readonly，需 removeAttribute 后设值并触发 change"
+  }
+}

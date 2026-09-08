@@ -73,7 +73,7 @@ csp-cross-layer-testing     ← 设计契约(可追溯用例对象 .linked.yaml)
 ├─ 1. 环境准备 ──── test 库连接(TEST_DB_URL) / dev server / 登录态
 ├─ 2. seed ──────── db:reset && db:seed:test (csp-db-migration)，事务隔离标记
 ├─ 3. pre 快照 ──── csp-db-state-assertion 取基线(目标表 + 不变量表)
-├─ 4. UI 动作 ────── csp-playwright-ui-test 执行点击，输出 linked-evidence.json
+├─ 4. UI 动作 ────── csp-playwright-ui-test 执行点击，输出 linked-evidence-{test_id}.json
 │                    (含网络请求 trace_id + 时间戳 + 请求体)
 ├─ 5. post 快照 ──── csp-db-state-assertion 在 window_ms 内查库，行级 diff
 ├─ 6. 对齐 ──────── 用 trace_id(强)或时间窗(弱)把 DB diff 与网络请求对齐
@@ -82,9 +82,9 @@ csp-cross-layer-testing     ← 设计契约(可追溯用例对象 .linked.yaml)
 └─ 9. 收尾 ──────── 事务 ROLLBACK / 清理浏览器 / 落盘报告
 ```
 
-## 4. linked-evidence.json（层间数据契约）
+## 4. linked-evidence-{test_id}.json（层间数据契约）
 
-`csp-playwright-ui-test` 在第 4 步产出的联动证据，供 DB 层对齐消费：
+`csp-playwright-ui-test` 在第 4 步产出的联动证据，按 `test_id` 命名落 `.csp/artifacts/verify/evidence/linked-evidence-{test_id}.json`，供 DB 层对齐消费：
 
 ```json
 {
@@ -101,8 +101,8 @@ csp-cross-layer-testing     ← 设计契约(可追溯用例对象 .linked.yaml)
       "ts": 1730000000120
     }
   ],
-  "ui_dom": "evidence/ORD-001-after.dom",
-  "screenshot": "evidence/ORD-001-after.png",
+  "ui_dom": ".csp/artifacts/verify/evidence/ORD-001-after.dom",
+  "screenshot": ".csp/artifacts/verify/evidence/ORD-001-after.png",
   "console_errors": []
 }
 ```
@@ -110,6 +110,8 @@ csp-cross-layer-testing     ← 设计契约(可追溯用例对象 .linked.yaml)
 DB 层用 `network[0].trace_id` 与 `network[0].ts` 做对齐锚点。
 
 ## 5. 单一联动裁决
+
+裁决落盘 `.csp/artifacts/verify/linked-verdict-{test_id}.md`（按 `test_id` 命名，幂等覆盖）。
 
 ```markdown
 # 联动裁决 — ORD-001 「用户下单」
@@ -131,8 +133,8 @@ env: http://localhost:3000 / test_db / chrome
 - 断点：products.stock delta=0，预期 -1
 
 ## 证据
-- UI:  evidence/ORD-001-action.png
-- API: linked-evidence.json#network[0]
+- UI:  .csp/artifacts/verify/evidence/ORD-001-action.png
+- API: linked-evidence-ORD-001.json#network[0]
 - DB:  pre=stock:10 / post=stock:10(预期 9)
 - UI:  (暂缓)
 
@@ -180,7 +182,7 @@ broken_at_layer:db  signature:invariant@products.stock:delta-0-expected-(-1)
 
 ## 9. 状态与清理
 
-- 状态落 `.csp/linked-test-state.json`（test_id / 当前层 / verdict / broken_at），完成后删除（同 ultraqa 清理规范）。
+- 状态落 `.csp/artifacts/verify/linked-test-state.json`（test_id / 当前层 / verdict / broken_at），完成后删除（同 ultraqa 清理规范）。
 - 事务隔离用例结尾 ROLLBACK；seed-reset 用例结尾可选 `db:reset`。
 - 关闭浏览器：`playwright-cli close` / `close-all`。
 

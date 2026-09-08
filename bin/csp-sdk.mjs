@@ -8,7 +8,7 @@
  *        csp-sdk version
  *
  * State storage:
- *   .planning/           — Project planning (ROADMAP.md, STATE.md, config.json, phases/)
+ *   .csp/planning/           — Project planning (ROADMAP.md, STATE.md, config.json, phases/)
  *   .csp/state.json      — Runtime state (phase/tech_stack/git_status)
  *   .csp/intel/*.md      — Learning outputs
  *
@@ -23,9 +23,26 @@ import { randomUUID } from 'node:crypto';
 // --- Utilities ---
 
 const PROJECT_ROOT = process.env.CSP_PROJECT_ROOT || process.cwd();
-const PLANNING_DIR = join(PROJECT_ROOT, '.planning');
+const PLANNING_DIR = join(PROJECT_ROOT, '.csp/planning');
 const CSP_DIR = join(PROJECT_ROOT, '.csp');
 const STATE_FILE = join(CSP_DIR, 'state.json');
+const LIFECYCLE_STATE_FILE = join(CSP_DIR, 'lifecycle-state.json');
+// Lifecycle contract ships inside the csp-workflow layer (copied to every IDE's
+// skills dir on install). Resolve relative to the bin first (repo layout), then
+// under PROJECT_ROOT (installed alongside csp-workflow/), then env override.
+const CONTRACT_ENV = process.env.CSP_LIFECYCLE_CONTRACT || '';
+function contractPath() {
+  if (CONTRACT_ENV) return resolve(PROJECT_ROOT, CONTRACT_ENV);
+  const here = dirname(new URL(import.meta.url).pathname);
+  const candidates = [
+    join(here, '..', 'csp-workflow', 'references', 'lifecycle-contract.json'),       // repo: bin/../csp-workflow
+    join(PROJECT_ROOT, 'csp-workflow', 'references', 'lifecycle-contract.json'),     // repo root
+    join(PROJECT_ROOT, 'csp-workflow', 'references', 'lifecycle-contract.json'),     // installed under skills
+    join(PROJECT_ROOT, '.cursor', 'skills', 'csp-workflow', 'references', 'lifecycle-contract.json'),
+    join(PROJECT_ROOT, '.claude', 'skills', 'csp-workflow', 'references', 'lifecycle-contract.json'),
+  ];
+  return candidates.find(p => existsSync(p)) || candidates[0];
+}
 const CONFIG_FILE = join(PLANNING_DIR, 'config.json');
 const ROADMAP_FILE = join(PLANNING_DIR, 'ROADMAP.md');
 const STATE_MD_FILE = join(PLANNING_DIR, 'STATE.md');
@@ -154,6 +171,372 @@ function loadState() {
 function saveState(state) {
   ensureDir(CSP_DIR);
   writeJSON(STATE_FILE, { ...state, _updated: timestamp() });
+}
+
+// --- Lifecycle Drive Chain (enforced state machine) ---
+// Turns advisory skill handoff into enforced transitions: a stage cannot advance
+// until its gate (artifacts + commands) passes. See csp-workflow/references/lifecycle-contract.json.
+
+function loadContract() {
+  const data = readJSON(contractPath(), null);
+  if (!data) throw new Error(`Lifecycle contract not found at ${contractPath()}`);
+  return data;
+}
+
+function loadLifecycleState() {
+  return readJSON(LIFECYCLE_STATE_FILE, null);
+}
+
+function saveLifecycleState(state) {
+  ensureDir(CSP_DIR);
+  writeJSON(LIFECYCLE_STATE_FILE, { ...state, schema_version: 1, updated_at: timestamp() });
+}
+
+function initLifecycleState(mode = 'full') {
+  const contract = loadContract();
+  const modeStages = (contract.modes[mode] || contract.modes.full).stages;
+  const stages = {};
+  for (const id of modeStages) stages[id] = { status: 'pending', retries: 0 };
+  const first = modeStages[0] || null;
+  if (first) stages[first].status = 'in_progress';
+  return { mode, current_stage: first, stages, milestone: null };
+}
+
+// Tech-stack → default S6 (quality gate) test command. Lets drive.init prefill
+// gate_overrides so the quality gate runs the right command out-of-box instead
+// of forcing every non-JS project to hand-edit lifecycle-state.json on day 1.
+const STACK_TEST_COMMANDS = {
+  javascript: 'npm test',
+  typescript: 'npm test',
+  python: 'python -m pytest',
+  go: 'go test ./...',
+  rust: 'cargo test',
+  java: 'mvn -q test',
+  kotlin: './gradlew -q test',
+  swift: 'swift test',
+  cpp: 'ctest --output-on-failure',
+};
+
+function prefillGateOverrides(stacks) {
+  const cmd = stacks.map(s => STACK_TEST_COMMANDS[s]).find(Boolean) || 'npm test';
+  return { S6: { commands: [cmd] } };
+}
+
+function getStageDef(contract, id) {
+  return contract.stages.find(s => s.id === id) || null;
+}
+
+// Resolve a skill's transitive depends_on from registry.json (skills[].deps).
+function loadRegistryDeps() {
+  const candidates = [
+    join(PROJECT_ROOT, 'csp-router', 'registry.json'),
+    join(PROJECT_ROOT, '.cursor', 'skills', 'csp-router', 'registry.json'),
+    join(PROJECT_ROOT, '.claude', 'skills', 'csp-router', 'registry.json'),
+  ];
+  const path = candidates.find(p => existsSync(p));
+  if (!path) return new Map();
+  const reg = readJSON(path, null);
+  if (!reg || !Array.isArray(reg.skills)) return new Map();
+  const m = new Map();
+  for (const s of reg.skills) m.set(s.name, s.deps || []);
+  return m;
+}
+
+function resolveDeps(skillName, depMap, seen = new Set()) {
+  if (seen.has(skillName)) return [];
+  seen.add(skillName);
+  const direct = depMap.get(skillName) || [];
+  const out = [];
+  for (const d of direct) {
+    out.push(...resolveDeps(d, depMap, seen));
+    if (!out.includes(d)) out.push(d);
+  }
+  return out;
+}
+
+// Check a stage's gate: required artifacts exist + commands exit 0.
+// Also runs governance gates (PMS/CMS/TMS) mapped to this stage via gate_at,
+// turning spec-coverage / drift checks into hard CI gates — not just "file exists".
+function checkGate(stageDef, lcState, contract) {
+  const gate = stageDef.gate || { artifacts: [], commands: [] };
+  const artifactOverrides = (lcState && lcState.gate_overrides && lcState.gate_overrides[stageDef.id]) || {};
+  const artifacts = artifactOverrides.artifacts || gate.artifacts || [];
+  const commands = artifactOverrides.commands || gate.commands || [];
+  const missing = artifacts.filter(a => !existsSync(resolve(PROJECT_ROOT, a)));
+  const failedCommands = [];
+  for (const cmd of commands) {
+    try {
+      execSync(cmd, { cwd: PROJECT_ROOT, encoding: 'utf-8', timeout: 60000, stdio: 'pipe' });
+    } catch (e) {
+      failedCommands.push({ command: cmd, message: (e.stderr || e.stdout || e.message || '').toString().split('\n')[0] });
+    }
+  }
+  // Governance gates mapped to this stage
+  const gov = (contract || loadContract()).governance || {};
+  const governanceChecks = [];
+  for (const [name, g] of Object.entries(gov)) {
+    const at = g.gate_at || [];
+    if (!at.includes(stageDef.id)) continue;
+    // Skip governance gate if its spec is gated by a stage not yet reached
+    // (the spec may not exist early on — only enforce when the spec is expected).
+    const checker = { pms: checkPmsGate, cms: checkCmsGate, tms: checkTmsGate }[name];
+    if (!checker) continue;
+    const result = checker();
+    governanceChecks.push({ spec: name, ...result });
+  }
+  const govFail = governanceChecks.filter(g => !g.pass);
+  const pass = missing.length === 0 && failedCommands.length === 0 && govFail.length === 0;
+  return { stage: stageDef.id, pass, missing, failed_commands: failedCommands, artifacts_checked: artifacts, governance: governanceChecks };
+}
+
+// --- Governance gate checkers ---
+// Each parses a real Module Spec artifact (PMS/CMS/TMS) the skills produce,
+// so the gate is machine-computed, not "file exists". See lifecycle-contract.json governance.
+
+// TMS: requirement_coverage_gap == 0
+// Parses .csp/test-spec/{module}/requirement-matrix.md — every requirement row in the
+// 需求→方法 table must have a non-empty 方法 cell, AND the 缺口清单 must list no gaps.
+function checkTmsGate() {
+  const tmsDir = join(CSP_DIR, 'test-spec');
+  const matrices = [];
+  try {
+    const walk = (d) => {
+      for (const e of readdirSync(d, { withFileTypes: true })) {
+        const p = join(d, e.name);
+        if (e.isDirectory()) walk(p);
+        else if (e.name === 'requirement-matrix.md') matrices.push(p);
+      }
+    };
+    if (existsSync(tmsDir)) walk(tmsDir);
+  } catch { /* none */ }
+  if (matrices.length === 0) return { pass: false, reason: 'no TMS requirement-matrix.md found under .csp/test-spec/', checked: 0 };
+  let totalReqs = 0, unmapped = 0, gapListed = 0;
+  for (const m of matrices) {
+    const text = readText(m);
+    // Parse the 需求→方法 table: rows like | R1 ... | unit + ... | case ... |
+    const tableRows = text.match(/^\|[^|]*\|[^|]*\|[^|]*\|/gm) || [];
+    for (const row of tableRows) {
+      const cells = row.split('|').map(c => c.trim()).filter((_, i, a) => i > 0 && i < a.length);
+      if (cells.length < 2) continue;
+      const req = cells[0], method = cells[1];
+      if (/^(需求|Requirement|---)/i.test(req) || /^[-:]+$/.test(req)) continue; // header/separator
+      totalReqs++;
+      if (!method || method === '—' || method === '-') unmapped++;
+    }
+    // Gap list section: count listed gap items (lines starting with -/•/digit under 缺口)
+    const gapSection = text.split(/缺口清单|Gap List/i)[1] || '';
+    const gapItems = gapSection.match(/^\s*[-•\d]/gm) || [];
+    gapListed += gapItems.length;
+  }
+  const pass = unmapped === 0 && gapListed === 0;
+  return { pass, checked: matrices.length, total_requirements: totalReqs, unmapped, gaps_listed: gapListed,
+           reason: pass ? 'all requirements mapped' : `${unmapped} unmapped + ${gapListed} listed gaps` };
+}
+
+// PMS: prd_to_module_coverage == 100%
+// Parses .csp/product-spec/PRODUCT-MODULE-SPEC.md — must declare ≥1 MOD-{domain}-{seq}
+// module AND show prd_to_module coverage at 100% (or no PRD yet → vacuous pass at S1).
+function checkPmsGate() {
+  const pmsFile = join(CSP_DIR, 'product-spec', 'PRODUCT-MODULE-SPEC.md');
+  if (!existsSync(pmsFile)) return { pass: false, reason: 'no PRODUCT-MODULE-SPEC.md' };
+  const text = readText(pmsFile);
+  const modules = text.match(/MOD-[A-Z]+-\d+/g) || [];
+  if (modules.length === 0) return { pass: false, reason: 'no MOD-* module declarations', modules: 0 };
+  // Coverage line: prd_to_module: 100% or prd_to_module_coverage == 100%
+  const covMatch = text.match(/prd_to_module[^:]*:\s*(\d+)%/i) || text.match(/prd_to_module_coverage\s*==\s*(\d+)/i);
+  // No PRD yet (early stage) → vacuous pass; else require 100%
+  const hasPrd = existsSync(join(PLANNING_DIR, 'phases')) || (readJSON(join(CSP_DIR, 'manifest.json'), {items:[]}).items || []).some(i => i.source_type === 'pms' || i.source_type === 'doc');
+  if (!covMatch) return { pass: !hasPrd, reason: hasPrd ? 'no prd_to_module coverage line' : 'no PRD yet (vacuous pass)', modules: modules.length };
+  const pct = parseInt(covMatch[1], 10);
+  return { pass: pct >= 100, modules: modules.length, coverage: pct + '%', reason: pct >= 100 ? 'full coverage' : `coverage ${pct}% < 100%` };
+}
+
+// CMS: cms_idempotent_align (weak version)
+// Parses .csp/code-spec/{app}/CODE-MODULE-SPEC.md — file must exist AND the 已知 drift /
+// 模块边界 section must not flag unaligned drift. Full re-distill+diff is deferred (high cost);
+// this weak gate catches "no CMS" and "explicit unaligned drift", not subtle staleness.
+function checkCmsGate() {
+  const cmsRoot = join(CSP_DIR, 'code-spec');
+  const specs = [];
+  try {
+    if (existsSync(cmsRoot)) {
+      const walk = (d) => {
+        for (const e of readdirSync(d, { withFileTypes: true })) {
+          const p = join(d, e.name);
+          if (e.isDirectory()) walk(p);
+          else if (e.name === 'CODE-MODULE-SPEC.md') specs.push(p);
+        }
+      };
+      walk(cmsRoot);
+    }
+  } catch { /* none */ }
+  if (specs.length === 0) return { pass: false, reason: 'no CODE-MODULE-SPEC.md under .csp/code-spec/' };
+  let driftFlags = 0;
+  for (const s of specs) {
+    const text = readText(s);
+    // Drift markers in §4 模块边界 (drift? column) and §6 已知 drift
+    const driftSection = text.split(/已知 drift|drift/i)[1] || '';
+    const driftRows = (driftSection.match(/^\s*\|/gm) || []).length;
+    // unaligned markers: 是/yes/未对齐/unaligned in a drift context
+    if (/未对齐|unaligned|drift.*是|drift.*yes/i.test(text)) driftFlags++;
+  }
+  const pass = driftFlags === 0;
+  return { pass, checked: specs.length, drift_flags: driftFlags, reason: pass ? 'no unaligned drift' : `${driftFlags} spec(s) flag unaligned drift` };
+}
+
+function nextStageId(contract, mode, currentId) {
+  const modeStages = (contract.modes[mode] || contract.modes.full).stages;
+  const idx = modeStages.indexOf(currentId);
+  if (idx === -1 || idx + 1 >= modeStages.length) return null;
+  return modeStages[idx + 1];
+}
+
+// drive.status — current stage, its status, retries, what's next.
+function driveStatus() {
+  let lc = loadLifecycleState();
+  if (!lc) return { initialized: false, message: 'No lifecycle state. Run `csp-sdk query drive.init`.' };
+  const contract = loadContract();
+  const cur = lc.current_stage;
+  const stageDef = cur ? getStageDef(contract, cur) : null;
+  const nxt = cur ? nextStageId(contract, lc.mode, cur) : null;
+  const completed = Object.entries(lc.stages || {}).filter(([,v]) => v.status === 'done').map(([k]) => k);
+  return {
+    initialized: true,
+    mode: lc.mode,
+    current_stage: cur,
+    current_stage_name: stageDef?.name || null,
+    current_skill: stageDef?.skill || null,
+    current_status: cur ? lc.stages[cur]?.status : null,
+    retries: cur ? lc.stages[cur]?.retries : 0,
+    next_stage: nxt,
+    completed,
+    milestone: lc.milestone,
+  };
+}
+
+// drive.next — what skill to run now + its resolved depends_on + the gate to satisfy.
+function driveNext() {
+  let lc = loadLifecycleState();
+  if (!lc) {
+    lc = initLifecycleState('full');
+    saveLifecycleState(lc);
+  }
+  const contract = loadContract();
+  const cur = lc.current_stage;
+  if (!cur) return { status: 'complete', message: 'No further stages in this mode.' };
+  const stageDef = getStageDef(contract, cur);
+  if (!stageDef) return { status: 'error', message: `Unknown stage ${cur} (contract drift).` };
+  const depMap = loadRegistryDeps();
+  const deps = resolveDeps(stageDef.skill, depMap);
+  const gate = checkGate(stageDef, lc, contract);
+  return {
+    stage: cur,
+    stage_name: stageDef.name,
+    skill_to_run: stageDef.skill,
+    skill_path_hint: `csp-workflow/skills/${stageDef.skill}/SKILL.md`,
+    depends_on_resolved: deps,
+    load_order: [...deps, stageDef.skill],
+    gate,
+    instruction: gate.pass
+      ? `Gate already satisfied — run \`csp-sdk query drive.advance\` to advance to ${nextStageId(contract, lc.mode, cur) || 'terminal'}.`
+      : `Load skills in load_order, execute ${stageDef.skill}, then run \`csp-sdk query drive.advance\`.`
+  };
+}
+
+// drive.gate [stage] — check a stage's gate without advancing.
+function driveGate(stageId) {
+  const lc = loadLifecycleState() || initLifecycleState('full');
+  const contract = loadContract();
+  const id = stageId || lc.current_stage;
+  if (!id) return { status: 'error', message: 'No current stage.' };
+  const stageDef = getStageDef(contract, id);
+  if (!stageDef) return { status: 'error', message: `Unknown stage ${id}.` };
+  return checkGate(stageDef, lc, contract);
+}
+
+// drive.advance — THE ENFORCER. Gate must pass or advance is refused.
+function driveAdvance() {
+  let lc = loadLifecycleState();
+  if (!lc) {
+    lc = initLifecycleState('full');
+  }
+  const contract = loadContract();
+  const cur = lc.current_stage;
+  if (!cur) return { status: 'complete', message: 'Already at terminal stage.' };
+  const stageDef = getStageDef(contract, cur);
+  if (!stageDef) return { status: 'error', message: `Unknown stage ${cur}.` };
+  const gate = checkGate(stageDef, lc, contract);
+  if (!gate.pass) {
+    // Do NOT advance. Bump retry counter; repoint agent to current skill.
+    lc.stages[cur].retries = (lc.stages[cur].retries || 0) + 1;
+    const max = stageDef.max_retries ?? 3;
+    const exhausted = lc.stages[cur].retries > max;
+    saveLifecycleState(lc);
+    return {
+      status: 'blocked',
+      stage: cur,
+      skill_to_run: stageDef.skill,
+      missing: gate.missing,
+      failed_commands: gate.failed_commands,
+      governance_failures: (gate.governance || []).filter(g => !g.pass),
+      retries: lc.stages[cur].retries,
+      max_retries: max,
+      retries_exhausted: exhausted,
+      instruction: exhausted
+        ? `Retries exhausted for ${cur}. Escalate: inspect missing artifacts/commands/governance gaps, or set current_stage back via drive.goto.`
+        : `Gate failed — do NOT advance. Re-run ${stageDef.skill}, then retry drive.advance.`,
+    };
+  }
+  // Gate passes — mark done, advance current_stage.
+  lc.stages[cur].status = 'done';
+  lc.stages[cur].completed_at = timestamp();
+  const nxt = nextStageId(contract, lc.mode, cur);
+  if (nxt) {
+    lc.stages[nxt].status = 'in_progress';
+    lc.current_stage = nxt;
+  } else {
+    lc.current_stage = null; // terminal
+  }
+  saveLifecycleState(lc);
+  return {
+    status: 'advanced',
+    from: cur,
+    to: nxt,
+    next_skill: nxt ? getStageDef(contract, nxt)?.skill : null,
+    next_skill_path: nxt ? `csp-workflow/skills/${getStageDef(contract, nxt)?.skill}/SKILL.md` : null,
+    instruction: nxt
+      ? `Advanced to ${nxt}. Run \`csp-sdk query drive.next\` for the next skill load order.`
+      : `Terminal stage reached. Milestone complete.`,
+  };
+}
+
+// drive.plan [mode] — full ordered skill sequence for a mode, deps resolved.
+function drivePlan(modeArg) {
+  const contract = loadContract();
+  const mode = modeArg || 'full';
+  const modeStages = (contract.modes[mode] || contract.modes.full).stages;
+  const depMap = loadRegistryDeps();
+  const plan = modeStages.map(id => {
+    const s = getStageDef(contract, id);
+    if (!s) return { stage: id, error: 'not in contract' };
+    const deps = resolveDeps(s.skill, depMap);
+    return { stage: id, name: s.name, skill: s.skill, load_order: [...deps, s.skill], gate_artifacts: s.gate?.artifacts || [] };
+  });
+  return { mode, stages: plan };
+}
+
+// drive.goto <stage> — manually set current_stage (escape hatch for blocked/exhausted).
+function driveGoto(stageId) {
+  const lc = loadLifecycleState() || initLifecycleState('full');
+  const contract = loadContract();
+  if (!getStageDef(contract, stageId)) return { status: 'error', message: `Unknown stage ${stageId}.` };
+  const modeStages = (contract.modes[lc.mode] || contract.modes.full).stages;
+  if (!modeStages.includes(stageId)) return { status: 'error', message: `Stage ${stageId} not in mode ${lc.mode}.` };
+  if (lc.current_stage && lc.stages[lc.current_stage]) lc.stages[lc.current_stage].status = lc.stages[lc.current_stage].status === 'done' ? 'done' : 'pending';
+  lc.stages[stageId].status = 'in_progress';
+  lc.current_stage = stageId;
+  saveLifecycleState(lc);
+  return { status: 'ok', current_stage: stageId, skill: getStageDef(contract, stageId).skill };
 }
 
 function initState() {
@@ -569,7 +952,7 @@ function verifyCommits(phaseArg) {
 function doctor() {
   const checks = [];
   checks.push({ name: 'project_root', status: 'ok', value: PROJECT_ROOT });
-  checks.push({ name: '.planning/', status: existsSync(PLANNING_DIR) ? 'ok' : 'missing' });
+  checks.push({ name: '.csp/planning/', status: existsSync(PLANNING_DIR) ? 'ok' : 'missing' });
   checks.push({ name: 'ROADMAP.md', status: existsSync(ROADMAP_FILE) ? 'ok' : 'missing' });
   checks.push({ name: 'config.json', status: existsSync(CONFIG_FILE) ? 'ok' : 'missing' });
   checks.push({ name: '.csp/state.json', status: existsSync(STATE_FILE) ? 'ok' : 'missing' });
@@ -764,7 +1147,17 @@ Subcommands (query):
   budget.track <N> [skill]    Token budget: add N tokens to usage counter
   budget.enforce              Token budget: check tier and output enforcement action
   budget.reset                Token budget: reset counter for new session
-  budget.estimate <file>      Token budget: estimate tokens in a file`);
+  budget.estimate <file>      Token budget: estimate tokens in a file
+
+Lifecycle drive chain (enforced skill handoff — IDE-agnostic):
+  drive.contract              Print the lifecycle state machine (stages + gates)
+  drive.init [--mode <m>]     Init .csp/lifecycle-state.json (full|lightweight|spec-only|extend)
+  drive.status                Current stage, skill, retries, next
+  drive.next                  Skill to run now + resolved depends_on load order + gate check
+  drive.gate [stage]          Check a stage's gate (artifacts exist + commands pass) without advancing
+  drive.advance               ENFORCER: advance only if gate passes, else block + repoint (no skip)
+  drive.plan [mode]           Full ordered skill sequence for a mode, deps resolved transitively
+  drive.goto <stage>          Escape hatch: set current_stage manually (for blocked/exhausted)`);
     process.exit(0);
   }
 
@@ -976,6 +1369,28 @@ function routeQuery(sub, args, flags) {
     return getPhase(args[0]) || { error: 'not_found' };
   }
   if (sub.startsWith('state.')) return { status: 'ok' }; // generic fallback
+
+  // --- drive.* : lifecycle enforcement chain ---
+  if (sub === 'drive.contract') return loadContract();
+  if (sub === 'drive.init') {
+    const mode = flags.mode || 'full';
+    const lc = initLifecycleState(mode);
+    const stacks = detectTechStack();
+    lc.gate_overrides = prefillGateOverrides(stacks);
+    saveLifecycleState(lc);
+    return { status: 'ok', mode: lc.mode, current_stage: lc.current_stage, tech_stack: stacks, s6_command: lc.gate_overrides.S6.commands[0], state_file: '.csp/lifecycle-state.json' };
+  }
+  if (sub === 'drive.status') return driveStatus();
+  if (sub === 'drive.next') return driveNext();
+  if (sub === 'drive.gate') return driveGate(args[0]);
+  if (sub === 'drive.advance') return driveAdvance();
+  if (sub === 'drive.plan') return drivePlan(args[0]);
+  if (sub === 'drive.goto') return driveGoto(args[0]);
+  if (sub.startsWith('drive.')) {
+    const known = ['contract','init','status','next','gate','advance','plan','goto'];
+    const subName = sub.slice(6);
+    return { status: 'unimplemented', subcommand: sub, known_subcommands: known };
+  }
 
   // --- config-* ---
   if (sub === 'config-get') {

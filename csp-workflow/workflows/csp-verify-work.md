@@ -54,7 +54,7 @@ MVP_MODE=$(csp-sdk query phase.mvp-mode "${phase_number}" ${CSP_WS} --pick activ
 **First: Check for active UAT sessions**
 
 ```bash
-(find .planning/phases -name "*-UAT.md" -type f 2>/dev/null || true)
+(find .csp/planning/phases -name "*-UAT.md" -type f 2>/dev/null || true)
 ```
 
 **If active sessions exist AND no $ARGUMENTS provided:**
@@ -256,7 +256,7 @@ skipped: 0
 [none yet]
 ```
 
-Write to `.planning/phases/XX-name/{phase_num}-UAT.md`
+Write to `.csp/planning/phases/XX-name/{phase_num}-UAT.md`
 
 Proceed to `present_test`.
 </step>
@@ -425,7 +425,7 @@ Clear Current Test section:
 
 Commit the UAT file:
 ```bash
-csp-sdk query commit "test({phase_num}): complete UAT - {passed} passed, {issues} issues" --files ".planning/phases/XX-name/{phase_num}-UAT.md"
+csp-sdk query commit "test({phase_num}): complete UAT - {passed} passed, {issues} issues" --files ".csp/planning/phases/XX-name/{phase_num}-UAT.md"
 ```
 
 Present summary:
@@ -566,8 +566,8 @@ Agent(
 
 <files_to_read>
 - {phase_dir}/{phase_num}-UAT.md (UAT with diagnoses)
-- .planning/STATE.md (Project State)
-- .planning/ROADMAP.md (Roadmap)
+- .csp/planning/STATE.md (Project State)
+- .csp/planning/ROADMAP.md (Roadmap)
 </files_to_read>
 
 ${AGENT_SKILLS_PLANNER}

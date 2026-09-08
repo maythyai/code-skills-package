@@ -18,8 +18,8 @@ csp-sdk query state.json 2>/dev/null || echo "{}"
 ```
 
 Also read:
-- `.planning/STATE.md` — current phase, progress, plan counts
-- `.planning/ROADMAP.md` — milestone structure and phase list
+- `.csp/planning/STATE.md` — current phase, progress, plan counts
+- `.csp/planning/ROADMAP.md` — milestone structure and phase list
 
 Extract:
 - `current_phase` — which phase is active
@@ -27,7 +27,7 @@ Extract:
 - `progress` — overall percentage
 - `status` — active, paused, etc.
 
-If no `.planning/` directory exists:
+If no `.csp/planning/` directory exists:
 ```
 No CSP project detected. Run `/csp-new-project` to get started.
 ```
@@ -42,15 +42,15 @@ Print a one-line warning: `⚠ --force: skipping safety gates`
 Then proceed directly to `determine_next_action`.
 
 **Gate 1: Unresolved checkpoint**
-Check if `.planning/.continue-here.md` exists:
+Check if `.csp/planning/.continue-here.md` exists:
 ```bash
-[ -f .planning/.continue-here.md ]
+[ -f .csp/planning/.continue-here.md ]
 ```
 If found:
 ```
 ⛔ Hard stop: Unresolved checkpoint
 
-`.planning/.continue-here.md` exists — a previous session left
+`.csp/planning/.continue-here.md` exists — a previous session left
 unfinished work that needs manual review before advancing.
 
 Read the file, resolve the issue, then delete it to continue.
@@ -139,17 +139,17 @@ Check for pending spike/sketch work and surface a notice (does not change routin
 
 ```bash
 # Check for pending spikes (verdict: PENDING in any README)
-PENDING_CSPIKES=$(grep -rl 'verdict: PENDING' .planning/spikes/*/README.md 2>/dev/null | wc -l | tr -d ' ')
+PENDING_CSPIKES=$(grep -rl 'verdict: PENDING' .csp/planning/spikes/*/README.md 2>/dev/null | wc -l | tr -d ' ')
 
 # Check for pending sketches (winner: null in any README)
-PENDING_SKETCHES=$(grep -rl 'winner: null' .planning/sketches/*/README.md 2>/dev/null | wc -l | tr -d ' ')
+PENDING_SKETCHES=$(grep -rl 'winner: null' .csp/planning/sketches/*/README.md 2>/dev/null | wc -l | tr -d ' ')
 ```
 
 If either count is > 0, display before routing:
 ```
 ⚠ Pending exploratory work:
-  {PENDING_CSPIKES} spike(s) with unresolved verdicts in .planning/spikes/
-  {PENDING_SKETCHES} sketch(es) without a winning variant in .planning/sketches/
+  {PENDING_CSPIKES} spike(s) with unresolved verdicts in .csp/planning/spikes/
+  {PENDING_SKETCHES} sketch(es) without a winning variant in .csp/planning/sketches/
 
   Resume with `/csp-spike` or `/csp-sketch`, or continue with phase work below.
 ```

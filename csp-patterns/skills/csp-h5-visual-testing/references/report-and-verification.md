@@ -8,7 +8,7 @@ npx playwright show-report      # 自动打开浏览器查看
 ```
 
 > 报告生成是流程最后一步，不可跳过。未生成时检查：
-> ① `npm list @playwright/test` ② `ls tests/*.spec.js` ③ `ls h5-test-output/playwright-report/`
+> ① `npm list @playwright/test` ② `ls tests/*.spec.js` ③ `ls .csp/artifacts/verify/h5-test/playwright-report/`
 
 官方 HTML reporter 自动包含：用例状态、失败堆栈与代码片段、耗时/Worker/重试、
 `test.info().attach()` 附加的截图与视频、每个 step 的耗时明细。
@@ -39,8 +39,8 @@ module.exports = {
 ```javascript
 module.exports = {
   // 统一输出目录（固定位置，不要频繁变更）
-  outputDir: 'src/__tests__/h5-test-output/test-results',
-  reporter: [['html', { open: 'never', outputFolder: 'src/__tests__/h5-test-output/playwright-report' }]],
+  outputDir: 'src/__tests__/.csp/artifacts/verify/h5-test/test-results',
+  reporter: [['html', { open: 'never', outputFolder: 'src/__tests__/.csp/artifacts/verify/h5-test/playwright-report' }]],
   use: {
     viewport: { width: 750, height: 1334 },
     deviceScaleFactor: 2,
@@ -140,8 +140,8 @@ function analyzeErrors(errors, failedRequests) {
 
 ## 截图完整性检查
 
-1. **文件数量**：`ls h5-test-output/screenshots/*.png | wc -l` = 页面数（深浅色 ×2）
-2. **文件大小**：`find h5-test-output/screenshots/ -size 0` 应返回空
+1. **文件数量**：`ls .csp/artifacts/verify/h5-test/screenshots/*.png | wc -l` = 页面数（深浅色 ×2）
+2. **文件大小**：`find .csp/artifacts/verify/h5-test/screenshots/ -size 0` 应返回空
 3. **命名规范**：`{page-name}.png` 或 `{page-name}-{light|dark}.png`
 
 ## 内容复验（必须逐张执行）
@@ -155,9 +155,9 @@ function analyzeErrors(errors, failedRequests) {
 - ✅ **正常渲染**：导航、列表、图片正确显示
 
 ```bash
-ls -lh h5-test-output/screenshots/*.png
-find h5-test-output/screenshots/ -name "*.png" -size -50k     # 可疑小文件
-open h5-test-output/screenshots/*.png                          # macOS 逐张查看
+ls -lh .csp/artifacts/verify/h5-test/screenshots/*.png
+find .csp/artifacts/verify/h5-test/screenshots/ -name "*.png" -size -50k     # 可疑小文件
+open .csp/artifacts/verify/h5-test/screenshots/*.png                          # macOS 逐张查看
 ```
 
 发现问题按类型处理：

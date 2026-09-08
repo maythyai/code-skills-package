@@ -1,7 +1,7 @@
 <purpose>
 Spike an idea through experiential exploration — build focused experiments to feel the pieces
 of a future app, validate feasibility, and produce verified knowledge for the real build.
-Saves artifacts to `.planning/spikes/`. Companion to `/csp-spike --wrap-up`.
+Saves artifacts to `.csp/planning/spikes/`. Companion to `/csp-spike --wrap-up`.
 
 Supports two modes:
 - **Idea mode** (default) — user describes an idea to spike
@@ -42,7 +42,7 @@ Parse `$ARGUMENTS` for:
 
 ### Load the Spike Landscape
 
-If no `.planning/spikes/` directory exists, tell the user there's nothing to analyze and offer to start fresh with an idea instead.
+If no `.csp/planning/spikes/` directory exists, tell the user there's nothing to analyze and offer to start fresh with an idea instead.
 
 Otherwise, load in this order:
 
@@ -50,9 +50,9 @@ Otherwise, load in this order:
 
 **b. Findings skills** — glob `./.claude/skills/spike-findings-*/SKILL.md` and read any that exist, plus their `references/*.md`. These contain curated knowledge from prior wrap-ups.
 
-**c. CONVENTIONS.md** — read `.planning/spikes/CONVENTIONS.md` if it exists. Established stack and patterns.
+**c. CONVENTIONS.md** — read `.csp/planning/spikes/CONVENTIONS.md` if it exists. Established stack and patterns.
 
-**d. All spike READMEs** — read `.planning/spikes/*/README.md` for verdicts, results, investigation trails, and tags.
+**d. All spike READMEs** — read `.csp/planning/spikes/*/README.md` for verdicts, results, investigation trails, and tags.
 
 ### Analyze for Integration Spikes
 
@@ -79,19 +79,19 @@ Present frontier spikes as concrete proposals numbered from the highest existing
 
 ### Get Alignment and Execute
 
-Present all integration and frontier candidates, then ask which to run. When the user picks spikes, write definitions into `.planning/spikes/MANIFEST.md` (appending to existing table) and proceed directly to building them starting at `research`.
+Present all integration and frontier candidates, then ask which to run. When the user picks spikes, write definitions into `.csp/planning/spikes/MANIFEST.md` (appending to existing table) and proceed directly to building them starting at `research`.
 </step>
 
 <step name="setup_directory">
-Create `.planning/spikes/` if it doesn't exist:
+Create `.csp/planning/spikes/` if it doesn't exist:
 
 ```bash
-mkdir -p .planning/spikes
+mkdir -p .csp/planning/spikes
 ```
 
 Check for existing spikes to determine numbering:
 ```bash
-ls -d .planning/spikes/[0-9][0-9][0-9]-* 2>/dev/null | sort | tail -1
+ls -d .csp/planning/spikes/[0-9][0-9][0-9]-* 2>/dev/null | sort | tail -1
 ```
 
 Check `commit_docs` config:
@@ -103,7 +103,7 @@ COMMIT_DOCS=$(csp-sdk query config-get commit_docs 2>/dev/null || echo "true")
 <step name="detect_stack">
 Check for the project's tech stack to inform spike technology choices.
 
-**Check conventions first.** If `.planning/spikes/CONVENTIONS.md` exists, follow its stack and patterns — these represent validated choices the user expects to see continued.
+**Check conventions first.** If `.csp/planning/spikes/CONVENTIONS.md` exists, follow its stack and patterns — these represent validated choices the user expects to see continued.
 
 **Then check the project stack:**
 ```bash
@@ -120,15 +120,15 @@ Avoid unless the spike specifically requires it:
 </step>
 
 <step name="load_prior_context">
-If `.planning/spikes/` has existing content, load context in this priority order:
+If `.csp/planning/spikes/` has existing content, load context in this priority order:
 
-**a. Conventions:** Read `.planning/spikes/CONVENTIONS.md` if it exists.
+**a. Conventions:** Read `.csp/planning/spikes/CONVENTIONS.md` if it exists.
 
 **b. Findings skills:** Glob for `./.claude/skills/spike-findings-*/SKILL.md` and read any that exist, plus their `references/*.md` files.
 
-**c. Manifest:** Read `.planning/spikes/MANIFEST.md` for the index of all spikes.
+**c. Manifest:** Read `.csp/planning/spikes/MANIFEST.md` for the index of all spikes.
 
-**d. Related READMEs:** Based on the new idea, identify which prior spikes are related by matching tags, names, technologies, or domain overlap. Read only those `.planning/spikes/*/README.md` files. Skip unrelated ones.
+**d. Related READMEs:** Based on the new idea, identify which prior spikes are related by matching tags, names, technologies, or domain overlap. Read only those `.csp/planning/spikes/*/README.md` files. Skip unrelated ones.
 
 Cross-reference against this full body of prior work:
 - **Skip already-validated questions.** Note the prior spike number and move on.
@@ -137,7 +137,7 @@ Cross-reference against this full body of prior work:
 - **Follow established conventions.** Mention any deviation.
 - **Call out relevant prior art** when presenting the decomposition.
 
-If no `.planning/spikes/` exists, skip this step.
+If no `.csp/planning/spikes/` exists, skip this step.
 </step>
 
 <step name="decompose">
@@ -205,7 +205,7 @@ If 2+ credible approaches exist, plan to build quick variants within the spike a
 </step>
 
 <step name="create_manifest">
-Create or update `.planning/spikes/MANIFEST.md`:
+Create or update `.csp/planning/spikes/MANIFEST.md`:
 
 ```markdown
 # Spike Manifest
@@ -231,7 +231,7 @@ Create or update `.planning/spikes/MANIFEST.md`:
 <step name="reground">
 ## Re-Ground Before Each Spike
 
-Before starting each spike (not just the first), re-read `.planning/spikes/MANIFEST.md` and `.planning/spikes/CONVENTIONS.md` to prevent drift within long sessions. Check the Requirements section — make sure the spike doesn't contradict any established requirements.
+Before starting each spike (not just the first), re-read `.csp/planning/spikes/MANIFEST.md` and `.csp/planning/spikes/CONVENTIONS.md` to prevent drift within long sessions. Check the Requirements section — make sure the spike doesn't contradict any established requirements.
 </step>
 
 <step name="build_spikes">
@@ -243,7 +243,7 @@ Before starting each spike (not just the first), re-read `.planning/spikes/MANIF
 
 ### For Each Spike:
 
-**a.** Create `.planning/spikes/NNN-descriptive-name/`
+**a.** Create `.csp/planning/spikes/NNN-descriptive-name/`
 
 **b.** Default to giving the user something they can experience. The bias should be toward building a simple UI or interactive demo, not toward stdout that only Claude reads. The user wants to *feel* the spike working, not just be told it works.
 
@@ -330,11 +330,11 @@ tags: [tag1, tag2]
 → Does this match what you expected? Describe what you see.
 ──────────────────────────────────────────────────────────────
 
-**h.** Update `.planning/spikes/MANIFEST.md` with the spike's row.
+**h.** Update `.csp/planning/spikes/MANIFEST.md` with the spike's row.
 
 **i.** Commit (if `COMMIT_DOCS` is true):
 ```bash
-csp-sdk query commit "docs(spike-NNN): [VERDICT] — [key finding]" --files .planning/spikes/NNN-descriptive-name/ .planning/spikes/MANIFEST.md
+csp-sdk query commit "docs(spike-NNN): [VERDICT] — [key finding]" --files .csp/planning/spikes/NNN-descriptive-name/ .csp/planning/spikes/MANIFEST.md
 ```
 
 **j.** Report:
@@ -364,7 +364,7 @@ Core assumption invalidated by Spike {NNN}.
 <step name="update_conventions">
 ## Update Conventions
 
-After all spikes in this session are built, update `.planning/spikes/CONVENTIONS.md` with patterns that emerged or solidified.
+After all spikes in this session are built, update `.csp/planning/spikes/CONVENTIONS.md` with patterns that emerged or solidified.
 
 ```markdown
 # Spike Conventions
@@ -388,7 +388,7 @@ Only include patterns that repeated across 2+ spikes or were explicitly chosen b
 
 Commit (if `COMMIT_DOCS` is true):
 ```bash
-csp-sdk query commit "docs(spikes): update conventions" --files .planning/spikes/CONVENTIONS.md
+csp-sdk query commit "docs(spikes): update conventions" --files .csp/planning/spikes/CONVENTIONS.md
 ```
 </step>
 
@@ -436,7 +436,7 @@ csp-sdk query commit "docs(spikes): update conventions" --files .planning/spikes
 </process>
 
 <success_criteria>
-- [ ] `.planning/spikes/` created (auto-creates if needed, no project init required)
+- [ ] `.csp/planning/spikes/` created (auto-creates if needed, no project init required)
 - [ ] Prior spikes and findings skills consulted before building
 - [ ] Conventions followed (or deviation documented)
 - [ ] Research grounded each spike in current docs before coding

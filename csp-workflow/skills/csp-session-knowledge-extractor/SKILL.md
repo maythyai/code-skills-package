@@ -24,12 +24,12 @@ Extract and categorize reusable knowledge from development sessions into proper 
 | Knowledge Type | Destination | Example |
 |---|---|---|
 | Architecture decisions | `docs/architecture/ADR-{NNN}.md` | "We chose SQLite because..." |
-| Technical constraints | `.planning/reference/constraints.md` | "SKILL.md must be under 500 lines" |
+| Technical constraints | `.csp/planning/reference/constraints.md` | "SKILL.md must be under 500 lines" |
 | Implementation pitfalls | `docs/development/pitfalls.md` or AGENTS.md | "Next.js output:'export' breaks dev server" |
 | Design decisions | `docs/design/{feature}.md` | "Dark theme with #0B0F1A base" |
-| Process improvements | `.planning/reference/decisions.md` | "Archive completed plans by version" |
+| Process improvements | `.csp/planning/reference/decisions.md` | "Archive completed plans by version" |
 | Tool/workflow patterns | Project AGENTS.md or memory | "Use py_compile instead of ruff" |
-| Session execution records | `.planning/archive/{version}/` | "Phase 1 completed: 3 plans, 11 merges" |
+| Session execution records | `.csp/planning/archive/{version}/` | "Phase 1 completed: 3 plans, 11 merges" |
 
 ## Extraction Process
 

@@ -325,7 +325,7 @@ directory is a high-risk signal. Flag such packages `[SUS]` even if slopcheck ra
 
 ## RESEARCH.md Structure
 
-**Location:** `.planning/phases/XX-name/{phase_num}-RESEARCH.md`
+**Location:** `.csp/planning/phases/XX-name/{phase_num}-RESEARCH.md`
 
 ```markdown
 # Phase [X]: [Name] - Research
@@ -510,7 +510,7 @@ Verified patterns from official sources:
 
 ## Validation Architecture
 
-> Skip this section entirely if workflow.nyquist_validation is explicitly set to false in .planning/config.json. If the key is absent, treat as enabled.
+> Skip this section entirely if workflow.nyquist_validation is explicitly set to false in .csp/planning/config.json. If the key is absent, treat as enabled.
 
 ### Test Framework
 | Property | Value |
@@ -601,7 +601,7 @@ if [[ "$INIT" == @file:* ]]; then INIT=$(cat "${INIT#@file:}"); fi
 
 Extract from init JSON: `phase_dir`, `padded_phase`, `phase_number`, `commit_docs`.
 
-Also read `.planning/config.json` — include Validation Architecture section in RESEARCH.md unless `workflow.nyquist_validation` is explicitly `false`. If the key is absent or `true`, include the section.
+Also read `.csp/planning/config.json` — include Validation Architecture section in RESEARCH.md unless `workflow.nyquist_validation` is explicitly `false`. If the key is absent or `true`, include the section.
 
 Then read CONTEXT.md if exists:
 ```bash
@@ -626,7 +626,7 @@ cat "$phase_dir"/*-CONTEXT.md 2>/dev/null
 Check for knowledge graph:
 
 ```bash
-ls .planning/graphs/graph.json 2>/dev/null
+ls .csp/planning/graphs/graph.json 2>/dev/null
 ```
 
 If graph.json exists, check freshness:

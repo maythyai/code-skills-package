@@ -62,7 +62,7 @@ anti_rationalizations:
 | **页面截图** | 单页/多页，设计稿标准尺寸、多设备视口 |
 | **主题测试** | 浅色/深色模式切换对比截图 |
 | **交互录屏** | 录制点击/滑动/表单填写链路，操作高亮 + 字幕 |
-| **Mock 注入** | 拦截 API 注入测试数据，支持 MTOP JSONP / fetch / XHR |
+| **Mock 注入** | 拦截 API 注入测试数据，支持 JSONP / fetch / XHR |
 | **测试报告** | Playwright 标准 HTML 报告，截图/视频可预览 |
 | **断言验证** | `expect` 验证关键元素，避免截到空白页 |
 
@@ -112,7 +112,7 @@ Vite 起测试服务，详见 [references/playwright-template.md](references/pla
 ```javascript
 await page.goto(`${BASE_URL}/`);
 await page.waitForLoadState('networkidle');
-await page.screenshot({ path: 'h5-test-output/screenshots/home-initial.png', fullPage: true });
+await page.screenshot({ path: '.csp/artifacts/verify/h5-test/screenshots/home-initial.png', fullPage: true });
 ```
 
 | 页面状态 | 是否需要 mock | 处理方式 |
@@ -134,7 +134,7 @@ await page.screenshot({ path: 'h5-test-output/screenshots/home-initial.png', ful
 
 方式 C 涉及改项目文件，安全规则（备份恢复、禁 git checkout）见
 [references/cleanup-safety.md](references/cleanup-safety.md)；
-MTOP JSONP、fetch/XHR 劫持等代码模式见 [references/playwright-mock-patterns.md](references/playwright-mock-patterns.md)。
+JSONP、fetch/XHR 劫持等代码模式见 [references/playwright-mock-patterns.md](references/playwright-mock-patterns.md)。
 
 ### 5. 编写脚本与 viewport
 
@@ -185,13 +185,13 @@ npx playwright show-report
 
 ## Output Format
 
-所有产物统一输出到项目内**固定目录** `src/__tests__/h5-test-output/`，不要频繁换目录：
+所有产物统一输出到项目内**固定目录** `src/__tests__/.csp/artifacts/verify/h5-test/`，不要频繁换目录：
 
 ```
 src/__tests__/
 ├── *.spec.js                 # Playwright 测试脚本
 ├── playwright.config.js
-└── h5-test-output/
+└── .csp/artifacts/verify/h5-test/
     ├── screenshots/          # 截图：{page}.png 或 {page}-{light|dark}.png
     ├── videos/               # 交互录屏（Library 模式）
     ├── test-results/         # 测试结果（Test 模式，含视频）
@@ -204,7 +204,7 @@ src/__tests__/
 
 - **断言必须验证业务目标**：不能只断言 `scrollTop === 149`（操作执行了），还要断言
   `Toast 可见`（业务达成），否则"测试通过但功能缺失"假阳性
-- **MTOP JSONP**：`page.route` 拦截后必须解析 URL 的 `callback` 参数，响应包裹为
+- **JSONP**：`page.route` 拦截后必须解析 URL 的 `callback` 参数，响应包裹为
   `callback({...})`，直接返回 JSON 无效
 - **移动端滚动容器**：H5 通常是内部容器滚动（`#pageScrollWrapper` 等），用容器
   `scrollTop/scrollBy`，不是 `window.scrollBy`
@@ -237,7 +237,7 @@ src/__tests__/
 | 文档 | 内容 |
 |------|------|
 | [references/mock-injection.md](references/mock-injection.md) | Mock 三种方式详解与数据要求 |
-| [references/playwright-mock-patterns.md](references/playwright-mock-patterns.md) | MTOP/fetch/XHR 拦截、主题检测、等待策略代码模式 |
+| [references/playwright-mock-patterns.md](references/playwright-mock-patterns.md) | JSONP RPC/fetch/XHR 拦截、主题检测、等待策略代码模式 |
 | [references/playwright-template.md](references/playwright-template.md) | 完整截图脚本模板、懒加载/动态冻结/登录态处理 |
 | [references/recording-and-themes.md](references/recording-and-themes.md) | Tab 遍历、深浅色切换、交互录屏详解 |
 | [references/report-and-verification.md](references/report-and-verification.md) | 报告配置、attach、错误分析、截图复验 |

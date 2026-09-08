@@ -4,7 +4,7 @@ UI 测试迭代可能跨越会话中断（上下文耗尽、进程被杀、浏�
 
 ## 进度文件（单一事实来源）
 
-每轮迭代在项目根维护一个进度文件 `.csp-ui-test/progress.json`（或用户指定位置），记录：
+每轮迭代维护一个进度文件 `.csp/artifacts/verify/ui-test-progress.json`（或用户指定位置），记录：
 
 ```json
 {
@@ -12,11 +12,11 @@ UI 测试迭代可能跨越会话中断（上下文耗尽、进程被杀、浏�
   "browser": "chrome",
   "mode": "full",
   "cases": [
-    { "id": "login-01", "status": "pass", "evidence": ["evidence/login-01-done.png"] },
+    { "id": "login-01", "status": "pass", "evidence": [".csp/artifacts/verify/evidence/login-01-done.png"] },
     { "id": "order-02", "status": "fail",
       "signature": "timing@order-list:loading-timeout",
       "attempt": 2,
-      "evidence": ["evidence/order-02-submit-fail.png"] },
+      "evidence": [".csp/artifacts/verify/evidence/order-02-submit-fail.png"] },
     { "id": "order-03", "status": "pending" }
   ],
   "lastUpdated": "2026-08-13T14:00:00+08:00"
@@ -69,7 +69,7 @@ playwright-cli state-load auth.json
 | 浏览器崩溃但进度文件在 | 续跑（恢复会话，从 pending/fail 继续） |
 | 登录态过期 | 重新登录 + `state-save`，然后续跑 |
 | 被测代码在会话间发生变化 | 已通过用例降级为待回归，重跑全量冒烟 |
-| 进度文件丢失 | 重跑；但 `evidence/` 里已有截图可辅助判断哪些用例跑过 |
+| 进度文件丢失 | 重跑；但 `.csp/artifacts/verify/evidence/` 里已有截图可辅助判断哪些用例跑过 |
 | 连续 3 轮同签名无进展 | 不再续跑该用例，标记 `blocked` 并写明原因 |
 
 ## 收尾
@@ -78,4 +78,4 @@ playwright-cli state-load auth.json
 
 1. 生成最终报告（见正文 §8.2 模板）
 2. 清理：`playwright-cli close-all`，按需 `delete-data`
-3. `progress.json` 保留至报告交付，交付后可删除
+3. `ui-test-progress.json` 保留至报告交付，交付后可删除

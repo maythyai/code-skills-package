@@ -104,10 +104,10 @@ rm -f /tmp/mock-files-before.txt /tmp/mock-files-after.txt /tmp/mock-files-new.t
 
 ## 清理产物目录
 
-所有产物统一在 `src/__tests__/h5-test-output/`，清理只需删除这一个目录：
+所有产物统一在 `src/__tests__/.csp/artifacts/verify/h5-test/`，清理只需删除这一个目录：
 
 ```bash
-rm -rf src/__tests__/h5-test-output/
+rm -rf src/__tests__/.csp/artifacts/verify/h5-test/
 ```
 
 > 💡 是否清理由用户决定——若用户还要看报告/截图，先保留。

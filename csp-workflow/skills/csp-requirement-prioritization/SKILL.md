@@ -94,11 +94,17 @@ Do you have reliable reach/impact data for each requirement?
 Gather the items to prioritize. Each item needs at minimum:
 - Name / short description
 - Source (user feedback, data analysis, stakeholder request, competitive pressure)
-- Estimated effort (if available)
+- Dependency hints (what it blocks / is blocked by) — for Wave ordering
 
-If the input comes from `csp-user-story-decomposition`, read the story list with story points directly.
+> **不估工时/story points**：AI 编程下 story points 与工时同样无意义（可能几分钟到几小时
+> 完成同一项）。优先级由价值/风险/依赖决定，排波次由依赖 DAG 决定，不靠容量估算。
+> 若上游 `csp-user-story-decomposition` 带了 story points，仅作参考、不用于排期。
 
 ### Step 3: Apply Selected Framework
+
+> **关于 effort/estimate**：RICE/ICE 的 Effort 维度是**相对打分**（如 0.5–3 或 1–10 的相对值），
+> 用于**横向比较优先级**，**不是人日/工时**，也不用于排期。AI 编程下人日无意义；
+> 排波次由依赖 DAG 决定，不由 effort 分推。
 
 #### RICE Scoring
 
@@ -172,23 +178,20 @@ Output a priority matrix combining the framework score with practical constraint
 
 ### Step 5: Sprint Planning Recommendation
 
-Based on the priority matrix and team capacity, recommend a sprint plan:
+Based on the priority matrix and **dependency Wave**（不靠 story-point 容量），推荐波次计划：
 
 ```markdown
-## Sprint Plan Recommendation
+## Sprint Plan Recommendation（按依赖 Wave + 优先级，不估工时）
 
-**Team capacity**: {N} story points per sprint
 **Total requirements**: {count}
-**Total estimated effort**: {sum}
+**Waves**: {count}（按依赖 DAG 划分）
 
-### Sprint 1 ({capacity} points)
-- {Requirement 1} ({points} pts) - P0
-- {Requirement 2} ({points} pts) - P0
-- {Requirement 3} ({points} pts) - P1
+### Wave 1 — 基础层（P0，无前置依赖）
+- {Requirement 1} - P0
+- {Requirement 2} - P0
 
-### Sprint 2 ({capacity} points)
-- {Requirement 4} ({points} pts) - P1
-- ...
+### Wave 2 — 核心层（P0/P1，依赖 Wave 1）
+- {Requirement 3} - P1
 
 ### Deferred (not in current plan)
 - {Requirement X} - {reason for deferral}

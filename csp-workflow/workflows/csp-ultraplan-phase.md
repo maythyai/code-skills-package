@@ -76,7 +76,7 @@ Parse JSON for: `phase_found`, `phase_number`, `phase_name`, `phase_slug`, `padd
 **If `planning_exists` is false:** Error and exit:
 
 ```text
-No .planning directory found. Initialize the project first:
+No .csp/planning directory found. Initialize the project first:
 
 /csp-new-project
 ```

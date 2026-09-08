@@ -69,7 +69,7 @@ test.beforeEach(async ({ page }) => {
 
 > `addInitScript` 必须在 `page.goto` **之前**调用，否则拦不到首次请求。
 
-MTOP JSONP、fetch/XHR 劫持的具体代码模式见
+JSONP、fetch/XHR 劫持的具体代码模式见
 [playwright-mock-patterns.md](playwright-mock-patterns.md)。
 
 ## 方式 C：项目代码硬编码（保底方案）
@@ -118,4 +118,4 @@ grep -r "H5-TEST-MOCK" src/ || echo "✓ 清理完成"
 1. 控制台是否有 `[Mock]` 日志（没有 → 拦截规则没匹配上，检查 URL pattern）
 2. 页面空白/加载态 → mock 数据字段缺失，补齐
 3. 页面报错/结构不匹配 → 对照真实接口返回修正 mock 结构
-4. MTOP 接口 → 检查 JSONP callback 包裹（见 playwright-mock-patterns.md）
+4. JSONP RPC 接口 → 检查 JSONP callback 包裹（见 playwright-mock-patterns.md）

@@ -562,7 +562,7 @@ Re-filter incomplete phases using the same logic as discover_phases:
 Read STATE.md fresh:
 
 ```bash
-cat .planning/STATE.md
+cat .csp/planning/STATE.md
 ```
 
 Check for blockers in the Blockers/Concerns section. If blockers are found, go to handle_blocker with the blocker description.
@@ -622,7 +622,7 @@ Skill(skill="csp-audit-milestone")
 After audit completes, detect the result:
 
 ```bash
-AUDIT_FILE=".planning/v${milestone_version}-MILESTONE-AUDIT.md"
+AUDIT_FILE=".csp/planning/v${milestone_version}-MILESTONE-AUDIT.md"
 AUDIT_STATUS=$(grep "^status:" "${AUDIT_FILE}" 2>/dev/null | head -1 | cut -d: -f2 | tr -d ' ')
 ```
 
@@ -678,7 +678,7 @@ Skill(skill="csp-complete-milestone", args="${milestone_version}")
 After complete-milestone returns, verify it produced output:
 
 ```bash
-ls .planning/milestones/v${milestone_version}-ROADMAP.md 2>/dev/null || true
+ls .csp/planning/milestones/v${milestone_version}-ROADMAP.md 2>/dev/null || true
 ```
 
 If the archive file does not exist, go to handle_blocker: "Complete milestone did not produce expected archive files."

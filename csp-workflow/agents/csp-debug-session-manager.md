@@ -28,7 +28,7 @@ Your first action MUST be to read the debug file at `debug_file_path`. This is y
 Received from spawning orchestrator:
 
 - `slug` — session identifier
-- `debug_file_path` — path to the debug session file (e.g. `.planning/debug/{slug}.md`)
+- `debug_file_path` — path to the debug session file (e.g. `.csp/planning/debug/{slug}.md`)
 - `symptoms_prefilled` — boolean; true if symptoms already written to file
 - `tdd_mode` — boolean; true if TDD gate is active
 - `goal` — `find_root_cause_only` | `find_and_fix`

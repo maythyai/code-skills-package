@@ -138,7 +138,7 @@ This chapter is primarily based on **PEP 8 -- Style Guide for Python Code** (htt
     from bs4 import BeautifulSoup
 
     from app.roi.jobs import sqljob
-    from app.roi.resources import odps
+    from app.roi.resources import analytics
     ```
     > Source: PEP 8 § Imports
 
@@ -153,9 +153,9 @@ This chapter is primarily based on **PEP 8 -- Style Guide for Python Code** (htt
 19. **SHOULD** Do not import too many names directly via `from x import` on a single line (no more than 3 is recommended); when there are more, import the module/package itself and access attributes through it, to avoid the redundancy caused by leaving unused directly-imported symbols in place and to make it easier to trace where a symbol comes from.
     Correct:
     ```python
-    from campaign.resources import odps
-    odps.CampaignLabelTable
-    odps.CampaignEventTable
+    from campaign.resources import analytics
+    analytics.CampaignLabelTable
+    analytics.CampaignEventTable
     ```
     > Source: Community practice (PEP 8 sets no limit on the number of direct imports)
 

@@ -1,5 +1,5 @@
 <purpose>
-Interactive configuration of CSP workflow agents (research, plan_check, verifier) and model profile selection via multi-question prompt. Updates .planning/config.json with user preferences. Optionally saves settings as global defaults (~/.csp/defaults.json) for future projects.
+Interactive configuration of CSP workflow agents (research, plan_check, verifier) and model profile selection via multi-question prompt. Updates .csp/planning/config.json with user preferences. Optionally saves settings as global defaults (~/.csp/defaults.json) for future projects.
 </purpose>
 
 <required_reading>
@@ -17,17 +17,17 @@ INIT=$(csp-sdk query state.load)
 if [[ "$INIT" == @file:* ]]; then INIT=$(cat "${INIT#@file:}"); fi
 # `state.load` returns STATE frontmatter JSON from the SDK — it does not include `config_path`. Orchestrators may set `CSP_CONFIG_PATH` from init phase-op JSON; otherwise resolve the same path csp-tools uses for flat vs active workstream (#2282).
 if [[ -z "${CSP_CONFIG_PATH:-}" ]]; then
-  if [[ -f .planning/active-workstream ]]; then
-    WS=$(tr -d '\n\r' < .planning/active-workstream)
-    CSP_CONFIG_PATH=".planning/workstreams/${WS}/config.json"
+  if [[ -f .csp/planning/active-workstream ]]; then
+    WS=$(tr -d '\n\r' < .csp/planning/active-workstream)
+    CSP_CONFIG_PATH=".csp/planning/workstreams/${WS}/config.json"
   else
-    CSP_CONFIG_PATH=".planning/config.json"
+    CSP_CONFIG_PATH=".csp/planning/config.json"
   fi
 fi
 ```
 
 Creates `config.json` (at the resolved path) with defaults if missing. `INIT` still holds `state.load` output for any step that needs STATE fields.
-Store `$CSP_CONFIG_PATH` — all subsequent reads and writes use this path, not a hardcoded `.planning/config.json`, so active-workstream installs target the correct file (#2282).
+Store `$CSP_CONFIG_PATH` — all subsequent reads and writes use this path, not a hardcoded `.csp/planning/config.json`, so active-workstream installs target the correct file (#2282).
 </step>
 
 <step name="read_current">
@@ -48,7 +48,7 @@ Parse current values (default to `true` if not present):
 - `workflow.code_review` — enable /csp-code-review and /csp-code-review --fix commands (default: true if absent)
 - `workflow.code_review_depth` — default depth for /csp-code-review: `quick`, `standard`, or `deep` (default: `"standard"` if absent; only relevant when `code_review` is on)
 - `workflow.ui_review` — run visual quality audit (/csp-ui-review) in autonomous mode (default: true if absent)
-- `commit_docs` — whether `.planning/` files are committed to git (default: true if absent)
+- `commit_docs` — whether `.csp/planning/` files are committed to git (default: true if absent)
 - `intel.enabled` — enable queryable codebase intelligence (/csp-map-codebase --query) (default: false if absent)
 - `graphify.enabled` — enable project knowledge graph (/csp-graphify) (default: false if absent)
 - `graphify.auto_update` — opt-in: auto-rebuild graph after main HEAD advances (#3347) (default: `false`)
@@ -65,7 +65,7 @@ Parse current values (default to `true` if not present):
 
 ```
 Note: Quality, Balanced, Budget, and Adaptive profiles assign semantic tiers
-(Opus/Sonnet/Haiku) to each agent. When `runtime` is set in .planning/config.json,
+(Opus/Sonnet/Haiku) to each agent. When `runtime` is set in .csp/planning/config.json,
 tiers resolve to runtime-native model IDs — on Codex that's gpt-5.4 / gpt-5.3-codex /
 gpt-5.4-mini with appropriate reasoning effort. See "Runtime-Aware Profiles" in
 docs/CONFIGURATION.md.
@@ -73,7 +73,7 @@ docs/CONFIGURATION.md.
 If `runtime` is unset on a non-Claude runtime, the profile tiers have no effect on
 actual model selection — agents use the runtime's default model. Choose "Inherit" to
 force session-model behavior, set `runtime` + a profile to get tiered models, or
-configure `model_overrides` manually in .planning/config.json to target specific
+configure `model_overrides` manually in .csp/planning/config.json to target specific
 models per agent.
 ```
 
@@ -277,12 +277,12 @@ AskUserQuestion([
     ]
   },
   {
-    question: "Commit .planning/ files to git? (controls whether plans/artifacts are tracked in your repo)",
+    question: "Commit .csp/planning/ files to git? (controls whether plans/artifacts are tracked in your repo)",
     header: "Commit Docs",
     multiSelect: false,
     options: [
-      { label: "Yes (Recommended)", description: "Commit .planning/ to git. Plans, research, and phase artifacts travel with the repo." },
-      { label: "No", description: "Do not commit .planning/. Keep planning local only. Automatic when .planning/ is in .gitignore." }
+      { label: "Yes (Recommended)", description: "Commit .csp/planning/ to git. Plans, research, and phase artifacts travel with the repo." },
+      { label: "No", description: "Do not commit .csp/planning/. Keep planning local only. Automatic when .csp/planning/ is in .gitignore." }
     ]
   },
   {
@@ -304,7 +304,7 @@ AskUserQuestion([
     ]
   },
   {
-    question: "Enable Intel? (queryable codebase intelligence via /csp-map-codebase --query — builds a JSON index in .planning/intel/)",
+    question: "Enable Intel? (queryable codebase intelligence via /csp-map-codebase --query — builds a JSON index in .csp/planning/intel/)",
     header: "Intel",
     multiSelect: false,
     options: [
@@ -313,7 +313,7 @@ AskUserQuestion([
     ]
   },
   {
-    question: "Enable Graphify? (project knowledge graph via /csp-graphify — builds a graph in .planning/graphs/)",
+    question: "Enable Graphify? (project knowledge graph via /csp-graphify — builds a graph in .csp/planning/graphs/)",
     header: "Graphify",
     multiSelect: false,
     options: [
@@ -383,7 +383,7 @@ Merge new settings into existing config.json:
 
 **Safe merge:** Apply each chosen value via `csp-sdk query config-set <key.path> <value>` so unrelated keys are never clobbered. `code_review_depth` is written only if the code_review question was answered `on`; otherwise leave the existing value in place.
 
-Write updated config to `$CSP_CONFIG_PATH` (the workstream-aware path resolved in `ensure_and_load_config`). Never hardcode `.planning/config.json` — workstream installs route to `.planning/workstreams/<slug>/config.json`.
+Write updated config to `$CSP_CONFIG_PATH` (the workstream-aware path resolved in `ensure_and_load_config`). Never hardcode `.csp/planning/config.json` — workstream installs route to `.csp/planning/workstreams/<slug>/config.json`.
 </step>
 
 <step name="save_as_defaults">

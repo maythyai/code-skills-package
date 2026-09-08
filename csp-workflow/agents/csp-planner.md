@@ -451,9 +451,9 @@ Output: [Artifacts created]
 </execution_context>
 
 <context>
-@.planning/PROJECT.md
-@.planning/ROADMAP.md
-@.planning/STATE.md
+@.csp/planning/PROJECT.md
+@.csp/planning/ROADMAP.md
+@.csp/planning/STATE.md
 
 # Only reference prior plan SUMMARYs if genuinely needed
 @path/to/relevant/source.ts
@@ -496,7 +496,7 @@ Output: [Artifacts created]
 </success_criteria>
 
 <output>
-Create `.planning/phases/XX-name/{padded_phase}-{plan}-SUMMARY.md` when done
+Create `.csp/planning/phases/XX-name/{padded_phase}-{plan}-SUMMARY.md` when done
 </output>
 ```
 
@@ -841,7 +841,7 @@ csp-sdk query state.load 2>/dev/null
 ```
 If the SDK is not installed under `node_modules`, use the same `query state.load` argv with your local `csp-sdk` CLI on `PATH`.
 
-If STATE.md missing but .planning/ exists, offer to reconstruct or continue without.
+If STATE.md missing but .csp/planning/ exists, offer to reconstruct or continue without.
 </step>
 
 <step name="load_mode_context">
@@ -860,7 +860,7 @@ instructions for operating in that mode.
 Check for codebase map:
 
 ```bash
-ls .planning/codebase/*.md 2>/dev/null
+ls .csp/planning/codebase/*.md 2>/dev/null
 ```
 
 If exists, load relevant documents by phase type:
@@ -881,7 +881,7 @@ If exists, load relevant documents by phase type:
 Check for knowledge graph:
 
 ```bash
-ls .planning/graphs/graph.json 2>/dev/null
+ls .csp/planning/graphs/graph.json 2>/dev/null
 ```
 
 If graph.json exists, check freshness:
@@ -915,8 +915,8 @@ If no results or graph.json absent, continue without graph context.
 
 <step name="identify_phase">
 ```bash
-cat .planning/ROADMAP.md
-ls .planning/phases/
+cat .csp/planning/ROADMAP.md
+ls .csp/planning/phases/
 ```
 
 If multiple phases available, ask which to plan. If obvious (first incomplete), proceed.
@@ -950,7 +950,7 @@ Select top 2-4 phases. Skip phases with no relevance signal.
 
 **Step 3 — Read full SUMMARYs for selected phases:**
 ```bash
-cat .planning/phases/{selected-phase}/*-SUMMARY.md
+cat .csp/planning/phases/{selected-phase}/*-SUMMARY.md
 ```
 
 From full SUMMARYs extract:
@@ -970,7 +970,7 @@ For phases not selected, retain from digest:
 
 **From RETROSPECTIVE.md (if exists):**
 ```bash
-cat .planning/RETROSPECTIVE.md 2>/dev/null | tail -100
+cat .csp/planning/RETROSPECTIVE.md 2>/dev/null | tail -100
 ```
 
 Read the most recent milestone retrospective and cross-milestone trends. Extract:
@@ -1100,7 +1100,7 @@ The filename MUST follow the exact pattern: `{padded_phase}-{NN}-PLAN.md`
 - ❌ `plan-01.md`
 - ❌ `01-01-plan.md` (lowercase)
 
-Full write path: `.planning/phases/{padded_phase}-{slug}/{padded_phase}-{NN}-PLAN.md`
+Full write path: `.csp/planning/phases/{padded_phase}-{slug}/{padded_phase}-{NN}-PLAN.md`
 
 Include all frontmatter fields.
 </step>
@@ -1136,7 +1136,7 @@ Returns JSON: `{ valid, errors, warnings, task_count, tasks }`
 <step name="update_roadmap">
 Update ROADMAP.md to finalize phase placeholders:
 
-1. Read `.planning/ROADMAP.md`
+1. Read `.csp/planning/ROADMAP.md`
 2. Find phase entry (`### Phase {N}:`)
 3. Update placeholders:
 
@@ -1160,7 +1160,7 @@ Plans:
 <step name="git_commit">
 ```bash
 csp-sdk query commit "docs($PHASE): create phase plan" --files \
-  .planning/phases/$PHASE-*/$PHASE-*-PLAN.md .planning/ROADMAP.md
+  .csp/planning/phases/$PHASE-*/$PHASE-*-PLAN.md .csp/planning/ROADMAP.md
 ```
 </step>
 

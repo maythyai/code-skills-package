@@ -164,7 +164,7 @@ Before transitioning to Solutioning Phase:
 
 ### With Other CSP Layers
 - **CSP Plan Phase**: Integrates with CSP planning workflows
-- **CSP Spec**: Uses `csp-spec-contract` + `change-artifacts/` templates under `.planning/`
+- **CSP Spec**: Uses `csp-spec-contract` + `change-artifacts/` templates under `.csp/planning/`
 - **CSP Patterns**: Can reference technology patterns for technical requirements
 
 ## Best Practices

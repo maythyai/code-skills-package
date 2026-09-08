@@ -41,7 +41,7 @@ tools: [Read, Write, Edit, Glob, Grep, Bash]
 按以下顺序尝试读取上下文：
 
 1. 扫描会话中的 `<!-- spark-context:frame -->` / `<!-- spark-context:scope -->` / `<!-- spark-context:audit -->` / `<!-- spark-context:probe -->` / `<!-- spark-context:signal -->` / `<!-- spark-context:brief -->` marker
-2. 读取项目目录 `spark-output/context/frame.json` / `scope.json` / `audit.json` 等
+2. 读取项目目录 `.csp/spark/context/frame.json` / `scope.json` / `audit.json` 等
 3. 都没有则进入 Step 1 询问基本信息
 
 可复用字段映射：
@@ -60,7 +60,7 @@ tools: [Read, Write, Edit, Glob, Grep, Bash]
 
 完成 Journey 后，**同时**做三件事：
 
-1. **保存 HTML Journey Map 文件**（核心可视产物）：`spark-output/journey/[project-slug].html`
+1. **保存 HTML Journey Map 文件**（核心可视产物）：`.csp/spark/journey/[project-slug].html`
 2. **会话内输出 chain context marker**（marker 之间放裸 JSON）：
 
    ```
@@ -69,7 +69,7 @@ tools: [Read, Write, Edit, Glob, Grep, Bash]
    <!-- /spark-context:journey -->
    ```
 
-3. **写入项目文件**：`spark-output/context/journey.json`（含元数据 + stage 数据）
+3. **写入项目文件**：`.csp/spark/context/journey.json`（含元数据 + stage 数据）
 
 下游可消费 Skill：
 - **Brief.strategy_dimensions** ← 每个 stage 高优先级 opportunity 转设计策略候选维度
@@ -93,18 +93,18 @@ tools: [Read, Write, Edit, Glob, Grep, Bash]
 > **协议依据**：chain-protocol.md §九「面板自动生成约定」。本步在 Handoff 之前执行；**告知用户的提示必须作为独立段落输出，禁止折叠进 Handoff 末尾、禁止静默跳过**。
 
 1. **找模板**：定位 `_shared/dashboard-template.html`（依次：相对套件根 → `glob dashboard-template.html` 搜套件安装目录 → 三轮都失败时，**用独立段落醒目告知用户**：`⚠️ 链路面板模板未找到（套件安装可能不完整，建议重装）。本 Skill 已正常完成，下游链路不受影响。` 然后跳过本步、继续 Handoff，**不阻断 Skill 完成**）。
-2. **聚合 STATE**：扫 `spark-output/context/*.json`，聚合为 `{"project":"<brief.project_name 或 frame.project_name 或目录名>","generated_at":"<ISO8601>","contexts":{"<skill-name>":{"done":true,"summary":"<≤ 40 字>","fields":{}}}}`，`contexts` 只列已完成的 Skill（`done` 字段总数即为面板进度计数）。
-3. **克隆模板**到 `spark-output/dashboard.html`（覆盖），用正则 `/\/\*__SPARK_STATE_INJECT__\*\/null/` 替换为 `/*__SPARK_STATE_INJECT__*/<JSON.stringify(STATE)>`。
+2. **聚合 STATE**：扫 `.csp/spark/context/*.json`，聚合为 `{"project":"<brief.project_name 或 frame.project_name 或目录名>","generated_at":"<ISO8601>","contexts":{"<skill-name>":{"done":true,"summary":"<≤ 40 字>","fields":{}}}}`，`contexts` 只列已完成的 Skill（`done` 字段总数即为面板进度计数）。
+3. **克隆模板**到 `.csp/spark/dashboard.html`（覆盖），用正则 `/\/\*__SPARK_STATE_INJECT__\*\/null/` 替换为 `/*__SPARK_STATE_INJECT__*/<JSON.stringify(STATE)>`。
 4. **独立段落告知用户**（强提示，单独成段，与 Handoff 之间空一行；根据 `Object.keys(STATE.contexts).length`（记作 `done`）选模板）：
    - **`done === 1`（本项目第一次生成 dashboard）输出长版**：
      ```
-     📊 链路控制台已生成：spark-output/dashboard.html（双击在浏览器打开）
+     📊 链路控制台已生成：.csp/spark/dashboard.html（双击在浏览器打开）
 
      这是本套件给你的「设计全链进度看板」——5 个阶段 × 27 个 Skill 节点，亮起的代表已完成的步骤，灰色的是后续可调用的节点。每跑完一个 Skill 都会自动更新，建议钉在浏览器一个标签页里随时回看，能看清「现在在哪一步、下游还差什么、链路是否健康」。
      ```
    - **`done > 1`（后续更新）输出短版**：
      ```
-     📊 链路面板已更新 · 进度 [done]/27 · spark-output/dashboard.html
+     📊 链路面板已更新 · 进度 [done]/27 · .csp/spark/dashboard.html
      ```
 5. **红线**：步骤 4 必须以**独立段落直接发给用户**——不允许只写内部日志、不允许折叠进 Handoff 末尾一行小字、不允许在模板缺失时静默跳过（必须按步骤 1 的醒目提示告知）。
 
@@ -124,7 +124,7 @@ tools: [Read, Write, Edit, Glob, Grep, Bash]
 本 Skill 在完全离线、无任何连接器的场景下即可完整交付，所有方法论与输出形态不依赖外部系统：
 
 - **体验断点识别 + 情感曲线**：完整方法论与 HTML 可视化模板内置
-- **链式上下文双通道**：写入 `spark-output/context/journey.json` + 会话内 marker block，下游 Brief / Stories / Flow Web/Mobile 可直接读取
+- **链式上下文双通道**：写入 `.csp/spark/context/journey.json` + 会话内 marker block，下游 Brief / Stories / Flow Web/Mobile 可直接读取
 - **HTML 一键导出**：本地浏览器即可生成 PNG / PDF 分享
 - **多触点串联**：跨设备 / 跨场景体验路径本地可绘
 
@@ -136,14 +136,14 @@ tools: [Read, Write, Edit, Glob, Grep, Bash]
 
 | 连接器 | 阶段 | 增强能力 | 降级路径 |
 | --- | --- | --- | --- |
-| **Notion / 飞书文档** | 执行流程输出后 | Journey HTML 一键写入团队 wiki，下游 Skill 可通过 wiki 链接反查 | 未装时输出本地 `journey-{project}.html`，提示手动上传 |
+| **Notion / 飞书** | 执行流程输出后 | Journey HTML 一键写入团队 wiki，下游 Skill 可通过 wiki 链接反查 | 未装时输出本地 `journey-{project}.html`，提示手动上传 |
 | **Figma** | 执行流程（触点关联阶段） | 每个触点直接引用对应设计稿 frame（含缩略图），评审时可一键跳转 | 未装时仅文字描述触点位置 |
 
 **接入触发**：用户首次调用 `/用户旅程` 时，Skill 主动检测已认证的连接器并显示「已检测到：XXX，将自动启用增强模式」提示，用户可在该次会话中选择关闭。
 
 **字段流向变化**：
 
-- 启用 **Notion / 飞书文档** → `chain.schema` 新增可选字段 `wiki_page_url: string`
+- 启用 **Notion / 飞书** → `chain.schema` 新增可选字段 `wiki_page_url: string`
 - 启用 **Figma** → `chain.schema` 新增可选字段 `touchpoint_refs: array<{stage, frame_url, thumbnail}>`
 
 > 所有新增字段都是 **可选**，未启用连接器时字段缺省，下游 Skill 必须能容忍缺省。
@@ -226,7 +226,7 @@ emotion_curve:
 
 ### Step 4 — 生成 HTML Journey Map
 
-使用以下**内嵌模板**生成 `spark-output/journey/[project-slug].html`：
+使用以下**内嵌模板**生成 `.csp/spark/journey/[project-slug].html`：
 
 ```html
 <!DOCTYPE html>
@@ -396,7 +396,7 @@ emotion_curve:
 
 #### 5.1 保存 HTML 文件
 
-路径：`spark-output/journey/[project-slug].html`
+路径：`.csp/spark/journey/[project-slug].html`
 
 告知用户："Journey Map HTML 已保存。双击打开可在浏览器查看；点'打印 / PDF'按钮可导出 PDF；如需 PNG 截图可用浏览器截图工具或 modern-screenshot 库。"
 
@@ -404,7 +404,7 @@ emotion_curve:
 
 按 [chain-protocol.md](../../chain-protocol.md) §2.1 v1.1 智能适配规则：
 
-**Step 1 — 写盘到 `spark-output/context/journey.json`**（必做，主持久化通道；目录不存在先创建）。写入以下完整 JSON：
+**Step 1 — 写盘到 `.csp/spark/context/journey.json`**（必做，主持久化通道；目录不存在先创建）。写入以下完整 JSON：
 
 ```
 {
@@ -440,15 +440,15 @@ emotion_curve:
     { "stage_order": 4, "type": "moment-of-truth", "description": "..." },
     { "stage_order": 5, "type": "dropout-risk", "description": "..." }
   ],
-  "journey_file": "spark-output/journey/[project-slug].html"
+  "journey_file": ".csp/spark/journey/[project-slug].html"
 }
 ```
 
 **Step 2 — chat 输出紧凑 marker**（必做，⛔ **不要在 chat 内重复输出 Step 1 的完整 JSON**）：
 
 ```
-<!-- spark-context:journey ref="spark-output/context/journey.json" -->
-Journey 已保存：project=[project_name]，persona=[name]，[N] stage（type=[end-to-end/...]），[K] 个 key_moments；HTML 已写到 spark-output/journey/[slug].html
+<!-- spark-context:journey ref=".csp/spark/context/journey.json" -->
+Journey 已保存：project=[project_name]，persona=[name]，[N] stage（type=[end-to-end/...]），[K] 个 key_moments；HTML 已写到 .csp/spark/journey/[slug].html
 <!-- /spark-context:journey -->
 ```
 
@@ -537,7 +537,7 @@ Journey 已保存：project=[project_name]，persona=[name]，[N] stage（type=[
 3. **情感曲线有据**：emotion score（-2 ~ +2）每个节点都标，且能引用上游证据（probe.painpoints / signal.top_issues / audit findings）
 4. **dropout-risk 显式标注**：高风险节点必须打 ⚠️，并写出可能原因（≥ 1 条上游证据支撑）
 5. **设计机会点反向链接**：每个 dropout / 低情感节点对应至少 1 个设计机会（指向 Brief.strategy_dimensions 或 HMW 卡片）
-6. **HTML 可视化输出**：必须生成 `spark-output/journey/[slug].html`（含情感曲线 SVG / 阶段卡片 / 触点图标），不只是 markdown 表格
+6. **HTML 可视化输出**：必须生成 `.csp/spark/journey/[slug].html`（含情感曲线 SVG / 阶段卡片 / 触点图标），不只是 markdown 表格
 
 ## 红线规则
 

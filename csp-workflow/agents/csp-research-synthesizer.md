@@ -53,10 +53,10 @@ Your SUMMARY.md is consumed by the csp-roadmapper agent which uses it to:
 Read all 4 research files:
 
 ```bash
-cat .planning/research/STACK.md
-cat .planning/research/FEATURES.md
-cat .planning/research/ARCHITECTURE.md
-cat .planning/research/PITFALLS.md
+cat .csp/planning/research/STACK.md
+cat .csp/planning/research/FEATURES.md
+cat .csp/planning/research/ARCHITECTURE.md
+cat .csp/planning/research/PITFALLS.md
 
 # Planning config loaded via csp-sdk query (or csp-tools.cjs) in commit step
 ```
@@ -132,14 +132,14 @@ Identify gaps that couldn't be resolved and need attention during planning.
 
 Use template: ~/.claude/code-skills-package/csp-workflow/templates/research-project/SUMMARY.md
 
-Write to `.planning/research/SUMMARY.md`
+Write to `.csp/planning/research/SUMMARY.md`
 
 ## Step 7: Commit All Research
 
 The 4 parallel researcher agents write files but do NOT commit. You commit everything together.
 
 ```bash
-csp-sdk query commit "docs: complete project research" --files .planning/research/
+csp-sdk query commit "docs: complete project research" --files .csp/planning/research/
 ```
 
 ## Step 8: Return Summary
@@ -171,12 +171,12 @@ When SUMMARY.md is written and committed:
 ## SYNTHESIS COMPLETE
 
 **Files synthesized:**
-- .planning/research/STACK.md
-- .planning/research/FEATURES.md
-- .planning/research/ARCHITECTURE.md
-- .planning/research/PITFALLS.md
+- .csp/planning/research/STACK.md
+- .csp/planning/research/FEATURES.md
+- .csp/planning/research/ARCHITECTURE.md
+- .csp/planning/research/PITFALLS.md
 
-**Output:** .planning/research/SUMMARY.md
+**Output:** .csp/planning/research/SUMMARY.md
 
 ### Executive Summary
 

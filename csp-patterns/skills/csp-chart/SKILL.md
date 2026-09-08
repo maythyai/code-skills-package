@@ -51,8 +51,8 @@ tools: [Read, Write, Edit, Glob, Grep, Bash]
 按以下顺序尝试读取上下文：
 
 1. 扫描会话中的 `<!-- spark-context:brief -->` / `<!-- spark-context:sitemap -->` / `<!-- spark-context:flow-web -->` / `<!-- spark-context:flow-mobile -->` marker
-2. 读取项目目录 `spark-output/context/brief.json` / `sitemap.json` / `flow-web.json` / `flow-mobile.json`
-3. **可选**：若已有 `spark-output/context/edge.json`，读取 `states_matrix` 中关联屏的 `empty / error / loading` 状态描述作为图表状态文案依据
+2. 读取项目目录 `.csp/spark/context/brief.json` / `sitemap.json` / `flow-web.json` / `flow-mobile.json`
+3. **可选**：若已有 `.csp/spark/context/edge.json`，读取 `states_matrix` 中关联屏的 `empty / error / loading` 状态描述作为图表状态文案依据
 4. 都没有则进入 Step 1 询问数据可视化场景
 
 可复用字段映射：
@@ -71,9 +71,9 @@ tools: [Read, Write, Edit, Glob, Grep, Bash]
 
 完成 Chart 后，**同时**做三件事：
 
-1. **写盘到 `spark-output/context/chart.json`**（必做，主持久化通道；目录不存在先创建）
+1. **写盘到 `.csp/spark/context/chart.json`**（必做，主持久化通道；目录不存在先创建）
 2. **会话内输出紧凑 marker**（带 ref，不重复 JSON）
-3. **额外保存 Markdown 报告**：`spark-output/chart/[project-slug].md`，含每图完整规格 + Dashboard 布局图（文字版）+ SparkDesign gap 清单
+3. **额外保存 Markdown 报告**：`.csp/spark/chart/[project-slug].md`，含每图完整规格 + Dashboard 布局图（文字版）+ SparkDesign gap 清单
 
 下游可消费 Skill：**Flow Web / Flow Mobile**（在含图表区的屏上叠加 Chart 输出的规格）/ **Edge**（图表状态条目可作为 edge.states_matrix 的"图表级"细化补充）/ **Check**（验"图表选型理由是否站得住、调色板是否合规"）/ **Access**（强制校验色盲安全 + ARIA label）/ **QA**（验前端实现是否对齐 design token）/ **Metric**（图表里展示的字段反推度量计划）。
 
@@ -95,18 +95,18 @@ tools: [Read, Write, Edit, Glob, Grep, Bash]
 > **协议依据**：chain-protocol.md §九「面板自动生成约定」。本步在 Handoff 之前执行；**告知用户的提示必须作为独立段落输出，禁止折叠进 Handoff 末尾、禁止静默跳过**。
 
 1. **找模板**：定位 `_shared/dashboard-template.html`（依次：相对套件根 → `glob dashboard-template.html` 搜套件安装目录 → 三轮都失败时，**用独立段落醒目告知用户**：`⚠️ 链路面板模板未找到（套件安装可能不完整，建议重装）。本 Skill 已正常完成，下游链路不受影响。` 然后跳过本步、继续 Handoff，**不阻断 Skill 完成**）。
-2. **聚合 STATE**：扫 `spark-output/context/*.json`，聚合为 `{"project":"<brief.project_name 或 frame.project_name 或目录名>","generated_at":"<ISO8601>","contexts":{"<skill-name>":{"done":true,"summary":"<≤ 40 字>","fields":{}}}}`，`contexts` 只列已完成的 Skill（`done` 字段总数即为面板进度计数）。
-3. **克隆模板**到 `spark-output/dashboard.html`（覆盖），用正则 `/\/\*__SPARK_STATE_INJECT__\*\/null/` 替换为 `/*__SPARK_STATE_INJECT__*/<JSON.stringify(STATE)>`。
+2. **聚合 STATE**：扫 `.csp/spark/context/*.json`，聚合为 `{"project":"<brief.project_name 或 frame.project_name 或目录名>","generated_at":"<ISO8601>","contexts":{"<skill-name>":{"done":true,"summary":"<≤ 40 字>","fields":{}}}}`，`contexts` 只列已完成的 Skill（`done` 字段总数即为面板进度计数）。
+3. **克隆模板**到 `.csp/spark/dashboard.html`（覆盖），用正则 `/\/\*__SPARK_STATE_INJECT__\*\/null/` 替换为 `/*__SPARK_STATE_INJECT__*/<JSON.stringify(STATE)>`。
 4. **独立段落告知用户**（强提示，单独成段，与 Handoff 之间空一行；根据 `Object.keys(STATE.contexts).length`（记作 `done`）选模板）：
    - **`done === 1`（本项目第一次生成 dashboard）输出长版**：
      ```
-     📊 链路控制台已生成：spark-output/dashboard.html（双击在浏览器打开）
+     📊 链路控制台已生成：.csp/spark/dashboard.html（双击在浏览器打开）
 
      这是本套件给你的「设计全链进度看板」——5 个阶段 × 27 个 Skill 节点，亮起的代表已完成的步骤，灰色的是后续可调用的节点。每跑完一个 Skill 都会自动更新，建议钉在浏览器一个标签页里随时回看，能看清「现在在哪一步、下游还差什么、链路是否健康」。
      ```
    - **`done > 1`（后续更新）输出短版**：
      ```
-     📊 链路面板已更新 · 进度 [done]/27 · spark-output/dashboard.html
+     📊 链路面板已更新 · 进度 [done]/27 · .csp/spark/dashboard.html
      ```
 5. **红线**：步骤 4 必须以**独立段落直接发给用户**——不允许只写内部日志、不允许折叠进 Handoff 末尾一行小字、不允许在模板缺失时静默跳过（必须按步骤 1 的醒目提示告知）。
 
@@ -130,7 +130,7 @@ tools: [Read, Write, Edit, Glob, Grep, Bash]
 本 Skill 在完全离线、无任何连接器的场景下即可完整交付，所有方法论与输出形态不依赖外部系统：
 
 - **六步决策链**：意图 → 数据约束 → 选型 → 视觉规格 → 状态 → 响应式全本地完成
-- **链式上下文双通道**：写入 `spark-output/context/chart.json` + 会话内 marker block，下游 Flow Web/Mobile / PRD / QA 可直接读取
+- **链式上下文双通道**：写入 `.csp/spark/context/chart.json` + 会话内 marker block，下游 Flow Web/Mobile / PRD / QA 可直接读取
 - **AntV gpt-vis mock 预览（v1.1）**：一键 curl 生成静态预览图，与工程实现解耦
 - **工程库智能推荐（v1.2）**：本地 package.json 检测 + 11 种栈映射 + score 打分公式
 - **SparkDesign 反向输入清单**：Dashboard 通用组件需求本地汇总
@@ -432,7 +432,7 @@ score = 框架适配度(0-40) + UI 库适配度(0-20) + 已安装加分(0-30) + 
 
 ### Step 4 — 输出
 
-#### 4.1 Markdown 报告（输出到对话 + 保存到 `spark-output/chart/[project-slug].md`）
+#### 4.1 Markdown 报告（输出到对话 + 保存到 `.csp/spark/chart/[project-slug].md`）
 
 ```markdown
 # Chart Spec — [项目名]
@@ -522,12 +522,12 @@ score = 框架适配度(0-40) + UI 库适配度(0-20) + 已安装加分(0-30) + 
 
 按 [chain-protocol.md](../../chain-protocol.md) §2.1 v1.1 智能适配规则：
 
-**Step 1 — 写盘到 `spark-output/context/chart.json`**（必做，主持久化通道；目录不存在先创建）。写入完整 JSON（schema 见 frontmatter）。
+**Step 1 — 写盘到 `.csp/spark/context/chart.json`**（必做，主持久化通道；目录不存在先创建）。写入完整 JSON（schema 见 frontmatter）。
 
 **Step 2 — chat 输出紧凑 marker**（必做，⛔ **不要在 chat 内重复输出 Step 1 的完整 JSON**）：
 
 ```
-<!-- spark-context:chart ref="spark-output/context/chart.json" -->
+<!-- spark-context:chart ref=".csp/spark/context/chart.json" -->
 Chart 已保存：project=[project_name]，surface=[surface]，[N] 图（trend n / comparison n / part n / ...），mobile 降级 [n]，a11y 通过 [n/N]，SparkDesign 缺口 [k] 项
 <!-- /spark-context:chart -->
 ```

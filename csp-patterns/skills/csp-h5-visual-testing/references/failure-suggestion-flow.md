@@ -47,7 +47,7 @@ Step 4: 等待用户决策
 
 **输出 1**：会话中简要说明——哪个测试失败、失败原因、建议方案简述、详见 FIX_SUGGESTION.md。
 
-**输出 2**：在 `h5-test-output/` 下生成 `FIX_SUGGESTION.md`，模板：
+**输出 2**：在 `.csp/artifacts/verify/h5-test/` 下生成 `FIX_SUGGESTION.md`，模板：
 
 ```markdown
 # 测试失败修改建议
@@ -100,7 +100,7 @@ Step 4: 等待用户决策
 
 - 测试脚本：<path>
 - 修改文件：<path>
-- 测试报告：src/__tests__/h5-test-output/playwright-report/index.html
+- 测试报告：src/__tests__/.csp/artifacts/verify/h5-test/playwright-report/index.html
 
 ---
 

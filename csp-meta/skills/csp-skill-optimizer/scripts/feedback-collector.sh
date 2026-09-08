@@ -6,7 +6,7 @@
 set -euo pipefail
 
 DAYS=${DAYS:-7}
-OUTPUT=${OUTPUT:-.planning/skill-feedback.json}
+OUTPUT=${OUTPUT:-.csp/planning/skill-feedback.json}
 
 mkdir -p "$(dirname "$OUTPUT")"
 

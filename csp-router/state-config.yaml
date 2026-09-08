@@ -51,7 +51,7 @@ tech_stack:
 phase:
   signals:
     planning:
-      files: [".planning/", "*.plan.md", "TODO.md", "ROADMAP.md"]
+      files: [".csp/planning/", "*.plan.md", "TODO.md", "ROADMAP.md"]
       weight: 0.8
     building:
       files: ["src/", "lib/", "app/"]

@@ -237,12 +237,12 @@ anti_rationalizations:
 # Implementation Plan
 
 ## 任务分解 (从 Spec 到 Task)
-| Task ID | Feature | 描述 | 依赖 | 估时 | Wave |
-|---------|---------|------|------|------|------|
-| T1 | F-A-1 | DB migration: features 表 | - | 0.5h | 1 |
-| T2 | F-A-1 | API: CRUD endpoints | T1 | 2h | 2 |
-| T3 | F-A-1 | Frontend: 列表页+详情页 | T2 | 3h | 3 |
-| T4 | F-B-1 | DB migration: orders 表 | - | 0.5h | 1 |
+| Task ID | Feature | 描述 | 依赖 | Wave |
+|---------|---------|------|------|------|
+| T1 | F-A-1 | DB migration: features 表 | - | 1 |
+| T2 | F-A-1 | API: CRUD endpoints | T1 | 2 |
+| T3 | F-A-1 | Frontend: 列表页+详情页 | T2 | 3 |
+| T4 | F-B-1 | DB migration: orders 表 | - | 1 |
 | ...
 
 ## 并行策略
@@ -251,13 +251,16 @@ anti_rationalizations:
 - Wave 3: 所有前端页面 (可并行)
 - Wave 4: 集成测试 + E2E
 
-## 里程碑
-- M1 (Day 1-2): 基础设施 + 核心数据模型
-- M2 (Day 3-5): 核心业务 API + 前端
-- M3 (Day 6-7): 增强功能 + 测试 + 修复
+## 里程碑（按 Wave 序号，不绑日历）
+- M1: 基础设施 + 核心数据模型（Wave 1 出口）
+- M2: 核心业务 API + 前端（Wave 2-3 出口）
+- M3: 增强功能 + 测试 + 修复（Wave 4 出口）
 ```
 
 **门控:** 任务覆盖所有 P0/P1 Feature 的 Spec
+
+> 不附工时/人天：AI 编程下工时方差大且易腐烂；排期与并行由依赖 DAG + Wave 决定。
+> 需工时/资源计划时按需调用 `csp-effort-estimation`，不进默认输出。
 
 ### Stage 5: 并行开发 (Parallel Execution)
 

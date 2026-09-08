@@ -8,9 +8,9 @@ Mark a shipped version (v1.0, v1.1, v2.0) as complete. Creates historical record
 
 1. templates/milestone.md
 2. templates/milestone-archive.md
-3. `.planning/ROADMAP.md`
-4. `.planning/REQUIREMENTS.md`
-5. `.planning/PROJECT.md`
+3. `.csp/planning/ROADMAP.md`
+4. `.csp/planning/REQUIREMENTS.md`
+5. `.csp/planning/PROJECT.md`
 
 </required_reading>
 
@@ -18,14 +18,14 @@ Mark a shipped version (v1.0, v1.1, v2.0) as complete. Creates historical record
 
 When a milestone completes:
 
-1. Extract full milestone details to `.planning/milestones/v[X.Y]-ROADMAP.md`
-2. Archive requirements to `.planning/milestones/v[X.Y]-REQUIREMENTS.md`
+1. Extract full milestone details to `.csp/planning/milestones/v[X.Y]-ROADMAP.md`
+2. Archive requirements to `.csp/planning/milestones/v[X.Y]-REQUIREMENTS.md`
 3. Update ROADMAP.md — overwrite in place with milestone grouping (preserve Backlog section)
 4. Safety commit archive files + updated ROADMAP.md, then `git rm REQUIREMENTS.md` (fresh for next milestone)
 5. Perform full PROJECT.md evolution review
 6. Offer to create next milestone inline
 7. Archive UI artifacts (`*-UI-CSPEC.md`, `*-UI-REVIEW.md`) alongside other phase documents
-8. Clean up `.planning/ui-reviews/` screenshot files (binary assets, never archived)
+8. Clean up `.csp/planning/ui-reviews/` screenshot files (binary assets, never archived)
 
 **Context Efficiency:** Archives keep ROADMAP.md constant-size and REQUIREMENTS.md milestone-scoped.
 
@@ -132,7 +132,7 @@ If user selects "Proceed anyway": note incomplete requirements in MILESTONES.md 
 <config-check>
 
 ```bash
-cat .planning/config.json 2>/dev/null || true
+cat .csp/planning/config.json 2>/dev/null || true
 ```
 
 </config-check>
@@ -197,7 +197,7 @@ Extract one-liners from SUMMARY.md files using summary-extract:
 
 ```bash
 # For each phase in milestone, extract one-liner
-for summary in .planning/phases/*-*/*-SUMMARY.md; do
+for summary in .csp/planning/phases/*-*/*-SUMMARY.md; do
   [ -e "$summary" ] || continue
   csp-sdk query summary-extract "$summary" --fields one_liner --pick one_liner
 done
@@ -231,7 +231,7 @@ Full PROJECT.md evolution review at milestone completion.
 Read all phase summaries:
 
 ```bash
-cat .planning/phases/*-*/*-SUMMARY.md
+cat .csp/planning/phases/*-*/*-SUMMARY.md
 ```
 
 **Full review checklist:**
@@ -365,7 +365,7 @@ Initial user testing showed demand for shape tools.
 
 <step name="reorganize_roadmap">
 
-Update `.planning/ROADMAP.md` — group completed milestone phases:
+Update `.csp/planning/ROADMAP.md` — group completed milestone phases:
 
 ```markdown
 # Roadmap: [Project Name]
@@ -416,7 +416,7 @@ ARCHIVE=$(csp-sdk query milestone.complete "v[X.Y]" --name "[Milestone Name]")
 ```
 
 The CLI handles:
-- Creating `.planning/milestones/` directory
+- Creating `.csp/planning/milestones/` directory
 - Archiving ROADMAP.md to `milestones/v[X.Y]-ROADMAP.md`
 - Archiving REQUIREMENTS.md to `milestones/v[X.Y]-REQUIREMENTS.md` with archive header
 - Moving audit file to milestones if it exists
@@ -425,7 +425,7 @@ The CLI handles:
 
 Extract from result: `version`, `date`, `phases`, `plans`, `tasks`, `accomplishments`, `archived`.
 
-Verify: `✅ Milestone archived to .planning/milestones/`
+Verify: `✅ Milestone archived to .csp/planning/milestones/`
 
 **Phase archival (optional):** After archival completes, ask the user:
 
@@ -435,18 +435,18 @@ AskUserQuestion(header="Archive Phases", question="Archive phase directories to 
 
 If "Yes": move phase directories to the milestone archive:
 ```bash
-mkdir -p .planning/milestones/v[X.Y]-phases
-# For each phase directory in .planning/phases/:
-mv .planning/phases/{phase-dir} .planning/milestones/v[X.Y]-phases/
+mkdir -p .csp/planning/milestones/v[X.Y]-phases
+# For each phase directory in .csp/planning/phases/:
+mv .csp/planning/phases/{phase-dir} .csp/planning/milestones/v[X.Y]-phases/
 ```
-Verify: `✅ Phase directories archived to .planning/milestones/v[X.Y]-phases/`
+Verify: `✅ Phase directories archived to .csp/planning/milestones/v[X.Y]-phases/`
 
-If "Skip": Phase directories remain in `.planning/phases/` as raw execution history. Use `/csp-cleanup` later to archive retroactively.
+If "Skip": Phase directories remain in `.csp/planning/phases/` as raw execution history. Use `/csp-cleanup` later to archive retroactively.
 
 After archival, the AI still handles:
 - Reorganizing ROADMAP.md with milestone grouping (requires judgment) — overwrite in place after extracting Backlog section
 - Full PROJECT.md evolution review (requires understanding)
-- Safety commit of archive files + updated ROADMAP.md, then `git rm .planning/REQUIREMENTS.md`
+- Safety commit of archive files + updated ROADMAP.md, then `git rm .csp/planning/REQUIREMENTS.md`
 - These are NOT fully delegated because they require AI interpretation of content
 
 </step>
@@ -461,7 +461,7 @@ Extract the Backlog section from the current ROADMAP.md before making any change
 
 ```bash
 # Extract lines under ## Backlog through end of file (or next ## section)
-BACKLOG_SECTION=$(awk '/^## Backlog/{found=1} found{print}' .planning/ROADMAP.md)
+BACKLOG_SECTION=$(awk '/^## Backlog/{found=1} found{print}' .csp/planning/ROADMAP.md)
 ```
 
 If `$BACKLOG_SECTION` is empty, there is no Backlog section — skip silently.
@@ -494,7 +494,7 @@ Append the extracted Backlog content verbatim to the end of the newly written RO
 **Safety commit — commit archive files BEFORE deleting any originals:**
 
 ```bash
-csp-sdk query commit "chore: archive v[X.Y] milestone files" --files .planning/milestones/v[X.Y]-ROADMAP.md .planning/milestones/v[X.Y]-REQUIREMENTS.md .planning/milestones/v[X.Y]-MILESTONE-AUDIT.md .planning/MILESTONES.md .planning/PROJECT.md .planning/STATE.md .planning/ROADMAP.md
+csp-sdk query commit "chore: archive v[X.Y] milestone files" --files .csp/planning/milestones/v[X.Y]-ROADMAP.md .csp/planning/milestones/v[X.Y]-REQUIREMENTS.md .csp/planning/milestones/v[X.Y]-MILESTONE-AUDIT.md .csp/planning/MILESTONES.md .csp/planning/PROJECT.md .csp/planning/STATE.md .csp/planning/ROADMAP.md
 ```
 
 This creates a durable checkpoint in git history. If anything fails after this point, the working tree can be reconstructed from git.
@@ -502,7 +502,7 @@ This creates a durable checkpoint in git history. If anything fails after this p
 **Remove REQUIREMENTS.md via git rm** (preserves history, stages deletion atomically):
 
 ```bash
-git rm .planning/REQUIREMENTS.md
+git rm .csp/planning/REQUIREMENTS.md
 ```
 
 </step>
@@ -513,7 +513,7 @@ git rm .planning/REQUIREMENTS.md
 
 Check for existing retrospective:
 ```bash
-ls .planning/RETROCSPECTIVE.md 2>/dev/null || true
+ls .csp/planning/RETROCSPECTIVE.md 2>/dev/null || true
 ```
 
 **If exists:** Read the file, append new milestone section before the "## Cross-Milestone Trends" section.
@@ -563,7 +563,7 @@ If the "## Cross-Milestone Trends" section exists, update the tables with new da
 
 **Commit:**
 ```bash
-csp-sdk query commit "docs: update retrospective for v${VERSION}" --files .planning/RETROCSPECTIVE.md
+csp-sdk query commit "docs: update retrospective for v${VERSION}" --files .csp/planning/RETROCSPECTIVE.md
 ```
 
 </step>
@@ -577,7 +577,7 @@ Most STATE.md updates were handled by `milestone complete`, but verify and updat
 ```markdown
 ## Project Reference
 
-See: .planning/PROJECT.md (updated [today])
+See: .csp/planning/PROJECT.md (updated [today])
 
 **Core value:** [Current core value from PROJECT.md]
 **Current focus:** [Next milestone or "Planning next milestone"]
@@ -655,9 +655,9 @@ git checkout ${BASE_BRANCH}
 if [ "$BRANCHING_STRATEGY" = "phase" ]; then
   for branch in $PHASE_BRANCHES; do
     git merge --squash "$branch"
-    # Strip .planning/ from staging if commit_docs is false
+    # Strip .csp/planning/ from staging if commit_docs is false
     if [ "$COMMIT_DOCS" = "false" ]; then
-      git reset HEAD .planning/ 2>/dev/null || true
+      git reset HEAD .csp/planning/ 2>/dev/null || true
     fi
     git commit -m "feat: $branch for v[X.Y]"
   done
@@ -665,9 +665,9 @@ fi
 
 if [ "$BRANCHING_STRATEGY" = "milestone" ]; then
   git merge --squash "$MILESTONE_BRANCH"
-  # Strip .planning/ from staging if commit_docs is false
+  # Strip .csp/planning/ from staging if commit_docs is false
   if [ "$COMMIT_DOCS" = "false" ]; then
-    git reset HEAD .planning/ 2>/dev/null || true
+    git reset HEAD .csp/planning/ 2>/dev/null || true
   fi
   git commit -m "feat: $MILESTONE_BRANCH for v[X.Y]"
 fi
@@ -684,9 +684,9 @@ git checkout ${BASE_BRANCH}
 if [ "$BRANCHING_STRATEGY" = "phase" ]; then
   for branch in $PHASE_BRANCHES; do
     git merge --no-ff --no-commit "$branch"
-    # Strip .planning/ from staging if commit_docs is false
+    # Strip .csp/planning/ from staging if commit_docs is false
     if [ "$COMMIT_DOCS" = "false" ]; then
-      git reset HEAD .planning/ 2>/dev/null || true
+      git reset HEAD .csp/planning/ 2>/dev/null || true
     fi
     git commit -m "Merge branch '$branch' for v[X.Y]"
   done
@@ -694,9 +694,9 @@ fi
 
 if [ "$BRANCHING_STRATEGY" = "milestone" ]; then
   git merge --no-ff --no-commit "$MILESTONE_BRANCH"
-  # Strip .planning/ from staging if commit_docs is false
+  # Strip .csp/planning/ from staging if commit_docs is false
   if [ "$COMMIT_DOCS" = "false" ]; then
-    git reset HEAD .planning/ 2>/dev/null || true
+    git reset HEAD .csp/planning/ 2>/dev/null || true
   fi
   git commit -m "Merge branch '$MILESTONE_BRANCH' for v[X.Y]"
 fi
@@ -743,7 +743,7 @@ Key accomplishments:
 - [Item 2]
 - [Item 3]
 
-See .planning/MILESTONES.md for full details."
+See .csp/planning/MILESTONES.md for full details."
 ```
 
 Confirm: "Tagged: v[X.Y]"
@@ -782,7 +782,7 @@ Archived:
 - milestones/v[X.Y]-ROADMAP.md
 - milestones/v[X.Y]-REQUIREMENTS.md
 
-Summary: .planning/MILESTONES.md
+Summary: .csp/planning/MILESTONES.md
 Tag: v[X.Y]
 
 ---

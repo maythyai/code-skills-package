@@ -129,7 +129,7 @@ When `CONTEXT_WINDOW < 200000` (sub-200K models), subagent prompts are thinned t
 
 **If `phase_found` is false:** Error — phase directory not found.
 **If `plan_count` is 0:** Error — no plans found in phase.
-**If `state_exists` is false but `.planning/` exists:** Offer reconstruct or continue.
+**If `state_exists` is false but `.csp/planning/` exists:** Offer reconstruct or continue.
 
 When `parallelization` is false, plans within a wave execute sequentially.
 
@@ -612,9 +612,9 @@ increases monotonically across waves. `{status}` is `complete` (success),
        <files_to_read>
        Read these files at execution start using the Read tool:
        - {phase_dir}/{plan_file} (Plan)
-       - .planning/PROJECT.md (Project context — core value, requirements, evolution rules)
-       - .planning/STATE.md (State)
-       - .planning/config.json (Config, if exists)
+       - .csp/planning/PROJECT.md (Project context — core value, requirements, evolution rules)
+       - .csp/planning/STATE.md (State)
+       - .csp/planning/config.json (Config, if exists)
        ${CONTEXT_WINDOW >= 500000 ? `
        - ${phase_dir}/*-CONTEXT.md (User decisions from discuss-phase — honors locked choices)
        - ${phase_dir}/*-RESEARCH.md (Technical research — pitfalls and patterns to follow)
@@ -772,8 +772,8 @@ increases monotonically across waves. `{status}` is `complete` (success),
        CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
        STATE_BACKUP=$(mktemp)
        ROADMAP_BACKUP=$(mktemp)
-       [ -f .planning/STATE.md ] && cp .planning/STATE.md "$STATE_BACKUP" || true
-       [ -f .planning/ROADMAP.md ] && cp .planning/ROADMAP.md "$ROADMAP_BACKUP" || true
+       [ -f .csp/planning/STATE.md ] && cp .csp/planning/STATE.md "$STATE_BACKUP" || true
+       [ -f .csp/planning/ROADMAP.md ] && cp .csp/planning/ROADMAP.md "$ROADMAP_BACKUP" || true
        DELETIONS=$(git diff --diff-filter=D --name-only HEAD..."$WT_BRANCH" 2>/dev/null || true)
        if [ -n "$DELETIONS" ]; then
          echo "BLOCKED: Worktree branch $WT_BRANCH contains file deletions: $DELETIONS"
@@ -785,13 +785,13 @@ increases monotonically across waves. `{status}` is `complete` (success),
          echo "⚠ Merge conflict from worktree $WT_BRANCH — resolve manually"
          echo "  STATE.md backup:   $STATE_BACKUP"
          echo "  ROADMAP.md backup: $ROADMAP_BACKUP"
-         echo "  Restore with: cp \$STATE_BACKUP .planning/STATE.md && cp \$ROADMAP_BACKUP .planning/ROADMAP.md"
+         echo "  Restore with: cp \$STATE_BACKUP .csp/planning/STATE.md && cp \$ROADMAP_BACKUP .csp/planning/ROADMAP.md"
          break
        }
-       MERGE_DEL_COUNT=$(git diff --diff-filter=D --name-only HEAD~1 HEAD 2>/dev/null | grep -vc '^\.planning/' || true)
+       MERGE_DEL_COUNT=$(git diff --diff-filter=D --name-only HEAD~1 HEAD 2>/dev/null | grep -vc '^\.csp/planning/' || true)
        if [ "$MERGE_DEL_COUNT" -gt 5 ] && [ "${ALLOW_BULK_DELETE:-0}" != "1" ]; then
-         MERGE_DELETIONS=$(git diff --diff-filter=D --name-only HEAD~1 HEAD 2>/dev/null | grep -v '^\.planning/' || true)
-         echo "⚠ BLOCKED: Merge of $WT_BRANCH deleted $MERGE_DEL_COUNT files outside .planning/ — reverting to protect repository integrity (#2384)"
+         MERGE_DELETIONS=$(git diff --diff-filter=D --name-only HEAD~1 HEAD 2>/dev/null | grep -v '^\.csp/planning/' || true)
+         echo "⚠ BLOCKED: Merge of $WT_BRANCH deleted $MERGE_DEL_COUNT files outside .csp/planning/ — reverting to protect repository integrity (#2384)"
          echo "$MERGE_DELETIONS"
          echo "  If these deletions are intentional, re-run with ALLOW_BULK_DELETE=1"
          git reset --hard HEAD~1 2>/dev/null || true
@@ -799,25 +799,25 @@ increases monotonically across waves. `{status}` is `complete` (success),
          continue
        fi
        if [ -s "$STATE_BACKUP" ]; then
-         cp "$STATE_BACKUP" .planning/STATE.md
+         cp "$STATE_BACKUP" .csp/planning/STATE.md
        fi
        if [ -s "$ROADMAP_BACKUP" ]; then
-         cp "$ROADMAP_BACKUP" .planning/ROADMAP.md
+         cp "$ROADMAP_BACKUP" .csp/planning/ROADMAP.md
        fi
        rm -f "$STATE_BACKUP" "$ROADMAP_BACKUP"
        # Detect files deleted on main but re-added by worktree merge (#2501).
-       DELETED_FILES=$(git diff --diff-filter=A --name-only HEAD~1 -- .planning/ 2>/dev/null || true)
+       DELETED_FILES=$(git diff --diff-filter=A --name-only HEAD~1 -- .csp/planning/ 2>/dev/null || true)
        for RESURRECTED in $DELETED_FILES; do
          WAS_DELETED=$(git log --follow --diff-filter=D --name-only --format="" HEAD~1 -- "$RESURRECTED" 2>/dev/null | grep -c . || true)
          if [ "${WAS_DELETED:-0}" -gt 0 ]; then
            git rm -f "$RESURRECTED" 2>/dev/null || true
          fi
        done
-       if ! git diff --quiet .planning/STATE.md .planning/ROADMAP.md 2>/dev/null || \
+       if ! git diff --quiet .csp/planning/STATE.md .csp/planning/ROADMAP.md 2>/dev/null || \
           [ -n "$DELETED_FILES" ]; then
          COMMIT_DOCS=$(csp-sdk query config-get commit_docs 2>/dev/null || echo "true")
          if [ "$COMMIT_DOCS" != "false" ]; then
-           git add .planning/STATE.md .planning/ROADMAP.md 2>/dev/null || true
+           git add .csp/planning/STATE.md .csp/planning/ROADMAP.md 2>/dev/null || true
            git commit --amend --no-edit 2>/dev/null || true
          fi
        fi
@@ -830,7 +830,7 @@ increases monotonically across waves. `{status}` is `complete` (success),
            cp "$SUMMARY" "$REL_PATH"
            echo "⚠ Rescued $REL_PATH from worktree before removal"
          fi
-       done < <(find "$WT/.planning" -name "*SUMMARY.md" 2>/dev/null)
+       done < <(find "$WT/.csp/planning" -name "*SUMMARY.md" 2>/dev/null)
        REMOVE_OK=false
        if git worktree remove "$WT" --force; then
          REMOVE_OK=true
@@ -933,8 +933,8 @@ increases monotonically across waves. `{status}` is `complete` (success),
      done
 
      # Only commit tracking files if they actually changed
-     if ! git diff --quiet .planning/ROADMAP.md .planning/STATE.md 2>/dev/null; then
-       csp-sdk query commit "docs(phase-${PHASE_NUMBER}): update tracking after wave ${N}" --files .planning/ROADMAP.md .planning/STATE.md
+     if ! git diff --quiet .csp/planning/ROADMAP.md .csp/planning/STATE.md 2>/dev/null; then
+       csp-sdk query commit "docs(phase-${PHASE_NUMBER}): update tracking after wave ${N}" --files .csp/planning/ROADMAP.md .csp/planning/STATE.md
      fi
    elif [ "${TEST_EXIT}" -eq 124 ]; then
      echo "⚠ Skipping tracking update — test suite timed out. Plans remain in-progress. Run tests manually to confirm."
@@ -1287,13 +1287,13 @@ For each gap that has a `debug_session:` field:
 - Update frontmatter `updated:` timestamp
 - Move to resolved directory:
 ```bash
-mkdir -p .planning/debug/resolved
-mv .planning/debug/{slug}.md .planning/debug/resolved/
+mkdir -p .csp/planning/debug/resolved
+mv .csp/planning/debug/{slug}.md .csp/planning/debug/resolved/
 ```
 
 **6. Commit updated artifacts:**
 ```bash
-csp-sdk query commit "docs(phase-${PARENT_PHASE}): resolve UAT gaps and debug sessions after ${PHASE_NUMBER} gap closure" --files .planning/phases/*${PARENT_PHASE}*/*-UAT.md .planning/debug/resolved/*.md
+csp-sdk query commit "docs(phase-${PARENT_PHASE}): resolve UAT gaps and debug sessions after ${PHASE_NUMBER} gap closure" --files .csp/planning/phases/*${PARENT_PHASE}*/*-UAT.md .csp/planning/debug/resolved/*.md
 ```
 </step>
 
@@ -1305,7 +1305,7 @@ Run prior phases' test suites to catch cross-phase regressions BEFORE verificati
 **Step 1: Discover prior phases' test files**
 ```bash
 # Find all VERIFICATION.md files from prior phases in current milestone
-PRIOR_VERIFICATIONS=$(find .planning/phases/ -name "*-VERIFICATION.md" ! -path "*${PHASE_NUMBER}*" 2>/dev/null)
+PRIOR_VERIFICATIONS=$(find .csp/planning/phases/ -name "*-VERIFICATION.md" ! -path "*${PHASE_NUMBER}*" 2>/dev/null)
 ```
 
 **Step 2: Extract test file lists from prior verifications**
@@ -1469,7 +1469,7 @@ Create VERIFICATION.md.
 Read these files before verification:
 - {phase_dir}/*-PLAN.md (All plans — understand intent, check must_haves)
 - {phase_dir}/*-SUMMARY.md (All summaries — cross-reference claimed vs actual)
-- .planning/REQUIREMENTS.md (Requirement traceability)
+- .csp/planning/REQUIREMENTS.md (Requirement traceability)
 ${CONTEXT_WINDOW >= 500000 ? `- {phase_dir}/*-CONTEXT.md (User decisions — verify they were honored)
 - {phase_dir}/*-RESEARCH.md (Known pitfalls — check for traps)
 - Prior VERIFICATION.md files from earlier phases (regression check)
@@ -1608,7 +1608,7 @@ These items are tracked and will appear in `/csp-progress` and `/csp-audit-uat`.
 ```
 
 ```bash
-csp-sdk query commit "docs(phase-{X}): complete phase execution" --files .planning/ROADMAP.md .planning/STATE.md .planning/REQUIREMENTS.md {phase_dir}/*-VERIFICATION.md
+csp-sdk query commit "docs(phase-{X}): complete phase execution" --files .csp/planning/ROADMAP.md .csp/planning/STATE.md .csp/planning/REQUIREMENTS.md {phase_dir}/*-VERIFICATION.md
 ```
 </step>
 
@@ -1642,8 +1642,8 @@ This step runs AFTER `update_roadmap` marks the phase complete. It moves any pen
 
 ```bash
 PHASE_NUM="${PHASE_NUMBER}"
-PENDING_DIR=".planning/todos/pending"
-COMPLETED_DIR=".planning/todos/completed"
+PENDING_DIR=".csp/planning/todos/pending"
+COMPLETED_DIR=".csp/planning/todos/completed"
 mkdir -p "$COMPLETED_DIR"
 
 CLOSED=()
@@ -1658,7 +1658,7 @@ for TODO_FILE in "$PENDING_DIR"/*.md; do
 done
 
 if [ ${#CLOSED[@]} -gt 0 ]; then
-  csp-sdk query commit "docs(phase-${PHASE_NUMBER}): auto-close ${#CLOSED[@]} todo(s) resolved by this phase" --files .planning/todos/completed/ .planning/STATE.md|| true
+  csp-sdk query commit "docs(phase-${PHASE_NUMBER}): auto-close ${#CLOSED[@]} todo(s) resolved by this phase" --files .csp/planning/todos/completed/ .csp/planning/STATE.md|| true
   echo "◆ Closed ${#CLOSED[@]} todo(s) resolved by Phase ${PHASE_NUMBER}:"
   for f in "${CLOSED[@]}"; do echo "  ✓ $f"; done
 fi
@@ -1673,7 +1673,7 @@ fi
 PROJECT.md tracks validated requirements, decisions, and current state. Without this step,
 PROJECT.md falls behind silently over multiple phases.
 
-1. Read `.planning/PROJECT.md`
+1. Read `.csp/planning/PROJECT.md`
 2. If the file exists and has a `## Validated Requirements` or `## Requirements` section:
    - Move any requirements validated by this phase from Active → Validated
    - Add a brief note: `Validated in Phase {X}: {Name}`
@@ -1683,10 +1683,10 @@ PROJECT.md falls behind silently over multiple phases.
 5. Commit the change:
 
 ```bash
-csp-sdk query commit "docs(phase-{X}): evolve PROJECT.md after phase completion" --files .planning/PROJECT.md
+csp-sdk query commit "docs(phase-{X}): evolve PROJECT.md after phase completion" --files .csp/planning/PROJECT.md
 ```
 
-**Skip this step if** `.planning/PROJECT.md` does not exist.
+**Skip this step if** `.csp/planning/PROJECT.md` does not exist.
 </step>
 
 <step name="offer_next">
@@ -1746,7 +1746,7 @@ Read and follow `~/.claude/code-skills-package/csp-workflow/workflows/transition
 Check whether CONTEXT.md already exists for the next phase:
 
 ```bash
-ls .planning/phases/*{next}*/{next}-CONTEXT.md 2>/dev/null || echo "no-context"
+ls .csp/planning/phases/*{next}*/{next}-CONTEXT.md 2>/dev/null || echo "no-context"
 ```
 
 If CONTEXT.md does **not** exist for the next phase, present:

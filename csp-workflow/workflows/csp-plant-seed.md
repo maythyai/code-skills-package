@@ -24,7 +24,7 @@ First, check for an enrich flag:
 ```bash
 if echo "$ARGUMENTS" | grep -qE '\-\-enrich[[:space:]]+SEED-[0-9]+'; then
   ENRICH_TARGET=$(echo "$ARGUMENTS" | grep -oE 'SEED-[0-9]+')
-  SEED_FILE=$(ls .planning/seeds/${ENRICH_TARGET}-*.md 2>/dev/null | head -1)
+  SEED_FILE=$(ls .csp/planning/seeds/${ENRICH_TARGET}-*.md 2>/dev/null | head -1)
   # Skip to enrich-seed step — do not prompt for $IDEA
 else
   if [ -n "$ARGUMENTS" ]; then
@@ -46,14 +46,14 @@ Only prompt for the idea when `$ARGUMENTS` is empty and no enrich target is pres
 
 <step name="create-seed-dir">
 ```bash
-mkdir -p .planning/seeds
+mkdir -p .csp/planning/seeds
 ```
 </step>
 
 <step name="generate-seed-id">
 ```bash
 # Find next seed number
-EXISTING=$( (ls .planning/seeds/SEED-*.md 2>/dev/null || true) | wc -l )
+EXISTING=$( (ls .csp/planning/seeds/SEED-*.md 2>/dev/null || true) | wc -l )
 NEXT=$((EXISTING + 1))
 PADDED=$(printf "%03d" $NEXT)
 ```
@@ -62,7 +62,7 @@ Generate slug from idea summary.
 </step>
 
 <step name="write-seed">
-Write `.planning/seeds/SEED-{PADDED}-{slug}.md` immediately with sensible defaults:
+Write `.csp/planning/seeds/SEED-{PADDED}-{slug}.md` immediately with sensible defaults:
 
 - `trigger_when`: default is `"when relevant"` — the seed will surface during any
   new-milestone scan; the user can narrow it later via `--enrich`
@@ -135,7 +135,7 @@ Store relevant file paths as `$BREADCRUMBS`.
 
 <step name="commit-seed">
 ```bash
-csp-sdk query commit "docs: plant seed — {$IDEA}" --files .planning/seeds/SEED-{PADDED}-{slug}.md
+csp-sdk query commit "docs: plant seed — {$IDEA}" --files .csp/planning/seeds/SEED-{PADDED}-{slug}.md
 ```
 </step>
 
@@ -144,7 +144,7 @@ csp-sdk query commit "docs: plant seed — {$IDEA}" --files .planning/seeds/SEED
 ✅ Seed planted: SEED-{PADDED}
 
 "{$IDEA}"
-File: .planning/seeds/SEED-{PADDED}-{slug}.md
+File: .csp/planning/seeds/SEED-{PADDED}-{slug}.md
 
 Trigger and scope are set to defaults. Run `/csp-capture --seed --enrich SEED-{PADDED}`
 to add trigger conditions, rationale, and scope estimate at your convenience.
@@ -157,7 +157,7 @@ This seed will surface automatically when you run /csp-new-milestone.
 **Optional enrichment — only run this step when `--enrich` flag is present.**
 
 If `--enrich` flag is in `$ARGUMENTS`:
-- `$ENRICH_TARGET` and `$SEED_FILE` are already set by `parse-idea`. Derive `$SEED_ID` from `$ENRICH_TARGET` (e.g. `SEED_ID="$ENRICH_TARGET"`). If `$SEED_FILE` is empty, fall back to the most-recently modified file in `.planning/seeds/` and set `$SEED_ID` from its filename.
+- `$ENRICH_TARGET` and `$SEED_FILE` are already set by `parse-idea`. Derive `$SEED_ID` from `$ENRICH_TARGET` (e.g. `SEED_ID="$ENRICH_TARGET"`). If `$SEED_FILE` is empty, fall back to the most-recently modified file in `.csp/planning/seeds/` and set `$SEED_ID` from its filename.
 - Ask focused questions to build a complete seed:
 
 
@@ -220,7 +220,7 @@ Scope: {$SCOPE}
 </process>
 
 <success_criteria>
-- [ ] Seed file created in .planning/seeds/ in one step, no questions required
+- [ ] Seed file created in .csp/planning/seeds/ in one step, no questions required
 - [ ] Frontmatter includes status, trigger_when (default: "when relevant"), scope (default: "unknown")
 - [ ] File is written BEFORE any optional enrichment questions are asked
 - [ ] Committed to git

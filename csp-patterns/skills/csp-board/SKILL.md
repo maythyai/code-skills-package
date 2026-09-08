@@ -23,10 +23,10 @@ Mood Board Skill — 把 Journey / Stories / Brief 的产品语境翻译为 3-4 
 | 模式 | 触发条件 | 产出特征 |
 | --- | --- | --- |
 | 🟢 **独立模式** | 无前序上下文，直接调用 | Phase 1/2 引导用户口述触点 + 产品语境 → 3-4 套方案 HTML |
-| 🔵 **链式模式** | 检测到 `spark-output/context/brief.json` 或 `journey.json` 或 `stories.json` | 跳过 Phase 1 触点提取（直接从 journey.touchpoints 读）+ 跳过 Phase 2 行业/受众追问（从 brief 读） |
+| 🔵 **链式模式** | 检测到 `.csp/spark/context/brief.json` 或 `journey.json` 或 `stories.json` | 跳过 Phase 1 触点提取（直接从 journey.touchpoints 读）+ 跳过 Phase 2 行业/受众追问（从 brief 读） |
 | 🟣 **增强模式** | 当前会话可用 ImageGen 工具 | 每方案 3 张 1792×1024 真实氛围图；不可用时 4 格全部用 CSS linear-gradient 兜底 |
 
-> 三种模式下**产出形态完全一致**（双通道：`spark-output/context/board.json` + 自包含 HTML），区别仅在"提问多少 / 字段从哪里来 / 氛围图是真图还是渐变"。
+> 三种模式下**产出形态完全一致**（双通道：`.csp/spark/context/board.json` + 自包含 HTML），区别仅在"提问多少 / 字段从哪里来 / 氛围图是真图还是渐变"。
 
 ## 输入要求
 
@@ -49,7 +49,7 @@ Mood Board Skill — 把 Journey / Stories / Brief 的产品语境翻译为 3-4 
 **Step 1 · 扫描上下文来源**（按顺序，找到任一即读取，多个可叠加）：
 
 - [ ] 会话内 marker：`<!-- spark-context:brief -->` / `journey` / `stories`
-- [ ] 项目文件：`spark-output/context/brief.json` / `journey.json` / `stories.json`
+- [ ] 项目文件：`.csp/spark/context/brief.json` / `journey.json` / `stories.json`
 - [ ] 都没有 → 跳过 Phase 0.5，按无上下文流程执行
 
 **Step 2 · 字段映射 checklist**：
@@ -95,19 +95,19 @@ Mood Board Skill — 把 Journey / Stories / Brief 的产品语境翻译为 3-4 
 
 完成产出后**严格按以下顺序**：
 
-1. **先写盘** `spark-output/context/board.json`（schema 见 frontmatter）
-2. **自检行**：chat 输出 `✅ board.json 已写盘到 spark-output/context/board.json`
+1. **先写盘** `.csp/spark/context/board.json`（schema 见 frontmatter）
+2. **自检行**：chat 输出 `✅ board.json 已写盘到 .csp/spark/context/board.json`
 3. **present_files** 输出 HTML 给用户预览
 4. **紧凑 marker**：
 
    ```
-   <!-- spark-context:board ref="spark-output/context/board.json" -->
+   <!-- spark-context:board ref=".csp/spark/context/board.json" -->
    Board 已保存：project=xxx，selected_scheme=xxx，primary=#xxx，font=xxx
    <!-- /spark-context:board -->
    ```
 
 5. **Handoff 引导**：建议跑 `/Web页面设计`（消费 board.color + component）或 `/动效规划`（消费 board.typography 调性）或 `/数据可视化`（消费 board.color.primary/secondary）
-6. **更新链路面板** `spark-output/dashboard.html`（详见 chain-protocol §9）
+6. **更新链路面板** `.csp/spark/dashboard.html`（详见 chain-protocol §9）
 
 ### 字段流向下游
 
@@ -139,7 +139,7 @@ Board 是视觉锚点，下游消费：
 
 ### Phase 0.5: 上下文检查
 
-按 Chain Context 章节定义读取 `spark-output/context/{brief,journey,stories}.json`，预填 project_name / 触点 / 产品类型 / 受众 / 品牌约束。告知用户沿用情况后进入下一 Phase。
+按 Chain Context 章节定义读取 `.csp/spark/context/{brief,journey,stories}.json`，预填 project_name / 触点 / 产品类型 / 受众 / 品牌约束。告知用户沿用情况后进入下一 Phase。
 
 ### Phase 1: 提取触点
 
@@ -181,9 +181,9 @@ Board 是视觉锚点，下游消费：
 #### Step 5.1: 缩略 + base64
 
 ```bash
-mkdir -p spark-output/board/{project}-moodboard
-cp vibe_images/{project}-*.png spark-output/board/{project}-moodboard/
-cd spark-output/board/{project}-moodboard
+mkdir -p .csp/spark/board/{project}-moodboard
+cp vibe_images/{project}-*.png .csp/spark/board/{project}-moodboard/
+cd .csp/spark/board/{project}-moodboard
 for f in *.png; do
   sips -Z 400 "$f" --out "${f%.png}_thumb.jpg" -s format jpeg -s formatOptions 60 2>/dev/null
 done
@@ -563,8 +563,8 @@ function switchTab(id) {{
 </html>'''
 
 import os
-os.makedirs("spark-output/board", exist_ok=True)
-board_path = f"spark-output/board/{project_slug}-moodboard.html"
+os.makedirs(".csp/spark/board", exist_ok=True)
+board_path = f".csp/spark/board/{project_slug}-moodboard.html"
 with open(board_path, "w", encoding="utf-8") as f:
     f.write(html)
 print(f"Done: {os.path.getsize(board_path)/1024:.0f} KB")
@@ -573,7 +573,7 @@ print(f"Done: {os.path.getsize(board_path)/1024:.0f} KB")
 ### Phase 6: present_files 交付
 
 ```
-present_files spark-output/board/{project_slug}-moodboard.html
+present_files .csp/spark/board/{project_slug}-moodboard.html
 ```
 
 让用户在 3-4 套方案标签页之间切换比较，回复"我选 X"或"用方案 B"等指令进入 Phase 7。
@@ -582,7 +582,7 @@ present_files spark-output/board/{project_slug}-moodboard.html
 
 #### Step 7.1 — **先写盘**
 
-把选中方案的色彩 / 字体 / 组件 token 序列化为 `design-tokens.json` 结构，**写入 `spark-output/context/board.json`**（不存在则创建目录）：
+把选中方案的色彩 / 字体 / 组件 token 序列化为 `design-tokens.json` 结构，**写入 `.csp/spark/context/board.json`**（不存在则创建目录）：
 
 ```json
 {
@@ -615,7 +615,7 @@ present_files spark-output/board/{project_slug}-moodboard.html
 
 chat 输出一行：
 ```
-✅ board.json 已写盘到 spark-output/context/board.json（selected_scheme=方案B，primary=#7C4DFF）
+✅ board.json 已写盘到 .csp/spark/context/board.json（selected_scheme=方案B，primary=#7C4DFF）
 ```
 
 #### Step 7.3 — **present_files 交付 HTML**（如 Phase 6 已交付，本步可跳过）
@@ -623,7 +623,7 @@ chat 输出一行：
 #### Step 7.4 — **紧凑 marker**
 
 ```
-<!-- spark-context:board ref="spark-output/context/board.json" -->
+<!-- spark-context:board ref=".csp/spark/context/board.json" -->
 Board 已保存：project=xxx，selected_scheme=方案B，primary=#7C4DFF，font=Space Grotesk
 <!-- /spark-context:board -->
 ```
@@ -639,9 +639,9 @@ Board 已保存：project=xxx，selected_scheme=方案B，primary=#7C4DFF，font
 
 #### Step 7.6 — **更新链路面板**
 
-按 chain-protocol §9 流程刷新 `spark-output/dashboard.html`，并在 Handoff 末尾告知：
+按 chain-protocol §9 流程刷新 `.csp/spark/dashboard.html`，并在 Handoff 末尾告知：
 ```
-📊 链路面板已更新：spark-output/dashboard.html（双击在浏览器打开）
+📊 链路面板已更新：.csp/spark/dashboard.html（双击在浏览器打开）
 ```
 
 ---
@@ -671,7 +671,7 @@ Board 已保存：project=xxx，selected_scheme=方案B，primary=#7C4DFF，font
 
 - **HTML 必须基于 LOCKED_CSS 逐字克隆**——不得新增、删除、修改任何选择器或属性值（详见 CRITICAL RULES #1）
 - **HTML 必须完全自包含**——禁止任何外部 CDN / link / script / image URL，所有图片以 `data:image/jpeg;base64,...` 内嵌
-- **必须输出双通道**：`spark-output/context/board.json` 写盘 + chat 内紧凑 marker（含 `ref=` 属性）
+- **必须输出双通道**：`.csp/spark/context/board.json` 写盘 + chat 内紧凑 marker（含 `ref=` 属性）
 - **必须按 chain-protocol §2.1 v1.1.1 顺序执行**：Step 7.1 写盘 → 7.2 自检 → 7.3 present → 7.4 marker → 7.5 handoff → 7.6 dashboard，不得颠倒
 - **方案数必须为 3 或 4**——少于 3 套用户无对比，多于 4 套决策疲劳
 - **每套方案必须含 4 行结构**：mood-row(4格) + row-type + row-colors(Primary+Secondary) + row-comps(4列)，少一行即失败
@@ -712,8 +712,8 @@ Board 已保存：project=xxx，selected_scheme=方案B，primary=#7C4DFF，font
 - 无任何外部依赖（无 CDN link、无 external script）
 
 **链路接入正确性**：
-- `spark-output/context/board.json` 文件已写入且 schema 符合 frontmatter 定义
-- chat marker 含 `ref="spark-output/context/board.json"` 属性
+- `.csp/spark/context/board.json` 文件已写入且 schema 符合 frontmatter 定义
+- chat marker 含 `ref=".csp/spark/context/board.json"` 属性
 - 下游 Skill（flow-web / flow-mobile / motion-plan / chart）调用时能正确读取本 Board 上下文
 - 已输出符合 Step 7.5 模板的 Handoff 引导（覆盖页面 / 动效 / 数据三类）
-- `spark-output/dashboard.html` 已刷新（链路面板生成失败仅 warning，不阻断交付）
+- `.csp/spark/dashboard.html` 已刷新（链路面板生成失败仅 warning，不阻断交付）

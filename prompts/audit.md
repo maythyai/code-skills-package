@@ -22,6 +22,7 @@
 8. **适用范围**：本方法论针对 **UI+API+DB 全栈应用**。若被审项目是 CLI/库/ML pipeline/纯后端，按层裁剪（删 UI 列、保留 API/DB/回路三层自洽），并在报告开头声明裁剪。
 9. **兼容 CSP 约定**：slug/front-matter 互链/manifest 回写/SemVer（不自动日期 tag）/默认优先（auto，仅真无解问人）。
 10. **不臆造**：预扫描只是线索，人工深挖确认后才成 finding；推断标置信度。
+11. **禁止降级审计（铁律）**：MCP/subagent/工具**不可用时，停下重试**，不产出降级审计。不得用"已有数据 + 未验证标注"冒充完整审计，不得粗略/省略审查后谎称"完成"。工具没恢复 = 审计没完成 = 不出裁决报告。与 budget 耗尽不同：budget 耗尽可标 `未验证-预算不足` 继续产出**部分**报告；工具不可用必须先恢复工具再继续，**不降级**。`未验证-MCP工具不可用` 不是"已审但有保留"，是"没审"——下游不应据此决策。
 
 ## 二、触发与路由
 
@@ -70,8 +71,49 @@
 - **E 测试现状**：分层(unit/integration/e2e)/覆盖/flaky/有无 property/fuzz/mutation → `测试资产清单+盲点初判`。
 - **F Code Review**：静态异味/反模式/错误处理/并发安全/副作用/安全敏感点 → `CR 发现清单（按严重度）`。
 - **G 安全审查**（安全敏感/资金类必启）：凭据泄露扫描(secret-scan)/依赖 CVE + **依赖治理**（过时/许可/传递风险）/authn-authz 矩阵（谁能调哪些端点）/SSRF·IDOR 专项/限流·重放/资金路径幂等+重放 → `安全发现清单（按严重度）+RBAC 矩阵`。
+
+  **OWASP Top 10 深度检查清单**：
+  - [ ] **A01:2021-Broken Access Control**：IDOR（用户 A 能访问用户 B 的资源）、越权（普通用户调 admin 端点）、路径遍历（`../../etc/passwd`）。
+  - [ ] **A02:2021-Cryptographic Failures**：敏感数据明文传输/存储、弱算法（MD5/SHA1）、硬编码密钥、TLS 版本 <1.2。
+  - [ ] **A03:2021-Injection**：SQL 注入（`' OR 1=1--`）、NoSQL 注入（`{"$gt": ""}`）、命令注入（`; rm -rf /`）、LDAP/XPath 注入。
+  - [ ] **A04:2021-Insecure Design**：缺少速率限制、无 captcha、无账户锁定、业务逻辑漏洞（负数金额、超量购买）。
+  - [ ] **A05:2021-Security Misconfiguration**：默认凭据、开放目录列表、错误信息泄漏堆栈、未禁用调试端点。
+  - [ ] **A06:2021-Vulnerable and Outdated Components**：依赖 CVE 扫描、许可证冲突（GPL 传染性）、传递依赖风险。
+  - [ ] **A07:2021-Identification and Authentication Failures**：弱密码策略、无 MFA、会话固定、JWT 过期时间过长。
+  - [ ] **A08:2021-Software and Data Integrity Failures**：未验证的更新/插件、CI/CD 管道篡改、序列化反序列化漏洞。
+  - [ ] **A09:2021-Security Logging and Monitoring Failures**：无审计日志、日志无 trace_id、告警未配置、日志泄漏敏感数据。
+  - [ ] **A10:2021-Server-Side Request Forgery (SSRF)**：用户控制的 URL 被服务端请求（`?url=http://169.254.169.254/latest/meta-data/`）。
+
+  **业务逻辑漏洞专项**：
+  - **价格篡改**：客户端传 `price=0.01` 服务端未校验。
+  - **优惠券叠加**：多张优惠券超出折扣上限。
+  - **负数数量**：`quantity=-10` 导致退款而非扣款。
+  - **竞态条件**：并发下单超卖、并发提现超额。
+  - **权限提升**：修改请求中的 `role=admin` 字段。
+
+  **API 滥用模式**：
+  - **批量枚举**：遍历 `/users/1`、`/users/2`…`/users/1000000` 抓取数据。
+  - **重放攻击**：截获请求后重复提交（无 nonce/timestamp 校验）。
+  - **速率限制绕过**：分布式 IP、慢速攻击、分片请求。
 - **H 性能与可扩展性**：N+1 查询/热点路径/不可水平扩展组件/队列多 worker 竞态/OOM 风险/缓存与 DB 一致性 → `性能瓶颈清单（按影响）`。
 - **I 可观测性与文档同步**：结构化日志覆盖/print 混入/metrics 充分性/trace_id 贯穿/告警覆盖；**文档同步度**（API docs/README/ADR/CHANGELOG 与代码是否一致，过时引用） → `可观测性表 + 文档 drift 清单`。
+
+  **可观测性深度检查清单**：
+  - [ ] **日志完整性**：关键路径（登录/支付/订单/权限变更）有结构化日志（JSON 格式，含 `level`/`message`/`timestamp`/`trace_id`/`user_id`/`action`/`result`）。
+  - [ ] **日志质量**：无 `print`/`console.log` 混入（生产环境）、无敏感数据泄漏（密码/token/PII）、日志级别合理（非全 `info`）。
+  - [ ] **Metric 充分性**：RED（Rate/Errors/Duration）+ USE（Utilization/Saturation/Errors）指标齐全；业务指标（转化率/留存率/客单价）有埋点。
+  - [ ] **Metric 基数**：高基数标签（`user_id`/`session_id`）导致时序数据库爆炸 → 应采样或聚合。
+  - [ ] **Trace 完整性**：请求从入口到 DB 到响应全程有 span；跨服务调用有 `trace_id` 传递；采样率合理（非 100% 但关键路径 100%）。
+  - [ ] **告警覆盖**：P0 路径有告警（错误率突增、延迟突增、队列积压）；告警有 runbook；无告警疲劳（非全 `critical`）。
+  - [ ] **Dashboard 可用性**：有全局健康大盘、模块级大盘、业务指标大盘；数据延迟 <1min。
+  - [ ] **日志/指标/追踪关联**：`trace_id` 贯穿日志+指标+追踪，能从告警 → dashboard → trace → 日志一气呵成。
+
+  **文档同步度检查**：
+  - [ ] **API docs vs 实现**：OpenAPI/Swagger 定义与实际端点一致（字段名/类型/状态码）。
+  - [ ] **README 新鲜度**：安装/启动/配置步骤能跑通；无过时命令/环境变量。
+  - [ ] **ADR（Architecture Decision Records）**：重大技术决策有记录（背景/选项/决定/后果）；无"为什么这样设计"的口头传承。
+  - [ ] **CHANGELOG vs git tag**：CHANGELOG 最新条目对应最新 tag；无"unreleased"堆积。
+  - [ ] **内联注释**：复杂算法有注释；无过时注释（"TODO: 下个版本删"但已存在 2 年）。
 
 > 并行产出**事实**，不下最终结论。
 
@@ -201,6 +243,277 @@
 - **本次可执行**（无额外基建）：unit / integration / contract / property / negative / 跨层联动 / a11y 扫描 / secret-scan / 依赖 CVE。
 - **建议补位**（需额外基建，本次只列不跑）：mutation / chaos / canary / visual-regression（需 baseline）。报告每条标"需基建：X"。
 
+### 8.1 深度测试方法论（发现更多问题的关键）
+
+> 当 unit 测试 plateau 或需要挖掘更深层 bug 时，以下方法论按**发现能力**排序。每条方法给出**操作指引**而非仅列名。
+
+#### 8.1.1 Property-based 测试（发现边界/组合爆炸）
+
+**核心**：定义**不变量**（invariant），让框架生成随机输入验证不变量成立。
+
+**操作指引**：
+1. **识别不变量**：从业务规则提取"无论如何都必须成立"的断言：
+   - 金额守恒：`sum(转入) == sum(转出) + 手续费`
+   - 状态单调：`订单状态只能前进不能后退`
+   - 幂等性：`f(f(x)) == f(x)`
+   - 非负性：`余额 >= 0`
+2. **选择框架**：JS/TS 用 `fast-check`，Python 用 `hypothesis`，Rust 用 `proptest`。
+3. **配置 shrinking**：失败时自动缩小反例到最小可复现输入（默认开启）。
+4. **Seeded PRNG**：用固定 seed 复现失败（`fc.sample(fc.nat(), seed=42)`）。
+5. **运行 100–1000 次**：默认 100 次，核心路径 1000 次。
+
+**发现能力**：边界值组合、溢出、空指针、状态机非法迁移。
+
+**示例（金额守恒）**：
+```typescript
+import fc from 'fast-check';
+
+fc.assert(
+  fc.property(
+    fc.array(fc.nat(1000), { minLength: 1, maxLength: 10 }),
+    fc.nat(100), // 手续费率 %
+    (transfers, feeRate) => {
+      const totalIn = transfers.reduce((a, b) => a + b, 0);
+      const fee = Math.floor(totalIn * feeRate / 100);
+      const totalOut = processTransfers(transfers, feeRate); // 被测函数
+      return totalOut + fee === totalIn; // 不变量
+    }
+  ),
+  { numRuns: 1000, seed: 42 }
+);
+```
+
+#### 8.1.2 Mutation 测试（发现测试盲区）
+
+**核心**：对源码做微小变异（`>`→`>=`、`+`→`-`、`!`→删除），跑测试看是否能检测到变异。**survivor = 测试盲区**。
+
+**操作指引**：
+1. **选择工具**：JS/TS 用 Stryker，Python 用 mutmut，Java 用 PIT。
+2. **配置变异算子**：
+   - 条件边界：`>`↔`>=`、`<`↔`<=`
+   - 算术：`+`↔`-`、`*`↔`/`
+   - 逻辑：`&&`↔`||`、`!`→删除
+   - 返回值：`return x`→`return null`/`return 0`
+3. **跑 mutation score**：`score = killed / total`。核心模块目标 ≥80%。
+4. **分析 survivor**：每个 survivor 人工审查，判断是"测试盲区"还是"equivalent mutant"（变异后行为等价的死代码）。
+5. **标记 equivalent**：在代码注释 `// stryker disable next-line` 并说明原因。
+
+**发现能力**：测试断言太弱（`expect(result).toBeDefined()` 而非具体值）、未覆盖的分支、静默失败（`catch(e) { return 0 }` 把错误吞掉）。
+
+**示例（Stryker 配置）**：
+```json
+{
+  "mutate": ["src/**/*.ts", "!src/**/*.spec.ts"],
+  "testRunner": "vitest",
+  "coverageAnalysis": "perTest",
+  "thresholds": { "high": 80, "low": 60, "break": 60 }
+}
+```
+
+#### 8.1.3 Fuzz 测试（发现解析器/输入验证漏洞）
+
+**核心**：生成大量随机/畸形输入，观察程序是否崩溃、挂起、泄漏、产生不一致状态。
+
+**操作指引**：
+1. **选择工具**：JS/TS 用 `jsfuzz`/`fuzzball`，Python 用 `atheris`（coverage-guided），Rust 用 `cargo-fuzz`。
+2. **定义 fuzz target**：接受字节流/结构化输入，调用被测函数，断言不崩溃。
+3. **配置 corpus**：提供有效输入作为种子，让 fuzzer 变异出边界。
+4. **跑 1–24 小时**：CI 跑 10min（smoke），nightly 跑 24h（深度）。
+5. **分析 crash/hang**：每个 crash 自动生成最小复现输入（shrinking）。
+
+**发现能力**：原型污染、嵌入逃逸（`<script>`/SQL 注入）、整数溢出、栈溢出、无限循环、内存泄漏。
+
+**示例（JSON 解析器 fuzz）**：
+```typescript
+import { fuzz } from 'jsfuzz';
+
+fuzz((buf: Buffer) => {
+  try {
+    const parsed = JSON.parse(buf.toString());
+    // 断言不崩溃即可
+  } catch (e) {
+    // 预期可能抛错，但不应 crash 进程
+  }
+});
+```
+
+#### 8.1.4 Contract 测试（发现跨服务/跨模块接口漂移）
+
+**核心**：Consumer 定义期望的 Provider 行为（契约），Provider 验证自己满足契约。**CDC（Consumer-Driven Contract）** 是反向：Consumer 写测试，Provider 跑。
+
+**操作指引**：
+1. **选择工具**：Pact（跨语言）、TypeBox/Zod schema diff（TS 内部）、OpenAPI diff（REST API）。
+2. **Consumer 写契约**：
+   ```typescript
+   const { provider } = new Pact({ consumer: 'Frontend', provider: 'OrderAPI' });
+   await provider
+     .uponReceiving('get order by id')
+     .withRequest({ method: 'GET', path: '/orders/123' })
+     .willRespondWith({ status: 200, body: { id: 123, status: 'pending' } });
+   ```
+3. **生成 pact file**：Consumer 测试跑完生成 `pacts/frontend-orderapi.json`。
+4. **Provider 验证**：Provider 跑 `pact-verifier`，对照 pact file 验证自己行为。
+5. **CI 集成**：Consumer PR 生成 pact → 上传 Pact Broker → Provider PR 拉取验证 → 不通过则阻断合并。
+
+**发现能力**：API 字段改名、类型变更、删除字段、状态码变更、向后不兼容。
+
+#### 8.1.5 Chaos Engineering（发现分布式系统脆弱性）
+
+**核心**：在生产/类生产环境**主动注入故障**（杀 Pod、断网、延迟、磁盘满），验证系统恢复能力。
+
+**操作指引**：
+1. **选择工具**：Chaos Monkey（Netflix）、LitmusChaos（K8s）、Failure Flags（AWS）、Chaos Mesh。
+2. **定义稳态假设**：`错误率 < 1%`、`P95 < 500ms`、`可用性 > 99.9%`。
+3. **设计 gameday**：
+   - **Pod 随机杀**：验证副本数、健康检查、自动重启。
+   - **网络分区**：验证超时、重试、降级。
+   - **依赖服务延迟 +5s**：验证熔断、fallback。
+   - **磁盘 95% 满**：验证日志轮转、告警。
+4. **执行 + 监控**：跑 gameday，实时监控稳态假设，违反则立即终止。
+5. **复盘**：每个违反稳态的实验 → finding + 修复建议。
+
+**发现能力**：单点故障、超时配置不当、重试风暴、级联失败、无降级路径。
+
+#### 8.1.6 State-transition 测试（发现状态机非法迁移）
+
+**核心**：建模状态机，断言**非法迁移被拒绝**、**合法迁移正确执行**。
+
+**操作指引**：
+1. **画状态图**：列出所有状态 + 合法迁移（Mermaid `stateDiagram-v2`）。
+2. **生成迁移矩阵**：`N×N` 矩阵，`matrix[i][j]` = 从状态 i 到状态 j 是否合法。
+3. **枚举所有迁移**：对每对 `(i, j)`，尝试触发迁移，断言：
+   - 合法迁移：状态变为 j，副作用正确。
+   - 非法迁移：抛错/拒绝，状态仍为 i。
+4. **持久化验证**：每次迁移后重启进程，验证状态从 DB 正确恢复。
+
+**发现能力**：伪造终态（`order.status = 'paid'` 但未付款）、状态回退、并发迁移竞态。
+
+**示例（订单状态机）**：
+```typescript
+const legalTransitions = [
+  ['pending', 'paid'],
+  ['paid', 'shipped'],
+  ['shipped', 'delivered'],
+  ['pending', 'cancelled'],
+  ['paid', 'refunded']
+];
+
+for (const from of allStates) {
+  for (const to of allStates) {
+    const isLegal = legalTransitions.some(([f, t]) => f === from && t === to);
+    test(`${from} → ${to}`, () => {
+      const order = createOrderInState(from);
+      if (isLegal) {
+        order.transitionTo(to);
+        expect(order.status).toBe(to);
+      } else {
+        expect(() => order.transitionTo(to)).toThrow(/非法迁移/);
+        expect(order.status).toBe(from);
+      }
+    });
+  }
+}
+```
+
+#### 8.1.7 Concurrency 测试（发现竞态/死锁/线性不可满足）
+
+**核心**：并发执行操作，断言**线性化**（linearizability）——存在某个顺序使结果等价于串行执行。
+
+**操作指引**：
+1. **识别并发热点**：共享资源（DB 行、缓存、文件锁、队列）。
+2. **写并发测试**：用 `Promise.all` / `threading` / `goroutine` 并发执行操作。
+3. **断言不变量**：
+   - **原子性**：`reserve → confirm → release` 中间状态不可见。
+   - **守恒**：`sum(余额) == 初始总额`。
+   - **无死锁**：操作在 timeout 内完成。
+4. **用工具检测**：TS 用 `jest-circus` 的 `test.concurrent`，Go 用 `-race`，Rust 用 `loom`。
+5. **跑 100 次**：竞态可能不每次触发，多跑几次。
+
+**发现能力**：超卖、余额负数、重复扣款、死锁、活锁。
+
+**示例（库存并发）**：
+```typescript
+test('并发扣库存不超卖', async () => {
+  await db.insert({ productId: 1, stock: 10 });
+  const results = await Promise.all(
+    Array(20).fill(null).map(() => deductStock(1, 1)) // 20 个并发扣 1
+  );
+  const finalStock = await db.query({ productId: 1 }).stock;
+  const successCount = results.filter(r => r.success).length;
+  expect(successCount).toBe(10); // 只有 10 个成功
+  expect(finalStock).toBe(0);
+});
+```
+
+#### 8.1.8 Differential 测试（发现迁移/重写回归）
+
+**核心**：新旧实现同时跑，对比输出，**diff == 0** 才算迁移成功。
+
+**操作指引**：
+1. **识别场景**：数据迁移、API 重写、算法替换、格式转换。
+2. **搭 dual-run 管道**：输入同时喂给旧实现和新实现。
+3. **对比输出**：忽略非确定性字段（timestamp、request-id），其余字段 diff。
+4. **跑全量历史数据**：从 prod snapshot 抽样 1k–10k 条，逐条对比。
+5. **diff 率 < 0.1%**：视为行为一致；超阈值 → 阻断 cutover。
+
+**发现能力**：字段映射遗漏、精度损失、边界条件处理不一致、时区/编码差异。
+
+### 8.2 测试方法选择决策树
+
+> 按项目特征选方法，不堆砌。
+
+```
+项目有 UI？
+├─ Yes → UI 测试组合（组件测 + visual-regression + a11y）
+└─ No → 跳过 UI 层
+
+有跨服务/跨模块调用？
+├─ Yes → contract(CDC) + 跨层联动
+└─ No → 仅 unit + integration
+
+有资金/库存/余额等守恒量？
+├─ Yes → property(守恒不变量) + concurrency(竞态)
+└─ No → 跳过 property/concurrency
+
+有状态机（订单/工单/审批）？
+├─ Yes → state-transition(非法迁移拒绝)
+└─ No → 跳过 state-transition
+
+有解析器/输入验证（JSON/XML/CSV/DSL）？
+├─ Yes → fuzz(畸形输入) + property(解析不崩溃)
+└─ No → 跳过 fuzz
+
+有数据迁移/重写？
+├─ Yes → differential(新旧对比)
+└─ No → 跳过 differential
+
+unit 测试 plateau（加 0 新 bug）？
+├─ Yes → 升层：mutation(测试盲区) + error-path 枚举
+└─ No → 继续加 unit
+
+生产环境可注入故障？
+├─ Yes → chaos(gameday)
+└─ No → 跳过 chaos（或 staging 模拟）
+```
+
+### 8.3 并发与状态机测试深度指引
+
+**并发测试检查清单**：
+- [ ] **原子性**：多步操作（`reserve → confirm → release`）中间状态不可见。
+- [ ] **守恒**：`sum(余额) == 初始总额`、`sum(库存) == 初始库存 - 已售`。
+- [ ] **幂等**：`f(f(x)) == f(x)`，重复调用不产生副作用。
+- [ ] **无死锁**：操作在 timeout 内完成，无循环等待。
+- [ ] **线性化**：存在某个顺序使并发结果等价于串行。
+- [ ] **隔离级别**：DB 事务隔离级别（read-committed / serializable）符合预期。
+
+**状态机测试检查清单**：
+- [ ] **合法迁移**：每条合法迁移正确执行，状态变更，副作用触发。
+- [ ] **非法迁移**：每条非法迁移被拒绝，状态不变，抛错/返回错误码。
+- [ ] **持久化**：迁移后重启，状态从 DB 正确恢复。
+- [ ] **并发迁移**：两个并发迁移尝试，只有一个成功，另一个失败。
+- [ ] **初始状态**：新建实体处于正确的初始状态。
+- [ ] **终态不可变**：到达终态（`delivered`/`cancelled`）后无法再迁移。
+
 ## 九、证据要求（证据先于断言）
 
 | 结论 | 必须证据 | 不算证据 |
@@ -210,8 +523,46 @@
 | 缺陷已复现 | 复现步骤 + 实际输出 | 代码读了觉得有问题 |
 | 无副作用 | 写前后 `count+checksum` diff 显示无多余行 | 接口 200 |
 | 异步/后台路径顺畅 | **结构化日志片段** + DB/状态最终一致 | "任务应该跑完了" |
+| 安全漏洞可利用 | PoC 脚本 + 实际响应（脱敏） | "理论上可以" |
+| 性能基准达标 | `wrk`/`k6`/`ab` 输出 + P95/P99 数值 | "感觉挺快" |
+| 可观测性完整 | trace 截图 + metric dashboard 截图 + 日志样本 | "应该有日志" |
 
 **红旗立即停**："应该/大概/看起来/我有信心/就这一次"；未跑验证就下"功能 OK"；**信任某 agent 的"success"自报而不独立复核**（主 agent 须对 ≥20% 的 agent 证据指针独立复跑）。
+
+### 9.1 证据 schema 标准化
+
+每条证据附结构化 JSON，便于归档/对账/机器消费：
+
+```json
+{
+  "finding_id": "AUDIT-F-42",
+  "evidence_type": "test_output | screenshot | log_snippet | command_output | trace | diff",
+  "command": "pnpm test --run tests/payment.spec.ts",
+  "exit_code": 0,
+  "stdout_sha256": "a3f2...（截断前 16 位）",
+  "duration_ms": 12430,
+  "ran_at": "2026-09-07T10:22:01Z",
+  "ran_by": "agent-audit-phase1-B",
+  "artifacts": [
+    "test-results/payment-junit.xml",
+    "test-results/coverage/lcov-report/index.html"
+  ],
+  "assertions": [
+    { "description": "支付成功落库", "passed": true, "actual": "order.status=paid", "expected": "paid" },
+    { "description": "库存扣减正确", "passed": true, "actual": "stock=9", "expected": "9" }
+  ],
+  "notes": "零错误零警告；1 个 pre-existing any in legacy/payment-gateway.ts (tracked ISSUE-87)"
+}
+```
+
+**schema 规则**：
+- `evidence_type` 必填；`command` 必填（除非 `screenshot`/`trace` 类型）。
+- `exit_code` 必填（命令类型）；`stdout_sha256` 必填（防篡改，截断前 16 位足够）。
+- `assertions` 数组：每条断言有 `description`/`passed`/`actual`/`expected`。
+- `notes` 可选，用于说明 pre-existing 问题、环境限制、已知 flaky。
+- **禁止省略 `not-run`**：未跑的证据必须显式标 `"status": "not-run"` + `"reason": "..."` + `"impact": "..."`，触发 BLOCKED。
+
+**证据链追溯**：每条 finding 至少 1 条 evidence；每条 evidence 可被多条 finding 引用（多对多）。`AUDIT-FINDINGS-{milestone}.json` 中 `evidence_refs` 数组指向证据 ID。
 
 ## 十、缺陷处理（系统化调试 4 阶段）
 
@@ -274,6 +625,7 @@ docs/analysis/
 
 - 研究阶段并行 fan-out，但**追溯矩阵与联动设计是 barrier**，必须等研究全部完成后再做。
 - **执行优先级与停止线**：P0/致命优先；budget 耗尽时，剩余项**显式标 `未验证-预算不足`**（不得省略，不得用"全面通过"糊过）。
+- **工具不可用 ≠ budget 耗尽（铁律）**：MCP/subagent/工具不可用时，**报 `BLOCKED: 工具不可用` + 停手 + 重试**，不产出降级审计。budget 耗尽是"时间/额度用完"（可标 `未验证-预算不足` 继续出**部分**报告）；工具不可用是"没法查"（必须恢复工具再继续，**不降级**）。两者性质不同，不可混淆。重试策略：指数退避（1min→5min→15min），多次失败报用户由其决定是否等/换工具/中止。
 - **写操作约束**：审计期不改代码/不发版（只产审计+建议）；若需补测试/改码/TDD 红绿 → 回 05 fix loop（经 04 拆 task），不在审计期擅自写。
 - 所有结论用 `文件:行号` 或命令输出做指针，禁止悬空断言。
 - 不下"全面通过"这种不可证伪的结论；有缺口就如实列缺口，有未验证项就明确标"未验证（含原因）"。
@@ -293,6 +645,7 @@ docs/analysis/
 | 不更新 roadmap | findings 无版本归属 | findings 带建议版本→roadmap 版本-主题表 |
 | 越界 PMS | 擅判模块边界 | 标"建议回 01 改 PMS" |
 | 替 05/06 改码发版 | 审计直接改代码 | 只产审计+建议，修复归 05/06 |
+| **降级审计** | MCP/工具不可用→用"已有数据+未验证标注"冒充完整审计→下游据虚假结论决策 | 工具不可用→报 BLOCKED+停手+重试，不产出裁决报告；恢复后再继续，不降级 |
 
 ## 输出风格
 

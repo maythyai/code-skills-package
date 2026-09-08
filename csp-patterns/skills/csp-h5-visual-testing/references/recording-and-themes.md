@@ -14,7 +14,7 @@ const TABS = [
 for (const tab of TABS) {
   await page.goto(`${BASE_URL}${tab.path}`);
   await page.waitForLoadState('networkidle');
-  await page.screenshot({ path: `h5-test-output/screenshots/${tab.name}.png`, fullPage: true });
+  await page.screenshot({ path: `.csp/artifacts/verify/h5-test/screenshots/${tab.name}.png`, fullPage: true });
 }
 ```
 
@@ -22,7 +22,7 @@ for (const tab of TABS) {
 
 ```javascript
 // 浅色模式截图
-await page.screenshot({ path: 'h5-test-output/screenshots/home-light.png', fullPage: true });
+await page.screenshot({ path: '.csp/artifacts/verify/h5-test/screenshots/home-light.png', fullPage: true });
 
 // 切换深色模式（根据项目实现选择方式）
 await page.evaluate(() => {
@@ -33,7 +33,7 @@ await page.evaluate(() => {
 await page.waitForTimeout(500); // 等待过渡动画
 
 // 深色模式截图
-await page.screenshot({ path: 'h5-test-output/screenshots/home-dark.png', fullPage: true });
+await page.screenshot({ path: '.csp/artifacts/verify/h5-test/screenshots/home-dark.png', fullPage: true });
 ```
 
 先检测项目的主题实现方式（`data-theme` / CSS 变量 / class / `prefers-color-scheme`），
@@ -116,7 +116,7 @@ const { chromium } = require('playwright');
 const browser = await chromium.launch();
 const context = await browser.newContext({
   viewport: { width: 750, height: 1334 },
-  recordVideo: { dir: 'h5-test-output/videos/', size: { width: 750, height: 1334 } },
+  recordVideo: { dir: '.csp/artifacts/verify/h5-test/videos/', size: { width: 750, height: 1334 } },
 });
 
 const page = await context.newPage();
@@ -164,5 +164,5 @@ await page.addInitScript(() => {
 
 ### 视频输出与适用场景
 
-- 格式：WebM（Playwright 默认）；路径：`h5-test-output/videos/`
+- 格式：WebM（Playwright 默认）；路径：`.csp/artifacts/verify/h5-test/videos/`
 - 适用：购物车流程、表单提交、弹窗交互、滑动加载、动画效果验证

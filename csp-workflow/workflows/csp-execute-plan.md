@@ -36,14 +36,14 @@ if [[ "$INIT" == @file:* ]]; then INIT=$(cat "${INIT#@file:}"); fi
 
 Extract from init JSON: `executor_model`, `commit_docs`, `sub_repos`, `phase_dir`, `phase_number`, `plans`, `summaries`, `incomplete_plans`, `state_path`, `config_path`.
 
-If `.planning/` missing: error.
+If `.csp/planning/` missing: error.
 </step>
 
 <step name="identify_plan">
 ```bash
 # Use plans/summaries from INIT JSON, or list files
-(ls .planning/phases/XX-name/*-PLAN.md 2>/dev/null || true) | sort
-(ls .planning/phases/XX-name/*-SUMMARY.md 2>/dev/null || true) | sort
+(ls .csp/planning/phases/XX-name/*-PLAN.md 2>/dev/null || true) | sort
+(ls .csp/planning/phases/XX-name/*-SUMMARY.md 2>/dev/null || true) | sort
 ```
 
 Find first PLAN without matching SUMMARY. Decimal phases supported (`01.1-hotfix/`):
@@ -72,9 +72,9 @@ PLAN_START_EPOCH=$(date +%s)
 <step name="parse_segments">
 ```bash
 # Count tasks — match <task tag at any indentation level
-TASK_COUNT=$(grep -cE '^\s*<task[[:space:]>]' .planning/phases/XX-name/{phase}-{plan}-PLAN.md 2>/dev/null || echo "0")
+TASK_COUNT=$(grep -cE '^\s*<task[[:space:]>]' .csp/planning/phases/XX-name/{phase}-{plan}-PLAN.md 2>/dev/null || echo "0")
 INLINE_THRESHOLD=$(csp-sdk query config-get workflow.inline_plan_threshold 2>/dev/null || echo "2")
-grep -n "type=\"checkpoint" .planning/phases/XX-name/{phase}-{plan}-PLAN.md
+grep -n "type=\"checkpoint" .csp/planning/phases/XX-name/{phase}-{plan}-PLAN.md
 ```
 
 **Primary routing: task count threshold (#1979)**
@@ -102,12 +102,12 @@ Fresh context per subagent preserves peak quality. Main context stays lean.
 
 <step name="init_agent_tracking">
 ```bash
-if [ ! -f .planning/agent-history.json ]; then
-  echo '{"version":"1.0","max_entries":50,"entries":[]}' > .planning/agent-history.json
+if [ ! -f .csp/planning/agent-history.json ]; then
+  echo '{"version":"1.0","max_entries":50,"entries":[]}' > .csp/planning/agent-history.json
 fi
-rm -f .planning/current-agent-id.txt
-if [ -f .planning/current-agent-id.txt ]; then
-  INTERRUPTED_ID=$(cat .planning/current-agent-id.txt)
+rm -f .csp/planning/current-agent-id.txt
+if [ -f .csp/planning/current-agent-id.txt ]; then
+  INTERRUPTED_ID=$(cat .csp/planning/current-agent-id.txt)
   echo "Found interrupted agent: $INTERRUPTED_ID"
 fi
 ```
@@ -148,7 +148,7 @@ Pattern B only (verify-only checkpoints). Skip for A/C.
 
 <step name="load_prompt">
 ```bash
-cat .planning/phases/XX-name/{phase}-{plan}-PLAN.md
+cat .csp/planning/phases/XX-name/{phase}-{plan}-PLAN.md
 ```
 This IS the execution instructions. Follow exactly. If plan references CONTEXT.md: honor user's vision throughout.
 
@@ -345,7 +345,7 @@ fi
 
 <step name="generate_user_setup">
 ```bash
-grep -A 50 "^user_setup:" .planning/phases/XX-name/{phase}-{plan}-PLAN.md | head -50
+grep -A 50 "^user_setup:" .csp/planning/phases/XX-name/{phase}-{plan}-PLAN.md | head -50
 ```
 
 If user_setup exists: create `{phase}-USER-SETUP.md` using template `~/.claude/code-skills-package/csp-workflow/templates/user-setup.md`. Per service: env vars table, account setup checklist, dashboard config, local dev notes, verification commands. Status "Incomplete". Set `USER_SETUP_CREATED=true`. If empty/missing: skip.
@@ -357,7 +357,7 @@ emit narrative output between the Write tool call and the commit tool call.
 Truncation at this boundary is a known failure mode (see #2070 rescue logic in
 execute-phase.md step 5.5).
 
-Create `{phase}-{plan}-SUMMARY.md` at `.planning/phases/XX-name/`. Use `~/.claude/code-skills-package/csp-workflow/templates/summary.md`.
+Create `{phase}-{plan}-SUMMARY.md` at `.csp/planning/phases/XX-name/`. Use `~/.claude/code-skills-package/csp-workflow/templates/summary.md`.
 
 **Frontmatter:** phase, plan, subsystem, tags | requires/provides/affects | tech-stack.added/patterns | key-files.created/modified | key-decisions | requirements-completed (**MUST** copy `requirements` array from PLAN.md frontmatter verbatim) | duration ($DURATION), completed ($PLAN_END_TIME date).
 
@@ -471,15 +471,15 @@ IS_WORKTREE=$([ -f .git ] && echo "true" || echo "false")
 
 # In parallel mode: exclude STATE.md and ROADMAP.md (orchestrator commits these)
 if [ "$IS_WORKTREE" = "true" ]; then
-  csp-sdk query commit "docs({phase}-{plan}): complete [plan-name] plan" --files .planning/phases/XX-name/{phase}-{plan}-SUMMARY.md .planning/REQUIREMENTS.md
+  csp-sdk query commit "docs({phase}-{plan}): complete [plan-name] plan" --files .csp/planning/phases/XX-name/{phase}-{plan}-SUMMARY.md .csp/planning/REQUIREMENTS.md
 else
-  csp-sdk query commit "docs({phase}-{plan}): complete [plan-name] plan" --files .planning/phases/XX-name/{phase}-{plan}-SUMMARY.md .planning/STATE.md .planning/ROADMAP.md .planning/REQUIREMENTS.md
+  csp-sdk query commit "docs({phase}-{plan}): complete [plan-name] plan" --files .csp/planning/phases/XX-name/{phase}-{plan}-SUMMARY.md .csp/planning/STATE.md .csp/planning/ROADMAP.md .csp/planning/REQUIREMENTS.md
 fi
 ```
 </step>
 
 <step name="update_codebase_map">
-If .planning/codebase/ doesn't exist: skip.
+If .csp/planning/codebase/ doesn't exist: skip.
 
 ```bash
 FIRST_TASK=$(git log --oneline --grep="feat({phase}-{plan}):" --grep="fix({phase}-{plan}):" --grep="test({phase}-{plan}):" --reverse | head -1 | cut -d' ' -f1)
@@ -489,7 +489,7 @@ git diff --name-only ${FIRST_TASK}^..HEAD 2>/dev/null || true
 Update only structural changes: new src/ dir → STRUCTURE.md | deps → STACK.md | file pattern → CONVENTIONS.md | API client → INTEGRATIONS.md | config → STACK.md | renamed → update paths. Skip code-only/bugfix/content changes.
 
 ```bash
-csp-sdk query commit "" --files .planning/codebase/*.md --amend
+csp-sdk query commit "" --files .csp/planning/codebase/*.md --amend
 ```
 </step>
 
@@ -497,8 +497,8 @@ csp-sdk query commit "" --files .planning/codebase/*.md --amend
 If `USER_SETUP_CREATED=true`: display `⚠️ USER SETUP REQUIRED` with path + env/config tasks at TOP.
 
 ```bash
-(ls -1 .planning/phases/[current-phase-dir]/*-PLAN.md 2>/dev/null || true) | wc -l
-(ls -1 .planning/phases/[current-phase-dir]/*-SUMMARY.md 2>/dev/null || true) | wc -l
+(ls -1 .csp/planning/phases/[current-phase-dir]/*-PLAN.md 2>/dev/null || true) | wc -l
+(ls -1 .csp/planning/phases/[current-phase-dir]/*-SUMMARY.md 2>/dev/null || true) | wc -l
 ```
 
 | Condition | Route | Action |

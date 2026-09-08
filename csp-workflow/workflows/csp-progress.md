@@ -22,7 +22,7 @@ Extract from init JSON: `project_exists`, `roadmap_exists`, `state_exists`, `pha
 DISCUSS_MODE=$(csp-sdk query config-get workflow.discuss_mode 2>/dev/null || echo "discuss")
 ```
 
-If `project_exists` is false (no `.planning/` directory):
+If `project_exists` is false (no `.csp/planning/` directory):
 
 ```
 No planning structure found.
@@ -85,7 +85,7 @@ Use this instead of manually reading/parsing ROADMAP.md.
 - Use `current_phase` and `next_phase` from `$ROADMAP`
 - Note `paused_at` if work was paused (from `$STATE`)
 - Count pending todos: use `init todos` or `list-todos`
-- Check for active debug sessions: `(ls .planning/debug/*.md 2>/dev/null || true) | grep -v resolved | wc -l`
+- Check for active debug sessions: `(ls .csp/planning/debug/*.md 2>/dev/null || true) | grep -v resolved | wc -l`
   </step>
 
 <step name="report">
@@ -173,9 +173,9 @@ When `MVP_MODE=false` (mode is null, absent, or the phase has no `**Mode:**` lin
 List files in the current phase directory:
 
 ```bash
-(ls -1 .planning/phases/[current-phase-dir]/*-PLAN.md 2>/dev/null || true) | wc -l
-(ls -1 .planning/phases/[current-phase-dir]/*-SUMMARY.md 2>/dev/null || true) | wc -l
-(ls -1 .planning/phases/[current-phase-dir]/*-UAT.md 2>/dev/null || true) | wc -l
+(ls -1 .csp/planning/phases/[current-phase-dir]/*-PLAN.md 2>/dev/null || true) | wc -l
+(ls -1 .csp/planning/phases/[current-phase-dir]/*-SUMMARY.md 2>/dev/null || true) | wc -l
+(ls -1 .csp/planning/phases/[current-phase-dir]/*-UAT.md 2>/dev/null || true) | wc -l
 ```
 
 State: "This phase has {X} plans, {Y} summaries."
@@ -186,7 +186,7 @@ Check for UAT.md files with status "diagnosed" (has gaps needing fixes).
 
 ```bash
 # Check for diagnosed UAT with gaps or partial (incomplete) testing
-grep -l "status: diagnosed\|status: partial" .planning/phases/[current-phase-dir]/*-UAT.md 2>/dev/null || true
+grep -l "status: diagnosed\|status: partial" .csp/planning/phases/[current-phase-dir]/*-UAT.md 2>/dev/null || true
 ```
 
 Track:
@@ -549,9 +549,9 @@ Read STATE.md `status` / `stopped_at` fields (from the STATE snapshot already lo
 
 Check for existence of:
 ```bash
-ls .planning/HANDOFF.json .planning/phases/*/.continue-here.md .planning/phases/*/*HANDOFF*.md 2>/dev/null || true
+ls .csp/planning/HANDOFF.json .csp/planning/phases/*/.continue-here.md .csp/planning/phases/*/*HANDOFF*.md 2>/dev/null || true
 ```
-Also check `.planning/continue-here.md`.
+Also check `.csp/planning/continue-here.md`.
 
 Emit:
 - ✓ `No orphaned handoff files` — if none found
@@ -559,9 +559,9 @@ Emit:
 
 **Check 3 — Deferred scope drift**
 
-Search phase artifacts (CONTEXT.md, DISCUSSION-LOG.md, BUG-BRIEF.md, VERIFICATION.md, SUMMARY.md, HANDOFF.md files under `.planning/phases/`) for patterns:
+Search phase artifacts (CONTEXT.md, DISCUSSION-LOG.md, BUG-BRIEF.md, VERIFICATION.md, SUMMARY.md, HANDOFF.md files under `.csp/planning/phases/`) for patterns:
 ```bash
-grep -rl "defer to Phase\|future phase\|out of scope Phase\|deferred to Phase" .planning/phases/ 2>/dev/null || true
+grep -rl "defer to Phase\|future phase\|out of scope Phase\|deferred to Phase" .csp/planning/phases/ 2>/dev/null || true
 ```
 
 For each match, extract the referenced phase number. Cross-reference against ROADMAP.md phase list. If the referenced phase number is NOT in ROADMAP.md, flag as deferred scope not captured.
@@ -572,9 +572,9 @@ Emit:
 
 **Check 4 — Memory-flagged pending work**
 
-Check if `.planning/MEMORY.md` or `.planning/memory/` exists:
+Check if `.csp/planning/MEMORY.md` or `.csp/planning/memory/` exists:
 ```bash
-ls .planning/MEMORY.md .planning/memory/*.md 2>/dev/null || true
+ls .csp/planning/MEMORY.md .csp/planning/memory/*.md 2>/dev/null || true
 ```
 
 If found, grep for entries containing: `pending`, `status`, `deferred`, `not yet run`, `backfill`, `blocking`.
@@ -587,7 +587,7 @@ Emit:
 
 Check for pending todos:
 ```bash
-ls .planning/todos/pending/*.md 2>/dev/null || true
+ls .csp/planning/todos/pending/*.md 2>/dev/null || true
 ```
 
 For files found, scan for keywords indicating operational blockers: `script`, `credential`, `API key`, `manual`, `verification`, `setup`, `configure`, `run `.
@@ -599,13 +599,13 @@ Emit:
 **Check 6 — Uncommitted code**
 
 ```bash
-git status --porcelain 2>/dev/null | grep -v "^??" | grep -v "^.planning\/" | grep -v "^\.\." | head -10
+git status --porcelain 2>/dev/null | grep -v "^??" | grep -v "^.csp/planning\/" | grep -v "^\.\." | head -10
 ```
 
-If output is non-empty (modified/staged files outside `.planning/`), flag as uncommitted code.
+If output is non-empty (modified/staged files outside `.csp/planning/`), flag as uncommitted code.
 
 Emit:
-- ✓ `Working tree clean` — if no modified files outside `.planning/`
+- ✓ `Working tree clean` — if no modified files outside `.csp/planning/`
 - ⚠ `Uncommitted changes in source files` — list up to 10 file paths
 
 ---
@@ -631,7 +631,7 @@ Then for each failed check, add a concrete next action:
 - Check 2 (orphaned handoff): `Read the handoff file(s) and resume from where work was paused: /csp-resume-work ${CSP_WS}`
 - Check 3 (deferred scope): `Add the missing phases to ROADMAP.md or update the deferred references`
 - Check 4 (memory pending): `Review the flagged memory entries and resolve or clear them`
-- Check 5 (blocking todos): `Complete the operational steps in .planning/todos/pending/ before continuing`
+- Check 5 (blocking todos): `Complete the operational steps in .csp/planning/todos/pending/ before continuing`
 - Check 6 (uncommitted code): `Commit or stash the uncommitted changes before advancing`
 - Check 1 (STATE inconsistency): `Run /csp-verify-work ${PHASE} ${CSP_WS} to reconcile state`
 </step>

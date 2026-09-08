@@ -160,7 +160,7 @@ Write to: `$PHASE_DIR/$PADDED_PHASE-PATTERNS.md`
 
 ## PATTERNS.md Structure
 
-**Location:** `.planning/phases/XX-name/{phase_num}-PATTERNS.md`
+**Location:** `.csp/planning/phases/XX-name/{phase_num}-PATTERNS.md`
 
 ```markdown
 # Phase [X]: [Name] - Pattern Map

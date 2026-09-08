@@ -40,7 +40,7 @@ if [[ "$INIT" == @file:* ]]; then INIT=$(cat "${INIT#@file:}"); fi
 
 Check `roadmap_exists` from init JSON. If false:
 ```
-ERROR: No roadmap found (.planning/ROADMAP.md)
+ERROR: No roadmap found (.csp/planning/ROADMAP.md)
 Run /csp-new-project to initialize.
 ```
 Exit.

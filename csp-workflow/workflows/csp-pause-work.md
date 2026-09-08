@@ -1,5 +1,5 @@
 <purpose>
-Create structured `.planning/HANDOFF.json` and `.continue-here.md` handoff files to preserve complete work state across sessions. The JSON provides machine-readable state for `/csp-resume-work`; the markdown provides human-readable context.
+Create structured `.csp/planning/HANDOFF.json` and `.continue-here.md` handoff files to preserve complete work state across sessions. The JSON provides machine-readable state for `/csp-resume-work`; the markdown provides human-readable context.
 </purpose>
 
 <required_reading>
@@ -15,24 +15,24 @@ Determine what kind of work is being paused and set the handoff destination acco
 
 ```bash
 # Check for active phase
-phase=$(( ls -lt .planning/phases/*/PLAN.md 2>/dev/null || true ) | head -1 | grep -oP 'phases/\K[^/]+' || true)
+phase=$(( ls -lt .csp/planning/phases/*/PLAN.md 2>/dev/null || true ) | head -1 | grep -oP 'phases/\K[^/]+' || true)
 
 # Check for active spike
-spike=$(( ls -lt .planning/spikes/*/CSPIKE.md .planning/spikes/*/DESIGN.md .planning/spikes/*/README.md 2>/dev/null || true ) | head -1 | grep -oP 'spikes/\K[^/]+' || true)
+spike=$(( ls -lt .csp/planning/spikes/*/CSPIKE.md .csp/planning/spikes/*/DESIGN.md .csp/planning/spikes/*/README.md 2>/dev/null || true ) | head -1 | grep -oP 'spikes/\K[^/]+' || true)
 
 # Check for active sketch
-sketch=$(( ls -lt .planning/sketches/*/README.md .planning/sketches/*/index.html 2>/dev/null || true ) | head -1 | grep -oP 'sketches/\K[^/]+' || true)
+sketch=$(( ls -lt .csp/planning/sketches/*/README.md .csp/planning/sketches/*/index.html 2>/dev/null || true ) | head -1 | grep -oP 'sketches/\K[^/]+' || true)
 
 # Check for active deliberation
-deliberation=$(ls .planning/deliberations/*.md 2>/dev/null | head -1 || true)
+deliberation=$(ls .csp/planning/deliberations/*.md 2>/dev/null | head -1 || true)
 ```
 
-- **Phase work**: active phase directory → handoff to `.planning/phases/XX-name/.continue-here.md`
-- **Spike work**: active spike directory or spike-related files (no active phase) → handoff to `.planning/spikes/CSPIKE-NNN/.continue-here.md` (create directory if needed)
-- **Sketch work**: active sketch directory (no active phase/spike) → handoff to `.planning/sketches/.continue-here.md`
-- **Deliberation work**: active deliberation file (no phase/spike/sketch) → handoff to `.planning/deliberations/.continue-here.md`
-- **Research work**: research notes exist but no phase/spike/sketch/deliberation → handoff to `.planning/.continue-here.md`
-- **Default**: no detectable context → handoff to `.planning/.continue-here.md`, note the ambiguity in `<current_state>`
+- **Phase work**: active phase directory → handoff to `.csp/planning/phases/XX-name/.continue-here.md`
+- **Spike work**: active spike directory or spike-related files (no active phase) → handoff to `.csp/planning/spikes/CSPIKE-NNN/.continue-here.md` (create directory if needed)
+- **Sketch work**: active sketch directory (no active phase/spike) → handoff to `.csp/planning/sketches/.continue-here.md`
+- **Deliberation work**: active deliberation file (no phase/spike/sketch) → handoff to `.csp/planning/deliberations/.continue-here.md`
+- **Research work**: research notes exist but no phase/spike/sketch/deliberation → handoff to `.csp/planning/.continue-here.md`
+- **Default**: no detectable context → handoff to `.csp/planning/.continue-here.md`, note the ambiguity in `<current_state>`
 
 If phase is detected, proceed with phase handoff path. Otherwise use the first matching non-phase path above.
 </step>
@@ -57,13 +57,13 @@ Ask user for clarifications if needed via conversational questions.
 **Also inspect SUMMARY.md files for false completions:**
 ```bash
 # Check for placeholder content in existing summaries
-grep -l "To be filled\|placeholder\|TBD" .planning/phases/*/*.md 2>/dev/null || true
+grep -l "To be filled\|placeholder\|TBD" .csp/planning/phases/*/*.md 2>/dev/null || true
 ```
 Report any summaries with placeholder content as incomplete items.
 </step>
 
 <step name="write_structured">
-**Write structured handoff to `.planning/HANDOFF.json`:**
+**Write structured handoff to `.csp/planning/HANDOFF.json`:**
 
 ```bash
 timestamp=$(csp-sdk query current-timestamp full --raw)
@@ -106,7 +106,7 @@ timestamp=$(csp-sdk query current-timestamp full --raw)
 </step>
 
 <step name="write">
-**Write handoff to the path determined in the detect step** (e.g. `.planning/phases/XX-name/.continue-here.md`, `.planning/spikes/CSPIKE-NNN/.continue-here.md`, or `.planning/.continue-here.md`):
+**Write handoff to the path determined in the detect step** (e.g. `.csp/planning/phases/XX-name/.continue-here.md`, `.csp/planning/spikes/CSPIKE-NNN/.continue-here.md`, or `.csp/planning/.continue-here.md`):
 
 ```markdown
 ---
@@ -172,7 +172,7 @@ Completed Tasks:
 ## Required Reading (in order)
 <!-- List documents the resuming agent must read before acting -->
 1. [document] — [why it matters]
-1. `.planning/METHODOLOGY.md` (if it exists) — project analytical lenses; apply before any assumption analysis
+1. `.csp/planning/METHODOLOGY.md` (if it exists) — project analytical lenses; apply before any assumption analysis
 
 ## Critical Anti-Patterns (do NOT repeat these)
 <!-- Mistakes discovered this session that must be structurally avoided -->
@@ -207,14 +207,14 @@ timestamp=$(csp-sdk query current-timestamp full --raw)
 
 <step name="commit">
 ```bash
-csp-sdk query commit "wip: [context-name] paused at [X]/[Y]" --files [handoff-path] .planning/HANDOFF.json
+csp-sdk query commit "wip: [context-name] paused at [X]/[Y]" --files [handoff-path] .csp/planning/HANDOFF.json
 ```
 </step>
 
 <step name="confirm">
 ```
 ✓ Handoff created:
-  - .planning/HANDOFF.json (structured, machine-readable)
+  - .csp/planning/HANDOFF.json (structured, machine-readable)
   - [handoff-path] (human-readable)
 
 Current state:

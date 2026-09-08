@@ -26,10 +26,10 @@ Output: Milestone archived (roadmap + requirements), PROJECT.md evolved, git tag
 
 <context>
 **Project files:**
-- `.planning/ROADMAP.md`
-- `.planning/REQUIREMENTS.md`
-- `.planning/STATE.md`
-- `.planning/PROJECT.md`
+- `.csp/planning/ROADMAP.md`
+- `.csp/planning/REQUIREMENTS.md`
+- `.csp/planning/STATE.md`
+- `.csp/planning/PROJECT.md`
 
 **User input:**
 
@@ -42,7 +42,7 @@ Output: Milestone archived (roadmap + requirements), PROJECT.md evolved, git tag
 
 0. **Check for audit:**
 
-   - Look for `.planning/v{{version}}-MILESTONE-AUDIT.md`
+   - Look for `.csp/planning/v{{version}}-MILESTONE-AUDIT.md`
    - If missing or stale: recommend `/csp-audit-milestone` first
    - If audit status is `gaps_found`: recommend closing the gaps inline
      (the audit output already enumerates them — insert closure phases
@@ -89,17 +89,17 @@ Output: Milestone archived (roadmap + requirements), PROJECT.md evolved, git tag
 
 4. **Archive milestone:**
 
-   - Create `.planning/milestones/v{{version}}-ROADMAP.md`
+   - Create `.csp/planning/milestones/v{{version}}-ROADMAP.md`
    - Extract full phase details from ROADMAP.md
    - Fill milestone-archive.md template
    - Update ROADMAP.md to one-line summary with link
 
 5. **Archive requirements:**
 
-   - Create `.planning/milestones/v{{version}}-REQUIREMENTS.md`
+   - Create `.csp/planning/milestones/v{{version}}-REQUIREMENTS.md`
    - Mark all v1 requirements as complete (checkboxes checked)
    - Note requirement outcomes (validated, adjusted, dropped)
-   - Delete `.planning/REQUIREMENTS.md` (fresh one created for next milestone)
+   - Delete `.csp/planning/REQUIREMENTS.md` (fresh one created for next milestone)
 
 6. **Update PROJECT.md:**
 
@@ -121,9 +121,9 @@ Output: Milestone archived (roadmap + requirements), PROJECT.md evolved, git tag
 
 <success_criteria>
 
-- Milestone archived to `.planning/milestones/v{{version}}-ROADMAP.md`
-- Requirements archived to `.planning/milestones/v{{version}}-REQUIREMENTS.md`
-- `.planning/REQUIREMENTS.md` deleted (fresh for next milestone)
+- Milestone archived to `.csp/planning/milestones/v{{version}}-ROADMAP.md`
+- Requirements archived to `.csp/planning/milestones/v{{version}}-REQUIREMENTS.md`
+- `.csp/planning/REQUIREMENTS.md` deleted (fresh for next milestone)
 - ROADMAP.md collapsed to one-line entry
 - PROJECT.md updated with current state
 - Git tag v{{version}} created (if `git.create_tag` enabled)

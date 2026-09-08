@@ -18,7 +18,7 @@ Execute small, ad-hoc tasks with CSP guarantees (atomic commits, STATE.md tracki
 
 Quick mode is the same system with a shorter path:
 - Spawns csp-planner (quick mode) + csp-executor(s)
-- Quick tasks live in `.planning/quick/` separate from planned phases
+- Quick tasks live in `.csp/planning/quick/` separate from planned phases
 - Updates STATE.md "Quick Tasks Completed" table (NOT ROADMAP.md)
 
 **Default:** Skips research, discussion, plan-checker, verifier. Use when you know exactly what to do.
@@ -65,14 +65,14 @@ Context files are resolved inside the workflow (`init quick`) and delegated via 
 When SUBCMD=list:
 
 ```bash
-ls -d .planning/quick/*/  2>/dev/null
+ls -d .csp/planning/quick/*/  2>/dev/null
 ```
 
 For each directory found:
 - Check if PLAN.md exists
 - Check if SUMMARY.md exists; if so, read `status` from its frontmatter via:
   ```bash
-  csp-sdk query frontmatter.get .planning/quick/{dir}/SUMMARY.md status
+  csp-sdk query frontmatter.get .csp/planning/quick/{dir}/SUMMARY.md status
   ```
 - Determine directory creation date: `stat -f "%SB" -t "%Y-%m-%d"` (macOS) or `stat -c "%w"` (Linux); fall back to the date prefix in the directory name (format: `YYYYMMDD-` prefix)
 - Derive display status:
@@ -105,7 +105,7 @@ When SUBCMD=status and SLUG is set (already sanitized):
 
 Find directory matching `*-{SLUG}` pattern:
 ```bash
-dir=$(ls -d .planning/quick/*-{SLUG}/ 2>/dev/null | head -1)
+dir=$(ls -d .csp/planning/quick/*-{SLUG}/ 2>/dev/null | head -1)
 ```
 
 If no directory found, print `No quick task found with slug: {SLUG}` and stop.
@@ -114,7 +114,7 @@ Read PLAN.md and SUMMARY.md (if exists) for the given slug. Display:
 ```
 Quick Task: {slug}
 ─────────────────────────────────────
-Plan file: .planning/quick/{dir}/PLAN.md
+Plan file: .csp/planning/quick/{dir}/PLAN.md
 Status: {status from SUMMARY.md frontmatter, or "no summary yet"}
 Description: {first non-empty line from PLAN.md after frontmatter}
 Last action: {last meaningful line of SUMMARY.md, or "none"}
@@ -130,7 +130,7 @@ When SUBCMD=resume and SLUG is set (already sanitized):
 
 1. Find the directory matching `*-{SLUG}` pattern:
    ```bash
-   dir=$(ls -d .planning/quick/*-{SLUG}/ 2>/dev/null | head -1)
+   dir=$(ls -d .csp/planning/quick/*-{SLUG}/ 2>/dev/null | head -1)
    ```
 2. If no directory found, print `No quick task found with slug: {SLUG}` and stop.
 
@@ -138,7 +138,7 @@ When SUBCMD=resume and SLUG is set (already sanitized):
 
 4. Print before spawning:
    ```
-   [quick] Resuming: .planning/quick/{dir}/
+   [quick] Resuming: .csp/planning/quick/{dir}/
    [quick] Plan: {description from PLAN.md}
    [quick] Status: {status from SUMMARY.md, or "in-progress"}
    ```
@@ -160,7 +160,7 @@ Preserve all workflow gates (validation, task description, planning, execution, 
 </process>
 
 <notes>
-- Quick tasks live in `.planning/quick/` — separate from phases, not tracked in ROADMAP.md
+- Quick tasks live in `.csp/planning/quick/` — separate from phases, not tracked in ROADMAP.md
 - Each quick task gets a `YYYYMMDD-{slug}/` directory with PLAN.md and eventually SUMMARY.md
 - STATE.md "Quick Tasks Completed" table is updated on completion
 - Use `list` to audit accumulated tasks; use `resume` to continue in-progress work

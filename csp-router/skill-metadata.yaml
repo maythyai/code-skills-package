@@ -4,7 +4,7 @@
 # Regenerate: node scripts/build-skill-metadata.mjs
 
 version: 2.0
-generated_at: 2026-08-31T06:35:14.214Z
+generated_at: 2026-09-08T06:00:34.563Z
 skills:
   csp-agent-teams:
     phase: review
@@ -803,9 +803,10 @@ skills:
       - csp-tdd
       - csp-verify-phase
     anti_rationalizations:
-      有任务清单就够了，不用做计划: 任务清单只说做什么，计划说什么时候做、谁来做、做多久。没有计划的任务清单是不可执行的。
+      有任务清单就够了，不用做计划: 任务清单只说做什么，计划说怎么安排——先做什么后做什么、谁来做、风险怎么处理。没有计划的任务清单是不可执行的。
       计划赶不上变化，做了也白做: 计划的价值不在于精确预测，而在于建立基线。有了基线才能衡量偏差，才能调整。
       小项目不需要里程碑: 即使只有一个里程碑，明确它也能让团队对齐预期。
+      不估时怎么排期: "排期由**依赖 DAG + Wave + 关键路径**决定，不需要工时。AI 编程下工时方差极大且易腐烂，强行估时给虚假信心。`csp-effort-estimation` 仅当团队确有工时/资源需求时按需调用。"
   csp-prd-change-impact:
     phase: review
     domain: quality
@@ -1291,9 +1292,10 @@ skills:
       - csp-plan-phase
       - csp-implementation-phase
     anti_rationalizations:
-      任务拆解太细浪费时间: "粗粒度的任务 = 模糊的估时 = 不可预测的交付。每任务 ≤ 4h 是确保可预测性的最小粒度。"
+      任务拆解太细浪费时间: "粗粒度的任务 = 模糊的验收 = 不可预测的交付。一任务一原子提交是确保可审查、可回滚的最小粒度。"
       直接按模块分就行: "模块划分 ≠ 开发任务。同一模块内可能有依赖关系，需要进一步拆解并排定顺序。"
-      估时不准，拆了也没用: "估时不准是常态，但拆解本身暴露了依赖和并行机会。即使估时偏 50%，拆解仍比不拆有价值。"
+      不估时怎么排期/并行: "排期与并行由**依赖 DAG + Wave**决定，不需要工时。估时在 AI 编程下方差极大且易腐烂（机器速度 + 上下文差异），强行估时反而给虚假信心。拆解的真正价值是暴露依赖与并行机会，不是预测时间——`csp-effort-estimation` 仅当团队确有工时需求时按需调用，不进默认流。"
+      估时不准，拆了也没用: "估时不准是常态——AI 编程下更甚。但拆解本身暴露了依赖和并行机会，这比工时预测有价值得多。"
   csp-test-spec:
     phase: verify
     domain: testing
@@ -1682,6 +1684,30 @@ skills:
   csp-docs-lookup:
     phase: build
     domain: patterns
+  csp-e2e-case-automation:
+    phase: verify
+    domain: testing
+    role: expert
+    scope: testing
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
+    related_skills:
+      - csp-e2e-testing
+      - csp-playwright-ui-test
+      - csp-h5-visual-testing
+      - csp-visual-regression
+      - csp-mock-strategies
+    anti_rationalizations:
+      用例步骤太模糊先跑跑看: 步骤必须满足动作明确/目标具体/数据清晰/验证完整四标准，模糊步骤先补全再执行
+      定位失败直接用 CSS 兜底: "CSS 类名随构建哈希变化最不稳定，仅在语义/ID/邻近全部失败后才兜底"
+      经验库过期了删掉重跑: 先合并更新成功率加权，盲目删除会丢失稳定策略；页面结构确实变了才重新探测
+      生成的脚本带调试日志也无所谓: "生产脚本必须移除 console.log/思考注释/尝试代码，只保留确定性操作"
+      登录步骤也写进脚本: "登录由 auth.setup 统一处理，生成脚本时必须过滤掉登录相关步骤"
   csp-e2e-testing:
     phase: build
     domain: patterns

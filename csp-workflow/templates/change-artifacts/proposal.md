@@ -9,11 +9,11 @@
 ## Capabilities
 
 ### New Capabilities
-<!-- Each becomes `.planning/specs/<kebab-name>/spec.md` -->
+<!-- Each becomes `.csp/planning/specs/<kebab-name>/spec.md` -->
 - `<name>`: <brief description>
 
 ### Modified Capabilities
-<!-- Existing specs whose REQUIREMENTS change. Check `.planning/specs/` for names. -->
+<!-- Existing specs whose REQUIREMENTS change. Check `.csp/planning/specs/` for names. -->
 - `<existing-name>`: <what requirement is changing>
 
 ## Impact

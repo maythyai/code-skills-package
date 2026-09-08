@@ -290,7 +290,7 @@ STALE ITEMS (>30 days, no activity)
 ===================================================================
 ```
 
-Write this report to `.planning/INBOX-TRIAGE.md` if a `.planning/` directory exists,
+Write this report to `.csp/planning/INBOX-TRIAGE.md` if a `.csp/planning/` directory exists,
 otherwise print to console only.
 </step>
 
@@ -353,7 +353,7 @@ Gate violations: {violation_count}
 Ready to merge: {ready_count}
 Needing attention: {attention_count}
 Stale (30+ days): {stale_count}
-{If report saved: "Report saved to .planning/INBOX-TRIAGE.md"}
+{If report saved: "Report saved to .csp/planning/INBOX-TRIAGE.md"}
 
 Next steps:
 - Review gate violations first — these block the contribution pipeline

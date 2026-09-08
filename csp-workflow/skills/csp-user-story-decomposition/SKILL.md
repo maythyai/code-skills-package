@@ -98,7 +98,7 @@ As a [role], I want [action], so that [value].
 | **CRUD operations** | Story covers full data lifecycle | "Manage products" -> "create product" + "edit product" + "delete product" + "list/search products" |
 | **Happy path vs. edge cases** | Story mixes normal flow with exceptions | "Process payment" -> "successful payment" + "failed payment handling" + "refund flow" |
 
-**Story sizing target**: Each story should be completable within one sprint (typically 1-5 story points). If larger, split again.
+**Story sizing target**: Each story should be a single deliverable with clear acceptance criteria and atomic scope (one user-visible value, completable as one unit). If a story mixes multiple independent values or spans unclear scope, split again. **不估 story points/工时**——AI 编程下 story points 与人日同样无意义，sizing 靠**范围与原子性**判据，不靠点数。
 
 ### Step 3: INVEST Validation
 
@@ -109,7 +109,7 @@ Validate each story against INVEST principles:
 | **I**ndependent | Can this story be developed without waiting for another? | Remove dependencies or restructure scope |
 | **N**egotiable | Is the implementation approach open to discussion? | Remove prescriptive implementation details |
 | **V**aluable | Does this story deliver observable value to the user? | Reframe around user value, not technical task |
-| **E**stimable | Can the team estimate the effort? | Add more detail or split further if ambiguous |
+| **E**stimable | Is the story clear enough to scope (files/tests/AC) without ambiguity? | Add more detail or split further if ambiguous |
 | **S**mall | Can it be completed in one sprint? | Apply splitting patterns from Step 2 |
 | **T**estable | Can QA verify completion objectively? | Add concrete acceptance criteria |
 
@@ -199,10 +199,9 @@ Save the story decomposition to `docs/stories/STORY-{epic-name}.md`:
 **Source**: {PRD reference or requirement description}
 **Date**: {current date}
 **Total Stories**: {count}
-**Total Points**: {sum}
 
 ## Story List
-(Detailed stories with ACs and estimates)
+(Detailed stories with ACs — no effort/point estimates)
 
 ## Story Map
 (Organized view by activity and release)

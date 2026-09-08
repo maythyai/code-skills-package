@@ -18,12 +18,12 @@ milestone sequence or remove stale entries.
 
 1. **List backlog items:**
    ```bash
-   ls -d .planning/phases/999* 2>/dev/null || echo "No backlog items found"
+   ls -d .csp/planning/phases/999* 2>/dev/null || echo "No backlog items found"
    ```
 
 2. **Read ROADMAP.md** and extract all 999.x phase entries:
    ```bash
-   cat .planning/ROADMAP.md
+   cat .csp/planning/ROADMAP.md
    ```
    Show each backlog item with its description, any accumulated context (CONTEXT.md, RESEARCH.md), and creation date.
 
@@ -48,7 +48,7 @@ milestone sequence or remove stale entries.
 
 6. **Commit changes:**
    ```bash
-   csp-sdk query commit "docs: review backlog — promoted N, removed M" --files .planning/ROADMAP.md
+   csp-sdk query commit "docs: review backlog — promoted N, removed M" --files .csp/planning/ROADMAP.md
    ```
 
 7. **Report summary:**

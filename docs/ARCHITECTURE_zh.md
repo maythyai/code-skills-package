@@ -2175,7 +2175,7 @@ CSP 提供三种使用方式，覆盖从新手到专家的全部用户画像：
    | 安全审计包 | csp-security-review + csp-secure-phase + 框架安全 skill | "安全审查" |
 
 2. **上下文感知加载：**
-   - 检测到 `.planning/` 目录存在 → 自动预加载 workflow 相关 skill
+   - 检测到 `.csp/planning/` 目录存在 → 自动预加载 workflow 相关 skill
    - 检测到 `specs/` 目录存在 → 自动预加载 spec-driven 相关 skill
    - 检测到 git merge conflict → 自动提示冲突解决 skill
 
@@ -2219,12 +2219,12 @@ CSP 提供三种使用方式，覆盖从新手到专家的全部用户画像：
 
 **第四层：共享上下文**
 
-多个 skill 共享 `.planning/` 和 `.specs/` 目录，避免跨 skill 调用时重复传递项目上下文。
+多个 skill 共享 `.csp/planning/` 和 `.csp/specs/` 目录，避免跨 skill 调用时重复传递项目上下文。
 
 ```
-csp-plan-phase → 写入 .planning/PLAN.md
-csp-execute-phase → 读取 .planning/PLAN.md（无需重新传递项目背景）
-csp-verify-phase → 读取 .planning/PLAN.md + .planning/VERIFICATION.md
+csp-plan-phase → 写入 .csp/planning/PLAN.md
+csp-execute-phase → 读取 .csp/planning/PLAN.md（无需重新传递项目背景）
+csp-verify-phase → 读取 .csp/planning/PLAN.md + .csp/planning/VERIFICATION.md
 ```
 
 预期收益：**-20% 跨 skill 调用开销**。

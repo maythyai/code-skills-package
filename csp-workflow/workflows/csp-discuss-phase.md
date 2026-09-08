@@ -229,15 +229,15 @@ Check `has_plans` and `plan_count` from init. **If `has_plans` is true:**
 Read project-level and prior phase context to avoid re-asking decided questions.
 
 ```bash
-cat .planning/PROJECT.md 2>/dev/null || true
-cat .planning/REQUIREMENTS.md 2>/dev/null || true
-cat .planning/STATE.md 2>/dev/null || true
+cat .csp/planning/PROJECT.md 2>/dev/null || true
+cat .csp/planning/REQUIREMENTS.md 2>/dev/null || true
+cat .csp/planning/STATE.md 2>/dev/null || true
 ```
 
-Read at most **3** prior CONTEXT.md files (most recent 3 phases before current). If `.planning/DECISIONS-INDEX.md` exists, read that instead — it is a bounded rolling summary that supersedes per-phase reads.
+Read at most **3** prior CONTEXT.md files (most recent 3 phases before current). If `.csp/planning/DECISIONS-INDEX.md` exists, read that instead — it is a bounded rolling summary that supersedes per-phase reads.
 
 ```bash
-(find .planning/phases -name "*-CONTEXT.md" 2>/dev/null || true) | sort -r
+(find .csp/planning/phases -name "*-CONTEXT.md" 2>/dev/null || true) | sort -r
 ```
 
 For each CONTEXT.md read: extract `<decisions>` (locked preferences), `<specifics>` (particular references), and patterns (e.g., "user prefers minimal UI", "user rejected single-key shortcuts").
@@ -246,8 +246,8 @@ For each CONTEXT.md read: extract `<decisions>` (locked preferences), `<specific
 ```bash
 CSPIKE_FINDINGS=$(ls ./.claude/skills/spike-findings-*/SKILL.md 2>/dev/null | head -1 || true)
 SKETCH_FINDINGS=$(ls ./.claude/skills/sketch-findings-*/SKILL.md 2>/dev/null | head -1 || true)
-RAW_CSPIKES=$(ls .planning/spikes/MANIFEST.md 2>/dev/null)
-RAW_SKETCHES=$(ls .planning/sketches/MANIFEST.md 2>/dev/null)
+RAW_CSPIKES=$(ls .csp/planning/spikes/MANIFEST.md 2>/dev/null)
+RAW_SKETCHES=$(ls .csp/planning/sketches/MANIFEST.md 2>/dev/null)
 ```
 
 If findings skills exist, read SKILL.md and reference files; extract validated patterns, landmines, constraints, design decisions. Add them to `<prior_decisions>`.
@@ -281,7 +281,7 @@ Parse JSON for: `todo_count`, `matches[]` (each with `file`, `title`, `area`, `s
 Lightweight scan of existing code to inform gray area identification (~10% context).
 
 Read `@~/.claude/code-skills-package/csp-workflow/references/scout-codebase.md` — it contains the phase-type→map selection table, single-read rule, no-maps fallback, and `<codebase_context>` output schema. Then execute:
-1. `ls .planning/codebase/*.md` to find existing maps
+1. `ls .csp/planning/codebase/*.md` to find existing maps
 2. Select 2–3 maps via the reference's table; or grep fallback if none exist
 3. Build internal `<codebase_context>` per the reference's output schema
 </step>
@@ -402,7 +402,7 @@ Write the file.
 Present summary and next steps:
 
 ```
-Created: .planning/phases/${PADDED_PHASE}-${SLUG}/${PADDED_PHASE}-CONTEXT.md
+Created: .csp/planning/phases/${PADDED_PHASE}-${SLUG}/${PADDED_PHASE}-CONTEXT.md
 
 ## Decisions Captured
 ### [Category]
@@ -461,7 +461,7 @@ csp-sdk query state.record-session \
   --stopped-at "Phase ${PHASE} context gathered" \
   --resume-file "${phase_dir}/${padded_phase}-CONTEXT.md"
 
-csp-sdk query commit "docs(state): record phase ${PHASE} context session" --files .planning/STATE.md
+csp-sdk query commit "docs(state): record phase ${PHASE} context session" --files .csp/planning/STATE.md
 ```
 </step>
 

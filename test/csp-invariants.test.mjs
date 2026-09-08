@@ -13,7 +13,7 @@ import { test } from 'node:test';
 import { strict as assert } from 'node:assert';
 import { readFileSync, existsSync } from 'node:fs';
 import { execSync } from 'node:child_process';
-import { resolve, join } from 'node:path';
+import { resolve, join, basename, dirname } from 'node:path';
 
 const ROOT = resolve(import.meta.dirname, '..');
 const readJSON = (p) => JSON.parse(readFileSync(join(ROOT, p), 'utf8'));
@@ -166,6 +166,257 @@ test('csp-sdk: current-timestamp returns ISO 8601', () => {
   const r = cspSdk('query current-timestamp');
   assert.equal(r.code, 0);
   assert.match(r.out.trim(), /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}/);
+});
+
+// ── csp-sdk drive.* lifecycle enforcement chain ────────────────────
+// Isolated under a temp CSP_PROJECT_ROOT so we can create/delete gate artifacts
+// without touching the real repo's .csp/.
+import { mkdtempSync, rmSync, writeFileSync, mkdirSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+
+function driveRoot() {
+  const tmp = mkdtempSync(join(tmpdir(), 'csp-drive-'));
+  // Mirror the registry + contract so the CLI (run with CSP_PROJECT_ROOT=tmp)
+  // can resolve deps and the lifecycle contract.
+  mkdirSync(join(tmp, 'csp-router'), { recursive: true });
+  writeFileSync(join(tmp, 'csp-router', 'registry.json'),
+    JSON.stringify({ version: 1.0, total_skills: 2, skills: [
+      { name: 'csp-knowledge-hub', deps: [] },
+      { name: 'csp-requirement-decomposition', deps: ['csp-knowledge-hub'] },
+    ]}));
+  // contract: copy from repo so stages/gates stay in sync
+  mkdirSync(join(tmp, 'csp-workflow', 'references'), { recursive: true });
+  writeFileSync(join(tmp, 'csp-workflow', 'references', 'lifecycle-contract.json'),
+    readText('csp-workflow/references/lifecycle-contract.json'));
+  return tmp;
+}
+
+function driveSdk(args, cwd) {
+  try {
+    const out = execSync(`node ${join(ROOT, 'bin', 'csp-sdk.mjs')} ${args}`,
+      { cwd, encoding: 'utf-8', timeout: 10000, env: { ...process.env, CSP_PROJECT_ROOT: cwd } });
+    return { code: 0, out };
+  } catch (e) {
+    return { code: e.status ?? 1, out: e.stdout ? e.stdout.toString() : '', err: e.stderr ? e.stderr.toString() : '' };
+  }
+}
+
+test('csp-sdk: drive.contract loads the lifecycle state machine', () => {
+  const r = cspSdk('query drive.contract');
+  assert.equal(r.code, 0);
+  const c = JSON.parse(r.out);
+  assert.equal(c.version, 1);
+  assert.ok(c.stages.length >= 13, 'contract has S0-S9 chain');
+  assert.ok(c.modes.full && c.modes['spec-only'], 'modes present');
+  const s0 = c.stages.find(s => s.id === 'S0');
+  assert.equal(s0.skill, 'csp-knowledge-hub');
+  assert.ok(s0.gate.artifacts.includes('.csp/AGENTS.md'));
+});
+
+test('csp-sdk: drive.init creates lifecycle-state and drive.status reports S0', () => {
+  const tmp = driveRoot();
+  try {
+    const r = driveSdk('query drive.init --mode spec-only', tmp);
+    assert.equal(r.code, 0);
+    const st = JSON.parse(r.out);
+    assert.equal(st.current_stage, 'S0');
+    assert.equal(st.mode, 'spec-only');
+    const s = JSON.parse(driveSdk('query drive.status', tmp).out);
+    assert.equal(s.current_stage, 'S0');
+    assert.equal(s.current_skill, 'csp-knowledge-hub');
+    assert.equal(s.current_status, 'in_progress');
+    assert.equal(s.next_stage, 'S1');
+  } finally { rmSync(tmp, { recursive: true, force: true }); }
+});
+
+test('csp-sdk: drive.advance BLOCKS when gate fails (no skip, repoint + retry)', () => {
+  const tmp = driveRoot();
+  try {
+    driveSdk('query drive.init --mode full', tmp);
+    const adv = JSON.parse(driveSdk('query drive.advance', tmp).out);
+    assert.equal(adv.status, 'blocked', 'gate fail must block, not advance');
+    assert.equal(adv.stage, 'S0');
+    assert.ok(adv.missing.includes('.csp/AGENTS.md'));
+    assert.equal(adv.retries, 1);
+    // current_stage must NOT have advanced
+    const s = JSON.parse(driveSdk('query drive.status', tmp).out);
+    assert.equal(s.current_stage, 'S0', 'must stay on S0 — no silent skip');
+    assert.equal(s.retries, 1);
+  } finally { rmSync(tmp, { recursive: true, force: true }); }
+});
+
+test('csp-sdk: drive.advance ADVANCES only after gate passes', () => {
+  const tmp = driveRoot();
+  try {
+    driveSdk('query drive.init --mode full', tmp);
+    // Satisfy S0 gate
+    mkdirSync(join(tmp, '.csp'), { recursive: true });
+    writeFileSync(join(tmp, '.csp', 'AGENTS.md'), '# AGENTS\n');
+    writeFileSync(join(tmp, '.csp', 'manifest.json'), '{"manifest_id":"t","version":1,"items":[]}');
+    const adv = JSON.parse(driveSdk('query drive.advance', tmp).out);
+    assert.equal(adv.status, 'advanced');
+    assert.equal(adv.from, 'S0');
+    assert.equal(adv.to, 'S1');
+    assert.equal(adv.next_skill, 'csp-requirement-decomposition');
+    const s = JSON.parse(driveSdk('query drive.status', tmp).out);
+    assert.equal(s.current_stage, 'S1');
+    assert.ok(s.completed.includes('S0'));
+  } finally { rmSync(tmp, { recursive: true, force: true }); }
+});
+
+test('csp-sdk: drive.next resolves depends_on transitively into load_order', () => {
+  const tmp = driveRoot();
+  try {
+    driveSdk('query drive.init --mode full', tmp);
+    // Advance past S0 so current is S1 (whose skill depends on csp-knowledge-hub)
+    mkdirSync(join(tmp, '.csp'), { recursive: true });
+    writeFileSync(join(tmp, '.csp', 'AGENTS.md'), '# AGENTS\n');
+    writeFileSync(join(tmp, '.csp', 'manifest.json'), '{"manifest_id":"t","version":1,"items":[]}');
+    driveSdk('query drive.advance', tmp);
+    const next = JSON.parse(driveSdk('query drive.next', tmp).out);
+    assert.equal(next.stage, 'S1');
+    assert.equal(next.skill_to_run, 'csp-requirement-decomposition');
+    assert.ok(next.depends_on_resolved.includes('csp-knowledge-hub'), 'transitive dep resolved');
+    assert.deepEqual(next.load_order, ['csp-knowledge-hub', 'csp-requirement-decomposition']);
+  } finally { rmSync(tmp, { recursive: true, force: true }); }
+});
+
+test('csp-sdk: unknown drive.* subcommand reports unimplemented (not silent pass)', () => {
+  const r = cspSdk('query drive.nonsense');
+  // drive.nonsense falls through to the drive.* prefix handler → unimplemented
+  const body = r.out + (r.err || '');
+  assert.ok(/unimplemented/.test(body), 'unknown drive sub must not silently pass');
+});
+
+// ── csp-sdk drive.* governance gates (PMS/CMS/TMS) + S6 stack prefill ──
+// driveRoot() (defined above) gives an isolated CSP_PROJECT_ROOT with registry + contract.
+function writeFile(tmp, rel, content) {
+  const p = join(tmp, rel);
+  mkdirSync(dirname(p), { recursive: true });
+  writeFileSync(p, content);
+}
+
+test('csp-sdk: drive.init prefills S6 gate command by detected tech stack', () => {
+  // python-only project (no package.json) → pytest
+  const tmp = driveRoot();
+  try {
+    writeFile(tmp, 'pyproject.toml', '[project]\nname = "x"\n');
+    const r = JSON.parse(driveSdk('query drive.init', tmp).out);
+    assert.deepEqual(r.tech_stack, ['python']);
+    assert.equal(r.s6_command, 'python -m pytest');
+  } finally { rmSync(tmp, { recursive: true, force: true }); }
+  // go project → go test
+  const tmp2 = driveRoot();
+  try {
+    writeFile(tmp2, 'go.mod', 'module x\n');
+    const r = JSON.parse(driveSdk('query drive.init', tmp2).out);
+    assert.deepEqual(r.tech_stack, ['go']);
+    assert.equal(r.s6_command, 'go test ./...');
+  } finally { rmSync(tmp2, { recursive: true, force: true }); }
+});
+
+test('csp-sdk: TMS gate BLOCKS S6 when requirement-matrix has unmapped/gaps', () => {
+  const tmp = driveRoot();
+  try {
+    driveSdk('query drive.init --mode full', tmp);
+    // satisfy S0..S5 stage gates so we reach S6 cleanly, then test TMS gate
+    writeFile(tmp, '.csp/AGENTS.md', '# AGENTS\n');
+    writeFile(tmp, '.csp/manifest.json', '{"manifest_id":"t","version":1,"items":[]}');
+    writeFile(tmp, '.csp/decomposition/DECOMPOSITION-SUMMARY.md', '# ');
+    writeFile(tmp, '.csp/decomposition/DEPENDENCY-GRAPH.md', '# ');
+    writeFile(tmp, '.csp/tech-decisions/TECH-STACK-OVERVIEW.md', '# ');
+    writeFile(tmp, '.csp/tech-design/ARCHITECTURE-DESIGN.md', '# ');
+    writeFile(tmp, '.csp/tech-design/DATA-ARCHITECTURE.md', '# ');
+    writeFile(tmp, '.csp/tech-design/INTERFACE-ARCHITECTURE.md', '# ');
+    writeFile(tmp, '.csp/tech-design/REVIEW-FINDINGS.md', '# APPROVED\n');
+    writeFile(tmp, '.csp/specs/SPEC-INDEX.md', '# ');
+    writeFile(tmp, '.csp/specs/API-OVERVIEW.md', '# ');
+    writeFile(tmp, '.csp/tasks/WBS.md', '# ');
+    writeFile(tmp, '.csp/tasks/DEPENDENCY-DAG.md', '# ');
+    writeFile(tmp, '.csp/plan/IMPLEMENTATION-PLAN.md', '# ');
+    writeFile(tmp, '.csp/verification/VERIFICATION.md', '# '); // for S7 later
+    // TMS matrix WITH a gap
+    writeFile(tmp, '.csp/test-spec/auth/requirement-matrix.md',
+      '| 需求 | 方法 | 用例 |\n|---|---|---|\n| R1 下单 | unit | c1 |\n| R2 拦截 | — | — |\n\n## 缺口清单\n- R2 未映射\n');
+    const g = JSON.parse(driveSdk('query drive.gate S6', tmp).out);
+    assert.equal(g.pass, false, 'TMS gap must block S6');
+    const tms = g.governance.find(x => x.spec === 'tms');
+    assert.equal(tms.pass, false);
+    assert.equal(tms.unmapped, 1);
+    assert.equal(tms.gaps_listed, 1);
+  } finally { rmSync(tmp, { recursive: true, force: true }); }
+});
+
+test('csp-sdk: TMS gate PASSES when all requirements mapped, no gaps', () => {
+  const tmp = driveRoot();
+  try {
+    driveSdk('query drive.init --mode full', tmp);
+    writeFile(tmp, '.csp/test-spec/auth/requirement-matrix.md',
+      '| 需求 | 方法 | 用例 |\n|---|---|---|\n| R1 下单 | unit | c1 |\n| R2 拦截 | negative | c2 |\n\n## 缺口清单\n（无）\n');
+    const g = JSON.parse(driveSdk('query drive.gate S6', tmp).out);
+    const tms = g.governance.find(x => x.spec === 'tms');
+    assert.equal(tms.pass, true);
+    assert.equal(tms.unmapped, 0);
+    assert.equal(tms.gaps_listed, 0);
+  } finally { rmSync(tmp, { recursive: true, force: true }); }
+});
+
+test('csp-sdk: PMS gate BLOCKS S1 when no module declarations', () => {
+  const tmp = driveRoot();
+  try {
+    driveSdk('query drive.init --mode full', tmp);
+    writeFile(tmp, '.csp/product-spec/PRODUCT-MODULE-SPEC.md',
+      '# Product Module Spec\n\nNo modules declared yet.\n');
+    const g = JSON.parse(driveSdk('query drive.gate S1', tmp).out);
+    const pms = g.governance.find(x => x.spec === 'pms');
+    assert.equal(pms.pass, false);
+    assert.match(pms.reason, /no MOD/);
+  } finally { rmSync(tmp, { recursive: true, force: true }); }
+});
+
+test('csp-sdk: PMS gate PASSES with module declarations + 100% coverage', () => {
+  const tmp = driveRoot();
+  try {
+    driveSdk('query drive.init --mode full', tmp);
+    writeFile(tmp, '.csp/product-spec/PRODUCT-MODULE-SPEC.md',
+      '# Product Module Spec\n\n## Modules\n- MOD-AUTH-1: auth\n- MOD-ORDER-1: orders\n\nprd_to_module: 100%\n');
+    const g = JSON.parse(driveSdk('query drive.gate S1', tmp).out);
+    const pms = g.governance.find(x => x.spec === 'pms');
+    assert.equal(pms.pass, true);
+    assert.equal(pms.modules, 2);
+  } finally { rmSync(tmp, { recursive: true, force: true }); }
+});
+
+test('csp-sdk: CMS gate BLOCKS S5 when code-spec flags unaligned drift', () => {
+  const tmp = driveRoot();
+  try {
+    driveSdk('query drive.init --mode full', tmp);
+    writeFile(tmp, '.csp/code-spec/app/CODE-MODULE-SPEC.md',
+      '# Code Module Spec\n\n## 4. 模块边界（对齐 PMS）\n| PMS 模块 | 代码归属 | drift? |\n| MOD-AUTH | auth/ | 未对齐 |\n');
+    const g = JSON.parse(driveSdk('query drive.gate S5', tmp).out);
+    const cms = g.governance.find(x => x.spec === 'cms');
+    assert.equal(cms.pass, false);
+    assert.match(cms.reason, /unaligned drift/);
+  } finally { rmSync(tmp, { recursive: true, force: true }); }
+});
+
+test('csp-sdk: governance gate failure blocks drive.advance (not just advisory)', () => {
+  const tmp = driveRoot();
+  try {
+    driveSdk('query drive.init --mode full', tmp);
+    // satisfy S0 gate
+    writeFile(tmp, '.csp/AGENTS.md', '# AGENTS\n');
+    writeFile(tmp, '.csp/manifest.json', '{"manifest_id":"t","version":1,"items":[]}');
+    // advance past S0 → now at S1, where PMS governance gate fires
+    driveSdk('query drive.advance', tmp); // S0 → S1
+    const adv = JSON.parse(driveSdk('query drive.advance', tmp).out); // S1 advance
+    assert.equal(adv.status, 'blocked', 'PMS governance gate (at S1) must block advance');
+    assert.ok(adv.governance_failures && adv.governance_failures.some(f => f.spec === 'pms'),
+      'PMS governance failure must surface in advance.blocked');
+    // current_stage must still be S1
+    const s = JSON.parse(driveSdk('query drive.status', tmp).out);
+    assert.equal(s.current_stage, 'S1');
+  } finally { rmSync(tmp, { recursive: true, force: true }); }
 });
 
 test('csp-sdk: version subcommand prints package version', () => {

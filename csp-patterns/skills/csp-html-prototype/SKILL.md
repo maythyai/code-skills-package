@@ -52,14 +52,14 @@ $ARGUMENTS
 - desktop: 1440×900（桌面标准）
 
 **文件名规则：** 从需求中提取核心名词转为 kebab-case，并追加版本号后缀 `-v{N}`。
-- 首次生成：扫描 `{{当前工作区}}/prototype-html/` 目录下同名前缀文件，取最大版本号 +1；若无同名文件则从 `v1` 开始。
+- 首次生成：扫描 `{{当前工作区}}/.csp/artifacts/prototype-html/` 目录下同名前缀文件，取最大版本号 +1；若无同名文件则从 `v1` 开始。
 - 示例："骑士救助申请页" → `prototype-knight-rescue-v1.html`，再次生成 → `prototype-knight-rescue-v2.html`
 
 ### Step 2：确定输出路径
 
-生成的 HTML 文件输出到当前工作区的 `prototype-html` 目录。如果该目录不存在，则先创建：
+生成的 HTML 文件输出到当前工作区的 `.csp/artifacts/prototype-html` 目录。如果该目录不存在，则先创建：
 ```
-{{当前工作区}}/prototype-html/{filename}
+{{当前工作区}}/.csp/artifacts/prototype-html/{filename}
 ```
 
 ### Step 3：上下文收集
@@ -132,7 +132,7 @@ $ARGUMENTS
 
 ### Step 7：输出与提示
 
-1. 将 HTML 文件写入 `{{当前工作区}}/prototype-html/` 目录（若目录不存在则先创建）
+1. 将 HTML 文件写入 `{{当前工作区}}/.csp/artifacts/prototype-html/` 目录（若目录不存在则先创建）
 2. 告知用户文件路径，提示可在浏览器中直接打开预览
 3. 询问是否需要调整
 

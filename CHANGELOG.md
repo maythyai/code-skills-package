@@ -6,6 +6,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## Unreleased
 
+### Changed
+- **产物路径全仓库统一到 `.csp/`** — 消除散落在项目根的并行产物根，一对一换根保留内部结构与跨 skill 交接路径：
+  - `.planning/` → `.csp/planning/`（L2 csp-workflow 层：agents/workflows/commands/skills + `csp-meta` spec-contract 等 + `bin/csp-sdk.mjs` + `scripts/token-budget.mjs` + csp-router 派生 + `docs/ARCHITECTURE*.md`/`USER-GUIDE.md`）
+  - `spark-output/` → `.csp/spark/`（28 个 Spark 设计链 skill + `prompts/01-prd.md` + `.claude/agents/prd-writer.md`）
+  - `.csp-writer-memory/` → `.csp/writer-memory/`（含 `lib/memory-manager.ts` 的 `MEMORY_DIR` 常量）
+  - `screenshots/`(csp-e2e-case-automation) → `.csp/artifacts/verify/evidence/`；`h5-test-output/`(csp-h5-visual-testing) → `.csp/artifacts/verify/h5-test/`；`prototype-html/`(csp-html-prototype) → `.csp/artifacts/prototype-html/`
+  - 测试类证据（playwright/cross-layer/linked-test-runner）→ `.csp/artifacts/verify/evidence/`
+  - 正式化于 `CLAUDE.md` 文档边界节、`prompts/00-knowledge-hub.md` §四 + 文档管理边界 + Phase 1.5 散落归位表；`prompts/06-verify-ship.md` A 类归档清单补 `evidence/`/`ui-test-report`/`linked-verdict`。`.cursor/skills/`、`.claude/skills/` 镜像已同步；`npm run build:all` 已从迁移后的源重生成 registry/triggers/metadata/graph/page。
+- **release-manager (06) 新增"增量质量工作不当轮延后"铁律** — 审计/验证定级为"增量/增强、非 bug"的 gate 邻接项（覆盖率阈值 bump、Setting/E2E/契约测试、可观测性埋点）若属本版质量基线，必须当轮完成或显式 BLOCKED，不得以"gate 全绿/可上线/下轮再补"为由延后；`deferred` 项计入发布裁决缺口 K 不得隐瞒。同步更新 `prompts/06-verify-ship.md` 硬边界 11 + Fix Loop + 发布裁决 + 反模式表，`.claude/agents/README.md` 新增"完成纪律"节。
+
 ## [0.10.0] — 2026-08-26
 
 ### Added

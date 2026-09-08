@@ -309,7 +309,7 @@ csp-sdk query state.update "Status" "Phase ${PHASE_NUMBER} shipped — PR #${PR_
 
 If `commit_docs` is true:
 ```bash
-csp-sdk query commit "docs(${padded_phase}): ship phase ${PHASE_NUMBER} — PR #${PR_NUMBER}" --files .planning/STATE.md
+csp-sdk query commit "docs(${padded_phase}): ship phase ${PHASE_NUMBER} — PR #${PR_NUMBER}" --files .csp/planning/STATE.md
 ```
 </step>
 

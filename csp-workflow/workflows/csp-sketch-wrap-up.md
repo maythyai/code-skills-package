@@ -1,7 +1,7 @@
 <purpose>
 Curate sketch design findings and package them into a persistent project skill for future
-UI implementation. Reads from `.planning/sketches/`, writes skill to `./.claude/skills/sketch-findings-[project]/`
-(project-local) and summary to `.planning/sketches/WRAP-UP-SUMMARY.md`.
+UI implementation. Reads from `.csp/planning/sketches/`, writes skill to `./.claude/skills/sketch-findings-[project]/`
+(project-local) and summary to `.csp/planning/sketches/WRAP-UP-SUMMARY.md`.
 Companion to `/csp-sketch`.
 </purpose>
 
@@ -22,15 +22,15 @@ Read all files referenced by the invoking prompt's execution_context before star
 <step name="gather">
 ## Gather Sketch Inventory
 
-1. Read `.planning/sketches/MANIFEST.md` for the design direction and reference points
-2. Glob `.planning/sketches/*/README.md` and parse YAML frontmatter from each
+1. Read `.csp/planning/sketches/MANIFEST.md` for the design direction and reference points
+2. Glob `.csp/planning/sketches/*/README.md` and parse YAML frontmatter from each
 3. Check if `./.claude/skills/sketch-findings-*/SKILL.md` exists for this project
    - If yes: read its `processed_sketches` list and filter those out
    - If no: all sketches are candidates
 
 If no unprocessed sketches exist:
 ```
-No unprocessed sketches found in `.planning/sketches/`.
+No unprocessed sketches found in `.csp/planning/sketches/`.
 Run `/csp-sketch` first to create design explorations.
 ```
 Exit.
@@ -67,7 +67,7 @@ Sketch {NNN}: {name} — Winner: Variant {X}
 ──────────────────────────────────────────────────────────────
 
 **If "Let me look at it":**
-1. Provide: `open .planning/sketches/NNN-name/index.html`
+1. Provide: `open .csp/planning/sketches/NNN-name/index.html`
 2. Remind them which variant won and what to look for
 3. After they've looked, return to the include/exclude/partial decision
 
@@ -190,7 +190,7 @@ Original sketch HTML files are preserved in `sources/` for complete reference.
 <step name="write_summary">
 ## Write Planning Summary
 
-Write `.planning/sketches/WRAP-UP-SUMMARY.md` for project history:
+Write `.csp/planning/sketches/WRAP-UP-SUMMARY.md` for project history:
 
 ```markdown
 # Sketch Wrap-Up Summary
@@ -232,7 +232,7 @@ If this routing line already exists (append mode), leave it as-is.
 Commit all artifacts (if `COMMIT_DOCS` is true):
 
 ```bash
-csp-sdk query commit "docs(sketch-wrap-up): package [N] sketch findings into project skill" --files .planning/sketches/WRAP-UP-SUMMARY.md
+csp-sdk query commit "docs(sketch-wrap-up): package [N] sketch findings into project skill" --files .csp/planning/sketches/WRAP-UP-SUMMARY.md
 ```
 </step>
 
@@ -245,7 +245,7 @@ csp-sdk query commit "docs(sketch-wrap-up): package [N] sketch findings into pro
 **Curated:** {N} sketches ({included} included, {excluded} excluded)
 **Design areas:** {list}
 **Skill:** `./.claude/skills/sketch-findings-[project]/`
-**Summary:** `.planning/sketches/WRAP-UP-SUMMARY.md`
+**Summary:** `.csp/planning/sketches/WRAP-UP-SUMMARY.md`
 **CLAUDE.md:** routing line added
 
 The sketch-findings skill will auto-load when building the UI.
@@ -278,7 +278,7 @@ The sketch-findings skill will auto-load when building the UI.
 - [ ] Sketch-findings skill exists at `./.claude/skills/` with SKILL.md, references/, sources/
 - [ ] Winning theme.css copied into skill sources
 - [ ] Reference files contain design decisions, CSS patterns, HTML structures, anti-patterns
-- [ ] `.planning/sketches/WRAP-UP-SUMMARY.md` written for project history
+- [ ] `.csp/planning/sketches/WRAP-UP-SUMMARY.md` written for project history
 - [ ] Project CLAUDE.md has auto-load routing line
 - [ ] Summary presented
 - [ ] Next-step options presented (including frontier sketch exploration via `/csp-sketch`)

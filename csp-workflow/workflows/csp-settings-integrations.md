@@ -2,7 +2,7 @@
 Interactive configuration of third-party integrations for CSP — search API keys
 (Brave / Firecrawl / Exa), code-review CLI routing (`review.models.<cli>`), and
 agent-skill injection (`agent_skills.<agent-type>`). Writes to
-`.planning/config.json` via `csp-sdk`/`csp-tools` so unrelated keys are
+`.csp/planning/config.json` via `csp-sdk`/`csp-tools` so unrelated keys are
 preserved, never clobbered.
 
 This command is deliberately separate from `/csp-settings` (workflow toggles)
@@ -12,7 +12,7 @@ cross-tool routing are *connectivity* concerns, not workflow or tuning knobs.
 
 <security>
 **API keys are secrets.** They are written as plaintext to
-`.planning/config.json` — that is where secrets live on disk, and file
+`.csp/planning/config.json` — that is where secrets live on disk, and file
 permissions are the security boundary. The UI must never display, echo, or
 log the plaintext value. The workflow follows these rules:
 
@@ -21,7 +21,7 @@ log the plaintext value. The workflow follows these rules:
   secret does not leak a meaningful fraction of its bytes. Unset values render
   as `(unset)`.
 - **Plaintext is never echoed by AskUserQuestion descriptions, confirmation
-  tables, or any log line.** It is not written to any file under `.planning/`
+  tables, or any log line.** It is not written to any file under `.csp/planning/`
   other than `config.json` itself.
 - **`config-set` output is masked** for keys in the secret set
   (`brave_search`, `firecrawl`, `exa_search`) — see
@@ -44,11 +44,11 @@ Ensure config exists and resolve the active config path (flat vs workstream, #22
 ```bash
 csp-sdk query config-ensure-section
 if [[ -z "${CSP_CONFIG_PATH:-}" ]]; then
-  if [[ -f .planning/active-workstream ]]; then
-    WS=$(tr -d '\n\r' < .planning/active-workstream)
-    CSP_CONFIG_PATH=".planning/workstreams/${WS}/config.json"
+  if [[ -f .csp/planning/active-workstream ]]; then
+    WS=$(tr -d '\n\r' < .csp/planning/active-workstream)
+    CSP_CONFIG_PATH=".csp/planning/workstreams/${WS}/config.json"
   else
-    CSP_CONFIG_PATH=".planning/config.json"
+    CSP_CONFIG_PATH=".csp/planning/config.json"
   fi
 fi
 ```
@@ -258,7 +258,7 @@ Agent Skills Injection
 | ...              | ...                       |
 
 Notes:
-- API keys are stored plaintext in .planning/config.json. The confirmation
+- API keys are stored plaintext in .csp/planning/config.json. The confirmation
   table above never displays plaintext — keys appear as ****<last-4>.
 - Plaintext is not echoed back by this workflow, not written to any log,
   and not displayed in error messages.

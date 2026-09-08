@@ -13,7 +13,7 @@ phase sequence and accumulate context over time.
 Check for existing backlog entries:
 
 ```bash
-cat .planning/ROADMAP.md
+cat .csp/planning/ROADMAP.md
 ```
 
 ## Step 2: Find next backlog number
@@ -49,13 +49,13 @@ Plans:
 
 ## Step 4: Create the phase directory
 
-Apply the `project_code` prefix (if set in `.planning/config.json`) so the backlog directory name is consistent with all other phase-creation paths:
+Apply the `project_code` prefix (if set in `.csp/planning/config.json`) so the backlog directory name is consistent with all other phase-creation paths:
 
 ```bash
 SLUG=$(csp-sdk query generate-slug "$ARGUMENTS" --raw)
 PROJECT_CODE=$(csp-sdk query config-get project_code --raw 2>/dev/null || echo "")
 PREFIX=$([ -n "$PROJECT_CODE" ] && echo "${PROJECT_CODE}-" || echo "")
-PHASE_DIR=".planning/phases/${PREFIX}${NEXT}-${SLUG}"
+PHASE_DIR=".csp/planning/phases/${PREFIX}${NEXT}-${SLUG}"
 mkdir -p "${PHASE_DIR}"
 touch "${PHASE_DIR}/.gitkeep"
 ```
@@ -63,7 +63,7 @@ touch "${PHASE_DIR}/.gitkeep"
 ## Step 5: Commit
 
 ```bash
-csp-sdk query commit "docs: add backlog item ${NEXT} — ${ARGUMENTS}" --files .planning/ROADMAP.md "${PHASE_DIR}/.gitkeep"
+csp-sdk query commit "docs: add backlog item ${NEXT} — ${ARGUMENTS}" --files .csp/planning/ROADMAP.md "${PHASE_DIR}/.gitkeep"
 ```
 
 ## Step 6: Report

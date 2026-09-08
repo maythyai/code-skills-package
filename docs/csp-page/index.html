@@ -351,7 +351,7 @@ a { color: var(--layer-1); text-decoration: none; }
 // ═══════════════════════════════════════════════════
 const CSP_DATA = {
   "stats": {
-    "total": 660,
+    "total": 661,
     "by_layer": {
       "Meta": {
         "count": 26,
@@ -359,7 +359,7 @@ const CSP_DATA = {
         "color": "#3b82f6"
       },
       "Patterns": {
-        "count": 381,
+        "count": 382,
         "layer": "L3",
         "color": "#a855f7"
       },
@@ -381,7 +381,7 @@ const CSP_DATA = {
     },
     "by_category": {
       "meta": 26,
-      "patterns": 381,
+      "patterns": 382,
       "router": 1,
       "runtime": 58,
       "workflow": 194
@@ -4634,7 +4634,7 @@ const CSP_DATA = {
     },
     {
       "name": "csp-data-pipeline-patterns",
-      "description": "Production data pipeline patterns covering Airflow DAG design, dbt transformations, data quality checks, incremental processing, idempotent pipelines, schema evolution, data lineage, ODPS/MaxCompute, data lake/warehouse patterns, and CDC with Debezium. Use when designing, building, or debugging data",
+      "description": "Production data pipeline patterns covering Airflow DAG design, dbt transformations, data quality checks, incremental processing, idempotent pipelines, schema evolution, data lineage, partitioned data warehouse patterns (BigQuery / Snowflake / generic ANSI SQL), data lake/warehouse patterns, and CDC ",
       "category": "patterns",
       "layer": "L3",
       "layer_name": "Patterns",
@@ -4807,6 +4807,25 @@ const CSP_DATA = {
       "triggers": {
         "en": [
           "csp-docs-lookup"
+        ],
+        "zh": []
+      }
+    },
+    {
+      "name": "csp-e2e-case-automation",
+      "description": "从自然语言/JSON 测试用例自动生成并执行 Playwright 端到端测试：解析用例步骤 → 自愈式 元素定位（经验学习 > 动态探测 > ID > 邻近 > 语义 > 属性 > CSS）→ 执行并采集证据 → 通过后生成确定性 TypeScript 测试脚本。支持登录态复用、增量执行（跳过已存在脚本）、 业务术语库与经验库持续学习。当用户提供 JSON 测试用例并要求执行/生成 E2E 脚本，或需要 把自然语言用例沉淀为可维护 Playwright 脚本时使用。务必在「用例 → 可执行脚本」转化场景 使用此 skill，而不是手写 .spec.ts 后再调试。",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "csp-e2e-case-automation",
+          "e2e",
+          "e2e case automation",
+          "e2e-case-automation",
+          "fix e2e case automation",
+          "review e2e case automation"
         ],
         "zh": []
       }
@@ -8465,7 +8484,7 @@ const CSP_DATA = {
     },
     {
       "name": "csp-intel-updater",
-      "description": "Analyzes codebase and writes structured intel files to .planning/intel/.",
+      "description": "Analyzes codebase and writes structured intel files to .csp/planning/intel/.",
       "category": "workflow",
       "layer": "L2",
       "layer_name": "Workflow",
@@ -8563,7 +8582,7 @@ const CSP_DATA = {
     },
     {
       "name": "csp-project-researcher",
-      "description": "Researches domain ecosystem before roadmap creation. Produces files in .planning/research/ consumed during roadmap creation. Spawned by /csp-new-project or /csp-new-milestone orchestrators.",
+      "description": "Researches domain ecosystem before roadmap creation. Produces files in .csp/planning/research/ consumed during roadmap creation. Spawned by /csp-new-project or /csp-new-milestone orchestrators.",
       "category": "workflow",
       "layer": "L2",
       "layer_name": "Workflow",
@@ -9043,7 +9062,7 @@ const CSP_DATA = {
     },
     {
       "name": "csp-graphify",
-      "description": "Build, query, and inspect the project knowledge graph in .planning/graphs/",
+      "description": "Build, query, and inspect the project knowledge graph in .csp/planning/graphs/",
       "category": "workflow",
       "layer": "L2",
       "layer_name": "Workflow",
@@ -9143,7 +9162,7 @@ const CSP_DATA = {
     },
     {
       "name": "csp-ingest-docs",
-      "description": "Bootstrap or merge a .planning/ setup from existing ADRs, PRDs, SPECs, and docs in a repo.",
+      "description": "Bootstrap or merge a .csp/planning/ setup from existing ADRs, PRDs, SPECs, and docs in a repo.",
       "category": "workflow",
       "layer": "L2",
       "layer_name": "Workflow",
@@ -9195,7 +9214,7 @@ const CSP_DATA = {
     },
     {
       "name": "csp-map-codebase",
-      "description": "Analyze codebase with parallel mapper agents to produce .planning/codebase/ documents",
+      "description": "Analyze codebase with parallel mapper agents to produce .csp/planning/codebase/ documents",
       "category": "workflow",
       "layer": "L2",
       "layer_name": "Workflow",
@@ -9487,7 +9506,7 @@ const CSP_DATA = {
     },
     {
       "name": "csp-pr-branch",
-      "description": "Create a clean PR branch by filtering out .planning/ commits — ready for code review",
+      "description": "Create a clean PR branch by filtering out .csp/planning/ commits — ready for code review",
       "category": "workflow",
       "layer": "L2",
       "layer_name": "Workflow",
@@ -10516,7 +10535,7 @@ const CSP_DATA = {
     },
     {
       "name": "csp-plan-phase",
-      "description": "实施规划阶段引擎。从任务拆解和工作量估算出发，制定详细的实施计划。 包括：里程碑规划、资源分配、风险缓冲、并行策略、进度跟踪方案。 是\"任务拆解→实施执行\"之间的桥梁，为 csp-implementation-phase 提供可执行的计划。 当任务拆解和估时完成需要制定实施计划、或用户需要\"实施计划\"、\"开发计划\"、\"里程碑\"时使用。 关键词：实施计划、开发计划、里程碑、milestone、implementation plan、执行计划、 项目计划、迭代计划、排期、交付计划、release plan、sprint plan。",
+      "description": "实施规划阶段引擎。从任务拆解出发，制定详细的实施计划。 包括：里程碑规划、资源分配、风险缓冲、并行策略、进度跟踪方案。 是\"任务拆解→实施执行\"之间的桥梁，为 csp-implementation-phase 提供可执行的计划。 当任务拆解完成需要制定实施计划、或用户需要\"实施计划\"、\"开发计划\"、\"里程碑\"时使用。 关键词：实施计划、开发计划、里程碑、milestone、implementation plan、执行计划、 项目计划、迭代计划、交付计划、release plan、sprint plan。",
       "category": "workflow",
       "layer": "L2",
       "layer_name": "Workflow",
@@ -10579,7 +10598,7 @@ const CSP_DATA = {
     },
     {
       "name": "csp-prd-parser",
-      "description": "多格式 PRD 文档解析器。统一解析多种格式的 PRD 文档（语雀、Markdown、纯文本）， 提取结构化信息，输出标准化的 PRD-IR（PRD 中间表示），供下游 skill 消费。 支持自动格式检测、章节识别、功能点提取、用户故事提取、约束条件识别。 当用户提供 PRD 文档链接或内容需要解析、或需要\"解析 PRD\"、\"提取需求\"、\"PRD格式化\"时使用。 关键词：解析 PRD、PRD 解析、提取需求、需求提取、PRD 格式化、 文档解析、结构化需求、parse PRD、extract requirements、PRD 结构化、 文档转需求、需求文档解析、PRD 链接解析、prd pa",
+      "description": "多格式 PRD 文档解析器。统一解析多种格式的 PRD 文档（语雀/Notion/Confluence 等在线文档、Markdown、纯文本）， 提取结构化信息，输出标准化的 PRD-IR（PRD 中间表示），供下游 skill 消费。 支持自动格式检测、章节识别、功能点提取、用户故事提取、约束条件识别。 当用户提供 PRD 文档链接或内容需要解析、或需要\"解析 PRD\"、\"提取需求\"、\"PRD格式化\"时使用。 关键词：解析 PRD、PRD 解析、提取需求、需求提取、PRD 格式化、 文档解析、结构化需求、parse PRD、extract requirements、PRD 结构化、 文档转需",
       "category": "workflow",
       "layer": "L2",
       "layer_name": "Workflow",
@@ -10701,7 +10720,7 @@ const CSP_DATA = {
     },
     {
       "name": "csp-qa-cr-review",
-      "description": "系统化 Code Review 评审工作流。覆盖影响范围、安全性、代码质量、测试覆盖、性能、可维护性六个维度，支持大 CR 并行模式、蒸馏增强调用链追溯、增量版本评审，以及自动生成 Aone TestHub xlsx 测试用例。",
+      "description": "系统化 Code Review 评审工作流。覆盖影响范围、安全性、代码质量、测试覆盖、性能、可维护性六个维度，支持大 CR 并行模式、蒸馏增强调用链追溯、增量版本评审，以及自动生成测试用例平台 xlsx 用例。",
       "category": "workflow",
       "layer": "L2",
       "layer_name": "Workflow",
@@ -10950,7 +10969,7 @@ const CSP_DATA = {
     },
     {
       "name": "csp-tech-task-breakdown",
-      "description": "技术方案到开发任务拆解引擎。从技术方案和 Feature Spec 出发，拆解为可执行的原子开发任务。 每个任务包含：精确文件路径、技术要点、估时、依赖、优先级、WBS 编号、验收标准。 支持 Waves 划分、并行策略优化、关键路径识别。 当技术方案评审通过后需要拆解任务、或用户需要\"任务拆解\"、\"WBS\"、\"开发计划\"、\"Sprint拆解\"时使用。 关键词：任务拆解、WBS、开发任务、Sprint拆解、任务分解、开发计划、task breakdown、 工作分解、开发排期、task list、任务清单、开发估算、实施计划、拆分任务、 开发任务拆解、编码任务、编程任务清单、开发 backlo",
+      "description": "技术方案到开发任务拆解引擎。从技术方案和 Feature Spec 出发，拆解为可执行的原子开发任务。 每个任务包含：精确文件路径、技术要点、依赖、优先级、WBS 编号、验收标准。 支持 Waves 划分、并行策略优化、关键路径识别。 当技术方案评审通过后需要拆解任务、或用户需要\"任务拆解\"、\"WBS\"、\"开发计划\"、\"Sprint拆解\"时使用。 关键词：任务拆解、WBS、开发任务、Sprint拆解、任务分解、开发计划、task breakdown、 工作分解、开发排期、task list、任务清单、开发估算、实施计划、拆分任务、 开发任务拆解、编码任务、编程任务清单、开发 backlog、s",
       "category": "workflow",
       "layer": "L2",
       "layer_name": "Workflow",

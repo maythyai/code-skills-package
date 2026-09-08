@@ -1,5 +1,5 @@
 <purpose>
-Execute small, ad-hoc tasks with CSP guarantees (atomic commits, STATE.md tracking). Quick mode spawns csp-planner (quick mode) + csp-executor(s), tracks tasks in `.planning/quick/`, and updates STATE.md's "Quick Tasks Completed" table.
+Execute small, ad-hoc tasks with CSP guarantees (atomic commits, STATE.md tracking). Quick mode spawns csp-planner (quick mode) + csp-executor(s), tracks tasks in `.csp/planning/quick/`, and updates STATE.md's "Quick Tasks Completed" table.
 
 With `--full` flag: enables the complete quality pipeline — discussion + research + plan-checking + verification. One flag for everything.
 
@@ -253,7 +253,7 @@ mkdir -p "${task_dir}"
 Create the directory for this quick task:
 
 ```bash
-QUICK_DIR=".planning/quick/${quick_id}-${slug}"
+QUICK_DIR=".csp/planning/quick/${quick_id}-${slug}"
 mkdir -p "$QUICK_DIR"
 ```
 
@@ -419,8 +419,8 @@ Agent(
 **Output:** ${QUICK_DIR}/${quick_id}-RESEARCH.md
 
 <files_to_read>
-- .planning/STATE.md (Project state — what's already built)
-- .planning/PROJECT.md (Project context)
+- .csp/planning/STATE.md (Project state — what's already built)
+- .csp/planning/PROJECT.md (Project context)
 - ./CLAUDE.md (if exists — project-specific guidelines)
 ${DISCUSS_MODE ? '- ' + QUICK_DIR + '/' + quick_id + '-CONTEXT.md (User decisions — research should align with these)' : ''}
 </files_to_read>
@@ -477,7 +477,7 @@ Agent(
 **Description:** ${DESCRIPTION}
 
 <files_to_read>
-- .planning/STATE.md (Project State)
+- .csp/planning/STATE.md (Project State)
 - ./CLAUDE.md (if exists — follow project-specific guidelines)
 ${DISCUSS_MODE ? '- ' + QUICK_DIR + '/' + quick_id + '-CONTEXT.md (User decisions — locked, do not revisit)' : ''}
 ${RESEARCH_MODE ? '- ' + QUICK_DIR + '/' + quick_id + '-RESEARCH.md (Research findings — use to inform implementation choices)' : ''}
@@ -717,7 +717,7 @@ This corrects a known issue where EnterWorktree creates branches from main inste
 
 <files_to_read>
 - ${QUICK_DIR}/${quick_id}-PLAN.md (Plan)
-- .planning/STATE.md (Project state)
+- .csp/planning/STATE.md (Project state)
 - ./CLAUDE.md (Project instructions, if exists)
 - .claude/skills/ or .agents/skills/ (Project skills, if either exists — list skills, read SKILL.md for each, follow relevant rules during implementation)
 </files_to_read>
@@ -826,10 +826,10 @@ After executor returns:
        # Backup STATE.md and ROADMAP.md before merge (main always wins)
        STATE_BACKUP=$(mktemp)
        ROADMAP_BACKUP=$(mktemp)
-       [ -f .planning/STATE.md ] && cp .planning/STATE.md "$STATE_BACKUP" || true
-       [ -f .planning/ROADMAP.md ] && cp .planning/ROADMAP.md "$ROADMAP_BACKUP" || true
+       [ -f .csp/planning/STATE.md ] && cp .csp/planning/STATE.md "$STATE_BACKUP" || true
+       [ -f .csp/planning/ROADMAP.md ] && cp .csp/planning/ROADMAP.md "$ROADMAP_BACKUP" || true
 
-       # Pre-merge deletion guard: block merges that delete tracked .planning/ files
+       # Pre-merge deletion guard: block merges that delete tracked .csp/planning/ files
        DELETIONS=$(git diff --diff-filter=D --name-only HEAD..."$WT_BRANCH" 2>/dev/null || true)
        if [ -n "$DELETIONS" ]; then
          echo "BLOCKED: Worktree branch $WT_BRANCH contains file deletions: $DELETIONS"
@@ -842,13 +842,13 @@ After executor returns:
          echo "⚠ Merge conflict from worktree $WT_BRANCH — resolve manually"
          echo "  STATE.md backup:   $STATE_BACKUP"
          echo "  ROADMAP.md backup: $ROADMAP_BACKUP"
-         echo "  Restore with: cp \$STATE_BACKUP .planning/STATE.md && cp \$ROADMAP_BACKUP .planning/ROADMAP.md"
+         echo "  Restore with: cp \$STATE_BACKUP .csp/planning/STATE.md && cp \$ROADMAP_BACKUP .csp/planning/ROADMAP.md"
          break
        }
 
        # Restore orchestrator-owned files
-       if [ -s "$STATE_BACKUP" ]; then cp "$STATE_BACKUP" .planning/STATE.md; fi
-       if [ -s "$ROADMAP_BACKUP" ]; then cp "$ROADMAP_BACKUP" .planning/ROADMAP.md; fi
+       if [ -s "$STATE_BACKUP" ]; then cp "$STATE_BACKUP" .csp/planning/STATE.md; fi
+       if [ -s "$ROADMAP_BACKUP" ]; then cp "$ROADMAP_BACKUP" .csp/planning/ROADMAP.md; fi
        rm -f "$STATE_BACKUP" "$ROADMAP_BACKUP"
 
        # Detect files deleted on main but re-added by worktree merge
@@ -856,7 +856,7 @@ After executor returns:
        # A "resurrected" file must have a deletion event in main's ancestry —
        # brand-new files (e.g. SUMMARY.md just created by the agent) have no
        # such history and must NOT be removed (#2501, #3195).
-       DELETED_FILES=$(git diff --diff-filter=A --name-only HEAD~1 -- .planning/ 2>/dev/null || true)
+       DELETED_FILES=$(git diff --diff-filter=A --name-only HEAD~1 -- .csp/planning/ 2>/dev/null || true)
        for RESURRECTED in $DELETED_FILES; do
          # Only delete if this file was previously tracked on main and then
          # deliberately removed (has a deletion event in git history).
@@ -866,18 +866,18 @@ After executor returns:
          fi
        done
 
-       if ! git diff --quiet .planning/STATE.md .planning/ROADMAP.md 2>/dev/null || \
+       if ! git diff --quiet .csp/planning/STATE.md .csp/planning/ROADMAP.md 2>/dev/null || \
           [ -n "$DELETED_FILES" ]; then
          COMMIT_DOCS=$(csp-sdk query config-get commit_docs 2>/dev/null || echo "true")
          if [ "$COMMIT_DOCS" != "false" ]; then
-           git add .planning/STATE.md .planning/ROADMAP.md 2>/dev/null || true
+           git add .csp/planning/STATE.md .csp/planning/ROADMAP.md 2>/dev/null || true
            git commit --amend --no-edit 2>/dev/null || true
          fi
        fi
 
        # Safety net: rescue uncommitted SUMMARY.md before worktree removal (#2296, mirrors #2070, #2838).
        # Filesystem-level (find + cp) bypasses git's --exclude-standard filter, which silently
-       # drops .planning/SUMMARY.md when projects gitignore .planning/ — the rescue's prior
+       # drops .csp/planning/SUMMARY.md when projects gitignore .csp/planning/ — the rescue's prior
        # `git ls-files --exclude-standard` form returned empty in that case and the SUMMARY
        # was lost on `git worktree remove --force`.
        while IFS= read -r SUMMARY; do
@@ -888,7 +888,7 @@ After executor returns:
            cp "$SUMMARY" "$REL_PATH"
            echo "⚠ Rescued $REL_PATH from worktree before removal"
          fi
-       done < <(find "$WT/.planning" -name "*SUMMARY.md" 2>/dev/null)
+       done < <(find "$WT/.csp/planning" -name "*SUMMARY.md" 2>/dev/null)
 
        # Remove the worktree before deleting the branch. If removal fails,
        # leave the branch in place so the worktree remains recoverable (#3384).
@@ -957,7 +957,7 @@ else
 fi
 
 if [ -n "$DIFF_BASE" ]; then
-  CHANGED_FILES=$(git diff --name-only "${DIFF_BASE}..HEAD" -- . ':!.planning' 2>/dev/null | tr '\n' ' ')
+  CHANGED_FILES=$(git diff --name-only "${DIFF_BASE}..HEAD" -- . ':!.csp/planning' 2>/dev/null | tr '\n' ' ')
 else
   CHANGED_FILES=""
 fi
@@ -1094,7 +1094,7 @@ Stage and commit quick task artifacts. This step MUST always run — even if the
 Build file list:
 - `${QUICK_DIR}/${quick_id}-PLAN.md`
 - `${QUICK_DIR}/${quick_id}-SUMMARY.md`
-- `.planning/STATE.md`
+- `.csp/planning/STATE.md`
 - If `$DISCUSS_MODE` and context file exists: `${QUICK_DIR}/${quick_id}-CONTEXT.md`
 - If `$RESEARCH_MODE` and research file exists: `${QUICK_DIR}/${quick_id}-RESEARCH.md`
 - If `$VALIDATE_MODE` and verification file exists: `${QUICK_DIR}/${quick_id}-VERIFICATION.md`
@@ -1103,10 +1103,10 @@ Build file list:
 ```bash
 # Explicitly stage all artifacts before commit — PLAN.md may be untracked
 # if the executor ran without worktree isolation and committed docs early
-# Filter .planning/ files from staging if commit_docs is disabled (#1783)
+# Filter .csp/planning/ files from staging if commit_docs is disabled (#1783)
 COMMIT_DOCS=$(csp-sdk query config-get commit_docs 2>/dev/null || echo "true")
 if [ "$COMMIT_DOCS" = "false" ]; then
-  file_list_filtered=$(echo "${file_list}" | tr ' ' '\n' | grep -v '^\.planning/' | tr '\n' ' ')
+  file_list_filtered=$(echo "${file_list}" | tr ' ' '\n' | grep -v '^\.csp/planning/' | tr '\n' ' ')
   git add ${file_list_filtered} 2>/dev/null
 else
   git add ${file_list} 2>/dev/null
@@ -1165,7 +1165,7 @@ Ready for next task: /csp-quick ${CSP_WS}
 - [ ] `--full` sets all booleans (`$FULL_MODE`, `$DISCUSS_MODE`, `$RESEARCH_MODE`, `$VALIDATE_MODE`)
 - [ ] Slug generated (lowercase, hyphens, max 40 chars)
 - [ ] Quick ID generated (YYMMDD-xxx format, 2s Base36 precision)
-- [ ] Directory created at `.planning/quick/YYMMDD-xxx-slug/`
+- [ ] Directory created at `.csp/planning/quick/YYMMDD-xxx-slug/`
 - [ ] (--discuss) Gray areas identified and presented, decisions captured in `${quick_id}-CONTEXT.md`
 - [ ] (--research) Research agent spawned, `${quick_id}-RESEARCH.md` created
 - [ ] `${quick_id}-PLAN.md` created by planner (honors CONTEXT.md decisions when --discuss, uses RESEARCH.md findings when --research)

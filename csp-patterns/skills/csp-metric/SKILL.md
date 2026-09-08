@@ -42,7 +42,7 @@ tools: [Read, Write, Edit, Glob, Grep, Bash]
 按以下顺序尝试读取上下文：
 
 1. 扫描会话中的 marker：`brief` / `stories` / `frame` / `sitemap` / `flow-web` / `flow-mobile` / `pitch` / `qa`
-2. 读取项目目录 `spark-output/context/*.json`
+2. 读取项目目录 `.csp/spark/context/*.json`
 3. 至少要读到 **brief** 或 **frame**（最低门槛），否则降级到 Step 1 询问
 
 **字段映射（度量四级如何消费上游）**：
@@ -64,18 +64,18 @@ tools: [Read, Write, Edit, Glob, Grep, Bash]
 
 按 [chain-protocol.md](../../chain-protocol.md) §2.1 v1.1 智能适配规则：
 
-1. **写盘到 `spark-output/context/metric.json`**（必做，主持久化通道；目录不存在先创建）
+1. **写盘到 `.csp/spark/context/metric.json`**（必做，主持久化通道；目录不存在先创建）
 2. **chat 输出紧凑 marker**（⛔ 不要在 chat 内输出完整 JSON）：
 
    ```
-   <!-- spark-context:metric ref="spark-output/context/metric.json" -->
+   <!-- spark-context:metric ref=".csp/spark/context/metric.json" -->
    Metric 已保存：NSM=[name]，[N] Drivers / [M] Counters / [K] Health，[G] 个 must 埋点缺口待补
    <!-- /spark-context:metric -->
    ```
 
 降级 fallback：若写盘失败，输出完整 JSON marker（无 ref）。详见 §2.1。
 
-3. **额外保存 Markdown 报告**：`spark-output/metric/[project-slug].md`，含度量蓝图 + 埋点清单 + 仪表盘建议。
+3. **额外保存 Markdown 报告**：`.csp/spark/metric/[project-slug].md`，含度量蓝图 + 埋点清单 + 仪表盘建议。
 
 下游可消费 Skill：**Retro**（项目复盘时对照实际数据 vs 设计阶段定的指标） / **PRD**（PRD 的 Section 4 Goals & Metrics 可引用 Metric 输出的完整指标体系替代 Brief 简版） / **Pitch**（汇报时引用更详细的指标）。
 
@@ -104,7 +104,7 @@ tools: [Read, Write, Edit, Glob, Grep, Bash]
 本 Skill 在完全离线、无任何连接器的场景下即可完整交付，所有方法论与输出形态不依赖外部系统：
 
 - **指标体系四件套**：North Star / Driver / Counter / Health Metrics 完整方法论
-- **链式上下文双通道**：写入 `spark-output/context/metric.json` + 会话内 marker block，下游 Retro / PRD 可直接读取
+- **链式上下文双通道**：写入 `.csp/spark/context/metric.json` + 会话内 marker block，下游 Retro / PRD 可直接读取
 - **埋点缺口清单（给工程师）**：本地生成可直接交付
 - **Dashboard 建议**：与 Chart Skill 配合本地完成
 
@@ -330,7 +330,7 @@ instrumentation_gaps:
 
 ### Step 6 — 输出
 
-#### 6.1 Markdown 报告（输出到对话 + 保存到 `spark-output/metric/[project-slug].md`）
+#### 6.1 Markdown 报告（输出到对话 + 保存到 `.csp/spark/metric/[project-slug].md`）
 
 ```markdown
 # Metric Blueprint — [项目名]
@@ -415,7 +415,7 @@ instrumentation_gaps:
 
 按 [chain-protocol.md](../../chain-protocol.md) 第 2.1 节执行。
 
-**Step 1 — 写盘到 `spark-output/context/metric.json`**（必做，主持久化通道；目录不存在先创建）。写入以下完整 JSON：
+**Step 1 — 写盘到 `.csp/spark/context/metric.json`**（必做，主持久化通道；目录不存在先创建）。写入以下完整 JSON：
 
 ```
 {
@@ -451,7 +451,7 @@ instrumentation_gaps:
 **Step 2 — chat 输出紧凑 marker**（必做，⛔ **不要在 chat 内重复输出 Step 1 的完整 JSON**）：
 
 ```
-<!-- spark-context:metric ref="spark-output/context/metric.json" -->
+<!-- spark-context:metric ref=".csp/spark/context/metric.json" -->
 Metric 已保存：project=[project_name]，NSM=[name]（目标 [target]），[N] Drivers / [M] Counters / [K] Health，[G] 个 must 埋点缺口
 <!-- /spark-context:metric -->
 ```
@@ -463,18 +463,18 @@ Metric 已保存：project=[project_name]，NSM=[name]（目标 [target]），[N
 > **协议依据**：chain-protocol.md §九「面板自动生成约定」。本步在 Handoff 之前执行；**告知用户的提示必须作为独立段落输出，禁止折叠进 Handoff 末尾、禁止静默跳过**。
 
 1. **找模板**：定位 `_shared/dashboard-template.html`（依次：相对套件根 → `glob dashboard-template.html` 搜套件安装目录 → 三轮都失败时，**用独立段落醒目告知用户**：`⚠️ 链路面板模板未找到（套件安装可能不完整，建议重装）。本 Skill 已正常完成，下游链路不受影响。` 然后跳过本步、继续 Handoff，**不阻断 Skill 完成**）。
-2. **聚合 STATE**：扫 `spark-output/context/*.json`，聚合为 `{"project":"<brief.project_name 或 frame.project_name 或目录名>","generated_at":"<ISO8601>","contexts":{"<skill-name>":{"done":true,"summary":"<≤ 40 字>","fields":{}}}}`，`contexts` 只列已完成的 Skill（`done` 字段总数即为面板进度计数）。
-3. **克隆模板**到 `spark-output/dashboard.html`（覆盖），用正则 `/\/\*__SPARK_STATE_INJECT__\*\/null/` 替换为 `/*__SPARK_STATE_INJECT__*/<JSON.stringify(STATE)>`。
+2. **聚合 STATE**：扫 `.csp/spark/context/*.json`，聚合为 `{"project":"<brief.project_name 或 frame.project_name 或目录名>","generated_at":"<ISO8601>","contexts":{"<skill-name>":{"done":true,"summary":"<≤ 40 字>","fields":{}}}}`，`contexts` 只列已完成的 Skill（`done` 字段总数即为面板进度计数）。
+3. **克隆模板**到 `.csp/spark/dashboard.html`（覆盖），用正则 `/\/\*__SPARK_STATE_INJECT__\*\/null/` 替换为 `/*__SPARK_STATE_INJECT__*/<JSON.stringify(STATE)>`。
 4. **独立段落告知用户**（强提示，单独成段，与 Handoff 之间空一行；根据 `Object.keys(STATE.contexts).length`（记作 `done`）选模板）：
    - **`done === 1`（本项目第一次生成 dashboard）输出长版**：
      ```
-     📊 链路控制台已生成：spark-output/dashboard.html（双击在浏览器打开）
+     📊 链路控制台已生成：.csp/spark/dashboard.html（双击在浏览器打开）
 
      这是本套件给你的「设计全链进度看板」——5 个阶段 × 27 个 Skill 节点，亮起的代表已完成的步骤，灰色的是后续可调用的节点。每跑完一个 Skill 都会自动更新，建议钉在浏览器一个标签页里随时回看，能看清「现在在哪一步、下游还差什么、链路是否健康」。
      ```
    - **`done > 1`（后续更新）输出短版**：
      ```
-     📊 链路面板已更新 · 进度 [done]/27 · spark-output/dashboard.html
+     📊 链路面板已更新 · 进度 [done]/27 · .csp/spark/dashboard.html
      ```
 5. **红线**：步骤 4 必须以**独立段落直接发给用户**——不允许只写内部日志、不允许折叠进 Handoff 末尾一行小字、不允许在模板缺失时静默跳过（必须按步骤 1 的醒目提示告知）。
 

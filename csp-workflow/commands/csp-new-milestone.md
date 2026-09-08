@@ -16,11 +16,11 @@ Start a new milestone: questioning → research (optional) → requirements → 
 Brownfield equivalent of new-project. Project exists, PROJECT.md has history. Gathers "what's next", updates PROJECT.md, then runs requirements → roadmap cycle.
 
 **Creates/Updates:**
-- `.planning/PROJECT.md` — updated with new milestone goals
-- `.planning/research/` — domain research (optional, NEW features only)
-- `.planning/REQUIREMENTS.md` — scoped requirements for this milestone
-- `.planning/ROADMAP.md` — phase structure (continues numbering)
-- `.planning/STATE.md` — reset for new milestone
+- `.csp/planning/PROJECT.md` — updated with new milestone goals
+- `.csp/planning/research/` — domain research (optional, NEW features only)
+- `.csp/planning/REQUIREMENTS.md` — scoped requirements for this milestone
+- `.csp/planning/ROADMAP.md` — phase structure (continues numbering)
+- `.csp/planning/STATE.md` — reset for new milestone
 
 **After:** `/csp-plan-phase [N]` to start execution.
 </objective>

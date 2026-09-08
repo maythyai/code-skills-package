@@ -1,6 +1,6 @@
 ---
 name: csp-graphify
-description: "Build, query, and inspect the project knowledge graph in .planning/graphs/"
+description: "Build, query, and inspect the project knowledge graph in .csp/planning/graphs/"
 argument-hint: "[build|query <term>|status|diff]"
 allowed-tools:
   - Read
@@ -24,11 +24,11 @@ Then proceed to Step 1.
 
 ## Step 1 -- Config Gate
 
-Check if graphify is enabled by reading `.planning/config.json` directly using the Read tool.
+Check if graphify is enabled by reading `.csp/planning/config.json` directly using the Read tool.
 
 **DO NOT use the csp-tools config get-value command** -- it hard-exits on missing keys.
 
-1. Read `.planning/config.json` using the Read tool
+1. Read `.csp/planning/config.json` using the Read tool
 2. If the file does not exist: display the disabled message below and **STOP**
 3. Parse the JSON content. Check if `config.graphify && config.graphify.enabled === true`
 4. If `graphify.enabled` is NOT explicitly `true`: display the disabled message below and **STOP**
@@ -157,9 +157,9 @@ Run the build, copy artifacts, write the diff snapshot, and report the summary i
 
 ```bash
 graphify update . \
-  && cp graphify-out/graph.json .planning/graphs/graph.json \
-  && cp graphify-out/graph.html .planning/graphs/graph.html \
-  && cp graphify-out/GRAPH_REPORT.md .planning/graphs/GRAPH_REPORT.md \
+  && cp graphify-out/graph.json .csp/planning/graphs/graph.json \
+  && cp graphify-out/graph.html .csp/planning/graphs/graph.html \
+  && cp graphify-out/GRAPH_REPORT.md .csp/planning/graphs/GRAPH_REPORT.md \
   && node "$HOME/.claude/code-skills-package/bin/csp-tools.cjs" graphify build snapshot \
   && node "$HOME/.claude/code-skills-package/bin/csp-tools.cjs" graphify status
 ```
@@ -168,7 +168,7 @@ Do NOT pass `run_in_background: true`. Typical builds complete in 15-60 seconds 
 
 If the chain fails (non-zero exit):
 - Display: `## GRAPHIFY BUILD FAILED` followed by the captured stderr
-- Do NOT delete `.planning/graphs/` -- the prior valid graph remains available
+- Do NOT delete `.csp/planning/graphs/` -- the prior valid graph remains available
 - **STOP**
 
 If the chain succeeds:

@@ -53,7 +53,7 @@ tools: [Read, Write, Edit, Glob, Grep, Bash, WebFetch, WebSearch]
 
 读不到时降级到"纯扫码仓库 / 纯 Figma 文件"模式，并在 `fallback_applied` 里标 `no-upstream-chain`。
 
-### 下游输出（写入 spark-output/context/extract.json + 会话内 marker）
+### 下游输出（写入 .csp/spark/context/extract.json + 会话内 marker）
 
 写出 `extract.json` 后，下游可以这样消费：
 
@@ -84,7 +84,7 @@ extract.artifacts.design_md → 任何 AI agent 的 context window 输入
 - 输入为路径 / 仓库根 / `.` / 空 → **内部模式**默认触发
 - 显式 `--mode external|internal|figma` 参数 → 覆盖自动判别（`mode_resolved_by=explicit`）
 - 关键词触发：上文 description 触发关键词集合（"figma 抽 token" / "figma variables 导出" 强信号触发 Figma 模式）
-- **上游驱动触发（v0.5.2 新增）**：会话中检测到 `spark-output/context/flow-web.json` 或 `flow-mobile.json` 存在且 `generated_at` 距今 < 7 天 → **主动询问**用户：
+- **上游驱动触发（v0.5.2 新增）**：会话中检测到 `.csp/spark/context/flow-web.json` 或 `flow-mobile.json` 存在且 `generated_at` 距今 < 7 天 → **主动询问**用户：
   ```
   检测到刚跑完 /Web页面设计（或 /mobile页面设计），是否顺手抽一份 design.md？
   常见用途：
@@ -108,7 +108,7 @@ extract.artifacts.design_md → 任何 AI agent 的 context window 输入
 本 Skill 在完全离线、无任何连接器的场景下即可完整交付，所有方法论与输出形态不依赖外部系统：
 
 - **三模式统一 schema**：external designlang / internal CSS-in-JS AST / figma MCP 完整方法论
-- **链式上下文双通道**：写入 `spark-output/context/extract.json` + 会话内 marker block，下游 PRD / Flow Web/Mobile 可直接读取
+- **链式上下文双通道**：写入 `.csp/spark/context/extract.json` + 会话内 marker block，下游 PRD / Flow Web/Mobile 可直接读取
 - **SparkDesign 语义级 Diff**：命名 + 语义双层四桶分类（matched / semantic_match / project_specific / proposed_increment），36 条 alias 规则表本地完成
 - **internal 模式 CSS-in-JS AST 解析**：覆盖 styled-components / emotion，babel-parser 本地解析
 
@@ -163,7 +163,7 @@ extract.artifacts.design_md → 任何 AI agent 的 context window 输入
 默认核心产物（3 件，不可省略 —— 否则链路断开下游 Skill 无法读取）：
   ✅ design.md            机读 token spec（19 段 markdown，下游 /设计验收 /写PRD /Web页面设计 必读）
   ✅ tokens/*.json        W3C tokens + tailwind/shadcn theme（工程可直接 cp 使用）
-  ✅ extract.json         链路 context（写入 spark-output/context/，标记 source.type 与 fallback_applied）
+  ✅ extract.json         链路 context（写入 .csp/spark/context/，标记 source.type 与 fallback_applied）
 
 可选加件：
   ☐ preview.html         视觉预览页（适合分享给团队 / 非工程角色 review）
@@ -235,7 +235,7 @@ extract.artifacts.design_md → 任何 AI agent 的 context window 输入
 
 ```bash
 npx designlang <url> \
-  --out spark-output/extract/<slug>/ \
+  --out .csp/spark/extract/<slug>/ \
   --name <slug> \
   --wait 1500 \           # SPA 默认等 1.5s
   --depth ${depth:-0} \   # 多页时由用户指定，默认 0
@@ -331,7 +331,7 @@ npx designlang <url> \
 
 ### Step 6 · 多 Target 产物生成
 
-按用户 Step 1 选定的 `target_framework` 子集，生成对应文件，全部写入 `spark-output/extract/<slug>/`：
+按用户 Step 1 选定的 `target_framework` 子集，生成对应文件，全部写入 `.csp/spark/extract/<slug>/`：
 
 | target | 产物 | 备注 |
 | --- | --- | --- |
@@ -353,9 +353,9 @@ npx designlang <url> \
 ```
 # 设计上下文
 本项目的设计语言已由 /extract 抽取，参考：
-- 完整 design.md： spark-output/extract/<slug>/<slug>-design-language.md
-- Token JSON：     spark-output/extract/<slug>/<slug>-design-tokens.json
-- Tailwind 配置：  spark-output/extract/<slug>/<slug>-tailwind.config.js
+- 完整 design.md： .csp/spark/extract/<slug>/<slug>-design-language.md
+- Token JSON：     .csp/spark/extract/<slug>/<slug>-design-tokens.json
+- Tailwind 配置：  .csp/spark/extract/<slug>/<slug>-tailwind.config.js
 
 生成 UI 组件时，所有 color / spacing / radius / shadow 必须从上述 token 中选取，不得自创。
 SparkDesign 已有组件优先复用，sparkdesign_diff.matched 给出对齐表。
@@ -365,7 +365,7 @@ SparkDesign 已有组件优先复用，sparkdesign_diff.matched 给出对齐表�
 
 ### Step 8 · 写出 chain context
 
-按 schema 序列化为 `spark-output/context/extract.json` + 会话内 `<!-- spark-context:extract -->` marker block。
+按 schema 序列化为 `.csp/spark/context/extract.json` + 会话内 `<!-- spark-context:extract -->` marker block。
 
 ---
 
@@ -374,18 +374,18 @@ SparkDesign 已有组件优先复用，sparkdesign_diff.matched 给出对齐表�
 > **协议依据**：chain-protocol.md §九「面板自动生成约定」。本步在 Handoff 之前执行；**告知用户的提示必须作为独立段落输出，禁止折叠进 Handoff 末尾、禁止静默跳过**。
 
 1. **找模板**：定位 `_shared/dashboard-template.html`（依次：相对套件根 → `glob dashboard-template.html` 搜套件安装目录 → 三轮都失败时，**用独立段落醒目告知用户**：`⚠️ 链路面板模板未找到（套件安装可能不完整，建议重装）。本 Skill 已正常完成，下游链路不受影响。` 然后跳过本步、继续 Handoff，**不阻断 Skill 完成**）。
-2. **聚合 STATE**：扫 `spark-output/context/*.json`，聚合为 `{"project":"<brief.project_name 或 frame.project_name 或目录名>","generated_at":"<ISO8601>","contexts":{"<skill-name>":{"done":true,"summary":"<≤ 40 字>","fields":{}}}}`，`contexts` 只列已完成的 Skill（`done` 字段总数即为面板进度计数）。
-3. **克隆模板**到 `spark-output/dashboard.html`（覆盖），用正则 `/\/\*__SPARK_STATE_INJECT__\*\/null/` 替换为 `/*__SPARK_STATE_INJECT__*/<JSON.stringify(STATE)>`。
+2. **聚合 STATE**：扫 `.csp/spark/context/*.json`，聚合为 `{"project":"<brief.project_name 或 frame.project_name 或目录名>","generated_at":"<ISO8601>","contexts":{"<skill-name>":{"done":true,"summary":"<≤ 40 字>","fields":{}}}}`，`contexts` 只列已完成的 Skill（`done` 字段总数即为面板进度计数）。
+3. **克隆模板**到 `.csp/spark/dashboard.html`（覆盖），用正则 `/\/\*__SPARK_STATE_INJECT__\*\/null/` 替换为 `/*__SPARK_STATE_INJECT__*/<JSON.stringify(STATE)>`。
 4. **独立段落告知用户**（强提示，单独成段，与 Handoff 之间空一行；根据 `Object.keys(STATE.contexts).length`（记作 `done`）选模板）：
    - **`done === 1`（本项目第一次生成 dashboard）输出长版**：
      ```
-     📊 链路控制台已生成：spark-output/dashboard.html（双击在浏览器打开）
+     📊 链路控制台已生成：.csp/spark/dashboard.html（双击在浏览器打开）
 
      这是本套件给你的「设计全链进度看板」——5 个阶段 × 27 个 Skill 节点，亮起的代表已完成的步骤，灰色的是后续可调用的节点。每跑完一个 Skill 都会自动更新，建议钉在浏览器一个标签页里随时回看，能看清「现在在哪一步、下游还差什么、链路是否健康」。
      ```
    - **`done > 1`（后续更新）输出短版**：
      ```
-     📊 链路面板已更新 · 进度 [done]/27 · spark-output/dashboard.html
+     📊 链路面板已更新 · 进度 [done]/27 · .csp/spark/dashboard.html
      ```
 5. **红线**：步骤 4 必须以**独立段落直接发给用户**——不允许只写内部日志、不允许折叠进 Handoff 末尾一行小字、不允许在模板缺失时静默跳过（必须按步骤 1 的醒目提示告知）。
 
@@ -511,7 +511,7 @@ card / dropdown / modal —— with HSL value, elevation 1-3
 8. **不抽 Figma 私密 / 草稿 page**（v0.5.2 新增）：仅抽 published page 内容；草稿 / 个人 page 即使技术上能拿到也不抽（避免泄露未公开的设计方向）
 9. **不分析 CSS-in-JS 模板插值**（v0.5.2 新增）：`styled.div\`color: ${getColor()}\`` 这类动态插值不做 dataflow 分析，只抽字面值；强行猜插值结果会导致产物失真
 10. **外部模式禁止用浏览器 JS computed style 替代 designlang CLI**（v0.5.3 新增）：外部模式底层**必须**调 `npx designlang extract <url> --interactions`。浏览器 puppeteer / `getComputedStyle` 手工抓取**严禁**作为默认路径——会丢 motion / icon / gradient / breakpoint / z-index 等类别，且不可复现。仅在以下情况允许 fallback 到 JS 抓取：① CLI 不可安装（断网 / 防火墙）；② 站点显式封禁 designlang UA。两种情况必须在 `meta.fallback_reason` 显式标注且降级为「轻量版 extract」标签，不能伪装成完整产物
-11. **产物路径强约束**（v0.5.3 新增）：所有产物**必须**落在 `<project-root>/spark-output/extract/<slug>/` 下（`extract.json` 落 `<project-root>/spark-output/context/extract.json`）。**严禁**写到 Desktop / Documents 根目录 / 用户家目录 / 任何 `spark-output/` 之外的位置——一旦散落到其他目录，链路 context 立即失效，下游所有 Skill 都读不到本次产出。如果 project-root 检测不到（用户在 `$HOME` 直接跑、或在临时目录跑），Step 1.5 必须先 ASK 用户指定项目根，不允许默认落桌面
+11. **产物路径强约束**（v0.5.3 新增）：所有产物**必须**落在 `<project-root>/.csp/spark/extract/<slug>/` 下（`extract.json` 落 `<project-root>/.csp/spark/context/extract.json`）。**严禁**写到 Desktop / Documents 根目录 / 用户家目录 / 任何 `.csp/spark/` 之外的位置——一旦散落到其他目录，链路 context 立即失效，下游所有 Skill 都读不到本次产出。如果 project-root 检测不到（用户在 `$HOME` 直接跑、或在临时目录跑），Step 1.5 必须先 ASK 用户指定项目根，不允许默认落桌面
 
 ---
 

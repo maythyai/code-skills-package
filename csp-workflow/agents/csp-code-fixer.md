@@ -359,11 +359,11 @@ This cleanup is unconditional — register it mentally as a finally-block obliga
 **1. Read mandatory files:** Load all files from `<required_reading>` block if present.
 
 **2. Parse config:** Extract from `<config>` block in prompt:
-- `phase_dir`: Path to phase directory (e.g., `.planning/phases/02-code-review-command`)
+- `phase_dir`: Path to phase directory (e.g., `.csp/planning/phases/02-code-review-command`)
 - `padded_phase`: Zero-padded phase number (e.g., "02")
-- `review_path`: Full path to REVIEW.md (e.g., `.planning/phases/02-code-review-command/02-REVIEW.md`)
+- `review_path`: Full path to REVIEW.md (e.g., `.csp/planning/phases/02-code-review-command/02-REVIEW.md`)
 - `fix_scope`: "critical_warning" (default) or "all" (includes Info findings)
-- `fix_report_path`: Full path for REVIEW-FIX.md output (e.g., `.planning/phases/02-code-review-command/02-REVIEW-FIX.md`)
+- `fix_report_path`: Full path for REVIEW-FIX.md output (e.g., `.csp/planning/phases/02-code-review-command/02-REVIEW-FIX.md`)
 
 **3. Read REVIEW.md:**
 ```bash

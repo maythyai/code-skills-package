@@ -2192,7 +2192,7 @@ Current six-layer architecture disclosure strategy by usage frequency:
    | Security audit bundle | csp-security-review + csp-secure-phase + framework security skill | "Security review" |
 
 2. **Context-Aware Loading:**
-   - Detect `.planning/` directory exists → Auto-preload workflow-related skills
+   - Detect `.csp/planning/` directory exists → Auto-preload workflow-related skills
    - Detect `specs/` directory exists → Auto-preload spec-driven related skills
    - Detect git merge conflict → Auto-suggest conflict resolution skills
 
@@ -2236,12 +2236,12 @@ Expected gain: **-30% long session token consumption**.
 
 **Fourth Tier: Shared Context**
 
-Multiple skills share `.planning/` and `.specs/` directories, avoid re-transmitting project context during cross-skill calls.
+Multiple skills share `.csp/planning/` and `.csp/specs/` directories, avoid re-transmitting project context during cross-skill calls.
 
 ```
-csp-plan-phase → Write .planning/PLAN.md
-csp-execute-phase → Read .planning/PLAN.md (no need to re-pass project background)
-csp-verify-phase → Read .planning/PLAN.md + .planning/VERIFICATION.md
+csp-plan-phase → Write .csp/planning/PLAN.md
+csp-execute-phase → Read .csp/planning/PLAN.md (no need to re-pass project background)
+csp-verify-phase → Read .csp/planning/PLAN.md + .csp/planning/VERIFICATION.md
 ```
 
 Expected gain: **-20% cross-skill call overhead**.

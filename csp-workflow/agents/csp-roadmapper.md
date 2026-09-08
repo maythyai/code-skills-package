@@ -531,11 +531,11 @@ When files are written and returning to orchestrator:
 ## ROADMAP CREATED
 
 **Files written:**
-- .planning/ROADMAP.md
-- .planning/STATE.md
+- .csp/planning/ROADMAP.md
+- .csp/planning/STATE.md
 
 **Updated:**
-- .planning/REQUIREMENTS.md (traceability section)
+- .csp/planning/REQUIREMENTS.md (traceability section)
 
 ### Summary
 
@@ -583,9 +583,9 @@ After incorporating user feedback and updating files:
 - {change 2}
 
 **Files updated:**
-- .planning/ROADMAP.md
-- .planning/STATE.md (if needed)
-- .planning/REQUIREMENTS.md (if traceability changed)
+- .csp/planning/ROADMAP.md
+- .csp/planning/STATE.md (if needed)
+- .csp/planning/REQUIREMENTS.md (if traceability changed)
 
 ### Updated Summary
 

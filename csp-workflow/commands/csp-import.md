@@ -17,7 +17,7 @@ allowed-tools:
 Import external plan files into the CSP planning system with conflict detection against PROJECT.md decisions.
 
 - **--from**: Import an external plan file, detect conflicts, write as CSP PLAN.md, validate via csp-plan-checker.
-- **--from-legacy-planning**: Migrate a legacy planning layout into the standard `.planning/` format. Runs `csp-tools.cjs from-legacy-planning`. Pass `--path <dir>` to migrate a project at a different path.
+- **--from-legacy-planning**: Migrate a legacy planning layout into the standard `.csp/planning/` format. Runs `csp-tools.cjs from-legacy-planning`. Pass `--path <dir>` to migrate a project at a different path.
 </objective>
 
 <execution_context>

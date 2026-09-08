@@ -602,14 +602,14 @@ SECURITY_BLOCK=$(csp-sdk query config-get workflow.security_block_on --raw 2>/de
 
 Each PLAN.md must include a <threat_model> block.
 Block on: {SECURITY_BLOCK} severity threats.
-Opt out: set security_enforcement: false in .planning/config.json
+Opt out: set security_enforcement: false in .csp/planning/config.json
 ```
 
 Continue to step 5.6. Security config is passed to the planner in step 8.
 
 ## 5.6. UI Design Contract Gate
 
-> Skip if `workflow.ui_phase` is explicitly `false` AND `workflow.ui_safety_gate` is explicitly `false` in `.planning/config.json`. If keys are absent, treat as enabled.
+> Skip if `workflow.ui_phase` is explicitly `false` AND `workflow.ui_safety_gate` is explicitly `false` in `.csp/planning/config.json`. If keys are absent, treat as enabled.
 
 ```bash
 UI_PHASE_CFG=$(csp-sdk query config-get workflow.ui_phase 2>/dev/null || echo "true")
@@ -1588,7 +1588,7 @@ This operation is idempotent: if wave headers or cross-cutting constraints alrea
 If `commit_docs` is true (from the init JSON parsed in step 1), commit the generated plan artifacts (including any ROADMAP.md annotations from step 13c):
 
 ```bash
-csp-sdk query commit "docs(${PADDED_PHASE}): create phase plan" --files "${PHASE_DIR}"/*-PLAN.md .planning/STATE.md .planning/ROADMAP.md
+csp-sdk query commit "docs(${PADDED_PHASE}): create phase plan" --files "${PHASE_DIR}"/*-PLAN.md .csp/planning/STATE.md .csp/planning/ROADMAP.md
 ```
 
 This commits all PLAN.md files for the phase plus the updated STATE.md and ROADMAP.md to version-control the planning artifacts. Skip this step if `commit_docs` is false.
@@ -1611,7 +1611,7 @@ if [ "$POST_PLANNING_GAPS" = "true" ]; then
 fi
 ```
 
-(`csp-tools.cjs gap-analysis` reads `.planning/REQUIREMENTS.md`, `${PHASE_DIR}/CONTEXT.md`,
+(`csp-tools.cjs gap-analysis` reads `.csp/planning/REQUIREMENTS.md`, `${PHASE_DIR}/CONTEXT.md`,
 and `${PHASE_DIR}/*-PLAN.md`, then prints a markdown table with one row per
 REQ-ID and D-ID. Word-boundary matching prevents `REQ-1` from being mistaken for
 `REQ-10`.)
@@ -1740,7 +1740,7 @@ Verification: {Passed | Passed with override | Skipped}
 ───────────────────────────────────────────────────────────────
 
 **Also available:**
-- cat .planning/phases/{phase-dir}/*-PLAN.md — review plans
+- cat .csp/planning/phases/{phase-dir}/*-PLAN.md — review plans
 - /csp-plan-phase {X} --research — re-research first
 - /csp-review --phase {X} --all — peer review plans with external AIs
 - /csp-plan-phase {X} --reviews — replan incorporating review feedback
@@ -1773,7 +1773,7 @@ If freezes persist, try `--skip-research` to reduce the agent chain from 3 to 2 
 </windows_troubleshooting>
 
 <success_criteria>
-- [ ] .planning/ directory validated
+- [ ] .csp/planning/ directory validated
 - [ ] Phase validated against roadmap
 - [ ] Phase directory created if needed
 - [ ] CONTEXT.md loaded early (step 4) and passed to ALL agents

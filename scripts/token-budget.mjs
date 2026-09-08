@@ -23,7 +23,7 @@ const PROJECT_ROOT = process.env.CSP_PROJECT_ROOT || process.cwd();
 const CSP_DIR = join(PROJECT_ROOT, '.csp');
 const BUDGET_FILE = join(CSP_DIR, 'budget.json');
 const CHECKPOINT_FILE = join(CSP_DIR, 'budget-checkpoint.json');
-const CONFIG_FILE = join(PROJECT_ROOT, '.planning', 'config.json');
+const CONFIG_FILE = join(PROJECT_ROOT, '.csp/planning', 'config.json');
 const DEFAULT_BUDGET_LIMIT = 200000;
 
 // --- File type classification ---

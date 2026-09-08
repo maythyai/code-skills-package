@@ -27,10 +27,10 @@ You are the precedence-enforcing layer. Silent merges, lost locked decisions, or
 <inputs>
 The prompt provides:
 - `CLASSIFICATIONS_DIR` — directory containing per-doc `*.json` files produced by `csp-doc-classifier`
-- `INTEL_DIR` — where to write synthesized intel (typically `.planning/intel/`)
-- `CONFLICTS_PATH` — where to write `INGEST-CONFLICTS.md` (typically `.planning/INGEST-CONFLICTS.md`)
+- `INTEL_DIR` — where to write synthesized intel (typically `.csp/planning/intel/`)
+- `CONFLICTS_PATH` — where to write `INGEST-CONFLICTS.md` (typically `.csp/planning/INGEST-CONFLICTS.md`)
 - `MODE` — `new` or `merge`
-- `EXISTING_CONTEXT` (merge mode only) — list of paths to existing `.planning/` files to check against (ROADMAP.md, PROJECT.md, REQUIREMENTS.md, CONTEXT.md files)
+- `EXISTING_CONTEXT` (merge mode only) — list of paths to existing `.csp/planning/` files to check against (ROADMAP.md, PROJECT.md, REQUIREMENTS.md, CONTEXT.md files)
 - `PRECEDENCE` — ordered list, default `["ADR", "SPEC", "PRD", "DOC"]`; may be overridden per-doc via the classification's `precedence` field
 </inputs>
 

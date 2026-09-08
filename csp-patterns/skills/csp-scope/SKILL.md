@@ -33,7 +33,7 @@ tools: [Read, Write, Edit, Glob, Grep, Bash]
 Scope 通常是链路起点，`reads: []`。但若用户在 Scope 之前用过其他 01 阶段 Skill，应尝试读取以利用：
 
 1. 扫描会话中的 `<!-- spark-context:audit -->` / `<!-- spark-context:probe -->` / `<!-- spark-context:bench -->` / `<!-- spark-context:signal -->` marker
-2. 读取项目目录 `spark-output/context/audit.json` / `probe.json` / `bench.json` / `signal.json`
+2. 读取项目目录 `.csp/spark/context/audit.json` / `probe.json` / `bench.json` / `signal.json`
 3. 都没有则按 standalone 模式启动（最常见）
 
 可复用字段映射（如有）：
@@ -54,9 +54,9 @@ Scope 通常是链路起点，`reads: []`。但若用户在 Scope 之前用过�
    <!-- /spark-context:scope -->
    ```
 
-2. **写入项目文件**：`spark-output/context/scope.json`（目录不存在时先创建）
+2. **写入项目文件**：`.csp/spark/context/scope.json`（目录不存在时先创建）
 
-3. **额外保存 Markdown 报告**：`spark-output/scope/[project-slug].md`，含完整提炼结果 + gaps 清单。
+3. **额外保存 Markdown 报告**：`.csp/spark/scope/[project-slug].md`，含完整提炼结果 + gaps 清单。
 
 ### 字段流向下游 Brief 的映射
 
@@ -105,7 +105,7 @@ Scope 输出的字段在用户进入 Brief 时会被自动复用：
 本 Skill 在完全离线、无任何连接器的场景下即可完整交付，所有方法论与输出形态不依赖外部系统：
 
 - **PRD 拆解模板**：产品定位 / 目标 / 用户 / 功能清单 / 约束 / 不做什么 / 设计 implications / Gaps 八段式输出
-- **链式上下文双通道**：写入 `spark-output/context/scope.json` + 会话内 marker block，Brief / Audit / Stories / PRD 等下游可直接读取
+- **链式上下文双通道**：写入 `.csp/spark/context/scope.json` + 会话内 marker block，Brief / Audit / Stories / PRD 等下游可直接读取
 - **Gaps 主动识别**：PRD 没说但设计需要的字段标注 `⚠️ Gaps`，下游 Brief Phase 3 追问可针对性补齐
 
 > 红线：缺连接器时 **绝不 abort**，所有引导与输出路径必须照常完成。
@@ -116,14 +116,14 @@ Scope 输出的字段在用户进入 Brief 时会被自动复用：
 
 | 连接器 | 阶段 | 增强能力 | 降级路径 |
 | --- | --- | --- | --- |
-| **Notion / 飞书文档** | 执行流程 Step 1（PRD 解析） | 直接拉取 PRD 文档（无需手动粘贴长文本），并搜索 wiki 历史同类 PRD 作为对照 | 未装时让用户粘贴 PRD 全文或上传 .md / .docx，解析路径完全一致 |
+| **Notion / 飞书** | 执行流程 Step 1（PRD 解析） | 直接拉取 PRD 文档（无需手动粘贴长文本），并搜索 wiki 历史同类 PRD 作为对照 | 未装时让用户粘贴 PRD 全文或上传 .md / .docx，解析路径完全一致 |
 | **Linear / Jira** | 执行流程 Step 1（背景对齐） | 若 PRD 关联 Epic，自动拉取 Epic 描述 / 子 issue 列表作为「功能清单」候选项 | 未装时仅依赖 PRD 正文，功能清单从 PRD 文本中提取 |
 
 **接入触发**：用户首次调用 `/读需求` 时，Skill 主动检测已认证的连接器并显示「已检测到：XXX，将自动启用增强模式」提示，用户可在该次会话中选择关闭。
 
 **字段流向变化**：
 
-- 启用 **Notion / 飞书文档** → `chain.schema` 新增可选字段 `source_prd_url: string`，下游 Brief / PRD 可在文档底部引用 PRD 原文链接
+- 启用 **Notion / 飞书** → `chain.schema` 新增可选字段 `source_prd_url: string`，下游 Brief / PRD 可在文档底部引用 PRD 原文链接
 - 启用 **Linear / Jira** → `chain.schema` 新增可选字段 `source_epic: {id, url, title}`，下游 PRD / Stories 读取后可自动关联同一 Epic
 
 > 所有新增字段都是 **可选**，未启用连接器时字段缺省，下游 Skill 必须能容忍缺省。
@@ -253,7 +253,7 @@ PRD 是 PM 视角的产物，**设计师需要的某些字段 PRD 几乎不会�
 
 #### 5.1 Markdown 报告
 
-输出到对话 + 保存到 `spark-output/scope/[project-slug].md`：
+输出到对话 + 保存到 `.csp/spark/scope/[project-slug].md`：
 
 ```markdown
 # Scope — [项目名]
@@ -316,7 +316,7 @@ PRD 是 PM 视角的产物，**设计师需要的某些字段 PRD 几乎不会�
 
 按 [chain-protocol.md](../../chain-protocol.md) §2.1 v1.1 智能适配规则：
 
-**Step 1 — 写盘到 `spark-output/context/scope.json`**（必做，主持久化通道；目录不存在先创建）。写入以下完整 JSON：
+**Step 1 — 写盘到 `.csp/spark/context/scope.json`**（必做，主持久化通道；目录不存在先创建）。写入以下完整 JSON：
 
 ```
 {
@@ -357,7 +357,7 @@ PRD 是 PM 视角的产物，**设计师需要的某些字段 PRD 几乎不会�
 **Step 2 — chat 输出紧凑 marker**（必做，⛔ **不要在 chat 内重复输出 Step 1 的完整 JSON**）：
 
 ```
-<!-- spark-context:scope ref="spark-output/context/scope.json" -->
+<!-- spark-context:scope ref=".csp/spark/context/scope.json" -->
 Scope 已保存：project=[project_name]，[N] 个 features，[M] 条 constraints，标注 [K] 个 gaps（如 persona / JTBD / design_criteria 等）
 <!-- /spark-context:scope -->
 ```
@@ -369,18 +369,18 @@ Scope 已保存：project=[project_name]，[N] 个 features，[M] 条 constraint
 > **协议依据**：chain-protocol.md §九「面板自动生成约定」。本步在 Handoff 之前执行；**告知用户的提示必须作为独立段落输出，禁止折叠进 Handoff 末尾、禁止静默跳过**。
 
 1. **找模板**：定位 `_shared/dashboard-template.html`（依次：相对套件根 → `glob dashboard-template.html` 搜套件安装目录 → 三轮都失败时，**用独立段落醒目告知用户**：`⚠️ 链路面板模板未找到（套件安装可能不完整，建议重装）。本 Skill 已正常完成，下游链路不受影响。` 然后跳过本步、继续 Handoff，**不阻断 Skill 完成**）。
-2. **聚合 STATE**：扫 `spark-output/context/*.json`，聚合为 `{"project":"<brief.project_name 或 frame.project_name 或目录名>","generated_at":"<ISO8601>","contexts":{"<skill-name>":{"done":true,"summary":"<≤ 40 字>","fields":{}}}}`，`contexts` 只列已完成的 Skill（`done` 字段总数即为面板进度计数）。
-3. **克隆模板**到 `spark-output/dashboard.html`（覆盖），用正则 `/\/\*__SPARK_STATE_INJECT__\*\/null/` 替换为 `/*__SPARK_STATE_INJECT__*/<JSON.stringify(STATE)>`。
+2. **聚合 STATE**：扫 `.csp/spark/context/*.json`，聚合为 `{"project":"<brief.project_name 或 frame.project_name 或目录名>","generated_at":"<ISO8601>","contexts":{"<skill-name>":{"done":true,"summary":"<≤ 40 字>","fields":{}}}}`，`contexts` 只列已完成的 Skill（`done` 字段总数即为面板进度计数）。
+3. **克隆模板**到 `.csp/spark/dashboard.html`（覆盖），用正则 `/\/\*__SPARK_STATE_INJECT__\*\/null/` 替换为 `/*__SPARK_STATE_INJECT__*/<JSON.stringify(STATE)>`。
 4. **独立段落告知用户**（强提示，单独成段，与 Handoff 之间空一行；根据 `Object.keys(STATE.contexts).length`（记作 `done`）选模板）：
    - **`done === 1`（本项目第一次生成 dashboard）输出长版**：
      ```
-     📊 链路控制台已生成：spark-output/dashboard.html（双击在浏览器打开）
+     📊 链路控制台已生成：.csp/spark/dashboard.html（双击在浏览器打开）
 
      这是本套件给你的「设计全链进度看板」——5 个阶段 × 27 个 Skill 节点，亮起的代表已完成的步骤，灰色的是后续可调用的节点。每跑完一个 Skill 都会自动更新，建议钉在浏览器一个标签页里随时回看，能看清「现在在哪一步、下游还差什么、链路是否健康」。
      ```
    - **`done > 1`（后续更新）输出短版**：
      ```
-     📊 链路面板已更新 · 进度 [done]/27 · spark-output/dashboard.html
+     📊 链路面板已更新 · 进度 [done]/27 · .csp/spark/dashboard.html
      ```
 5. **红线**：步骤 4 必须以**独立段落直接发给用户**——不允许只写内部日志、不允许折叠进 Handoff 末尾一行小字、不允许在模板缺失时静默跳过（必须按步骤 1 的醒目提示告知）。
 

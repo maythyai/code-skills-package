@@ -75,7 +75,7 @@ Create or update `INDEX.md` at root and each category level. Keep indexes short 
 | Anti-Pattern | Do This Instead |
 |---|---|
 | "I'll organize later" | Organize at each milestone boundary |
-| "Everything is in `.planning/`" | Split into plan (active) + archive (completed) |
+| "Everything is in `.csp/planning/`" | Split into plan (active) + archive (completed) |
 | "The INDEX.md is comprehensive" | Run link checks after every file move |
 | "Archive is a flat dump" | Group by version or theme |
 | "Reference and plans mixed" | Separate plan (expires) from reference (persistent) |

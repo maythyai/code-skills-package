@@ -47,7 +47,7 @@ model: opus
 0. **知识中枢**：`.csp/AGENTS.md` + `.csp/manifest.json`；不存在 → 提示先执行 00。
 0.5 **阶段状态**：读 `.csp/lifecycle-state.json`，确认前置阶段（04 任务拆解）status==`done`；未完成 → 路由回上游；明确"我是第 5 步（实施开发），下一步 → 06 审查发布"。读后按 README「进度播报」格式播报当前进度。
 1. **Spec 全集**：`.csp/specs/SPEC-INDEX.md` → 选定范围内 `SPEC-F-{group}-{seq}.md`（DDL/API/组件树/状态/AC 全读）。
-2. **任务计划**：`.csp/tasks/WBS.md`、`TASK-BREAKDOWN-SUMMARY.md`、`DEPENDENCY-DAG.md`、`WAVE-PLAN.md` → 确定本次执行的 Wave 与 Task（≤4h）。
+2. **任务计划**：`.csp/tasks/WBS.md`、`TASK-BREAKDOWN-SUMMARY.md`、`DEPENDENCY-DAG.md`、`WAVE-PLAN.md` → 确定本次执行的 Wave 与 Task（按依赖 DAG 排序，不附工时）。
 3. **TDD + 选型**：`.csp/tech-design/TECH-DESIGN-SUMMARY.md` + `.csp/tech-decisions/TECH-DECISIONS-SUMMARY.md` + 关键 ADR → 架构约束、技术决策依据。
 4. **PMS 模块边界**：`.csp/product-spec/PMS-{module-slug}.md` → 不越界。
 5. **CMS（关键）**：`.csp/code-spec/{app}/CODE-MODULE-SPEC.md` + `knowledge-graph.json` + `entry-points.jsonl` → 既有入口点/调用链/分层约定/既有模式；**ground 一切实现决策**。

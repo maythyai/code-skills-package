@@ -7,7 +7,7 @@ description: Instantly restore full project context so "Where were we?" has an i
 Use this workflow when:
 - Starting a new session on an existing project
 - User says "continue", "what's next", "where were we", "resume"
-- Any planning operation when .planning/ already exists
+- Any planning operation when .csp/planning/ already exists
 - User returns after time away from project
 </trigger>
 
@@ -41,8 +41,8 @@ Parse JSON for: `state_exists`, `roadmap_exists`, `project_exists`, `planning_ex
 Read and parse STATE.md, then PROJECT.md:
 
 ```bash
-cat .planning/STATE.md
-cat .planning/PROJECT.md
+cat .csp/planning/STATE.md
+cat .csp/planning/PROJECT.md
 ```
 
 **From STATE.md extract:**
@@ -69,20 +69,20 @@ Look for incomplete work that needs attention:
 
 ```bash
 # Check for structured handoff (preferred — machine-readable)
-cat .planning/HANDOFF.json 2>/dev/null || true
+cat .csp/planning/HANDOFF.json 2>/dev/null || true
 
 # Check for continue-here files (phase + non-phase + legacy fallback).
 # Use `find` rather than a chained `ls` of bare globs: under zsh's default
 # NOMATCH option (macOS default shell), a single non-matching glob aborts
 # the entire command during word-expansion — silently dropping every
-# pattern after the first miss, including `.planning/.continue-here*.md`.
+# pattern after the first miss, including `.csp/planning/.continue-here*.md`.
 # `find` does not use shell glob expansion and tolerates absent
 # directories on both bash and zsh.
-find .planning -maxdepth 3 -name '.continue-here*.md' -print 2>/dev/null || true
+find .csp/planning -maxdepth 3 -name '.continue-here*.md' -print 2>/dev/null || true
 find . -maxdepth 1 -name '.continue-here*.md' -print 2>/dev/null || true
 
 # Check for plans without summaries (incomplete execution)
-for plan in .planning/phases/*/*-PLAN.md; do
+for plan in .csp/planning/phases/*/*-PLAN.md; do
   [ -e "$plan" ] || continue
   summary="${plan/PLAN/SUMMARY}"
   [ ! -f "$summary" ] && echo "Incomplete: $plan"
@@ -228,7 +228,7 @@ What would you like to do?
 **Note:** When offering phase planning, check for CONTEXT.md existence first:
 
 ```bash
-ls .planning/phases/XX-name/*-CONTEXT.md 2>/dev/null || true
+ls .csp/planning/phases/XX-name/*-CONTEXT.md 2>/dev/null || true
 ```
 
 If missing, suggest discuss-phase before plan. If exists, offer plan directly.
@@ -272,7 +272,7 @@ Resume-specific exception: do **not** emit `/clear then:` here. Resume is alread
   ---
   ```
 - **Advance to next phase** → ./transition.md (internal workflow, invoked inline — NOT a user command)
-- **Check todos** → Read .planning/todos/pending/, present summary
+- **Check todos** → Read .csp/planning/todos/pending/, present summary
 - **Review alignment** → Read PROJECT.md, compare to current state
 - **Something else** → Ask what they need
 </step>
@@ -303,7 +303,7 @@ If STATE.md is missing but other artifacts exist:
 1. Read PROJECT.md → Extract "What This Is" and Core Value
 2. Read ROADMAP.md → Determine phases, find current position
 3. Scan \*-SUMMARY.md files → Extract decisions, concerns
-4. Count pending todos in .planning/todos/pending/
+4. Count pending todos in .csp/planning/todos/pending/
 5. Check for .continue-here files → Session continuity
 
 Reconstruct and write STATE.md, then proceed normally.
@@ -312,7 +312,7 @@ This handles cases where:
 
 - Project predates STATE.md introduction
 - File was accidentally deleted
-- Cloning repo without full .planning/ state
+- Cloning repo without full .csp/planning/ state
   </reconstruction>
 
 <quick_resume>

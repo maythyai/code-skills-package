@@ -221,7 +221,7 @@ if [ ${#REVIEW_FILES[@]} -eq 0 ]; then
     
     # Run git diff with specific exclusions (per D-03)
     DIFF_FILES=$(git diff --name-only "${DIFF_BASE}..HEAD" -- . \
-      ':!.planning/' ':!ROADMAP.md' ':!STATE.md' \
+      ':!.csp/planning/' ':!ROADMAP.md' ':!STATE.md' \
       ':!*-SUMMARY.md' ':!*-VERIFICATION.md' ':!*-PLAN.md' \
       ':!package-lock.json' ':!yarn.lock' ':!Gemfile.lock' ':!poetry.lock' 2>/dev/null)
     
@@ -245,7 +245,7 @@ fi
 FILTERED_FILES=()
 for file in "${REVIEW_FILES[@]}"; do
   # Skip planning directory and specific artifacts
-  if [[ "$file" == .planning/* ]] || \
+  if [[ "$file" == .csp/planning/* ]] || \
      [[ "$file" == ROADMAP.md ]] || \
      [[ "$file" == STATE.md ]] || \
      [[ "$file" == *-SUMMARY.md ]] || \

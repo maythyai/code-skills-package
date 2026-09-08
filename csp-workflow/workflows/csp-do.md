@@ -29,7 +29,7 @@ Wait for response before continuing.
 INIT=$(csp-sdk query state.load 2>/dev/null)
 ```
 
-Track whether `.planning/` exists — some routes require it, others don't.
+Track whether `.csp/planning/` exists — some routes require it, others don't.
 </step>
 
 <step name="route">
@@ -60,7 +60,7 @@ Evaluate `$ARGUMENTS` against these routing rules. Apply the **first matching** 
 | Completing a milestone, shipping, releasing | `/csp-complete-milestone` | Milestone lifecycle |
 | A specific, actionable, small task (add feature, fix typo, update config) | `/csp-quick` | Self-contained, single executor |
 
-**Requires `.planning/` directory:** All routes except `/csp-new-project`, `/csp-map-codebase`, `/csp-spike`, `/csp-sketch`, and `/csp-help`. If the project doesn't exist and the route requires it, suggest `/csp-new-project` first.
+**Requires `.csp/planning/` directory:** All routes except `/csp-new-project`, `/csp-map-codebase`, `/csp-spike`, `/csp-sketch`, and `/csp-help`. If the project doesn't exist and the route requires it, suggest `/csp-new-project` first.
 
 **Ambiguity handling:** If the text could reasonably match multiple routes, ask the user via AskUserQuestion with the top 2-3 options. For example:
 

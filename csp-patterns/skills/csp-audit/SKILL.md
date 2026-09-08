@@ -44,8 +44,8 @@ tools: [Read, Write, Edit, Glob, Grep, Bash, WebFetch, WebSearch]
 Audit 是改版项目入口（C 入口），声明读取 **frame** 和 **scope**——这两个是兄弟入口，一般互斥；但若改版项目同时已有 PRD（Scope）或对话推过方向（Frame），可读取作为参考。Probe / Signal / Bench 是按需深挖工具，不强制读取（因此不放进 chain.reads，避免循环 / 错误依赖）。
 
 1. 扫描会话中的 `<!-- spark-context:frame -->` / `<!-- spark-context:scope -->` marker
-2. 读取项目目录 `spark-output/context/frame.json` / `scope.json`
-3. **可选**：若用户跑过 Probe / Signal / Bench，扫描 `spark-output/context/probe.json` / `signal.json` / `bench.json` 作为参考输入
+2. 读取项目目录 `.csp/spark/context/frame.json` / `scope.json`
+3. **可选**：若用户跑过 Probe / Signal / Bench，扫描 `.csp/spark/context/probe.json` / `signal.json` / `bench.json` 作为参考输入
 4. 都没有则按 standalone 模式启动（最常见——改版项目通常先跑 Audit）
 
 可复用字段映射（如有）：
@@ -68,9 +68,9 @@ Audit 是改版项目入口（C 入口），声明读取 **frame** 和 **scope**
    <!-- /spark-context:audit -->
    ```
 
-2. **写入项目文件**：`spark-output/context/audit.json`（目录不存在时先创建）
+2. **写入项目文件**：`.csp/spark/context/audit.json`（目录不存在时先创建）
 
-3. **额外保存 Markdown 报告**：`spark-output/audit/[project-slug].md`，含完整 findings + 机会点矩阵 + 截图标注（如有）。
+3. **额外保存 Markdown 报告**：`.csp/spark/audit/[project-slug].md`，含完整 findings + 机会点矩阵 + 截图标注（如有）。
 
 ### 字段流向下游
 
@@ -87,18 +87,18 @@ Audit 的输出主要服务于 Brief 和 Stories：
 > **协议依据**：chain-protocol.md §九「面板自动生成约定」。本步在 Handoff 之前执行；**告知用户的提示必须作为独立段落输出，禁止折叠进 Handoff 末尾、禁止静默跳过**。
 
 1. **找模板**：定位 `_shared/dashboard-template.html`（依次：相对套件根 → `glob dashboard-template.html` 搜套件安装目录 → 三轮都失败时，**用独立段落醒目告知用户**：`⚠️ 链路面板模板未找到（套件安装可能不完整，建议重装）。本 Skill 已正常完成，下游链路不受影响。` 然后跳过本步、继续 Handoff，**不阻断 Skill 完成**）。
-2. **聚合 STATE**：扫 `spark-output/context/*.json`，聚合为 `{"project":"<brief.project_name 或 frame.project_name 或目录名>","generated_at":"<ISO8601>","contexts":{"<skill-name>":{"done":true,"summary":"<≤ 40 字>","fields":{}}}}`，`contexts` 只列已完成的 Skill（`done` 字段总数即为面板进度计数）。
-3. **克隆模板**到 `spark-output/dashboard.html`（覆盖），用正则 `/\/\*__SPARK_STATE_INJECT__\*\/null/` 替换为 `/*__SPARK_STATE_INJECT__*/<JSON.stringify(STATE)>`。
+2. **聚合 STATE**：扫 `.csp/spark/context/*.json`，聚合为 `{"project":"<brief.project_name 或 frame.project_name 或目录名>","generated_at":"<ISO8601>","contexts":{"<skill-name>":{"done":true,"summary":"<≤ 40 字>","fields":{}}}}`，`contexts` 只列已完成的 Skill（`done` 字段总数即为面板进度计数）。
+3. **克隆模板**到 `.csp/spark/dashboard.html`（覆盖），用正则 `/\/\*__SPARK_STATE_INJECT__\*\/null/` 替换为 `/*__SPARK_STATE_INJECT__*/<JSON.stringify(STATE)>`。
 4. **独立段落告知用户**（强提示，单独成段，与 Handoff 之间空一行；根据 `Object.keys(STATE.contexts).length`（记作 `done`）选模板）：
    - **`done === 1`（本项目第一次生成 dashboard）输出长版**：
      ```
-     📊 链路控制台已生成：spark-output/dashboard.html（双击在浏览器打开）
+     📊 链路控制台已生成：.csp/spark/dashboard.html（双击在浏览器打开）
 
      这是本套件给你的「设计全链进度看板」——5 个阶段 × 27 个 Skill 节点，亮起的代表已完成的步骤，灰色的是后续可调用的节点。每跑完一个 Skill 都会自动更新，建议钉在浏览器一个标签页里随时回看，能看清「现在在哪一步、下游还差什么、链路是否健康」。
      ```
    - **`done > 1`（后续更新）输出短版**：
      ```
-     📊 链路面板已更新 · 进度 [done]/27 · spark-output/dashboard.html
+     📊 链路面板已更新 · 进度 [done]/27 · .csp/spark/dashboard.html
      ```
 5. **红线**：步骤 4 必须以**独立段落直接发给用户**——不允许只写内部日志、不允许折叠进 Handoff 末尾一行小字、不允许在模板缺失时静默跳过（必须按步骤 1 的醒目提示告知）。
 
@@ -134,7 +134,7 @@ Audit 的输出主要服务于 Brief 和 Stories：
 本 Skill 在完全离线、无任何连接器的场景下即可完整交付，所有方法论与输出形态不依赖外部系统：
 
 - **Nielsen 十原则走查表**：内置 checklist + 严重度 0-4 分级 + 改版机会点排序
-- **链式上下文双通道**：写入 `spark-output/context/audit.json` + 会话内 marker block，Brief / Pitch / Retro 等下游可直接读取
+- **链式上下文双通道**：写入 `.csp/spark/context/audit.json` + 会话内 marker block，Brief / Pitch / Retro 等下游可直接读取
 - **Findings 清单 + 截图引用**：本地路径或描述均可，无需云端图床
 - **改版机会点优先级**：按 severity × frequency 自动排序，输出可直接进入 Brief 作为「问题驱动」型项目的依据
 
@@ -341,7 +341,7 @@ Audit 的输出主要服务于 Brief 和 Stories：
 
 #### 5.1 Markdown 报告
 
-输出到对话 + 保存到 `spark-output/audit/[project-slug].md`：
+输出到对话 + 保存到 `.csp/spark/audit/[project-slug].md`：
 
 ```markdown
 # Audit — [项目名]
@@ -399,7 +399,7 @@ Audit 的输出主要服务于 Brief 和 Stories：
 
 按 [chain-protocol.md](../../chain-protocol.md) §2.1 v1.1 智能适配规则：
 
-**Step 1 — 写盘到 `spark-output/context/audit.json`**（必做，主持久化通道；目录不存在先创建）。写入以下完整 JSON：
+**Step 1 — 写盘到 `.csp/spark/context/audit.json`**（必做，主持久化通道；目录不存在先创建）。写入以下完整 JSON：
 
 ```
 {
@@ -445,7 +445,7 @@ Audit 的输出主要服务于 Brief 和 Stories：
 **Step 2 — chat 输出紧凑 marker**（必做，⛔ **不要在 chat 内重复输出 Step 1 的完整 JSON**）：
 
 ```
-<!-- spark-context:audit ref="spark-output/context/audit.json" -->
+<!-- spark-context:audit ref=".csp/spark/context/audit.json" -->
 Audit 已保存：project=[project_name]，[N] 个 findings（blocker [n] / major [n] / minor [n]），聚类为 [M] 个改版机会点
 <!-- /spark-context:audit -->
 ```

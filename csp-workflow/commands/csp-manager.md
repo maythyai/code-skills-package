@@ -20,7 +20,7 @@ Designed for power users who want to parallelize work across phases from one ter
 
 **Creates/Updates:**
 - No files created directly — dispatches to existing CSP commands via Skill() and background Task agents.
-- Reads `.planning/STATE.md`, `.planning/ROADMAP.md`, phase directories for status.
+- Reads `.csp/planning/STATE.md`, `.csp/planning/ROADMAP.md`, phase directories for status.
 
 **After:** User exits when done managing, or all phases complete and milestone lifecycle is suggested.
 </objective>

@@ -12,7 +12,7 @@ Read all files referenced by the invoking prompt's execution_context before star
 
 ```bash
 # Find the most recent audit file
-(ls -t .planning/v*-MILESTONE-AUDIT.md 2>/dev/null || true) | head -1
+(ls -t .csp/planning/v*-MILESTONE-AUDIT.md 2>/dev/null || true) | head -1
 ```
 
 Parse YAML frontmatter to extract structured gaps:
@@ -134,7 +134,7 @@ Reset checked-off requirements the audit found unsatisfied:
 
 ```bash
 # Verify traceability table reflects gap closure assignments
-grep -c "Pending" .planning/REQUIREMENTS.md
+grep -c "Pending" .csp/planning/REQUIREMENTS.md
 ```
 
 ## 8. Create Phase Directories
@@ -148,12 +148,12 @@ expected_phase_dir=$(echo "$INIT" | node -e "process.stdout.write(JSON.parse(req
 mkdir -p "${expected_phase_dir}"
 ```
 
-Repeat for each gap-closure phase number. This produces `{CODE}-{NN}-{slug}/` when `project_code` is set in `.planning/config.json`, and `{NN}-{slug}/` otherwise — consistent with all other phase-creation paths.
+Repeat for each gap-closure phase number. This produces `{CODE}-{NN}-{slug}/` when `project_code` is set in `.csp/planning/config.json`, and `{NN}-{slug}/` otherwise — consistent with all other phase-creation paths.
 
 ## 9. Commit Roadmap and Requirements Update
 
 ```bash
-csp-sdk query commit "docs(roadmap): add gap closure phases {N}-{M}" --files .planning/ROADMAP.md .planning/REQUIREMENTS.md
+csp-sdk query commit "docs(roadmap): add gap closure phases {N}-{M}" --files .csp/planning/ROADMAP.md .csp/planning/REQUIREMENTS.md
 ```
 
 ## 10. Offer Next Steps
@@ -178,7 +178,7 @@ csp-sdk query commit "docs(roadmap): add gap closure phases {N}-{M}" --files .pl
 
 **Also available:**
 - `/csp-execute-phase {N}` — if plans already exist
-- `cat .planning/ROADMAP.md` — see updated roadmap
+- `cat .csp/planning/ROADMAP.md` — see updated roadmap
 
 ---
 

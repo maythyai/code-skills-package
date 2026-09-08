@@ -48,10 +48,10 @@ If the flag is absent, keep the current behavior of continuing phase numbering f
 
 ## 2.5. Scan Planted Seeds
 
-Check `.planning/seeds/` for seed files that match the milestone goals gathered in step 2.
+Check `.csp/planning/seeds/` for seed files that match the milestone goals gathered in step 2.
 
 ```bash
-ls .planning/seeds/SEED-*.md 2>/dev/null
+ls .csp/planning/seeds/SEED-*.md 2>/dev/null
 ```
 
 **If no seed files exist:** Skip this step silently — do not print any message or prompt.
@@ -93,7 +93,7 @@ AskUserQuestion(
 
 **After selection:**
 - Selected seeds become additional context for requirement definition in step 9. Store them in an accumulator (e.g. `$SELECTED_SEEDS`) so step 9 can reference the ideas and their "Why This Matters" sections when defining requirements.
-- Unselected seeds remain untouched in `.planning/seeds/` — never delete or modify seed files during this workflow.
+- Unselected seeds remain untouched in `.csp/planning/seeds/` — never delete or modify seed files during this workflow.
 
 ## 3. Determine Milestone Version
 
@@ -212,7 +212,7 @@ csp-sdk query phases.clear --confirm
 ```
 
 ```bash
-csp-sdk query commit "docs: start milestone v[X.Y] [Name]" --files .planning/PROJECT.md .planning/STATE.md
+csp-sdk query commit "docs: start milestone v[X.Y] [Name]" --files .csp/planning/PROJECT.md .csp/planning/STATE.md
 ```
 
 ## 7. Load Context and Resolve Models
@@ -252,10 +252,10 @@ If `phase_dir_count > 0` and `phase_archive_path` is available:
 
 ```bash
 mkdir -p "${phase_archive_path}"
-find .planning/phases -mindepth 1 -maxdepth 1 -type d -exec mv {} "${phase_archive_path}/" \;
+find .csp/planning/phases -mindepth 1 -maxdepth 1 -type d -exec mv {} "${phase_archive_path}/" \;
 ```
 
-Then verify `.planning/phases/` no longer contains old milestone directories before continuing.
+Then verify `.csp/planning/phases/` no longer contains old milestone directories before continuing.
 
 If `phase_dir_count > 0` but `phase_archive_path` is missing:
 - Stop and explain that reset numbering is unsafe without a completed milestone archive target.
@@ -291,7 +291,7 @@ AskUserQuestion: "Research the domain ecosystem for new features before defining
 ```
 
 ```bash
-mkdir -p .planning/research
+mkdir -p .csp/planning/research
 ```
 
 Spawn 4 parallel csp-project-researcher agents. Each uses this template with dimension-specific fields:
@@ -310,7 +310,7 @@ Focus ONLY on what's needed for the NEW features.
 <question>{QUESTION}</question>
 
 <files_to_read>
-- .planning/PROJECT.md (Project context)
+- .csp/planning/PROJECT.md (Project context)
 </files_to_read>
 
 ${AGENT_SKILLS_RESEARCHER}
@@ -320,7 +320,7 @@ ${AGENT_SKILLS_RESEARCHER}
 <quality_gate>{GATES}</quality_gate>
 
 <output>
-Write to: .planning/research/{FILE}
+Write to: .csp/planning/research/{FILE}
 Use template: ~/.claude/code-skills-package/csp-workflow/templates/research-project/{FILE}
 </output>
 ", subagent_type="csp-project-researcher", model="{researcher_model}", description="{DIMENSION} research")
@@ -345,15 +345,15 @@ Agent(prompt="
 Synthesize research outputs into SUMMARY.md.
 
 <files_to_read>
-- .planning/research/STACK.md
-- .planning/research/FEATURES.md
-- .planning/research/ARCHITECTURE.md
-- .planning/research/PITFALLS.md
+- .csp/planning/research/STACK.md
+- .csp/planning/research/FEATURES.md
+- .csp/planning/research/ARCHITECTURE.md
+- .csp/planning/research/PITFALLS.md
 </files_to_read>
 
 ${AGENT_SKILLS_SYNTHESIZER}
 
-Write to: .planning/research/SUMMARY.md
+Write to: .csp/planning/research/SUMMARY.md
 Use template: ~/.claude/code-skills-package/csp-workflow/templates/research-project/SUMMARY.md
 Commit after writing.
 ", subagent_type="csp-research-synthesizer", model="{synthesizer_model}", description="Synthesize research")
@@ -444,7 +444,7 @@ If "adjust": Return to scoping.
 
 **Commit requirements:**
 ```bash
-csp-sdk query commit "docs: define milestone v[X.Y] requirements" --files .planning/REQUIREMENTS.md
+csp-sdk query commit "docs: define milestone v[X.Y] requirements" --files .csp/planning/REQUIREMENTS.md
 ```
 
 ## 10. Create Roadmap
@@ -465,11 +465,11 @@ csp-sdk query commit "docs: define milestone v[X.Y] requirements" --files .plann
 Agent(prompt="
 <planning_context>
 <files_to_read>
-- .planning/PROJECT.md
-- .planning/REQUIREMENTS.md
-- .planning/research/SUMMARY.md (if exists)
-- .planning/config.json
-- .planning/MILESTONES.md
+- .csp/planning/PROJECT.md
+- .csp/planning/REQUIREMENTS.md
+- .csp/planning/research/SUMMARY.md (if exists)
+- .csp/planning/config.json
+- .csp/planning/MILESTONES.md
 </files_to_read>
 
 ${AGENT_SKILLS_ROADMAPPER}
@@ -530,7 +530,7 @@ Success criteria:
 
 **Commit roadmap** (after approval):
 ```bash
-csp-sdk query commit "docs: create milestone v[X.Y] roadmap ([N] phases)" --files .planning/ROADMAP.md .planning/STATE.md .planning/REQUIREMENTS.md
+csp-sdk query commit "docs: create milestone v[X.Y] roadmap ([N] phases)" --files .csp/planning/ROADMAP.md .csp/planning/STATE.md .csp/planning/REQUIREMENTS.md
 ```
 
 ## 10.5. Link Pending Todos to Roadmap Phases
@@ -539,7 +539,7 @@ After roadmap approval, scan pending todos against the newly approved phases. Fo
 
 **Check for pending todos:**
 ```bash
-PENDING_TODOS=$(ls .planning/todos/pending/*.md 2>/dev/null | head -50)
+PENDING_TODOS=$(ls .csp/planning/todos/pending/*.md 2>/dev/null | head -50)
 ```
 
 **If no pending todos exist:** Skip this step silently.
@@ -573,7 +573,7 @@ files: [existing]
 
 **If any todos were linked:**
 ```bash
-csp-sdk query commit "docs: tag [count] pending todos with resolves_phase after milestone v[X.Y] roadmap" --files .planning/todos/pending/*.md
+csp-sdk query commit "docs: tag [count] pending todos with resolves_phase after milestone v[X.Y] roadmap" --files .csp/planning/todos/pending/*.md
 ```
 
 Print a summary:
@@ -594,10 +594,10 @@ Print a summary:
 
 | Artifact       | Location                    |
 |----------------|-----------------------------|
-| Project        | `.planning/PROJECT.md`      |
-| Research       | `.planning/research/`       |
-| Requirements   | `.planning/REQUIREMENTS.md` |
-| Roadmap        | `.planning/ROADMAP.md`      |
+| Project        | `.csp/planning/PROJECT.md`      |
+| Research       | `.csp/planning/research/`       |
+| Requirements   | `.csp/planning/REQUIREMENTS.md` |
+| Roadmap        | `.csp/planning/ROADMAP.md`      |
 
 **[N] phases** | **[X] requirements** | Ready to build ✓
 

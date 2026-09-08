@@ -33,7 +33,7 @@ tools: [Read, Write, Edit, Glob, Grep, Bash]
 Frame 通常是链路起点，`reads: []`。但若用户在 Frame 之前已用过 Audit / Probe / Bench / Signal 等其他 01 阶段 Skill，应尝试读取以利用：
 
 1. 扫描会话中的 `<!-- spark-context:audit -->` / `<!-- spark-context:probe -->` / `<!-- spark-context:bench -->` / `<!-- spark-context:signal -->` marker
-2. 读取项目目录 `spark-output/context/audit.json` / `probe.json` / `bench.json` / `signal.json`
+2. 读取项目目录 `.csp/spark/context/audit.json` / `probe.json` / `bench.json` / `signal.json`
 3. 都没有则按 standalone 模式启动（最常见）
 
 可复用字段映射（如有）：
@@ -57,9 +57,9 @@ Frame 通常是链路起点，`reads: []`。但若用户在 Frame 之前已用�
    <!-- /spark-context:frame -->
    ```
 
-2. **写入项目文件**：`spark-output/context/frame.json`（目录不存在时先创建）
+2. **写入项目文件**：`.csp/spark/context/frame.json`（目录不存在时先创建）
 
-3. **额外保存 Markdown 报告**：`spark-output/frame/[project-slug].md`，含完整对话产出 + persona 卡片。
+3. **额外保存 Markdown 报告**：`.csp/spark/frame/[project-slug].md`，含完整对话产出 + persona 卡片。
 
 ### 字段如何流向下游 Brief
 
@@ -96,7 +96,7 @@ Frame 输出的字段在用户进入 Brief 时会被自动复用，**用户无�
 本 Skill 在完全离线、无任何连接器的场景下即可完整交付，所有方法论与输出形态不依赖外部系统：
 
 - **JTBD 提炼全套方法论**：Persona / Situation / Goal / Outcome 五段式追问 + 机会点映射 + Phase 3.5 HMW 卡片预生成
-- **链式上下文双通道**：写入 `spark-output/context/frame.json` + 会话内 marker block，下游 Brief / Stories / Journey / Bench 等可直接读取
+- **链式上下文双通道**：写入 `.csp/spark/context/frame.json` + 会话内 marker block，下游 Brief / Stories / Journey / Bench 等可直接读取
 - **Phase 4 可选压测**：Devil's Advocate / Pre-mortem / 假设清单全本地化运行
 - **Persona Card + Markdown 报告**：Phase 5 同时输出结构化 JSON + 人类可读 MD，无需任何外部系统
 
@@ -108,13 +108,13 @@ Frame 输出的字段在用户进入 Brief 时会被自动复用，**用户无�
 
 | 连接器 | 阶段 | 增强能力 | 降级路径 |
 | --- | --- | --- | --- |
-| **Notion / 飞书文档** | Phase 5 Output 之后 | Frame 探索结论（含 Persona / 机会点 / 押注方向）一键写入项目空间作为后续 Brief 的素材源 | 未装时输出本地 `frame-{project}.md`，提示用户手动上传或粘贴给 Brief |
+| **Notion / 飞书** | Phase 5 Output 之后 | Frame 探索结论（含 Persona / 机会点 / 押注方向）一键写入项目空间作为后续 Brief 的素材源 | 未装时输出本地 `frame-{project}.md`，提示用户手动上传或粘贴给 Brief |
 
 **接入触发**：用户首次调用 `/问题框定` 时，Skill 主动检测已认证的连接器并显示「已检测到：XXX，将自动启用增强模式」提示，用户可在该次会话中选择关闭。
 
 **字段流向变化**：
 
-- 启用 **Notion / 飞书文档** → `chain.schema` 新增可选字段 `wiki_page_url: string`，Brief 在 Phase 0.5 上游读取时可直接引用该 wiki 链接
+- 启用 **Notion / 飞书** → `chain.schema` 新增可选字段 `wiki_page_url: string`，Brief 在 Phase 0.5 上游读取时可直接引用该 wiki 链接
 
 > 所有新增字段都是 **可选**，未启用连接器时字段缺省，下游 Skill 必须能容忍缺省。
 
@@ -537,9 +537,9 @@ hmw_cards:
 
 | 顺序 | 动作 | 必做 | 输出位置 |
 | --- | --- | --- | --- |
-| **5.1** | **写盘 frame.json**（调用 Write 工具） | ⭐ 必做 | `spark-output/context/frame.json` |
+| **5.1** | **写盘 frame.json**（调用 Write 工具） | ⭐ 必做 | `.csp/spark/context/frame.json` |
 | **5.2** | **自检行**（让用户能验证写盘真的发生了） | ⭐ 必做 | chat |
-| 5.3 | Markdown 报告 | 必做 | chat + `spark-output/frame/[slug].md` |
+| 5.3 | Markdown 报告 | 必做 | chat + `.csp/spark/frame/[slug].md` |
 | 5.4 | Persona Card | 必做 | chat（紧跟 5.3） |
 | 5.5 | 紧凑 marker | 必做 | chat |
 | 5.6 | Handoff 引导 | 必做 | chat |
@@ -548,7 +548,7 @@ hmw_cards:
 
 ---
 
-### 5.1 写盘到 `spark-output/context/frame.json`（必做 · 主持久化通道）
+### 5.1 写盘到 `.csp/spark/context/frame.json`（必做 · 主持久化通道）
 
 ⭐ **本 Skill 输出的第一个动作就是写盘**——目录不存在先创建。写入以下完整 JSON：
 
@@ -613,7 +613,7 @@ hmw_cards:
 紧跟着写盘动作，在 chat 输出**一行**自检：
 
 ```
-✅ frame.json 已写盘到 spark-output/context/frame.json
+✅ frame.json 已写盘到 .csp/spark/context/frame.json
 ```
 
 **写盘失败时**（如平台无文件系统访问）：
@@ -624,7 +624,7 @@ hmw_cards:
 
 跳到 5.5 输出完整 JSON marker 作为 fallback。
 
-### 5.3 Markdown 报告（输出到对话 + 保存到 `spark-output/frame/[project-slug].md`）
+### 5.3 Markdown 报告（输出到对话 + 保存到 `.csp/spark/frame/[project-slug].md`）
 
 ```markdown
 # Frame — [项目名]
@@ -734,7 +734,7 @@ JTBD-情感：感到 [正面] / 避免 [负面]。
 ⛔ **不要在 chat 内重复输出 5.1 已写盘的完整 JSON**——只输出紧凑形式：
 
 ```
-<!-- spark-context:frame ref="spark-output/context/frame.json" -->
+<!-- spark-context:frame ref=".csp/spark/context/frame.json" -->
 Frame 已保存：project=[project_name]，persona=[name]，方向押 [lean_direction]，关键假设：[critical_assumption 一句话]
 <!-- /spark-context:frame -->
 ```
@@ -746,18 +746,18 @@ Frame 已保存：project=[project_name]，persona=[name]，方向押 [lean_dire
 > **协议依据**：chain-protocol.md §九「面板自动生成约定」。本步在 Handoff 之前执行；**告知用户的提示必须作为独立段落输出，禁止折叠进 Handoff 末尾、禁止静默跳过**。
 
 1. **找模板**：定位 `_shared/dashboard-template.html`（依次：相对套件根 → `glob dashboard-template.html` 搜套件安装目录 → 三轮都失败时，**用独立段落醒目告知用户**：`⚠️ 链路面板模板未找到（套件安装可能不完整，建议重装）。本 Skill 已正常完成，下游链路不受影响。` 然后跳过本步、继续 Handoff，**不阻断 Skill 完成**）。
-2. **聚合 STATE**：扫 `spark-output/context/*.json`，聚合为 `{"project":"<brief.project_name 或 frame.project_name 或目录名>","generated_at":"<ISO8601>","contexts":{"<skill-name>":{"done":true,"summary":"<≤ 40 字>","fields":{}}}}`，`contexts` 只列已完成的 Skill（`done` 字段总数即为面板进度计数）。
-3. **克隆模板**到 `spark-output/dashboard.html`（覆盖），用正则 `/\/\*__SPARK_STATE_INJECT__\*\/null/` 替换为 `/*__SPARK_STATE_INJECT__*/<JSON.stringify(STATE)>`。
+2. **聚合 STATE**：扫 `.csp/spark/context/*.json`，聚合为 `{"project":"<brief.project_name 或 frame.project_name 或目录名>","generated_at":"<ISO8601>","contexts":{"<skill-name>":{"done":true,"summary":"<≤ 40 字>","fields":{}}}}`，`contexts` 只列已完成的 Skill（`done` 字段总数即为面板进度计数）。
+3. **克隆模板**到 `.csp/spark/dashboard.html`（覆盖），用正则 `/\/\*__SPARK_STATE_INJECT__\*\/null/` 替换为 `/*__SPARK_STATE_INJECT__*/<JSON.stringify(STATE)>`。
 4. **独立段落告知用户**（强提示，单独成段，与 Handoff 之间空一行；根据 `Object.keys(STATE.contexts).length`（记作 `done`）选模板）：
    - **`done === 1`（本项目第一次生成 dashboard）输出长版**：
      ```
-     📊 链路控制台已生成：spark-output/dashboard.html（双击在浏览器打开）
+     📊 链路控制台已生成：.csp/spark/dashboard.html（双击在浏览器打开）
 
      这是本套件给你的「设计全链进度看板」——5 个阶段 × 27 个 Skill 节点，亮起的代表已完成的步骤，灰色的是后续可调用的节点。每跑完一个 Skill 都会自动更新，建议钉在浏览器一个标签页里随时回看，能看清「现在在哪一步、下游还差什么、链路是否健康」。
      ```
    - **`done > 1`（后续更新）输出短版**：
      ```
-     📊 链路面板已更新 · 进度 [done]/27 · spark-output/dashboard.html
+     📊 链路面板已更新 · 进度 [done]/27 · .csp/spark/dashboard.html
      ```
 5. **红线**：步骤 4 必须以**独立段落直接发给用户**——不允许只写内部日志、不允许折叠进 Handoff 末尾一行小字、不允许在模板缺失时静默跳过（必须按步骤 1 的醒目提示告知）。
 
@@ -831,7 +831,7 @@ Frame 已保存：project=[project_name]，persona=[name]，方向押 [lean_dire
 3. **方向 A/B/C ≤ 3 个**：收敛阶段必须给 ≤ 3 个候选方向，每个含「核心假设 + 用户证据 + 风险」三件套
 4. **机会点 ≥ 5 张 HMW 卡片**：HMW 卡片必须 ≥ 5 张，覆盖不同 JTBD 维度，每张含「机会 / 涉及用户 / 可能解决方案空间」
 5. **关键假设显式列出**：方向收敛后必须列「待验证假设清单」（≥ 3 条），每条标验证方法（用研 / 数据 / 上线 AB）
-6. **5.1 强制写盘第一动作**：写完 spark-output/frame/[slug].md 才能进入 5.2 自检行，顺序不能颠倒（chain-protocol v1.1.1 约束）
+6. **5.1 强制写盘第一动作**：写完 .csp/spark/frame/[slug].md 才能进入 5.2 自检行，顺序不能颠倒（chain-protocol v1.1.1 约束）
 
 ## 红线规则
 

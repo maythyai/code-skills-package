@@ -20,7 +20,7 @@ Extract from init JSON: `commit_docs`, `date`, `timestamp`, `todo_count`, `todos
 
 Ensure directories exist:
 ```bash
-mkdir -p .planning/todos/pending .planning/todos/completed
+mkdir -p .csp/planning/todos/pending .csp/planning/todos/completed
 ```
 
 Note existing areas from the todos array for consistency in infer_area step.
@@ -53,7 +53,7 @@ Infer area from file paths:
 | `src/db/*`, `database/*` | `database` |
 | `tests/*`, `__tests__/*` | `testing` |
 | `docs/*` | `docs` |
-| `.planning/*` | `planning` |
+| `.csp/planning/*` | `planning` |
 | `scripts/*`, `bin/*` | `tooling` |
 | No files or unclear | `general` |
 
@@ -63,7 +63,7 @@ Use existing area from step 2 if similar match exists.
 <step name="check_duplicates">
 ```bash
 # Search for key words from title in existing todos
-grep -l -i "[key words from title]" .planning/todos/pending/*.md 2>/dev/null || true
+grep -l -i "[key words from title]" .csp/planning/todos/pending/*.md 2>/dev/null || true
 ```
 
 If potential duplicate found:
@@ -89,7 +89,7 @@ Generate slug for the title:
 slug=$(csp-sdk query generate-slug "$title" --raw)
 ```
 
-Write to `.planning/todos/pending/${date}-${slug}.md`:
+Write to `.csp/planning/todos/pending/${date}-${slug}.md`:
 
 ```markdown
 ---
@@ -111,7 +111,7 @@ files:
 </step>
 
 <step name="update_state">
-If `.planning/STATE.md` exists:
+If `.csp/planning/STATE.md` exists:
 
 1. Use `todo_count` from init context (or re-run `init todos` if count changed)
 2. Update "### Pending Todos" under "## Accumulated Context"
@@ -121,7 +121,7 @@ If `.planning/STATE.md` exists:
 Commit the todo and any updated state:
 
 ```bash
-csp-sdk query commit "docs: capture todo - [title]" --files .planning/todos/pending/[filename] .planning/STATE.md
+csp-sdk query commit "docs: capture todo - [title]" --files .csp/planning/todos/pending/[filename] .csp/planning/STATE.md
 ```
 
 Tool respects `commit_docs` config and gitignore automatically.
@@ -131,7 +131,7 @@ Confirm: "Committed: docs: capture todo - [title]"
 
 <step name="confirm">
 ```
-Todo saved: .planning/todos/pending/[filename]
+Todo saved: .csp/planning/todos/pending/[filename]
 
   [title]
   Area: [area]

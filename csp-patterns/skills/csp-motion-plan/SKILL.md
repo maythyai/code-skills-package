@@ -19,10 +19,10 @@ tools: [Read, Write, Edit, Glob, Grep, Bash]
 | 模式 | 触发条件 | 产出特征 |
 | --- | --- | --- |
 | 🟢 **独立模式** | 无前序上下文，直接调用 | Phase 1 引导用户口述目标元素 + 期望调性 → 完整动效规范 JSON |
-| 🔵 **链式模式** | 检测到 `spark-output/context/brief.json` 或 `flow-web.json` / `flow-mobile.json` / `avatar.json` | 跳过基础信息追问；自动从 brief.strategy_dimensions / avatar.style_profile 推荐 Personality 候选；从 flow 提取 target_elements |
-| 🟣 **增强模式** | 项目已装 SparkDesign / 已存在 `spark-output/profile/motion-apply.md` | Personality 与已有组件库主调风格对齐；输出可直接被 /动效开发 消费 |
+| 🔵 **链式模式** | 检测到 `.csp/spark/context/brief.json` 或 `flow-web.json` / `flow-mobile.json` / `avatar.json` | 跳过基础信息追问；自动从 brief.strategy_dimensions / avatar.style_profile 推荐 Personality 候选；从 flow 提取 target_elements |
+| 🟣 **增强模式** | 项目已装 SparkDesign / 已存在 `.csp/spark/profile/motion-apply.md` | Personality 与已有组件库主调风格对齐；输出可直接被 /动效开发 消费 |
 
-> 三种模式产出的 schema 完全一致（`spark-output/context/motion-plan.json`），差别只在「Personality 是用户口述定 vs 从上游自动推导」。
+> 三种模式产出的 schema 完全一致（`.csp/spark/context/motion-plan.json`），差别只在「Personality 是用户口述定 vs 从上游自动推导」。
 
 ## 输入要求
 
@@ -47,7 +47,7 @@ tools: [Read, Write, Edit, Glob, Grep, Bash]
 按以下顺序尝试读取上下文，找到即提取可复用字段并告知用户已沿用：
 
 1. 扫描会话中的 `<!-- spark-context:brief -->` / `<!-- spark-context:flow-web -->` / `<!-- spark-context:flow-mobile -->` / `<!-- spark-context:avatar -->` marker
-2. 读取项目目录 `spark-output/context/brief.json` / `flow-web.json` / `flow-mobile.json` / `avatar.json`
+2. 读取项目目录 `.csp/spark/context/brief.json` / `flow-web.json` / `flow-mobile.json` / `avatar.json`
 3. 都没有则跳过，按独立模式 Phase 1 引导追问
 
 可复用字段映射：
@@ -63,12 +63,12 @@ tools: [Read, Write, Edit, Glob, Grep, Bash]
 
 ### 下游输出（Phase 6 执行，严格按 chain-protocol §2.1 Step 1→6 顺序）
 
-1. **先写盘**：`Write` 工具把完整 JSON 写到 `spark-output/context/motion-plan.json`（目录不存在先创建）
-2. **输出自检行**：`✅ motion-plan.json 已写盘到 spark-output/context/motion-plan.json`
+1. **先写盘**：`Write` 工具把完整 JSON 写到 `.csp/spark/context/motion-plan.json`（目录不存在先创建）
+2. **输出自检行**：`✅ motion-plan.json 已写盘到 .csp/spark/context/motion-plan.json`
 3. **渲染动效规范 Markdown 报告**（Personality + Duration palette + element specs 表 + 编舞图）
 4. **输出紧凑 marker**：
    ```
-   <!-- spark-context:motion-plan ref="spark-output/context/motion-plan.json" -->
+   <!-- spark-context:motion-plan ref=".csp/spark/context/motion-plan.json" -->
    动效规划已保存：project=<name>，Personality=<archetype>，signature_easing=<...>，<N> 个 element_specs
    <!-- /spark-context:motion-plan -->
    ```
@@ -128,7 +128,7 @@ This skill provides **design principles** (what makes animation good). For **com
 
 **Handoff protocol:**
 - If motion-apply installed a component but user wants to tune feel → this skill activates
-- If this skill defines a Motion Personality → motion-apply stores it in `spark-output/profile/motion-apply.md` for future picks
+- If this skill defines a Motion Personality → motion-apply stores it in `.csp/spark/profile/motion-apply.md` for future picks
 - If user asks for an effect and ReactBits has no matching component → this skill provides the design, then write CSS/JS directly
 
 ---
@@ -424,8 +424,8 @@ Skeletons (100ms) → Hero metric (250ms, 100ms delay) → Cards stagger (50ms/e
 - 8-Step Checklist 8 项都在 element_specs 推导链路里能追溯
 
 **链路接入正确性**：
-- `spark-output/context/motion-plan.json` 文件已写入且 schema 符合 frontmatter 定义
-- chat marker 含 `ref="spark-output/context/motion-plan.json"` 属性
+- `.csp/spark/context/motion-plan.json` 文件已写入且 schema 符合 frontmatter 定义
+- chat marker 含 `ref=".csp/spark/context/motion-plan.json"` 属性
 - 下游 `/动效开发` 调用时能正确读取本 Skill 上下文（验证：motion-apply Phase 0 嗅探日志含 "检测到动效规划上下文"）
 - 已输出符合 chain-protocol 的 Handoff（推荐 `/动效开发` 作为下一步，附 emoji 🎬）
-- `spark-output/dashboard.html` 已按 Avatar SKILL.md §更新链路面板 流程刷新
+- `.csp/spark/dashboard.html` 已按 Avatar SKILL.md §更新链路面板 流程刷新

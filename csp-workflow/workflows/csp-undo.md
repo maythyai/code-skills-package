@@ -75,7 +75,7 @@ Parse the user's selection into COMMITS list.
 
 **MODE=phase:**
 
-Read `.planning/.phase-manifest.json` if it exists.
+Read `.csp/planning/.phase-manifest.json` if it exists.
 
 If the file exists and `manifest.phases?.[TARGET_PHASE]?.commits` is a non-empty array:
   - Use `manifest.phases[TARGET_PHASE].commits` entries as COMMITS (each entry is a commit hash)
@@ -119,7 +119,7 @@ Skip this step entirely for MODE=last.
 
 **MODE=phase:**
 
-Read `.planning/ROADMAP.md` inline.
+Read `.csp/planning/ROADMAP.md` inline.
 
 Search for phases that list a dependency on the target phase. Look for patterns like:
 - "Depends on: Phase ${TARGET_PHASE}"
@@ -127,7 +127,7 @@ Search for phases that list a dependency on the target phase. Look for patterns 
 - "depends_on: [${TARGET_PHASE}]"
 
 For each dependent phase N found:
-1. Check if `.planning/phases/${N}-*/` directory exists
+1. Check if `.csp/planning/phases/${N}-*/` directory exists
 2. If directory exists, check for any PLAN.md or SUMMARY.md files inside it
 
 If any downstream phase has started work, collect warnings:
@@ -142,7 +142,7 @@ If any downstream phase has started work, collect warnings:
 
 Extract the phase number from TARGET_PLAN (the NN part of NN-MM). Extract the plan number (the MM part).
 
-Look for later plans in the same phase directory (`.planning/phases/${NN}-*/`). For each later plan (plans with number > MM):
+Look for later plans in the same phase directory (`.csp/planning/phases/${NN}-*/`). For each later plan (plans with number > MM):
 1. Read the later plan's PLAN.md
 2. Check if its `<files>` sections or `consumes` fields reference outputs from the target plan
 
@@ -301,7 +301,7 @@ Show next steps:
 
 <success_criteria>
 - [ ] Arguments parsed correctly for all three modes
-- [ ] --phase mode reads .planning/.phase-manifest.json using manifest.phases[TARGET_PHASE].commits
+- [ ] --phase mode reads .csp/planning/.phase-manifest.json using manifest.phases[TARGET_PHASE].commits
 - [ ] --phase mode falls back to git log if manifest entry missing
 - [ ] Dependency check warns when downstream phases have started (MODE=phase)
 - [ ] Dependency check warns when later plans reference target plan outputs (MODE=plan)

@@ -54,6 +54,6 @@ bounded retry limits.
 
 ## State persistence
 
-- `.planning/debug/{slug}/ROOT-CAUSE.md`
-- `.planning/debug/{slug}/FIX-SUMMARY.md`
-- `.planning/debug/{slug}/VERIFICATION.md`
+- `.csp/planning/debug/{slug}/ROOT-CAUSE.md`
+- `.csp/planning/debug/{slug}/FIX-SUMMARY.md`
+- `.csp/planning/debug/{slug}/VERIFICATION.md`

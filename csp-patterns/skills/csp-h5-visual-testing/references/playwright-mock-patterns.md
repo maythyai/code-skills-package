@@ -5,7 +5,7 @@ H5 自动化截图的核心代码模式参考。按需加载。
 ## 目录
 
 1. [基础框架](#基础框架)
-2. [MTOP 接口 Mock](#mtop-接口-mock)
+2. [JSONP RPC 接口 Mock](#jsonp-rpc-接口-mock)
 3. [RESTful API Mock](#restful-api-mock)
 4. [外部脚本拦截](#外部脚本拦截)
 5. [主题切换](#主题切换)
@@ -38,25 +38,25 @@ const { chromium } = require('playwright');
 })();
 ```
 
-## MTOP 接口 Mock
+## JSONP RPC 接口 Mock
 
-MTOP 是阿里系移动端 RPC 框架，H5 页面通过 `lib.mtop` 或 `@ali/mtop` 调用。
+JSONP RPC 是移动端常见的远程调用方式，H5 页面通过 `lib.rpc` 或 `@app/jsonp-rpc` 调用。
 
 ### ⚠️ 核心要点：JSONP 格式
 
-**MTOP SDK 默认使用 JSONP 而非普通 JSON**，必须构造回调函数包裹的响应：
+**JSONP RPC SDK 默认使用 JSONP 而非普通 JSON**，必须构造回调函数包裹的响应：
 
 ```javascript
 // ❌ 错误 - 普通 JSON 响应（页面会空白/报错）
 {
-  api: 'mtop.xxx',
+  api: 'rpc.xxx',
   data: {...},
   ret: ['SUCCESS']
 }
 
 // ✅ 正确 - JSONP 格式
-mtopjsonp1({
-  api: 'mtop.xxx',
+jsonp1({
+  api: 'rpc.xxx',
   data: {...},
   ret: ['SUCCESS::调用成功'],
   v: '1.0'
@@ -66,8 +66,8 @@ mtopjsonp1({
 ### 通用 Mock 函数
 
 ```javascript
-// 构造 MTOP JSONP 响应
-function mtopJsonpResponse(callback, api, data) {
+// 构造 JSONP 响应
+function jsonpResponse(callback, api, data) {
   const body = `${callback}(${JSON.stringify({
     api,
     data,
@@ -85,18 +85,18 @@ function mtopJsonpResponse(callback, api, data) {
 ### 拦截规则（推荐方式）
 
 ```javascript
-// 在 Playwright 中拦截 MTOP 请求
+// 在 Playwright 中拦截 JSONP RPC 请求
 await page.route('**/h5api**', async (route) => {
   const url = route.request().url();
 
-  // ⚠️ 排除 JS 静态资源（重要！否则会拦截 MTOP SDK 本身）
+  // ⚠️ 排除 JS 静态资源（重要！否则会拦截 JSONP RPC SDK 本身）
   if (url.includes('.js') && !url.includes('callback=')) {
     return route.continue();
   }
 
   // 从 URL 提取回调函数名
   const callbackMatch = url.match(/callback=(\w+)/);
-  const callback = callbackMatch ? callbackMatch[1] : 'mtopjsonp1';
+  const callback = callbackMatch ? callbackMatch[1] : 'jsonp1';
 
   // 提取 api 参数进行路由
   const apiMatch = url.match(/api=([^&]+)/);
@@ -122,7 +122,7 @@ await page.route('**/h5api**', async (route) => {
   }
 
   // 返回 JSONP 格式响应
-  return route.fulfill(mtopJsonpResponse(callback, apiName, data));
+  return route.fulfill(jsonpResponse(callback, apiName, data));
 });
 ```
 
@@ -142,13 +142,13 @@ await page.route('**/h5api**', async (route) => {
 | 问题 | 原因 | 解决方案 |
 |------|------|----------|
 | 页面空白/报错 | Mock 返回普通 JSON，SDK 解析失败 | 使用 JSONP 格式（见上方） |
-| MTOP SDK 未加载 | 拦截了 .js 文件 | 排除 JS 静态资源：`if (url.includes('.js') && !url.includes('callback=')) return route.continue()` |
+| JSONP RPC SDK 未加载 | 拦截了 .js 文件 | 排除 JS 静态资源：`if (url.includes('.js') && !url.includes('callback=')) return route.continue()` |
 | 数据不渲染 | data 字段结构不对 | 对照真实接口返回结构，确保字段名一致 |
-| 回调函数未定义 | 回调名提取错误 | 从 URL 的 `callback=` 参数提取，默认 `mtopjsonp1` |
+| 回调函数未定义 | 回调名提取错误 | 从 URL 的 `callback=` 参数提取，默认 `jsonp1` |
 
-### 方式 A：拦截 window.lib.mtop（备用）
+### 方式 A：拦截 window.lib.rpc（备用）
 
-如果 `page.route` 方式不生效，可以在页面加载前劫持 `window.lib.mtop`：
+如果 `page.route` 方式不生效，可以在页面加载前劫持 `window.lib.rpc`：
 
 ```javascript
 await page.addInitScript(() => {
@@ -159,10 +159,10 @@ await page.addInitScript(() => {
     },
   };
 
-  // 劫持 mtop 请求
-  const originalMtop = window.lib?.mtop;
-  if (window.lib && window.lib.mtop) {
-    window.lib.mtop = {
+  // 劫持 JSONP RPC 请求
+  const originalRpc = window.lib?.rpc;
+  if (window.lib && window.lib.rpc) {
+    window.lib.rpc = {
       request: async (params) => {
         const api = params?.api?.toLowerCase();
         for (const [key, data] of Object.entries(window.__MOCK_DATA__)) {
@@ -253,15 +253,15 @@ await page.route('**/api/**', (route) => {
 
 ```javascript
 await page.addInitScript(() => {
-  // 拦截 goldlog（阿里埋点）
-  window.goldlog = { record: () => {}, spm_ab: [] };
+  // 拦截埋点 SDK
+  window.__tracker = { record: () => {}, spm_ab: [] };
 
-  // 拦截 JSTracker / ARMS 监控
-  window.JSTracker2 = { log: () => {}, error: () => {} };
-  window.__bl = { error: () => {}, api: () => {} };
+  // 拦截前端监控 SDK
+  window.__tracker = { log: () => {}, error: () => {} };
+  window.__monitor = { error: () => {}, api: () => {} };
 
-  // 拦截 WindVane（客户端桥接）
-  window.WindVane = { call: () => {}, call2: () => {} };
+  // 拦截客户端桥接 SDK
+  window.__bridge = { call: () => {}, call2: () => {} };
 
   // 阻止特定 script 标签加载
   const observer = new MutationObserver((mutations) => {
@@ -270,7 +270,7 @@ await page.addInitScript(() => {
         if (node.tagName === 'SCRIPT') {
           const src = node.src || '';
           if (src.includes('tracker') || src.includes('beacon') ||
-              src.includes('goldlog') || src.includes('arms')) {
+              src.includes('tracker') || src.includes('monitor')) {
             node.remove();
           }
         }
@@ -357,7 +357,7 @@ await page.waitForFunction(() => {
 
 ```javascript
 await page.screenshot({
-  path: `h5-test-output/screenshots/${tabName}-${theme}.png`,
+  path: `.csp/artifacts/verify/h5-test/screenshots/${tabName}-${theme}.png`,
   fullPage: false, // false = 仅视口；true = 整页长截图
   type: 'png',
 });

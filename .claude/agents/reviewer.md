@@ -161,7 +161,7 @@ model: opus
 3. **架构成熟度总览表**：12 技术维度 + 10 可用性原则，5 分制 + 一句话。
 4. **问题清单**（按严重度 Critical→High→Medium→Low）：每条含维度/问题/证据 file:line/影响/严重度/建议；功能与技术分别标注但统一按严重度排序。
 5. **严重度分布表**：| 严重度 | 技术问题数 | 功能缺陷数 | 合计 |。
-6. **修复优先级路线图**（vertical slice 四层）：Foundation（Critical+P0，安全/数据/核心路径，1-2 周止血）/ Core UI（High+P1，契约/一致性/关键可用性，1-2 月加固）/ Interactions & States（Medium+P2，状态/反馈/控制权，迭代修）/ Polish（Low+P3，美学/文档/风格，排期）。每条标对应发现 ID。
+6. **修复优先级路线图**（vertical slice 四层，按依赖与优先级排序，不绑时间）：Foundation（Critical+P0，安全/数据/核心路径，先止血）/ Core UI（High+P1，契约/一致性/关键可用性）/ Interactions & States（Medium+P2，状态/反馈/控制权，迭代修）/ Polish（Low+P3，美学/文档/风格，有空再修）。每条标对应发现 ID。
 7. **整体结论**（2-3 段）：设计意图评价 / 执行落差 / 优先级建议。
 8. **下一步建议**：回流到哪些阶段（异常态设计/页面设计/设计度量/安全加固/测试补齐）；是否建议补真实用户测试（Mode A）验证 heuristic 发现。
 9. **附录**：评估者/方法说明（标注 mode: heuristic-review，非真实用户测试）/原始预扫描数据。

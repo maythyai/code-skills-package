@@ -9,9 +9,9 @@ allowed-tools:
 requires: [phase]
 ---
 <objective>
-Archive phase directories from completed milestones into `.planning/milestones/v{X.Y}-phases/`.
+Archive phase directories from completed milestones into `.csp/planning/milestones/v{X.Y}-phases/`.
 
-Use when `.planning/phases/` has accumulated directories from past milestones.
+Use when `.csp/planning/phases/` has accumulated directories from past milestones.
 </objective>
 
 <execution_context>

@@ -70,7 +70,9 @@ model: sonnet
 ├── tech-decisions/                # 技术选型+ADR（03 阶段产物）
 ├── tech-design/                   # TDD（03 阶段产物）
 ├── tasks/                         # 任务拆解（04 阶段产物）
-├── artifacts/                     # 开发/验证/评审工作产物（04/05 阶段）
+├── artifacts/                     # 开发/验证/评审工作产物（04/05 阶段，含 verify/evidence/ 测试运行证据）
+├── planning/                      # L2 csp-workflow 生命周期产物（phases/debug/intel/codebase/spikes/reports/forensics/research/todos 等，原 .planning/ 归位）
+├── spark/                         # Spark 设计链产物（context/profile/dashboard/各 skill 报告，原 spark-output/ 归位）
 ├── ship/ ops/                     # 发布/运维产物（05 阶段）
 ├── traceability/                  # 追溯矩阵（贯穿）
 ├── wiki/                          # 通用项目 wiki
@@ -89,9 +91,10 @@ model: sonnet
 
 > **文档管理边界（全链路统一）**：
 > - **`.csp/` = 编程管理统一文档库**（agent/工程消费，唯一编程事实源）：`AGENTS.md`/`manifest.json`/`lifecycle-state.json` + 三说明书 **PMS**(`product-spec/`)/**CMS**(`code-spec/`)/**TMS**(`test-spec/`) + `decomposition/`/`specs/`/`tech-design/`/`tech-decisions/`/`tasks/`/`traceability/`/`artifacts/`/`ship/`/`ops/`/`review/`/`milestones/`。所有驱动开发流水线的产物落此，git 跟踪，跨阶段共享。
-> - **`docs/` = 非编程用途的人类文档**：`README.md`/`USER-GUIDE`/通用 `ARCHITECTURE` 概览/`analysis/` 报告/`CHANGELOG`；以及 **PRD 的人类可读原文**（`docs/prd/`，其编程消费形态 PMS 在 `.csp/product-spec/`）。
+> - **`docs/` = 对外人类文档**（给人读，非流水线驱动产物）：安装/使用/架构/技能索引与编写规范/`analysis/` 报告/`strategy/` 战略/`prd/` PRD 原文。**门面 `README.md` 与发布元数据 `CHANGELOG.md`/`LICENSE` 在根目录，不属 `docs/`**——README 只做电梯演讲 + 指向 `docs/` 的链接表，不堆细节。
+> - **三层定位（权威见 `docs/README.md`）**：`README.md`（根，门面+路标）→ `docs/`（对外人类文档）→ `.csp/`（对内 agent 产物库，人不直接读）。编程产物不进 `docs/`，人类文档不进 `.csp/`，README 不堆细节。
 > - **原则**：驱动开发流水线的编程管理产物 → `.csp/`；给人读的非开发文档 → `docs/`。PRD 原文供人评审，PMS 是其工程消费蒸馏。strategy/roadmap 属编程管理（驱动版本规划）→ `docs/strategy/`（人类可读 + manifest 索引）。
-> - **不混放**：编程产物不散落 `docs/`；非编程文档不进 `.csp/`。散落 → Phase 1.5 整改归位。
+> - **不混放**：编程产物不散落 `docs/`；非编程文档不进 `.csp/`。散落 → Phase 1.5 整改归位。**所有 skill 产物统一落 `.csp/` 下对应子区**——测试运行证据→`.csp/artifacts/verify/evidence/`；L2 生命周期产物→`.csp/planning/`（原 `.planning/`）；Spark 设计链产物→`.csp/spark/`（原 `spark-output/`）；写作记忆→`.csp/writer-memory/`（原 `.csp-writer-memory/`）——或 `docs/` 给人读。禁止散落根目录裸目录（`evidence/`、`reports/`、`screenshots/`、`output/`、`spark-output/`、`.planning/`、`.csp-*/` 等）。
 
 ### Phase 1.5：既有文档整改（Reconcile）→ 严格按最新要求管理知识与文档
 
@@ -100,7 +103,7 @@ model: sonnet
 | 维度 | 检查 | 整改动作 |
 |---|---|---|
 | **版本一致** | VERSION / package.json / CHANGELOG 最新条目 / 各文档 front-matter version 是否对齐 | 不一致则以单一事实源（VERSION 或 package.json）为准统一改齐；CHANGELOG 补条目 |
-| **散落归位** | 不在约定路径的文档（如根目录散落 .md、错置子目录） | 移到正确约定目录（PRD→`docs/prd/`、规格→`.csp/specs/` 等），或在 manifest 登记 `output_path` |
+| **散落归位** | 不在约定路径的文档（如根目录散落 .md、错置子目录、裸 `evidence/`、`.csp-*-test/`） | 移到正确约定目录（PRD→`docs/prd/`、规格→`.csp/specs/`、测试证据→`.csp/artifacts/verify/evidence/` 等），或在 manifest 登记 `output_path` |
 | **重复副本** | 同主题多份、`_zh`/`_en` 双语是否成对、旧版残留 | 保留 canonical，重复副本删除；双语成对则两份都留并互相链接 |
 | **陈旧/临时** | `.tmp/`、`*.zip` 附件、过时版本快照、WIP 草稿 | 该删则删；有归档价值的移入 `.csp/milestones/` |
 | **命名/结构** | 文件名/目录是否符合最新 slug 与目录约定 | 改名/移位以符合约定；同步更新所有引用 |
@@ -320,6 +323,42 @@ git branch -d csp/hub-init   # 清理已合并的侧分支
 - [ ] 各阶段产物持续回写 manifest，保持索引实时
 当前产物：.csp/AGENTS.md + .csp/manifest.json（{N} items，{built} built，{pending} pending）+ .csp/lifecycle-state.json（初始化：00 done，current_stage=01-prd）。完成时按 README「进度播报」格式播报（00 转 ✓，current_stage 推进至 01-prd）。
 ```
+
+## 十三、项目文档管理条约（标准项目文档的角色/范围/规范）
+
+> 本节定义标准项目的全部文档与配置文件的角色、功能范围、内容规范、结构、维护时机。权威出处：本节 + `docs/README.md` 三层定位。棕地整合（`brownfield-doc-integration.md`）逐份按本条约判"临时产物 vs 长期人读成品"。
+
+### 13.1 文档清单与角色
+
+| 文档/配置 | 路径 | 角色 | 面向 | 功能范围 | 内容规范/结构 | 维护时机 |
+|---|---|---|---|---|---|---|
+| 门面 | `README.md`（根） | 项目入口/电梯演讲 | 所有人 | 一句话定位/核心特性/Quick Start（可运行）/Further Reading 指向 `docs/` | 不堆细节；细节进 `docs/`；中英成对（`README_zh.md`） | 版本发布/特性变更 |
+| agent 指令 | `CLAUDE.md`（根） | Claude Code 工程指令 | agent | 路由规则/工程规范/文档边界/可用 skills 清单/版本 | 不堆业务细节；指向 `docs/` 与 `.csp/` | 结构/规范变更 |
+| agent 配置 | `.claude/` | Claude Code 运行时配置 | agent | `agents/`/`skills/`/`settings.json`/`hooks` | 安装器生成；managed 块（`<!-- csp-begin -->`）不手改 | 安装/更新 |
+| 路由契约 | `.csp/AGENTS.md` | 项目知识路由契约（00 产出） | agent | 项目概览/目录权威与依赖方向/三说明书定位/manifest 索引约定/操作路由表/闭环 | 电报体；6 节固定结构（见 Phase 1） | 00 初始化 + 结构变更增量 |
+| 产物索引 | `.csp/manifest.json` | 唯一产物索引 | agent | items（source_id/source_type/content_hash/build_status/raw_path/output_path） | content_hash 用 git blob；禁 mtime；每阶段回写 | 每阶段产出即回写 |
+| 流水线状态 | `.csp/lifecycle-state.json` | 阶段状态导航 | agent | pipeline_version/milestone/current_stage/stages[]/reconciled/prod_version | 阶段级+progress 摘要；不存全量任务 | 每阶段读/写；06 对账 |
+| 对外文档 | `docs/` | 人类文档 | 人 | install/usage/arch/skill-index/authoring/analysis/strategy/prd(intake) | 见 `docs/README.md`；编程产物不进 `docs/` | 持续 |
+| docs 索引 | `docs/README.md` | docs 目录索引+三层定位 | 人 | 三层（README门面/docs对外/.csp对内）+ 文件索引 + 棕地整合映射 | 结构变更时同步 | 结构变更 |
+| 贡献 | `CONTRIBUTING.md` | 贡献指南 | 贡献者 | 提交流程/分支策略/conventional commits/skill 编写规范（指向 `docs/SKILL-AUTHORING.md`）/PR 流程 | — | 流程变更 |
+| 许可证 | `LICENSE` | 许可证 | 所有人 | MIT/Apache 等（包级）；skill 内禁 LICENSE/NOTICE/COPYING | 不变（除非换证） | 极少 |
+| 发布历史 | `CHANGELOG.md` | 发布历史 | 所有人 | Keep a Changelog（Added/Changed/Deprecated/Removed/Fixed/Security） | bot/release-please 自动；贡献者不手改 | 每版本 |
+| 行为准则 | `CODE_OF_CONDUCT.md`（可选） | 社区行为准则 | 贡献者 | 标准 CoC（Contributor Covenant） | 不变 | 极少 |
+| 安全 | `SECURITY.md`（可选） | 安全策略 | 所有人 | 支持版本/漏洞上报渠道/响应 SLA | — | 策略变更 |
+| 版本元数据 | `VERSION`/`package.json` | 版本号单一事实源 | 工具 | SemVer `X.Y.Z` | 五方对齐（tag↔package.json↔VERSION↔Release↔prod health） | 每版本 |
+| 忽略规则 | `.gitignore`/`.npmignore` | 忽略 | 工具 | 临时产物/构建产物/凭证/`.csp/tmp`/`.csp/.hub-run` | 按需 | 按需 |
+
+### 13.2 内容规范要点
+- **README/CLAUDE 不堆细节**：门面与指令只给定位+路标+可运行 Quick Start，细节进 `docs/`。
+- **`.csp/AGENTS.md` 电报体 6 节**：项目概览/目录权威与依赖/三说明书定位/manifest 索引约定/操作路由表/闭环。
+- **manifest 唯一索引**：content_hash 用 git blob；`raw_path`（docs/原文）↔ `output_path`（.csp/蒸馏）双向映射；不靠 docs/ front-matter 反链。
+- **CHANGELOG bot 自动**：基于 conventional commits；贡献者不手改（hotfix 补登例外）。
+- **LICENSE 包级唯一**：根 `LICENSE`；skill 目录内禁 LICENSE/NOTICE/COPYING。
+- **VERSION/package.json 单一事实源**：五方对齐（见 06「版本对齐检查」）。
+- **docs/ vs .csp/ 边界**：编程产物→`.csp/`，人类对外文档→`docs/`；docs/ 临时产物（intake/specs/design/analysis/archived/research）蒸馏后删源，永久人读成品留。
+
+### 13.3 棕地整合判定（引用）
+棕地项目逐份按"临时/工程产物 vs 长期人读成品"判定（标准见 `brownfield-doc-integration.md` Phase 1）：临时产物（PRD intake/specs/design/analysis findings/archived/research/solutions 工程详情）→ 归纳 `.csp/` + 删源；长期人读成品（`README`/`CLAUDE`/`docs/` 永久文档/`CONTRIBUTING`/`LICENSE`/`CHANGELOG`）→ 留原位整理。
 
 ## 输出风格
 

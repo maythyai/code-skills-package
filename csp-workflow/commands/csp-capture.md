@@ -27,10 +27,10 @@ Mode routing:
 
 | Flag | Destination | Workflow |
 |------|-------------|----------|
-| (none) | Structured todo in .planning/todos/ | add-todo |
+| (none) | Structured todo in .csp/planning/todos/ | add-todo |
 | --note | Timestamped note file, list, or promote | note |
 | --backlog | ROADMAP.md backlog section (999.x) | add-backlog |
-| --seed | .planning/seeds/SEED-NNN-slug.md | plant-seed |
+| --seed | .csp/planning/seeds/SEED-NNN-slug.md | plant-seed |
 | --list | Interactive todo browser + action router | check-todos |
 
 </routing>

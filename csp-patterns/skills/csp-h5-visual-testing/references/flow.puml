@@ -37,7 +37,7 @@ end note
 
 :注入 Mock 数据 (addInitScript);
 note right
-  拦截 MTOP/API 请求
+  拦截 JSONP API/fetch 请求
   返回 mock 响应
 end note
 
@@ -124,7 +124,7 @@ if (发现问题？) then (是)
     note right
       含代码 diff
       含验证方法
-      写入 h5-test-output/
+      写入 .csp/artifacts/verify/h5-test/
     end note
     :会话中说明问题摘要;
     :等待用户决策;

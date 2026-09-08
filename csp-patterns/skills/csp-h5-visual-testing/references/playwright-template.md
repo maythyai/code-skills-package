@@ -40,13 +40,13 @@ const TABS = [
 
 // Mock 数据（从项目 mock 文件提取）
 const MOCK_DATA = {
-  'mtop.navigation.get': {
+  'rpc.navigation.get': {
     tabs: [
       { id: 1, name: '首页', path: '/' },
       { id: 2, name: '分类', path: '/category' },
     ],
   },
-  'mtop.products.list': {
+  'rpc.products.list': {
     items: [
       { id: 1, title: '商品1', price: 99.9 },
       { id: 2, title: '商品2', price: 199.9 },
@@ -76,14 +76,14 @@ const MOCK_DATA = {
 
   // 注入 Mock 数据（在页面加载前）
   await page.addInitScript((mockData) => {
-    // 拦截 window.mtopRequest（阿里系 H5 常用）
-    const originalMtop = window.mtopRequest;
-    window.mtopRequest = async function(api, params) {
+    // 拦截 window.rpcRequest（移动端 H5 常用）
+    const originalRpc = window.rpcRequest;
+    window.rpcRequest = async function(api, params) {
       console.log(`[Mock] Intercepted: ${api}`, params);
       if (mockData[api]) {
         return { data: mockData[api], ret: ['SUCCESS::调用成功'] };
       }
-      return originalMtop ? originalMtop.call(this, api, params) : {};
+      return originalRpc ? originalRpc.call(this, api, params) : {};
     };
 
     // 拦截 fetch 请求

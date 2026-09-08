@@ -80,11 +80,11 @@ If no UI-SPEC exists: audit against abstract 6-pillar standards.
 
 ```bash
 # Ensure directory exists
-mkdir -p .planning/ui-reviews
+mkdir -p .csp/planning/ui-reviews
 
 # Write .gitignore if not present
-if [ ! -f .planning/ui-reviews/.gitignore ]; then
-  cat > .planning/ui-reviews/.gitignore << 'GITIGNORE'
+if [ ! -f .csp/planning/ui-reviews/.gitignore ]; then
+  cat > .csp/planning/ui-reviews/.gitignore << 'GITIGNORE'
 # Screenshot files — never commit binary assets
 *.png
 *.webp
@@ -94,7 +94,7 @@ if [ ! -f .planning/ui-reviews/.gitignore ]; then
 *.bmp
 *.tiff
 GITIGNORE
-  echo "Created .planning/ui-reviews/.gitignore"
+  echo "Created .csp/planning/ui-reviews/.gitignore"
 fi
 ```
 
@@ -151,7 +151,7 @@ below. Behavior is unchanged from the standard code-only audit path.
 DEV_STATUS=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:3000 2>/dev/null || echo "000")
 
 if [ "$DEV_STATUS" = "200" ]; then
-  SCREENSHOT_DIR=".planning/ui-reviews/${PADDED_PHASE}-$(date +%Y%m%d-%H%M%S)"
+  SCREENSHOT_DIR=".csp/planning/ui-reviews/${PADDED_PHASE}-$(date +%Y%m%d-%H%M%S)"
   mkdir -p "$SCREENSHOT_DIR"
 
   # Desktop

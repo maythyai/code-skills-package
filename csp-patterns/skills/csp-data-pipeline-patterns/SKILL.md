@@ -1,6 +1,6 @@
 ---
 name: csp-data-pipeline-patterns
-description: Production data pipeline patterns covering Airflow DAG design, dbt transformations, data quality checks, incremental processing, idempotent pipelines, schema evolution, data lineage, ODPS/MaxCompute, data lake/warehouse patterns, and CDC with Debezium. Use when designing, building, or debugging data pipelines.
+description: Production data pipeline patterns covering Airflow DAG design, dbt transformations, data quality checks, incremental processing, idempotent pipelines, schema evolution, data lineage, partitioned data warehouse patterns (BigQuery / Snowflake / generic ANSI SQL), data lake/warehouse patterns, and CDC with Debezium. Use when designing, building, or debugging data pipelines.
 layer: 3
 category: patterns
 domain: patterns
@@ -19,7 +19,7 @@ Use this skill to design, build, and operate reliable data pipelines with proper
 - Adding data quality checks with Great Expectations, dbt tests, or Soda
 - Designing idempotent pipelines that handle re-runs safely
 - Managing schema evolution in upstream sources or downstream consumers
-- Working with ODPS/MaxCompute for large-scale batch processing
+- Working with partitioned data warehouses (BigQuery / Snowflake / etc.) for large-scale batch processing
 - Implementing Change Data Capture (CDC) with Debezium or similar tools
 - Choosing between data lake, warehouse, and lakehouse architectures
 - Debugging data freshness, completeness, or correctness issues
@@ -712,81 +712,68 @@ def _is_safe_type_widen(old_type: str, new_type: str) -> bool:
     return (old_type, new_type) in SAFE_WIDENS
 ```
 
-## ODPS/MaxCompute Patterns
+## Partitioned Data Warehouse Patterns
+
+> Patterns apply to any partitioned data warehouse (BigQuery, Snowflake, Spark SQL, etc.).
+> Adjust syntax to your vendor; the partition-pruning and incremental-load concepts are universal.
 
 ### Table Design and Partitioning
 
 ```sql
--- ODPS table with partitioning for efficient querying
+-- Generic ANSI SQL: partitioned table for efficient querying
+-- (BigQuery: partition by ingestion time / column; Snowflake: clustering key)
 CREATE TABLE IF NOT EXISTS user_events (
-    event_id        STRING NOT NULL COMMENT 'Unique event identifier',
-    user_id         BIGINT NOT NULL COMMENT 'User identifier',
-    event_type      STRING NOT NULL COMMENT 'Event category',
-    event_detail    STRING COMMENT 'JSON-encoded event payload',
-    session_id      STRING COMMENT 'Session identifier',
-    device_info     STRING COMMENT 'JSON device metadata',
-    event_timestamp DATETIME NOT NULL COMMENT 'Event occurrence time',
-    ip_address      STRING COMMENT 'Client IP (masked)',
-    duration_ms     BIGINT COMMENT 'Event duration in milliseconds'
+    event_id        VARCHAR NOT NULL,         -- unique event identifier
+    user_id         BIGINT NOT NULL,          -- user identifier
+    event_type      VARCHAR NOT NULL,         -- event category
+    event_detail    VARCHAR,                  -- JSON-encoded event payload
+    session_id      VARCHAR,                 -- session identifier
+    device_info     VARCHAR,                 -- JSON device metadata
+    event_timestamp TIMESTAMP NOT NULL,      -- event occurrence time
+    ip_address      VARCHAR,                 -- client IP (masked)
+    duration_ms     BIGINT                   -- event duration in milliseconds
 )
-PARTITIONED BY (
-    dt      STRING COMMENT 'Date partition: YYYYMMDD',
-    hour    STRING COMMENT 'Hour partition: HH'
-)
-LIFECYCLE 365  -- Auto-cleanup after 365 days
+PARTITION BY (event_date)  -- vendor-specific: BigQuery partition, Snowflake cluster key, etc.
 ;
 
--- Partition pruning query (efficient)
+-- Partition pruning query (efficient: only scans relevant partitions)
 SELECT user_id, event_type, COUNT(*) AS cnt
 FROM user_events
-WHERE dt = '20260614'
-  AND hour BETWEEN '09' AND '18'
+WHERE event_date = DATE '2026-06-14'
+  AND EXTRACT(HOUR FROM event_timestamp) BETWEEN 9 AND 18
   AND event_type = 'purchase'
 GROUP BY user_id, event_type;
 
 -- Anti-pattern: full table scan (no partition filter)
--- SELECT * FROM user_events WHERE event_type = 'purchase';  -- EXPENSIVE
+-- SELECT * FROM user_events WHERE event_type = 'purchase';  -- EXPENSIVE on large tables
 ```
 
-### MapReduce vs SQL Decision
+### SQL vs MapReduce/Spark Decision
 
 ```python
-# Use ODPS SQL for:
+# Use SQL (warehouse-native) for:
 # - Aggregations, joins, filters on structured data
 # - Window functions, CTEs, set operations
-# - Simple UDFs (Python/Java)
+# - Simple UDFs
 # - Most ETL transformations
 
-# Use MapReduce for:
+# Use Spark/MapReduce for:
 # - Custom graph algorithms
 # - Complex stateful processing
 # - Non-relational operations (e.g., TF-IDF computation)
 # - Multi-stage processing with intermediate data
 
-# ODPS PyODPS example
-from odps import ODPS
+# Generic warehouse client example (BigQuery-style; adapt to your vendor SDK)
+from google.cloud import bigquery  # or: snowflake.connector, pyspark.sql, etc.
 
-odps = ODPS(
-    access_id="your_access_id",
-    access_key="your_access_key",
-    project="your_project",
-    endpoint="{MAXCOMPUTE_ENDPOINT}",
-)
+client = bigquery.Client()
 
 
-def run_sql_transform(sql: str, hints: dict | None = None) -> str:
+def run_sql_transform(sql: str, job_config: bigquery.QueryJobConfig | None = None) -> str:
     """Execute a SQL transformation with resource hints."""
-    default_hints = {
-        "odps.sql.mapper.split.size": "256",  # MB per mapper
-        "odps.sql.reducer.instances": "100",  # Number of reducers
-        "odps.sql.type.system.odps2": "true",  # Enable ODPS 2.0 type system
-    }
-    if hints:
-        default_hints.update(hints)
-
-    instance = odps.execute_sql(sql, hints=default_hints)
-    instance.wait_for_success()
-    return instance.id
+    job = client.query(sql, job_config=job_config)
+    job.result()  # wait for completion
+    return job.job_id
 
 
 def incremental_load(
@@ -795,27 +782,31 @@ def incremental_load(
     partition_date: str,
     incremental_key: str = "updated_at",
 ) -> str:
-    """Incremental load pattern for ODPS.
+    """Incremental load pattern: reads only new/changed records since last load.
 
-    Reads only new/changed records since the last load timestamp.
+    Works on any partitioned warehouse — adjust partition syntax per vendor.
     """
     # Get watermark from target table
     watermark_sql = f"""
         SELECT MAX({incremental_key}) AS last_loaded
         FROM {target_table}
-        WHERE dt = '{partition_date}'
+        WHERE event_date = DATE '{partition_date}'
     """
-    with odps.execute_sql(watermark_sql).open_reader() as reader:
-        last_loaded = reader[0]["last_loaded"] if reader.count > 0 else "1970-01-01"
+    result = list(client.query(watermark_sql).result())
+    last_loaded = result[0]["last_loaded"] if result else "1970-01-01"
 
-    # Incremental extract and load
+    # Incremental extract and load (MERGE / INSERT OVERWRITE per vendor)
     load_sql = f"""
-        INSERT OVERWRITE TABLE {target_table}
-        PARTITION (dt = '{partition_date}')
-        SELECT *
-        FROM {source_table}
-        WHERE dt = '{partition_date}'
-          AND {incremental_key} > '{last_loaded}'
+        MERGE INTO {target_table} AS t
+        USING (
+            SELECT *
+            FROM {source_table}
+            WHERE event_date = DATE '{partition_date}'
+              AND {incremental_key} > '{last_loaded}'
+        ) AS s
+        ON t.event_id = s.event_id
+        WHEN MATCHED THEN UPDATE SET *
+        WHEN NOT MATCHED THEN INSERT *
     """
     return run_sql_transform(load_sql)
 ```
@@ -1046,13 +1037,13 @@ class LineageTracker:
 - [ ] Sensitive columns are masked or excluded from pipeline outputs
 - [ ] CDC consumers commit offsets only after successful processing
 - [ ] Table and column lineage tracked for impact analysis
-- [ ] ODPS/MaxCompute queries use partition filters to avoid full scans
+- [ ] Partitioned data warehouse queries use partition filters to avoid full scans
 - [ ] Pipeline monitoring covers freshness, completeness, and quality metrics
 - [ ] Alerting configured for SLA misses, quality failures, and lag
 
 ## Anti-Patterns
 
-- Running `SELECT *` without partition filters on large ODPS tables
+- Running `SELECT *` without partition filters on large partitioned tables
 - Airflow tasks with no timeout, causing indefinite hangs
 - Idempotency violations: INSERT without deduplication, append-only on re-runs
 - Schema changes deployed without checking downstream consumers

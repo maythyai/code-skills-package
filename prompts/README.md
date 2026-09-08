@@ -1,6 +1,6 @@
 # 系统提示词集（端到端交付链路）
 
-一套自包含的系统提示词 + 一个外环战略规划，覆盖从长期规划到上线运维与整体复盘的完整链路。外环 `roadmap.md` 先于 00 跑一次（每个项目通常跑一次用很久）；内环 00-07 每版本迭代执行。八份内环 + 一份外环同源同构：统一目录约定（`docs/` + `.csp/`）、统一 slug/feature-id 命名、统一 front-matter 双向互链、manifest 唯一索引、PMS/CMS/TMS 三说明书全程 living 治理、归档就绪、变更 delta 同步。
+一套自包含的系统提示词 + 一个外环战略规划，覆盖从长期规划到上线运维与整体复盘的完整链路。外环 `roadmap.md` 先于 00 跑一次（每个项目通常跑一次用很久）；内环 00-07 每版本迭代执行。八份内环 + 一份外环同源同构：统一目录约定（`docs/` + `.csp/`）、统一 slug/feature-id 命名、统一 front-matter 单向锚定（`.csp/`→`docs/`）+ manifest 双向映射、PMS/CMS/TMS 三说明书全程 living 治理、归档就绪、变更 delta 同步。
 
 ## 链路与文件
 
@@ -16,12 +16,15 @@
 | 6 | 审查·测试·发布交付·运维 | [06-verify-ship.md](./06-verify-ship.md) | `.csp/artifacts/{verify,review}/` + `.csp/ship/` + `.csp/ops/` + `.csp/milestones/` |
 | 7 | 整体复盘审查（产品+技术，迭代探索） | [07-reviewer.md](./07-reviewer.md) | `.csp/review/` + `docs/solutions/`（摘要） |
 | 独立 | 模块化审计+可用性审查+联动测试+roadmap bump | [audit.md](./audit.md) | `.csp/audit/` + `docs/analysis/`（摘要） |
+| 棕地 | docs/→.csp/ 双轨整合（PRD→PMS、strategy→lifecycle、solutions→specs、analysis→audit） | [brownfield-doc-integration.md](./brownfield-doc-integration.md) | `.csp/product-spec/` + `.csp/manifest.json` + `docs/` 整理归位 |
 
 > **06 vs 07**：06 是**发布前符合性验证**（实现是否满足 PRD/Spec/AC、能否上线），是门控；07 是**里程碑后整体复盘**（产品对不对、架构稳不稳、下一步做什么），探索性/战略性，不卡发布。07 从用户视角+技术视角发现 Spec 之外的新问题，findings 回流下一迭代 01-05 + 外环 roadmap。
 
 > **外环 roadmap**：`roadmap.md` 先于 00 跑一次——产出战略锚点（STRATEGY.md）+ 版本号规则 + 1/3 年+迭代路径（ROADMAP.md）。01 PRD 读 ROADMAP 定位本版本主题（`roadmap_ref`/`target_version`）；06 release 用版本号规则；07 复盘 findings 回流更新 ROADMAP 下一版本主题。每个项目通常只跑一次，07 回流或战略调整时增量更新。
 
 > **独立审计 `audit`**：`audit.md` 独立于 00–07 链路，可随时运行——模块化拆解（含 DB 模块）→ 并行 fan-out 事实 → 需求可追溯缺口 → 跨层联动测试 → 逐模块可用性审查（Mode A/B + Nielsen 10）→ 评级 → 裁决报告 → findings 带 SemVer bump 建议回流 roadmap。产出 `.csp/audit/`（MODULE-LIST/USABILITY-REPORT/AUDIT-VERDICT/FINDINGS）。兼容 CSP 全部约定；不写 lifecycle、不改代码，只产审计+建议（修复归 05/06）。
+
+> **棕地文档整合 `brownfield-doc-integration`**：独立于 00–07 链路，是 00 Phase 1.5/1.7 在"docs/→.csp/ 双轨整合"上的具体化。棕地项目 onboarding 时跑——把 `docs/` 的 `prd/`/`strategy/`/`solutions/`/`analysis/` 蒸馏+索引进 `.csp/`（PRD→PMS、strategy→lifecycle/VERSION-REGISTRY、solutions→specs/review、analysis→audit/review），原文留 `docs/` 不复制全文，`.csp/` 只存工程蒸馏 + manifest 索引 + front-matter 互链。`.csp/AGENTS.md` 不存在先跑 00。可随时增量重跑（delta）。产物 `.csp/product-spec/` + `.csp/manifest.json` + `docs/` 整理归位。
 
 ## 阶段并入说明
 
@@ -40,7 +43,7 @@
 
 - **知识中枢前置**：每阶段探测第 0 步查 `.csp/AGENTS.md` + `.csp/manifest.json`；不存在 → 提示先执行 00。
 - **manifest 回写**：各阶段产出实质页后回写 `.csp/manifest.json` 对应 item `source_type` + `build_status=built` + `content_hash`，保持索引实时。约定见 00「manifest 回写约定」节。
-- **追溯锚点**：`prd_ref` / `pms_module` / `related_decomposition` / `related_specs` / `related_tasks` / `feature_id` / `task_id` 双向互链。
+- **追溯锚点（单向）**：`.csp/` 产物 front-matter 单向锚定 `docs/` 原文（`prd_ref`/`original_ref`/`sources`）+ `.csp/` 内部互链（`pms_module`/`spec_ref`/`related_tasks`/`feature_id`/`task_id`）；**`docs/` 原文不内嵌 `.csp/` 引用**（`.csp/` 易变/临时，`docs/` 沉淀精确）；`docs/`↔`.csp/` 双向映射由 `manifest` 承载（`raw_path`↔`output_path`），不靠 `docs/` front-matter 反向链接。
 - **数量关系**（详见 03「元数据与一致性」节）：PRD `feature_count`（模块/域级）≈ decomposition 域数 ≤ decomposition 原子 Feature 数 == Spec 数（1:1）；每份 P0/P1 Spec ≥1 Task。
 - **归档规范**（详见 06「里程碑归档规范」节）：一次性发布产物用 `mv` 移入 `.csp/milestones/{milestone}/`；living baseline 与增量文档用 `cp -r` 快照归档（原件留在 `.csp/` 继续演进）。
 - **变更同步**：各阶段重新执行时先读既有产物 diff delta，只改 delta，沿追溯链传播 stale 标记并回写 manifest `degraded`。
@@ -55,6 +58,7 @@
 - **阶段穷尽**：每阶段必须**穷尽完成本阶段全部任务**才可标 `done`、写 lifecycle 进下一阶段，不遗留尾巴到下游。例：03 必须为 decomposition 每个 Feature 产出 Spec（硬门控 Spec 数 == Feature 数）；04 必须为每个 P0/P1 Spec 拆 Task；05 必须按全部 Wave 实施完。下游探测发现上游有缺漏 → 停步路由回上游补全，不臆造、不绕过。
 - **评审/批准 gate（默认自动，不等人）**：① **PRD 评审**（01 完成前，reviewer≠author，auto 跑、findings 自动应用、无未解 Critical 自动 `Approved` 进 02，**不要求人工批准**；仅 Rejected fundamental 才人工）；② **Git 发布**（06，S6 质量门控+S7 审查+对账全过后**自动 push+GitHub Release**，gate 即授权，不再二次人工确认；版本号一致性见 06「版本与发布规范」节）；③ **07 复盘**（里程碑后可选触发）。**仅无前置 gate 的纯破坏操作（删 source、删业务文档）才人工拍板。**
 - **门控执行完整性（禁止静默降级）**：auto-proceed 只认**真实执行**（`ran: <命令> exit <code>`），不认降级（grep 替代 typecheck/test/build）。工具链不可用→`BLOCKED`→不发布、tag 标 `-draft`。`not-run`=阻断。版本叠加：上版 not-run→本版警告先对齐再加新功能。
+- **提交规范（自审通过即 local commit）**：自审 + 本阶段 gate 绿 → 立即本地 commit 到主干（原子、conventional message、禁 WIP 破码），**不留"未提交"收尾态**（不 commit=未完成）；push remote 才 gate（06 release）。格式/哪些说明/哪些忽略见 `version-management.md`「十六、提交规范」。
 
 ## 文档与图规范（全链路 Markdown 产物遵守）
 

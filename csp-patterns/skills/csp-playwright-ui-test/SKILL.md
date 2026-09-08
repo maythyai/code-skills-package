@@ -29,6 +29,11 @@ triggers:
   - "e2e 冒烟"
   - "表单测试"
   - "登录测试"
+  - "验证页面改动"
+  - "排查页面问题"
+  - "开发自测"
+  - "attach 浏览器"
+  - "a11y snapshot"
 related_skills: [csp-e2e-testing, csp-webapp-testing, csp-qa-test-engineering, csp-verify-phase, csp-react-testing, csp-h5-visual-testing, csp-cross-layer-testing, csp-linked-test-runner]
 anti_rationalizations:
   "代码逻辑看起来没问题": "页面行为必须以浏览器实测证据为准，读代码不能替代跑页面"
@@ -142,6 +147,21 @@ playwright-cli -s=before open https://old.example.com
 playwright-cli -s=after  open https://new.example.com
 ```
 
+### 3.1 attach 真实 Chrome（持久登录态 + 开发期自验证）
+
+默认 `open` 拉起干净内存 profile，适合隔离验证。但当被测系统有 SSO/复杂登录、需装扩展
+（改 header/代理 CDN），或**改完前端代码想就地自验证本次改动**时，更适合 attach 一个
+**独立调试 profile 的真实 Chrome**：登录态与插件持久化、跨会话免登，全程用 a11y 快照 +
+`eval` 布尔断言 + `requests` 校验，不依赖截图、省 token。
+
+```bash
+playwright-cli attach --cdp="${CSP_CHROME_DEBUG_PORT:-9222}"   # 接管已启动的调试 Chrome
+playwright-cli -s=default snapshot                              # daemon 常驻，后续命令秒连
+```
+
+启动调试 Chrome、daemon 复用纪律、双模式（回归 sub-agent / 开发期自验证闭环）、ref 失效
+处理见 [references/attach-debug-browser.md](references/attach-debug-browser.md)。
+
 ## 4. 用例执行：snapshot ref 驱动
 
 **核心循环**：先 `snapshot` 拿到元素 ref（如 `e15`），再用 ref 操作，操作后自动回显新快照。
@@ -214,11 +234,11 @@ playwright-cli console warning    # 只看 warning
 ### 5.4 截图
 
 ```bash
-playwright-cli screenshot --filename=evidence/step3-result.png
-playwright-cli screenshot e12 --filename=evidence/step3-toast.png   # 元素级截图
+playwright-cli screenshot --filename=.csp/artifacts/verify/evidence/step3-result.png
+playwright-cli screenshot e12 --filename=.csp/artifacts/verify/evidence/step3-toast.png   # 元素级截图
 ```
 
-**命名规范**：`evidence/<用例ID>-<步骤>-<状态>.png`，例如 `evidence/login-01-submit-fail.png`。失败截图与通过截图都要保留，报告里成对引用。
+**命名规范**：`.csp/artifacts/verify/evidence/<用例ID>-<步骤>-<状态>.png`，例如 `.csp/artifacts/verify/evidence/login-01-submit-fail.png`。失败截图与通过截图都要保留，报告里成对引用。证据根可用环境变量 `CSP_EVIDENCE_DIR` 覆盖（默认 `.csp/artifacts/verify/evidence/`），仅用于把 trace/视频等大体积媒体重定向到 gitignore 路径，不得当常态散落到 `.csp/` 之外。
 
 ## 6. 失败签名
 
@@ -273,6 +293,8 @@ playwright-cli kill-all       # 进程残留时强制清理
 
 ### 8.2 测试报告模板
 
+报告落盘 `.csp/artifacts/verify/ui-test-report.md`（单文件最新版，幂等覆盖）。
+
 ```markdown
 # UI 测试报告 — <对象/页面>
 - 结论：complete | blocked（原因：...）
@@ -282,8 +304,8 @@ playwright-cli kill-all       # 进程残留时强制清理
 ## 用例结果
 | 用例 | 结果 | 失败签名 | 证据 |
 |------|------|----------|------|
-| login-01 | ✅ | - | evidence/login-01-done.png |
-| order-02 | ❌→✅ | timing@order-list:loading-timeout | evidence/order-02-*.png |
+| login-01 | ✅ | - | .csp/artifacts/verify/evidence/login-01-done.png |
+| order-02 | ❌→✅ | timing@order-list:loading-timeout | .csp/artifacts/verify/evidence/order-02-*.png |
 
 ## 修复记录（每轮）
 1. 签名 timing@order-list:loading-timeout → 根因：列表渲染无 loading 态 → 修复：<文件:行> → 回归通过
@@ -319,7 +341,7 @@ playwright-cli kill-all       # 进程残留时强制清理
 ## 11. 联动证据输出（供跨层测试消费）
 
 当被 `csp-linked-test-runner` 编排做跨层联动测试时，本技能在执行 UI 动作的同时，
-**额外产出一份 `linked-evidence.json`**，把"这次点击"的网络请求、时间戳、请求/响应体、DOM、截图
+**额外产出一份 `linked-evidence-{test_id}.json`**（按 `test_id` 命名，落 `.csp/artifacts/verify/evidence/`），把"这次点击"的网络请求、时间戳、请求/响应体、DOM、截图
 绑定成一组，供下游 `csp-db-state-assertion` 用 trace_id/时间窗与 DB 行变化对齐。
 
 ### 11.1 产出格式
@@ -339,8 +361,8 @@ playwright-cli kill-all       # 进程残留时强制清理
       "ts": 1730000000120
     }
   ],
-  "ui_dom": "evidence/ORD-001-after.dom",
-  "screenshot": "evidence/ORD-001-after.png",
+  "ui_dom": ".csp/artifacts/verify/evidence/ORD-001-after.dom",
+  "screenshot": ".csp/artifacts/verify/evidence/ORD-001-after.png",
   "console_errors": []
 }
 ```
@@ -366,6 +388,7 @@ playwright-cli kill-all       # 进程残留时强制清理
 | [references/tool-output-throttling.md](references/tool-output-throttling.md) | 工具输出限流：大快照/网络日志/控制台输出的过滤与落盘 |
 | [references/recovery-resume.md](references/recovery-resume.md) | 恢复与续跑：会话恢复、进度文件、断点续测 |
 | [references/security-constraints.md](references/security-constraints.md) | 安全约束详细规则 |
+| [references/attach-debug-browser.md](references/attach-debug-browser.md) | attach 真实 Chrome：独立调试 profile + daemon 复用 + 开发期自验证闭环 |
 | [references/playwright-tests.md](references/playwright-tests.md) | 运行与调试存量 Playwright 测试 |
 | [references/request-mocking.md](references/request-mocking.md) | 请求拦截与 mock |
 | [references/storage-state.md](references/storage-state.md) | 登录态/Cookie/Storage 管理 |
@@ -376,4 +399,4 @@ playwright-cli kill-all       # 进程残留时强制清理
 | [references/element-attributes.md](references/element-attributes.md) | 元素属性检查 |
 | [references/running-code.md](references/running-code.md) | 直接执行 Playwright 代码片段 |
 | [csp-cross-layer-testing](../../csp-patterns/skills/csp-cross-layer-testing/SKILL.md) | 跨层联动测试契约与证据矩阵 |
-| [csp-linked-test-runner](../../csp-runtime/skills/csp-linked-test-runner/SKILL.md) | 联动编排器(消费 linked-evidence.json) |
+| [csp-linked-test-runner](../../csp-runtime/skills/csp-linked-test-runner/SKILL.md) | 联动编排器(消费 linked-evidence-{test_id}.json) |

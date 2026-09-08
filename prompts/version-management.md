@@ -121,3 +121,58 @@ release 后从 `git log <prev-tag>..<tag> --oneline` + CHANGELOG 回填"Main Fea
 | 版本字符串不一致 | tag ≠ package.json ≠ Release title | 五方完全一致，脚本校验 |
 | 不回填实际交付 | release 后"实际做了什么"没记录 | git log + CHANGELOG 回填 VERSION-REGISTRY + roadmap |
 | 静默门控降级后 auto-release | 工具链坏→grep 替代→auto-proceed | not-run=BLOCKED=阻断发布，tag 标 -draft |
+
+## 十六、提交规范（commit convention）
+
+> 本节集中提交规则，供 00/05/06/各 agent 引用。**本地 commit 是正常操作（自审通过 + 任务/gate 完成即 commit 到主干）；push 到 remote 才 gate（06 release）**。禁止"任务结束留未提交工作树"作为收尾态——要么 commit，要么标 BLOCKED。
+
+### 16.1 何时 commit
+- **自审通过 + 本阶段 gate 绿** → 立即 local commit 到主干（master/main），不积压、不留"未提交"。
+- **原子提交**：一个逻辑变更一个 commit；每 commit 独立可编译/可测过；**禁止 WIP 破码提交**（不通过 typecheck/test 的代码不 commit）；文件可数 ≤6、单一职责。
+- `.csp/` 知识产物（manifest/lifecycle-state/PMS/CMS/TMS/specs/tasks/traceability/归档）= 共享基础设施 → 提交到主干，不建 side branch。
+- **push 才 gate**：push remote + GitHub Release 在 06 release（S6/S7/对账全过）自动执行；非发布场景不 push。
+
+### 16.2 格式（Conventional Commits）
+```
+<type>(<scope>): <subject>      # 一句话，祈使句，≤72 字，风格统一
+
+<body>                           # 可选：解释 why（动机/取舍/breaking/迁移）；what 不必赘述（diff 自解释）
+
+<footer>                         # 可选：BREAKING CHANGE: / Fixes #NN / Refs AUDIT-F-NN / Implements T-NN
+```
+**type**：`feat`（新功能）/`fix`（bug）/`docs`（仅文档）/`refactor`（不改行为）/`perf`/`test`/`build`/`ci`/`chore`（构建/脚手架/杂务/派生数据）/`style`（格式）。
+
+### 16.3 哪些要说明（写 body）
+- 非显而易见的改动：**为什么**这么做（动机/取舍/约束），而非做了什么。
+- breaking 变更 + 迁移说明（footer `BREAKING CHANGE:`）。
+- 关联追溯：finding/任务 id（`Fixes AUDIT-F-NN` / `Refs REV-F-NN` / `Implements T-NN`）。
+- 约定/架构调整：why + 影响范围。
+
+### 16.4 哪些可忽略（subject 足矣，不写 body）
+- 纯机械编辑：路径 rename、格式化、typo、派生数据重生成（`chore: rebuild derived registry/triggers`）。
+- 单一明显修复：subject 自解释的 one-liner（`fix(auth): token refresh resets retry counter`）。
+- 文档措辞微调。
+
+### 16.5 示例
+```
+feat(order): 支持订单退款全链路（PRD→PMS→Spec→Task）
+
+采纳 07 finding REV-F-12（高并发退款事务回滚不一致）；扣库存并入退款事务
+（见 .csp/specs/SPEC-F-order-3 §事务边界）。AC ORD-003..006 全演示。
+
+Refs REV-F-12, Implements T-14
+```
+```
+chore(csp): 统一产物路径到 .csp/（.planning→.csp/planning, spark-output→.csp/spark）
+```
+```
+fix(auth): token 刷新后未重置 retry 计数
+```
+
+### 16.6 反模式
+- **"未提交留工作树"收尾** → 自审通过必 commit；不 commit = 任务未完成（与 [[csp-artifact-path-convention]] 同期整改）。
+- **WIP 破码提交** → 不通过门控的代码不 commit。
+- **巨型 commit** → 一变更一 commit，文件可数 ≤6、单一职责。
+- **只写 what 不写 why**（非显然改动） → body 写 why。
+- **subject = "update"/"fix bug"** → 须自解释（祈使句 + scope）。
+- **commit 半生体 push** → push 只在 06 release gate 通过后。

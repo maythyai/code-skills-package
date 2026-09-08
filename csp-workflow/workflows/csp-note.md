@@ -16,8 +16,8 @@ Read all files referenced by the invoking prompt's execution_context before star
 
 Notes are stored as individual markdown files:
 
-- **Project scope**: `.planning/notes/{YYYY-MM-DD}-{slug}.md` — used when `.planning/` exists in cwd
-- **Global scope**: `~/.claude/notes/{YYYY-MM-DD}-{slug}.md` — fallback when no `.planning/`, or when `--global` flag is present
+- **Project scope**: `.csp/planning/notes/{YYYY-MM-DD}-{slug}.md` — used when `.csp/planning/` exists in cwd
+- **Global scope**: `~/.claude/notes/{YYYY-MM-DD}-{slug}.md` — fallback when no `.csp/planning/`, or when `--global` flag is present
 
 Each note file:
 
@@ -30,9 +30,9 @@ promoted: false
 {note text verbatim}
 ```
 
-**`--global` flag**: Strip `--global` from anywhere in `$ARGUMENTS` before parsing. When present, force global scope regardless of whether `.planning/` exists.
+**`--global` flag**: Strip `--global` from anywhere in `$ARGUMENTS` before parsing. When present, force global scope regardless of whether `.csp/planning/` exists.
 
-**Important**: Do NOT create `.planning/` if it doesn't exist. Fall back to global scope silently.
+**Important**: Do NOT create `.csp/planning/` if it doesn't exist. Fall back to global scope silently.
 </step>
 
 <step name="parse_subcommand">
@@ -52,7 +52,7 @@ promoted: false
 **Subcommand: append — create a timestamped note file.**
 
 1. Determine scope (project or global) per storage format above
-2. Ensure the notes directory exists (`.planning/notes/` or `~/.claude/notes/`)
+2. Ensure the notes directory exists (`.csp/planning/notes/` or `~/.claude/notes/`)
 3. Generate slug: first ~4 meaningful words of the note text, lowercase, hyphen-separated (strip articles/prepositions from the start)
 4. Generate filename: `{YYYY-MM-DD}-{slug}.md`
    - If a file with that name already exists, append `-2`, `-3`, etc.
@@ -69,7 +69,7 @@ promoted: false
 <step name="list">
 **Subcommand: list — show notes from both scopes.**
 
-1. Glob `.planning/notes/*.md` (if directory exists) — project notes
+1. Glob `.csp/planning/notes/*.md` (if directory exists) — project notes
 2. Glob `~/.claude/notes/*.md` (if directory exists) — global notes
 3. For each file, read frontmatter to get `date` and `promoted` status
 4. Exclude files where `promoted: true` from active counts (but still show them, dimmed)
@@ -81,7 +81,7 @@ promoted: false
 ```
 Notes:
 
-Project (.planning/notes/):
+Project (.csp/planning/notes/):
   1. [2026-02-08 14:32] refactor the hook system to support async validators
   2. [promoted] [2026-02-08 14:40] add rate limiting to the API endpoints
   3. [2026-02-08 15:10] consider adding a --dry-run flag to build
@@ -101,11 +101,11 @@ If a scope has no directory or no entries, show: `(no notes)`
 1. Run the **list** logic to build the numbered index (both scopes)
 2. Find entry N from the numbered list
 3. If N is invalid or refers to an already-promoted note, tell the user and stop
-4. **Requires `.planning/` directory** — if it doesn't exist, warn: "Todos require a CSP project. Run `/csp-new-project` to initialize one."
-5. Ensure `.planning/todos/pending/` directory exists
-6. Generate todo ID: `{NNN}-{slug}` where NNN is the next sequential number (scan both `.planning/todos/pending/` and `.planning/todos/completed/` for the highest existing number, increment by 1, zero-pad to 3 digits) and slug is the first ~4 meaningful words of the note text
+4. **Requires `.csp/planning/` directory** — if it doesn't exist, warn: "Todos require a CSP project. Run `/csp-new-project` to initialize one."
+5. Ensure `.csp/planning/todos/pending/` directory exists
+6. Generate todo ID: `{NNN}-{slug}` where NNN is the next sequential number (scan both `.csp/planning/todos/pending/` and `.csp/planning/todos/completed/` for the highest existing number, increment by 1, zero-pad to 3 digits) and slug is the first ~4 meaningful words of the note text
 7. Extract the note text from the source file (body after frontmatter)
-8. Create `.planning/todos/pending/{id}.md`:
+8. Create `.csp/planning/todos/pending/{id}.md`:
 
 ```yaml
 ---
@@ -138,8 +138,8 @@ Promoted from quick note captured on {original date}.
 
 <edge_cases>
 1. **"list" as note text**: `/csp-note list of things` saves note "list of things" (subcommand only when `list` is the entire arg)
-2. **No `.planning/`**: Falls back to global `~/.claude/notes/` — works in any directory
-3. **Promote without project**: Warns that todos require `.planning/`, suggests `/csp-new-project`
+2. **No `.csp/planning/`**: Falls back to global `~/.claude/notes/` — works in any directory
+3. **Promote without project**: Warns that todos require `.csp/planning/`, suggests `/csp-new-project`
 4. **Large files**: `list` shows last 10 when >20 active entries
 5. **Duplicate slugs**: Append `-2`, `-3` etc. to filename if slug already used on same date
 6. **`--global` position**: Stripped from anywhere — `--global my idea` and `my idea --global` both save "my idea" globally
@@ -154,5 +154,5 @@ Promoted from quick note captured on {original date}.
 - [ ] List: Promoted notes shown but dimmed
 - [ ] Promote: Todo created with correct format
 - [ ] Promote: Source note marked as promoted
-- [ ] Global fallback: Works when no `.planning/` exists
+- [ ] Global fallback: Works when no `.csp/planning/` exists
 </success_criteria>

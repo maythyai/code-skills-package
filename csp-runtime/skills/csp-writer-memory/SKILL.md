@@ -200,8 +200,8 @@ The system synthesizes answers from all relevant memory types.
 
 ## Behavior
 
-1. **On Init**: Creates `.csp-writer-memory/memory.json` with project metadata and empty collections
-2. **Auto-Backup**: Changes are backed up before modification to `.csp-writer-memory/backups/`
+1. **On Init**: Creates `.csp/writer-memory/memory.json` with project metadata and empty collections
+2. **Auto-Backup**: Changes are backed up before modification to `.csp/writer-memory/backups/`
 3. **Korean-First**: Emotion vocabulary uses Korean terms throughout
 4. **Session Loading**: Memory is loaded on session start for immediate context
 5. **Git-Friendly**: JSON formatted for clean diffs and collaboration
@@ -390,7 +390,7 @@ Output:
 ## File Structure
 
 ```
-.csp-writer-memory/
+.csp/writer-memory/
 ├── memory.json          # Main memory file
 ├── backups/             # Auto-backups before changes
 │   ├── memory-2024-01-15-090000.json
@@ -411,7 +411,7 @@ Output:
 ## Troubleshooting
 
 **Memory not loading?**
-- Check `.csp-writer-memory/memory.json` exists
+- Check `.csp/writer-memory/memory.json` exists
 - Verify JSON syntax is valid
 - Run `/csp-writer-memory status` to diagnose
 

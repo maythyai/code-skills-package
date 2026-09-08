@@ -51,7 +51,7 @@ model: opus
 ### 探测顺序（读到即停）
 0. **知识中枢**：`.csp/AGENTS.md` + `.csp/manifest.json`；不存在 → 提示先执行 00。
 0.5 **阶段状态**：读 `.csp/lifecycle-state.json`，确认前置阶段（02）status==`done`；未完成 → 路由回上游；明确"我是第 3 步（技术方案+选型+Spec），下一步 → 04 任务拆解"。读后按 README「进度播报」格式播报当前进度。
-1. **PRD + front-matter**：`docs/prd/PRD-{slug}.md`（`id`/`product_type`/`feature_count`/`mvp_scope`/`thin_sections`/`related_specs`/`related_pms`）。
+1. **PRD + front-matter**：`docs/prd/PRD-{slug}.md`（`id`/`product_type`/`feature_count`/`mvp_scope`/`thin_sections`）。
 2. **需求拆解**：`.csp/decomposition/DECOMPOSITION-SUMMARY.md`、`FEATURE-DETAILS/*.yaml`（技术维度标记）、`NFR.md`、`DEPENDENCY-GRAPH.md`。
 3. **PMS**：`.csp/product-spec/PMS-INDEX.md` + `PMS-{module}.md` → 模块边界，**不得越界**。
 4. **技术选型（决定是否跑「技术选型（S2）」节）**：`.csp/tech-decisions/TECH-STACK-OVERVIEW.md`、`PER-FEATURE-STACK.md`、`TECH-DECISIONS-SUMMARY.md`、`ADR/*.md`。**已选型 → 复用不重写；缺失 → 「技术选型（S2）」节选型。**
@@ -200,7 +200,7 @@ model: opus
 - [ ] 每个 P0/P1 Feature 的 Spec 含全部所需维度（S 精简 / M 标准 8 维 / L+ 状态机 / XL+ 性能容灾）。
 - [ ] **任何 Feature 缺 Spec → 当场补全再完成**；不允许"部分 Spec 先进 04、剩余后补"——Spec 是 04 任务拆解与 05 实施的唯一输入，缺则下游无法拆/无法实施，必返工。
 - [ ] 每份 Spec `ac_coverage` 自检（无未覆盖 AC，或缺口显式标 `[TBD]`）。
-- [ ] `SPEC-INDEX.md`、追溯矩阵、PRD front-matter `related_specs` 三处同步回填，且 Spec 数一致。
+- [ ] `SPEC-INDEX.md`、追溯矩阵、manifest（PRD↔Spec 映射）三处同步，且 Spec 数一致。
 
 > **穷尽原则**：本阶段必须为 decomposition 全部 Feature 产出 Spec 才算完成。不遗留尾巴到 04/05。
 
@@ -250,7 +250,7 @@ ER 图（Mermaid）；表定义（主键、CHECK、外键、软删 `deleted_at`�
 
 ```
 项目根/
-├── docs/prd/PRD-{slug}.md          # 只读 + 回填 front-matter related_specs
+├── docs/prd/PRD-{slug}.md          # 只读（不回填 .csp/ 引用；PRD↔Spec 映射在 manifest）
 ├── .csp/product-spec/              # PMS（只读，本阶段不改）
 ├── .csp/code-spec/                 # CMS（若有，只读参考）
 ├── .csp/tech-decisions/            # 第五层选型产出（缺选型时产出；已有则复用）
@@ -309,7 +309,7 @@ ac_coverage: {已映射 AC 数}/{PRD 该 Feature AC 总数}
 ```
 
 ### 双向回填约束（生成后强制执行）
-1. **回填 PRD**：每生成一份 Spec，更新 `docs/prd/PRD-{slug}.md` 的 `related_specs` 追加本 Spec 路径；更新 `docs/prd/PRD-INDEX.md` 该 PRD 行状态/关联 Spec。
+1. **回写 manifest**：每生成一份 Spec，登记 manifest 映射（`raw_path`=`docs/prd/PRD-{slug}.md`，`output_path`=`.csp/specs/SPEC-F-*-n.md`）；更新 `docs/prd/PRD-INDEX.md` 该 PRD 行状态/关联 Spec。**不向 PRD front-matter 写 `.csp/` 引用**（双向映射由 manifest 承载）。
 2. **追溯矩阵同步**：`PRD 条目 → Feature-id → Spec 路径` 写入 `.csp/traceability/FORWARD-MATRIX.md`，反向写 `BACKWARD-MATRIX.md`；未映射 AC 在 `COVERAGE-REPORT.md` 标缺口。
 3. **数量一致（按粒度分层校验，非全等）**：
 
@@ -373,7 +373,7 @@ ac_coverage: {已映射 AC 数}/{PRD 该 Feature AC 总数}
 - ✅ TDD 评审已自动完成（findings 落 .csp/tech-design/REVIEW-FINDINGS.md，无未解 Critical，自动进 04）
 - [ ] 跨系统集成 → 补 .csp/tech-design/INTEGRATION-DESIGN.md（按需）
 - [ ] PRD 变更 → 沿 .csp/traceability/ 评估变更影响
-当前产物：[选型+]TDD（{N} 章）+ Spec（{M} 份）+ TMS + 追溯矩阵 + REVIEW-FINDINGS（已 auto 通过）；已回填 docs/prd/PRD-{slug}.md 的 related_specs；已回写 manifest。已写 .csp/lifecycle-state.json：03 done，current_stage=04-task-breakdown。完成时按 README「进度播报」格式播报（03 转 ✓，current_stage 推进至 04-task-breakdown）。
+当前产物：[选型+]TDD（{N} 章）+ Spec（{M} 份）+ TMS + 追溯矩阵 + REVIEW-FINDINGS（已 auto 通过）；已回写 manifest（PRD↔Spec 映射）。已写 .csp/lifecycle-state.json：03 done，current_stage=04-task-breakdown。完成时按 README「进度播报」格式播报（03 转 ✓，current_stage 推进至 04-task-breakdown）。
 ```
 
 ## 十四、反模式
@@ -387,7 +387,7 @@ ac_coverage: {已映射 AC 数}/{PRD 该 Feature AC 总数}
 | 跳过选型 | 直接开写无 ADR | 缺选型必跑「技术选型（S2）」节，每触发维度出 ADR |
 | Spec 含糊 | "字段见代码" | DDL/OpenAPI/组件树级明确 |
 | API 契约非正式 | 口头约定 | 形式化落 API-OVERVIEW.md |
-| 不回填 PRD | Spec 生成后 related_specs 仍空 | 强制双向回填 |
+| 不回写 manifest | Spec 生成后 PRD↔Spec 映射缺失 | 强制回写 manifest |
 | 不回写 manifest | 索引失效 | 产出实质页即回写 build_status |
 | TMS 事后补 | 写完再补用例 | 随 Spec 同步建 TMS + 追溯矩阵 |
 | 绿测=覆盖 | 全绿以为覆盖需求 | 用追溯矩阵找未测缺口 |

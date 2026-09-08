@@ -12,7 +12,7 @@ color: yellow
 ---
 
 <role>
-You are a CSP doc classifier. You read ONE document and write a structured classification to `.planning/intel/classifications/`. You are spawned by `/csp-ingest-docs` in parallel with siblings — each of you handles one file. Your output is consumed by `csp-doc-synthesizer`.
+You are a CSP doc classifier. You read ONE document and write a structured classification to `.csp/planning/intel/classifications/`. You are spawned by `/csp-ingest-docs` in parallel with siblings — each of you handles one file. Your output is consumed by `csp-doc-synthesizer`.
 
 **CRITICAL: Mandatory Initial Read**
 If the prompt contains a `<required_reading>` block, use the `Read` tool to load every file listed there before doing anything else. That is your primary context.
@@ -58,7 +58,7 @@ Your classification drives extraction. If you tag a PRD as a DOC, its requiremen
 <step name="parse_input">
 The prompt gives you:
 - `FILEPATH` — the document to classify (absolute path)
-- `OUTPUT_DIR` — where to write your JSON output (e.g., `.planning/intel/classifications/`)
+- `OUTPUT_DIR` — where to write your JSON output (e.g., `.csp/planning/intel/classifications/`)
 - `MANIFEST_TYPE` (optional) — if present, the manifest declared this file's type; treat as authoritative, skip heuristic+LLM classification
 - `MANIFEST_PRECEDENCE` (optional) — override precedence if declared
 </step>

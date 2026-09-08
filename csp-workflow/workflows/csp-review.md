@@ -115,12 +115,12 @@ if [[ "$INIT" == @file:* ]]; then INIT=$(cat "${INIT#@file:}"); fi
 Read from init: `phase_dir`, `phase_number`, `padded_phase`.
 
 Then read:
-1. `.planning/PROJECT.md` (first 80 lines — project context)
-2. Phase section from `.planning/ROADMAP.md`
+1. `.csp/planning/PROJECT.md` (first 80 lines — project context)
+2. Phase section from `.csp/planning/ROADMAP.md`
 3. All `*-PLAN.md` files in the phase directory
 4. `*-CONTEXT.md` if present (user decisions)
 5. `*-RESEARCH.md` if present (domain research)
-6. `.planning/REQUIREMENTS.md` (requirements this phase addresses)
+6. `.csp/planning/REQUIREMENTS.md` (requirements this phase addresses)
 </step>
 
 <step name="build_prompt">
@@ -191,8 +191,8 @@ for PLAN_FILE in "${PHASE_DIR}"/*-PLAN.md; do
 done
 
 # Optional section files (only if content was included in the combined prompt)
-if [ -f ".planning/PROJECT.md" ]; then
-  cp .planning/PROJECT.md "/tmp/csp-review-${PHASE}-project.md"
+if [ -f ".csp/planning/PROJECT.md" ]; then
+  cp .csp/planning/PROJECT.md "/tmp/csp-review-${PHASE}-project.md"
 fi
 if ls "${PHASE_DIR}/"*"-CONTEXT.md" >/dev/null 2>&1; then
   cat "${PHASE_DIR}/"*"-CONTEXT.md" > "/tmp/csp-review-${PHASE}-context.md"
@@ -200,8 +200,8 @@ fi
 if ls "${PHASE_DIR}/"*"-RESEARCH.md" >/dev/null 2>&1; then
   cat "${PHASE_DIR}/"*"-RESEARCH.md" > "/tmp/csp-review-${PHASE}-research.md"
 fi
-if [ -f ".planning/REQUIREMENTS.md" ]; then
-  cp .planning/REQUIREMENTS.md "/tmp/csp-review-${PHASE}-requirements.md"
+if [ -f ".csp/planning/REQUIREMENTS.md" ]; then
+  cp .csp/planning/REQUIREMENTS.md "/tmp/csp-review-${PHASE}-requirements.md"
 fi
 ```
 

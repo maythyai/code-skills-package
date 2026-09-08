@@ -1,5 +1,5 @@
 <purpose>
-Create a clean branch for pull requests by filtering out transient .planning/ commits.
+Create a clean branch for pull requests by filtering out transient .csp/planning/ commits.
 The PR branch contains only code changes and structural planning state — reviewers
 don't see CSP transient artifacts (PLAN.md, SUMMARY.md, CONTEXT.md, RESEARCH.md, etc.)
 but milestone archives, STATE.md, ROADMAP.md, and PROJECT.md changes are preserved.
@@ -50,38 +50,38 @@ git log --oneline "$TARGET".."$CURRENT_BRANCH" --no-merges
 ```
 
 **Structural planning files** — always preserved (repository planning state):
-- `.planning/STATE.md`
-- `.planning/ROADMAP.md`
-- `.planning/MILESTONES.md`
-- `.planning/PROJECT.md`
-- `.planning/REQUIREMENTS.md`
-- `.planning/milestones/**`
+- `.csp/planning/STATE.md`
+- `.csp/planning/ROADMAP.md`
+- `.csp/planning/MILESTONES.md`
+- `.csp/planning/PROJECT.md`
+- `.csp/planning/REQUIREMENTS.md`
+- `.csp/planning/milestones/**`
 
 **Transient planning files** — excluded from PR branch (reviewer noise):
-- `.planning/phases/**` (PLAN.md, SUMMARY.md, CONTEXT.md, RESEARCH.md, etc.)
-- `.planning/quick/**`
-- `.planning/research/**`
-- `.planning/threads/**`
-- `.planning/todos/**`
-- `.planning/debug/**`
-- `.planning/seeds/**`
-- `.planning/codebase/**`
-- `.planning/ui-reviews/**`
+- `.csp/planning/phases/**` (PLAN.md, SUMMARY.md, CONTEXT.md, RESEARCH.md, etc.)
+- `.csp/planning/quick/**`
+- `.csp/planning/research/**`
+- `.csp/planning/threads/**`
+- `.csp/planning/todos/**`
+- `.csp/planning/debug/**`
+- `.csp/planning/seeds/**`
+- `.csp/planning/codebase/**`
+- `.csp/planning/ui-reviews/**`
 
 For each commit, check what it touches:
 
 ```bash
 # For each commit hash
 FILES=$(git diff-tree --no-commit-id --name-only -r $HASH)
-NON_PLANNING=$(echo "$FILES" | grep -v "^\.planning/" | wc -l)
-STRUCTURAL=$(echo "$FILES" | grep -E "^\.planning/(STATE|ROADMAP|MILESTONES|PROJECT|REQUIREMENTS)\.md|^\.planning/milestones/" | wc -l)
-TRANSIENT_ONLY=$(echo "$FILES" | grep "^\.planning/" | grep -vE "^\.planning/(STATE|ROADMAP|MILESTONES|PROJECT|REQUIREMENTS)\.md|^\.planning/milestones/" | wc -l)
+NON_PLANNING=$(echo "$FILES" | grep -v "^\.csp/planning/" | wc -l)
+STRUCTURAL=$(echo "$FILES" | grep -E "^\.csp/planning/(STATE|ROADMAP|MILESTONES|PROJECT|REQUIREMENTS)\.md|^\.csp/planning/milestones/" | wc -l)
+TRANSIENT_ONLY=$(echo "$FILES" | grep "^\.csp/planning/" | grep -vE "^\.csp/planning/(STATE|ROADMAP|MILESTONES|PROJECT|REQUIREMENTS)\.md|^\.csp/planning/milestones/" | wc -l)
 ```
 
 Classify:
-- **Code commits**: Touch at least one non-.planning/ file → INCLUDE
-- **Structural planning commits**: Touch only structural .planning/ files (STATE.md, ROADMAP.md, MILESTONES.md, PROJECT.md, REQUIREMENTS.md, milestones/**) → INCLUDE
-- **Transient planning commits**: Touch only transient .planning/ files (phases/, quick/, research/, etc.) → EXCLUDE
+- **Code commits**: Touch at least one non-.csp/planning/ file → INCLUDE
+- **Structural planning commits**: Touch only structural .csp/planning/ files (STATE.md, ROADMAP.md, MILESTONES.md, PROJECT.md, REQUIREMENTS.md, milestones/**) → INCLUDE
+- **Transient planning commits**: Touch only transient .csp/planning/ files (phases/, quick/, research/, etc.) → EXCLUDE
 - **Mixed commits**: Touch code + any planning files → INCLUDE (transient planning changes come along; acceptable in mixed context)
 
 Display analysis:
@@ -106,11 +106,11 @@ Cherry-pick code commits and structural planning commits (in order):
 ```bash
 for HASH in $CODE_AND_STRUCTURAL_COMMITS; do
   git cherry-pick "$HASH" --no-commit
-  # Remove only transient .planning/ subdirectories that came along in mixed commits.
+  # Remove only transient .csp/planning/ subdirectories that came along in mixed commits.
   # DO NOT remove structural files (STATE.md, ROADMAP.md, MILESTONES.md, PROJECT.md,
   # REQUIREMENTS.md, milestones/) — these must survive into the PR branch.
   for dir in phases quick research threads todos debug seeds codebase ui-reviews; do
-    git rm -r --cached ".planning/$dir/" 2>/dev/null || true
+    git rm -r --cached ".csp/planning/$dir/" 2>/dev/null || true
   done
   git commit -C "$HASH"
 done
@@ -124,8 +124,8 @@ git checkout "$CURRENT_BRANCH"
 
 <step name="verify">
 ```bash
-# Verify no .planning/ files in PR branch
-PLANNING_FILES=$(git diff --name-only "$TARGET".."$PR_BRANCH" | grep "^\.planning/" | wc -l)
+# Verify no .csp/planning/ files in PR branch
+PLANNING_FILES=$(git diff --name-only "$TARGET".."$PR_BRANCH" | grep "^\.csp/planning/" | wc -l)
 TOTAL_FILES=$(git diff --name-only "$TARGET".."$PR_BRANCH" | wc -l)
 PR_COMMITS=$(git rev-list --count "$TARGET".."$PR_BRANCH")
 ```
@@ -151,7 +151,7 @@ Or use /csp-ship to create the PR automatically.
 <success_criteria>
 - [ ] PR branch created from target
 - [ ] Planning-only commits excluded
-- [ ] No .planning/ files in PR branch diff
+- [ ] No .csp/planning/ files in PR branch diff
 - [ ] Commit messages preserved from original
 - [ ] User shown next steps
 </success_criteria>

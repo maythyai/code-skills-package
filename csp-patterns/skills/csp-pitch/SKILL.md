@@ -41,7 +41,7 @@ tools: [Read, Write, Edit, Glob, Grep, Bash]
 Pitch 几乎吃满整条链。按以下顺序读取：
 
 1. 扫描会话中的 marker：`frame` / `scope` / `audit` / `brief` / `stories` / `flow-web` / `flow-mobile` / `check` / `qa` / `edge`
-2. 读取项目目录 `spark-output/context/*.json`
+2. 读取项目目录 `.csp/spark/context/*.json`
 3. 至少要读到 **brief** 或 **frame**（最低门槛），否则降级到 Step 1 询问
 
 **字段映射（Pitch 6 段如何消费上游）**：
@@ -61,13 +61,13 @@ Pitch 几乎吃满整条链。按以下顺序读取：
 
 按 [chain-protocol.md](../../chain-protocol.md) §2.1 v1.1 智能适配规则，完成 Pitch 后做以下：
 
-1. **保存 Markdown / Slide-friendly Pitch 文件**（核心产物）：`spark-output/pitch/[direction-slug].md`
-2. **写盘 chain context**：写入 `spark-output/context/pitch.json`（含元数据 + 章节摘要）
+1. **保存 Markdown / Slide-friendly Pitch 文件**（核心产物）：`.csp/spark/pitch/[direction-slug].md`
+2. **写盘 chain context**：写入 `.csp/spark/context/pitch.json`（含元数据 + 章节摘要）
 3. **chat 输出紧凑 marker**（⛔ 不要在 chat 内输出完整 JSON）：
 
    ```
-   <!-- spark-context:pitch ref="spark-output/context/pitch.json" -->
-   Pitch 已保存：audience=[受众]，format=[格式]，[N] 个 Asks，pitch_file=spark-output/pitch/[slug].md
+   <!-- spark-context:pitch ref=".csp/spark/context/pitch.json" -->
+   Pitch 已保存：audience=[受众]，format=[格式]，[N] 个 Asks，pitch_file=.csp/spark/pitch/[slug].md
    <!-- /spark-context:pitch -->
    ```
 
@@ -89,18 +89,18 @@ Pitch 几乎吃满整条链。按以下顺序读取：
 > **协议依据**：chain-protocol.md §九「面板自动生成约定」。本步在 Handoff 之前执行；**告知用户的提示必须作为独立段落输出，禁止折叠进 Handoff 末尾、禁止静默跳过**。
 
 1. **找模板**：定位 `_shared/dashboard-template.html`（依次：相对套件根 → `glob dashboard-template.html` 搜套件安装目录 → 三轮都失败时，**用独立段落醒目告知用户**：`⚠️ 链路面板模板未找到（套件安装可能不完整，建议重装）。本 Skill 已正常完成，下游链路不受影响。` 然后跳过本步、继续 Handoff，**不阻断 Skill 完成**）。
-2. **聚合 STATE**：扫 `spark-output/context/*.json`，聚合为 `{"project":"<brief.project_name 或 frame.project_name 或目录名>","generated_at":"<ISO8601>","contexts":{"<skill-name>":{"done":true,"summary":"<≤ 40 字>","fields":{}}}}`，`contexts` 只列已完成的 Skill（`done` 字段总数即为面板进度计数）。
-3. **克隆模板**到 `spark-output/dashboard.html`（覆盖），用正则 `/\/\*__SPARK_STATE_INJECT__\*\/null/` 替换为 `/*__SPARK_STATE_INJECT__*/<JSON.stringify(STATE)>`。
+2. **聚合 STATE**：扫 `.csp/spark/context/*.json`，聚合为 `{"project":"<brief.project_name 或 frame.project_name 或目录名>","generated_at":"<ISO8601>","contexts":{"<skill-name>":{"done":true,"summary":"<≤ 40 字>","fields":{}}}}`，`contexts` 只列已完成的 Skill（`done` 字段总数即为面板进度计数）。
+3. **克隆模板**到 `.csp/spark/dashboard.html`（覆盖），用正则 `/\/\*__SPARK_STATE_INJECT__\*\/null/` 替换为 `/*__SPARK_STATE_INJECT__*/<JSON.stringify(STATE)>`。
 4. **独立段落告知用户**（强提示，单独成段，与 Handoff 之间空一行；根据 `Object.keys(STATE.contexts).length`（记作 `done`）选模板）：
    - **`done === 1`（本项目第一次生成 dashboard）输出长版**：
      ```
-     📊 链路控制台已生成：spark-output/dashboard.html（双击在浏览器打开）
+     📊 链路控制台已生成：.csp/spark/dashboard.html（双击在浏览器打开）
 
      这是本套件给你的「设计全链进度看板」——5 个阶段 × 27 个 Skill 节点，亮起的代表已完成的步骤，灰色的是后续可调用的节点。每跑完一个 Skill 都会自动更新，建议钉在浏览器一个标签页里随时回看，能看清「现在在哪一步、下游还差什么、链路是否健康」。
      ```
    - **`done > 1`（后续更新）输出短版**：
      ```
-     📊 链路面板已更新 · 进度 [done]/27 · spark-output/dashboard.html
+     📊 链路面板已更新 · 进度 [done]/27 · .csp/spark/dashboard.html
      ```
 5. **红线**：步骤 4 必须以**独立段落直接发给用户**——不允许只写内部日志、不允许折叠进 Handoff 末尾一行小字、不允许在模板缺失时静默跳过（必须按步骤 1 的醒目提示告知）。
 
@@ -150,7 +150,7 @@ mixed 听众（如同时有 Design Lead + VP + PM）时，**用以下时长分�
 本 Skill 在完全离线、无任何连接器的场景下即可完整交付，所有方法论与输出形态不依赖外部系统：
 
 - **叙事结构 + 决策对齐**：一句话押注 / Why Now / User & JTBD / Direction / Decisions / Asks 六段式模板
-- **链式上下文双通道**：写入 `spark-output/context/pitch.json` + 会话内 marker block，下游 Retro / Metric 可直接读取
+- **链式上下文双通道**：写入 `.csp/spark/context/pitch.json` + 会话内 marker block，下游 Retro / Metric 可直接读取
 - **听众驱动的内容策略**：CEO / PM / 工程 / 业务方差异化措辞本地完成
 - **Asks 强制突出**：决策事项单独标段，避免会议无果
 
@@ -162,14 +162,14 @@ mixed 听众（如同时有 Design Lead + VP + PM）时，**用以下时长分�
 
 | 连接器 | 阶段 | 增强能力 | 降级路径 |
 | --- | --- | --- | --- |
-| **Notion / 飞书文档** | 执行流程输出后 | 提案文档一键写入团队 wiki，会议后自动归档 | 未装时输出本地 `pitch-{project}.md`，提示手动上传 |
+| **Notion / 飞书** | 执行流程输出后 | 提案文档一键写入团队 wiki，会议后自动归档 | 未装时输出本地 `pitch-{project}.md`，提示手动上传 |
 | **Slack / 飞书 / 钉钉** | 执行流程输出后 | 完成后自动通知评审群（含 wiki 链接 + Asks 摘要），降低催评审成本 | 未装时手动发送会议邀请 |
 
 **接入触发**：用户首次调用 `/设计提案` 时，Skill 主动检测已认证的连接器并显示「已检测到：XXX，将自动启用增强模式」提示，用户可在该次会话中选择关闭。
 
 **字段流向变化**：
 
-- 启用 **Notion / 飞书文档** → `chain.schema` 新增可选字段 `wiki_page_url: string`
+- 启用 **Notion / 飞书** → `chain.schema` 新增可选字段 `wiki_page_url: string`
 - 启用 **Slack / 飞书 / 钉钉** → `chain.schema` 新增可选字段 `notified_channels: array<string>`
 
 > 所有新增字段都是 **可选**，未启用连接器时字段缺省，下游 Skill 必须能容忍缺省。
@@ -192,7 +192,7 @@ mixed 听众（如同时有 Design Lead + VP + PM）时，**用以下时长分�
 2. **输出格式**：
    - **Doc**：Markdown 文档（最详细，async 分享）
    - **Slides**：每段对应 1-2 张幻灯片大纲（meeting deck 友好）
-   - **Async-share**：精简版（适合 Slack / Lark / 邮件分享）
+   - **Async-share**：精简版（适合 Slack / 飞书 / 钉钉 / 邮件分享）
    - **Meeting-deck**：现场讲 + 简短稿（讲稿 + bullet points）
 3. **时长约束**（仅 meeting-deck）：5 分钟 / 15 分钟 / 30 分钟（影响 design_decisions 的数量）
 
@@ -389,7 +389,7 @@ JTBD：当 [情境]，[姓名] 想 [动机]，从而 [结果]。
 
 #### 3.1 保存 Markdown Pitch 文件
 
-文件路径：`spark-output/pitch/[direction-slug].md`
+文件路径：`.csp/spark/pitch/[direction-slug].md`
 
 **完整 Pitch Markdown 文件结构**：
 
@@ -449,7 +449,7 @@ JTBD：当 [情境]，[姓名] 想 [动机]，从而 [结果]。
 
 按 [chain-protocol.md](../../chain-protocol.md) 第 2.1 节执行。
 
-**Step 1 — 写盘到 `spark-output/context/pitch.json`**（必做，主持久化通道；目录不存在先创建）。写入以下完整 JSON：
+**Step 1 — 写盘到 `.csp/spark/context/pitch.json`**（必做，主持久化通道；目录不存在先创建）。写入以下完整 JSON：
 
 ```
 {
@@ -458,7 +458,7 @@ JTBD：当 [情境]，[姓名] 想 [动机]，从而 [结果]。
   "project_name": "...",
   "audience": "pm|design-lead|vp-or-exec|stakeholder|peer-design|mixed",
   "format": "doc|slides|async-share|meeting-deck",
-  "pitch_file": "spark-output/pitch/[direction-slug].md",
+  "pitch_file": ".csp/spark/pitch/[direction-slug].md",
   "sections": {
     "the_bet": { "one_liner": "...", "success_metric": "..." },
     "why_now": "...",
@@ -495,8 +495,8 @@ JTBD：当 [情境]，[姓名] 想 [动机]，从而 [结果]。
 **Step 2 — chat 输出紧凑 marker**（必做，⛔ **不要在 chat 内重复输出 Step 1 的完整 JSON**）：
 
 ```
-<!-- spark-context:pitch ref="spark-output/context/pitch.json" -->
-Pitch 已保存：project=[project_name]，audience=[受众]，format=[格式]，the_bet=[一句话押注]，[N] 个 Asks，pitch_file=spark-output/pitch/[slug].md
+<!-- spark-context:pitch ref=".csp/spark/context/pitch.json" -->
+Pitch 已保存：project=[project_name]，audience=[受众]，format=[格式]，the_bet=[一句话押注]，[N] 个 Asks，pitch_file=.csp/spark/pitch/[slug].md
 <!-- /spark-context:pitch -->
 ```
 
@@ -506,7 +506,7 @@ Pitch 已保存：project=[project_name]，audience=[受众]，format=[格式]�
 
 > **协议**：按 [`_shared/next-skill.md`](../../_shared/next-skill.md) 三层结构模板输出；前 5 候选由 `_shared/skill-graph.json` 的依赖图算法实时算（done ⊆ ready，按 next_hint.preferred → alternatives → 同阶段 → anchor → fan-out 排序），优先建议从 `_shared/skill-graph.json#skills[id="pitch"].next_hint` 读取。
 
-**首行模板**：`✅ 设计提案 已完成，6 段叙事 + Asks 已成稿，已保存到 `spark-output/pitch/[slug].md`。`
+**首行模板**：`✅ 设计提案 已完成，6 段叙事 + Asks 已成稿，已保存到 `.csp/spark/pitch/[slug].md`。`
 
 **本 Skill 的 `next_hint`**（来自 skill-graph.json，**不可在此 SKILL.md 内硬编码覆盖**）：
 
@@ -546,7 +546,7 @@ Pitch 已保存：project=[project_name]，audience=[受众]，format=[格式]�
 Pitch 和 PRD 可同时生成（吃同一批上游字段）。建议：
 
 - **先 Pitch 后 PRD**：先用 Pitch 跟决策者对齐方向，拍板后再生成 PRD 给工程
-- **如果同时已有 PRD**：Pitch 可在 Ask 段说"PRD 详见 `spark-output/prd/[slug].md`"，节省现场讲实现的时间
+- **如果同时已有 PRD**：Pitch 可在 Ask 段说"PRD 详见 `.csp/spark/prd/[slug].md`"，节省现场讲实现的时间
 
 ---
 

@@ -192,7 +192,7 @@ Router 决策:
 Router 决策:
   1. 触发词匹配: "理解"/"explore" → csp-explore + csp-map-codebase
   2. 加载: csp-explore + csp-codebase-mapper + 技术栈对应 patterns
-输出: .planning/codebase/ 文档
+输出: .csp/planning/codebase/ 文档
 ```
 
 ### 场景 5: 安全审计

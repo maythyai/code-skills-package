@@ -27,7 +27,7 @@ docs/
   reference/            # Persistent reference knowledge
   reports/              # Analysis reports, audits, deep dives
   prototypes/           # Interactive prototypes, mockups
-.planning/
+.csp/planning/
   INDEX.md              # Planning entry point
   STATE.md              # Current project status (always latest version)
   ROADMAP.md            # Milestone tracker (completed + next)

@@ -38,7 +38,7 @@ tools: [Read, Write, Edit, Glob, Grep, Bash]
 按以下顺序尝试读取上下文，找到即提取可复用字段并告知用户已沿用：
 
 1. 扫描会话中的 `<!-- spark-context:brief -->` / `<!-- spark-context:board -->` marker
-2. 读取项目目录 `spark-output/context/brief.json` / `spark-output/context/board.json`
+2. 读取项目目录 `.csp/spark/context/brief.json` / `.csp/spark/context/board.json`
 3. 都没有则跳过，按无上下文流程执行（Phase 1 正常问用户）
 
 **从 brief 提取**：`project_name`、`brand_tone`、`target_user` → 预填 Phase 1 的营销主题和品牌调性
@@ -48,27 +48,27 @@ tools: [Read, Write, Edit, Glob, Grep, Bash]
 
 ### 下游输出（Phase 5.5，在 Phase 5 交付之后执行）
 
-**Step 1 · 写盘**（必做）：调用 Write 工具把完整 JSON 写到 `spark-output/context/poster.json`
+**Step 1 · 写盘**（必做）：调用 Write 工具把完整 JSON 写到 `.csp/spark/context/poster.json`
 
-**Step 2 · 自检行**：输出 `✅ poster.json 已写盘到 spark-output/context/poster.json`
+**Step 2 · 自检行**：输出 `✅ poster.json 已写盘到 .csp/spark/context/poster.json`
 
 **Step 3 · 紧凑 marker（必须在 chat 中输出）**：
 
 ⛔ 即使 Step 1 写盘成功，也**必须**在 chat 中输出以下 marker（让下游 Skill 在纯对话场景下也能发现 poster 上下文）：
 
 ```
-<!-- spark-context:poster ref="spark-output/context/poster.json" -->
+<!-- spark-context:poster ref=".csp/spark/context/poster.json" -->
 Poster 已保存：project=[项目名]，material=[材质]，sizes=[尺寸列表]，text_verified=[pass/retry/flaw]
 <!-- /spark-context:poster -->
 ```
 
-**Step 4 · 更新链路面板**（如 `_shared/dashboard-template.html` 存在）：扫描 `spark-output/context/*.json` 聚合状态，克隆模板到 `spark-output/dashboard.html` 并注入。面板生成失败不阻断 Skill 完成。
+**Step 4 · 更新链路面板**（如 `_shared/dashboard-template.html` 存在）：扫描 `.csp/spark/context/*.json` 聚合状态，克隆模板到 `.csp/spark/dashboard.html` 并注入。面板生成失败不阻断 Skill 完成。
 
 **Step 5 · Handoff 提示（必须输出，紧跟 Step 4 之后）**：
 
 ```
 ✅ 营销海报已完成（[N] 张成品 PNG + 文字校验 [pass/accepted-with-flaw]）
-📊 链路面板已更新：spark-output/dashboard.html
+📊 链路面板已更新：.csp/spark/dashboard.html
 
 📋 下一步建议：
 1. 🎯 推荐：`/设计提案` — 把海报主视觉装进决策者汇报

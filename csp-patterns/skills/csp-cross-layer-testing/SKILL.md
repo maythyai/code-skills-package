@@ -164,7 +164,7 @@ chain:
   db:         FAIL   (orders 行已插入，但 products.stock 未扣减 -> 不变量破坏)
   ui_effect:  n/a    (因 DB 层失败，UI 断言暂缓)
 evidence:
-  - ui:   evidence/ORD-001-action.png
+  - ui:   .csp/artifacts/verify/evidence/ORD-001-action.png
   - api:  POST /api/orders 200 trace_id=abc
   - db:   orders: +1 row(status=pending); products.stock: 0(预期 -1)
 ```

@@ -1,9 +1,9 @@
 # Ingest Docs Workflow
 
-Scan a repo for mixed planning documents (ADR, PRD, CSPEC, DOC), synthesize them into a consolidated context, and bootstrap or merge into `.planning/`.
+Scan a repo for mixed planning documents (ADR, PRD, CSPEC, DOC), synthesize them into a consolidated context, and bootstrap or merge into `.csp/planning/`.
 
 - `[path]` — optional target directory to scan (defaults to repo root)
-- `--mode new|merge` — override auto-detect (defaults: `new` if `.planning/` absent, `merge` if present)
+- `--mode new|merge` — override auto-detect (defaults: `new` if `.csp/planning/` absent, `merge` if present)
 - `--manifest <file>` — YAML file listing `{path, type, precedence?}` per doc; overrides heuristic classification
 - `--resolve auto|interactive` — conflict resolution (v1: only `auto` is supported; `interactive` is reserved)
 
@@ -62,7 +62,7 @@ Parse `project_exists`, `planning_exists`, `has_git`, `git_worktree_root`, `in_n
 - `planning_exists: true` → `MODE=merge`
 - `planning_exists: false` → `MODE=new`
 
-If user passed `--mode new` but `.planning/` already exists: display warning and require explicit confirm via `AskUserQuestion` (approve-revise-abort from `references/gate-prompts.md`) before overwriting.
+If user passed `--mode new` but `.csp/planning/` already exists: display warning and require explicit confirm via `AskUserQuestion` (approve-revise-abort from `references/gate-prompts.md`) before overwriting.
 
 Git initialisation (Bug #3491 — never create a nested `.git` inside an existing worktree):
 
@@ -162,19 +162,19 @@ On Revise: exit with guidance to re-run with `--manifest` or a narrower path.
 Create staging directory:
 
 ```bash
-mkdir -p .planning/intel/classifications/
+mkdir -p .csp/planning/intel/classifications/
 ```
 
 For each discovered doc, spawn `csp-doc-classifier` in parallel. In Claude Code, issue all Task calls in a single message with multiple tool uses so the harness runs them concurrently. For Copilot / sequential runtimes, fall back to sequential dispatch.
 
 Per-spawn prompt fields:
 - `FILEPATH` — absolute path to the doc
-- `OUTPUT_DIR` — `.planning/intel/classifications/`
+- `OUTPUT_DIR` — `.csp/planning/intel/classifications/`
 - `MANIFEST_TYPE` — the type from the manifest if present, else omit
 - `MANIFEST_PRECEDENCE` — the precedence integer from the manifest if present, else omit
 - `<required_reading>` — `agents/csp-doc-classifier.md` (the agent definition itself)
 
-Collect the one-line confirmations from each classifier. If any classifier errors out, surface the error and abort without touching `.planning/` further.
+Collect the one-line confirmations from each classifier. If any classifier errors out, surface the error and abort without touching `.csp/planning/` further.
 
 </step>
 
@@ -186,11 +186,11 @@ Spawn `csp-doc-synthesizer` once:
 Agent({
   subagent_type: "csp-doc-synthesizer",
   prompt: "
-    CLASSIFICATIONS_DIR: .planning/intel/classifications/
-    INTEL_DIR: .planning/intel/
-    CONFLICTS_PATH: .planning/INGEST-CONFLICTS.md
+    CLASSIFICATIONS_DIR: .csp/planning/intel/classifications/
+    INTEL_DIR: .csp/planning/intel/
+    CONFLICTS_PATH: .csp/planning/INGEST-CONFLICTS.md
     MODE: {MODE}
-    EXISTING_CONTEXT: {paths to existing .planning files if MODE=merge, else empty}
+    EXISTING_CONTEXT: {paths to existing .csp/planning files if MODE=merge, else empty}
     PRECEDENCE: {array from manifest defaults or default ['ADR','CSPEC','PRD','DOC']}
 
     <required_reading>
@@ -204,15 +204,15 @@ Agent({
 > **ORCHESTRATOR RULE — CODEX RUNTIME**: After calling Agent() above, stop working on this task immediately. Do not read or synthesize any classified documents independently while the subagent is active. Wait for the subagent to return its result. This prevents duplicate work, conflicting edits, and wasted context. Only resume when the subagent result is available.
 
 The synthesizer writes:
-- `.planning/intel/decisions.md`, `.planning/intel/requirements.md`, `.planning/intel/constraints.md`, `.planning/intel/context.md`
-- `.planning/intel/SYNTHESIS.md`
-- `.planning/INGEST-CONFLICTS.md`
+- `.csp/planning/intel/decisions.md`, `.csp/planning/intel/requirements.md`, `.csp/planning/intel/constraints.md`, `.csp/planning/intel/context.md`
+- `.csp/planning/intel/SYNTHESIS.md`
+- `.csp/planning/INGEST-CONFLICTS.md`
 
 </step>
 
 <step name="conflict_gate">
 
-Read `.planning/INGEST-CONFLICTS.md`. Count entries in each bucket (the synthesizer always writes the three-bucket header; parse the `### BLOCKERS ({N})`, `### WARNINGS ({N})`, `### INFO ({N})` lines).
+Read `.csp/planning/INGEST-CONFLICTS.md`. Count entries in each bucket (the synthesizer always writes the three-bucket header; parse the `### BLOCKERS ({N})`, `### WARNINGS ({N})`, `### INFO ({N})` lines).
 
 Apply the safety semantics from `references/doc-conflict-engine.md`. Operation noun: `ingest`.
 
@@ -233,7 +233,7 @@ Render the report, then ask via AskUserQuestion (approve-revise-abort):
 - header: "Approve?"
 - options: Approve | Abort
 
-On Abort: exit cleanly with "Ingest cancelled. Staged intel preserved at `.planning/intel/`."
+On Abort: exit cleanly with "Ingest cancelled. Staged intel preserved at `.csp/planning/intel/`."
 
 **If BLOCKERS = 0 and WARNINGS = 0:**
 
@@ -245,7 +245,7 @@ Proceed to routing silently, or optionally display `CSP > No conflicts. Auto-res
 
 **Applies only when MODE=new.**
 
-Audit PROJECT.md field requirements that `csp-roadmapper` expects. For fields derivable from `.planning/intel/SYNTHESIS.md` (project scope, goals/non-goals, constraints, locked decisions), synthesize from the intel. For fields NOT derivable (project name, developer-facing success metric, target runtime), prompt via `AskUserQuestion` one at a time — minimal question set, no interrogation.
+Audit PROJECT.md field requirements that `csp-roadmapper` expects. For fields derivable from `.csp/planning/intel/SYNTHESIS.md` (project scope, goals/non-goals, constraints, locked decisions), synthesize from the intel. For fields NOT derivable (project name, developer-facing success metric, target runtime), prompt via `AskUserQuestion` one at a time — minimal question set, no interrogation.
 
 Delegate to `csp-roadmapper`:
 
@@ -254,15 +254,15 @@ Agent({
   subagent_type: "csp-roadmapper",
   prompt: "
     Mode: new-project-from-ingest
-    Intel: .planning/intel/SYNTHESIS.md (entry point)
-    Per-type intel: .planning/intel/{decisions,requirements,constraints,context}.md
+    Intel: .csp/planning/intel/SYNTHESIS.md (entry point)
+    Per-type intel: .csp/planning/intel/{decisions,requirements,constraints,context}.md
     User-supplied fields: {collected in previous step}
 
     Produce:
-    - .planning/PROJECT.md
-    - .planning/REQUIREMENTS.md
-    - .planning/ROADMAP.md
-    - .planning/STATE.md
+    - .csp/planning/PROJECT.md
+    - .csp/planning/REQUIREMENTS.md
+    - .csp/planning/ROADMAP.md
+    - .csp/planning/STATE.md
 
     Treat ADR-locked decisions as locked in PROJECT.md <decisions> blocks.
   "
@@ -277,14 +277,14 @@ Agent({
 
 **Applies only when MODE=merge.**
 
-Load existing `.planning/ROADMAP.md`, `.planning/PROJECT.md`, `.planning/REQUIREMENTS.md`, all `CONTEXT.md` files under `.planning/phases/`.
+Load existing `.csp/planning/ROADMAP.md`, `.csp/planning/PROJECT.md`, `.csp/planning/REQUIREMENTS.md`, all `CONTEXT.md` files under `.csp/planning/phases/`.
 
 The synthesizer has already hard-blocked on any LOCKED-in-ingest vs LOCKED-in-existing contradiction; if we reach this step, no such blockers remain.
 
 Plan the merge:
-- **New requirements** from synthesized `.planning/intel/requirements.md` that do not overlap existing REQUIREMENTS.md entries → append to REQUIREMENTS.md
-- **New decisions** from synthesized `.planning/intel/decisions.md` that do not overlap existing CONTEXT.md `<decisions>` blocks → write to a new phase's CONTEXT.md or append to the next milestone's requirements
-- **New scope** → derive phase additions following the `new-milestone.md` pattern; append phases to `.planning/ROADMAP.md`
+- **New requirements** from synthesized `.csp/planning/intel/requirements.md` that do not overlap existing REQUIREMENTS.md entries → append to REQUIREMENTS.md
+- **New decisions** from synthesized `.csp/planning/intel/decisions.md` that do not overlap existing CONTEXT.md `<decisions>` blocks → write to a new phase's CONTEXT.md or append to the next milestone's requirements
+- **New scope** → derive phase additions following the `new-milestone.md` pattern; append phases to `.csp/planning/ROADMAP.md`
 
 Preview the merge diff to the user and gate via approve-revise-abort before writing.
 
@@ -297,12 +297,12 @@ Commit the ingest results:
 ```bash
 node "$HOME/.claude/code-skills-package/bin/csp-tools.cjs" commit \
   "docs: ingest {N} docs from {SCAN_PATH} (#2387)" --files \
-  .planning/PROJECT.md \
-  .planning/REQUIREMENTS.md \
-  .planning/ROADMAP.md \
-  .planning/STATE.md \
-  .planning/intel/ \
-  .planning/INGEST-CONFLICTS.md
+  .csp/planning/PROJECT.md \
+  .csp/planning/REQUIREMENTS.md \
+  .csp/planning/ROADMAP.md \
+  .csp/planning/STATE.md \
+  .csp/planning/intel/ \
+  .csp/planning/INGEST-CONFLICTS.md
 ```
 
 (For merge mode, substitute the actual set of modified files.)
@@ -319,7 +319,7 @@ Show:
 - Mode ran (new or merge)
 - Docs ingested (count + type breakdown)
 - Decisions locked, requirements created, constraints captured
-- Conflict report path (`.planning/INGEST-CONFLICTS.md`)
+- Conflict report path (`.csp/planning/INGEST-CONFLICTS.md`)
 - Next step: `/csp-plan-phase 1` (new mode) or `/csp-plan-phase N` (merge, pointing at the first newly-added phase)
 
 </step>

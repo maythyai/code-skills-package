@@ -1,6 +1,6 @@
 <purpose>
 Lightweight codebase assessment. Spawns a single csp-codebase-mapper agent for one focus area,
-producing targeted documents in `.planning/codebase/`.
+producing targeted documents in `.csp/planning/codebase/`.
 </purpose>
 
 <required_reading>
@@ -45,9 +45,9 @@ if [[ "$INIT" == @file:* ]]; then INIT=$(cat "${INIT#@file:}"); fi
 
 Look up which documents would be produced for the selected focus (from the mapping table above).
 
-For each target document, check if it already exists in `.planning/codebase/`:
+For each target document, check if it already exists in `.csp/planning/codebase/`:
 ```bash
-ls -la .planning/codebase/{DOCUMENT}.md 2>/dev/null
+ls -la .csp/planning/codebase/{DOCUMENT}.md 2>/dev/null
 ```
 
 If any exist, show their modification dates and ask:
@@ -64,7 +64,7 @@ If user says no, exit.
 ## Step 3: Create output directory
 
 ```bash
-mkdir -p .planning/codebase
+mkdir -p .csp/planning/codebase
 ```
 
 ## Step 4: Spawn mapper agent
@@ -73,7 +73,7 @@ Spawn a single `csp-codebase-mapper` agent with the selected focus area:
 
 ```
 Agent(
-  prompt="Scan this codebase with focus: {focus}. Write results to .planning/codebase/. Produce only: {document_list}",
+  prompt="Scan this codebase with focus: {focus}. Write results to .csp/planning/codebase/. Produce only: {document_list}",
   subagent_type="csp-codebase-mapper",
   model="{resolved_model}"
 )
@@ -100,5 +100,5 @@ Use `/csp-map-codebase` for a comprehensive 4-area parallel scan.
 - [ ] Existing documents detected with modification dates shown
 - [ ] User prompted before overwriting
 - [ ] Single mapper agent spawned with correct focus
-- [ ] Output documents written to .planning/codebase/
+- [ ] Output documents written to .csp/planning/codebase/
 </success_criteria>

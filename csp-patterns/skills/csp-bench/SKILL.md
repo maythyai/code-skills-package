@@ -50,7 +50,7 @@ tools: [Read, Write, Edit, Glob, Grep, Bash, WebFetch, WebSearch]
 按 [chain-protocol.md](../../chain-protocol.md) §2.1 v1.1 智能适配规则：
 
 1. 扫描会话中的 `<!-- spark-context:frame -->` / `<!-- spark-context:scope -->` marker
-2. 读取项目目录 `spark-output/context/frame.json` / `scope.json`
+2. 读取项目目录 `.csp/spark/context/frame.json` / `scope.json`
 3. 都没有则按 standalone 模式启动
 
 可复用字段映射：
@@ -64,11 +64,11 @@ tools: [Read, Write, Edit, Glob, Grep, Bash, WebFetch, WebSearch]
 
 完成 Bench 后，**同时**做两件事：
 
-1. **写盘**：`spark-output/context/bench.json`（目录不存在先创建）
+1. **写盘**：`.csp/spark/context/bench.json`（目录不存在先创建）
 2. **会话内输出紧凑 marker**（不重复输出完整 JSON）：
 
    ```
-   <!-- spark-context:bench ref="spark-output/context/bench.json" -->
+   <!-- spark-context:bench ref=".csp/spark/context/bench.json" -->
    Bench 已保存：project=[name]，[N] 个竞品 × [M] 个维度 → [K] 条 takeaways（borrow [b] / avoid [a] / match [m]），视觉策略决策：[lean-in|diverge]
    <!-- /spark-context:bench -->
    ```
@@ -94,18 +94,18 @@ Bench 的输出主要服务于 Audit / Brief / Pitch：
 > **协议依据**：chain-protocol.md §九「面板自动生成约定」。本步在 Handoff 之前执行；**告知用户的提示必须作为独立段落输出，禁止折叠进 Handoff 末尾、禁止静默跳过**。
 
 1. **找模板**：定位 `_shared/dashboard-template.html`（依次：相对套件根 → `glob dashboard-template.html` 搜套件安装目录 → 三轮都失败时，**用独立段落醒目告知用户**：`⚠️ 链路面板模板未找到（套件安装可能不完整，建议重装）。本 Skill 已正常完成，下游链路不受影响。` 然后跳过本步、继续 Handoff，**不阻断 Skill 完成**）。
-2. **聚合 STATE**：扫 `spark-output/context/*.json`，聚合为 `{"project":"<brief.project_name 或 frame.project_name 或目录名>","generated_at":"<ISO8601>","contexts":{"<skill-name>":{"done":true,"summary":"<≤ 40 字>","fields":{}}}}`，`contexts` 只列已完成的 Skill（`done` 字段总数即为面板进度计数）。
-3. **克隆模板**到 `spark-output/dashboard.html`（覆盖），用正则 `/\/\*__SPARK_STATE_INJECT__\*\/null/` 替换为 `/*__SPARK_STATE_INJECT__*/<JSON.stringify(STATE)>`。
+2. **聚合 STATE**：扫 `.csp/spark/context/*.json`，聚合为 `{"project":"<brief.project_name 或 frame.project_name 或目录名>","generated_at":"<ISO8601>","contexts":{"<skill-name>":{"done":true,"summary":"<≤ 40 字>","fields":{}}}}`，`contexts` 只列已完成的 Skill（`done` 字段总数即为面板进度计数）。
+3. **克隆模板**到 `.csp/spark/dashboard.html`（覆盖），用正则 `/\/\*__SPARK_STATE_INJECT__\*\/null/` 替换为 `/*__SPARK_STATE_INJECT__*/<JSON.stringify(STATE)>`。
 4. **独立段落告知用户**（强提示，单独成段，与 Handoff 之间空一行；根据 `Object.keys(STATE.contexts).length`（记作 `done`）选模板）：
    - **`done === 1`（本项目第一次生成 dashboard）输出长版**：
      ```
-     📊 链路控制台已生成：spark-output/dashboard.html（双击在浏览器打开）
+     📊 链路控制台已生成：.csp/spark/dashboard.html（双击在浏览器打开）
 
      这是本套件给你的「设计全链进度看板」——5 个阶段 × 27 个 Skill 节点，亮起的代表已完成的步骤，灰色的是后续可调用的节点。每跑完一个 Skill 都会自动更新，建议钉在浏览器一个标签页里随时回看，能看清「现在在哪一步、下游还差什么、链路是否健康」。
      ```
    - **`done > 1`（后续更新）输出短版**：
      ```
-     📊 链路面板已更新 · 进度 [done]/27 · spark-output/dashboard.html
+     📊 链路面板已更新 · 进度 [done]/27 · .csp/spark/dashboard.html
      ```
 5. **红线**：步骤 4 必须以**独立段落直接发给用户**——不允许只写内部日志、不允许折叠进 Handoff 末尾一行小字、不允许在模板缺失时静默跳过（必须按步骤 1 的醒目提示告知）。
 
@@ -126,7 +126,7 @@ Bench 的输出主要服务于 Audit / Brief / Pitch：
 本 Skill 在完全离线、无任何连接器的场景下即可完整交付，所有方法论与输出形态不依赖外部系统：
 
 - **三维拆解框架**：功能矩阵 + 交互模式 + 视觉语言完整方法论
-- **链式上下文双通道**：写入 `spark-output/context/bench.json` + 会话内 marker block，Brief / Pitch / Frame 等下游可直接读取
+- **链式上下文双通道**：写入 `.csp/spark/context/bench.json` + 会话内 marker block，Brief / Pitch / Frame 等下游可直接读取
 - **Castle vs Shack 判断 + 视觉策略决策**：lean-in / diverge 二选一模型内置
 - **Takeaways 按 action 分组**：直接产出可执行结论，无需外部模板
 
@@ -139,14 +139,14 @@ Bench 的输出主要服务于 Audit / Brief / Pitch：
 | 连接器 | 阶段 | 增强能力 | 降级路径 |
 | --- | --- | --- | --- |
 | **Figma** | 执行流程（截图引用阶段） | 引用竞品 UI 截图与 SparkDesign 同类组件做并排对比，Takeaways 可直接嵌入 frame 链接 | 未装时使用本地截图或外部图床链接，对比走 Markdown 表格 |
-| **Notion / 飞书文档** | 执行流程 Step 4 输出后 | 竞品报告写入团队「竞品库」空间并定期更新，Brief 可在 Phase 0.5 反查同类竞品分析 | 未装时输出本地 `bench-{competitor}.md`，提示用户手动归档 |
+| **Notion / 飞书** | 执行流程 Step 4 输出后 | 竞品报告写入团队「竞品库」空间并定期更新，Brief 可在 Phase 0.5 反查同类竞品分析 | 未装时输出本地 `bench-{competitor}.md`，提示用户手动归档 |
 
 **接入触发**：用户首次调用 `/竞品拆解` 时，Skill 主动检测已认证的连接器并显示「已检测到：XXX，将自动启用增强模式」提示，用户可在该次会话中选择关闭。
 
 **字段流向变化**：
 
 - 启用 **Figma** → `chain.schema` 新增可选字段 `screenshot_refs: array<{frame_url, competitor, page}>`
-- 启用 **Notion / 飞书文档** → `chain.schema` 新增可选字段 `wiki_page_url: string`
+- 启用 **Notion / 飞书** → `chain.schema` 新增可选字段 `wiki_page_url: string`
 
 > 所有新增字段都是 **可选**，未启用连接器时字段缺省，下游 Skill 必须能容忍缺省。
 
@@ -322,7 +322,7 @@ Bench 的输出主要服务于 Audit / Brief / Pitch：
 
 #### 7.1 Markdown 报告
 
-输出到对话 + 保存到 `spark-output/bench/[project-slug].md`：
+输出到对话 + 保存到 `.csp/spark/bench/[project-slug].md`：
 
 ```markdown
 # Bench — [项目名]
@@ -418,7 +418,7 @@ Bench 的输出主要服务于 Audit / Brief / Pitch：
 
 按 [chain-protocol.md](../../chain-protocol.md) §2.1 v1.1 智能适配规则：
 
-**Step 1 — 写盘到 `spark-output/context/bench.json`**（必做）：
+**Step 1 — 写盘到 `.csp/spark/context/bench.json`**（必做）：
 
 ```json
 {
@@ -512,7 +512,7 @@ Bench 的输出主要服务于 Audit / Brief / Pitch：
 **Step 2 — chat 输出紧凑 marker**（不重复输出完整 JSON）：
 
 ```
-<!-- spark-context:bench ref="spark-output/context/bench.json" -->
+<!-- spark-context:bench ref=".csp/spark/context/bench.json" -->
 Bench 已保存：project=[name]，[N] 个竞品 × [M] 个维度 → [K] 条 takeaways（borrow [b] / avoid [a] / match [m]），视觉策略决策：[lean-in|diverge]
 <!-- /spark-context:bench -->
 ```

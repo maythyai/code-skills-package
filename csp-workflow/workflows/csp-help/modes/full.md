@@ -38,7 +38,7 @@ One command takes you from idea to ready-for-planning:
 - Requirements definition with v1/v2/out-of-scope scoping
 - Roadmap creation with phase breakdown and success criteria
 
-Creates all `.planning/` artifacts:
+Creates all `.csp/planning/` artifacts:
 - `PROJECT.md` — vision and requirements
 - `config.json` — workflow mode (interactive/yolo)
 - `research/` — domain research (if selected)
@@ -53,10 +53,10 @@ Map an existing codebase for brownfield projects.
 
 - `--fast` — rapid lightweight assessment (replaces the former `csp-scan`)
 - `--focus <area>` — scope the map to a specific area
-- `--query <term>` — query the codebase intelligence index in `.planning/intel/` (replaces the former `csp-intel`)
+- `--query <term>` — query the codebase intelligence index in `.csp/planning/intel/` (replaces the former `csp-intel`)
 
 - Analyzes codebase with parallel Explore agents
-- Creates `.planning/codebase/` with 7 focused documents
+- Creates `.csp/planning/codebase/` with 7 focused documents
 - Covers stack, architecture, structure, conventions, testing, integrations, concerns
 - Use before `/csp-new-project` on existing codebases
 
@@ -94,7 +94,7 @@ Create detailed execution plan for a specific phase.
 - `--tdd` — plan in test-driven order (tests before code)
 - `--mvp` — vertical-slice MVP planning mode (see also `/csp-mvp-phase`)
 
-- Generates `.planning/phases/XX-phase-name/XX-YY-PLAN.md`
+- Generates `.csp/planning/phases/XX-phase-name/XX-YY-PLAN.md`
 - Breaks phase into concrete, actionable tasks
 - Includes verification criteria and success measures
 - Multiple plans per phase supported (XX-01, XX-02, etc.)
@@ -103,7 +103,7 @@ Usage: `/csp-plan-phase 1`
 Usage: `/csp-plan-phase --research-phase 2` — research only on phase 2 (prompts if `RESEARCH.md` exists)
 Usage: `/csp-plan-phase --research-phase 2 --view` — print existing `RESEARCH.md`, no spawn
 Usage: `/csp-plan-phase --research-phase 2 --research` — force-refresh, no prompt
-Result: Creates `.planning/phases/01-foundation/01-01-PLAN.md`
+Result: Creates `.csp/planning/phases/01-foundation/01-01-PLAN.md`
 
 **PRD Express Path:** Pass `--prd path/to/requirements.md` to skip discuss-phase entirely. Your PRD becomes locked decisions in CONTEXT.md. Useful when you already have clear acceptance criteria.
 
@@ -146,7 +146,7 @@ Execute small, ad-hoc tasks with CSP guarantees but skip optional agents.
 
 Quick mode uses the same system with a shorter path:
 - Spawns planner + executor (skips researcher, checker, verifier by default)
-- Quick tasks live in `.planning/quick/` separate from planned phases
+- Quick tasks live in `.csp/planning/quick/` separate from planned phases
 - Updates STATE.md tracking (not ROADMAP.md)
 
 Flags enable additional quality steps:
@@ -160,7 +160,7 @@ Granular flags are composable: `--discuss --research --validate` gives the same 
 Usage: `/csp-quick`
 Usage: `/csp-quick --full`
 Usage: `/csp-quick --research --validate`
-Result: Creates `.planning/quick/NNN-slug/PLAN.md`, `.planning/quick/NNN-slug/NNN-slug-SUMMARY.md`
+Result: Creates `.csp/planning/quick/NNN-slug/PLAN.md`, `.csp/planning/quick/NNN-slug/NNN-slug-SUMMARY.md`
 
 ---
 
@@ -277,7 +277,7 @@ Usage: `/csp-resume-work`
 **`/csp-pause-work [--report]`**
 Create context handoff when pausing work mid-phase.
 
-- `--report` — generate a post-session summary in `.planning/reports/` capturing commits, file changes, and phase progress
+- `--report` — generate a post-session summary in `.csp/planning/reports/` capturing commits, file changes, and phase progress
 - Creates .continue-here file with current state
 - Updates STATE.md session continuity section
 - Captures in-progress work context
@@ -292,10 +292,10 @@ Systematic debugging with persistent state across context resets.
 - `--diagnose` — run a one-shot diagnostic pass without opening a persistent debug session
 
 - Gathers symptoms through adaptive questioning
-- Creates `.planning/debug/[slug].md` to track investigation
+- Creates `.csp/planning/debug/[slug].md` to track investigation
 - Investigates using scientific method (evidence → hypothesis → test)
 - Survives `/clear` — run `/csp-debug` with no args to resume
-- Archives resolved issues to `.planning/debug/resolved/`
+- Archives resolved issues to `.csp/planning/debug/resolved/`
 
 Usage: `/csp-debug "login button doesn't work"`
 Usage: `/csp-debug` (resume active session)
@@ -308,7 +308,7 @@ Rapidly spike an idea with throwaway experiments to validate feasibility.
 - Decomposes idea into 2-5 focused experiments (risk-ordered)
 - Each spike answers one specific Given/When/Then question
 - Builds minimum code, runs it, captures verdict (VALIDATED/INVALIDATED/PARTIAL)
-- Saves to `.planning/spikes/` with MANIFEST.md tracking
+- Saves to `.csp/planning/spikes/` with MANIFEST.md tracking
 - Does not require `/csp-new-project` — works in any repo
 - `--quick` skips decomposition, builds immediately
 
@@ -322,7 +322,7 @@ Rapidly sketch UI/design ideas using throwaway HTML mockups with multi-variant e
 - Each sketch produces 2-3 variants as tabbed HTML pages
 - User compares variants, cherry-picks elements, iterates
 - Shared CSS theme system compounds across sketches
-- Saves to `.planning/sketches/` with MANIFEST.md tracking
+- Saves to `.csp/planning/sketches/` with MANIFEST.md tracking
 - Does not require `/csp-new-project` — works in any repo
 - `--quick` skips mood intake, jumps to building
 
@@ -335,7 +335,7 @@ Package spike findings into a persistent project skill.
 - Curates each spike one-at-a-time (include/exclude/partial/UAT)
 - Groups findings by feature area
 - Generates `./.claude/skills/spike-findings-[project]/` with references and sources
-- Writes summary to `.planning/spikes/WRAP-UP-SUMMARY.md`
+- Writes summary to `.csp/planning/spikes/WRAP-UP-SUMMARY.md`
 - Adds auto-load routing line to project CLAUDE.md
 
 Usage: `/csp-spike --wrap-up`
@@ -346,7 +346,7 @@ Package sketch design findings into a persistent project skill.
 - Curates each sketch one-at-a-time (include/exclude/partial/revisit)
 - Groups findings by design area
 - Generates `./.claude/skills/sketch-findings-[project]/` with design decisions, CSS patterns, HTML structures
-- Writes summary to `.planning/sketches/WRAP-UP-SUMMARY.md`
+- Writes summary to `.csp/planning/sketches/WRAP-UP-SUMMARY.md`
 - Adds auto-load routing line to project CLAUDE.md
 
 Usage: `/csp-sketch --wrap-up`
@@ -357,7 +357,7 @@ Usage: `/csp-sketch --wrap-up`
 Capture an idea or task as a structured todo from current conversation.
 
 - Extracts context from conversation (or uses provided description)
-- Creates structured todo file in `.planning/todos/pending/`
+- Creates structured todo file in `.csp/planning/todos/pending/`
 - Infers area from file paths for grouping
 - Checks for duplicates before creating
 - Updates STATE.md todo count
@@ -368,7 +368,7 @@ Usage: `/csp-capture Add auth token refresh`
 **`/csp-capture --note <text>`**
 Zero-friction note capture — one command, instant save, no questions.
 
-- Saves timestamped note to `.planning/notes/` (or `~/.claude/notes/` globally)
+- Saves timestamped note to `.csp/planning/notes/` (or `~/.claude/notes/` globally)
 - Three subcommands: append (default), list, promote
 - Promote converts a note into a structured todo
 - Works without a project (falls back to global scope)
@@ -432,9 +432,9 @@ Usage: `/csp-review --phase 3 --all`
 ---
 
 **`/csp-pr-branch [target]`**
-Create a clean branch for pull requests by filtering out .planning/ commits.
+Create a clean branch for pull requests by filtering out .csp/planning/ commits.
 
-- Classifies commits: code-only (include), planning-only (exclude), mixed (include sans .planning/)
+- Classifies commits: code-only (include), planning-only (exclude), mixed (include sans .csp/planning/)
 - Cherry-picks code commits onto a clean branch
 - Reviewers see only code changes, no CSP artifacts
 
@@ -490,7 +490,7 @@ Configure workflow toggles and model profile interactively.
 
 - Toggle researcher, plan checker, verifier agents
 - Select model profile (quality/balanced/budget/inherit)
-- Updates `.planning/config.json`
+- Updates `.csp/planning/config.json`
 
 Usage: `/csp-settings`
 
@@ -526,10 +526,10 @@ Usage: `/csp-surface disable utility`
 **`/csp-cleanup`**
 Archive accumulated phase directories from completed milestones.
 
-- Identifies phases from completed milestones still in `.planning/phases/`
+- Identifies phases from completed milestones still in `.csp/planning/phases/`
 - Shows dry-run summary before moving anything
-- Moves phase dirs to `.planning/milestones/v{X.Y}-phases/`
-- Use after multiple milestones to reduce `.planning/phases/` clutter
+- Moves phase dirs to `.csp/planning/milestones/v{X.Y}-phases/`
+- Use after multiple milestones to reduce `.csp/planning/phases/` clutter
 
 Usage: `/csp-cleanup`
 
@@ -574,8 +574,8 @@ The commands above cover the most common day-to-day flows. Every command listed 
 - **`/csp-spec-phase <phase> [--auto] [--text]`** — Clarify WHAT a phase delivers with ambiguity scoring; produces a CSPEC.md before discuss-phase.
 - **`/csp-ai-integration-phase [phase]`** — Generate an AI-CSPEC.md design contract for phases that involve building AI systems.
 - **`/csp-ui-phase [phase]`** — Generate UI design contract (UI-CSPEC.md) for frontend phases.
-- **`/csp-import --from <filepath> | --from-legacy-planning`** — Ingest external plans with conflict detection, or migrate a legacy planning layout into the standard `.planning/` format.
-- **`/csp-ingest-docs [path] [--mode new|merge] [--manifest <file>] [--resolve auto|interactive]`** — Bootstrap or merge a `.planning/` setup from existing ADRs, PRDs, CSPECs, and docs in a repo.
+- **`/csp-import --from <filepath> | --from-legacy-planning`** — Ingest external plans with conflict detection, or migrate a legacy planning layout into the standard `.csp/planning/` format.
+- **`/csp-ingest-docs [path] [--mode new|merge] [--manifest <file>] [--resolve auto|interactive]`** — Bootstrap or merge a `.csp/planning/` setup from existing ADRs, PRDs, CSPECs, and docs in a repo.
 
 ### Planning & Execution
 
@@ -604,7 +604,7 @@ The commands above cover the most common day-to-day flows. Every command listed 
 
 ### Knowledge & Context
 
-- **`/csp-graphify [build|query <term>|status|diff]`** — Build, query, and inspect the project knowledge graph in `.planning/graphs/`.
+- **`/csp-graphify [build|query <term>|status|diff]`** — Build, query, and inspect the project knowledge graph in `.csp/planning/graphs/`.
 - **`/csp-thread [list [--open|--resolved] | close <slug> | status <slug> | name | description]`** — Manage persistent context threads for cross-session work.
 - **`/csp-profile-user [--questionnaire] [--refresh]`** — Generate developer behavioral profile and create Claude-discoverable artifacts.
 - **`/csp-stats`** — Display project statistics: phases, plans, requirements, git metrics, and timeline.
@@ -635,7 +635,7 @@ These six skills exist primarily for the model to perform two-stage hierarchical
 ## Files & Structure
 
 ```text
-.planning/
+.csp/planning/
 ├── PROJECT.md            # Project vision
 ├── ROADMAP.md            # Current phase breakdown
 ├── STATE.md              # Project memory & context
@@ -692,24 +692,24 @@ Set during `/csp-new-project`:
 - Executes plans without confirmation
 - Only stops for critical checkpoints
 
-Change anytime by editing `.planning/config.json`
+Change anytime by editing `.csp/planning/config.json`
 
 ## Planning Configuration
 
-Configure how planning artifacts are managed in `.planning/config.json`:
+Configure how planning artifacts are managed in `.csp/planning/config.json`:
 
 **`planning.commit_docs`** (default: `true`)
 - `true`: Planning artifacts committed to git (standard workflow)
 - `false`: Planning artifacts kept local-only, not committed
 
 When `commit_docs: false`:
-- Add `.planning/` to your `.gitignore`
+- Add `.csp/planning/` to your `.gitignore`
 - Useful for OSS contributions, client projects, or keeping planning private
 - All planning files still work normally, just not tracked in git
 
 **`planning.search_gitignored`** (default: `false`)
 - `true`: Add `--no-ignore` to broad ripgrep searches
-- Only needed when `.planning/` is gitignored and you want project-wide searches to include it
+- Only needed when `.csp/planning/` is gitignored and you want project-wide searches to include it
 
 Example config:
 ```json
@@ -777,8 +777,8 @@ Example config:
 
 ## Getting Help
 
-- Read `.planning/PROJECT.md` for project vision
-- Read `.planning/STATE.md` for current context
-- Check `.planning/ROADMAP.md` for phase status
+- Read `.csp/planning/PROJECT.md` for project vision
+- Read `.csp/planning/STATE.md` for current context
+- Check `.csp/planning/ROADMAP.md` for phase status
 - Run `/csp-progress` to check where you're up to
 </reference>

@@ -1,7 +1,7 @@
 ---
 name: csp-prd-parser
 description: |
-  多格式 PRD 文档解析器。统一解析多种格式的 PRD 文档（语雀、Markdown、纯文本），
+  多格式 PRD 文档解析器。统一解析多种格式的 PRD 文档（语雀/Notion/Confluence 等在线文档、Markdown、纯文本），
   提取结构化信息，输出标准化的 PRD-IR（PRD 中间表示），供下游 skill 消费。
   支持自动格式检测、章节识别、功能点提取、用户故事提取、约束条件识别。
   当用户提供 PRD 文档链接或内容需要解析、或需要"解析 PRD"、"提取需求"、"PRD格式化"时使用。
@@ -49,13 +49,13 @@ anti_rationalizations:
 
 ## 核心理念
 
-PRD 可能来自多种来源：语雀文档、Markdown 文件、钉钉文档、纯文本邮件。格式各异，结构不同，但需要提取的核心信息是相同的。PRD Parser 的作用就是把这些异构输入统一为下游 skill 可消费的结构化数据。
+PRD 可能来自多种来源：语雀/Notion 等在线文档、钉钉文档、Markdown 文件、纯文本邮件。格式各异，结构不同，但需要提取的核心信息是相同的。PRD Parser 的作用就是把这些异构输入统一为下游 skill 可消费的结构化数据。
 
 ## 支持格式
 
 | 格式 | 来源 | 检测方式 | 解析方式 |
 |------|------|---------|---------|
-| 语雀文档 | 语雀链接 | URL 包含 yuque 域名 | 语雀 API 获取 Markdown 后解析 |
+| 在线文档 | 语雀 / Notion / Confluence 链接 | URL 含 yuque / notion.so / atlassian 域名 | 平台 API 获取后解析 |
 | Markdown | 本地文件/粘贴 | 文件扩展名 `.md` 或 Markdown 语法 | 直接解析 Markdown 结构 |
 | 纯文本 | 聊天/邮件 | 无特殊格式 | 基于语义分段解析 |
 
@@ -80,7 +80,7 @@ prd_ir:
   meta:
     title: ""                    # PRD 标题
     source: ""                   # 来源（链接或文件路径）
-    format: "yuque|markdown|text"  # 原始格式
+    format: "online-doc|markdown|text"  # 原始格式
     author: ""                   # 作者（如有）
     version: ""                  # 版本号（如有）
     created_at: ""               # 创建时间
@@ -226,24 +226,24 @@ constraint_patterns:
 └── PARSE-LOG.md             # 解析日志（含警告和未解析内容）
 ```
 
-## 语雀文档解析
+## 在线文档解析
 
-对于语雀链接，使用语雀 API 获取文档内容：
+对于在线文档链接（语雀 / Notion / Confluence 等），使用对应平台的 API 获取文档内容：
 
 ```yaml
-yuque_parse:
-  # 输入: 语雀文档链接
-  # 例如: https://{domain}/group/book/doc
+online_doc_parse:
+  # 输入: 在线文档链接（语雀 / Notion / Confluence）
+  # 例如: https://www.yuque.com/{group}/{book}/{doc} 或 https://www.notion.so/workspace/page-id 或 https://workspace.atlassian.net/wiki/spaces/SPACE/pages/123
   
   steps:
-    1. 从 URL 提取 group_login, book_slug, doc_slug
-    2. 调用语雀 API 获取文档 body
+    1. 从 URL 提取 workspace, page_id（按平台 URL 规则）
+    2. 调用平台文档 API 获取文档 body（语雀 API / Notion API / Confluence REST API）
     3. 将 body 转换为 Markdown
     4. 按标准流程解析 Markdown
   
   auth:
-    # 需要语雀 API Token
-    env: YUQUE_TOKEN
+    # 需要平台 API Token（如 YUQUE_TOKEN / NOTION_TOKEN / CONFLUENCE_PAT）
+    env: DOC_API_TOKEN
 ```
 
 ## 门控检查
@@ -266,7 +266,7 @@ completion_signal:
   status:
     prd_ir_path: .csp/prd-ir/
     feature_count: "{{count}}"
-    format: "yuque|markdown|text"
+    format: "online-doc|markdown|text"
     phase: define
     ready_for: [requirement-decomposition, prd-generation]
 ```
@@ -286,11 +286,11 @@ completion_signal:
 ## 快速开始示例
 
 ```
-用户: "解析这个 PRD: https://{yuque_domain}/team/prd/user-system"
+用户: "解析这个 PRD: https://www.yuque.com/team/prd/user-system"
 
 执行:
-  1. 格式检测: 语雀链接
-  2. 获取文档: 通过语雀 API 获取完整文档
+  1. 格式检测: 语雀/Notion 在线文档链接
+  2. 获取文档: 通过语雀/Notion API 获取完整文档
   3. 章节识别:
      - 背景与目标 ✅
      - 用户角色 ✅

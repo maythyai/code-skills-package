@@ -22,17 +22,17 @@ Ensure config exists and resolve the workstream-aware config path (mirrors `sett
 ```bash
 csp-sdk query config-ensure-section
 if [[ -z "${CSP_CONFIG_PATH:-}" ]]; then
-  if [[ -f .planning/active-workstream ]]; then
-    WS=$(tr -d '\n\r' < .planning/active-workstream)
-    CSP_CONFIG_PATH=".planning/workstreams/${WS}/config.json"
+  if [[ -f .csp/planning/active-workstream ]]; then
+    WS=$(tr -d '\n\r' < .csp/planning/active-workstream)
+    CSP_CONFIG_PATH=".csp/planning/workstreams/${WS}/config.json"
   else
-    CSP_CONFIG_PATH=".planning/config.json"
+    CSP_CONFIG_PATH=".csp/planning/config.json"
   fi
 fi
 ```
 
 All subsequent reads and writes go through `$CSP_CONFIG_PATH`. Never hardcode
-`.planning/config.json` — workstream installs must route to their own config file.
+`.csp/planning/config.json` — workstream installs must route to their own config file.
 </step>
 
 <step name="read_current">
@@ -313,7 +313,7 @@ AskUserQuestion([
     multiSelect: false,
     options: [
       { label: "No (default: false)", description: "Respect .gitignore during searches." },
-      { label: "Yes", description: "Add --no-ignore to broad searches (includes .planning/)." }
+      { label: "Yes", description: "Add --no-ignore to broad searches (includes .csp/planning/)." }
     ]
   },
   {

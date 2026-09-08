@@ -23,10 +23,10 @@ Design Brief Skill — 在设计启动前，用一页可导出的 HTML 文档完
 | 模式 | 触发条件 | 产出特征 |
 | --- | --- | --- |
 | 🟢 **独立模式** | 无前序上下文，直接调用 | 引导式追问 7 字段 → 完整 HTML |
-| 🔵 **链式模式** | 检测到 `spark-output/context/frame|scope|audit|journey|hmw.json` | 跳过已预填字段 → 完整 HTML |
+| 🔵 **链式模式** | 检测到 `.csp/spark/context/frame|scope|audit|journey|hmw.json` | 跳过已预填字段 → 完整 HTML |
 | 🟣 **增强模式** | 项目同目录有 SparkDesign 组件库标识（未来） | HTML 内策略维度引用真实组件名 |
 
-> Brief 的产出形态在三种模式下完全一致（双通道：`spark-output/context/brief.json` + 完整 HTML），区别只在"提问多少 / 字段从哪里来"。
+> Brief 的产出形态在三种模式下完全一致（双通道：`.csp/spark/context/brief.json` + 完整 HTML），区别只在"提问多少 / 字段从哪里来"。
 
 ## 输入要求
 
@@ -52,7 +52,7 @@ Design Brief Skill — 在设计启动前，用一页可导出的 HTML 文档完
 **Step 1 · 扫描上下文来源**（按顺序，找到任一即读取）：
 
 - [ ] 会话内 marker：`<!-- spark-context:frame -->` / `scope` / `audit` / `journey` / `hmw`
-- [ ] 项目文件：`spark-output/context/frame.json` / `scope.json` / `audit.json` / `journey.json` / `hmw.json`
+- [ ] 项目文件：`.csp/spark/context/frame.json` / `scope.json` / `audit.json` / `journey.json` / `hmw.json`
 - [ ] 都没有 → 跳过 Phase 0.5，按无上下文流程执行
 
 **Step 2 · 字段映射 checklist**（找到上下文时，按下表逐项映射并预填 Brief 字段）：
@@ -119,7 +119,7 @@ Design Brief Skill — 在设计启动前，用一页可导出的 HTML 文档完
    <!-- /spark-context:brief -->
    ```
 
-2. **写入项目文件**：`spark-output/context/brief.json`（目录不存在时先创建）
+2. **写入项目文件**：`.csp/spark/context/brief.json`（目录不存在时先创建）
 
 下游可消费 Skill：Stories / Sitemap / **Journey** / Flow Web / Flow Mobile / Landing / Campaign / Chart / Edge / Motion / Check / Access / Metric / QA / PRD / Pitch / Retro。
 
@@ -163,9 +163,9 @@ Brief 是链路锚点，下游消费量最大（13 个 Skill）。字段映射�
 本 Skill 在完全离线、无任何连接器的场景下即可完整交付，所有方法论与输出形态不依赖外部系统：
 
 - **一页纸 HTML 完整生成**：目标 / 用户 / 策略 / 标准 / 约束七字段引导式追问 → Phase 4/4.5/4.6 策略维度勾选与 AI 草拟 → 完整 HTML 输出
-- **链式上下文双通道**：写入 `spark-output/context/brief.json` + 会话内 marker block，下游 14 个 Skill 可直接读取（无需连接器）
+- **链式上下文双通道**：写入 `.csp/spark/context/brief.json` + 会话内 marker block，下游 14 个 Skill 可直接读取（无需连接器）
 - **HTML 一键导出 PNG**：本地浏览器即可完成，无需云服务
-- **三种运行模式自适应**：独立模式（无前序）/ 链式模式（读本地 spark-output）/ 增强模式（识别 SparkDesign 组件标识）全部本地化运行
+- **三种运行模式自适应**：独立模式（无前序）/ 链式模式（读本地 .csp/spark）/ 增强模式（识别 SparkDesign 组件标识）全部本地化运行
 - **六大项目类型差异化模板**：B2C / B2B / Tool / Content / 营销活动 / 平台型差异化策略库内置在 Skill 内
 
 > 红线：缺连接器时 **绝不 abort**，所有引导式追问与 HTML 生成路径必须照常完成。
@@ -177,7 +177,7 @@ Brief 是链路锚点，下游消费量最大（13 个 Skill）。字段映射�
 | 连接器 | 阶段 | 增强能力 | 降级路径 |
 | --- | --- | --- | --- |
 | **Figma** | Phase 0.5 上游读取 | 直接抓取项目相关 frame / moodboard / 早期 sketch 作为 `business_context` 与策略维度的视觉佐证；HTML 内"参考视觉"区块嵌入 frame 缩略图 + 深链 | 未装时让用户手动粘贴 Figma 链接或截图描述，HTML 内退化为纯文字引用 |
-| **Notion / 飞书文档** | Phase 7 输出后 | Brief HTML 一键写入团队 wiki 指定空间，自动生成项目锚点页（下游 Skill 通过 wiki 链接反查 Brief）；并搜索 wiki 历史 Brief 作为同类项目参考 | 未装时输出本地 `spark-output/brief/{project}.html`，提示用户手动上传至团队 wiki |
+| **Notion / 飞书** | Phase 7 输出后 | Brief HTML 一键写入团队 wiki 指定空间，自动生成项目锚点页（下游 Skill 通过 wiki 链接反查 Brief）；并搜索 wiki 历史 Brief 作为同类项目参考 | 未装时输出本地 `.csp/spark/brief/{project}.html`，提示用户手动上传至团队 wiki |
 | **Linear / Jira** | Phase 0.5 上游读取 | 若 `business_context` 与某个 Epic / Project 绑定，可拉取 Epic 描述 / 关联 issue 数量 / 当前 sprint 作为业务背景的补充事实 | 未装时让用户在 Phase 3 追问中手动描述"业务背景与现状"，不影响 Brief 主体 |
 | **GitHub** | Phase 4.5 策略维度 AI 草拟 | 检测项目代码仓库的 package.json / 技术栈，让策略维度的"技术约束"与"组件复用策略"更贴合实际工程现状 | 未装时按用户描述的技术栈生成通用策略，准确度略降但不阻断 |
 
@@ -448,7 +448,7 @@ Q3 · 依据｜这条策略对应哪个业务目标或用户痛点？（≤ 25 �
 
 **Step 2 · 全文克隆（合并结构 + 样式）**
 
-将 `prototype/brief.html` 的结构 + `prototype/brief-themes.css` 的样式合并为一个**自包含的单 HTML 文件**，写入目标文件（默认路径 `spark-output/brief/[项目名].html`，目录不存在时先创建，由用户确认）。
+将 `prototype/brief.html` 的结构 + `prototype/brief-themes.css` 的样式合并为一个**自包含的单 HTML 文件**，写入目标文件（默认路径 `.csp/spark/brief/[项目名].html`，目录不存在时先创建，由用户确认）。
 
 **合并方法**：在输出 HTML 中，将 `<style></style>` 替换为 `<style>\n{brief-themes.css 全部内容}\n</style>`，并删除 `<link rel="stylesheet" href="brief-themes.css">` 行（输出文件必须自包含，不依赖外部 CSS 文件）。
 
@@ -530,9 +530,9 @@ HTML 里 `modern-screenshot` 通过 jsDelivr CDN 引用（`https://cdn.jsdelivr.
 
 按 [chain-protocol.md](../../chain-protocol.md) §2.1 v1.1 智能适配规则：
 
-**Step 1 — 写盘到 `spark-output/context/brief.json`**（必做，主持久化通道；目录不存在先创建）。
+**Step 1 — 写盘到 `.csp/spark/context/brief.json`**（必做，主持久化通道；目录不存在先创建）。
 
-⛔ **JSON 安全**（详见 chain-protocol.md §2.1.2）：写入前**必须检查所有字符串值中的引号字符**。用户原文中的中文弯引号 `""`（U+201C/U+201D）必须替换为 `「」`，否则会被存储为 ASCII `"` 破坏 JSON 结构，导致下游全链路（Dashboard 更新 + 下游 Skill 读取）解析失败。写盘后用 `python3 -c "import json; json.load(open('spark-output/context/brief.json'))"` 自检。
+⛔ **JSON 安全**（详见 chain-protocol.md §2.1.2）：写入前**必须检查所有字符串值中的引号字符**。用户原文中的中文弯引号 `""`（U+201C/U+201D）必须替换为 `「」`，否则会被存储为 ASCII `"` 破坏 JSON 结构，导致下游全链路（Dashboard 更新 + 下游 Skill 读取）解析失败。写盘后用 `python3 -c "import json; json.load(open('.csp/spark/context/brief.json'))"` 自检。
 
 写入以下完整 JSON：
 
@@ -566,7 +566,7 @@ HTML 里 `modern-screenshot` 通过 jsDelivr CDN 引用（`https://cdn.jsdelivr.
 **Step 2 — chat 输出紧凑 marker**（必做，⛔ **不要在 chat 内重复输出 Step 1 的完整 JSON**）：
 
 ```
-<!-- spark-context:brief ref="spark-output/context/brief.json" -->
+<!-- spark-context:brief ref=".csp/spark/context/brief.json" -->
 Brief 已保存：project=[project_name]，project_type=[type/subtype]，persona=[user 第一条简述]，[N] 个 strategy_dimensions
 <!-- /spark-context:brief -->
 ```
@@ -578,18 +578,18 @@ Brief 已保存：project=[project_name]，project_type=[type/subtype]，persona
 > **协议依据**：chain-protocol.md §九「面板自动生成约定」。本步在 Handoff 之前执行；**告知用户的提示必须作为独立段落输出，禁止折叠进 Handoff 末尾、禁止静默跳过**。
 
 1. **找模板**：定位 `_shared/dashboard-template.html`（依次：相对套件根 → `glob dashboard-template.html` 搜套件安装目录 → 三轮都失败时，**用独立段落醒目告知用户**：`⚠️ 链路面板模板未找到（套件安装可能不完整，建议重装）。本 Skill 已正常完成，下游链路不受影响。` 然后跳过本步、继续 Handoff，**不阻断 Skill 完成**）。
-2. **聚合 STATE**：扫 `spark-output/context/*.json`，聚合为 `{"project":"<brief.project_name 或 frame.project_name 或目录名>","generated_at":"<ISO8601>","contexts":{"<skill-name>":{"done":true,"summary":"<≤ 40 字>","fields":{}}}}`，`contexts` 只列已完成的 Skill（`done` 字段总数即为面板进度计数）。
-3. **克隆模板**到 `spark-output/dashboard.html`（覆盖），用正则 `/\/\*__SPARK_STATE_INJECT__\*\/null/` 替换为 `/*__SPARK_STATE_INJECT__*/<JSON.stringify(STATE)>`。
+2. **聚合 STATE**：扫 `.csp/spark/context/*.json`，聚合为 `{"project":"<brief.project_name 或 frame.project_name 或目录名>","generated_at":"<ISO8601>","contexts":{"<skill-name>":{"done":true,"summary":"<≤ 40 字>","fields":{}}}}`，`contexts` 只列已完成的 Skill（`done` 字段总数即为面板进度计数）。
+3. **克隆模板**到 `.csp/spark/dashboard.html`（覆盖），用正则 `/\/\*__SPARK_STATE_INJECT__\*\/null/` 替换为 `/*__SPARK_STATE_INJECT__*/<JSON.stringify(STATE)>`。
 4. **独立段落告知用户**（强提示，单独成段，与 Handoff 之间空一行；根据 `Object.keys(STATE.contexts).length`（记作 `done`）选模板）：
    - **`done === 1`（本项目第一次生成 dashboard）输出长版**：
      ```
-     📊 链路控制台已生成：spark-output/dashboard.html（双击在浏览器打开）
+     📊 链路控制台已生成：.csp/spark/dashboard.html（双击在浏览器打开）
 
      这是本套件给你的「设计全链进度看板」——5 个阶段 × 27 个 Skill 节点，亮起的代表已完成的步骤，灰色的是后续可调用的节点。每跑完一个 Skill 都会自动更新，建议钉在浏览器一个标签页里随时回看，能看清「现在在哪一步、下游还差什么、链路是否健康」。
      ```
    - **`done > 1`（后续更新）输出短版**：
      ```
-     📊 链路面板已更新 · 进度 [done]/27 · spark-output/dashboard.html
+     📊 链路面板已更新 · 进度 [done]/27 · .csp/spark/dashboard.html
      ```
 5. **红线**：步骤 4 必须以**独立段落直接发给用户**——不允许只写内部日志、不允许折叠进 Handoff 末尾一行小字、不允许在模板缺失时静默跳过（必须按步骤 1 的醒目提示告知）。
 
@@ -865,7 +865,7 @@ HTML 中不依赖外部框架，仅依赖：
 ### 🚫 红线规则（违反即任务失败，无降级空间）
 
 - **视觉产物必须基于 `prototype/brief.html` 克隆**——不得自写 HTML / CSS / JS，不得引入任何 UI 框架（详见 Phase 6.0）
-- **必须输出双通道**：`spark-output/context/brief.json` 写盘 + chat 内紧凑 marker（含 `ref=` 属性）
+- **必须输出双通道**：`.csp/spark/context/brief.json` 写盘 + chat 内紧凑 marker（含 `ref=` 属性）
 - **必须按 chain-protocol §2.1 v1.1.1 执行顺序**：先写盘 → 自检行 → 渲染报告 → marker → handoff，不得颠倒
 - **7 张卡片的 DOM 顺序、class 名、SVG line icon 必须与原型逐字一致**
 - **设计标准每条必须以 `<span class="tag" data-kind="quant|qual">` 行首 pill 开头**，不得放行尾纯文字
@@ -895,7 +895,7 @@ HTML 中不依赖外部框架，仅依赖：
 - 浏览器打开后：主题切换 / 布局切换 / 字号缩放 / topbar 编辑 / 导出 PNG 五项功能均可用
 
 **链路接入正确性**：
-- `spark-output/context/brief.json` 文件已写入且 schema 符合 frontmatter 定义
-- chat marker 含 `ref="spark-output/context/brief.json"` 属性
+- `.csp/spark/context/brief.json` 文件已写入且 schema 符合 frontmatter 定义
+- chat marker 含 `ref=".csp/spark/context/brief.json"` 属性
 - 下游 Skill（Stories / Sitemap / Flow Web 等）调用时能正确读取本 Brief 上下文
 - 已输出符合 Phase 7 Handoff 模板的下一步建议

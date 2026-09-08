@@ -51,6 +51,6 @@ For each workspace, show:
 - **Name** — directory name
 - **Repos** — count from init data
 - **Strategy** — from WORKCSPACE.md
-- **CSP Project** — whether `.planning/PROJECT.md` exists (Yes/No)
+- **CSP Project** — whether `.csp/planning/PROJECT.md` exists (Yes/No)
 
 </process>

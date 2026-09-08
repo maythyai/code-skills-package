@@ -85,8 +85,8 @@ csp-sdk query state.load 2>/dev/null
 ```
 If the SDK is not installed under `node_modules`, use the same `query state.load` argv with your local `csp-sdk` CLI on `PATH`.
 
-If STATE.md missing but .planning/ exists: offer to reconstruct or continue without.
-If .planning/ missing: Error — project not initialized.
+If STATE.md missing but .csp/planning/ exists: offer to reconstruct or continue without.
+If .csp/planning/ missing: Error — project not initialized.
 </step>
 
 <step name="load_plan">
@@ -587,7 +587,7 @@ file individually. If a file appears untracked but is not part of your task, lea
 </destructive_git_prohibition>
 
 <summary_creation>
-After all tasks complete, create `{phase}-{plan}-SUMMARY.md` at `.planning/phases/XX-name/`.
+After all tasks complete, create `{phase}-{plan}-SUMMARY.md` at `.csp/planning/phases/XX-name/`.
 
 Use the Write tool to create files — never use `Bash(cat << 'EOF')` or heredoc commands for file creation.
 
@@ -713,7 +713,7 @@ csp-sdk query state.add-blocker "Blocker description"
 <final_commit>
 ```bash
 csp-sdk query commit "docs({phase}-{plan}): complete [plan-name] plan" --files \
-  .planning/phases/XX-name/{phase}-{plan}-SUMMARY.md .planning/STATE.md .planning/ROADMAP.md .planning/REQUIREMENTS.md
+  .csp/planning/phases/XX-name/{phase}-{plan}-SUMMARY.md .csp/planning/STATE.md .csp/planning/ROADMAP.md .csp/planning/REQUIREMENTS.md
 ```
 
 Separate from per-task commits — captures execution results only.
@@ -724,20 +724,20 @@ one of three shapes:
 - `{committed: true, hash, reason: 'committed'}` — commit succeeded; record
   the hash in the completion format.
 - `{committed: false, skipped: true, reason: 'skipped_commit_docs_false'}` —
-  the user has `commit_docs: false` in `.planning/config.json`. **This is an
+  the user has `commit_docs: false` in `.csp/planning/config.json`. **This is an
   intentional success path.** Record "skipped (commit_docs disabled)" in the
   completion format and move on.
 - `{committed: false, skipped: true, reason: 'skipped_gitignored'}` —
-  `.planning/` is gitignored in the user's project. **Also an intentional
-  success path.** Record "skipped (.planning gitignored)" and move on.
+  `.csp/planning/` is gitignored in the user's project. **Also an intentional
+  success path.** Record "skipped (.csp/planning gitignored)" and move on.
 - `{committed: false, reason: 'nothing_to_commit' | 'commit_failed', ...}` —
   no-op / genuine failure; surface in the completion notes.
 
 **Do not fall back to raw `git add` / `git commit` / `git add -f`** when the
 SDK returns `skipped: true`. The SDK's skip is the user's deliberate choice
-to keep `.planning/` files out of git history. Force-staging gitignored
-content via `git add -f .planning/...` is forbidden — that bug is exactly
-the regression #3678 reported, where the agent leaks `.planning/` artifacts
+to keep `.csp/planning/` files out of git history. Force-staging gitignored
+content via `git add -f .csp/planning/...` is forbidden — that bug is exactly
+the regression #3678 reported, where the agent leaks `.csp/planning/` artifacts
 into the user's project history.
 </final_commit>
 

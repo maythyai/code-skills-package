@@ -1,8 +1,8 @@
 <purpose>
 Package spike experiment findings into a persistent project skill — an implementation blueprint
-for future build conversations. Reads from `.planning/spikes/`, writes skill to
+for future build conversations. Reads from `.csp/planning/spikes/`, writes skill to
 `./.claude/skills/spike-findings-[project]/` (project-local) and summary to
-`.planning/spikes/WRAP-UP-SUMMARY.md`. Companion to `/csp-spike`.
+`.csp/planning/spikes/WRAP-UP-SUMMARY.md`. Companion to `/csp-spike`.
 </purpose>
 
 <required_reading>
@@ -22,15 +22,15 @@ Read all files referenced by the invoking prompt's execution_context before star
 <step name="gather">
 ## Gather Spike Inventory
 
-1. Read `.planning/spikes/MANIFEST.md` for the overall idea context and requirements
-2. Glob `.planning/spikes/*/README.md` and parse YAML frontmatter from each
+1. Read `.csp/planning/spikes/MANIFEST.md` for the overall idea context and requirements
+2. Glob `.csp/planning/spikes/*/README.md` and parse YAML frontmatter from each
 3. Check if `./.claude/skills/spike-findings-*/SKILL.md` exists for this project
    - If yes: read its `processed_spikes` list from the metadata section and filter those out
    - If no: all spikes are candidates
 
 If no unprocessed spikes exist:
 ```
-No unprocessed spikes found in `.planning/spikes/`.
+No unprocessed spikes found in `.csp/planning/spikes/`.
 Run `/csp-spike` first to create experiments.
 ```
 Exit.
@@ -175,7 +175,7 @@ Original spike source files are preserved in `sources/` for complete reference.
 <step name="write_summary">
 ## Write Planning Summary
 
-Write `.planning/spikes/WRAP-UP-SUMMARY.md` for project history:
+Write `.csp/planning/spikes/WRAP-UP-SUMMARY.md` for project history:
 
 ```markdown
 # Spike Wrap-Up Summary
@@ -209,7 +209,7 @@ If this routing line already exists (append mode), leave it as-is.
 <step name="generate_conventions">
 ## Generate or Update CONVENTIONS.md
 
-Analyze all processed spikes for recurring patterns and write `.planning/spikes/CONVENTIONS.md`. This file tells future spike sessions *how we spike* — the stack, structure, and patterns that have been established.
+Analyze all processed spikes for recurring patterns and write `.csp/planning/spikes/CONVENTIONS.md`. This file tells future spike sessions *how we spike* — the stack, structure, and patterns that have been established.
 
 1. Read all spike source code and READMEs looking for:
    - **Stack choices** — What language/framework/runtime appears across multiple spikes?
@@ -217,7 +217,7 @@ Analyze all processed spikes for recurring patterns and write `.planning/spikes/
    - **Recurring approaches** — How auth is handled, how styling is done, how data is served
    - **Tools & libraries** — Packages that showed up repeatedly with versions that worked
 
-2. Write or update `.planning/spikes/CONVENTIONS.md`:
+2. Write or update `.csp/planning/spikes/CONVENTIONS.md`:
 
 ```markdown
 # Spike Conventions
@@ -246,7 +246,7 @@ Patterns and stack choices established across spike sessions. New spikes follow 
 Commit all artifacts (if `COMMIT_DOCS` is true):
 
 ```bash
-csp-sdk query commit "docs(spike-wrap-up): package [N] spike findings into project skill" --files .planning/spikes/WRAP-UP-SUMMARY.md .planning/spikes/CONVENTIONS.md
+csp-sdk query commit "docs(spike-wrap-up): package [N] spike findings into project skill" --files .csp/planning/spikes/WRAP-UP-SUMMARY.md .csp/planning/spikes/CONVENTIONS.md
 ```
 </step>
 
@@ -259,8 +259,8 @@ csp-sdk query commit "docs(spike-wrap-up): package [N] spike findings into proje
 **Processed:** {N} spikes
 **Feature areas:** {list}
 **Skill:** `./.claude/skills/spike-findings-[project]/`
-**Conventions:** `.planning/spikes/CONVENTIONS.md`
-**Summary:** `.planning/spikes/WRAP-UP-SUMMARY.md`
+**Conventions:** `.csp/planning/spikes/CONVENTIONS.md`
+**Summary:** `.csp/planning/spikes/WRAP-UP-SUMMARY.md`
 **CLAUDE.md:** routing line added
 
 The spike-findings skill will auto-load in future build conversations.
@@ -298,8 +298,8 @@ After the summary, present next-step options:
 - [ ] Spikes grouped by feature area
 - [ ] Spike-findings skill exists at `./.claude/skills/` with SKILL.md (including requirements), references/, sources/
 - [ ] Reference files are implementation blueprints with Requirements, How to Build It, What to Avoid, Constraints
-- [ ] `.planning/spikes/CONVENTIONS.md` created or updated with recurring stack/structure/pattern choices
-- [ ] `.planning/spikes/WRAP-UP-SUMMARY.md` written for project history
+- [ ] `.csp/planning/spikes/CONVENTIONS.md` created or updated with recurring stack/structure/pattern choices
+- [ ] `.csp/planning/spikes/WRAP-UP-SUMMARY.md` written for project history
 - [ ] Project CLAUDE.md has auto-load routing line
 - [ ] Summary presented
 - [ ] Next-step options presented (including frontier spike exploration via `/csp-spike`)

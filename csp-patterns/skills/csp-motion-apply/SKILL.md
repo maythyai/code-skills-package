@@ -19,8 +19,8 @@ tools: [Read, Write, Edit, Glob, Grep, Bash]
 | 模式 | 触发条件 | 产出特征 |
 | --- | --- | --- |
 | 🟢 **独立模式** | 无 motion-plan 上下文，直接调用 | 进入 Phase 0（框架探测）→ Phase 1（参数抽取）→ Phase 2（上下文嗅探）→ 选组件 + 默认 prop（按 scene 调） |
-| 🔵 **链式模式** | 检测到 `spark-output/context/motion-plan.json` | 跳过 Personality 推断；直接用 motion-plan.element_specs 作为 prop overrides；跳过 Phase 2 调性嗅探 |
-| 🟣 **增强模式** | 项目同目录有 SparkDesign 组件库 / 已存在 `spark-output/profile/motion-apply.md` | Component 选型优先匹配 SparkDesign 已有组件；profile 累积 reject/accept 历史，下次选型更准 |
+| 🔵 **链式模式** | 检测到 `.csp/spark/context/motion-plan.json` | 跳过 Personality 推断；直接用 motion-plan.element_specs 作为 prop overrides；跳过 Phase 2 调性嗅探 |
+| 🟣 **增强模式** | 项目同目录有 SparkDesign 组件库 / 已存在 `.csp/spark/profile/motion-apply.md` | Component 选型优先匹配 SparkDesign 已有组件；profile 累积 reject/accept 历史，下次选型更准 |
 
 > 三种模式都遵守同一套场景合规红线（LOCKED #7）：DASHBOARD 场景禁 `animation: ... infinite` / 禁持续背景动效 / 禁超 2s 入场 / 禁 translate >20px / scale >1.05 / rotate >5deg。
 
@@ -45,8 +45,8 @@ tools: [Read, Write, Edit, Glob, Grep, Bash]
 按以下顺序尝试读取上下文，找到即提取并告知用户已沿用：
 
 1. 扫描会话中的 `<!-- spark-context:motion-plan -->` / `<!-- spark-context:flow-web -->` / `<!-- spark-context:brief -->` marker
-2. 读取项目目录 `spark-output/context/motion-plan.json` / `flow-web.json` / `flow-mobile.json` / `brief.json`
-3. 读取 `spark-output/profile/motion-apply.md`（本 Skill 自己的运行时记忆，含历史选型 / 拒绝偏好 / Tailwind 版本陷阱等）
+2. 读取项目目录 `.csp/spark/context/motion-plan.json` / `flow-web.json` / `flow-mobile.json` / `brief.json`
+3. 读取 `.csp/spark/profile/motion-apply.md`（本 Skill 自己的运行时记忆，含历史选型 / 拒绝偏好 / Tailwind 版本陷阱等）
 4. 都没有则跳过，按独立模式 Phase 0→4 全流程执行
 
 可复用字段映射：
@@ -64,19 +64,19 @@ tools: [Read, Write, Edit, Glob, Grep, Bash]
 
 ### 下游输出（最终交付时执行，严格按 chain-protocol §2.1 Step 1→6 顺序）
 
-1. **先写盘**：`Write` 工具把完整 JSON 写到 `spark-output/context/motion-apply.json`
-2. **输出自检行**：`✅ motion-apply.json 已写盘到 spark-output/context/motion-apply.json`
+1. **先写盘**：`Write` 工具把完整 JSON 写到 `.csp/spark/context/motion-apply.json`
+2. **输出自检行**：`✅ motion-apply.json 已写盘到 .csp/spark/context/motion-apply.json`
 3. **渲染交付摘要**（PATH DECISION NOTIFICATION + 安装组件列表 + prop overrides 表 + 写入文件列表）
 4. **输出紧凑 marker**：
    ```
-   <!-- spark-context:motion-apply ref="spark-output/context/motion-apply.json" -->
+   <!-- spark-context:motion-apply ref=".csp/spark/context/motion-apply.json" -->
    动效开发已完成：project=<name>，framework=<...>，scene=<...>，installed=[<ComponentA>, <ComponentB>]，<N> 段 CSS
    <!-- /spark-context:motion-apply -->
    ```
 5. **Handoff 引导**：推荐下游 `/设计走查`（check）做动效合规走查
 6. **更新链路面板**（按 Avatar SKILL.md 第 140-158 行的标准流程，独立段落告知用户）
 
-**Profile 同步**：除了 chain context，本 Skill 同时维护 `spark-output/profile/motion-apply.md`（项目级长期记忆，含 stack/scene/tonality/history/preferences/Tailwind 版本陷阱）。该文件在 Phase 5 写入，与 chain context 互补——chain 给下游 Skill 看，profile 给自己下次跑看。
+**Profile 同步**：除了 chain context，本 Skill 同时维护 `.csp/spark/profile/motion-apply.md`（项目级长期记忆，含 stack/scene/tonality/history/preferences/Tailwind 版本陷阱）。该文件在 Phase 5 写入，与 chain context 互补——chain 给下游 Skill 看，profile 给自己下次跑看。
 
 ### 字段流向下游
 
@@ -137,7 +137,7 @@ Three categories of decisions, in priority order:
 | Layer | Examples | When fixed |
 |---|---|---|
 | **LOCKED** (above) | CLI-only install, OSS-only, no source copy | Skill permanent |
-| **USER-CONFIRMED** | Stack variant (JS/TS × CSS/TW), animation intensity preference | Per-project, sticky after first confirmation, written to `spark-output/profile/motion-apply.md` |
+| **USER-CONFIRMED** | Stack variant (JS/TS × CSS/TW), animation intensity preference | Per-project, sticky after first confirmation, written to `.csp/spark/profile/motion-apply.md` |
 | **VARIES** | Specific component pick, props, where it's wired in | Per-task |
 
 USER-CONFIRMED values are **inferred via context sniffing first**. Only ask if inference fails or signals conflict.
@@ -181,7 +181,7 @@ These three pillars are not guidelines — they are the skill's identity. Any ph
 [Phase 4] Install + wire
     └─ Verify deps → run shadcn CLI → import + minimal usage example
 [Phase 5] Sink to profile
-    └─ Write project tonality + chosen component to spark-output/profile/motion-apply.md
+    └─ Write project tonality + chosen component to .csp/spark/profile/motion-apply.md
 ```
 
 ### Global principle: REFLECT before any phase transition (LOCKED)
@@ -424,7 +424,7 @@ If none of the above extraction rules match directly, **do NOT silently skip to 
 
 ### Sniffing order (progressive — stop at first sufficient signal)
 
-1. `spark-output/profile/motion-apply.md` (project profile from previous runs)
+1. `.csp/spark/profile/motion-apply.md` (project profile from previous runs)
 2. `package.json` (deps, description, framework)
 3. `tailwind.config.{js,ts,mjs,cjs}` or `tailwind.config` in CSS (theme.colors, fontFamily)
 4. Representative page: `app/page.tsx` / `src/App.tsx` / `pages/index.tsx`
@@ -493,7 +493,7 @@ L3 Project semantics + scene type (soft, high value, careful)
 
 L4 Existing convention (softest, highest authority)
     - Already-used React Bits components → strong consistency pull
-    - spark-output/profile/motion-apply.md preferences
+    - .csp/spark/profile/motion-apply.md preferences
     - Project styleguide.md / CONTRIBUTING.md (if present)
 ```
 
@@ -762,7 +762,7 @@ After install:
 
 ## Phase 5: Profile sinking
 
-After successful install, write or update `spark-output/profile/motion-apply.md` (project-local, gitignored by default — add `spark-output/profile/` to `.gitignore` if not already):
+After successful install, write or update `.csp/spark/profile/motion-apply.md` (project-local, gitignored by default — add `.csp/spark/profile/` to `.gitignore` if not already):
 
 ```markdown
 # React Bits — Project Profile
@@ -886,7 +886,7 @@ A run is successful when ALL of:
 1. The installed component renders without runtime errors on the dev server
 2. The variant matches project's actual stack (TS project gets TS variant)
 3. No heavy dep was silently installed
-4. `spark-output/profile/motion-apply.md` was created or updated
+4. `.csp/spark/profile/motion-apply.md` was created or updated
 5. The user can reverse the decision in 1 message ("换成 X" or "我不喜欢这个")
 
 When E2E testing this skill, the orthogonal matrix:
@@ -903,7 +903,7 @@ When E2E testing this skill, the orthogonal matrix:
 
 This skill handles **component selection + installation**. For **animation design principles** (timing, easing, personality, choreography), defer to the `motion-plan` skill.
 
-**Simultaneous activation priority**: When a single user message could trigger both skills (e.g. "给 dashboard 加个有质感的入场动画"), this skill (motion-apply) runs FIRST — it owns selection + installation. motion-plan activates AFTER if the user then asks to tune timing/feel. Rationale: you can't tune what isn't installed yet. If motion-plan has already set a Personality in the profile, this skill reads it from `spark-output/profile/motion-apply.md` and factors it into component selection — no live cross-skill call needed.
+**Simultaneous activation priority**: When a single user message could trigger both skills (e.g. "给 dashboard 加个有质感的入场动画"), this skill (motion-apply) runs FIRST — it owns selection + installation. motion-plan activates AFTER if the user then asks to tune timing/feel. Rationale: you can't tune what isn't installed yet. If motion-plan has already set a Personality in the profile, this skill reads it from `.csp/spark/profile/motion-apply.md` and factors it into component selection — no live cross-skill call needed.
 
 | After this skill... | motion-plan provides... |
 |---------------------|--------------------------|
@@ -927,7 +927,7 @@ When the user complains about an already-installed component's feel, the flow is
 
 In other words: motion-plan never touches the user's code directly. It only outputs design parameters. This skill translates those parameters into prop changes on the installed ReactBits component (or CSS changes for Phase 0a output).
 
-**Motion Personality → Profile sync**: If motion-plan defines a Personality (Playful/Premium/Corporate/Energetic), this skill stores it in `spark-output/profile/motion-apply.md` under `tone-signals` and uses it for all future component selections in that project.
+**Motion Personality → Profile sync**: If motion-plan defines a Personality (Playful/Premium/Corporate/Energetic), this skill stores it in `.csp/spark/profile/motion-apply.md` under `tone-signals` and uses it for all future component selections in that project.
 
 ---
 
@@ -945,7 +945,7 @@ In other words: motion-plan never touches the user's code directly. It only outp
 ### Crawler usage
 
 ```bash
-# from skill root (~/spark-output/profile/skills/motion-apply/)
+# from skill root (~/.csp/spark/profile/skills/motion-apply/)
 python3 scripts/crawl_catalog.py                     # full refresh (≈ 130 HTTP requests, 30-60s)
 python3 scripts/crawl_catalog.py --category text-animations
 python3 scripts/crawl_catalog.py --dry-run --limit 5 # smoke test, no writes
@@ -982,7 +982,7 @@ This skill is portable to Codex CLI (`~/.codex/skills/motion-apply/`). The only 
 
 8. **双通道输出**必须符合 chain-protocol §2.1 Step 1→6 顺序（先写盘 → 自检行 → 渲染 → marker → handoff → 刷新面板）。
 9. **PATH DECISION NOTIFICATION 必出**——每次执行（不管 Phase 0a / 0b / 4）都要在写代码前输出 `📋 路径 + 原因 + 场景` 三行。
-10. **链式优先**——检测到 `spark-output/context/motion-plan.json` 时**必须**用 motion-plan 的 Personality + element_specs 作为 prop overrides 基准，不得回退用 React Bits 组件默认值。
+10. **链式优先**——检测到 `.csp/spark/context/motion-plan.json` 时**必须**用 motion-plan 的 Personality + element_specs 作为 prop overrides 基准，不得回退用 React Bits 组件默认值。
 
 ### ⚠️ 反模式（常见错误，需主动规避）
 
@@ -993,7 +993,7 @@ This skill is portable to Codex CLI (`~/.codex/skills/motion-apply/`). The only 
 - ❌ 一次问 3 个以上候选 / 一个问题里塞 4 个选项（违反 anti-overload）
 - ❌ 用户问 "为啥不用 ReactBits" 时支吾——必须每次都输出 PATH DECISION NOTIFICATION 提前说清楚
 - ❌ 写完代码不跑 LOCKED #7 自检就交付
-- ❌ 在 IDE 没有 `spark-output/profile/` 目录时不创建直接写 profile 失败
+- ❌ 在 IDE 没有 `.csp/spark/profile/` 目录时不创建直接写 profile 失败
 - ❌ React Bits Pro 请求被识别后还偷偷尝试 OSS 替代（应该直接拒绝 + 重定向）
 - ❌ Re-enter 同一 phase 无新信息（违反 never-loop guarantee）
 
@@ -1010,11 +1010,11 @@ This skill is portable to Codex CLI (`~/.codex/skills/motion-apply/`). The only 
 - 所有 `css_snippets[]` 都过了 scene_compliance 自检（`scene_compliance_passed: true`）
 - 重依赖（three / ogl / gsap）安装前有用户确认痕迹
 - 安装失败的 fallback 已走（不能"装失败就放弃"）
-- 项目 `spark-output/profile/motion-apply.md` 已写入（含 stack / scene / tonality / history / preferences）
+- 项目 `.csp/spark/profile/motion-apply.md` 已写入（含 stack / scene / tonality / history / preferences）
 
 **链路接入正确性**：
-- `spark-output/context/motion-apply.json` 文件已写入且 schema 符合 frontmatter 定义
-- chat marker 含 `ref="spark-output/context/motion-apply.json"` 属性
+- `.csp/spark/context/motion-apply.json` 文件已写入且 schema 符合 frontmatter 定义
+- chat marker 含 `ref=".csp/spark/context/motion-apply.json"` 属性
 - 下游 `/设计走查` 调用时能正确读取本 Skill 上下文（验证：check Phase 0 嗅探日志含 "检测到动效开发上下文"）
 - 已输出符合 chain-protocol 的 Handoff（推荐 `/设计走查` 作为下一步，附 emoji ✨）
-- `spark-output/dashboard.html` 已按 Avatar SKILL.md §更新链路面板 流程刷新
+- `.csp/spark/dashboard.html` 已按 Avatar SKILL.md §更新链路面板 流程刷新

@@ -89,7 +89,7 @@ dependencies:
 按 [chain-protocol.md](../../chain-protocol.md) §2.1 v1.1 智能适配规则：
 
 1. 扫描会话中的 `<!-- spark-context:brief -->` / `flow-web` / `flow-mobile` / `sitemap` / `stories` marker
-2. 读取项目目录 `spark-output/context/brief.json` 等文件
+2. 读取项目目录 `.csp/spark/context/brief.json` 等文件
 3. 都没有则按 standalone 模式启动（要求用户至少描述要测什么）
 
 可复用字段映射：
@@ -105,11 +105,11 @@ dependencies:
 
 完成 Test 后，**同时**做两件事：
 
-1. **写盘**：`spark-output/context/test.json`（目录不存在先创建）
+1. **写盘**：`.csp/spark/context/test.json`（目录不存在先创建）
 2. **会话内输出紧凑 marker**：
 
    ```
-   <!-- spark-context:test ref="spark-output/context/test.json" -->
+   <!-- spark-context:test ref=".csp/spark/context/test.json" -->
    Test 已保存：project=[name]，[N] 个参与者 × [M] 个任务 → [K] 条 finding（catastrophic [c] / critical [cr] / major [mj]）；任务成功率均值 [X]%
    <!-- /spark-context:test -->
    ```
@@ -136,18 +136,18 @@ Test 的输出主要服务于 Edge / Flow / Brief / Metric / Retro：
 > **协议依据**：chain-protocol.md §九「面板自动生成约定」。本步在 Handoff 之前执行；**告知用户的提示必须作为独立段落输出，禁止折叠进 Handoff 末尾、禁止静默跳过**。
 
 1. **找模板**：定位 `_shared/dashboard-template.html`（依次：相对套件根 → `glob dashboard-template.html` 搜套件安装目录 → 三轮都失败时，**用独立段落醒目告知用户**：`⚠️ 链路面板模板未找到（套件安装可能不完整，建议重装）。本 Skill 已正常完成，下游链路不受影响。` 然后跳过本步、继续 Handoff，**不阻断 Skill 完成**）。
-2. **聚合 STATE**：扫 `spark-output/context/*.json`，聚合为 `{"project":"<brief.project_name 或 frame.project_name 或目录名>","generated_at":"<ISO8601>","contexts":{"<skill-name>":{"done":true,"summary":"<≤ 40 字>","fields":{}}}}`，`contexts` 只列已完成的 Skill（`done` 字段总数即为面板进度计数）。
-3. **克隆模板**到 `spark-output/dashboard.html`（覆盖），用正则 `/\/\*__SPARK_STATE_INJECT__\*\/null/` 替换为 `/*__SPARK_STATE_INJECT__*/<JSON.stringify(STATE)>`。
+2. **聚合 STATE**：扫 `.csp/spark/context/*.json`，聚合为 `{"project":"<brief.project_name 或 frame.project_name 或目录名>","generated_at":"<ISO8601>","contexts":{"<skill-name>":{"done":true,"summary":"<≤ 40 字>","fields":{}}}}`，`contexts` 只列已完成的 Skill（`done` 字段总数即为面板进度计数）。
+3. **克隆模板**到 `.csp/spark/dashboard.html`（覆盖），用正则 `/\/\*__SPARK_STATE_INJECT__\*\/null/` 替换为 `/*__SPARK_STATE_INJECT__*/<JSON.stringify(STATE)>`。
 4. **独立段落告知用户**（强提示，单独成段，与 Handoff 之间空一行；根据 `Object.keys(STATE.contexts).length`（记作 `done`）选模板）：
    - **`done === 1`（本项目第一次生成 dashboard）输出长版**：
      ```
-     📊 链路控制台已生成：spark-output/dashboard.html（双击在浏览器打开）
+     📊 链路控制台已生成：.csp/spark/dashboard.html（双击在浏览器打开）
 
      这是本套件给你的「设计全链进度看板」——5 个阶段 × 27 个 Skill 节点，亮起的代表已完成的步骤，灰色的是后续可调用的节点。每跑完一个 Skill 都会自动更新，建议钉在浏览器一个标签页里随时回看，能看清「现在在哪一步、下游还差什么、链路是否健康」。
      ```
    - **`done > 1`（后续更新）输出短版**：
      ```
-     📊 链路面板已更新 · 进度 [done]/27 · spark-output/dashboard.html
+     📊 链路面板已更新 · 进度 [done]/27 · .csp/spark/dashboard.html
      ```
 5. **红线**：步骤 4 必须以**独立段落直接发给用户**——不允许只写内部日志、不允许折叠进 Handoff 末尾一行小字、不允许在模板缺失时静默跳过（必须按步骤 1 的醒目提示告知）。
 
@@ -174,7 +174,7 @@ Test 的输出主要服务于 Edge / Flow / Brief / Metric / Retro：
 本 Skill 在完全离线、无任何连接器的场景下即可完整交付，所有方法论与输出形态不依赖外部系统：
 
 - **任务量化基线**：Nielsen 0-4 严重度 + 任务完成率 / 出错率 / 时长基线完整方法论
-- **链式上下文双通道**：写入 `spark-output/context/test.json` + 会话内 marker block，下游 Retro / Metric 可直接读取
+- **链式上下文双通道**：写入 `.csp/spark/context/test.json` + 会话内 marker block，下游 Retro / Metric 可直接读取
 - **vertical slice 分组的修复优先级**：测试结论可直接进入下一迭代
 - **多方案 / 观察团 / Wizard of Oz 协议**：内置不同测试类型模板
 
@@ -186,13 +186,13 @@ Test 的输出主要服务于 Edge / Flow / Brief / Metric / Retro：
 
 | 连接器 | 阶段 | 增强能力 | 降级路径 |
 | --- | --- | --- | --- |
-| **Notion / 飞书文档** | 执行流程输出后 | 测试报告（任务量化结果 + Findings + 修复优先级）一键写入团队 wiki | 未装时输出本地 `test-{project}.md` |
+| **Notion / 飞书** | 执行流程输出后 | 测试报告（任务量化结果 + Findings + 修复优先级）一键写入团队 wiki | 未装时输出本地 `test-{project}.md` |
 
 **接入触发**：用户首次调用 `/可用性测试` 时，Skill 主动检测已认证的连接器并显示「已检测到：XXX，将自动启用增强模式」提示，用户可在该次会话中选择关闭。
 
 **字段流向变化**：
 
-- 启用 **Notion / 飞书文档** → `chain.schema` 新增可选字段 `wiki_page_url: string`
+- 启用 **Notion / 飞书** → `chain.schema` 新增可选字段 `wiki_page_url: string`
 
 > 所有新增字段都是 **可选**，未启用连接器时字段缺省，下游 Skill 必须能容忍缺省。
 
@@ -605,7 +605,7 @@ severity 0-1    ┃    🟡 P2 批量修              ⚪ P3 视情况修
 
 #### 4.6 Markdown 报告输出
 
-保存到 `spark-output/test/[project-slug].md`：
+保存到 `.csp/spark/test/[project-slug].md`：
 
 ```markdown
 # Test — [项目名]
@@ -678,7 +678,7 @@ severity 0-1    ┃    🟡 P2 批量修              ⚪ P3 视情况修
 
 按 [chain-protocol.md](../../chain-protocol.md) §2.1 v1.1 智能适配规则：
 
-**Step 1 — 写盘到 `spark-output/context/test.json`**（必做）：
+**Step 1 — 写盘到 `.csp/spark/context/test.json`**（必做）：
 
 ```json
 {
@@ -783,7 +783,7 @@ severity 0-1    ┃    🟡 P2 批量修              ⚪ P3 视情况修
 **Step 2 — chat 输出紧凑 marker**：
 
 ```
-<!-- spark-context:test ref="spark-output/context/test.json" -->
+<!-- spark-context:test ref=".csp/spark/context/test.json" -->
 Test 已保存：project=[name]，[N] 人 × [M] 任务 → [K] 条 finding（catastrophic [c] / critical [cr] / major [mj]）；任务成功率均值 [X]%；P0 [p0] 条 / P1 [p1] 条
 <!-- /spark-context:test -->
 ```
@@ -898,7 +898,7 @@ Test 已保存：project=[name]，[N] 人 × [M] 任务 → [K] 条 finding（ca
 - **Unmoderated 异步**：Maze（原型 + 数据）/ UserTesting（含真实用户池）/ Useberry
 - **5-Second / First-Click**：Maze / UsabilityHub
 - **卡片分类 / Tree Test**（IA）：Optimal Workshop
-- **国内常用**：腾讯文档协作记录 / 钉钉录屏 / 飞书妙记自动转录
+- **协作与转录**：协作文档（Notion / Confluence / 腾讯文档）记录 / 录屏（OBS / 系统自带） / 会议自动转录（Otter / 飞书妙记）
 
 ---
 

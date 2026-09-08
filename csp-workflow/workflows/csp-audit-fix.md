@@ -37,8 +37,8 @@ if [[ "$INIT" == @file:* ]]; then INIT=$(cat "${INIT#@file:}"); fi
 ```
 
 Read existing UAT and verification files to extract findings:
-- Glob: `.planning/phases/*/*-UAT.md`
-- Glob: `.planning/phases/*/*-VERIFICATION.md`
+- Glob: `.csp/planning/phases/*/*-UAT.md`
+- Glob: `.csp/planning/phases/*/*-VERIFICATION.md`
 
 Parse each finding into a structured record:
 - **ID** — sequential identifier (F-01, F-02, ...)

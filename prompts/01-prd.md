@@ -97,7 +97,7 @@
 
 ## 七、上游消费（若处于设计链路中，强制执行）
 
-若会话或 `spark-output/context/*.json` 存在上游设计产出（`brief`/`stories`/`sitemap`/`flow-web`/`flow-mobile`/`frame`/`scope`/`check`），按字段映射消费——上游已有字段必须读取，不凭直觉重写。
+若会话或 `.csp/spark/context/*.json` 存在上游设计产出（`brief`/`stories`/`sitemap`/`flow-web`/`flow-mobile`/`frame`/`scope`/`check`），按字段映射消费——上游已有字段必须读取，不凭直觉重写。
 
 | PRD 章节 | 上游来源 | 字段映射 |
 |---|---|---|
@@ -149,8 +149,8 @@
 每功能模块 ≥3 条 AC，Given-When-Then。
 | ID | 场景 | Given | When | Then |
 
-## 7. 排期估算
-| 阶段 | 预估工作量 | 依赖 | 风险 |
+## 7. 排期与估时（不做）
+> PRD 描述 WHAT，不做排期/估时。AI 编程下人日/工时方差极大（可能几分钟到几小时完成），估算无意义且易腐烂，强行估时给虚假信心。排期归任务管理（依赖 DAG + Wave），不进 PRD。需要时按需调用 `csp-effort-estimation`。
 
 ## 8. 风险与依赖
 | 风险 | 概率 | 影响 | 缓解 |
@@ -183,12 +183,14 @@ PRD 落盘同时，建立/更新产品说明书 PMS：
 ├── .csp/product-spec/         # PMS（本阶段产出）
 │   ├── PMS-{module-slug}.md
 │   └── PMS-INDEX.md
-└── spark-output/              # 设计链路模式（若适用）
+└── .csp/spark/              # 设计链路模式（若适用）
     ├── prd/{direction-slug}.md
     └── context/prd.json       # 元数据+章节摘要，不含全文
 ```
 
-**落盘规则**：PRD 全文→`docs/prd/PRD-{slug}.md`；元数据→`docs/prd/PRD-{slug}.md` 的 front-matter；设计链路模式另存 `spark-output/prd/{slug}.md` 与 `spark-output/context/prd.json`（不含全文）。对话内只输出紧凑 marker。
+**落盘规则**：PRD 全文→`docs/prd/PRD-{slug}.md`；元数据→`docs/prd/PRD-{slug}.md` 的 front-matter；设计链路模式另存 `.csp/spark/prd/{slug}.md` 与 `.csp/spark/context/prd.json`（不含全文）。对话内只输出紧凑 marker。
+
+> **`docs/prd/` 是 intake/staging**：PRD 全文落此供评审；蒸馏进 `.csp/product-spec/` PMS 后，PRD 原文可按需归并进 docs/ 产品文档并删除 intake 源（provenance 由 PMS `original_ref`→git 历史 + manifest 承载，详见 `brownfield-doc-integration.md` Phase 2）。
 
 **路径原则**：单一事实源（全文只一份）；可发现性（每产物在 INDEX 登记）；路径即语义（`docs/` 给人读、`.csp/` 给 agent）；幂等覆盖（同 slug 重写覆盖，不拗留 `-v2`）；不污染根目录。
 
@@ -215,11 +217,10 @@ product_type: B2C|B2B|internal-tool|platform
 feature_count: {N}
 mvp_scope: [{slug}, ...]
 thin_sections: [{section编号}, ...]
-upstream_source: docs/ARCHITECTURE.md | spark-output/context/stories.json | user-input | .csp/review/REVIEW-FINDINGS-{milestone}.json#F-NN（若采纳 07 复盘 findings）
+upstream_source: docs/ARCHITECTURE.md | docs/strategy/ROADMAP.md#vX.Y.Z | user-input（仅稳定来源；源自 .csp/spark 或采纳 .csp/review finding 的 provenance 由该 .csp/ 产物 forward ref + manifest 承载，不在 PRD 反向引用）
 roadmap_ref: docs/strategy/ROADMAP.md#vX.Y.Z（本 PRD 实现的版本/主题；外环规划，无则 [TBD]）
 target_version: vX.Y.Z（对应 ROADMAP 版本号规则）
-related_pms: [.csp/product-spec/PMS-{module-slug}.md, ...]
-related_specs: []   # 下游技术方案生成后回填
+# related_pms / related_specs 不写入 PRD front-matter（docs/ 不内嵌 .csp/ 引用）；PRD↔PMS/Spec 映射由 .csp/manifest.json 承载
 ---
 ```
 
@@ -238,7 +239,7 @@ related_specs: []   # 下游技术方案生成后回填
 | 7 | 数据埋点完整 | 核心操作路径都有事件 |
 | 8 | 无技术实现 | 无 DB/语言/框架 |
 | 9 | 优先级明确 | P0/P1/P2 标注 |
-| 10 | 排期有据 | 覆盖开发/测试/集成阶段 |
+| 10 | 不含排期/估时 | 工时归任务管理，不进 PRD |
 
 ## 十三.五、PRD 评审（01 完成前 gate——未批准禁止标 done / 进 02）
 

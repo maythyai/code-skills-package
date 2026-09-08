@@ -5,7 +5,7 @@
 | Scenario | Style | Example |
 |---|---|---|
 | Module / file name | All lowercase, underscores allowed | `user_service.py` |
-| Package name | All lowercase, underscores discouraged | `campaign`, `odps` |
+| Package name | All lowercase, underscores discouraged | `campaign`, `analytics` |
 | Class name / exception class name | CapWords (UpperCamelCase) | `UserService`, `ParameterError` |
 | Function name / method name | All lowercase + underscores | `get_user_info()` |
 | Variable name / parameter name | All lowercase + underscores | `user_id`, `total_count` |
