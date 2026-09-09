@@ -15,7 +15,7 @@ playwright-cli video-start demo.webm
 playwright-cli video-chapter "Getting Started" --description="Opening the homepage" --duration=2000
 
 # Navigate and perform actions
-playwright-cli goto https://example.com
+playwright-cli goto <your-site-url>
 playwright-cli snapshot
 playwright-cli click e1
 

@@ -227,7 +227,7 @@ await locateByIdPattern(page, /^user-\d+-profile$/).waitFor({ state: 'visible', 
 
 ```typescript
 test('user-login', async ({ page }) => {
-  await page.goto('https://example.com/login');
+  await page.goto('<your-site-url>/login');
   await page.waitForLoadState('domcontentloaded');
   
   // 优先使用 ID 定位
@@ -248,7 +248,7 @@ test('user-login', async ({ page }) => {
 
 ```typescript
 test('data-table-operations', async ({ page }) => {
-  await page.goto('https://example.com/data-management');
+  await page.goto('<your-site-url>/data-management');
   await page.waitForLoadState('domcontentloaded');
   
   // 等待表格加载
@@ -274,7 +274,7 @@ test('data-table-operations', async ({ page }) => {
 
 ```typescript
 test('complex-navigation', async ({ page }) => {
-  await page.goto('https://example.com/dashboard');
+  await page.goto('<your-site-url>/dashboard');
   await page.waitForLoadState('domcontentloaded');
   
   // 主导航

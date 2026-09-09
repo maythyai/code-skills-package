@@ -11,7 +11,7 @@ This code appears in the output and can be copied directly into your test files.
 
 ```bash
 # Start a session
-playwright-cli open https://example.com/login
+playwright-cli open <your-site-url>/login
 
 # Take a snapshot to see elements
 playwright-cli snapshot
@@ -40,7 +40,7 @@ import { test, expect } from '@playwright/test';
 
 test('login flow', async ({ page }) => {
   // Generated code from playwright-cli session:
-  await page.goto('https://example.com/login');
+  await page.goto('<your-site-url>/login');
   await page.getByRole('textbox', { name: 'Email' }).fill('user@example.com');
   await page.getByRole('textbox', { name: 'Password' }).fill('password123');
   await page.getByRole('button', { name: 'Sign In' }).click();
@@ -69,7 +69,7 @@ await page.locator('#submit-btn').click();
 Take snapshots to understand the page structure before recording actions:
 
 ```bash
-playwright-cli open https://example.com
+playwright-cli open <your-site-url>
 playwright-cli snapshot
 # Review the element structure
 playwright-cli click e5

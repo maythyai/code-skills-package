@@ -10,7 +10,7 @@
 ```bash
 playwright-cli open
 # open and navigate right away
-playwright-cli open https://example.com/
+playwright-cli open <your-site-url>/
 playwright-cli goto https://playwright.dev
 playwright-cli type "search query"
 playwright-cli click e3
@@ -81,7 +81,7 @@ playwright-cli pdf --filename=page.pdf
 ```bash
 playwright-cli tab-list
 playwright-cli tab-new
-playwright-cli tab-new https://example.com/page
+playwright-cli tab-new <your-site-url>/page
 playwright-cli tab-close
 playwright-cli tab-close 2
 playwright-cli tab-select 0
@@ -215,7 +215,7 @@ playwright-cli delete-data
 After each command, playwright-cli provides a snapshot of the current browser state.
 
 ```bash
-> playwright-cli goto https://example.com
+> playwright-cli goto <your-site-url>
 ### Page
 - Page URL: https://example.com/
 - Page Title: Example Domain
@@ -272,9 +272,9 @@ playwright-cli click "getByTestId('submit-button')"
 
 ```bash
 # create new browser session named "mysession" with persistent profile
-playwright-cli -s=mysession open example.com --persistent
+playwright-cli -s=mysession open <your-site-url> --persistent
 # same with manually specified profile directory (use when requested explicitly)
-playwright-cli -s=mysession open example.com --profile=/path/to/profile
+playwright-cli -s=mysession open <your-site-url> --profile=/path/to/profile
 playwright-cli -s=mysession click e6
 playwright-cli -s=mysession close  # stop a named browser
 playwright-cli -s=mysession delete-data  # delete user data for persistent session
@@ -306,7 +306,7 @@ npm install -g @playwright/cli@latest
 ### 表单提交
 
 ```bash
-playwright-cli open https://example.com/form
+playwright-cli open <your-site-url>/form
 playwright-cli snapshot
 
 playwright-cli fill e1 "user@example.com"
@@ -319,8 +319,8 @@ playwright-cli close
 ### 多标签页工作流
 
 ```bash
-playwright-cli open https://example.com
-playwright-cli tab-new https://example.com/other
+playwright-cli open <your-site-url>
+playwright-cli tab-new <your-site-url>/other
 playwright-cli tab-list
 playwright-cli tab-select 0
 playwright-cli snapshot
@@ -330,7 +330,7 @@ playwright-cli close
 ### DevTools 调试
 
 ```bash
-playwright-cli open https://example.com
+playwright-cli open <your-site-url>
 playwright-cli click e4
 playwright-cli fill e7 "test"
 playwright-cli console
@@ -339,7 +339,7 @@ playwright-cli close
 ```
 
 ```bash
-playwright-cli open https://example.com
+playwright-cli open <your-site-url>
 playwright-cli tracing-start
 playwright-cli click e4
 playwright-cli fill e7 "test"
@@ -350,6 +350,6 @@ playwright-cli close
 ### 交互式会话（请用户标注 UI）
 
 ```bash
-playwright-cli open https://example.com
+playwright-cli open <your-site-url>
 playwright-cli show --annotate
 ```

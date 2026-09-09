@@ -462,7 +462,7 @@ async function measurePerformance<T>(operation: () => Promise<T>, operationName:
 
 // 使用示例
 await measurePerformance(
-  () => page.goto('https://example.com'),
+  () => page.goto('<your-site-url>'),
   '页面导航'
 );
 ```

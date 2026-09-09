@@ -52,7 +52,7 @@ async function clickButton(page: Page, buttonText: string) {
 import { test, expect } from '@playwright/test';
 
 test('user-search', async ({ page }) => {
-  await page.goto('https://example.com/#/system/user-management');
+  await page.goto('<your-site-url>/#/system/user-management');
   await page.waitForLoadState('domcontentloaded');
   
   const searchInput = page.getByLabel(/^\s*搜索关键词\s*$/);
@@ -79,7 +79,7 @@ test('user-search', async ({ page }) => {
 ```typescript
 // ✅ 生产版本 - 简洁的错误处理
 test('data-edit', async ({ page }) => {
-  await page.goto('https://example.com/#/system/data-management');
+  await page.goto('<your-site-url>/#/system/data-management');
   await page.waitForLoadState('domcontentloaded');
   
   try {
@@ -213,7 +213,7 @@ test('user-login', async ({ page }) => {
   try {
     // 步骤1：导航到登录页面
     console.log('步骤1：导航到登录页面');
-    await page.goto('https://example.com/login');
+    await page.goto('<your-site-url>/login');
     await page.waitForLoadState('domcontentloaded');
     console.log('✅ 页面导航成功');
     
@@ -240,7 +240,7 @@ test('user-login', async ({ page }) => {
 import { test, expect } from '@playwright/test';
 
 test('user-login', async ({ page }) => {
-  await page.goto('https://example.com/login');
+  await page.goto('<your-site-url>/login');
   await page.waitForLoadState('domcontentloaded');
   
   const usernameInput = page.getByLabel(/^\s*用户名\s*$/);

@@ -9,7 +9,7 @@ Capture detailed execution traces for debugging and analysis. Traces include DOM
 playwright-cli tracing-start
 
 # Perform actions
-playwright-cli open https://example.com
+playwright-cli open <your-site-url>
 playwright-cli click e1
 playwright-cli fill e2 "test"
 
@@ -65,7 +65,7 @@ When you start tracing, Playwright creates a `traces/` directory with several fi
 
 ```bash
 playwright-cli tracing-start
-playwright-cli open https://app.example.com
+playwright-cli open <your-site-url>
 
 # This click fails - why?
 playwright-cli click e5
@@ -90,7 +90,7 @@ playwright-cli tracing-stop
 # Record a complete user flow for documentation
 playwright-cli tracing-start
 
-playwright-cli open https://app.example.com/checkout
+playwright-cli open <your-site-url>/checkout
 playwright-cli fill e1 "4111111111111111"
 playwright-cli fill e2 "12/25"
 playwright-cli fill e3 "123"
@@ -118,7 +118,7 @@ playwright-cli tracing-stop
 ```bash
 # Trace the entire flow, not just the failing step
 playwright-cli tracing-start
-playwright-cli open https://example.com
+playwright-cli open <your-site-url>
 # ... all steps leading to the issue ...
 playwright-cli tracing-stop
 ```

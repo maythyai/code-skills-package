@@ -219,7 +219,7 @@ playwright-cli run-code "async page => {
 ```bash
 # Login and save state
 playwright-cli run-code "async page => {
-  await page.goto('https://example.com/login');
+  await page.goto('<your-site-url>/login');
   await page.getByRole('textbox', { name: 'Email' }).fill('user@example.com');
   await page.getByRole('textbox', { name: 'Password' }).fill('secret');
   await page.getByRole('button', { name: 'Sign in' }).click();
@@ -232,7 +232,7 @@ playwright-cli run-code "async page => {
 playwright-cli run-code "async page => {
   const results = [];
   for (let i = 1; i <= 3; i++) {
-    await page.goto(\`https://example.com/page/\${i}\`);
+    await page.goto(\`<your-site-url>/page/\${i}\`);
     const items = await page.locator('.item').allTextContents();
     results.push(...items);
   }

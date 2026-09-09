@@ -191,7 +191,7 @@ If `exa_search: false` (or not set), fall back to WebSearch or Brave Search.
 Check `firecrawl` from init context. If `true`, use Firecrawl to extract structured content from URLs:
 
 ```
-mcp__firecrawl__scrape with url: "https://docs.example.com/guide"
+mcp__firecrawl__scrape with url: "<your-docs-url>"
 mcp__firecrawl__search with query: "your query" (web search + auto-scrape results)
 ```
 

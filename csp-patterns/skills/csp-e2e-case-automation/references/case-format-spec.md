@@ -6,7 +6,7 @@
 {
     "email": "test@example.com",
     "password": "test123",
-    "baseUrl": "https://example.com/",
+    "baseUrl": "<your-site-url>/",
     "testCases": [
         {
             "name": "test-case-name",
@@ -92,7 +92,7 @@
 {
     "email": "test@example.com",
     "password": "test123",
-    "baseUrl": "https://example.com/",
+    "baseUrl": "<your-site-url>/",
     "testCases": [
         {
             "name": "user-search",
@@ -118,7 +118,7 @@
 {
     "email": "admin@example.com",
     "password": "admin123",
-    "baseUrl": "https://example.com/",
+    "baseUrl": "<your-site-url>/",
     "testCases": [
         {
             "name": "data-edit",

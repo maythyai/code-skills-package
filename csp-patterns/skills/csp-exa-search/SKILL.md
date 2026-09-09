@@ -74,7 +74,7 @@ people_search_exa(query: "AI safety researchers at Anthropic", numResults: 5)
 Extract full page content from a URL.
 
 ```
-crawling_exa(url: "https://example.com/article", tokensNum: 5000)
+crawling_exa(url: "<your-docs-url>", tokensNum: 5000)
 ```
 
 **Parameters:**

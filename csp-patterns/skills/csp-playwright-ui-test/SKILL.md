@@ -99,12 +99,12 @@ npm install -g @playwright/cli@latest
 
 ```bash
 # 首次手工登录后保存
-playwright-cli open https://test.example.com --persistent
+playwright-cli open <your-site-url> --persistent
 # ... 完成登录 ...
 playwright-cli state-save auth.json
 
 # 后续会话直接复用
-playwright-cli open https://test.example.com
+playwright-cli open <your-site-url>
 playwright-cli state-load auth.json
 ```
 
@@ -143,8 +143,8 @@ playwright-cli open https://localhost:3000 --browser=chrome
 多会话并行（例如对比改动前后）用 `-s` 命名会话：
 
 ```bash
-playwright-cli -s=before open https://old.example.com
-playwright-cli -s=after  open https://new.example.com
+playwright-cli -s=before open <your-old-site-url>
+playwright-cli -s=after  open <your-new-site-url>
 ```
 
 ### 3.1 attach 真实 Chrome（持久登录态 + 开发期自验证）

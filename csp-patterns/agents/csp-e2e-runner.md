@@ -36,7 +36,7 @@ You are an expert end-to-end testing specialist. Your mission is to ensure criti
 npm install -g agent-browser && agent-browser install
 
 # Core workflow
-agent-browser open https://example.com
+agent-browser open <your-site-url>
 agent-browser snapshot -i          # Get elements with refs [ref=e1]
 agent-browser click @e1            # Click by ref
 agent-browser fill @e2 "text"      # Fill input by ref
