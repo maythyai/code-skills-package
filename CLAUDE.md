@@ -72,7 +72,7 @@ npm test               # validate:all + build:graph + node --test test/ (20 inva
 - `.csp/` = 编程管理产物（PMS/CMS/TMS + specs/tasks/tech-design/traceability/artifacts/ship/ops/milestones + planning/spark/writer-memory/intel），git 跟踪。
 - `docs/` = 对外人类文档（给人读，非流水线驱动）；门面 `README.md` 与发布元数据 `CHANGELOG.md`/`LICENSE` 在根目录，不属 `docs/`。
 - 测试运行证据（截图/DOM/联动契约/进度文件）统一落 `.csp/artifacts/verify/evidence/` 与 `.csp/artifacts/verify/`，禁止散落根目录裸 `evidence/` 或 `.csp-*-test/`。L2 csp-workflow 生命周期产物落 `.csp/planning/`（原 `.planning/`），Spark 设计链产物落 `.csp/spark/`（原 `spark-output/`），写作记忆落 `.csp/writer-memory/`（原 `.csp-writer-memory/`）——所有 skill 产物一律进 `.csp/` 或 `docs/`，不散落根目录。
-- 版本号默认 SemVer（X.Y.Z），不自动用日期形式 tag。
+- 版本号默认 SemVer（X.Y.Z），不自动用日期形式 tag；攒批发布——一个版本可含多个功能/修复，不逐功能 bump（按整批最高级别一次 bump）。
 
 ### 用法
 - 端到端：说"跑流程/从 00 开始/推进" → `lifecycle-orchestrator` 自动推进到 06 发布。

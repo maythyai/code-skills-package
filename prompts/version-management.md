@@ -16,6 +16,7 @@
 - **MINOR/MAJOR 不跳跃**：MINOR 从上一已发 tag +1 顺序递增，**不因"这版很重要/很大"跳 MINOR 或跳 MAJOR**。
 - **不轻易跳 MAJOR**：MAJOR 只在**实际 breaking API 变更**时 +1。additive 永远 MINOR+1，哪怕 MINOR 已经是 105。
 - **只有 PATCH 可以跳号**（如 v1.2.0 → v1.2.2，跳过 v1.2.1）。
+- **攒批发布，不逐功能 bump**：版本号按**发布批次**递增，不按单个功能递增——一个版本可包含多个小功能/修复，攒一批发一次、只 bump 一次。不要"一个小功能就发一版、bump 一次"。一次发布含多个变更时，按整批**最高级别** bump 一次（如一批含 1 个 additive + 3 个 fix → MINOR+1，而非 MINOR+1 再 +PATCH×3）。
 
 ## 三、战略主题号 ≠ SemVer 发布号
 
@@ -48,6 +49,7 @@
 - breaking（移除 deprecated/改变响应语义/不兼容 API）→ **MAJOR+1**。
 - bug fix → **PATCH+1**。
 - **战略愿景宏大 ≠ MAJOR bump**。不跳跃 MINOR/MAJOR。大数字正常。
+- **攒批发布**：按发布批次 bump，不逐功能 bump——一次发布含多个变更时按整批**最高级别** bump 一次（additive+fix 混合批 → MINOR+1），一个版本可含多个产品功能，不为每个小功能单独发版递增。
 
 ## 八、多平台版本同步（五方完全一致）
 
@@ -116,6 +118,7 @@ release 后从 `git log <prev-tag>..<tag> --oneline` + CHANGELOG 回填"Main Fea
 |---|---|---|
 | 战略号当 SemVer 打 tag | sprint 做了起步标 v2.0.0（MAJOR）但无 breaking | additive→MINOR+1 递增；MAJOR 只在真实 breaking；大数字正常(v1.105.269) |
 | 版本号跳跃 | 从 v1.4 直接 v2.0 无 breaking，或跳 MINOR | 从上一 tag 顺序+1，不跳 MINOR/MAJOR；PATCH 可跳 |
+| 逐功能 bump 版本 | 一个小功能就发一版、bump 一次，版本号膨胀快 | 攒批发布：多个小改动合并到一个版本，按整批最高级别一次 bump |
 | 日期形式 tag | 不问用户就用 v2026.9.3 | 默认 SemVer；CalVer 仅显式 opt-in |
 | released 当 deployed | tag 推了就以为线上在跑 | released≠deployed≠prod-verified；五方对齐 + prod health 验证 |
 | 版本字符串不一致 | tag ≠ package.json ≠ Release title | 五方完全一致，脚本校验 |

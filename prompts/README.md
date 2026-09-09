@@ -52,6 +52,7 @@
 - **文档管理边界**：`.csp/` = 编程管理统一库（PMS/CMS/TMS + 全部流水线产物，agent/工程消费、git 跟踪）；`docs/` = 非编程人类文档（README/USER-GUIDE/通用概览/analysis/CHANGELOG + PRD 人类原文，其工程形态 PMS 在 `.csp/`）。编程产物不散落 `docs/`，非编程文档不进 `.csp/`。
 - **版本号默认 SemVer**：X.Y.Z 语义化（MAJOR 不兼容/MINOR 功能/PATCH 修复），**不自动用日期形式 tag**；tag 取 roadmap 规划的版本号（提前交付仍用规划版本号，非今日日期）。CalVer 仅用户显式 opt-in。
 - **战略主题号 ≠ SemVer 发布号**：roadmap 的 v2.0/v3.0 是多季度战略愿景叙事，**不是 sprint 发布 tag**。实际发布号按 SemVer 从上一 tag 增量续编：additive（新模块/新端点/无 breaking）→ MINOR+1；breaking API → MAJOR+1；fix → PATCH+1。MAJOR 只在 06 发布时验证到**实际 breaking API 变更**才 bump——战略愿景宏大 ≠ MAJOR bump。
+- **攒批发布，不逐功能 bump**：版本号按发布批次递增——一个版本可含多个产品功能/小改动，攒一批发一次、只 bump 一次（按整批最高级别，如 additive+fix 混合批 → MINOR+1）。不要一个小功能就发一版、bump 一次。
 - **版本全生命周期追踪**：`released ≠ deployed ≠ prod-verified`。`.csp/ship/VERSION-REGISTRY.md` 记录每版本全生命周期（planned→released→deployed→prod-verified→rolled-back）+ 实际交付 + 四方对齐（tag↔package.json↔prod health↔CHANGELOG）。`lifecycle-state.prod_version` ≠ `latest_release`——线上跑的不一定是最新的。05 开始前检查 prod 版本对齐。
 - **Finding ID 前缀规则（防冲突）**：audit=`AUDIT-F-NN`，07 review=`REV-F-NN`，03 TDD 评审=`TDD-REV-F-NN`，01 PRD 评审=`PRD-REV-F-NN`。不同来源 finding 不混编，追溯按前缀路由。
 - **audit 衔接**：audit P0 findings（`快速修复=true`）→ orchestrator 直发 04 拆 fix task（`fix(audit-F-NN)`）→ 05 fix → 06 verify（不等 roadmap/01）；P1/P2 → roadmap 版本-主题表，下一轮走 01→04→05。04 读 `.csp/audit/AUDIT-FINDINGS-{milestone-slug}.json` 拆 fix task。
