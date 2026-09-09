@@ -159,6 +159,8 @@ Task D: package.json, src/config/
 
 **编码基线**：TS `strict:true` 基线（noImplicitReturns/noImplicitOverride/noUnusedLocals/verbatimModuleSyntax/isolatedModules）；禁 any（用类型守卫替代，禁危险类型断言）；命名 PascalCase 类/camelCase 函数/SCREAMING 常量/kebab 文件；Python Ruff lint+format + 类型提示 + Pydantic；异常精确捕获携上下文、禁宽泛 `except Exception: pass`。
 
+**模块化与编码反模式**：一文件一职责——发现文件承担第二类不相关职责**立即拆分**，不"顺手加一点"累积 god file（god file 是每次顺手加一点长出来的，不是审查时才冒出来的）。god file/class、跨层穿透、循环依赖、feature envy、散弹式修改、宽泛吞错、N+1、过早抽象等反模式的**编码期预防规则**与提交前自检清单见 `shared/references/coding-anti-patterns.md`。
+
 **Pre-commit**：trailing-whitespace / end-of-file-fixer / check-yaml / check-added-large-files（≤500KB）/ check-merge-conflict / detect-private-key / shellcheck / actionlint / oxlint·ruff。
 
 **AI Agent 权限**：读文件允许；编辑关键路径需审批；执行命令需审批（或自动批准白名单）；默认禁网络；密钥经环境变量注入、Agent 不直接读。
@@ -250,6 +252,8 @@ Task D: package.json, src/config/
 | WIP 破码提交 | "先提交回头改" | stash 或分支，不提交破码 |
 | 顺手重构 | "while I'm here" | 单独回 04 建 task，不混入功能提交 |
 | 推测性抽象 | 建"将来可能要的" | 只建 Spec 要的 |
+| god file / god class | 一文件多职责，"顺手加一点"累积成巨石 | 一文件一职责；第二职责立即拆，不留给"以后重构"；详见 `coding-anti-patterns.md` §1 |
+| 跨层穿透 / 循环依赖 | Router 直打 ORM、A⇄B 循环依赖 | 分层禁止项 + 依赖方向单向 DAG；ESLint/madge CI 守护；详见 `coding-anti-patterns.md` §2 |
 | CMS 事后补 | 上线才对齐 | 每 Feature 落地即增量对齐 |
 | TMS 全量重写 | 每次重写存量 | 只产 delta 增量 |
 | 带红测试往下推 | Wave 间不验证 | Wave 间全量绿才进下一 Wave |

@@ -50,7 +50,7 @@ disallowedTools: Write, Edit
     3) Stage 2 - Code Quality (ONLY after Stage 1 passes): Run lsp_diagnostics on each modified file. Use ast_grep_search to detect problematic patterns (console.log, empty catch, hardcoded secrets). Apply review checklist: security, quality, performance, best practices.
     4) Check logic correctness: loop bounds, null handling, type mismatches, control flow, data flow.
     5) Check error handling: are error cases handled? Do errors propagate correctly? Resource cleanup?
-    6) Scan for anti-patterns: God Object, spaghetti code, magic numbers, copy-paste, shotgun surgery, feature envy.
+    6) Scan for anti-patterns: God Object, spaghetti code, magic numbers, copy-paste, shotgun surgery, feature envy. Canonical catalog (symptoms, coding-phase prevention rules, detection signals, fix) — `shared/references/coding-anti-patterns.md`.
     7) Evaluate SOLID principles: SRP (one reason to change?), OCP (extend without modifying?), LSP (substitutability?), ISP (small interfaces?), DIP (abstractions?).
     8) Assess maintainability: readability, complexity (cyclomatic < 10), testability, naming clarity.
     9) Rate each issue by severity AND confidence (LOW/MEDIUM/HIGH). Report every issue you find, including low-severity and uncertain ones; filtering happens in a downstream verification stage, not here.
