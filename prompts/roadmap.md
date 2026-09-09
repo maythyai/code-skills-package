@@ -108,7 +108,7 @@
 ### 战略主题：{名称}（SemVer 逼近：v2.0 附近）— status: planned|in-progress|shipped|deferred
 - 实际 SemVer 发布号：{按增量续编，如 v1.4.0}（additive=MINOR；breaking=MAJOR；fix=PATCH）
 - 目标：一句话
-- 关键功能（摘要级，3-5 条）：…（不写详细 PRD，只点明做什么）
+- 关键功能（摘要级，3-5 条）：…（不写详细 PRD，只点明做什么；同步落入 `docs/FEATURES.md` 对应版本行，状态 `📋规划中`）
 - 价值描述：用户价值 + 业务价值
 - 成功指标：北极星/子指标目标值（未定标 [TBD]）
 - 前置依赖：依赖版本/外部能力
@@ -127,14 +127,15 @@
 方向性叙事：产品终局、护城河、可持续性。一段话，不细化。
 
 ### Phase 5：产出 + 回写 + 衔接
-- 写 `docs/strategy/STRATEGY.md`（锚点）+ `docs/strategy/ROADMAP.md`（版本号规则 + 1y/3y/长期路径 + 版本-主题表）；若有参考文件夹，另写 `docs/analysis/COMPETITIVE-REFERENCE.md`（借鉴清单）。
+- 写 `docs/strategy/STRATEGY.md`（锚点）+ `docs/strategy/ROADMAP.md`（版本号规则 + 1y/3y/长期路径 + 版本-主题表）+ `docs/FEATURES.md`（功能列表：版本×模块×功能×集成状态矩阵；Phase 2 每版本的功能行落入此文件，状态初始 `📋规划中`）；若有参考文件夹，另写 `docs/analysis/COMPETITIVE-REFERENCE.md`（借鉴清单）。
 - 回写 `.csp/manifest.json`：strategy/roadmap/competitive-reference item `source_type=doc`、`build_status=built` + `content_hash`。
-- 衔接声明：01 PRD 读 ROADMAP 定位本版本主题；06 release 用版本号规则；07 复盘 findings 回流更新 ROADMAP 下一版本主题。
+- 衔接声明：01 PRD 读 ROADMAP 定位本版本主题；06 release 用版本号规则 + 标记 `docs/FEATURES.md` 已交付功能 `✅`；07 复盘 findings 回流更新 ROADMAP 下一版本主题 + 校准 FEATURES.md planned-vs-delivered 漂移。
 
 ## 五、产物路径规范（与 00-07 同构）
 
 ```
 项目根/
+├── docs/FEATURES.md            # 功能列表（版本×模块×功能×集成状态；roadmap 建规划行，06 标 ✅，07 校准漂移）
 ├── docs/strategy/
 │   ├── STRATEGY.md          # 战略锚点（target problem/approach/who/metrics/tracks/not-doing）
 │   └── ROADMAP.md           # 版本号规则 + 1y/3y/长期路径 + 版本-主题表

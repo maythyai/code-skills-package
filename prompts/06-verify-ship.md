@@ -389,6 +389,7 @@ verify/review 发现需 fix 时按下述闭环，**不 ship、不问人怎么修
 ### 7.4 发布产物
 **本地（auto，可逆）**：
 - CHANGELOG.md 追加条目（趁热写，不"以后补"，遵循 Keep a Changelog）。
+- `docs/FEATURES.md` 更新集成状态：本版本已交付功能行改 `✅已集成` + 填交付证据（tag/commit）；延后改 `⏭️延后` + 下一版本补行；砍单改 `❌砍单` + 原因（见 FEATURES.md 维护契约）。
 - release notes → `.csp/ship/RELEASE-NOTES-{milestone}.md`。
 - 回滚计划 → `.csp/ship/ROLLBACK-PLAN-{milestone}.md`。
 - `git tag -a v{milestone}`（本地 annotated tag，附发布说明）。
@@ -426,7 +427,7 @@ verify/review 发现需 fix 时按下述闭环，**不 ship、不问人怎么修
 
 > **查"线上是哪个版本"**：VERSION-REGISTRY 最新 `prod-verified` 行的 SemVer = 线上版本；`lifecycle-state.prod_version` 是机器可读的线上版本。prod-verified 后**更新 lifecycle-state.prod_version = <verified version>**。`prod_version` ≠ `latest_release`——线上跑的不一定是最新的 tag。
 
-**实际交付回填**：从 `git log <prev-tag>..<tag> --oneline` + CHANGELOG 回填"Main Features"到 registry + roadmap version-主题表（`实际交付` 字段），与规划对比标"planned vs delivered"差异。
+**实际交付回填**：从 `git log <prev-tag>..<tag> --oneline` + CHANGELOG 回填"Main Features"到 registry + roadmap version-主题表（`实际交付` 字段）+ `docs/FEATURES.md`（已交付功能行标 `✅` + 证据，规划未交付标 `⏭️延后`），与规划对比标"planned vs delivered"差异。
 
 ### 7.6 阶段状态对账与闭环（归档前必做）
 

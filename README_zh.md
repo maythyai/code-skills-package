@@ -305,6 +305,7 @@ node bin/csp-sdk.mjs init-skill csp-my-skill --layer 3 --phase build
 | [SKILL-AUTHORING_zh.md](./docs/SKILL-AUTHORING_zh.md) | Skill 编写最佳实践 |
 | [SKILL-SPEC.md](./docs/SKILL-SPEC.md) | SKILL.md 规范文档 |
 | [VERSIONING.md](./docs/VERSIONING.md) | 版本管理规范（X=架构，Y=功能，Z=修复） |
+| [FEATURES.md](./docs/FEATURES.md) | 功能列表（版本×模块×功能×集成状态） |
 | [USER-GUIDE.md](./docs/USER-GUIDE.md) | 用户使用指南 |
 | [examples/](./examples/README.md) | 五个真实运行示例（代码审查、安全审查、构建修复、代码简化、仪表盘） |
 | [scripts/](./scripts/README.md) | 构建 / 校验 / 维护工具参考 |

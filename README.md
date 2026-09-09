@@ -307,6 +307,7 @@ node bin/csp-sdk.mjs init-skill csp-my-skill --layer 3 --phase build
 | [SKILL-AUTHORING.md](./docs/SKILL-AUTHORING.md) | Skill authoring best practices |
 | [SKILL-SPEC.md](./docs/SKILL-SPEC.md) | SKILL.md specification document |
 | [VERSIONING.md](./docs/VERSIONING.md) | Version management policy (X=arch, Y=feature, Z=fix) |
+| [FEATURES.md](./docs/FEATURES.md) | Feature inventory (version × module × feature × integration status) |
 | [USER-GUIDE.md](./docs/USER-GUIDE.md) | User guide |
 | [examples/](./examples/README.md) | Five worked examples (code review, security review, build-fix, simplification, dashboard) |
 | [scripts/](./scripts/README.md) | Build / validation / maintenance tooling reference |

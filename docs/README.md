@@ -26,6 +26,7 @@
 | `INSTALL.md` / `INSTALL_zh.md` | 安装指南（22+ 平台） |
 | `UPDATE.md` | 更新指南 |
 | `VERSIONING.md` | 版本管理（X=arch, Y=feature, Z=fix） |
+| `FEATURES.md` | 功能列表（版本×模块×功能×集成状态矩阵） |
 | `USER-GUIDE.md` | 使用指南 |
 | `ARCHITECTURE.md` / `ARCHITECTURE_zh.md` | 完整架构设计（DAG 编排 / SKPG / Token 策略） |
 | `SKILL-INDEX.md` | 全部 skills/agents 索引 |
