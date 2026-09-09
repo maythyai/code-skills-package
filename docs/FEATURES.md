@@ -4,6 +4,11 @@
 > 集成了没有"。与 [CHANGELOG.md](../CHANGELOG.md)（发布流水账，每版一次性变更叙述）和
 > `.csp/ship/VERSION-REGISTRY.md`（版本生命周期台账，planned→released→prod-verified）互补——
 > 本文件回答"产品现在有哪些功能、分别从哪个版本起有、还有哪些没集成"。
+>
+> **⚠️ 与 `.csp/planning/research/FEATURES.md` 区分**：那个是 `/csp-new-project` 研究阶段产出的
+> **功能领域景观**（table stakes / differentiators / anti-features，供 roadmap 规划输入，工程产物、
+> 随项目而变）；本文件是**跨版本产品功能集成总账**（人读产品文档，记录"哪个功能在哪个版本集成了"）。
+> 两者同名但路径与定位不同：研究景观在 `.csp/planning/research/`，本总账在 `docs/`。
 
 ## 维护契约（谁在何时更新）
 
