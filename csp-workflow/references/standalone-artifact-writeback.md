@@ -63,3 +63,12 @@ standalone 完成本阶段后，写 `.csp/lifecycle-state.json`（与 orchestrat
 ## 5. 一句话规则
 
 **standalone 调用的 engine skill：hub 前置（缺则提示 S0）→ 产出即回写 manifest → 推进 lifecycle-state → ship 阶段双写 milestone+version + 更新 AGENTS.md。** 三步缺一即产物游离。
+
+## 6. Finding 状态回写（防"修了仍显示待修"）
+
+engine skill 若处理 finding（audit/review/verify 类）或修复了既有 finding（implementation 类），须回写 finding 状态，否则 PRD/findings 文档与代码现实脱节：
+
+- **finding 状态枚举**（对齐 `prompts/07-reviewer.md`）：`open` / `fixed`（已在代码中修复，附 `fixed_in` commit/task id + `fixed_at`）/ `adopted` / `deferred` / `wontfix` / `stale` / `superseded`。
+- **修复了 finding**（05/06 实施中）：回写该 finding `status=fixed` + `fixed_in`（commit sha 或 Task id）+ `fixed_at`，更新 `.csp/review/REVIEW-FINDINGS-*.json` 或 `.csp/audit/AUDIT-FINDINGS-*.json` 对应条目 + `manifest` `content_hash`。
+- **对账**（verify/ship 类 standalone）：核验 `fixed` findings 的 `fixed_in` commit 存在 + 当前代码无该违规；代码仍违规 → 降级 `stale`；代码已修但 finding 仍 `open` → 补标 `fixed`。
+- **lint/audit 口径对齐**：audit/verify 类 skill 产 finding 前，先对齐检测口径与 PRD 违规定义（见 `prompts/audit.md`「违规定义对账」+ `csp-codebase-audit` Phase 0），不按自己的口径报数。

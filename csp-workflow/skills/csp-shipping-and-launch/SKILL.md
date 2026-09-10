@@ -135,6 +135,7 @@ Every deployment needs a rollback plan before it happens:
 
 - **前置**：`.csp/AGENTS.md`+`manifest.json` 不存在 → 提示先跑 `csp-knowledge-hub`(S0)。
 - **manifest**：归档快照 + VERSION-REGISTRY 行回写 item `source_type=archive`、`build_status=built`、`content_hash`=git blob；CMS re-align 后更新 `content_hash`。
+- **ROADMAP**：同步 `docs/strategy/ROADMAP.md` 本版本行 status=`released`（planned→released）+ 回填 `实际交付`；回写 manifest item `source_type=doc`、`build_status=built`。聚合用 `csp-roadmap-update`。
 - **lifecycle**：**S8 双写 `milestone` 与 `version`(SemVer tag) + `latest_release`**；prod-verified 后写 `prod_version`；`reconciled=false`；`current_stage` 推进至 S9。
 - **AGENTS.md**：自动更新「项目概览」版本号 + 里程碑 + 三说明书定位表，不靠手填。
 

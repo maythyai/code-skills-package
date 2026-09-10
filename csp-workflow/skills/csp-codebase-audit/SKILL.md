@@ -46,7 +46,8 @@ anti_rationalizations:
 1. **读项目约定文件**（按优先级）：`CLAUDE.md` / `MEMORY.md` / `.cursorrules` / `AGENTS.md` → `README.md` → `pyproject.toml` / `package.json` / `Cargo.toml` → `CHANGELOG.md` 前 100 行。
 2. **确定审查基线**：`git log --oneline -5 && git tag --sort=-version:refname | head -5 && git rev-parse --short HEAD`。
 3. **规模速览**：`find . -name "*.py" -not -path "*/node_modules/*" -not -path "*/.git/*" | wc -l` + 目录树。
-4. **输出**：3-5 句项目背景摘要（技术栈 + 核心子系统 + 规模），后续所有代理 prompt 共用。
+4. **PRD 违规定义对齐（防口径漂移）**：若 PRD/PMS 定义了具体违例口径（判定规则 + 检测范围），记录之，与本次审查/lint 工具的检测范围逐项对齐。范围不一致 → 报 `口径漂移` finding（列口径差异表，不按自己口径报数），提醒先对齐 PRD 违规定义再复跑——这是"修了 PRD 仍显示待修"的常见根因。
+5. **输出**：3-5 句项目背景摘要（技术栈 + 核心子系统 + 规模），后续所有代理 prompt 共用。
 
 ## Phase 1: Parallel Dimension Audit（并行多维审查）
 

@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generated_at": "2026-09-10T08:26:35.668Z",
+  "generated_at": "2026-09-10T13:17:22.853Z",
   "nodes": {
     "5b37ecd541b4": {
       "id": "5b37ecd541b4",
@@ -42903,6 +42903,12 @@
     },
     {
       "source": "40489dfdce58",
+      "target": "7aaf943687fc",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "40489dfdce58",
       "target": "3c187c080b19",
       "kind": "depends_on",
       "metadata": {}
@@ -44020,6 +44026,12 @@
     {
       "source": "48a012295eed",
       "target": "6fccb1bf47c8",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "48a012295eed",
+      "target": "23c62050d68e",
       "kind": "depends_on",
       "metadata": {}
     },
@@ -49330,17 +49342,17 @@
   ],
   "stats": {
     "node_count": 2465,
-    "edge_count": 5219,
+    "edge_count": 5221,
     "skill_count": 661,
     "trigger_count": 1794,
     "phase_count": 6,
     "category_count": 5,
-    "depends_on_count": 1230,
+    "depends_on_count": 1232,
     "related_to_count": 1058,
     "edge_types": {
       "contains": 938,
       "triggers": 1993,
-      "depends_on": 1230,
+      "depends_on": 1232,
       "related_to": 1058
     }
   }

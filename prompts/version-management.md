@@ -94,6 +94,7 @@
 
 - `lifecycle-state.prod_version`：线上实际在跑的版本（从 health endpoint 验证）。
 - `lifecycle-state.latest_release`：最新推送的 tag。
+- `lifecycle-state.milestone`：**当前迭代 SemVer 版本号**（如 `v3.13.0`），**非代号**；06 发布时验证 `milestone`==本次 tag。若保留代号用独立 `milestone_name` 字段（如 `M9-observability`）。`milestone`/`prod_version`/`latest_release` 三者必须同一抽象层（SemVer），代号不参与版本对齐——否则"milestone 是 M9、version 是 v3.13.0"映射不可机读。
 - **两者不一致 = 线上落后于最新发布**——05 开始前检查此差异。
 - prod-verified 后更新 `lifecycle-state.prod_version = <verified version>`。
 
@@ -124,6 +125,7 @@ release 后从 `git log <prev-tag>..<tag> --oneline` + CHANGELOG 回填"Main Fea
 | 版本字符串不一致 | tag ≠ package.json ≠ Release title | 五方完全一致，脚本校验 |
 | 不回填实际交付 | release 后"实际做了什么"没记录 | git log + CHANGELOG 回填 VERSION-REGISTRY + roadmap |
 | 静默门控降级后 auto-release | 工具链坏→grep 替代→auto-proceed | not-run=BLOCKED=阻断发布，tag 标 -draft |
+| 代号当 milestone | `milestone` 写 `M9-xxx`，与 `prod_version`/`latest_release` 不同层，映射不可机读 | `milestone`=SemVer（`v3.13.0`）；代号进 `milestone_name`；三者同层对齐 |
 
 ## 十六、提交规范（commit convention）
 

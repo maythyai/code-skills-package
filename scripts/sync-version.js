@@ -16,6 +16,13 @@ const ROOT = resolve(__dirname, '..');
 // 每个条目: path + match(正则) + replaceFn(生成替换文本) + extractFn(提取旧版本)
 const TARGETS = [
   {
+    // VERSION 文件：整文件内容为版本号（test/csp-invariants 校验 VERSION==package.json）
+    path: 'VERSION',
+    match: /^[0-9]+\.[0-9]+\.[0-9]+/m,
+    replace: (v) => v,
+    extract: (m) => m[0],
+  },
+  {
     path: 'CLAUDE.md',
     match: /^# CSP — Code Skills Package v[0-9]+\.[0-9]+\.[0-9]+/m,
     replace: (v) => `# CSP — Code Skills Package v${v}`,

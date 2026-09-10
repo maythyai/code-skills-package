@@ -68,7 +68,7 @@ domain: patterns
 | 已有技术设计文档 | P2 |
 | 已有实现计划 | P3 |
 | 简单 bug 修复 | P0, P1, P2, P3 → 直接 P4 |
-| PATCH/MINOR 增量且 PRD 足够详细 | P0, P2, P3 轻量；lifecycle-state 标 `skipped_stages`（不假装全流程） |
+| PATCH/MINOR 增量且 PRD 已足够详细 | P0,P2,P3 轻量可跳，**硬门控**：跳 02 须 PRD 含 Feature 拆解清单 + 每 Feature ≥1 AC；跳 03 须 PRD 含数据模型 + API 契约；否则 02/03 必跑（防"PRD→code 直连断裂"）；lifecycle-state 标 `skipped_stages` + 理由 |
 | 无前端变更 | P4 前端 subagent |
 | 无需部署 | P7 |
 
@@ -148,6 +148,7 @@ domain: patterns
 3. 产出 `docs/prd/PRD-{slug}.md` + `.csp/product-spec/`（PMS 蒸馏）
 
 > **边界**：PRD 正本落 `docs/prd/`（不落 `.csp/full/`）；PRD↔PMS 映射由 `manifest.json` 承载。串联形态下若 `docs/prd/PRD-{slug}.md` 已存在则跳过 P1。
+> **骨架先行禁令**：PRD 未产出/未 Approved 前禁止写生产代码骨架——PRD 是规格不是事后记录（v3.13 反模式：骨架先行致 PRD 降级为历史记录）。极小改动用 `csp-simple-dev`。
 > **回写**：P1 末回写 `manifest.json`（PRD item `source_type=doc`、PMS item `source_type=pms`、`build_status=built`）+ `lifecycle-state`（P1 done，`current_stage` 推进）。
 
 **PRD 输出结构：**
@@ -355,6 +356,7 @@ T1 → US-1.AC-1, US-1.AC-2
 > **回写（P7 是闭环关键）**：
 > - `manifest.json`：归档快照 item `source_type=archive`、`build_status=built`；CMS re-align 后更新 `content_hash`。
 > - `lifecycle-state.json`：**双写 `milestone` 与 `version`(SemVer tag) + `latest_release`**；prod-verified 后写 `prod_version`；`reconciled=false`（待对账）。
+> - `ROADMAP.md`：同步 `docs/strategy/ROADMAP.md` 本版本行 status=`released` + 回填 `实际交付`；回写 manifest item `source_type=doc`。
 > - `AGENTS.md`：自动更新「项目概览」版本号 + 里程碑 + 三说明书定位表（CMS 已建则去"未建"标注），不靠手填。
 > - P7 done 后 `current_stage` 推进至 P8。
 

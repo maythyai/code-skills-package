@@ -389,6 +389,7 @@ verify/review 发现需 fix 时按下述闭环，**不 ship、不问人怎么修
 ### 7.4 发布产物
 **本地（auto，可逆）**：
 - CHANGELOG.md 追加条目（趁热写，不"以后补"，遵循 Keep a Changelog）。
+- **同步 `docs/strategy/ROADMAP.md`**：本版本行 status 改 `released`（planned→released）+ 回填 `实际交付`（git log+CHANGELOG 摘要）+ 标对应战略主题；回写 `manifest` item `source_type=doc`、`build_status=built`、`content_hash`。**发版必同步 ROADMAP status**——否则 ROADMAP 仍标 `planned`，版本号与 milestone 映射脱节。聚合见 `csp-roadmap-update`。
 - `docs/FEATURES.md` 更新集成状态：本版本已交付功能行改 `✅已集成` + 填交付证据（tag/commit）；延后改 `⏭️延后` + 下一版本补行；砍单改 `❌砍单` + 原因（见 FEATURES.md 维护契约）。
 - release notes → `.csp/ship/RELEASE-NOTES-{milestone}.md`。
 - 回滚计划 → `.csp/ship/ROLLBACK-PLAN-{milestone}.md`。
@@ -440,7 +441,8 @@ verify/review 发现需 fix 时按下述闭环，**不 ship、不问人怎么修
 | 02 | status=done | `.csp/decomposition/DEPENDENCY-GRAPH.md` | DAG 无环、PRD AC 全归属（无未归属 AC） |
 | 03 | status=done | `.csp/specs/SPEC-INDEX.md` + `COVERAGE-REPORT.md` | Spec 数 == decomposition 原子 Feature 数（1:1）；每 Spec ac_coverage 无缺口 |
 | 05 | status=done | `.csp/tasks/WBS.md` + git commit | WBS 中全部 Task == done；commits 覆盖全部 Wave；未完 Task → 05 置 `blocked`，**禁止归档** |
-| 07（上一轮复盘） | adopted findings | `.csp/review/REVIEW-FINDINGS-{prev-m}.json` | 所有 `adopted` findings 的 `adopted_by` 链可追到本轮 PRD→Spec→Task→commit；未闭环 → 标 `degraded` 报缺口 |
+| 07（上一轮复盘） | adopted / fixed findings | `.csp/review/REVIEW-FINDINGS-{prev-m}.json` | 所有 `adopted` findings 的 `adopted_by` 链可追到本轮 PRD→Spec→Task→commit；未闭环 → 标 `degraded` 报缺口。`fixed` findings 须核验 `fixed_in` commit 存在 + 当前代码无该违规；代码仍违规 → 降级 `stale` 重开；代码已修但 finding 仍 `open` → 补标 `fixed`+`fixed_in`（防"修了仍显示待修"） |
+| **ROADMAP 同步** | released | `docs/strategy/ROADMAP.md` 版本-主题表 | 本版本行 status==`released`（planned→released）+ `实际交付` 字段已回填（git log+CHANGELOG）；未同步 → 视为对账缺口，发版前补 |
 | **版本注册表** | prod-verified | `.csp/ship/VERSION-REGISTRY.md` | 最新行 status==prod-verified + 四方对齐（tag/package.json/prod health/CHANGELOG）；不对齐 → 标 misaligned |
 | 05 | status=in_progress | 本阶段产物 | S6 门控六项全过 + S7 无 CRITICAL + 回滚就绪 + 监控就绪 |
 
