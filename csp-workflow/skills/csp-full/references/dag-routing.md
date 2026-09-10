@@ -21,14 +21,30 @@
 
 ```
                     ┌──────────────────┐
-                    │  检测已有产出物    │
+                    │  step 0.5 探测    │
+                    │  .csp/AGENTS.md? │
+                    └────────┬─────────┘
+                             │
+              ┌──────────────┴──────────────┐
+              │                            │
+        不存在 → 先跑 S0/00          已存在 → 读 lifecycle-state
+        (csp-knowledge-hub)          定位"现在第几步、下一步谁"
+              │                            │
+              └──────────────┬─────────────┘
+                             │
+                    ┌────────┴─────────┐
+                    │  探测已有产出物    │
                     └────────┬─────────┘
                              │
               ┌──────────────┼──────────────┐
               │              │              │
-     PRD存在？         技术设计存在？     计划存在？
+     .csp/specs/+.csp/      PRD存在？       技术设计存在？
+     tasks/ 已存在？           │              │
+        (orchestrator 产出)    │              │
               │              │              │
-         跳过 P1         跳过 P2        跳过 P3
+   串联形态：跳 P0-P3       跳过 P1         跳过 P2
+   从 P4 起，读 specs/tasks    │              │
+   为输入（不重写正本）        │              │
               │              │              │
               └──────────────┼──────────────┘
                              │
@@ -61,6 +77,11 @@
                     └──────────────────┘
 ```
 
+> **新增分支说明（内环对齐）**：详见 `references/inner-loop-alignment.md`。
+> - **hub 前置**：`.csp/AGENTS.md` 不存在 → 先跑 `csp-knowledge-hub`(S0)，未初始化不进 P1。这是整条链路的第一步。
+> - **spec-aware 串联**：`.csp/specs/`+`.csp/tasks/` 已存在（orchestrator 产出）→ 跳 P0-P3 从 P4 起，读内环产物为输入，**不重写 PRD/spec/task 正本到 `.csp/full/`**。
+> - **轻量增量**：PATCH/MINOR 且 PRD 足够详细 → P0/P2/P3 轻量，**lifecycle-state 标 `skipped_stages`**，不假装全流程。
+
 ## 分支场景
 
 ### 场景 A: 全新产品（最常见）
@@ -87,6 +108,20 @@ P0 → P1 → P2 → P3 → P4 → P5 → P6 → P7 → P8
 ### 场景 E: MVP 迭代到 v1
 ```
 P0(轻量) → P1(增量) → P2(增量) → P3 → P4 → P5 → P6 → P7 → P8
+```
+
+### 场景 F: 串联执行（orchestrator 已出 spec/task）
+```
+step 0.5: 读 lifecycle-state + 探测 .csp/specs/+.csp/tasks/ 已存在
+跳过 P0,P1,P2,P3 → P4(读 specs/tasks 为输入) → P5 → P6 → P7 → P8
+不重写 PRD/spec/task 正本到 .csp/full/；产物回写 manifest/lifecycle
+```
+
+### 场景 G: 轻量增量（PATCH/MINOR，PRD 已足够详细）
+```
+P0(跳) → P1(精简或复用 docs/prd/ 既有 PRD) → P2(跳/轻量) → P3(跳/轻量) → P4 → P5 → P6 → P7
+lifecycle-state 标 skipped_stages:["P2","P3"] + 理由，不假装全流程
+manifest 仍回写本版本增量产物
 ```
 
 ## Subagent 选择矩阵

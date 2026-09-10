@@ -4,7 +4,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
 [![npm](https://img.shields.io/npm/v/code-skills-package)](https://www.npmjs.com/package/code-skills-package)
-[![v0.10.0](https://img.shields.io/badge/version-0.10.0-green)](./CHANGELOG.md)(./CHANGELOG.md)(./CHANGELOG.md)
+[![v0.11.0](https://img.shields.io/badge/version-0.11.0-green)](./CHANGELOG.md)(./CHANGELOG.md)(./CHANGELOG.md)(./CHANGELOG.md)
 [![Skills: 661](https://img.shields.io/badge/skills-661-orange)](./docs/SKILL-INDEX.md)
 [![Platforms: 22+](https://img.shields.io/badge/platforms-22+-brightgreen)](./docs/INSTALL.md)
 
@@ -39,9 +39,45 @@ CSP（Code Skills Package）将多个开源 AI 编程项目的精华整合为一
 | **全栈覆盖** | 661 技能 · 5 层级 · 15+ 语言 · 22+ 平台 | 单一语言 / 有限场景 |
 | **开放扩展** | 自定义 Skill + Recipe + 创作向导 | 封闭生态 / 无扩展 |
 
-### 智能路由
+### 状态驱动智能路由
 
-路由器采用三信号加权评分（关键词 40% + 意图 30% + 上下文 30%），结合 Git 状态、技术栈和开发阶段自动感知，配合 SKPG 技能知识图谱（740 节点、795 边、162 个触发词）进行依赖检查和路径优化。高置信度直接路由，低置信度交互式确认。
+路由器由**三重状态信号**驱动，而非仅靠关键词：
+
+- **项目状态**（`.csp/state.json`）：Git 状态、技术栈、开发阶段、测试状态——由 pre-router hook 自动探测并注入 context_score（阶段匹配 +0.2，栈匹配 +0.15，dirty 偏向 debug skill）。
+- **产物状态**（`.csp/artifacts/*.md`）：`understand`/`plan`/`spec`/`implement`/`review`/`verify` 产物是否存在决定当前 SDD 阶段，并**自动 boost 下一步 skill**——路由器因此知道你"在哪一步"，而不只是你"说了什么"。
+- **图谱状态**（`.csp/skpg/graph.json`，2,400+ 节点 / 5,200+ 边）：SKPG 依赖检查、影响分析、A→B 最短路径，覆盖 2,200+ 触发词。
+
+三信号加权评分（关键词 40% + 意图 30% + 上下文 30%）。高置信度直接路由，低置信度交互式确认，低于 50% 回退深度访谈。
+
+### 产物驱动链路接力
+
+skill 通过产物接力自动组装成工作流——无需手动连线。前置 skill 的输出落盘后，后继 skill 自动探测并跳过已完成阶段：
+
+```
+deep-interview spec (.csp/specs/deep-interview-*.md)
+  → csp-plan --consensus --direct（复用 spec，跳过访谈）
+    → 共识计划 (.csp/plans/consensus-*.md)
+      → csp-autopilot（跳过 Phase 0+1，直接进执行）
+```
+
+路由器在输出中检测到接力产物时，会标注**推荐后继 skill**。
+
+### 门控式自动化
+
+CSP 积极自动化但从失控收手：审批门控在拆解确认、技术栈确认、发布前暂停；QA 同一错误重复 3 次即停（根本问题信号）；plan→执行默认需显式批准。这些停止条件是刻意设计的——防止一个模糊想法一路自动提交到生产。
+
+### 多分支路由
+
+门控失败时引擎分支推进——不是直接停：
+
+| 失败 | 分支动作 |
+|------|---------|
+| 拆解不完整 | 重试（最多 2 次） |
+| 技术方案评审失败 | 重试设计或评审（最多 3 次） |
+| 测试失败 | 在 QA 前插入调试阶段 |
+| 审查发现严重问题 | 在发布前插入修复阶段 |
+
+四种模式（`full` / `lightweight` / `spec-only` / `extend`）与基于范围的升级/降级（如 `csp-simple-dev` 在改动超 3 文件时自动升级到 `csp-design-hub`）让流水线始终匹配任务规模。
 
 ### 按需加载架构
 
@@ -49,7 +85,7 @@ CSP（Code Skills Package）将多个开源 AI 编程项目的精华整合为一
 
 ### 技能编排引擎
 
-两种编排模式互补：静态 Recipe 为常见场景（功能开发、Bug 修复、重构、快速修复）预定义技能序列；动态 DAG 引擎 `csp-auto` 逐节点决策，支持分支并行、回退重试和 worktree 隔离执行。复杂度分类器自动匹配模型档位。
+两种编排模式互补：静态 Recipe 为常见场景（功能开发、Bug 修复、重构、快速修复）预定义技能序列；动态 DAG 引擎 `csp-autopilot` 逐节点决策，支持分支并行、回退重试和 worktree 隔离执行。复杂度分类器自动匹配模型档位。
 
 ### 持续学习引擎
 
@@ -58,6 +94,8 @@ CSP（Code Skills Package）将多个开源 AI 编程项目的精华整合为一
 ### 全开发生命周期覆盖
 
 661 个技能分布在 5 个层级，覆盖需求规划、代码实现、审查、调试、测试、发布全流程，并延伸至 AI 工程（RAG/LLM/vLLM）、DevOps（CI/CD/IaC/K8s）、移动端（React Native/跨平台）、安全审计（STRIDE-A/CodeQL/事件响应）等专业领域。此外，31 个技能专为独立开发者设计，覆盖部署运维（Vercel/Railway/VPS）、商业化运营（Stripe/订阅/SEO/分析）、性能调优、API 集成（Webhook/OAuth）、测试工程（E2E/视觉回归）、国际化和 Monorepo 管理。每个技能遵循 SKILL.md v2 规范，含 phase/domain/role 等结构化字段。
+
+**三说明书治理层**（PMS 产品说明书 / CMS 代码说明书 / TMS 测试说明书）作为 living baseline 与生命周期并行运行：每个阶段先读对应说明书再产出，发布后写回 delta 增量——无需额外工具即可让 PRD、代码、测试相互可追溯。
 
 ### 开放生态
 
@@ -214,7 +252,7 @@ CSP 采用五层分层架构。仅路由器（L0）在会话启动时加载，�
 
 ## 技能编排
 
-CSP 支持静态 Recipe（预定义序列）和动态 DAG（`csp-auto` 逐节点决策）两种编排模式。
+CSP 支持静态 Recipe（预定义序列）和动态 DAG（`csp-autopilot` 逐节点决策）两种编排模式。
 
 ### 内置 Recipe
 

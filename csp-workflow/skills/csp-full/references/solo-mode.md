@@ -27,6 +27,8 @@
 
 ## 快速通道
 
+> **诚实跳过规则（对齐内环）**：所有 Fast Track 跳过的阶段**必须在 `.csp/lifecycle-state.json` 写 `skipped_stages` + 跳过理由**，不假装走了全流程。manifest 仍回写本版本实际产出的产物。详见 `references/inner-loop-alignment.md` §3.2。
+
 Solo 模式下支持的快速通道：
 
 ### Fast Track: Bug Fix

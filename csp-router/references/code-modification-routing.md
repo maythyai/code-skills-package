@@ -45,18 +45,32 @@
 - **关键词**：loop / 研发loop / autopilot / 自动驾驶 / 全自动 / auto pilot / 端到端 / 全流程自动
 - **消歧**："loop" 作为变量名/循环语句（如 "for loop""event loop"）≠ 研发 Loop。需结合上下文：含"启动""开始""跑""启动研发"等动词修饰时才算。
 
+### Specialized Code-Modification Branches
+
+改码意图除 loop/PRD/模式/极简四主信号外，设四个**专项改码分支**。命中后优先于通用置信度路由，路由到对应专项 skill，避免穿透到通用层选错 skill。
+
+| 分支 | 检测信号（任一命中） | 路由到 | 复合判定 |
+|------|---------------------|--------|---------|
+| **hotfix** | hotfix / 紧急 / 线上 / 生产故障 / P0 / urgent / emergency / production issue | `csp-hotfix` + `csp-systematic-debugging` | 含"线上"且"重构"→ 先 hotfix 止血 |
+| **重构** | 重构 / 技术债 / 代码异味 / refactor / tech debt / code smell | `csp-refactorer` | 大规模→`csp-refactoring-strategies`；盘点→`csp-tech-debt-paydown` |
+| **迁移** | 迁移 / 升级 / 移植 / 遗留系统 / migrate / modernize / legacy / port to | `csp-legacy-modernization` | 含废弃→`csp-deprecation-and-migration` |
+| **性能** | 性能 / 慢 / 瓶颈 / 延迟 / optimize / latency / bottleneck | `csp-performance-optimizer` | 前端→`csp-web-performance-auditor` |
+
+**边界**：分支互斥优先级 = "线上/紧急" 修饰时 hotfix 先于重构；"迁移"+"性能"→ 迁移为纲（迁移本身常含性能权衡）。
+
 ## Fallback Rules (Priority Order)
 
 信号冲突时按优先级从高到低判定：
 
 1. **显式模式指定**（最高）— 用户明确说某设计模式 → `csp-design-hub`
 2. **PRD / 链接提供** — 有需求输入 → `csp-design-hub`
-3. **明确极简** — 用户说极简/简单/直接改 → `csp-simple-dev`
-4. **隐式极简** — 无 PRD + 无模式 + 短描述 → `csp-simple-dev`
-5. **Loop 请求** — 提及 loop → `csp-autopilot` + `csp-lifecycle-orchestrator`
-6. **通用置信度路由**（最低）— 上述都不命中，回落到 `csp-router` 的关键词+意图+上下文评分
+3. **专项改码分支**（hotfix / 重构 / 迁移 / 性能） — 命中专项信号 → 对应专项 skill；内部互斥：紧急修饰→hotfix 优先，迁移+性能→迁移为纲
+4. **明确极简** — 用户说极简/简单/直接改 → `csp-simple-dev`
+5. **隐式极简** — 无 PRD + 无模式 + 短描述 → `csp-simple-dev`
+6. **Loop 请求** — 提及 loop → `csp-autopilot` + `csp-lifecycle-orchestrator`
+7. **通用置信度路由**（最低）— 上述都不命中，回落到 `csp-router` 的关键词+意图+上下文评分
 
-> 注：Loop 与极简/设计互斥——Loop 是"全自动全流程"，设计/极简是"人介入单步"。如同时出现，以更具体的为准（如"启动 loop 但先用极简改这个"→ 优先极简单步，loop 作为后续）。
+> 注：Loop 与极简/设计/专项改码互斥——Loop 是"全自动全流程"，其余是"人介入单步"。如同时出现，以更具体的为准（如"启动 loop 但先用极简改这个"→ 优先极简单步，loop 作为后续）。专项改码分支不高于显式 PRD（如"按这个 PRD 做迁移"→ 走 `csp-design-hub`，迁移语义作为设计输入）。
 
 ## Scope-Based Escalation
 

@@ -25,6 +25,10 @@ tools: [Read, Glob, Grep]
 | 提及 loop / 研发 Loop | 用户输入含 "loop""研发loop""autopilot""自动驾驶""全自动""auto pilot" | → 研发 Loop 路径 |
 | 提供 PRD / 需求链接 | 用户输入含 URL（http/https）、文件路径（.md/.doc/.pdf）、或明确说"这是 PRD""这是需求文档""requirement doc" | → 设计路径 |
 | 指定设计模式 | 用户输入含"标准设计""概要设计""极速设计""本地极速""详细设计""detailed""summary""rapid""regenerate""重新生成" | → 设计路径（csp-design-hub） |
+| 紧急 / 线上故障 | 用户输入含"hotfix""紧急""线上""生产故障""P0""urgent""emergency""production issue" | → 专项改码：hotfix |
+| 重构 / 技术债 | 用户输入含"重构""技术债""代码异味""refactor""tech debt""code smell" | → 专项改码：重构 |
+| 迁移 / 遗留系统 | 用户输入含"迁移""升级""移植""遗留系统""migrate""modernize""legacy""port to" | → 专项改码：迁移 |
+| 性能 / 瓶颈 | 用户输入含"性能""慢""瓶颈""延迟""optimize""latency""bottleneck" | → 专项改码：性能 |
 | 明确极简 | 用户输入含"极简模式""简单模式""直接改码""无PRD""快速改""不用设计" 或 未提供 PRD 且未指定模式 | → 极简路径 |
 
 ### 路由决策表
@@ -33,14 +37,20 @@ tools: [Read, Glob, Grep]
 |-------------|--------|------|
 | 提及 loop / 研发 Loop | `csp-autopilot` + `csp-lifecycle-orchestrator` | 端到端自动化需要完整生命周期编排 |
 | 提供 PRD / 链接 或 指定标准/极速/本地模式 | `csp-design-hub` | 有需求输入或模式指定 → 设计方案先行 |
+| 紧急 / 线上故障 | `csp-hotfix`（+ `csp-systematic-debugging`） | 最小化变更、快速止血，避免走全流程 |
+| 重构 / 技术债 | `csp-refactorer`（大规模 → `csp-refactoring-strategies`；技术债盘点 → `csp-tech-debt-paydown`） | 先分析再重构，回归保护优先 |
+| 迁移 / 遗留系统 | `csp-legacy-modernization`（含废弃→ `csp-deprecation-and-migration`） | 迁移需渐进式策略 + 兼容期管理 |
+| 性能 / 瓶颈 | `csp-performance-optimizer`（前端 → `csp-web-performance-auditor`） | 先定位瓶颈再优化，避免盲目调参 |
 | 无 PRD 且未指定模式 或 明确极简 | `csp-simple-dev` | 无需求文档、无模式 → 极简直接改码 |
 
 ### 回退规则
 
-1. 信号冲突（如同时提及"极简"和"PRD"）时，优先级：**显式模式指定 > PRD 提供 > 极简**
-2. 路由到 `csp-simple-dev` 但改动涉及 3+ 文件或架构变更 → 升级到 `csp-design-hub`
-3. 路由到 `csp-design-hub` 但用户说"不用设计了直接改" → 降级到 `csp-simple-dev`
-4. 无法判定 → 回退到下方通用置信度路由流程
+1. 信号冲突（如同时提及"极简"和"PRD"）时，优先级：**显式模式指定 > PRD 提供 > 专项改码（hotfix/重构/迁移/性能） > 极简**
+2. 专项改码分支命中后，优先于通用置信度路由；但不高于显式 loop 或 PRD（如"按这个 PRD 做迁移"→ 走 `csp-design-hub`，迁移作为设计输入）
+3. 专项改码分支内部复合判定：含"线上/紧急"且"重构"→ 优先 `csp-hotfix`（止血先于重构）；"迁移"+"性能"→ `csp-legacy-modernization`（迁移为纲）
+4. 路由到 `csp-simple-dev` 但改动涉及 3+ 文件或架构变更 → 升级到 `csp-design-hub`
+5. 路由到 `csp-design-hub` 但用户说"不用设计了直接改" → 降级到 `csp-simple-dev`
+6. 无法判定 → 回退到下方通用置信度路由流程
 
 ### 示例
 
@@ -148,6 +158,11 @@ Context score 考虑:
 **决策**: Top 3 候选 — 请确认
 
 **SKPG 提示**: csp-tdd 依赖 csp-spec-contract
+
+**推荐后继**（基于 `.csp/` 产物驱动的链路接力规则）:
+- 检测到 `.csp/specs/deep-interview-*.md` → 建议下一步 `csp-plan-phase` / `csp-writing-plans`
+- 检测到 `.csp/plans/consensus-*.md` 或 `ralplan-*.md` → 建议下一步 `csp-autopilot`（将自动跳过 Phase 0+1 直接执行）
+- 未检测到前置产物 → 无后继推荐
 ```
 
 ## 信号优先级 (从高到低)

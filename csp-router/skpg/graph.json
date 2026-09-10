@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generated_at": "2026-09-08T06:00:37.463Z",
+  "generated_at": "2026-09-10T08:26:35.668Z",
   "nodes": {
     "5b37ecd541b4": {
       "id": "5b37ecd541b4",
@@ -40953,13 +40953,61 @@
     },
     {
       "source": "8681655e0ee6",
-      "target": "7aaf943687fc",
+      "target": "8e4815103a09",
       "kind": "depends_on",
       "metadata": {}
     },
     {
       "source": "8681655e0ee6",
-      "target": "8e4815103a09",
+      "target": "d8ddd7c38474",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "8681655e0ee6",
+      "target": "363d1b032951",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "8681655e0ee6",
+      "target": "1f7a641a1f89",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "8681655e0ee6",
+      "target": "bec6f5e4a8f7",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "8681655e0ee6",
+      "target": "cc4976e63742",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "8681655e0ee6",
+      "target": "fa9d3e39dbff",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "8681655e0ee6",
+      "target": "5c60284aa0f3",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "8681655e0ee6",
+      "target": "fe11f05f4a1a",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "8681655e0ee6",
+      "target": "7aaf943687fc",
       "kind": "depends_on",
       "metadata": {}
     },
@@ -40990,6 +41038,18 @@
     {
       "source": "8681655e0ee6",
       "target": "3827da1ec890",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "8681655e0ee6",
+      "target": "7648612eadf8",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "8681655e0ee6",
+      "target": "e767641de27d",
       "kind": "depends_on",
       "metadata": {}
     },
@@ -42825,6 +42885,12 @@
     },
     {
       "source": "40489dfdce58",
+      "target": "6fccb1bf47c8",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "40489dfdce58",
       "target": "e612ca87e754",
       "kind": "depends_on",
       "metadata": {}
@@ -42868,6 +42934,12 @@
     {
       "source": "cc5790b1164b",
       "target": "e235d3c4f0ea",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "cc5790b1164b",
+      "target": "6fccb1bf47c8",
       "kind": "depends_on",
       "metadata": {}
     },
@@ -43000,6 +43072,12 @@
     {
       "source": "8e4815103a09",
       "target": "7aaf943687fc",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "af8b06b4e37f",
+      "target": "6fccb1bf47c8",
       "kind": "depends_on",
       "metadata": {}
     },
@@ -43940,6 +44018,12 @@
       "metadata": {}
     },
     {
+      "source": "48a012295eed",
+      "target": "6fccb1bf47c8",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
       "source": "7aaf943687fc",
       "target": "8e4815103a09",
       "kind": "depends_on",
@@ -44258,6 +44342,12 @@
       "metadata": {}
     },
     {
+      "source": "6488bc786564",
+      "target": "6fccb1bf47c8",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
       "source": "3a9051ed70ce",
       "target": "f248367726e7",
       "kind": "depends_on",
@@ -44446,6 +44536,12 @@
     {
       "source": "14c63e108d67",
       "target": "9fad9094ab76",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "14c63e108d67",
+      "target": "6fccb1bf47c8",
       "kind": "depends_on",
       "metadata": {}
     },
@@ -49234,17 +49330,17 @@
   ],
   "stats": {
     "node_count": 2465,
-    "edge_count": 5203,
+    "edge_count": 5219,
     "skill_count": 661,
     "trigger_count": 1794,
     "phase_count": 6,
     "category_count": 5,
-    "depends_on_count": 1214,
+    "depends_on_count": 1230,
     "related_to_count": 1058,
     "edge_types": {
       "contains": 938,
       "triggers": 1993,
-      "depends_on": 1214,
+      "depends_on": 1230,
       "related_to": 1058
     }
   }

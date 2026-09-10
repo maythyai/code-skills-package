@@ -129,6 +129,15 @@ Every deployment needs a rollback plan before it happens:
 - Redeploy previous version: < 5 minutes
 - Database rollback: < 15 minutes
 ```
+## 产物回写（standalone 调用时）
+
+非经 orchestrator 调度时，本 skill 须回写产物索引 + 推进状态机 + 更新 AGENTS.md，否则发布游离于 VERSION-REGISTRY 之外、线上版本不可追溯。约定见 `csp-workflow/references/standalone-artifact-writeback.md`。
+
+- **前置**：`.csp/AGENTS.md`+`manifest.json` 不存在 → 提示先跑 `csp-knowledge-hub`(S0)。
+- **manifest**：归档快照 + VERSION-REGISTRY 行回写 item `source_type=archive`、`build_status=built`、`content_hash`=git blob；CMS re-align 后更新 `content_hash`。
+- **lifecycle**：**S8 双写 `milestone` 与 `version`(SemVer tag) + `latest_release`**；prod-verified 后写 `prod_version`；`reconciled=false`；`current_stage` 推进至 S9。
+- **AGENTS.md**：自动更新「项目概览」版本号 + 里程碑 + 三说明书定位表，不靠手填。
+
 ## See Also
 
 - For security pre-launch checks, see `references/security-checklist.md`

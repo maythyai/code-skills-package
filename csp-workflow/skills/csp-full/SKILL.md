@@ -62,12 +62,36 @@ domain: patterns
 **阶段跳过规则：**
 | 条件 | 跳过阶段 |
 |------|---------|
+| `.csp/AGENTS.md` 不存在 | 不跳过——先跑 `csp-knowledge-hub`(S0) 初始化中枢，未初始化不进 P1 |
+| `.csp/specs/`+`.csp/tasks/` 已存在（orchestrator 产出） | P0, P1, P2, P3 → 从 P4 起，读 specs/tasks 为输入（spec-aware 串联形态） |
 | 已有 PRD/spec 文件 | P0, P1 |
 | 已有技术设计文档 | P2 |
 | 已有实现计划 | P3 |
 | 简单 bug 修复 | P0, P1, P2, P3 → 直接 P4 |
+| PATCH/MINOR 增量且 PRD 足够详细 | P0, P2, P3 轻量；lifecycle-state 标 `skipped_stages`（不假装全流程） |
 | 无前端变更 | P4 前端 subagent |
 | 无需部署 | P7 |
+
+## 内环对齐与产物边界
+
+> csp-full 是 `.csp/` 内环的**执行车道**，不是独立王国。它与内环（00-07 prompts / S0-S9 lifecycle 契约）共享 `manifest.json`/`lifecycle-state.json`/`AGENTS.md`。完整对齐表、handoff 契约、更新时机见 `references/inner-loop-alignment.md`——**必读**。要点：
+
+**三种运行形态（由版本复杂度自动判定，不由人指定）：**
+| 形态 | 触发 | 起始 | 产物落点 |
+|---|---|---|---|
+| 串联（spec-aware） | `.csp/specs/`+`.csp/tasks/` 已存在 | P4 | 全进内环产物体系 |
+| 独立全流程 | 全新项目、无 specs | P0 | PRD→`docs/prd/`、spec/tasks→`.csp/`、执行态→`.csp/full/` |
+| 轻量增量 | PATCH/MINOR、PRD 已足够详细 | P1(精简)/P4 | `skipped_stages` 诚实标注 |
+
+**产物边界（违反即断裂追溯链）：**
+- PRD 正本 → `docs/prd/PRD-{slug}.md`（人读、永久）；PMS 蒸馏 → `.csp/product-spec/`。**禁止**写 `.csp/full/PRD.md` 第三副本。
+- spec → `.csp/specs/`；tech-design/THREAT-MODEL → `.csp/tech-design/`；task → `.csp/tasks/`；plan → `.csp/plan/`；CMS → `.csp/code-spec/`；review → `.csp/review/`；ship → `.csp/ship/`；ops → `.csp/ops/`。
+- `.csp/full/` 只保留执行过程态：`intake.md`、里程碑归档快照。里程碑归档 canonical 在 `.csp/milestones/{m}/`。
+
+**更新时机（强制，对齐内环 00 约定）：**
+- **manifest.json**：每阶段产出实质页后立即回写 `source_id`/`source_type`/`content_hash`(git blob)/`build_status`。P1=doc+pms、P2=spec、P3=doc+feature、P4=cms(每次原子 commit)、P6=doc、P7=archive、P8=doc。
+- **lifecycle-state.json**：启动 step 0.5 读（`.csp/AGENTS.md` 缺则先 S0 init，不静默进 P1）；每阶段末写 `status=done`+`current_stage`+`progress`+`reconciled=false`；**P7 双写 `milestone` 与 `version`(SemVer tag) + `latest_release`**；轻量跳过写 `skipped_stages`+理由。
+- **AGENTS.md**：P7 ship 时自动更新版本号/里程碑/三说明书定位表，不靠手填。
 
 ## 阶段定义
 
@@ -116,12 +140,15 @@ domain: patterns
 1. PM subagent 创建 PRD
 2. 利益相关者审查（模拟 reviewer subagent）
 3. 审批门控：PRD 需通过评审才可进入下一阶段
-4. 产出 `.csp/full/PRD.md`
+4. 产出 `docs/prd/PRD-{slug}.md`（人读正本）+ `.csp/product-spec/`（PMS 蒸馏）
 
 **独立开发者模式：**
 1. 自助 PRD 生成（精简版）
 2. 核心要素：用户故事、验收标准、MVP 范围
-3. 产出 `.csp/full/PRD.md`
+3. 产出 `docs/prd/PRD-{slug}.md` + `.csp/product-spec/`（PMS 蒸馏）
+
+> **边界**：PRD 正本落 `docs/prd/`（不落 `.csp/full/`）；PRD↔PMS 映射由 `manifest.json` 承载。串联形态下若 `docs/prd/PRD-{slug}.md` 已存在则跳过 P1。
+> **回写**：P1 末回写 `manifest.json`（PRD item `source_type=doc`、PMS item `source_type=pms`、`build_status=built`）+ `lifecycle-state`（P1 done，`current_stage` 推进）。
 
 **PRD 输出结构：**
 ```markdown
@@ -156,12 +183,15 @@ domain: patterns
 1. Architect subagent（Opus）：系统架构设计
 2. Security subagent：威胁建模
 3. 技术评审会议（模拟多角色审查）
-4. 产出 `.csp/full/TECH-DESIGN.md` + `.csp/full/THREAT-MODEL.md`
+4. 产出 `.csp/tech-design/`（ARCHITECTURE/DATA/INTERFACE + THREAT-MODEL）+ `.csp/specs/`（每 Feature Spec）
 
 **独立开发者模式：**
 1. 轻量架构设计
 2. 关键技术决策记录
-3. 产出 `.csp/full/TECH-DESIGN.md`
+3. 产出 `.csp/tech-design/` + `.csp/specs/`（精简 Spec）
+
+> **边界**：THREAT-MODEL 落 `.csp/tech-design/THREAT-MODEL.md`（不落 `.csp/full/`）。串联形态下若 `.csp/specs/` 已存在则跳过 P2，改读为 P4 输入。
+> **回写**：P2 末回写 `manifest.json`（spec/tech-design item `source_type=spec`、`build_status=built`）+ `lifecycle-state`（P2 done）。
 
 **技术设计输出结构：**
 ```markdown
@@ -186,12 +216,15 @@ domain: patterns
 1. Tech Lead subagent 创建任务分解
 2. 依赖分析 → DAG 构建
 3. 任务优先级排序
-4. 产出 `.csp/full/PLAN.md`
+4. 产出 `.csp/tasks/`（WBS + DEPENDENCY-DAG + TASK-CARDS）+ `.csp/plan/IMPLEMENTATION-PLAN.md`
 
 **独立开发者模式：**
 1. 自助任务分解
 2. 依赖关系标记
-3. 产出 `.csp/full/PLAN.md`
+3. 产出 `.csp/tasks/` + `.csp/plan/IMPLEMENTATION-PLAN.md`（精简）
+
+> **边界**：任务落 `.csp/tasks/`（不落 `.csp/full/`）。串联形态下若 `.csp/tasks/` 已存在则跳过 P3。
+> **回写**：P3 末回写 `manifest.json`（task item `source_type=doc`+`kind=feature`、`build_status=built`）+ `lifecycle-state`（P3 done，`current_stage` 推进至 P4）。
 
 **规划输出结构：**
 ```markdown
@@ -234,6 +267,8 @@ T1 → US-1.AC-1, US-1.AC-2
 **企业模式特有：** 每个 subagent 产出独立 PR，需通过审查后合并。
 **独立开发者模式：** 直接提交到主分支，减少 overhead。
 
+> **回写**：P4 每个原子 commit 后增量回写 `.csp/code-spec/`(CMS delta) + `manifest.json`（CMS item `source_type=cms`、`build_status=built`）。P4 完成时写 `lifecycle-state`（P4 done，`current_stage` 推进至 P5）。
+
 ### Phase 5: 质量保证（Quality Assurance）
 
 **目标：** 确保代码质量和功能正确性。
@@ -249,6 +284,8 @@ T1 → US-1.AC-1, US-1.AC-2
 **独立开发者模式：** 跳过企业级合规检查，聚焦功能正确性。
 
 **门控：** 所有 CRITICAL 测试必须通过才可进入下一阶段。
+
+> **回写**：P5 末回写 `.csp/artifacts/verify/` 证据 + `manifest.json`（verify item `source_type=doc`、`build_status=built`）+ `lifecycle-state`（P5 done，`current_stage` 推进至 P6）。
 
 ### Phase 6: 审查与验证（Review & Validation）
 
@@ -290,6 +327,8 @@ T1 → US-1.AC-1, US-1.AC-2
 
 **门控：** 有条件通过时，自动进入修复循环（1 轮）。修复后重新验证。
 
+> **回写**：P6 末回写 `.csp/review/REVIEW-FINDINGS.md` + `manifest.json`（review item `source_type=doc`、`build_status=built`）+ `lifecycle-state`（P6 done，`current_stage` 推进至 P7）。
+
 ### Phase 7: 发布与交付（Ship & Deliver）
 
 **目标：** 将成果交付到生产环境。
@@ -311,6 +350,13 @@ T1 → US-1.AC-1, US-1.AC-2
 - `CHANGELOG.md` — 变更日志更新
 - Git tag (v[milestone])
 - 部署状态报告
+
+> **产物边界**：ship 产物落 `.csp/ship/`（含 `VERSION-REGISTRY.md`）；里程碑归档落 `.csp/milestones/{milestone}/`（canonical，与内环共享），不落 `.csp/full/milestones/`。
+> **回写（P7 是闭环关键）**：
+> - `manifest.json`：归档快照 item `source_type=archive`、`build_status=built`；CMS re-align 后更新 `content_hash`。
+> - `lifecycle-state.json`：**双写 `milestone` 与 `version`(SemVer tag) + `latest_release`**；prod-verified 后写 `prod_version`；`reconciled=false`（待对账）。
+> - `AGENTS.md`：自动更新「项目概览」版本号 + 里程碑 + 三说明书定位表（CMS 已建则去"未建"标注），不靠手填。
+> - P7 done 后 `current_stage` 推进至 P8。
 
 ### Phase 8: 运维监控（Post-Launch Operations）
 
@@ -335,6 +381,8 @@ T1 → US-1.AC-1, US-1.AC-2
 ## 已知问题
 ## 下一里程碑建议
 ```
+
+> **回写**：P8 末回写 `.csp/ops/` 配置 + `manifest.json`（ops item `source_type=doc`、`build_status=built`）+ `lifecycle-state`（P8 done，`current_stage` 推进至下一迭代或 `milestone-archive`）。
 
 ## 多轮迭代（Multi-Milestone）
 
@@ -363,23 +411,30 @@ v1 全流程 (复用 MVP 基础，增量开发)
 v2 全流程
 ```
 
-每个里程碑的产出物归档到 `.csp/full/milestones/v{N}/`。
+每个里程碑的产出物归档到 `.csp/milestones/{milestone}/`（canonical，与内环共享；`.csp/full/milestones/` 为兼容旧路径）。归档含 specs/plan/test-results/review/release-notes 快照 + `lifecycle-state.json` 对账后快照。
 
 ## 执行流程
 
 ```
+0. 启动探测（step 0.5）：
+   a. 读 .csp/lifecycle-state.json 定位"现在第几步、下一步谁"
+   b. 若 .csp/AGENTS.md 不存在 → 先跑 csp-knowledge-hub(S0) 初始化中枢，不静默进 P1
+   c. 探测 .csp/specs/+.csp/tasks/ 是否已存在（orchestrator 产出）→ 串联形态，跳 P0-P3 从 P4 起
 1. 解析参数 (--mode, --milestones, 等)
-2. 评估输入复杂度 → 确定起始阶段
+2. 评估输入复杂度 → 确定起始阶段与运行形态（串联/独立/轻量）
 3. 按 DAG 顺序执行各阶段
 4. 每个阶段完成后：
    a. 验证产出物存在
-   b. 检查门控条件
-   c. 通过后 → 下一阶段
-   d. 失败 → 进入 handle_blocker
+   b. 回写 manifest.json（source_id/source_type/content_hash/build_status）
+   c. 写 lifecycle-state.json（status=done + current_stage + progress + reconciled=false）
+   d. 检查门控条件
+   e. 通过后 → 下一阶段
+   f. 失败 → 进入 handle_blocker
 5. 里程碑完成后：
-   a. 归档产出物
-   b. 如 --auto-iterate → 进入下一里程碑
-   c. 否则 → 报告完成
+   a. 归档产出物到 .csp/milestones/{milestone}/（canonical）
+   b. P7 双写 lifecycle milestone+version，更新 AGENTS.md
+   c. 如 --auto-iterate → 进入下一里程碑
+   d. 否则 → 报告完成
 ```
 
 ## 阻塞处理（Handle Blocker）
@@ -387,7 +442,7 @@ v2 全流程
 任何阶段失败时，提供 3 个选项：
 
 1. **修复并重试** — 针对当前阶段重试
-2. **跳过此阶段** — 标记为 skipped，继续下一阶段
+2. **跳过此阶段** — 标记为 skipped，继续下一阶段；**必须在 `lifecycle-state.json` 写 `skipped_stages` + 跳过理由，不假装走了全流程**
 3. **停止工作流** — 报告当前进度并退出
 
 **自动重试策略：**
@@ -425,18 +480,22 @@ csp-full:
 详细的子编排规则、企业模式配置和 Solo 模式优化指南请参考：
 
 - `references/dag-routing.md` — 完整的 DAG 路由决策树和 Subagent 选择矩阵
+- `references/inner-loop-alignment.md` — **csp-full ↔ 内环对齐表 + handoff 契约 + 更新时机（必读）**
 - `references/enterprise-mode.md` — 企业角色定义、审批门控和合规检查清单
 - `references/solo-mode.md` — Solo 模式精简策略、快速通道和成本优化
 - `references/skill-orchestration.md` — Subagent 编排模式和错误处理策略
 
 ## 成功标准
 
-- [ ] 所有非跳过的阶段均产出有效产物
-- [ ] PRD 包含至少 1 个 falsifiable 验收标准
-- [ ] 技术设计包含关键技术决策记录
-- [ ] 实施计划包含依赖分析和并行策略
+- [ ] 所有非跳过的阶段均产出有效产物；跳过的阶段在 `lifecycle-state.json` 标 `skipped_stages` + 理由
+- [ ] PRD 包含至少 1 个 falsifiable 验收标准；PRD 正本落 `docs/prd/`（不落 `.csp/full/`）
+- [ ] 技术设计包含关键技术决策记录；spec/tech-design 落 `.csp/specs/`+`.csp/tech-design/`
+- [ ] 实施计划包含依赖分析和并行策略；task/plan 落 `.csp/tasks/`+`.csp/plan/`
 - [ ] QA 所有 CRITICAL 测试通过
 - [ ] 代码审查无 CRITICAL 问题
 - [ ] PRD 对齐验证通过率 ≥ 90%
-- [ ] 发布产物（RELEASE.md, CHANGELOG, tag）完整
+- [ ] 发布产物（RELEASE.md, CHANGELOG, tag）完整；ship 落 `.csp/ship/`
+- [ ] **manifest.json 已回写**本里程碑全部产物（source_id/content_hash/build_status）
+- [ ] **lifecycle-state.json 已写**：milestone 与 version 双写、`reconciled=false`、`current_stage` 推进
+- [ ] **AGENTS.md 版本/里程碑已更新**（P7 自动）
 - [ ] 用户收到完成报告和下一步建议

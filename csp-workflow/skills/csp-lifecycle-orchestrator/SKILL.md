@@ -88,6 +88,7 @@ anti_rationalizations:
 - `csp-full` = 执行导向（P0-P8 快速推进，适合需求已明确的场景）
 - `csp-lifecycle-orchestrator` = 规格化导向（深度拆解 + 选型 + Spec，适合需求模糊或系统复杂的场景）
 - 两者可串联：orchestrator 完成 Spec 后，交给 csp-full 的 P4+ 执行
+- **双边契约**：csp-full 现已遵循此 handoff——探测到 `.csp/specs/`+`.csp/tasks/` 已存在即跳 P0-P3 从 P4 起，并全程回写 `manifest.json`/`lifecycle-state.json`/`AGENTS.md`（P7 双写 milestone+version）。三形态（串联/独立/轻量）与对齐表见 `csp-workflow/skills/csp-full/references/inner-loop-alignment.md`
 
 ## Module Spec 治理层（PMS / CMS / TMS）
 

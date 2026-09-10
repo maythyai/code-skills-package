@@ -1,0 +1,99 @@
+{
+  "name": "full-delivery",
+  "description": "Full product delivery lifecycle: requirement decomposition -> tech selection -> solution design -> spec -> task breakdown -> implementation -> QA -> review -> ship",
+  "stages": [
+    {
+      "name": "decompose",
+      "description": "Decompose requirement into features with acceptance criteria",
+      "skills": ["csp-requirement-decomposition"],
+      "condition": null,
+      "on_failure": "retry_2x",
+      "timeout": 900,
+      "artifacts": [".csp/decomposition/"],
+      "gate": "user_confirms_features"
+    },
+    {
+      "name": "tech-selection",
+      "description": "Select tech stack and record ADRs",
+      "skills": ["csp-tech-stack-advisor"],
+      "condition": "decompose.success",
+      "on_failure": "retry_with_constraints",
+      "timeout": 900,
+      "artifacts": [".csp/tech-decisions/"],
+      "gate": "user_confirms_stack"
+    },
+    {
+      "name": "tech-design",
+      "description": "Design architecture, data model, interfaces",
+      "skills": ["csp-tech-solution-design"],
+      "condition": "tech-selection.success",
+      "on_failure": "retry_2x",
+      "timeout": 1200,
+      "artifacts": [".csp/tech-design/"]
+    },
+    {
+      "name": "spec",
+      "description": "Generate full-stack specs per feature",
+      "skills": ["csp-fullstack-spec-generator"],
+      "condition": "tech-design.success",
+      "on_failure": "retry_for_affected",
+      "timeout": 1200,
+      "artifacts": [".csp/specs/"]
+    },
+    {
+      "name": "task-breakdown",
+      "description": "Break specs into dependency-ordered tasks and waves",
+      "skills": ["csp-tech-task-breakdown"],
+      "condition": "spec.success",
+      "on_failure": "retry_2x",
+      "timeout": 900,
+      "artifacts": [".csp/tasks/"]
+    },
+    {
+      "name": "implement",
+      "description": "Parallel execution by wave",
+      "skills": ["csp-implementation-phase"],
+      "condition": "task-breakdown.success",
+      "on_failure": "insert_debug",
+      "timeout": 3600,
+      "artifacts": [".csp/milestones/v{N}/code"]
+    },
+    {
+      "name": "qa",
+      "description": "Quality gate: build, lint, test",
+      "skills": ["csp-tdd", "csp-verify-phase"],
+      "condition": "implement.success",
+      "on_failure": "retry_5x",
+      "timeout": 1200,
+      "artifacts": [".csp/milestones/v{N}/test-results"]
+    },
+    {
+      "name": "review",
+      "description": "Multi-perspective review and PRD alignment",
+      "skills": ["csp-code-review", "csp-verify-phase"],
+      "condition": "qa.success",
+      "on_failure": "insert_fix",
+      "timeout": 900,
+      "artifacts": [".csp/milestones/v{N}/review-summary"]
+    },
+    {
+      "name": "ship",
+      "description": "Release, tag, changelog",
+      "skills": ["csp-shipping-and-launch"],
+      "condition": "review.success",
+      "on_failure": "rollback_retry",
+      "timeout": 600,
+      "artifacts": [".csp/milestones/v{N}/release-notes"],
+      "gate": "user_approves_release"
+    }
+  ],
+  "defaults": {
+    "on_failure": "stop",
+    "timeout": 900
+  },
+  "governance": {
+    "pms": "csp-product-spec",
+    "cms": "csp-code-spec",
+    "tms": "csp-test-spec"
+  }
+}

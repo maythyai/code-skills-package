@@ -24,7 +24,7 @@
         },
         {
           "name": "produces_intake",
-          "description": "P0 产出 .csp/full/intake.md",
+          "description": "P0 产出 .csp/full/intake.md（执行态，保留）",
           "check": "file_exists:.csp/full/intake.md"
         }
       ]
@@ -53,7 +53,7 @@
         {
           "name": "produces_threat_model",
           "description": "应产出威胁建模文档",
-          "check": "file_exists:.csp/full/THREAT-MODEL.md"
+          "check": "file_exists:.csp/tech-design/THREAT-MODEL.md"
         },
         {
           "name": "detects_tech_stack",
@@ -174,8 +174,8 @@
         },
         {
           "name": "archives_milestone",
-          "description": "MVP 产出应归档到 .csp/full/milestones/vMVP/",
-          "check": "file_exists:.csp/full/milestones/vMVP/PRD.md"
+          "description": "MVP 产出应归档到 .csp/milestones/vMVP/（canonical，与内环共享）",
+          "check": "file_exists:.csp/milestones/vMVP/PRD.md"
         }
       ]
     },

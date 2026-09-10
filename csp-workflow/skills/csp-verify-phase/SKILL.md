@@ -108,6 +108,14 @@ After implementation, the spec itself may need updating:
 - [ ] No rationalizations were used to skip a check
 - [ ] Verification evidence is committed or linked in the PR/task
 
+## 产物回写（standalone 调用时）
+
+非经 orchestrator 调度时，本 skill 须回写产物索引 + 推进状态机，否则验证证据游离、06 对账无据。约定见 `csp-workflow/references/standalone-artifact-writeback.md`。
+
+- **前置**：`.csp/AGENTS.md`+`manifest.json` 不存在 → 提示先跑 `csp-knowledge-hub`(S0)。
+- **manifest**：验证证据回写 item `source_type=doc`、`build_status=built`、`content_hash`=git blob（`.csp/verification/VERIFICATION.md` + 证据）。
+- **lifecycle**：S7 `status=done` + `current_stage` 推进至 S8 + `progress`(六项检查通过率)。
+
 ## Related Skills
 
 - [[csp-implementation-phase]] — the work being verified

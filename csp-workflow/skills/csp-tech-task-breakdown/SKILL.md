@@ -232,6 +232,14 @@ parallel_strategy:
 └── TASK-BREAKDOWN-SUMMARY.md     # 拆解摘要 + 缺口清单（供 05 消费，即索引）
 ```
 
+## 产物回写（standalone 调用时）
+
+非经 orchestrator 调度时，本 skill 须回写产物索引 + 推进状态机，否则 task 游离、05 实施读不到。约定见 `csp-workflow/references/standalone-artifact-writeback.md`。
+
+- **前置**：`.csp/AGENTS.md`+`manifest.json` 不存在 → 提示先跑 `csp-knowledge-hub`(S0)。
+- **manifest**：每份 task 卡回写 item `source_type=doc`+`kind=feature`、`build_status=built`、`content_hash`=git blob（含 WBS.md / DEPENDENCY-DAG.md / WAVE-PLAN.md / TASK-BREAKDOWN-SUMMARY.md）；回填 Spec `related_tasks`。
+- **lifecycle**：S3.5 `status=done` + `current_stage` 推进至 S4 + `progress`(task/wave 计数)。
+
 ## 门控检查
 
 - [ ] 每个 Feature 有对应任务

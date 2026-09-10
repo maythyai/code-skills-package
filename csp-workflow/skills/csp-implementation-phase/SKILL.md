@@ -94,6 +94,14 @@ For each logical unit of work:
 - [ ] Commit history is clean — each commit is a self-contained logical unit
 - [ ] Spec deviations are documented with rationale
 
+## 产物回写（standalone 调用时）
+
+非经 orchestrator 调度时，本 skill 须回写产物索引 + 推进状态机，否则代码变更游离于 CMS 之外、追溯断裂。约定见 `csp-workflow/references/standalone-artifact-writeback.md`。
+
+- **前置**：`.csp/AGENTS.md`+`manifest.json` 不存在 → 提示先跑 `csp-knowledge-hub`(S0)。
+- **manifest**：每个原子 commit 后增量回写 `.csp/code-spec/`(CMS delta) item `source_type=cms`、`build_status=built`、`content_hash`=git blob。
+- **lifecycle**：S5 `status=done` + `current_stage` 推进至 S6 + `progress`(commit/wave 计数)；build gate 在 S6 校验。
+
 ## Related Skills
 
 - [[csp-verify-phase]] — for post-implementation verification

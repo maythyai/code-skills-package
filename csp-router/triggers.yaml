@@ -6014,6 +6014,39 @@ stack_rules:
   "csp-rag-architecture":
     skills: [csp-rag-architecture]
     weight: 40
+  "RAG":
+    skills: [csp-rag-architecture, csp-llm-app-development]
+    weight: 55
+  "检索增强":
+    skills: [csp-rag-architecture]
+    weight: 55
+  "向量检索":
+    skills: [csp-rag-architecture]
+    weight: 55
+  "向量数据库":
+    skills: [csp-rag-architecture, csp-postgres-patterns]
+    weight: 50
+  "MCP":
+    skills: [csp-mcp-builder, csp-mcp-server-patterns]
+    weight: 60
+  "MCP server":
+    skills: [csp-mcp-builder, csp-mcp-server-patterns]
+    weight: 55
+  "vLLM":
+    skills: [csp-vllm-serving]
+    weight: 55
+  "推理服务":
+    skills: [csp-vllm-serving, csp-llm-app-development]
+    weight: 55
+  "大模型":
+    skills: [csp-llm-app-development, csp-rag-architecture, csp-prompt-engineering]
+    weight: 50
+  "多智能体":
+    skills: [csp-multi-agent-architect, csp-agent-teams]
+    weight: 55
+  "数据管道":
+    skills: [csp-data-pipeline-patterns, csp-data-engineer]
+    weight: 55
   "Native":
     skills: [csp-react-native-patterns]
     weight: 45
@@ -6812,6 +6845,19 @@ intent_patterns:
     phase_hint: build
     weight: 45
 
+  # ─── AI/LLM Engineering Intents ───
+  ai_llm_application:
+    patterns: ["LLM", "RAG", "embedding", "vector.*search", "向量检索", "检索增强", "MCP", "vLLM", "推理服务", "大模型", "agent.*pipeline", "multi-agent", "多智能体", "langchain", "prompt.*engine"]
+    skills: [csp-rag-architecture, csp-llm-app-development, csp-mcp-builder, csp-vllm-serving, csp-multi-agent-architect, csp-prompt-engineering]
+    phase_hint: build
+    weight: 55
+
+  data_pipeline_build:
+    patterns: ["ETL", "ELT", "数据管道", "数据集成", "airflow", "dbt", "lakehouse", "数据湖", "数仓", "数据血缘"]
+    skills: [csp-data-pipeline-patterns, csp-data-engineer, csp-rag-architecture]
+    phase_hint: build
+    weight: 50
+
 # ─── SDD State-Aware Routing ───
 # Detect current development phase from artifacts and route accordingly
 sdd_state_routing:
@@ -6848,6 +6894,30 @@ sdd_state_routing:
     - when: "review_complete && !verify_complete"
       boost: [csp-verification, csp-verify-phase]
       phase_hint: verify
+
+  # ─── Chain Handoff Rules (产物驱动的链路接力) ───
+  # 检测前置 skill 产物存在 → 主动 boost 后继 skill，实现工作流自我组装。
+  # 与 SDD artifact 规则并行；命中后在路由输出中标注"推荐后继"。
+  - when: "artifact_exists('.csp/specs/deep-interview-*.md') && !artifact_exists('.csp/plans/consensus-*.md') && !artifact_exists('.csp/plans/ralplan-*.md')"
+    boost: [csp-plan-phase, csp-writing-plans]
+    phase_hint: plan
+    handoff_from: deep-interview
+  - when: "artifact_exists('.csp/plans/consensus-*.md') || artifact_exists('.csp/plans/ralplan-*.md')"
+    boost: [csp-autopilot]
+    phase_hint: build
+    handoff_from: ralplan
+  - when: "artifact_exists('.csp/decomposition/') && !artifact_exists('.csp/tech-decisions/')"
+    boost: [csp-tech-stack-advisor]
+    phase_hint: define
+    handoff_from: requirement-decomposition
+  - when: "artifact_exists('.csp/tech-design/') && !artifact_exists('.csp/specs/')"
+    boost: [csp-fullstack-spec-generator]
+    phase_hint: define
+    handoff_from: tech-solution-design
+  - when: "artifact_exists('.csp/specs/') && !artifact_exists('.csp/tasks/')"
+    boost: [csp-tech-task-breakdown]
+    phase_hint: define
+    handoff_from: fullstack-spec-generator
 
   # ─── Documentation Management Triggers ───
   "整理文档":

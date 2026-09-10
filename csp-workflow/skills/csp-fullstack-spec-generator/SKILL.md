@@ -551,6 +551,14 @@ services:
 └── SPEC-INDEX.md          # Spec 索引 + 完成状态
 ```
 
+## 产物回写（standalone 调用时）
+
+非经 `csp-lifecycle-orchestrator` 调度时（standalone），本 skill 须在产出后回写产物索引 + 推进状态机，否则 spec 游离于 manifest 之外、下游 task-breakdown 找不到。约定见 `csp-workflow/references/standalone-artifact-writeback.md`。
+
+- **前置**：`.csp/AGENTS.md`+`manifest.json` 不存在 → 提示先跑 `csp-knowledge-hub`(S0)，不静默产出。
+- **manifest**：每份 Spec 回写 item `source_type=spec`、`build_status=built`、`content_hash`=git blob（含 SPEC-INDEX.md / API-OVERVIEW.md / SHARED-SCHEMAS.md）。
+- **lifecycle**：S3 `status=done` + `current_stage` 推进至 S3.5 + `progress`(spec 计数) + `reconciled=false`。
+
 ## 生成策略
 
 | Feature 复杂度 | Spec 深度 | 预估 Token |

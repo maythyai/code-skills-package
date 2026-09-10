@@ -71,13 +71,18 @@
 
 ## 与 csp-full 的协作
 
-```
-场景 A: 需求模糊，需要深度拆解
-  → csp-lifecycle S1-S4 → csp-full P4-P8
+csp-full 是执行车道，与 lifecycle 共享 `.csp/manifest.json`/`lifecycle-state.json`/`AGENTS.md`——**csp-full 不论哪种形态都回写这三个文件**，不"跳过"产物索引与状态机。完整双边契约与三形态对齐见 `csp-workflow/skills/csp-full/references/inner-loop-alignment.md`。
 
-场景 B: 需求明确，快速执行
-  → csp-full P0-P8 (跳过 lifecycle)
+```
+场景 A: 串联（spec-aware）— 需求模糊，需要深度拆解
+  → csp-lifecycle S1-S4（产出 .csp/specs/+tasks/）→ csp-full P4-P8（读 specs/tasks 为输入，不重写正本）
+
+场景 B: 独立全流程 — 需求明确，全新产品
+  → csp-full P0-P8（不经 orchestrator 的 S1-S4，但全程回写 manifest/lifecycle-state/AGENTS.md）
 
 场景 C: 只需要规格文档
   → csp-lifecycle --mode spec-only (S1-S4 后停止)
+
+场景 D: 轻量增量 — PATCH/MINOR，PRD 已足够详细
+  → csp-full P1(精简)/P4 起步，lifecycle-state 标 skipped_stages（不假装全流程），manifest 仍回写本版本增量
 ```

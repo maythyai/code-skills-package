@@ -4,7 +4,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
 [![npm](https://img.shields.io/npm/v/code-skills-package)](https://www.npmjs.com/package/code-skills-package)
-[![v0.10.0](https://img.shields.io/badge/version-0.10.0-green)](./CHANGELOG.md)(./CHANGELOG.md)(./CHANGELOG.md)
+[![v0.11.0](https://img.shields.io/badge/version-0.11.0-green)](./CHANGELOG.md)(./CHANGELOG.md)(./CHANGELOG.md)(./CHANGELOG.md)
 [![Skills: 661](https://img.shields.io/badge/skills-661-orange)](./docs/SKILL-INDEX.md)
 [![Platforms: 22+](https://img.shields.io/badge/platforms-22+-brightgreen)](./docs/INSTALL.md)
 
@@ -39,9 +39,45 @@ CSP (Code Skills Package) consolidates the essence of multiple open-source AI pr
 | **Full-Stack Coverage** | 661 skills · 5 layers · 15+ languages · 22+ platforms | Single language / limited scenarios |
 | **Open Extension** | Custom Skills + Recipe + Creation Wizard | Closed ecosystem / no extension |
 
-### Smart Routing
+### State-Driven Smart Routing
 
-The router uses triple-signal weighted scoring (keywords 40% + intent 30% + context 30%), combined with Git status, technology stack and development phase auto-detection, along with the SKPG skill knowledge graph (740 nodes, 795 edges, 162 trigger keywords) for dependency checking and path optimization. High confidence routes directly, low confidence uses interactive confirmation.
+The router is driven by **triple state signals**, not just keywords:
+
+- **Project state** (`.csp/state.json`): Git status, tech stack, dev phase, test status — auto-detected by the pre-router hook and fed into the context score (phase match +0.2, stack match +0.15, dirty tree biases toward debug skills).
+- **Artifact state** (`.csp/artifacts/*.md`): existence of `understand`/`plan`/`spec`/`implement`/`review`/`verify` artifacts determines the current SDD phase and **boosts the next skill** automatically — so the router knows where you are, not just what you typed.
+- **Graph state** (`.csp/skpg/graph.json`, 2,400+ nodes / 5,200+ edges): SKPG dependency checks, impact analysis, and A→B shortest-path finding across 2,200+ trigger keywords.
+
+Triple-signal weighted scoring (keywords 40% + intent 30% + context 30%). High confidence routes directly, low confidence uses interactive confirmation, below 50% falls back to deep interview.
+
+### Artifact-Driven Chain Handoff
+
+Skills self-assemble into workflows via artifact handoff — no manual wiring. When a predecessor's output lands on disk, the successor auto-detects it and skips already-completed phases:
+
+```
+deep-interview spec (.csp/specs/deep-interview-*.md)
+  → csp-plan --consensus --direct (reuses spec, skips interview)
+    → consensus plan (.csp/plans/consensus-*.md)
+      → csp-autopilot (skips Phase 0+1, starts at execution)
+```
+
+The router reports a **recommended next skill** in its output whenever a handoff artifact is detected.
+
+### Gated Autonomy
+
+CSP automates aggressively but never runs away: approval gates pause before decomposition sign-off, tech-stack confirmation, and release; QA stops after the same error repeats 3× (fundamental-issue signal); plan→execution is approval-gated by default. Stop conditions are intentional — they prevent a vague idea from auto-committing all the way to production.
+
+### Multi-Branch Routing
+
+When a gate fails, the engine branches — it doesn't halt:
+
+| Failure | Branch action |
+|---------|--------------|
+| Decomposition incomplete | retry (max 2×) |
+| Tech-design review fails | retry design or review (max 3×) |
+| Test failure | insert a debug stage before QA |
+| Critical review finding | insert a fix stage before ship |
+
+Four modes (`full` / `lightweight` / `spec-only` / `extend`) and scope-based escalation/degradation (e.g. `csp-simple-dev` auto-upgrades to `csp-design-hub` when scope exceeds 3 files) keep the pipeline matched to task size.
 
 ### On-Demand Loading Architecture
 
@@ -49,7 +85,7 @@ Only L0 router remains resident (~2,000 tokens (SKILL.md + routing index summary
 
 ### Skill Orchestration Engine
 
-Two orchestration modes complement each other: Static Recipe pre-defines skill sequences for common scenarios (feature development, bug fixes, refactoring, quick fixes); Dynamic DAG engine `csp-auto` makes node-by-node decisions, supporting branching parallelism, rollback retries and worktree isolation execution. Complexity classifier automatically matches model tiers.
+Two orchestration modes complement each other: Static Recipe pre-defines skill sequences for common scenarios (feature development, bug fixes, refactoring, quick fixes); Dynamic DAG engine `csp-autopilot` makes node-by-node decisions, supporting branching parallelism, rollback retries and worktree isolation execution. Complexity classifier automatically matches model tiers.
 
 ### Continuous Learning Engine
 
@@ -58,6 +94,8 @@ Automatically extracts knowledge in 5 dimensions at session end — project arch
 ### Full Development Lifecycle Coverage
 
 661 skills distributed across 5 layers, covering the full process of requirement planning, code implementation, review, debugging, testing, and release, extending to specialized areas such as AI Engineering (RAG/LLM/vLLM), DevOps (CI/CD/IaC/K8s), mobile (React Native/cross-platform), security auditing (STRIDE-A/CodeQL/incident response). Additionally, 31 skills are specifically designed for independent developers, covering deployment (Vercel/Railway/VPS), monetization (Stripe/subscriptions/SEO/analytics), performance tuning, API integration (webhooks/OAuth), testing engineering (E2E/visual regression), internationalization, and monorepo management. Each skill follows the SKILL.md v2 specification, with structured fields like phase/domain/role.
+
+A **three-spec governance layer** (PMS product-spec / CMS code-spec / TMS test-spec) runs alongside the lifecycle as living baselines: each stage reads the relevant spec before producing, and writes back deltas after shipping — keeping PRD, code, and tests mutually traceable without a separate tool.
 
 ### Open Ecosystem
 
@@ -216,7 +254,7 @@ Detailed architecture design, DAG orchestration engine, skill knowledge graph, s
 
 ## Skill Orchestration
 
-CSP supports two complementary orchestration modes: static Recipes (pre-defined sequences) and dynamic DAG (`csp-auto` makes node-by-node decisions).
+CSP supports two complementary orchestration modes: static Recipes (pre-defined sequences) and dynamic DAG (`csp-autopilot` makes node-by-node decisions).
 
 ### Built-in Recipes
 

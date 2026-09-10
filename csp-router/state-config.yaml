@@ -47,6 +47,34 @@ tech_stack:
     cpp:
       files: ["CMakeLists.txt", "Makefile"]
       confidence: 0.7
+    php:
+      files: ["composer.json"]
+      confidence: 0.85
+    ruby:
+      files: ["Gemfile", "Gemfile.lock"]
+      confidence: 0.9
+    scala:
+      files: ["build.sbt", "build.sc"]
+      confidence: 0.9
+    elixir:
+      files: ["mix.exs"]
+      confidence: 0.9
+    csharp:
+      files: ["*.csproj", "*.sln"]
+      confidence: 0.85
+  # 复合栈判定：基础栈 + 依赖特征 → 派生领域栈（供路由 context_score 加权）
+  composite_indicators:
+    ai_llm:
+      requires: ["python"]
+      deps_in_pyproject: ["transformers", "torch", "langchain", "llama-index", "openai", "anthropic", "vllm", "sentence-transformers"]
+      deps_in_requirements: ["transformers", "torch", "langchain", "openai", "anthropic", "vllm"]
+      confidence: 0.8
+      label: "ai-llm"
+    fullstack_js:
+      requires: ["javascript"]
+      deps_in_package_json: ["next", "react", "vue", "nuxt", "svelte"]
+      confidence: 0.75
+      label: "fullstack-js"
 
 phase:
   signals:
@@ -57,10 +85,10 @@ phase:
       files: ["src/", "lib/", "app/"]
       weight: 0.6
     testing:
-      files: ["tests/", "test/", "spec/", "__tests__/"]
+      files: ["tests/", "test/", "spec/", "__tests__/", "*.test.ts", "*.test.js", "*.spec.js", "*.spec.ts"]
       weight: 0.7
     deploying:
-      files: ["Dockerfile", "docker-compose.yml", ".github/workflows/", "k8s/"]
+      files: ["Dockerfile", "docker-compose.yml", ".github/workflows/", "k8s/", "vercel.json", "railway.json", "fly.toml", "netlify.toml", "render.yaml"]
       weight: 0.8
     reviewing:
       files: [".github/PULL_REQUEST_TEMPLATE.md", ".review/"]
