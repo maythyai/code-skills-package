@@ -1,6 +1,8 @@
 # 版本号管理规范（独立参考文件）
 
-> 本文件集中所有版本号管理规则，供 roadmap/06/05/README 引用。各提示词内仍保留各自相关内容，本文件是**汇总参考**。
+> 本文件是版本号管理规则的**权威定义**，供 roadmap/06/05/README 引用。各提示词内仍保留各自相关内容；与本文件冲突时以本文件为准。
+>
+> ⚠️ **本文件出现的所有具体版本号（如 `v1.3.0`、`v1.105.269`、`vX.Y.Z`）与代号（`Mxx-codename`）均为 SemVer 规则的格式示例，不是本仓库的真实版本。** 本仓库真实版本以 `VERSION` 文件与 `git tag` 为准（当前 `0.11.1`）。切勿把示例版本号当作项目当前版本或历史 tag 来引用/对齐。
 
 ## 一、默认 SemVer（X.Y.Z）
 
@@ -94,7 +96,7 @@
 
 - `lifecycle-state.prod_version`：线上实际在跑的版本（从 health endpoint 验证）。
 - `lifecycle-state.latest_release`：最新推送的 tag。
-- `lifecycle-state.milestone`：**当前迭代 SemVer 版本号**（如 `v3.13.0`），**非代号**；06 发布时验证 `milestone`==本次 tag。若保留代号用独立 `milestone_name` 字段（如 `M9-observability`）。`milestone`/`prod_version`/`latest_release` 三者必须同一抽象层（SemVer），代号不参与版本对齐——否则"milestone 是 M9、version 是 v3.13.0"映射不可机读。
+- `lifecycle-state.milestone`：**当前迭代 SemVer 版本号**（格式如 `vX.Y.Z`，取本仓库实际下一版本），**非代号**；06 发布时验证 `milestone`==本次 tag。若保留代号用独立 `milestone_name` 字段（如 `Mxx-codename`）。`milestone`/`prod_version`/`latest_release` 三者必须同一抽象层（SemVer），代号不参与版本对齐——否则"milestone 是代号、version 是 SemVer"映射不可机读。
 - **两者不一致 = 线上落后于最新发布**——05 开始前检查此差异。
 - prod-verified 后更新 `lifecycle-state.prod_version = <verified version>`。
 
@@ -125,7 +127,7 @@ release 后从 `git log <prev-tag>..<tag> --oneline` + CHANGELOG 回填"Main Fea
 | 版本字符串不一致 | tag ≠ package.json ≠ Release title | 五方完全一致，脚本校验 |
 | 不回填实际交付 | release 后"实际做了什么"没记录 | git log + CHANGELOG 回填 VERSION-REGISTRY + roadmap |
 | 静默门控降级后 auto-release | 工具链坏→grep 替代→auto-proceed | not-run=BLOCKED=阻断发布，tag 标 -draft |
-| 代号当 milestone | `milestone` 写 `M9-xxx`，与 `prod_version`/`latest_release` 不同层，映射不可机读 | `milestone`=SemVer（`v3.13.0`）；代号进 `milestone_name`；三者同层对齐 |
+| 代号当 milestone | `milestone` 写代号（`Mxx-codename`），与 `prod_version`/`latest_release` 不同层，映射不可机读 | `milestone`=SemVer（`vX.Y.Z`）；代号进 `milestone_name`；三者同层对齐 |
 
 ## 十六、提交规范（commit convention）
 

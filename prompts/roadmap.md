@@ -13,7 +13,7 @@
 ## 一、使命与硬边界（红线）
 
 1. **Anchor, not plan**：战略 = 产品是什么/为什么/为谁（Rumelt kernel：诊断→指导方针→连贯行动）。**不是 feature list、不是排期**——功能细节归 01 PRD/spec，排期归任务管理。规划只给"方向 + 版本主题 + 关键价值"，不放详细 PRD。
-2. **版本号规则权威在此**：SemVer/CalVer 方案、X.Y.Z 含义、版本-主题序列**定义在本提示词产出物里**；06 发布执行时 reference 它，不另立。
+2. **版本号规则权威**：SemVer/CalVer 机制、对齐检查的权威定义在 `version-management.md`（独立参考文件）；本提示词产出物定义本项目的**版本-主题序列**；06 发布执行时 reference `version-management.md` 的规则，不另立。
 3. **短是特性**：模板受限，加节成本高；push back 扩张。每版本只给关键信息 + 价值描述，详细 spec 留到 01/03。
 4. **Durable rerunnable**：可重跑——二次运行 in-place 更新，保留有效部分，只挑战 stale/weak 段；不推倒重来。
 5. **不臆造数据**：指标目标/量级未明确标 `[TBD]`，不编造 DAU/收入等。
@@ -99,7 +99,7 @@
 
 **多平台版本同步**：根/各 app `package.json`、`tauri.conf.json`、`pyproject.toml`、iOS `CURRENT_PROJECT_VERSION`、Docker tag、GitHub Release tag_name、GitHub Release title、`VERSION` 文件必须**完全一致**（同一字符串）；用脚本校验禁止人工同步（执行细节见 06「版本与发布规范」节）。
 
-> 本节是**版本号规则的权威定义**；06 发布执行 reference 此节，不另立方案。
+> 版本号规则（SemVer 机制、对齐检查）的权威定义见 `version-management.md`；本节定义本项目的版本-主题序列与 bump 策略。06 发布执行 reference `version-management.md`，不另立方案。
 
 ### Phase 2：1 年路径（版本序列 + 主题）
 列接下来 12 个月版本序列（如 SemVer `v1.0 → v1.1 → v1.2 → v1.3` 或 CalVer `v2026.9 → v2026.11 → v2027.1`）。**每版本只给摘要级**（详细 spec 留到 01/03）：
@@ -175,7 +175,7 @@ see_also: docs/prd/PRD-INDEX.md | .csp/review/REVIEW-FINDINGS-*.json
 | 规划=feature list | 列一堆功能无战略 | Anchor not plan；战略是 what/why，功能归 01 |
 | 规划=排期 | Gantt 化、堆日期 | 路线图示方向不示日期；排期归任务管理 |
 | 详细 PRD 写进 roadmap | 每版本写全 AC/字段 | 只给关键信息+价值；详细 spec 留 01/03 |
-| 版本号规则散落 | 06 另立方案、与 roadmap 不一致 | 版本号规则权威在 ROADMAP，06 reference |
+| 版本号规则散落 | 06 另立方案、与 roadmap 不一致 | 版本号规则权威在 `version-management.md`（06 reference）；ROADMAP 记版本-主题序列 |
 | 不回写 manifest | 规划产物无索引 | 产出即回写 manifest |
 | 推倒重写 | 每次更新全重写 | durable rerunnable，in-place 增量更新 |
 | 臆造指标 | 编 DAU/收入目标 | 未定标 [TBD] |
@@ -191,3 +191,7 @@ see_also: docs/prd/PRD-INDEX.md | .csp/review/REVIEW-FINDINGS-*.json
 - 每版本摘要级，不写详细 PRD（"真正的 prd 细节等具体 spec 再详细描述"）。
 - 不确定处标 `[TBD]`，绝不臆造。
 - 完成时一句话告知：产物路径 + "01 PRD 将读 ROADMAP 定位版本主题；06 release 用版本号规则；07 复盘 findings 回流"。
+
+---
+
+规划后续路径，新功能和迭代都可以。

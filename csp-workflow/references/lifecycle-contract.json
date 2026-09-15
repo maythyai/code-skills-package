@@ -1,6 +1,9 @@
 {
   "version": 1,
   "description": "CSP lifecycle state machine — the machine-readable form of the S0-S9 chain declared in csp-lifecycle-orchestrator skill. Read by `csp-sdk drive.*` to turn advisory skill handoff into enforced state transitions: a stage cannot advance until its gate (artifacts + commands) passes.",
+  "canonical_vocabulary": "00-07 (defined in prompts/README.md §阶段状态追踪). S0-S9 ids below are the machine-id aliases used by csp-sdk drive.*; they map to 00-07 via stage_id_aliases. The runtime state file .csp/lifecycle-state.json uses 00-07 current_stage ids and the schema defined in prompts/README + prompts/version-management.md.",
+  "stage_id_aliases": { "S0": "00", "S1": "02", "S2": "03", "S2.5": "03", "S2.6": "03", "S3": "03", "S3.5": "04", "S4": "04", "S5": "05", "S6": "06", "S7": "06", "S8": "06", "S9": "06" },
+  "lifecycle_state_schema_ref": "prompts/README.md §阶段状态追踪 — required fields: pipeline_version, milestone (SemVer, not codename), milestone_name (codename, nullable), current_stage, last_updated, reconciled, prod_version, latest_release, stages[]. Version rules authoritative in prompts/version-management.md.",
   "modes": {
     "full":        { "stages": ["S0","S1","S2","S2.5","S2.6","S3","S3.5","S4","S5","S6","S7","S8","S9"] },
     "lightweight": { "stages": ["S0","S1","S2","S2.5","S3","S3.5","S4","S5","S6","S7","S8"] },

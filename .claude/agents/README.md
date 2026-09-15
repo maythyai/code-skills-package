@@ -124,7 +124,30 @@ orchestrator 只 spawn `dev-lead` 一次；dev-lead 内部按 Wave + 文件无�
 
 ## 八、提示词源
 
-本目录 agent 正文来自 `prompts/`（roadmap.md + 00-07 + README）。若改了 prompts/，重新生成 agent（`cp prompts/X.md 内容到 .claude/agents/<name>.md` 的正文部分，保留 frontmatter）。
+本目录 agent 正文来自 `prompts/`，源文件清单：
+
+| agent | prompt 源 | 说明 |
+|---|---|---|
+| roadmap-planner | roadmap.md | 外环 |
+| knowledge-hub | 00-knowledge-hub.md | 00 |
+| prd-writer | 01-prd.md | 01 |
+| decomposer | 02-decomposition.md | 02 |
+| tech-designer | 03-tech-design.md | 03 |
+| task-breaker | 04-task-breakdown.md | 04 |
+| dev-lead | 05-implementation.md | 05 |
+| release-manager | 06-verify-ship.md | 06 |
+| reviewer | 07-reviewer.md | 07 |
+| auditor | audit.md | 独立 |
+| brownfield-integrator | brownfield-doc-integration.md | 棕地(独立) |
+| version-management | version-management.md | 参考文件(无 frontmatter，整文件复制) |
+| (本 README) | README.md | 共享约定，不复制成 agent |
+
+**重新生成约定**：若改了 `prompts/`，按下式重新生成对应 agent，保持 body 与 prompt 逐字一致——
+
+- 有 frontmatter 的 agent（除 version-management 外全部）：`{ head -6 .claude/agents/<name>.md; echo; echo '> 共享约定（全流程地图/进度播报格式/gate 原则/manifest 回写/默认优先）见同目录 \`README.md\`。'; echo; cat prompts/<src>.md; } > .claude/agents/<name>.md.new && mv .claude/agents/<name>.md.new .claude/agents/<name>.md`（保留各 agent 自己的 frontmatter 6 行 + 共享约定指针行 + prompt 全文）。
+- version-management.md（参考文件，无 frontmatter）：`cp prompts/version-management.md .claude/agents/version-management.md`。
+
+> 版本号规则等共享规则以 `prompts/version-management.md` 为权威定义；各 prompt 内嵌的版本片段若与之冲突，以 version-management.md 为准。
 
 ## 九、迁移到其他项目
 

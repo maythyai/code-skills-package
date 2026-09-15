@@ -74,6 +74,8 @@ model: sonnet
 ├── planning/                      # L2 csp-workflow 生命周期产物（phases/debug/intel/codebase/spikes/reports/forensics/research/todos 等，原 .planning/ 归位）
 ├── spark/                         # Spark 设计链产物（context/profile/dashboard/各 skill 报告，原 spark-output/ 归位）
 ├── ship/ ops/                     # 发布/运维产物（05 阶段）
+├── review/                        # 正式评审/复盘报告（01 PRD-REVIEW、07 REVIEW-REPORT）
+├── audit/                         # 模块审计/可用性审查产物（audit 阶段）
 ├── traceability/                  # 追溯矩阵（贯穿）
 ├── wiki/                          # 通用项目 wiki
 ├── code-wiki/{system}/            # 代码 Q&A wiki
@@ -90,7 +92,7 @@ model: sonnet
 **风格**：电报体（telegraph style）——短句、规则式、无废话；大型项目可分目录 scoped AGENTS.md（如 `docs/AGENTS.md`、`extensions/AGENTS.md`）就近约束，根 AGENTS.md 作入口指向。
 
 > **文档管理边界（全链路统一）**：
-> - **`.csp/` = 编程管理统一文档库**（agent/工程消费，唯一编程事实源）：`AGENTS.md`/`manifest.json`/`lifecycle-state.json` + 三说明书 **PMS**(`product-spec/`)/**CMS**(`code-spec/`)/**TMS**(`test-spec/`) + `decomposition/`/`specs/`/`tech-design/`/`tech-decisions/`/`tasks/`/`traceability/`/`artifacts/`/`ship/`/`ops/`/`review/`/`milestones/`。所有驱动开发流水线的产物落此，git 跟踪，跨阶段共享。
+> - **`.csp/` = 编程管理统一文档库**（agent/工程消费，唯一编程事实源）：`AGENTS.md`/`manifest.json`/`lifecycle-state.json` + 三说明书 **PMS**(`product-spec/`)/**CMS**(`code-spec/`)/**TMS**(`test-spec/`) + `decomposition/`/`specs/`/`tech-design/`/`tech-decisions/`/`tasks/`/`traceability/`/`artifacts/`/`ship/`/`ops/`/`review/`/`audit/`/`milestones/`。所有驱动开发流水线的产物落此，git 跟踪，跨阶段共享。
 > - **`docs/` = 对外人类文档**（给人读，非流水线驱动产物）：安装/使用/架构/技能索引与编写规范/`analysis/` 报告/`strategy/` 战略/`prd/` PRD 原文。**门面 `README.md` 与发布元数据 `CHANGELOG.md`/`LICENSE` 在根目录，不属 `docs/`**——README 只做电梯演讲 + 指向 `docs/` 的链接表，不堆细节。
 > - **三层定位（权威见 `docs/README.md`）**：`README.md`（根，门面+路标）→ `docs/`（对外人类文档）→ `.csp/`（对内 agent 产物库，人不直接读）。编程产物不进 `docs/`，人类文档不进 `.csp/`，README 不堆细节。
 > - **原则**：驱动开发流水线的编程管理产物 → `.csp/`；给人读的非开发文档 → `docs/`。PRD 原文供人评审，PMS 是其工程消费蒸馏。strategy/roadmap 属编程管理（驱动版本规划）→ `docs/strategy/`（人类可读 + manifest 索引）。
@@ -229,7 +231,7 @@ bash $SCRIPT list --type cms     # 按 source_type 列项
 └── .hub-run/<run-id>/             # 运行工作区（不提交）：source-lock/coverage/audit
 ```
 
-**lifecycle-state.json 初始化责任**：本阶段完成时若该文件不存在，则创建它——`pipeline_version`、`milestone`、`current_stage=01-prd`、`stages[]` 全链路 8 阶段（00 标 `done`，01–06 `pending`，07 `pending` 可选触发）。后续每阶段读它定位、完成时写它推进。
+**lifecycle-state.json 初始化责任**：本阶段完成时若该文件不存在，则创建它——`pipeline_version`、`milestone`（SemVer，非代号）、`milestone_name`（代号，可空）、`current_stage=01-prd`、`last_updated`、`reconciled=false`、`prod_version`（线上版本，初值=null）、`latest_release`（最新 tag，初值=null）、`stages[]` 全链路 8 阶段（00 标 `done`，01–06 `pending`，07 `pending` 可选触发）。字段 schema 见 README「阶段状态追踪」。后续每阶段读它定位、完成时写它推进。
 
 **路径原则**：单一事实源（manifest 唯一）；可发现性（manifest 即索引）；路径即语义（`.csp/` 给 agent）；幂等（重跑 doctor 通过即复用）；不污染根目录。
 
@@ -337,7 +339,7 @@ git branch -d csp/hub-init   # 清理已合并的侧分支
 | agent 配置 | `.claude/` | Claude Code 运行时配置 | agent | `agents/`/`skills/`/`settings.json`/`hooks` | 安装器生成；managed 块（`<!-- csp-begin -->`）不手改 | 安装/更新 |
 | 路由契约 | `.csp/AGENTS.md` | 项目知识路由契约（00 产出） | agent | 项目概览/目录权威与依赖方向/三说明书定位/manifest 索引约定/操作路由表/闭环 | 电报体；6 节固定结构（见 Phase 1） | 00 初始化 + 结构变更增量 |
 | 产物索引 | `.csp/manifest.json` | 唯一产物索引 | agent | items（source_id/source_type/content_hash/build_status/raw_path/output_path） | content_hash 用 git blob；禁 mtime；每阶段回写 | 每阶段产出即回写 |
-| 流水线状态 | `.csp/lifecycle-state.json` | 阶段状态导航 | agent | pipeline_version/milestone/current_stage/stages[]/reconciled/prod_version | 阶段级+progress 摘要；不存全量任务 | 每阶段读/写；06 对账 |
+| 流水线状态 | `.csp/lifecycle-state.json` | 阶段状态导航 | agent | pipeline_version/milestone/milestone_name/current_stage/last_updated/reconciled/prod_version/latest_release/stages[] | 阶段级+progress 摘要；不存全量任务 | 每阶段读/写；06 对账 |
 | 对外文档 | `docs/` | 人类文档 | 人 | install/usage/arch/skill-index/authoring/analysis/strategy/prd(intake) | 见 `docs/README.md`；编程产物不进 `docs/` | 持续 |
 | docs 索引 | `docs/README.md` | docs 目录索引+三层定位 | 人 | 三层（README门面/docs对外/.csp对内）+ 文件索引 + 棕地整合映射 | 结构变更时同步 | 结构变更 |
 | 贡献 | `CONTRIBUTING.md` | 贡献指南 | 贡献者 | 提交流程/分支策略/conventional commits/skill 编写规范（指向 `docs/SKILL-AUTHORING.md`）/PR 流程 | — | 流程变更 |

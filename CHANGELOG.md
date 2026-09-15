@@ -6,6 +6,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## Unreleased
 
+_(暂无未发布内容)_
+
+## [0.11.1] — 2026-09-10
+
+### Fixed
+- **版本号与 prompts/skills 对齐** — sync VERSION 文件 + align prompts 00-07 with skills（commit `3296a76`）。修正发布链路版本字符串一致性。
+
+## [0.11.0] — 2026-09-10
+
 ### Changed
 - **产物路径全仓库统一到 `.csp/`** — 消除散落在项目根的并行产物根，一对一换根保留内部结构与跨 skill 交接路径：
   - `.planning/` → `.csp/planning/`（L2 csp-workflow 层：agents/workflows/commands/skills + `csp-meta` spec-contract 等 + `bin/csp-sdk.mjs` + `scripts/token-budget.mjs` + csp-router 派生 + `docs/ARCHITECTURE*.md`/`USER-GUIDE.md`）

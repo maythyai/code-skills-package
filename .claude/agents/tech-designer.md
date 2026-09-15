@@ -298,7 +298,7 @@ status: Draft|Reviewing|Approved|Released|Deprecated
 author: {name 或 [TBD]}
 date: {YYYY-MM-DD}
 prd_ref: docs/prd/PRD-{slug}.md        # ← 唯一上游 PRD
-pms_ref: .csp/product-spec/PMS-{module-slug}.md
+pms_module: {module-slug}    # ← 归属 PMS 模块（与 02/04 同字段，不另立 pms_ref）
 cms_ref: .csp/code-spec/{相关}.md      # 若参考了 CMS，必填；否则 [无]
 feature_id: F-{group}-{seq}
 complexity: S|M|L|XL

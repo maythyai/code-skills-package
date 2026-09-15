@@ -80,6 +80,8 @@
 
 **粒度原则**：lifecycle-state 只记**阶段级 + 每阶段 progress 摘要（指针/计数）**，不存全量任务/用例。细粒度状态各有归属：Task 在 `.csp/tasks/WBS.md`、AC 覆盖在 `.csp/traceability/COVERAGE-REPORT.md`、产物 build_status 在 `.csp/manifest.json`。lifecycle-state 是导航摘要，避免重复臃肿。
 
+> ⚠️ 以下 JSON 为 **schema 格式示例**，其中的 `milestone`/`prod_version`/`latest_release` 等字段值（`v1.0`/`v1.3.0`/`v1.4.0`/`M1-…`）均为占位演示，**不是本仓库真实版本**。真实版本以 `VERSION` 文件 + `git tag` 为准。
+
 ```json
 {
   "pipeline_version": 1,
@@ -104,7 +106,7 @@
 ```
 
 - **status 取值**：`pending`（未开始）/ `in_progress`（进行中）/ `done`（完成）/ `blocked`（阻塞）/ `stale`（上游变更需重跑）。
-- **milestone ↔ version 映射（强制，防"M9 vs v3.13.0"模糊）**：`milestone` 字段**必须**是当前迭代的 SemVer 版本号（如 `v3.13.0`），**不得**用里程碑代号（`M9-xxx`）。代号是叙事性愿景，不是机读版本——`milestone` 用代号会让 `milestone`/`prod_version`/`latest_release` 三者不在同一抽象层，映射不可机读。若需保留代号，用独立 `milestone_name` 字段（如 `"milestone": "v3.13.0", "milestone_name": "M9-observability"`）。06 发布时验证 `milestone`==本次 tag，与 `latest_release` 对齐；代号不参与版本对齐。
+- **milestone ↔ version 映射（强制，防"代号 vs SemVer"模糊）**：`milestone` 字段**必须**是当前迭代的 SemVer 版本号（格式如 `vX.Y.Z`，取本仓库实际下一版本），**不得**用里程碑代号（`Mxx-codename`）。代号是叙事性愿景，不是机读版本——`milestone` 用代号会让 `milestone`/`prod_version`/`latest_release` 三者不在同一抽象层，映射不可机读。若需保留代号，用独立 `milestone_name` 字段（如 `"milestone": "vX.Y.Z", "milestone_name": "Mxx-codename"`）。06 发布时验证 `milestone`==本次 tag，与 `latest_release` 对齐；代号不参与版本对齐。
 - **07 为可选触发阶段**：不在 00→06 的强制线性链路上；里程碑发布（06 done）后由用户触发复盘。07 的 findings 通过 `回流阶段` 字段驱动下一迭代 01-05。
 - **每阶段开始（探测 step 0.5）**：读 `lifecycle-state.json`，确认本阶段前置阶段 status==`done`；未完成 → 路由回上游；明确"我是第 N 步、下一步是 Y"。
 - **每阶段完成**：写 `lifecycle-state.json`——本阶段 status=`done` + 补 `progress` 摘要（计数/指针，非全量）、`current_stage` 指向下一阶段 id、`last_updated` 更新、`reconciled=false`（待 06 对账）。

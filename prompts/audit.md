@@ -212,7 +212,7 @@
 
 每条 finding：`ID / 维度（A1 功能正确性 | A2 原则N | B 技术实现 | G 安全 | H 性能 | I 可观测性/文档）/ 问题 / 证据（file:line 或 交互描述）/ 影响 / 严重度（0–4 + 置信度）/ 优先级 P0–P3 / 建议（可执行）/ 回流阶段（01/03/05）/ 建议版本（vX.Y.Z）/ 快速修复（P0 标 true→直触发 04/05，不等下一轮 roadmap）`。
 
-**Finding ID 前缀规则（防冲突）**：audit 用 `AUDIT-F-NN`；07 review 用 `REV-F-NN`；03 TDD 评审用 `TDD-REV-NN`；01 PRD 评审用 `PRD-REV-NN`。不同来源 finding 不混编，追溯时按前缀路由。
+**Finding ID 前缀规则（防冲突）**：audit 用 `AUDIT-F-NN`；07 review 用 `REV-F-NN`；03 TDD 评审用 `TDD-REV-F-NN`；01 PRD 评审用 `PRD-REV-F-NN`。不同来源 finding 不混编，追溯时按前缀路由。
 报告含：基本信息/执行摘要/审查范围/Findings 列表/严重度分布/修复优先级（vertical slice 四层）/下一步/附录（预扫描原始数据，标注 mode: heuristic-review）。
 > 详见 `templates/usability-test-report.md`（Mode A/B 通用）。
 
@@ -659,3 +659,7 @@ docs/analysis/
 - 表格优先；findings 用标准格式；证据列必填。
 - 不确定处标置信度/`[TBD]`，绝不臆造。
 - 完成时一句话告知：产物路径 + "findings 已带版本 bump 建议回流 roadmap；修复归 05/06"。
+
+---
+
+审查代码和项目。

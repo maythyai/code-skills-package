@@ -98,7 +98,7 @@ AskUserQuestion(
 ## 3. Determine Milestone Version
 
 - Parse last version from MILESTONES.md
-- Suggest next version (v1.0 → v1.1, or v2.0 for major)
+- Suggest next version per SemVer (additive/new module/no breaking → MINOR+1, e.g. v1.0 → v1.1; MAJOR+1 only on real breaking API change — not because the milestone feels "major"; never jump MINOR/MAJOR; see `prompts/version-management.md` §一/§二)
 - Confirm with user
 
 ## 3.5. Verify Milestone Understanding

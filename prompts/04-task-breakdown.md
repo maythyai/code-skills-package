@@ -78,7 +78,7 @@
 
 ### 5.1 Task 字段（引用 Canonical Schema）
 对每份 Spec 按维度拆为原子 Task。**字段集以 `csp-tech-task-breakdown` skill 的
-「Canonical Task Schema」为唯一权威**，不在此另立字段。核心字段：
+「Canonical Task Schema」为唯一权威**，不在此另立字段——避免三方漂移。核心字段：
 
 - `task_id`：`T-{feature-id}-{seq}`（如 `T-F-A-1-3`，含 group+seq，可追溯 task→feature→module）
 - `spec_ref`：`.csp/specs/SPEC-F-{group}-{seq}.md`（追溯到 Spec 维度，不臆造）
@@ -103,8 +103,9 @@
 - [ ] 每个 Task 是一个原子提交（文件可数 ≤6、单一职责、一句话 commit message）
 - [ ] DAG 无环；Task 依赖与 decomposition Feature 依赖一致
 - [ ] Wave 划分合理（共享资源单独串行 Wave）
-- [ ] 每 Task 可追溯到 AC（`acceptance` 非空）
+- [ ] 每 Task 可追溯到 AC（`acceptance` 非空）+ Spec（`spec_ref`）+ PMS（`pms_module`）
 - [ ] 不越出 PMS 模块边界
+- [ ] 产物为独立文件（WBS.md / DEPENDENCY-DAG.md / WAVE-PLAN.md / TASK-BREAKDOWN-SUMMARY.md），不合并
 
 ## 六、产物路径规范（与上游同构）
 
@@ -153,8 +154,8 @@
 |---|---|---|
 | 不读 Spec 就拆 | 凭印象发明 Task | Task 必须源于 Spec 维度 |
 | 越界 PMS | 跨模块 Task 不确认 | 先回 PRD 改 PMS 再拆 |
-| 巨石 Task | 1 Task >4h | 继续原子拆分 |
-| 碎片 Task | 1 Task <0.5h | 合并到合理粒度 |
+| 巨石 Task | 1 Task 文件不可数/多职责 | 继续原子拆分到一提交一职责 |
+| 碎片 Task | 1 Task <1 文件或无独立验收 | 合并到合理粒度 |
 | DAG 有环 | 依赖成环 | 报错停步，重构依赖 |
 | 依赖反向 | Task 依赖与 Feature 依赖矛盾 | 与 decomposition DEPENDENCY-GRAPH 一致 |
 | 不追溯 AC | Task 无 acceptance | 每 Task 指向 AC id |

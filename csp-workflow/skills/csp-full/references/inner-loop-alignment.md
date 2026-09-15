@@ -62,10 +62,10 @@
 
 - **启动 step 0.5**：读 `lifecycle-state.json` 定位"现在第几步、下一步谁"；`.csp/AGENTS.md` 不存在 → 先跑 S0/00 init，**不静默进 P1**。
 - **每阶段末**：写本阶段 `status=done` + `current_stage` 推进 + `progress` 摘要（计数/指针，非全量）+ `reconciled=false`（待 06 对账）+ `last_updated`。
-- **P7 ship**：写 `milestone` **和** `version`（SemVer tag）**双写** + `latest_release`；prod-verified 后写 `prod_version`。**milestone 与 version 不二选一**——这是 #3 问题的根法。
+- **P7 ship**：写 `milestone`（=本次 SemVer tag，**非代号**）+ `latest_release`（=同 tag）；代号写 `milestone_name`（可空）。prod-verified 后写 `prod_version`（=health 端点验证的版本）。`milestone`/`prod_version`/`latest_release` 三者同一抽象层（SemVer），代号不参与版本对齐——对齐 `prompts/version-management.md` §十一，这是 #3 问题的根法。
 - **轻量跳过**：跳过的阶段写 `skipped_stages:["P2","P3"]` + 跳过理由，**不假装走了全流程**——这是 #6 问题的根法。
 
-`current_stage` 的 id 用法：串联形态用 S0-S9 id（与 orchestrator 对齐，orchestrator 后续可读）；独立全流程可用 00-07 id。**同一项目内保持一致，不可混用**，否则 orchestrator 读不到 csp-full 的进度。
+`current_stage` 的 id 用法：**正典为 00-07 id**（`prompts/README` §阶段状态追踪 定义，lifecycle-state.json 默认）；S0-S9 是 `csp-sdk drive.*` 的机器别名（映射见 `lifecycle-contract.json` 的 `stage_id_aliases`）。串联形态下若 orchestrator 已用 S0-S9，则沿用 S0-S9 与其对齐；否则统一用 00-07。**同一项目内保持一致，不可混用**，否则 orchestrator 读不到 csp-full 的进度。
 
 ### 3.3 AGENTS.md — 版本/里程碑随 P7 自动更新
 

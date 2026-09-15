@@ -443,7 +443,7 @@ verify/review 发现需 fix 时按下述闭环，**不 ship、不问人怎么修
 | 05 | status=done | `.csp/tasks/WBS.md` + git commit | WBS 中全部 Task == done；commits 覆盖全部 Wave；未完 Task → 05 置 `blocked`，**禁止归档** |
 | 07（上一轮复盘） | adopted / fixed findings | `.csp/review/REVIEW-FINDINGS-{prev-m}.json` | 所有 `adopted` findings 的 `adopted_by` 链可追到本轮 PRD→Spec→Task→commit；未闭环 → 标 `degraded` 报缺口。`fixed` findings 须核验 `fixed_in` commit 存在 + 当前代码无该违规；代码仍违规 → 降级 `stale` 重开；代码已修但 finding 仍 `open` → 补标 `fixed`+`fixed_in`（防"修了仍显示待修"） |
 | **ROADMAP 同步** | released | `docs/strategy/ROADMAP.md` 版本-主题表 | 本版本行 status==`released`（planned→released）+ `实际交付` 字段已回填（git log+CHANGELOG）；未同步 → 视为对账缺口，发版前补 |
-| **版本注册表** | prod-verified | `.csp/ship/VERSION-REGISTRY.md` | 最新行 status==prod-verified + 四方对齐（tag/package.json/prod health/CHANGELOG）；不对齐 → 标 misaligned |
+| **版本注册表** | prod-verified | `.csp/ship/VERSION-REGISTRY.md` | 最新行 status==prod-verified + 五方对齐（tag/package.json/VERSION/prod health/CHANGELOG）；不对齐 → 标 misaligned |
 | 05 | status=in_progress | 本阶段产物 | S6 门控六项全过 + S7 无 CRITICAL + 回滚就绪 + 监控就绪 |
 
 **对账动作**：
@@ -591,7 +591,7 @@ verify/review 发现需 fix 时按下述闭环，**不 ship、不问人怎么修
 | **战略号当 SemVer 打 tag** | sprint 做了起步标 v2.0.0（MAJOR）但无 breaking | additive→MINOR+1 递增；MAJOR 只在真实 breaking；大数字正常(v1.105.269) |
 | **版本号跳跃** | 从 v1.4 直接 v2.0 无 breaking，或跳 MINOR | 从上一 tag 顺序+1，不跳 MINOR/MAJOR；PATCH 可跳 |
 | **逐功能 bump 版本** | 一个小功能就发一版、bump 一次，版本号膨胀快 | 攒批发布：多个小改动合并到一个版本，按整批最高级别一次 bump |
-| **released 当 deployed** | tag 推了就以为线上在跑 | released≠deployed≠prod-verified；VERSION-REGISTRY 四方对齐 + prod health 验证版本 |
+| **released 当 deployed** | tag 推了就以为线上在跑 | released≠deployed≠prod-verified；VERSION-REGISTRY 五方对齐 + prod health 验证版本 |
 | 周五发布 | 临下班上线 | 不在周末前发布 |
 | 监控以后补 | "先上再说" | 发布前装好监控 |
 | 文档以后补 | "follow-up" | 趁热写 CHANGELOG/文档 |

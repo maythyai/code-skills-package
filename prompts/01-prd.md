@@ -244,7 +244,7 @@ target_version: vX.Y.Z（对应 ROADMAP 版本号规则）
 ## 十三.五、PRD 评审（01 完成前 gate——未批准禁止标 done / 进 02）
 
 > 定位：工程前的人工决策 gate（同 06 的 Git 发布 gate 性质），不是自主构建阶段。PRD 出 draft 后、标 01 done 前必须过评审。
-> **骨架先行禁令**：PRD 未 `Approved` 前禁止写生产代码骨架/脚手架——PRD 是规格不是事后记录。骨架先行会让 PRD 降级为对已写代码的事后追认，失去"规格驱动开发"意义（v3.13 暴露的反模式：PRD 写完即过时）。极小一句话改动用 `csp-simple-dev`（明示无 PRD 路径），不走本 gate。
+> **骨架先行禁令**：PRD 未 `Approved` 前禁止写生产代码骨架/脚手架——PRD 是规格不是事后记录。骨架先行会让 PRD 降级为对已写代码的事后追认，失去"规格驱动开发"意义（历史迭代暴露的反模式：PRD 写完即过时）。极小一句话改动用 `csp-simple-dev`（明示无 PRD 路径），不走本 gate。
 
 **触发**：01 产出 PRD draft（front-matter `status: Draft`）后、写 lifecycle `01 done` 前。
 

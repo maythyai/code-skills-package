@@ -149,7 +149,8 @@ model: opus
 - **优先级**：P0-P3。
 - **建议**（可执行）：具体落地路径，给出修改方向或伪代码。
 - **回流阶段**（可选）：修复后建议回流到哪个阶段（01 PRD / 02 decomposition / 03 tech-design / 05 implementation）。
-- **状态**：`open`（未处理）/ `adopted`（被新 PRD 采纳，附 `adopted_by` 指向新 PRD/Feature/Task id）/ `deferred`（推迟）/ `wontfix`（关闭+理由）/ `stale`（证据漂移待重核）/ `superseded`（被新报告覆盖，附新 finding id）。默认 `open`；跨迭代管理见「07 产物跨迭代管理」节。
+- **状态**：`open`（未处理）/ `fixed`（已在代码中修复，附 `fixed_in` 指向 commit/task id + `fixed_at` 时间）/ `adopted`（被新 PRD 采纳，附 `adopted_by` 指向新 PRD/Feature/Task id）/ `deferred`（推迟）/ `wontfix`（关闭+理由）/ `stale`（证据漂移待重核）/ `superseded`（被新报告覆盖，附新 finding id）。默认 `open`；跨迭代管理见「07 产物跨迭代管理」节。
+- **fixed 回写（防"修了仍显示待修"）**：05/06 实施中若在代码里修了某 finding（无论是否经 `adopted` 链），**必须**回写该 finding `status=fixed` + `fixed_in`（commit sha 或 Task id）+ `fixed_at`，并更新 PRD/findings 文档对应条目状态 + `manifest` `content_hash`。不回写 = finding 永远 `open`，PRD 与代码现实脱节。
 ```
 
 ## 九、交付报告格式
@@ -194,11 +195,12 @@ docs/solutions/
 **2. 采纳 = 反向链接 + 逐条状态更新（核心）**：
 - 新 PRD front-matter `upstream_source` 引用采纳的 finding：`.csp/review/REVIEW-FINDINGS-{milestone}.json#REV-F-NN`，并在正文该需求处注明"源自 07 finding REV-F-NN"。
 - 本 findings JSON 逐条更新 `status`：
+  - `fixed`（已在代码中修复，附 `fixed_in` commit/task id + `fixed_at`）——**本迭代 05/06 直接修复的 finding 用此状态**，不要求经 `adopted` 链
   - `adopted`（被采纳）+ `adopted_by`（指向新 PRD/Feature/Task id）
   - `deferred`（推迟到后续迭代）
   - `wontfix`（关闭 + 理由）
   - `open`（未处理，进下一轮 backlog）
-- manifest 对应 item `build_status`：adopted→`consumed`、deferred→`degraded`、wontfix→`closed`。
+- manifest 对应 item `build_status`：fixed→`built`（附 `fixed_in`）、adopted→`consumed`、deferred→`degraded`、wontfix→`closed`。
 
 **3. 留存 + 归档（living，不 mv）**：07 产物留在 `.csp/review/`（**不 mv 走**，保持新 PRD 的引用稳定）；新迭代发布（06）时按 B 类 `cp` 快照到 `.csp/milestones/{new-m}/review/`。原件长期留存供审计与追溯。
 
@@ -206,7 +208,7 @@ docs/solutions/
 
 **5. 覆盖与去重**：新迭代的 07 审查若重复发现旧 finding → 旧标 `superseded`（被新报告覆盖）+ 指向新 finding id；**不删除**旧报告。
 
-**6. 采纳闭环校验**（新迭代 06 发布前对账时执行）：所有 `adopted` findings 必须有 `adopted_by` 链追到新 PRD→Spec→Task→commit；未闭环的 `adopted` → 标 `degraded`，对账报缺口，不放过"说采纳了但没做"。
+**6. 采纳闭环校验**（新迭代 06 发布前对账时执行）：所有 `adopted` findings 必须有 `adopted_by` 链追到新 PRD→Spec→Task→commit；未闭环的 `adopted` → 标 `degraded`，对账报缺口，不放过"说采纳了但没做"。**`fixed` findings 须核验代码实际已修**（`fixed_in` commit 存在 + 当前代码无该违规）；代码仍违规 → 降级 `stale` 重开；代码已修但 finding 仍 `open` → 补标 `fixed` + `fixed_in`（防"修了仍显示待修"）。
 
 ## 十一、反模式
 
