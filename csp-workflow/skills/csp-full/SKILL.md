@@ -148,7 +148,7 @@ domain: patterns
 3. 产出 `docs/prd/PRD-{slug}.md` + `.csp/product-spec/`（PMS 蒸馏）
 
 > **边界**：PRD 正本落 `docs/prd/`（不落 `.csp/full/`）；PRD↔PMS 映射由 `manifest.json` 承载。串联形态下若 `docs/prd/PRD-{slug}.md` 已存在则跳过 P1。
-> **骨架先行禁令**：PRD 未产出/未 Approved 前禁止写生产代码骨架——PRD 是规格不是事后记录（v3.13 反模式：骨架先行致 PRD 降级为历史记录）。极小改动用 `csp-simple-dev`。
+> **骨架先行禁令**：PRD 未产出/未 Approved 前禁止写生产代码骨架——PRD 是规格不是事后记录（历史迭代暴露的反模式：骨架先行致 PRD 降级为历史记录）。极小改动用 `csp-simple-dev`。
 > **回写**：P1 末回写 `manifest.json`（PRD item `source_type=doc`、PMS item `source_type=pms`、`build_status=built`）+ `lifecycle-state`（P1 done，`current_stage` 推进）。
 
 **PRD 输出结构：**

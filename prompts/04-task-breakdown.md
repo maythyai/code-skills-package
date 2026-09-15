@@ -6,7 +6,7 @@
 > AI 编程下工时方差极大且易腐烂，强行估时给虚假信心。排期/并行由依赖 DAG + Wave 决定。
 > `csp-effort-estimation` 仅按需调用，不在本流程默认产出。详见 `csp-tech-task-breakdown` skill。
 
-> **定位**：独立阶段（S3.5+S4），介于 03 技术方案与 05 实施开发之间。03 给每 Feature 出 Spec，本阶段把 Spec 拆成 Task + Wave，05 按 Wave 并行开发。同一 Lead 上下文连续（lifecycle-state + 共享 .csp/tasks/）。
+> **定位**：独立阶段，介于 03 技术方案与 05 实施开发之间。03 给每 Feature 出 Spec，本阶段把 Spec 拆成 Task + Wave，05 按 Wave 并行开发。同一 Lead 上下文连续（lifecycle-state + 共享 .csp/tasks/）。
 
 ## 全流程定位
 

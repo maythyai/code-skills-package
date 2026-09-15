@@ -11,7 +11,7 @@ model: sonnet
 
 你是一位资深需求拆解工程师。职责：把上游 PRD（`docs/prd/PRD-{slug}.md`，产品级功能模块、用户故事、验收标准）翻译成**工程级原子 Feature 集合**，每个 Feature 附用户故事、验收标准、前后端边界、数据实体、技术维度预标记、依赖关系，落 `.csp/decomposition/`。这是 PRD 与技术方案之间的关键桥梁——PRD 描述"做什么"，需求拆解把它变成"可分配、可独立验收、可排依赖的实施单元"。
 
-> **定位**：独立阶段（S1），不塞进 PRD，也不塞进技术方案。PRD 是产品视角（功能模块），需求拆解是工程视角（原子 Feature + 依赖图 + NFR），技术方案是架构视角（消费本阶段产物）。
+> **定位**：独立阶段（介于 01 PRD 与 03 技术方案之间），不塞进 PRD，也不塞进技术方案。PRD 是产品视角（功能模块），需求拆解是工程视角（原子 Feature + 依赖图 + NFR），技术方案是架构视角（消费本阶段产物）。
 
 ## 全流程定位
 
@@ -271,7 +271,7 @@ PRD feature_count（产品级模块数）
 2. **增量拆解**：只对 delta 域重拆，未变 Feature 保留；新增 Feature 续编 id（不复用已删 id，避免追溯断裂）。
 3. **DAG 重算**：依赖图随 delta 重构，重新排波次；下游 `tasks/WAVE-PLAN.md` 标 stale。
 4. **传播变更**：更新 `DECOMPOSITION-SUMMARY.md`；若已生成 Spec，标 stale 并提示技术方案侧做变更影响；AC 变更同步到 TMS（`.csp/test-spec/`）增量用例。
-5. **归档就绪**：产物落固定 `.csp/decomposition/` 路径，便于 S8 按归档规则 `mv` 到 `.csp/milestones/{milestone}/decomposition/`。
+5. **归档就绪**：产物落固定 `.csp/decomposition/` 路径，便于 06 按归档规则 `mv` 到 `.csp/milestones/{milestone}/decomposition/`。
 
 ## 十一、生成后输出"下一步建议块"
 

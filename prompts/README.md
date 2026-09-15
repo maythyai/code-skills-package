@@ -28,8 +28,15 @@
 
 ## 阶段并入说明
 
-- **S2 技术选型**：并入 `03-tech-design.md`「技术选型（S2）」节。缺选型时由 03 自行产出 `.csp/tech-decisions/` + ADR；已选型则复用。
-- **S3.5 任务拆解 + S4 实施规划**：独立成 `04-task-breakdown.md`（Spec → Task + DAG + Wave），与 `05-implementation.md`（并行开发）分离。同一 Lead 上下文连续（lifecycle-state + 共享 `.csp/tasks/`）。
+- **S0 知识中枢** → `00-knowledge-hub.md`（基座阶段）。
+- **S1 需求拆解** → `02-decomposition.md`（独立阶段；PRD 已含模块边界为隐式拆解）。
+- **S2 技术选型** → 并入 `03-tech-design.md`「技术选型」节。缺选型时由 03 自行产出 `.csp/tech-decisions/` + ADR；已选型则复用。
+- **S2.5/S2.6/S3 技术方案+评审+全栈 Spec** → `03-tech-design.md`。
+- **S3.5 任务拆解 + S4 实施规划** → 独立成 `04-task-breakdown.md`（Spec → Task + DAG + Wave），与 `05-implementation.md`（并行开发）分离。同一 Lead 上下文连续（lifecycle-state + 共享 `.csp/tasks/`）。
+- **S5 实施** → `05-implementation.md`。
+- **S6/S7/S8/S9 质量门控/审查/发布/运维** → `06-verify-ship.md`（本阶段内部子步骤，非管线 stage）。
+
+> 旧 S0-S9 是 CSP `lifecycle-contract.json` 的机器 id 别名，映射见 `csp-workflow/references/lifecycle-contract.json` 的 `stage_id_aliases`；00-07 为正典。
 
 ## 三说明书（living baseline）
 

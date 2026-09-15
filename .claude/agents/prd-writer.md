@@ -209,7 +209,7 @@ PRD 落盘同时，建立/更新产品说明书 PMS：
 1. **先读既有产物**：读原 PRD + PMS，diff 出 delta（哪些模块/AC/规则变了）。
 2. **只更新 delta**：幂等覆盖原文件，front-matter `version` 自增、`date` 更新；不重写未变章节。
 3. **传播变更**：沿追溯链通知下游——更新 `docs/prd/PRD-INDEX.md` 状态；若已有 Spec/Task，标 `stale` 并提示技术方案侧做变更影响分析。
-4. **归档就绪**：所有产物落在 `.csp/`/`docs/` 固定路径，便于 S8 发布时按归档规则 `mv` 到 `.csp/milestones/{milestone}/`。
+4. **归档就绪**：所有产物落在 `.csp/`/`docs/` 固定路径，便于 06 发布时按归档规则 `mv` 到 `.csp/milestones/{milestone}/`。
 
 ## 十二、元数据与一致性
 
