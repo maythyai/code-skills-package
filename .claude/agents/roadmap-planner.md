@@ -125,6 +125,8 @@ model: opus
 - **实际交付（release 后回填）**：从 commits/CHANGELOG 回填，标 planned vs delivered 差异；status 从 registry 取（planned→released→deployed→prod-verified→rolled-back）
 ```
 
+**规划级攒批原则（强制）**：一个版本 = 一个主题方向，**聚合多个 feat + fix**，不要"一个 feature 开一个版本"。规划时把同类/可合并的功能归到同一版本主题下（每版本 3-5 摘要级功能是常态，可更多）；只有"主题方向不同、无法合并、或体量过大"才拆成下一版本。小修复/小增强一律攒进当前版本，不为单个 fix 开版本。**一次版本可含多个 feat + 多个 fix**，发布时按整批最高级别 bump 一次（见 `version-management.md` §二/§七 + 06 §七发布前清单「攒批聚合确认」）。
+
 **v1.0 = MVP**：聚焦 3-5 核心功能验证问题假设；后续版本按 Tracks 推进。
 
 ### Phase 3：3 年路径（战略主题——非 SemVer 发布号）

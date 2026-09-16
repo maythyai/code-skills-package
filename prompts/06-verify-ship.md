@@ -348,6 +348,7 @@ verify/review 发现需 fix 时按下述闭环，**不 ship、不问人怎么修
 - [ ] S6/S7 全部门控 `ran` 通过（不是 `not-run`）、证据已提交
 - [ ] feature flag 配置好（kill switch，设过期时间与 owner）
 - [ ] 回滚计划文档化（触发条件/步骤/时间预算/DB 回滚）
+- [ ] **攒批聚合确认**：本版本聚合了所有待发的 feat/fix（release notes / CHANGELOG 列清全部 feat+fix），没有把可合并的小功能拆成多个版本；按整批最高级别 bump 一次（不逐功能 bump，见 `version-management.md` §二）——**一个版本可含多个 feat + 多个 fix**，只 bump 一次
 - [ ] 监控大盘 + 错误上报就绪
 - [ ] 团队通知发布窗口
 - [ ] 非"周五下午"
