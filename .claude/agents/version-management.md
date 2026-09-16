@@ -18,7 +18,8 @@
 - **MINOR/MAJOR 不跳跃**：MINOR 从上一已发 tag +1 顺序递增，**不因"这版很重要/很大"跳 MINOR 或跳 MAJOR**。
 - **不轻易跳 MAJOR**：MAJOR 只在**实际 breaking API 变更**时 +1。additive 永远 MINOR+1，哪怕 MINOR 已经是 105。
 - **只有 PATCH 可以跳号**（如 v1.2.0 → v1.2.2，跳过 v1.2.1）。
-- **攒批发布，不逐功能 bump**：版本号按**发布批次**递增，不按单个功能递增——一个版本可包含多个小功能/修复，攒一批发一次、只 bump 一次。不要"一个小功能就发一版、bump 一次"。一次发布含多个变更时，按整批**最高级别** bump 一次（如一批含 1 个 additive + 3 个 fix → MINOR+1，而非 MINOR+1 再 +PATCH×3）。
+- **攒批发布，不逐功能 bump**：版本号按**发布批次**递增，不按单个功能递增——一个版本可包含多个**同类**变更，攒一批发一次、只 bump 一次。不要"一个小功能就发一版、bump 一次"。
+- **feat/fix 分轨，不混合**：additive（新功能）与 fix（bug 修复）走不同版本线——多个 feat 攒一个 **MINOR+1** 版本；多个 fix 攒一个 **PATCH+1** 版本。同迭代若既有 feat 又有 fix，**拆成两个发布**（feat 批打 MINOR tag、fix 批打 PATCH tag，commit 也按类型分开），不混合成一个 MINOR+1 版本（否则 fix 的 PATCH 性质被 MINOR 掩盖）。为某 feat 自身服务的修复属该 feat 一部分（归 MINOR 批）；面向已发布功能的独立 bug fix 走 PATCH 批。
 
 ## 三、战略主题号 ≠ SemVer 发布号
 
@@ -51,7 +52,8 @@
 - breaking（移除 deprecated/改变响应语义/不兼容 API）→ **MAJOR+1**。
 - bug fix → **PATCH+1**。
 - **战略愿景宏大 ≠ MAJOR bump**。不跳跃 MINOR/MAJOR。大数字正常。
-- **攒批发布**：按发布批次 bump，不逐功能 bump——一次发布含多个变更时按整批**最高级别** bump 一次（additive+fix 混合批 → MINOR+1），一个版本可含多个产品功能，不为每个小功能单独发版递增。
+- **攒批发布（同类型内）**：多个 feat 攒一个 MINOR+1 版本、多个 fix 攒一个 PATCH+1 版本，不为每个小功能单独发版递增。
+- **feat/fix 分轨**：同迭代既有 feat 又有 fix → 拆两个发布（feat 批 MINOR tag + fix 批 PATCH tag），不混合成一个版本；详见 §二。
 
 ## 八、多平台版本同步（全源一致 + 单源派生）
 
@@ -144,7 +146,8 @@ release 后从 `git log <prev-tag>..<tag> --oneline` + CHANGELOG 回填"Main Fea
 |---|---|---|
 | 战略号当 SemVer 打 tag | sprint 做了起步标 v2.0.0（MAJOR）但无 breaking | additive→MINOR+1 递增；MAJOR 只在真实 breaking；大数字正常(v1.105.269) |
 | 版本号跳跃 | 从 v1.4 直接 v2.0 无 breaking，或跳 MINOR | 从上一 tag 顺序+1，不跳 MINOR/MAJOR；PATCH 可跳 |
-| 逐功能 bump 版本 | 一个小功能就发一版、bump 一次，版本号膨胀快 | 攒批发布：多个小改动合并到一个版本，按整批最高级别一次 bump |
+| 逐功能 bump 版本 | 一个小功能就发一版、bump 一次，版本号膨胀快 | 同类型攒批：多个 feat 合并一个 MINOR+1、多个 fix 合并一个 PATCH+1 |
+| feat/fix 混合 bump | additive+fix 同打一个 MINOR+1，fix 的 PATCH 性质丢失 | 分轨：feat 批 MINOR+1、fix 批 PATCH+1，同迭代有两类拆两个发布 |
 | 日期形式 tag | 不问用户就用 v2026.9.3 | 默认 SemVer；CalVer 仅显式 opt-in |
 | released 当 deployed | tag 推了就以为线上在跑 | released≠deployed≠prod-verified；五方对齐 + prod health 验证 |
 | 版本字符串不一致 | tag ≠ package.json ≠ Release title | 五方完全一致，脚本校验 |

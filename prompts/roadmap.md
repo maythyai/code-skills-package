@@ -81,7 +81,7 @@
 - **pre**：`alpha.N`（功能未完内部测）/`beta.N`（功能完公开测）/`rc.N`（发布候选）。
 - 允许跳 PATCH 号（如 v1.2.0 → v1.2.2，跳过 v1.2.1）。**但 MINOR/MAJOR 不跳跃**——MINOR 从上一已发 tag +1 顺序递增，**不因"这版很重要/很大"跳 MINOR 或跳 MAJOR**。
 - **版本号是顺序计数器，不是"宏大程度"指示器**：v1.105.269 完全正常——做了 105 次 MINOR 递增、269 次 PATCH 修复是正常的迭代节奏；大数字≠大版本，只代表迭代次数多。
-- **攒批发布，不逐功能 bump**：版本号按发布批次递增，不按单个功能递增——一个版本可包含多个小功能/修复，攒一批发一次、只 bump 一次。一次发布含多个变更时，按整批最高级别 bump（additive+fix 混合批 → MINOR+1）。不要"一个小功能就发一版、bump 一次"。
+- **攒批发布，feat/fix 分轨**：多个 feat 攒一个 MINOR+1 版本、多个 fix 攒一个 PATCH+1 版本，不为每个小功能单独发版。同迭代既有 feat 又有 fix → 拆两个发布（feat 批 MINOR tag + fix 批 PATCH tag），不混合。详见 version-management §二。不要"一个小功能就发一版、bump 一次"。
 - **不轻易跳 MAJOR**：MAJOR 只在**实际 breaking API 变更**时 +1。additive（新模块/新端点/新功能）永远 MINOR+1，哪怕 MINOR 已经是 105。
 
 **CalVer（日期形式 vYYYY.M.DD）仅显式 opt-in**：仅当用户明确要求日期版本（典型：每日构建的终端应用）才用；**默认不用日期形式**。即便用 CalVer，tag 取 **roadmap 规划的版本号**（按规划交付），不自动用今日日期打 tag——提前/延后交付不改 tag，tag 跟随 roadmap 规划的语义版本。
@@ -116,7 +116,7 @@
 - **实际交付（release 后回填）**：从 commits/CHANGELOG 回填，标 planned vs delivered 差异；status 从 registry 取（planned→released→deployed→prod-verified→rolled-back）
 ```
 
-**规划级攒批原则（强制）**：一个版本 = 一个主题方向，**聚合多个 feat + fix**，不要"一个 feature 开一个版本"。规划时把同类/可合并的功能归到同一版本主题下（每版本 3-5 摘要级功能是常态，可更多）；只有"主题方向不同、无法合并、或体量过大"才拆成下一版本。小修复/小增强一律攒进当前版本，不为单个 fix 开版本。**一次版本可含多个 feat + 多个 fix**，发布时按整批最高级别 bump 一次（见 `version-management.md` §二/§七 + 06 §七发布前清单「攒批聚合确认」）。
+**规划级攒批原则（强制）**：一个版本 = 一个主题方向，**聚合多个同类变更**，不要"一个 feature 开一个版本"。规划时把同类/可合并的功能归到同一版本主题下（每版本 3-5 摘要级功能是常态，可更多）；只有"主题方向不同、无法合并、或体量过大"才拆成下一版本。**feat/fix 分轨**：feat 批（MINOR+1）与 fix 批（PATCH+1）不混合——规划时若某迭代既有新功能又有独立 bug fix，标两个发布（feat 批 + fix 批各自一个 tag），fix 攒进 PATCH 批不为单个 fix 开 MINOR 版本。详见 `version-management.md` §二 + 06 §七发布前清单「攒批聚合确认」。
 
 **v1.0 = MVP**：聚焦 3-5 核心功能验证问题假设；后续版本按 Tracks 推进。
 
