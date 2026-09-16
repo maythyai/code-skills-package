@@ -53,18 +53,36 @@
 - **战略愿景宏大 ≠ MAJOR bump**。不跳跃 MINOR/MAJOR。大数字正常。
 - **攒批发布**：按发布批次 bump，不逐功能 bump——一次发布含多个变更时按整批**最高级别** bump 一次（additive+fix 混合批 → MINOR+1），一个版本可含多个产品功能，不为每个小功能单独发版递增。
 
-## 八、多平台版本同步（五方完全一致）
+## 八、多平台版本同步（全源一致 + 单源派生）
 
-所有版本字符串必须**完全一致**（同一字符串）：
-1. `git tag`
-2. `package.json` version
-3. `VERSION` 文件
-4. GitHub Release tag_name + title
-5. prod 健康端点报告的版本号
-6. CHANGELOG 最新条目
-7. Docker tag / `tauri.conf.json` / `pyproject.toml` / iOS `CURRENT_PROJECT_VERSION`
+版本号是**一个事实**，但各生态工具各自只认自己的文件。原则：**一处定义、多处派生、禁手填、脚本校验**——不手填就不会漂移。
 
-用脚本校验禁止人工同步。
+### 8.1 来源分类（4 类）
+
+| 类 | 角色 | 举例 |
+|---|---|---|
+| **真相源 (canonical)** | 唯一定义点 | `git tag`（发布锚点，不可变）+ 一个 canonical 文件（`VERSION` 或 `pkg/version.py`） |
+| **打包消费** | 各生态打包工具读 | `package.json`、`pyproject.toml`、`tauri.conf.json`、Docker tag、iOS `CURRENT_PROJECT_VERSION` |
+| **代码内常量** | 代码 import 的版本常量 | `version.py.__version__`、`src/version.ts`、`bin/*.mjs` 硬编码（如 `CSP_VERSION`） |
+| **发布元数据/运行时** | 人读/线上报告 | GitHub Release tag_name+title、CHANGELOG 最新条目、prod health 端点 |
+
+### 8.2 单源派生（禁手填，全部从 canonical 派生）
+
+| 来源 | 派生方式 |
+|---|---|
+| `package.json` | build 时从 VERSION 注入，或 `scripts/sync-version` 写入 |
+| `pyproject.toml` | `dynamic = ["version"]` + `version = {attr = "pkg.version.__version__"}`，从 version.py 派生 |
+| `tauri`/Docker/iOS | build 时从 VERSION 注入（Docker `ARG VERSION`、iOS build setting） |
+| 代码内常量 | build 注入 / `import` VERSION / 运行时读包 `package.json`，**不手填**（本仓库 `bin/csp-sdk.mjs` 的 `CSP_VERSION` 即此模式） |
+| GitHub Release | 发版动作从 tag 创建，tag_name 自动==tag |
+| CHANGELOG | 发版时校验最新条目==tag |
+| prod health | 从打包注入的版本常量读，不另填 |
+
+### 8.3 强制门控
+
+- **sync 脚本**（`scripts/sync-version`）：从 canonical 读，写入所有派生文件。改版本只改 canonical + 跑 sync，一处。
+- **verify 脚本**：发布前校验**全源字符串完全一致**，任一不一致 `exit 1` 阻断发布（详见 §十）。纳入 06 发布前清单为强制 gate。
+- **禁手改派生文件**：派生版本字段不人工编辑；CI 校验版本与 canonical 不一致且非 sync 生成 → 失败。
 
 ## 九、版本注册表（VERSION-REGISTRY）
 
@@ -82,15 +100,20 @@
 
 **released ≠ deployed ≠ prod-verified**——tag 推了不等于线上在跑。
 
-## 十、版本对齐检查（发布后/部署后）
+## 十、版本对齐检查（发布前 gate + 部署后核对）
 
-五方对齐（所有版本字符串必须完全一致）：
-1. `git tag` == `package.json` == `VERSION` == GitHub Release tag_name + title
-2. **prod 健康端点报告的版本号** == tag
-3. CHANGELOG 最新条目 == tag
-4. VERSION-REGISTRY 最新行 status == `prod-verified`
+**verify-version 脚本 = 发布前强制 gate**（不通过 = BLOCKED，不发布、tag 标 `-draft`）：全源字符串必须完全一致——
+1. `git tag` == canonical 文件（`VERSION` / `version.py`）
+2. `package.json` == `pyproject.toml` == `tauri.conf.json` == Docker tag == iOS == canonical
+3. **代码内版本常量**（`__version__` / `src/version.ts` / `bin` 硬编码 / `CSP_VERSION`）== canonical
+4. CHANGELOG 最新条目 == tag
+5. GitHub Release tag_name + title == tag（发版动作创建）
 
-任一不一致 → 标 `misaligned`，不标 prod-verified。
+部署后核对：
+6. **prod 健康端点报告版本** == tag（线上实际在跑）
+7. VERSION-REGISTRY 最新行 status == `prod-verified`
+
+任一不一致 → 标 `misaligned`，不标 prod-verified；发布前 gate 阻断发布。
 
 ## 十一、prod_version vs latest_release
 

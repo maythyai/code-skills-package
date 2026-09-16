@@ -19,8 +19,17 @@ import { readFileSync, writeFileSync, existsSync, mkdirSync, readdirSync, statSy
 import { resolve, join, basename, dirname } from 'node:path';
 import { execSync, execFileSync } from 'node:child_process';
 import { randomUUID } from 'node:crypto';
+import { fileURLToPath } from 'node:url';
 
 // --- Utilities ---
+
+// CSP_VERSION is derived from the package's own package.json (single source of truth),
+// never hand-edited here. Falls back to 'unknown' only if the file is unreachable.
+let CSP_VERSION = 'unknown';
+try {
+  const _pkgPath = join(dirname(fileURLToPath(import.meta.url)), '..', 'package.json');
+  CSP_VERSION = JSON.parse(readFileSync(_pkgPath, 'utf8')).version;
+} catch {}
 
 const PROJECT_ROOT = process.env.CSP_PROJECT_ROOT || process.cwd();
 const PLANNING_DIR = join(PROJECT_ROOT, '.csp/planning');
@@ -541,7 +550,7 @@ function driveGoto(stageId) {
 
 function initState() {
   const state = {
-    version: '0.11.1',
+    version: CSP_VERSION,
     phase: null,
     phase_name: null,
     milestone: null,
@@ -898,7 +907,7 @@ function getStats() {
   const state = loadState() || {};
   const completed = roadmap.phases.filter(p => ['done', 'complete', '✅'].includes(p.status)).length;
   return {
-    version: '0.11.1',
+    version: CSP_VERSION,
     milestone: state.milestone || roadmap.milestone || 'unknown',
     phases_total: roadmap.phases.length,
     phases_completed: completed,
@@ -1111,7 +1120,7 @@ function main() {
   const args = process.argv.slice(2);
 
   if (args.length === 0 || args[0] === '--help' || args[0] === '-h') {
-    out(`csp-sdk v0.11.1 — CSP workflow orchestration CLI
+    out(`csp-sdk v${CSP_VERSION} — CSP workflow orchestration CLI
 
 Usage:
   csp-sdk query <subcommand> [args...] [--flags]
@@ -1162,7 +1171,7 @@ Lifecycle drive chain (enforced skill handoff — IDE-agnostic):
   }
 
   if (args[0] === 'version' || args[0] === '--version') {
-    out('0.11.1');
+    out(CSP_VERSION);
     process.exit(0);
   }
 

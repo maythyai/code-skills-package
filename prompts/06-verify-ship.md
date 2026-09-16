@@ -346,6 +346,7 @@ verify/review 发现需 fix 时按下述闭环，**不 ship、不问人怎么修
   > **任何 S6/S7 gate `not-run`（工具链不可用/降级为 grep）→ 裁决=阻断发布**，tag 标 `v{milestone}-draft`/`unverified`，release notes 标"未验证脚手架/draft"。auto-proceed **不触发**（仅认 ran+exit 0）。
   > **`deferred` 增量项（硬边界 11）计入缺口 K**：有 `deferred` 项 → 裁决不得为"放行"，至少"有条件发布"，且 release notes 列明每项 deferred 的阻塞原因 + 解除条件 + 下一轮入口，不得隐瞒。
 - [ ] S6/S7 全部门控 `ran` 通过（不是 `not-run`）、证据已提交
+- [ ] **版本全源对齐通过**（verify-version 脚本，见 `version-management.md` §十）：`git tag` == canonical（`VERSION`/`version.py`）== `package.json` / `pyproject` / `tauri` / Docker / iOS == 代码内常量（`__version__`/`CSP_VERSION`）== CHANGELOG 最新条目 == GitHub Release tag，全一致；任一不一致 = BLOCKED，tag 标 `-draft`，不发布
 - [ ] feature flag 配置好（kill switch，设过期时间与 owner）
 - [ ] 回滚计划文档化（触发条件/步骤/时间预算/DB 回滚）
 - [ ] **攒批聚合确认**：本版本聚合了所有待发的 feat/fix（release notes / CHANGELOG 列清全部 feat+fix），没有把可合并的小功能拆成多个版本；按整批最高级别 bump 一次（不逐功能 bump，见 `version-management.md` §二）——**一个版本可含多个 feat + 多个 fix**，只 bump 一次
