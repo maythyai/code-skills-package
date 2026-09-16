@@ -23,7 +23,7 @@
 
 ## 三、战略主题号 ≠ SemVer 发布号
 
-- roadmap 的 **战略主题**（如"平台化""生态开放"）是**叙事性愿景**，**不是 SemVer 发布号**——不能用战略主题号打 sprint 的发布 tag。
+- roadmap 的 **战略主题**（如"平台化""生态开放"）是**叙事性愿景**，**不是 SemVer 发布号**——不能用战略主题号打版本的发布 tag。
 - **实际发布号**按 SemVer 从上一个已发 tag **增量续编**。
 - roadmap 的 v2.0/v3.0 战略号只在**实际 breaking/范式跃迁真正发生时**才作为 SemVer 号使用；在那之前，版本号按 SemVer 增量续编（v1.4/v1.5/...），逐步逼近战略号。
 
@@ -32,6 +32,7 @@
 - `vYYYY.M.DD[-alpha.N|-beta.N]`：取**发布日期**。
 - **默认不用日期形式**。仅当用户明确要求日期版本（典型：每日构建的终端应用）才用。
 - 即便用 CalVer，tag 取 **roadmap 规划的版本号**，不自动用今日日期打 tag——提前/延后交付不改 tag。
+- **AI 开发下时间形式版本号无意义**：AI 产出节奏与日历无关（可能几小时完成一个版本），按年/季/月/日定版本或估时毫无依据。默认 SemVer 增量续编，不引入日期维度。
 
 ## 五、Tag 规则
 
@@ -144,7 +145,7 @@ release 后从 `git log <prev-tag>..<tag> --oneline` + CHANGELOG 回填"Main Fea
 
 | 反模式 | 症状 | 正确做法 |
 |---|---|---|
-| 战略号当 SemVer 打 tag | sprint 做了起步标 v2.0.0（MAJOR）但无 breaking | additive→MINOR+1 递增；MAJOR 只在真实 breaking；大数字正常(v1.105.269) |
+| 战略号当 SemVer 打 tag | 版本做了起步标 v2.0.0（MAJOR）但无 breaking | additive→MINOR+1 递增；MAJOR 只在真实 breaking；大数字正常(v1.105.269) |
 | 版本号跳跃 | 从 v1.4 直接 v2.0 无 breaking，或跳 MINOR | 从上一 tag 顺序+1，不跳 MINOR/MAJOR；PATCH 可跳 |
 | 逐功能 bump 版本 | 一个小功能就发一版、bump 一次，版本号膨胀快 | 同类型攒批：多个 feat 合并一个 MINOR+1、多个 fix 合并一个 PATCH+1 |
 | feat/fix 混合 bump | additive+fix 同打一个 MINOR+1，fix 的 PATCH 性质丢失 | 分轨：feat 批 MINOR+1、fix 批 PATCH+1，同迭代有两类拆两个发布 |

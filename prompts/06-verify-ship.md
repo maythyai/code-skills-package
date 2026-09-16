@@ -592,7 +592,7 @@ verify/review 发现需 fix 时按下述闭环，**不 ship、不问人怎么修
 | 只推 tag 不建 Release | 远端"有 tag 无 Release"，半发布 | tag push 与 `gh release create` 一起做；CI 建 Release 则确认 workflow 成功 |
 | **静默门控降级** | pnpm install 死→用 grep 替代 typecheck/test/build→假装"通过"→release 未验证代码 | **工具链不可用=BLOCKED**，不降级；`not-run`=阻断发布，tag 标 -draft；grep ≠ typecheck ≠ build |
 | **版本叠在未验证地基** | 上版 not-run→本版叠上去→bug 面积随版本复利 | 开始本版前检查上版 06 门控执行记录，有 not-run→先跑真门控对齐再加新功能 |
-| **战略号当 SemVer 打 tag** | sprint 做了起步标 v2.0.0（MAJOR）但无 breaking | additive→MINOR+1 递增；MAJOR 只在真实 breaking；大数字正常(v1.105.269) |
+| **战略号当 SemVer 打 tag** | 版本做了起步标 v2.0.0（MAJOR）但无 breaking | additive→MINOR+1 递增；MAJOR 只在真实 breaking；大数字正常(v1.105.269) |
 | **版本号跳跃** | 从 v1.4 直接 v2.0 无 breaking，或跳 MINOR | 从上一 tag 顺序+1，不跳 MINOR/MAJOR；PATCH 可跳 |
 | **逐功能 bump 版本** | 一个小功能就发一版、bump 一次，版本号膨胀快 | 同类型攒批：多个 feat 合并一个 MINOR+1、多个 fix 合并一个 PATCH+1 |
 | **feat/fix 混合 bump** | additive+fix 同打一个 MINOR+1，fix 的 PATCH 性质丢失 | 分轨：feat 批 MINOR+1、fix 批 PATCH+1，同迭代有两类拆两个发布 |

@@ -6,7 +6,7 @@
 
 | 顺序 | 阶段 | 文件 | 产出目录 |
 |---|---|---|---|
-| 外环 | 产品长期规划（战略锚点+版本号规则+1/3年路径） | [roadmap.md](./roadmap.md) | `docs/strategy/`（STRATEGY+ROADMAP） |
+| 外环 | 产品长期规划（战略锚点+版本号规则+版本序列路径） | [roadmap.md](./roadmap.md) | `docs/strategy/`（STRATEGY+ROADMAP） |
 | 0 | 知识中枢初始化 | [00-knowledge-hub.md](./00-knowledge-hub.md) | `.csp/AGENTS.md` + `.csp/manifest.json` |
 | 1 | PRD 生成（产品需求） | [01-prd.md](./01-prd.md) | `docs/prd/` + `.csp/product-spec/`（PMS） |
 | 2 | 需求拆解（工程级 Feature） | [02-decomposition.md](./02-decomposition.md) | `.csp/decomposition/` |
@@ -58,7 +58,7 @@
 - **默认优先**：可逆/非破坏/非外向的决策一律取默认自动执行，不打断用户；仅在破坏性/不可逆/外向操作（删除来源、Git 发布、删业务文档）时人工拍板。各阶段"引导模式"的问询仅针对**输入真缺失**，不针对可默认的偏好。
 - **文档管理边界**：`.csp/` = 编程管理统一库（PMS/CMS/TMS + 全部流水线产物，agent/工程消费、git 跟踪）；`docs/` = 非编程人类文档（README/USER-GUIDE/通用概览/analysis/CHANGELOG + PRD 人类原文，其工程形态 PMS 在 `.csp/`）。编程产物不散落 `docs/`，非编程文档不进 `.csp/`。
 - **版本号默认 SemVer**：X.Y.Z 语义化（MAJOR 不兼容/MINOR 功能/PATCH 修复），**不自动用日期形式 tag**；tag 取 roadmap 规划的版本号（提前交付仍用规划版本号，非今日日期）。CalVer 仅用户显式 opt-in。
-- **战略主题号 ≠ SemVer 发布号**：roadmap 的 v2.0/v3.0 是多季度战略愿景叙事，**不是 sprint 发布 tag**。实际发布号按 SemVer 从上一 tag 增量续编：additive（新模块/新端点/无 breaking）→ MINOR+1；breaking API → MAJOR+1；fix → PATCH+1。MAJOR 只在 06 发布时验证到**实际 breaking API 变更**才 bump——战略愿景宏大 ≠ MAJOR bump。
+- **战略主题号 ≠ SemVer 发布号**：roadmap 的 v2.0/v3.0 是远期战略愿景叙事，**不是版本发布 tag**。实际发布号按 SemVer 从上一 tag 增量续编：additive（新模块/新端点/无 breaking）→ MINOR+1；breaking API → MAJOR+1；fix → PATCH+1。MAJOR 只在 06 发布时验证到**实际 breaking API 变更**才 bump——战略愿景宏大 ≠ MAJOR bump。
 - **攒批发布，feat/fix 分轨**：多个 feat 攒一个 MINOR+1 版本、多个 fix 攒一个 PATCH+1 版本，不为每个小功能单独发版；同迭代既有 feat 又有 fix → 拆两个发布（feat 批 MINOR tag + fix 批 PATCH tag），不混合成一个版本（fix 的 PATCH 性质不被 MINOR 掩盖）。
 - **版本全生命周期追踪**：`released ≠ deployed ≠ prod-verified`。`.csp/ship/VERSION-REGISTRY.md` 记录每版本全生命周期（planned→released→deployed→prod-verified→rolled-back）+ 实际交付 + 四方对齐（tag↔package.json↔prod health↔CHANGELOG）。`lifecycle-state.prod_version` ≠ `latest_release`——线上跑的不一定是最新的。05 开始前检查 prod 版本对齐。
 - **Finding ID 前缀规则（防冲突）**：audit=`AUDIT-F-NN`，07 review=`REV-F-NN`，03 TDD 评审=`TDD-REV-F-NN`，01 PRD 评审=`PRD-REV-F-NN`。不同来源 finding 不混编，追溯按前缀路由。
