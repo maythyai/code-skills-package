@@ -19,6 +19,7 @@
 - **不轻易跳 MAJOR**：MAJOR 只在**实际 breaking API 变更**时 +1。additive 永远 MINOR+1，哪怕 MINOR 已经是 105。
 - **只有 PATCH 可以跳号**（如 v1.2.0 → v1.2.2，跳过 v1.2.1）。
 - **攒批发布，不逐功能 bump**：版本号按**发布批次**递增，不按单个功能递增——一个版本可包含多个**同类**变更，攒一批发一次、只 bump 一次。不要"一个小功能就发一版、bump 一次"。
+- **以模块为单位聚合（版本作用域规则）**：一个版本**不限于一个功能**——把**同一模块**相关的几个功能打包成一个版本是常态（模块内聚 → 同一版本主题 → 一次 MINOR+1）。跨模块的功能拆到各自版本；同模块但不相关的功能也不硬凑。判定：功能共享同一模块边界/数据/职责链 → 同版本；否则拆分。"一个版本一个功能"不是默认形态，是模块内恰好只剩一个功能时的特例。
 - **feat/fix 分轨，不混合**：additive（新功能）与 fix（bug 修复）走不同版本线——多个 feat 攒一个 **MINOR+1** 版本；多个 fix 攒一个 **PATCH+1** 版本。同迭代若既有 feat 又有 fix，**拆成两个发布**（feat 批打 MINOR tag、fix 批打 PATCH tag，commit 也按类型分开），不混合成一个 MINOR+1 版本（否则 fix 的 PATCH 性质被 MINOR 掩盖）。为某 feat 自身服务的修复属该 feat 一部分（归 MINOR 批）；面向已发布功能的独立 bug fix 走 PATCH 批。
 
 ## 三、战略主题号 ≠ SemVer 发布号
@@ -148,6 +149,7 @@ release 后从 `git log <prev-tag>..<tag> --oneline` + CHANGELOG 回填"Main Fea
 | 战略号当 SemVer 打 tag | 版本做了起步标 v2.0.0（MAJOR）但无 breaking | additive→MINOR+1 递增；MAJOR 只在真实 breaking；大数字正常(v1.105.269) |
 | 版本号跳跃 | 从 v1.4 直接 v2.0 无 breaking，或跳 MINOR | 从上一 tag 顺序+1，不跳 MINOR/MAJOR；PATCH 可跳 |
 | 逐功能 bump 版本 | 一个小功能就发一版、bump 一次，版本号膨胀快 | 同类型攒批：多个 feat 合并一个 MINOR+1、多个 fix 合并一个 PATCH+1 |
+| 强行一功能一版本 | 同模块的几个相关功能被拆成多个版本，主题碎片化、MINOR 号虚涨 | 以模块为单位聚合：同模块相关功能打包一个版本（不限于一个功能）；跨模块才拆 |
 | feat/fix 混合 bump | additive+fix 同打一个 MINOR+1，fix 的 PATCH 性质丢失 | 分轨：feat 批 MINOR+1、fix 批 PATCH+1，同迭代有两类拆两个发布 |
 | 日期形式 tag | 不问用户就用 v2026.9.3 | 默认 SemVer；CalVer 仅显式 opt-in |
 | released 当 deployed | tag 推了就以为线上在跑 | released≠deployed≠prod-verified；五方对齐 + prod health 验证 |

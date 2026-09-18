@@ -267,7 +267,7 @@ Generate a stakeholder-friendly summary (separate from the detailed report):
 | Anti-Pattern | Symptom | Correct Approach |
 |-------------|---------|-----------------|
 | Date obsession | Roadmap is just a Gantt chart with fixed dates | Show themes and outcomes; dates are estimates, not commitments |
-| Feature listing | Roadmap is a flat list of 50 features with no grouping | Group by milestone/theme; show the strategic narrative |
+| Feature listing | Roadmap is a flat list of 50 features with no grouping | Group by **module** (same-module related features → one version) first, then by milestone/theme; a version is not limited to one feature; show the strategic narrative |
 | Status theater | Everything is "green" even when behind | Use honest status; Green/Yellow/Red with recovery plans |
 | Update avoidance | Roadmap hasn't been updated in months | Schedule regular updates (every sprint minimum) |
 | Scope hiding | Deferred features are silently dropped | Log all descoping decisions with rationale and stakeholder approval |
