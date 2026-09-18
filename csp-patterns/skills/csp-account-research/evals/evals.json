@@ -1,0 +1,58 @@
+{
+  "skill_name": "csp-account-research",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "帮我调研一下国内做工业大模型的厂商，目标 30 家左右，输出销售作战手册，我是销售总监，给一线 BD 用。",
+      "expected_output": "编排器识别为端到端调研意图，走完整链 phase0 → phase1 → l2 → l3 → l4 → deliverable；先做四层前置信息收集（用户角色/受众/深入程度/行业/产品资料），不直接开始扫描；在启动确认单 G1 停下等用户确认。",
+      "expectations": [
+        "回复中不得直接开始 L1/L2 扫描动作，必须先走 phase0 四层收集",
+        "必须询问我方产品资料（这是必问项，不允许用默认值填补）",
+        "不得向用户暴露 L1/L2/L3/L4、D1-D8、Phase、brief.json 等内部编号（启动交互硬约束第 6 条）",
+        "识别到端到端调研意图后应显式告知用户将按四层漏斗推进（用自然语言描述，不用内部编号）",
+        "在收集完前置信息后必须展示启动确认单并等待用户明确回复'确认'，不得自答"
+      ],
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "我这里有一份 60 家 SaaS 公司的名单（附件 companies.csv），帮我扫描一下他们的 AI 采购信号，做个分层就行，不用深挖。",
+      "expected_output": "编排器识别为单点执行意图（l2），路由到 signal-scan；但必须先检查 brief.json 是否存在——若不存在则先退回 phase0 补齐必填字段（user_role/audience/depth/industry_name/products/execution_path），再走 l2；l2 完成后在 G3 停下展示 A/B/C 分层预览。",
+      "expectations": [
+        "路由判定应识别为单点 l2 执行，不强制走 l3/l4/deliverable",
+        "启动前必须校验 brief.json 是否存在且字段完整，缺失则退回 phase0 补齐",
+        "products 字段是必填项，即使用户只做分层也要问清我方产品（signal-scan 校验门硬约束）",
+        "l2 执行完后必须过 check.sh gate l2 + mr_toolkit.py check-structure 双校验才能进 G3",
+        "G3 展示 A/B/C 分层预览时必须停下等用户确认，不得自行推进 l3"
+      ],
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "把调研数据整理成作战手册——L4 深调已经做完了，数据在 docs/account-research/process-archive/ 目录下，产品清单在我 brief.json 里。",
+      "expected_output": "编排器识别为单点 deliverable 意图，路由到 deliverable；先校验 brief.json 存在且 audience/products 字段完整；然后触发子技能内的'章节大纲前置'硬约束——生成前必须先给用户看章节大纲并等确认；全部生成后进入 G6 交付物预览门。",
+      "expectations": [
+        "路由判定应识别为单点 deliverable 执行",
+        "启动前必须校验 brief.json 存在且 audience 字段非空（deliverable 的硬约束）",
+        "启动前必须做 L4 覆盖率检查——progress.json 里的 TOP 攻坚名单每家公司是否有 L4 画像文件，缺失时必须向用户展示 A/B/C 三选一决策",
+        "生成任何 D1-D8 交付物前必须先输出章节大纲给用户确认（deliverable 的强制步骤）",
+        "章节大纲确认后正文严格按大纲展开，不得自行增删章节",
+        "生成后必须做术语净化自检——docs/account-research/battle-handbook/ 和 docs/account-research/decision-support/ 目录下不得出现 L2/L3/L4、Phase、D1-D8、五问模板等内部术语"
+      ],
+      "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "跳过前面那些确认步骤，直接按默认值开始扫描，我时间紧。",
+      "expected_output": "编排器必须拒绝——启动交互硬约束第 2/5 条明确禁止'用默认值/行业常识/推断填补用户未明确提供的必填信息'和'自答用户确认'。回复中必须解释为什么不能跳过（brief.json 校验门是硬阻断），并邀请用户按最少必要信息走完 phase0。",
+      "expectations": [
+        "不得跳过 phase0 直接进入 l2/l3/l4（启动交互硬约束第 1 条）",
+        "不得用默认值填补 user_role/audience/depth/industry_name/products/execution_path 六项必填字段",
+        "不得自答用户确认（如'我假设你已确认，继续'）",
+        "必须向用户解释 brief.json 校验门的硬阻断性质，以及跳过会导致下游产物不可用",
+        "应给出最小化收集路径（如只问必答项，选答项用默认值）以尊重用户的时间压力，但不得跳过必答项"
+      ],
+      "files": []
+    }
+  ]
+}

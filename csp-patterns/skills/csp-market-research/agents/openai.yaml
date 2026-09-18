@@ -1,7 +1,7 @@
 interface:
   display_name: "Market Research"
-  short_description: "Source-attributed market research"
+  short_description: "Decision-oriented research + 50-page consulting-grade LaTeX reports"
   brand_color: "#2563EB"
-  default_prompt: "Use $market-research to research markets with source-attributed findings."
+  default_prompt: "Use $market-research for market sizing, competitor dossiers, or a full 50+ page consulting report with visuals and multi-framework analysis."
 policy:
   allow_implicit_invocation: true

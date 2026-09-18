@@ -1,0 +1,7 @@
+interface:
+  display_name: "Product Research"
+  short_description: "Venture-direction & market research suite (5 modules, 35+ methodologies)"
+  brand_color: "#7C3AED"
+  default_prompt: "Use $product-research to evaluate a venture direction: industry scan, competitor deep-dive, customer insight, unit economics, and a go/no-go decision memo."
+policy:
+  allow_implicit_invocation: true

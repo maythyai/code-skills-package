@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "total_skills": 661,
+  "total_skills": 664,
   "shards": [],
   "skill_metadata": "skill-metadata.yaml",
   "skills": [
@@ -3129,6 +3129,21 @@
       "priority": 10
     },
     {
+      "name": "csp-account-research",
+      "description": "B2B target-account batch research pipeline (orchestrator entry). A four-layer funnel (L1 quick-screen → L2 signal scan → L3 light research → L4 deep research → deliverable generation) progressively converges a candidate pool into a top target list, dispatching three sub-skills under references/ on d",
+      "layer": 3,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/csp-account-research/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
       "name": "csp-agent-introspection-debugging",
       "description": "Structured self-debugging workflow for AI agent failures using capture, diagnosis, contained recovery, and introspection reports.",
       "layer": 3,
@@ -4315,7 +4330,7 @@
     },
     {
       "name": "csp-market-research",
-      "description": "Conduct market research, competitive analysis, investor due diligence, and industry intelligence with source attribution and decision-oriented summaries. Use when the user wants market sizing, competitor comparisons, fund research, technology scans, or research that informs business decisions.",
+      "description": "Market research that supports decisions, and the reports that carry it. Two modes: (1) decision-oriented research — market sizing, competitor comparisons, investor dossiers, technology scans, with source attribution and a go/no-go verdict; (2) comprehensive 50+ page consulting-grade report (McKinsey",
       "layer": 3,
       "category": "patterns",
       "triggers": {
@@ -4734,6 +4749,21 @@
       "priority": 10
     },
     {
+      "name": "csp-product-research",
+      "description": "Scientific, comprehensive product & business-direction research suite. Covers five scenarios: venture-direction evaluation, industry scan, competitor deep-dive, customer insight, and unit-economics. AI completes all desk research autonomously and outputs a structured report + Lean Canvas + decision ",
+      "layer": 3,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/csp-product-research/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
       "name": "csp-prompt-engineering",
       "description": "Production prompt engineering covering template management with Jinja2/Mustache, version control, evaluation frameworks, prompt pattern libraries (chain-of-thought, few-shot, ReAct, structured output), guardrails and safety, systematic optimization, and multi-model adaptation. Use when designing, te",
       "layer": 3,
@@ -4940,6 +4970,21 @@
       },
       "stack_detection": false,
       "path": "csp-patterns/skills/csp-refactoring-strategies/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-research-report-writing",
+      "description": "Research-report writing & refactoring craft — distilled from top consulting reports and editorial playbooks. Use it to (1) write a research/user-research/industry report from scratch, or (2) optimize/rewrite/refactor an existing report (e.g. after stakeholder feedback). Triggers when the user asks t",
+      "layer": 3,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/csp-research-report-writing/SKILL.md",
       "deps": [],
       "priority": 10
     },
@@ -8530,7 +8575,7 @@
     },
     {
       "name": "csp-competitive-analysis",
-      "description": "Generate a structured competitive analysis report with feature comparison matrix, SWOT analysis, Porter's Five Forces, and differentiation strategy. Branches by analysis purpose (product design / fundraising BP / strategic planning / annual review). Use when the user says \"竞品分析\", \"功能对比\", \"竞品调研\", \"竞争",
+      "description": "Structured competitive analysis with two modes: (1) a full framework report — feature comparison matrix, SWOT, Porter's Five Forces, differentiation strategy, branching by purpose (product design / fundraising BP / strategic planning / annual review); (2) a single-movement competitive-intelligence s",
       "layer": 2,
       "category": "workflow",
       "triggers": {
@@ -8650,7 +8695,7 @@
     },
     {
       "name": "csp-effort-estimation",
-      "description": "工作量与资源估算引擎。从技术方案和任务拆解出发，推算开发工作量、资源需求和时间线。 支持多种估算方法：类比估算、三点估算(PERT)、COCOMO II。 考虑因素：复杂度、不确定性、团队能力、技术栈熟悉度、并行度。 输出 WBS 工时汇总、甘特图、资源计划、里程碑时间线。 当任务拆解完成后需要估算工作量、或用户需要\"工作量估算\"、\"估时\"、\"排期\"、\"资源计划\"时使用。 关键词：工作量估算、估时、工时估算、排期、资源计划、effort estimation、 work estimation、PERT、三点估算、COCOMO、甘特图、gantt chart、 开发周期、交付时间、人天、stor",
+      "description": "⚠️ AI 编程下绝对工时/人天估算无意义（产出节奏与日历无关，可能几小时完成一个版本）。本 skill 仅作**复杂度相对参考**与**依赖/并行度分析**，不产绝对时间线/排期/人天；返回时须声明\"AI 产出节奏不可估时，以下仅复杂度相对参考\"。 复杂度相对估算引擎。从技术方案和任务拆解出发，分析复杂度、不确定性、并行度（非绝对工时）。 方法：类比估算、三点估算(PERT)、COCOMO II（仅作复杂度相对参考，不产绝对人天）。 输出 WBS 复杂度汇总、依赖/并行计划、相对里程碑序列（按版本号，不按日期）。 当任务拆解完成后需要复杂度相对参考、或用户需要\"估时\"\"排期\"\"资源计划\"时使",
       "layer": 2,
       "category": "workflow",
       "triggers": {

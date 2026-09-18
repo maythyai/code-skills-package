@@ -4,7 +4,7 @@
 # Regenerate: node scripts/build-skill-metadata.mjs
 
 version: 2.0
-generated_at: 2026-09-10T13:17:12.606Z
+generated_at: 2026-09-18T07:49:40.122Z
 skills:
   csp-agent-teams:
     phase: review
@@ -360,9 +360,12 @@ skills:
       - csp-mvp-scoping
       - csp-product-discovery-orchestrator
     anti_rationalizations:
-      We don't have real competitors: "Every product has alternatives, including 'do nothing'. Find them."
+      We don't have real competitors: "Every product has alternatives, including 'do nothing'. Find them. Search ≥3 rounds with different terms before concluding a gap."
       Copying features is enough: "Feature lists miss positioning, pricing, and ecosystem differences."
       SWOT is too generic: "SWOT is a starting frame, not the final answer. Pair it with Porter's Five Forces."
+      I recall this competitor move: "Model memory is not a source. Unsourced claims are fabrication. Retrieve, then cite."
+      The move is recent enough: "Adopt only information inside the trailing 6-month window. Out-of-window or undated sources are excluded, not quietly reused."
+      A blog said it, so it's a fact: "A lone self-media source is never sufficient. Flag it for cross-validation; prefer primary/official and authoritative sources."
   csp-compound-learning:
     phase: build
     domain: quality
@@ -479,7 +482,7 @@ skills:
       - csp-tech-risk-assessment
       - csp-plan-phase
     anti_rationalizations:
-      估时总是错的，没必要估: 估时不准确是常态，但估算过程本身暴露了不确定性和风险。没有估时就没有管理基线。
+      估时总是错的，没必要估: "绝对工时估算在 AI 编程下确实无意义（产出节奏与日历无关，可能几小时完成一个版本），但复杂度相对参考与不确定性/并行度分析仍有价值——本 skill 输出复杂度相对参考，非绝对工时/排期。"
       直接给个总数就行: "没有 WBS 的估时是拍脑袋。逐任务估算 + 汇总才有参考价值。"
       用经验估就行，不用方法论: "方法论（如 PERT）通过最优/最可能/最差三值量化不确定性，比单一经验值更可靠。"
   csp-explore:
@@ -1419,6 +1422,34 @@ skills:
       - Bash
       - WebFetch
       - WebSearch
+  csp-account-research:
+    phase: define
+    domain: patterns
+    scope: analysis
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
+      - WebFetch
+      - WebSearch
+      - Agent
+    dependencies:
+      skills: []
+    related_skills:
+      - csp-product-research
+      - csp-competitive-analysis
+      - csp-market-research
+      - csp-research-report-writing
+      - csp-deep-research
+      - csp-strategy
+    anti_rationalizations:
+      I'll skip Phase 0 and just start scanning: "brief.json is the single source of truth for the task. Without it locked, every downstream stage reads from conversation memory and drifts. Always run Phase 0 first."
+      The competitor list is obvious: "Never hardcode competitor vendors. The user's product and competing vendors are collected in Phase 0 and stored in brief.json. Defaults are empty."
+      I recall this company's signals: "Model memory is not a source. Every signal and conclusion must trace to a retrieved public source, or be marked [信息缺失]."
+      The gate is a formality: "G1–G6 are mandatory. A gate is never skipped because 'it seems fine'. Run check.sh + check-structure before showing any gate."
   csp-agent-introspection-debugging:
     phase: build
     domain: patterns
@@ -1885,10 +1916,34 @@ skills:
     phase: build
     domain: patterns
   csp-market-research:
-    phase: build
+    phase: define
     domain: patterns
+    scope: analysis
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
+      - WebFetch
+      - WebSearch
+      - Agent
+    dependencies:
+      skills: []
     related_skills:
-      - csp-product-discovery-orchestrator
+      - csp-deep-research
+      - csp-competitive-analysis
+      - csp-product-research
+      - csp-research-report-writing
+      - csp-tech-diagram
+      - csp-fal-ai-media
+      - csp-multi-review
+    anti_rationalizations:
+      Research theater: "A research deliverable that doesn't end in a decision is theater. Every report ends with a verdict or an explicit action table."
+      The market size is obvious: "TAM/SAM/SOM is a model with assumptions, not a lookup. State the bottom-up build and cross-validate; never quote a single round number as fact."
+      We can skip the sources: "Every important claim needs a source. Unsourced market numbers are downgraded to qualitative statements."
+      Visuals are decoration: "Each chart must carry one independent argument. If removing it doesn't break the argument, delete it."
   csp-mcp-server-patterns:
     phase: build
     domain: patterns
@@ -2070,6 +2125,33 @@ skills:
     domain: patterns
     related_skills:
       - csp-product-discovery-orchestrator
+  csp-product-research:
+    phase: define
+    domain: patterns
+    scope: analysis
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
+      - WebFetch
+      - WebSearch
+      - Agent
+    dependencies:
+      skills: []
+    related_skills:
+      - csp-market-research
+      - csp-competitive-analysis
+      - csp-research-report-writing
+      - csp-deep-research
+      - csp-strategy
+    anti_rationalizations:
+      No competitors exist: "Every direction has alternatives, including 'do nothing'. Search ≥3 rounds with different terms before concluding a gap."
+      The market is blank: "A blank result is a search failure, not a market opportunity. Expand keywords (synonym / hypernym / English / government / company-registry)."
+      I recall this number: "Model memory is not a source. Unsourced numbers are downgraded to qualitative statements."
+      Has pain point, therefore will pay: "Need is real ≠ business is viable. Apply the five-layer falsification (demand / willingness-to-pay / scale / defensibility / team)."
   csp-prompt-engineering:
     phase: build
     domain: patterns
@@ -2167,6 +2249,29 @@ skills:
   csp-refactoring-strategies:
     phase: build
     domain: patterns
+  csp-research-report-writing:
+    phase: review
+    domain: patterns
+    scope: analysis
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
+    dependencies:
+      skills: []
+    related_skills:
+      - csp-product-research
+      - csp-market-research
+      - csp-competitive-analysis
+      - csp-account-research
+      - csp-article-writing
+    anti_rationalizations:
+      The data speaks for itself: "Data without a frame is a cross-tab dump. Pick one analytical device and tell the story through it."
+      Longer is more thorough: "A 79-page report with 10 recommendations gives nothing. One page-one action table + one minimum action gives the reader something to do."
+      The reader can judge the numbers: "An isolated 91% is meaningless. Every number needs a baseline (last year / competitor / industry mean)."
+      A catchy coined term helps: "A term that needs explanation to be understood is a bad term. Use plain words; if a coinage isn't first-glance clear, don't use it."
   csp-responsive-design:
     phase: build
     domain: patterns

@@ -1,0 +1,7 @@
+interface:
+  display_name: "Research Report Writing"
+  short_description: "8-rule consulting-style report writing & refactoring craft"
+  brand_color: "#0EA5E9"
+  default_prompt: "Use $research-report-writing to write or refactor a research report: verdict-first structure, action tables, data baselines, tension pairing."
+policy:
+  allow_implicit_invocation: true

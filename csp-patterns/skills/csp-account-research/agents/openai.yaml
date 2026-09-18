@@ -1,0 +1,7 @@
+interface:
+  display_name: "Account Research"
+  short_description: "B2B target-account batch research pipeline (4-layer funnel)"
+  brand_color: "#059669"
+  default_prompt: "Use $account-research to research a batch of B2B target accounts: signal scan, layering, depth profiles, and a battle-handbook deliverable."
+policy:
+  allow_implicit_invocation: true

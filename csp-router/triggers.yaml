@@ -3177,7 +3177,7 @@ trigger_index:
     skills: [csp-requirement-decomposition]
     weight: 40
   "research":
-    skills: [csp-research-synthesizer]
+    skills: [csp-research-synthesizer, csp-research-report-writing]
     weight: 40
   "research synthesizer":
     skills: [csp-research-synthesizer]
@@ -5428,6 +5428,50 @@ trigger_index:
   "review e2e case automation":
     skills: [csp-e2e-case-automation]
     weight: 40
+
+  # ─── auto-generated triggers (generate-triggers.mjs) ───
+  "account":
+    skills: [csp-account-research]
+    weight: 40
+  "account research":
+    skills: [csp-account-research]
+    weight: 40
+  "account-research":
+    skills: [csp-account-research]
+    weight: 40
+  "fix account research":
+    skills: [csp-account-research]
+    weight: 40
+  "fix product research":
+    skills: [csp-product-research]
+    weight: 40
+  "fix research report writing":
+    skills: [csp-research-report-writing]
+    weight: 40
+  "product research":
+    skills: [csp-product-research]
+    weight: 40
+  "product-research":
+    skills: [csp-product-research]
+    weight: 40
+  "research report writing":
+    skills: [csp-research-report-writing]
+    weight: 40
+  "research report writing 研究":
+    skills: [csp-research-report-writing]
+    weight: 40
+  "research-report-writing":
+    skills: [csp-research-report-writing]
+    weight: 40
+  "review account research":
+    skills: [csp-account-research]
+    weight: 40
+  "review product research":
+    skills: [csp-product-research]
+    weight: 40
+  "review research report writing":
+    skills: [csp-research-report-writing]
+    weight: 40
 stack_rules:
   python:
     files: ["pyproject.toml", "setup.py", "requirements.txt", "Pipfile"]
@@ -5664,7 +5708,7 @@ stack_rules:
     skills: [csp-product-pulse]
     weight: 40
   "product":
-    skills: [csp-product-pulse, csp-product-discovery-orchestrator, csp-product-spec]
+    skills: [csp-product-pulse, csp-product-discovery-orchestrator, csp-product-spec, csp-product-research]
     weight: 40
   "上线":
     skills: [csp-shipping-and-launch]
