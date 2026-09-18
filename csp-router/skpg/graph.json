@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generated_at": "2026-09-16T03:56:48.531Z",
+  "generated_at": "2026-09-18T09:47:43.642Z",
   "nodes": {
     "5b37ecd541b4": {
       "id": "5b37ecd541b4",
@@ -2138,6 +2138,18 @@
         "path": "csp-patterns/skills/csp-access/SKILL.md"
       }
     },
+    "ddeb2d8771c1": {
+      "id": "ddeb2d8771c1",
+      "kind": "skill",
+      "name": "csp-account-research",
+      "metadata": {
+        "layer": 3,
+        "category": "patterns",
+        "phase": "define",
+        "domain": "patterns",
+        "path": "csp-patterns/skills/csp-account-research/SKILL.md"
+      }
+    },
     "f7990e8c9a1c": {
       "id": "f7990e8c9a1c",
       "kind": "skill",
@@ -3090,7 +3102,7 @@
       "metadata": {
         "layer": 3,
         "category": "patterns",
-        "phase": "build",
+        "phase": "define",
         "domain": "patterns",
         "path": "csp-patterns/skills/csp-market-research/SKILL.md"
       }
@@ -3419,6 +3431,18 @@
         "path": "csp-patterns/skills/csp-product-capability/SKILL.md"
       }
     },
+    "f1f447c27de4": {
+      "id": "f1f447c27de4",
+      "kind": "skill",
+      "name": "csp-product-research",
+      "metadata": {
+        "layer": 3,
+        "category": "patterns",
+        "phase": "define",
+        "domain": "patterns",
+        "path": "csp-patterns/skills/csp-product-research/SKILL.md"
+      }
+    },
     "234c283e75d0": {
       "id": "234c283e75d0",
       "kind": "skill",
@@ -3583,6 +3607,18 @@
         "phase": "build",
         "domain": "patterns",
         "path": "csp-patterns/skills/csp-refactoring-strategies/SKILL.md"
+      }
+    },
+    "2685e10a1a0f": {
+      "id": "2685e10a1a0f",
+      "kind": "skill",
+      "name": "csp-research-report-writing",
+      "metadata": {
+        "layer": 3,
+        "category": "patterns",
+        "phase": "review",
+        "domain": "patterns",
+        "path": "csp-patterns/skills/csp-research-report-writing/SKILL.md"
       }
     },
     "a8d5e939659a": {
@@ -18010,6 +18046,90 @@
       "kind": "trigger",
       "name": "review e2e case automation",
       "metadata": {}
+    },
+    "b00aff8050ca": {
+      "id": "b00aff8050ca",
+      "kind": "trigger",
+      "name": "account",
+      "metadata": {}
+    },
+    "f813dab54933": {
+      "id": "f813dab54933",
+      "kind": "trigger",
+      "name": "account research",
+      "metadata": {}
+    },
+    "fe02825f8b91": {
+      "id": "fe02825f8b91",
+      "kind": "trigger",
+      "name": "account-research",
+      "metadata": {}
+    },
+    "26ba667ff26f": {
+      "id": "26ba667ff26f",
+      "kind": "trigger",
+      "name": "fix account research",
+      "metadata": {}
+    },
+    "10c26d6bcd5b": {
+      "id": "10c26d6bcd5b",
+      "kind": "trigger",
+      "name": "fix product research",
+      "metadata": {}
+    },
+    "12052d8db3fd": {
+      "id": "12052d8db3fd",
+      "kind": "trigger",
+      "name": "fix research report writing",
+      "metadata": {}
+    },
+    "8ff6cddea9ab": {
+      "id": "8ff6cddea9ab",
+      "kind": "trigger",
+      "name": "product research",
+      "metadata": {}
+    },
+    "ef66fa51bcc8": {
+      "id": "ef66fa51bcc8",
+      "kind": "trigger",
+      "name": "product-research",
+      "metadata": {}
+    },
+    "89a5687c2504": {
+      "id": "89a5687c2504",
+      "kind": "trigger",
+      "name": "research report writing",
+      "metadata": {}
+    },
+    "3baea3922f97": {
+      "id": "3baea3922f97",
+      "kind": "trigger",
+      "name": "research report writing 研究",
+      "metadata": {}
+    },
+    "ad794f2d50b9": {
+      "id": "ad794f2d50b9",
+      "kind": "trigger",
+      "name": "research-report-writing",
+      "metadata": {}
+    },
+    "e8c535c972cf": {
+      "id": "e8c535c972cf",
+      "kind": "trigger",
+      "name": "review account research",
+      "metadata": {}
+    },
+    "943023aa3c05": {
+      "id": "943023aa3c05",
+      "kind": "trigger",
+      "name": "review product research",
+      "metadata": {}
+    },
+    "2529408d9d84": {
+      "id": "2529408d9d84",
+      "kind": "trigger",
+      "name": "review research report writing",
+      "metadata": {}
     }
   },
   "edges": [
@@ -25364,6 +25484,12 @@
       "metadata": {}
     },
     {
+      "source": "40566cc0c3e6",
+      "target": "2685e10a1a0f",
+      "kind": "triggers",
+      "metadata": {}
+    },
+    {
       "source": "3e228161078e",
       "target": "07fd86446cfc",
       "kind": "triggers",
@@ -29972,6 +30098,90 @@
       "metadata": {}
     },
     {
+      "source": "b00aff8050ca",
+      "target": "ddeb2d8771c1",
+      "kind": "triggers",
+      "metadata": {}
+    },
+    {
+      "source": "f813dab54933",
+      "target": "ddeb2d8771c1",
+      "kind": "triggers",
+      "metadata": {}
+    },
+    {
+      "source": "fe02825f8b91",
+      "target": "ddeb2d8771c1",
+      "kind": "triggers",
+      "metadata": {}
+    },
+    {
+      "source": "26ba667ff26f",
+      "target": "ddeb2d8771c1",
+      "kind": "triggers",
+      "metadata": {}
+    },
+    {
+      "source": "10c26d6bcd5b",
+      "target": "f1f447c27de4",
+      "kind": "triggers",
+      "metadata": {}
+    },
+    {
+      "source": "12052d8db3fd",
+      "target": "2685e10a1a0f",
+      "kind": "triggers",
+      "metadata": {}
+    },
+    {
+      "source": "8ff6cddea9ab",
+      "target": "f1f447c27de4",
+      "kind": "triggers",
+      "metadata": {}
+    },
+    {
+      "source": "ef66fa51bcc8",
+      "target": "f1f447c27de4",
+      "kind": "triggers",
+      "metadata": {}
+    },
+    {
+      "source": "89a5687c2504",
+      "target": "2685e10a1a0f",
+      "kind": "triggers",
+      "metadata": {}
+    },
+    {
+      "source": "3baea3922f97",
+      "target": "2685e10a1a0f",
+      "kind": "triggers",
+      "metadata": {}
+    },
+    {
+      "source": "ad794f2d50b9",
+      "target": "2685e10a1a0f",
+      "kind": "triggers",
+      "metadata": {}
+    },
+    {
+      "source": "e8c535c972cf",
+      "target": "ddeb2d8771c1",
+      "kind": "triggers",
+      "metadata": {}
+    },
+    {
+      "source": "943023aa3c05",
+      "target": "f1f447c27de4",
+      "kind": "triggers",
+      "metadata": {}
+    },
+    {
+      "source": "2529408d9d84",
+      "target": "2685e10a1a0f",
+      "kind": "triggers",
+      "metadata": {}
+    },
+    {
       "source": "b2e754d45580",
       "target": "5b37ecd541b4",
       "kind": "contains",
@@ -31221,6 +31431,12 @@
     },
     {
       "source": "e94f651cc1ba",
+      "target": "ddeb2d8771c1",
+      "kind": "contains",
+      "metadata": {}
+    },
+    {
+      "source": "e94f651cc1ba",
       "target": "f7990e8c9a1c",
       "kind": "contains",
       "metadata": {}
@@ -31863,6 +32079,12 @@
     },
     {
       "source": "e94f651cc1ba",
+      "target": "f1f447c27de4",
+      "kind": "contains",
+      "metadata": {}
+    },
+    {
+      "source": "e94f651cc1ba",
       "target": "234c283e75d0",
       "kind": "contains",
       "metadata": {}
@@ -31942,6 +32164,12 @@
     {
       "source": "e94f651cc1ba",
       "target": "1f7a641a1f89",
+      "kind": "contains",
+      "metadata": {}
+    },
+    {
+      "source": "e94f651cc1ba",
+      "target": "2685e10a1a0f",
       "kind": "contains",
       "metadata": {}
     },
@@ -34100,6 +34328,12 @@
       "metadata": {}
     },
     {
+      "source": "ea5a4594970a",
+      "target": "ddeb2d8771c1",
+      "kind": "contains",
+      "metadata": {}
+    },
+    {
       "source": "4df9fd7d77be",
       "target": "f7990e8c9a1c",
       "kind": "contains",
@@ -34550,7 +34784,7 @@
       "metadata": {}
     },
     {
-      "source": "4df9fd7d77be",
+      "source": "ea5a4594970a",
       "target": "9d7c6add109b",
       "kind": "contains",
       "metadata": {}
@@ -34718,6 +34952,12 @@
       "metadata": {}
     },
     {
+      "source": "ea5a4594970a",
+      "target": "f1f447c27de4",
+      "kind": "contains",
+      "metadata": {}
+    },
+    {
       "source": "4df9fd7d77be",
       "target": "234c283e75d0",
       "kind": "contains",
@@ -34786,6 +35026,12 @@
     {
       "source": "4df9fd7d77be",
       "target": "1f7a641a1f89",
+      "kind": "contains",
+      "metadata": {}
+    },
+    {
+      "source": "f297e9873811",
+      "target": "2685e10a1a0f",
       "kind": "contains",
       "metadata": {}
     },
@@ -37808,6 +38054,42 @@
       "metadata": {}
     },
     {
+      "source": "ddeb2d8771c1",
+      "target": "f1f447c27de4",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "ddeb2d8771c1",
+      "target": "ee550ccf695a",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "ddeb2d8771c1",
+      "target": "9d7c6add109b",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "ddeb2d8771c1",
+      "target": "2685e10a1a0f",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "ddeb2d8771c1",
+      "target": "643b68649749",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "ddeb2d8771c1",
+      "target": "e9e1e2af8e75",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
       "source": "9ba4012993c5",
       "target": "91c598dea98d",
       "kind": "related_to",
@@ -38001,7 +38283,43 @@
     },
     {
       "source": "9d7c6add109b",
-      "target": "d90eb85a4a0a",
+      "target": "643b68649749",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "9d7c6add109b",
+      "target": "ee550ccf695a",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "9d7c6add109b",
+      "target": "f1f447c27de4",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "9d7c6add109b",
+      "target": "2685e10a1a0f",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "9d7c6add109b",
+      "target": "3f0de07d6842",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "9d7c6add109b",
+      "target": "73e5fe0300cb",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "9d7c6add109b",
+      "target": "e96bb6eb8f05",
       "kind": "related_to",
       "metadata": {}
     },
@@ -38056,6 +38374,36 @@
     {
       "source": "f84210158e31",
       "target": "d90eb85a4a0a",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "f1f447c27de4",
+      "target": "9d7c6add109b",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "f1f447c27de4",
+      "target": "ee550ccf695a",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "f1f447c27de4",
+      "target": "2685e10a1a0f",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "f1f447c27de4",
+      "target": "643b68649749",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "f1f447c27de4",
+      "target": "e9e1e2af8e75",
       "kind": "related_to",
       "metadata": {}
     },
@@ -38152,6 +38500,36 @@
     {
       "source": "32a93f72631a",
       "target": "6ed77fefcdc0",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "2685e10a1a0f",
+      "target": "f1f447c27de4",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "2685e10a1a0f",
+      "target": "9d7c6add109b",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "2685e10a1a0f",
+      "target": "ee550ccf695a",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "2685e10a1a0f",
+      "target": "ddeb2d8771c1",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "2685e10a1a0f",
+      "target": "308f91513f5c",
       "kind": "related_to",
       "metadata": {}
     },
@@ -39452,6 +39830,54 @@
       "metadata": {}
     },
     {
+      "source": "ddeb2d8771c1",
+      "target": "f1f447c27de4",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "ddeb2d8771c1",
+      "target": "ee550ccf695a",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "ddeb2d8771c1",
+      "target": "9d7c6add109b",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "ddeb2d8771c1",
+      "target": "2685e10a1a0f",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "ddeb2d8771c1",
+      "target": "643b68649749",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "ddeb2d8771c1",
+      "target": "e9e1e2af8e75",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "ddeb2d8771c1",
+      "target": "1e2e162ad28e",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "ddeb2d8771c1",
+      "target": "398364b65753",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
       "source": "f7990e8c9a1c",
       "target": "bcf9b9497f8d",
       "kind": "depends_on",
@@ -40179,7 +40605,43 @@
     },
     {
       "source": "9d7c6add109b",
-      "target": "d90eb85a4a0a",
+      "target": "643b68649749",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "9d7c6add109b",
+      "target": "ee550ccf695a",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "9d7c6add109b",
+      "target": "f1f447c27de4",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "9d7c6add109b",
+      "target": "2685e10a1a0f",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "9d7c6add109b",
+      "target": "3f0de07d6842",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "9d7c6add109b",
+      "target": "73e5fe0300cb",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "9d7c6add109b",
+      "target": "e96bb6eb8f05",
       "kind": "depends_on",
       "metadata": {}
     },
@@ -40466,6 +40928,42 @@
       "metadata": {}
     },
     {
+      "source": "f1f447c27de4",
+      "target": "9d7c6add109b",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "f1f447c27de4",
+      "target": "ee550ccf695a",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "f1f447c27de4",
+      "target": "2685e10a1a0f",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "f1f447c27de4",
+      "target": "643b68649749",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "f1f447c27de4",
+      "target": "e9e1e2af8e75",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "f1f447c27de4",
+      "target": "ddeb2d8771c1",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
       "source": "234c283e75d0",
       "target": "efbfa55c8c44",
       "kind": "depends_on",
@@ -40642,6 +41140,36 @@
     {
       "source": "1f7a641a1f89",
       "target": "3c187c080b19",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "2685e10a1a0f",
+      "target": "f1f447c27de4",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "2685e10a1a0f",
+      "target": "9d7c6add109b",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "2685e10a1a0f",
+      "target": "ddeb2d8771c1",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "2685e10a1a0f",
+      "target": "ee550ccf695a",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "2685e10a1a0f",
+      "target": "308f91513f5c",
       "kind": "depends_on",
       "metadata": {}
     },
@@ -42724,6 +43252,36 @@
     {
       "source": "ee550ccf695a",
       "target": "1179b083c804",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "ee550ccf695a",
+      "target": "9d7c6add109b",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "ee550ccf695a",
+      "target": "f1f447c27de4",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "ee550ccf695a",
+      "target": "ddeb2d8771c1",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "ee550ccf695a",
+      "target": "2685e10a1a0f",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "ee550ccf695a",
+      "target": "643b68649749",
       "kind": "depends_on",
       "metadata": {}
     },
@@ -46611,6 +47169,12 @@
     },
     {
       "source": "9679e0e03f5f",
+      "target": "ddeb2d8771c1",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "ddeb2d8771c1",
       "target": "f7990e8c9a1c",
       "kind": "related_to",
       "metadata": {}
@@ -47241,6 +47805,12 @@
     },
     {
       "source": "f84210158e31",
+      "target": "f1f447c27de4",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "f1f447c27de4",
       "target": "234c283e75d0",
       "kind": "related_to",
       "metadata": {}
@@ -47319,6 +47889,12 @@
     },
     {
       "source": "1f7a641a1f89",
+      "target": "2685e10a1a0f",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "2685e10a1a0f",
       "target": "a8d5e939659a",
       "kind": "related_to",
       "metadata": {}
@@ -49341,19 +49917,19 @@
     }
   ],
   "stats": {
-    "node_count": 2465,
-    "edge_count": 5221,
-    "skill_count": 661,
-    "trigger_count": 1794,
+    "node_count": 2482,
+    "edge_count": 5297,
+    "skill_count": 664,
+    "trigger_count": 1808,
     "phase_count": 6,
     "category_count": 5,
-    "depends_on_count": 1232,
-    "related_to_count": 1058,
+    "depends_on_count": 1262,
+    "related_to_count": 1083,
     "edge_types": {
-      "contains": 938,
-      "triggers": 1993,
-      "depends_on": 1232,
-      "related_to": 1058
+      "contains": 944,
+      "triggers": 2008,
+      "depends_on": 1262,
+      "related_to": 1083
     }
   }
 }

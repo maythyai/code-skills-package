@@ -12,7 +12,7 @@
 
 set -u
 SKILL_DIR="$(cd "$(dirname "$0")/.." && pwd)"
-OUTPUT_ROOT="$PWD/.csp/account-research/runs"
+OUTPUT_ROOT="${CSP_PROJECT_ROOT:-$PWD}/.csp/account-research/runs"
 ok=true
 
 good() { echo "  ✓ $1"; }

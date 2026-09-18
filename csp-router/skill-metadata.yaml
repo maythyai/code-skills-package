@@ -4,7 +4,7 @@
 # Regenerate: node scripts/build-skill-metadata.mjs
 
 version: 2.0
-generated_at: 2026-09-18T07:49:40.122Z
+generated_at: 2026-09-18T09:43:32.151Z
 skills:
   csp-agent-teams:
     phase: review

@@ -5,7 +5,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
 [![npm](https://img.shields.io/npm/v/code-skills-package)](https://www.npmjs.com/package/code-skills-package)
 [![v0.11.1](https://img.shields.io/badge/version-0.11.1-green)](./CHANGELOG.md)(./CHANGELOG.md)(./CHANGELOG.md)(./CHANGELOG.md)(./CHANGELOG.md)
-[![Skills: 661](https://img.shields.io/badge/skills-664-orange)](./docs/SKILL-INDEX.md)
+[![Skills: 664](https://img.shields.io/badge/skills-664-orange)](./docs/SKILL-INDEX.md)
 [![Platforms: 22+](https://img.shields.io/badge/platforms-22+-brightgreen)](./docs/INSTALL.md)
 
 **Unified AI Programming Skills · 22+ Platforms · 15+ Languages · 664 Skills**
