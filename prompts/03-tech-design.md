@@ -148,6 +148,12 @@
 ### 2. 数据架构 → `DATA-ARCHITECTURE.md`
 全局 ER 图（Mermaid）；核心实体清单（实体|表名|量级|增长率|存储引擎|分区）；数据流图；一致性策略（CRUD 强一致/索引最终一致/缓存写穿+TTL/跨服务 Saga）。
 
+**命名约定 + 常量归属（动手前定，下游 05 编码中守）**：
+- **DB 命名方案**：schema/表/列/索引/外键 一套稳定命名规则（前缀、单复数、snake_case、软删列名、审计列 `created_at/updated_at`、枚举 key 大小写），写入此文件为唯一出处；同名实体禁止别名/同义词。
+- **跨层同名**：同一概念从 DB 列 → DTO 字段 → API 字段 → UI prop 同名（或显式映射表），不在各层重起名。
+- **字段命名 ledger**：核心实体的字段清单（名/类型/含义/枚举值），作为 05 实现的施工依据，不在编码中途临时造名。
+- **常量归属**：每模块/应用指定一个常量集中位置（路径），magic 值/阈值/枚举 key/默认值统一落此并按名引用；env 钩子走同一层。
+
 ### 3. 接口架构 → `INTERFACE-ARCHITECTURE.md`
 接口风格（REST/gRPC/GraphQL/WebSocket/MQ/Webhook）；版本策略（`/api/v1/`，破坏性变更新版本，旧版维护 6 个月，废弃提前 3 个月标 `Deprecated`）；鉴权体系（JWT 中心，REST Bearer/gRPC Metadata/WebSocket 握手 Token）。
 

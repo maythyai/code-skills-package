@@ -40,12 +40,30 @@ Universal coding standards applicable across all projects.
 - Create reusable components
 - Share utilities across modules
 - Avoid copy-paste programming
+- **Same logic, one home**: never implement the same capability twice. Repeated logic is extracted into a method on the cohesive class (see §7) and invoked through an instance — not pasted, not reimplemented as a sibling helper.
 
 ### 4. YAGNI (You Aren't Gonna Need It)
 - Don't build features before they're needed
 - Avoid speculative generality
 - Add complexity only when required
 - Start simple, refactor when needed
+
+### 5. Name Before You Code (Naming Ledger)
+- Plan field, variable, and DB schema/table/column names **up front** and keep them consistent across the module — don't invent names mid-implementation.
+- A name is decided once and reused everywhere it appears (API field ↔ DTO field ↔ DB column ↔ UI prop). Same concept carries the same name across layers; renaming is a deliberate, propagated change.
+- Record the project's naming convention (snake_case vs camelCase per layer, table prefix, enum casing, boolean `is_/has_` prefix) in one place and reference it — don't re-decide per file.
+- DB schema names: one stable, documented naming scheme for schemas/tables/columns/indexes; no ad-hoc aliases or synonyms for the same entity.
+
+### 6. Constants Centralized
+- All magic values (numbers, strings, thresholds, enum keys, config defaults) live in **one constants location per module/app** and are referenced by name — never inlined as a literal in two places.
+- A constant is defined once and imported; duplicating the same literal across files is a code smell even when "only used twice".
+- Environment/runtime knobs go through the same constants layer (with env override), not scattered `process.env.X` reads.
+
+### 7. Class Cohesion & Instance Methods
+- Group **related methods into one class**; a class is the home for the operations that share its state and responsibility — not a bag of static helpers.
+- Access behavior through the **instance**, not through parallel free functions doing the same work in different files. If two functions operate on the same data the same way, they belong on the same class as one method.
+- A method lives next to the state it touches; callers depend on the class's instance, so behavior is discoverable and cannot silently diverge across copy-pasted call sites.
+- Cohesion test: can you describe the class's responsibility in one sentence without "and"? If not, split the class. Methods with no shared state → candidates to become a stateless utility module instead.
 
 ## TypeScript/JavaScript Standards
 
