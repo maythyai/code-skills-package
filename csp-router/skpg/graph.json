@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generated_at": "2026-09-18T09:47:43.642Z",
+  "generated_at": "2026-09-20T13:03:12.931Z",
   "nodes": {
     "5b37ecd541b4": {
       "id": "5b37ecd541b4",
@@ -36896,6 +36896,12 @@
       "metadata": {}
     },
     {
+      "source": "de3012021006",
+      "target": "23c62050d68e",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
       "source": "e96bb6eb8f05",
       "target": "91c598dea98d",
       "kind": "related_to",
@@ -43892,6 +43898,78 @@
       "metadata": {}
     },
     {
+      "source": "de3012021006",
+      "target": "23c62050d68e",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "de3012021006",
+      "target": "f84210158e31",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "de3012021006",
+      "target": "1179b083c804",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "de3012021006",
+      "target": "44ff927c4b87",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "de3012021006",
+      "target": "a419aeebed65",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "de3012021006",
+      "target": "6a0d86c4361f",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "de3012021006",
+      "target": "1fd378faa32f",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "de3012021006",
+      "target": "d42a20929685",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "de3012021006",
+      "target": "ee550ccf695a",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "de3012021006",
+      "target": "5051c3e24124",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "de3012021006",
+      "target": "6e66517805b7",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "de3012021006",
+      "target": "2237d75bb913",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
       "source": "e96bb6eb8f05",
       "target": "91c598dea98d",
       "kind": "depends_on",
@@ -49918,18 +49996,18 @@
   ],
   "stats": {
     "node_count": 2482,
-    "edge_count": 5297,
+    "edge_count": 5310,
     "skill_count": 664,
     "trigger_count": 1808,
     "phase_count": 6,
     "category_count": 5,
-    "depends_on_count": 1262,
-    "related_to_count": 1083,
+    "depends_on_count": 1274,
+    "related_to_count": 1084,
     "edge_types": {
       "contains": 944,
       "triggers": 2008,
-      "depends_on": 1262,
-      "related_to": 1083
+      "depends_on": 1274,
+      "related_to": 1084
     }
   }
 }

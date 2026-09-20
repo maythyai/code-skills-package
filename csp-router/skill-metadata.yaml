@@ -4,7 +4,7 @@
 # Regenerate: node scripts/build-skill-metadata.mjs
 
 version: 2.0
-generated_at: 2026-09-18T09:43:32.151Z
+generated_at: 2026-09-20T13:03:11.564Z
 skills:
   csp-agent-teams:
     phase: review
@@ -759,6 +759,7 @@ skills:
       - csp-code-spec
       - csp-test-spec
       - csp-knowledge-hub
+      - csp-roadmap-update
     anti_rationalizations:
       Let's skip the spec phase and just code: "Skipping specs causes rework. The spec phase pays for itself."
       We can do tech selection during implementation: "Mid-implementation tech changes are 10x more expensive."

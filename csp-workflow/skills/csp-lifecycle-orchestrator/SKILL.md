@@ -42,6 +42,7 @@ related_skills:
   - csp-code-spec
   - csp-test-spec
   - csp-knowledge-hub
+  - csp-roadmap-update
 
 triggers:
   keywords: ["全生命周期", "lifecycle", "端到端", "从需求到上线", "完整开发流程",
@@ -123,8 +124,10 @@ anti_rationalizations:
 │  (本地 markdown│                                                              │
 │   +git+manifest)│ S4          S5           S6           S7          S8   S9  │
 │               │ 实施规划 → 并行开发 → 质量门控 → 审查验证 → 发布交付 → 运维监控│
-│                                                                               │
-│  (迭代: 回到 S1 增量，hub 持续索引每阶段产物)                                  │
+│               │                                                                │
+│               │   S10 产品巡检+多角度审查（可选·里程碑后）→ 交棒 roadmap 下一迭代 │
+│               │                                                                │
+│  (迭代: 回到 S1 增量，hub 持续索引每阶段产物；S10 findings 可作为下一迭代 roadmap 输入)│
 │                                                                               │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
@@ -321,6 +324,41 @@ anti_rationalizations:
 - 已知问题清单
 - 下一迭代建议
 
+### Stage 10: 产品巡检 + 多角度审查（可选 · 里程碑后）→ 交棒 roadmap
+
+**执行:** `prompts/product-audit-to-roadmap.md` 驱动的流程（编排多 skill：`csp-product-capability` / `csp-codebase-audit` / `csp-code-tour-guide` / `csp-frontend-design` / `csp-tech-debt-assessment` / `csp-security-review` / `csp-observability-and-instrumentation` / `csp-competitive-analysis` 等，按角度裁剪），收尾交棒 `csp-roadmap-update`。
+
+**定位:** **外环可选阶段**——里程碑归档（S8 ship / milestone_archive）后触发，对**现有产品功能模块**做一次系统化巡检 + 多角度审查，把"下一步往哪走"的实证输入交给 roadmap agent。不在线性 ship 链上，不阻塞发布。
+
+**输入:**
+- 里程碑产物：`.csp/milestones/v{N}/`（snapshot：decomposition/tech-decisions/specs/plan/test-results/review/release-notes）
+- 治理层基线：PMS（`.csp/product-spec/`）+ CMS（`.csp/code-spec/{app}/`）+ TMS（`.csp/test-spec/`）
+- 功能清单：`docs/FEATURES.md` + `docs/strategy/ROADMAP.md`（已规划/已发布）
+- 体验信号（若有）：`csp-product-pulse` / `csp-user-feedback-analysis` / `csp-product-metrics-review` 产物
+
+**审查角度（必选 4 + 扩展按命中裁剪）:**
+- A 增强规划 / B 功能迭代 / C 模块重组 / D 界面规划（必选）
+- E 性能 / F 安全合规 / G 可观测 / H 技术债 / I 数据与增长 / J 竞品对标（命中才做）
+
+**输出:**
+- `docs/audit/PRODUCT-AUDIT-{date}.md`（多角度审查报告）
+- `docs/audit/REVIEW-FINDINGS-{audit-slug}.json`（结构化发现 `AUDIT-F-NN`）
+- `docs/analysis/AUDIT-TO-ROADMAP-{date}.md`（**主题候选交棒清单**：每候选 = 主题名/来源 finding/涉及模块/价值假设/优先级/SemVer 性质/建议版本批次；**以模块为单位聚合**，遵循 roadmap 攒批原则）
+- 回写 `.csp/manifest.json`（audit/analysis item `source_type=doc`、`build_status=built`、`content_hash`）
+
+**门控:**
+- 每条 finding 带依据（`file:line` / 反馈 / 指标），推断标 `[TBD]`，不臆造
+- 跨角度去重 + 严重度复核（Critical/High 亲核 `file:line`）
+- 每条高优先建议附 ≥1 反面证据/风险
+- 交棒清单含"主题候选 → 涉及模块 → SemVer 性质"映射，可供 roadmap 直接消费
+
+**跳过条件:** 用户未要求巡检 / 里程碑为首个 MVP 前无足够演进信号 / 已在周期内跑过且无新变更（content_hash 未变 → 零 delta，不重跑）。默认**不自动触发**，需用户显式 opt-in（lifecycle-config `inspection.auto: false`）。
+
+**与 roadmap 的交棒契约:**
+- 本阶段**止于主题候选 + 优先级 + 依据**；版本号/版本序列/SemVer bump 由 `csp-roadmap-update`（或外环 `prompts/roadmap.md`）按其规则定，本阶段不替它排版本号。
+- roadmap agent 读 `AUDIT-TO-ROADMAP-{date}.md` 定位下一迭代主题；本阶段 findings 与 `07` 复盘 findings 同族（`AUDIT-F-NN` / `REV-F-NN`），都回流 roadmap。
+- 先 `prompts/audit.md`（深度结构化测试+可用性体检）再本阶段（演进开方）= 先诊断再开方，两者可串联。
+
 ## 编排配置
 
 ```yaml
@@ -340,6 +378,7 @@ lifecycle:
     - review
     - ship
     - post-launch
+    - inspection              # 可选·里程碑后：产品巡检+多角度审查→交棒 roadmap（默认 opt-in）
   
   gates:
     require_user_approval:
@@ -347,6 +386,7 @@ lifecycle:
       - after_tech_selection      # 选型后确认技术栈
       - after_tech_design_review  # 方案评审后确认技术方案
       - before_ship               # 发布前确认
+      - before_inspection         # 巡检前确认范围/角度（opt-in，默认不触发）
     auto_pass:
       - quality_gate           # 测试通过即自动进入下一阶段
       - review                 # 无 CRITICAL 即通过
@@ -354,6 +394,10 @@ lifecycle:
   iteration:
     auto_advance: false        # 完成后是否自动进入下一迭代
     milestone_archive: true    # 每个里程碑归档到 .csp/milestones/
+    inspection:                # 里程碑后可选巡检
+      auto: false              # 默认 opt-in，不自动触发
+      on_milestone: true       # 里程碑归档后可触发（需用户确认）
+      feeds: roadmap           # findings 交棒 csp-roadmap-update 作下一迭代输入
   
   scaling:
     # 根据项目规模自动调整深度
@@ -428,7 +472,11 @@ lifecycle:
     ├── review findings                      │        │
     └── release artifacts                    │        │
                                              │        │
-    ▼ [迭代: 增量需求]                        │        │
+    ▼ [S10 产品巡检+多角度审查（可选·里程碑后）]   │
+docs/audit/PRODUCT-AUDIT-*.md + REVIEW-FINDINGS  │
+docs/analysis/AUDIT-TO-ROADMAP-*.md ──交棒──▶ csp-roadmap-update（定下一迭代版本主题/序列）
+                                             │        │
+    ▼ [迭代: 增量需求 + (可选)S10 主题候选]   │        │
 回到 S1 (增量模式) ◄─────────────────────────┘        │
                                                       │
 用户确认 ◄────────────────────────────────────────────┘
@@ -488,6 +536,16 @@ routing_rules:
       action: insert_fix_before_S7
       max_retries: 2
 
+  # 里程碑后可选巡检 → roadmap 交棒（外环，opt-in）
+  post_milestone:
+    inspection:
+      trigger: user_opt_in           # 默认不自动；里程碑归档后用户确认才跑
+      skill_flow: prompts/product-audit-to-roadmap.md
+      output: docs/audit/ + docs/analysis/AUDIT-TO-ROADMAP-{date}.md
+      handoff: csp-roadmap-update     # 主题候选交棒 roadmap，roadmap 定版本号/序列
+      skip_if: no_evolution_signal | inspection_content_hash_unchanged
+      gate: findings_have_evidence    # 每条带 file:line/反馈/指标，不臆造
+
   # Module Spec 治理旁路（与 S1–S9 并行，不是额外阶段）
   # 三个 living baseline 说明书：每个阶段读对应说明书再产出，ship/变更后写回 delta。
   # 详见 csp-workflow/references/module-spec-lifecycle-norms.md
@@ -534,8 +592,9 @@ iteration:
   # 增量迭代
   next_iteration:
     mode: extend
-    input: 增量需求 (新功能/变更/优化)
-    context: 上一里程碑的完整产物
+    input: 增量需求 (新功能/变更/优化) + 可选 S10 巡检交棒清单
+    context: 上一里程碑的完整产物 + （若跑过）docs/analysis/AUDIT-TO-ROADMAP-{date}.md
+    roadmap_input: S10 主题候选（以模块为单位聚合）→ csp-roadmap-update 定版本主题/序列
     delta_handling:
       new_features: full S1-S3 for new features only
       modified_features: delta spec (ADDED/MODIFIED/REMOVED)
@@ -582,6 +641,15 @@ def run_lifecycle(user_input, config):
     # 3. 完成报告
     generate_completion_report(artifacts)
     
+    # 3.5 可选·里程碑后巡检（opt-in）→ 交棒 roadmap
+    if config.iteration.inspection.auto and milestone_just_archived(artifacts):
+        if request_approval("run product inspection?"):
+            audit = run_inspection_flow(            # prompts/product-audit-to-roadmap.md
+                scope=artifacts.milestone, baselines={pms, cms, tms},
+                signals={pulse, feedback, metrics})
+            handoff = build_roadmap_handoff(audit.findings)  # 以模块为单位聚合主题候选
+            skill("csp-roadmap-update").apply(handoff)       # roadmap 定版本号/序列，本步不替它排
+    
     # 4. 迭代推进（如配置）
     if config.iteration.auto_advance:
         prompt_next_iteration()
@@ -597,6 +665,7 @@ completion_signal:
     total_features: "{{count}}"
     specs_generated: "{{count}}"
     phase: shipped
+    inspection_run: "{{bool}} — 若跑，docs/analysis/AUDIT-TO-ROADMAP-*.md 已交棒 roadmap"
     next_action: "iterate or close"
 ```
 
