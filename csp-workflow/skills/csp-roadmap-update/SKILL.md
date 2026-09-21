@@ -257,6 +257,7 @@ Generate a stakeholder-friendly summary (separate from the detailed report):
 ## Key Principles
 
 - **Roadmap is a living document**: It should be updated at least every sprint. A stale roadmap is a misleading roadmap.
+- **已规划不等于必要（集成必要性审视）**：更新时若发生优先级变动 / 里程碑 at risk / 外部依赖变化 / 战略调整，对受影响版本的功能**重跑 `prompts/roadmap.md` Phase 2.5 集成必要性审视**——6 维（定位契合 / 场景必要 / 现有能力重叠 / 集成成本 vs 价值 / 依赖可行 / 攒批合理）裁决纳入/降级/剔除/合并，剔除/降级必记原因可追溯，产出 `docs/analysis/INTEGRATION-NECESSITY-{date}.md`。规划完不审视、已规划即保留 = 反模式。
 - **Honest status builds trust**: Never hide delays. Report real status with a clear recovery plan. Stakeholders can handle bad news; they cannot handle surprises.
 - **Velocity is a forecasting tool, not a performance metric**: Using velocity to judge team performance creates gaming behavior. Use it only for planning.
 - **Descoping is a valid strategy**: When a milestone is at risk, reducing scope is often better than slipping dates. Make the trade-off explicit.
@@ -271,6 +272,7 @@ Generate a stakeholder-friendly summary (separate from the detailed report):
 | Status theater | Everything is "green" even when behind | Use honest status; Green/Yellow/Red with recovery plans |
 | Update avoidance | Roadmap hasn't been updated in months | Schedule regular updates (every sprint minimum) |
 | Scope hiding | Deferred features are silently dropped | Log all descoping decisions with rationale and stakeholder approval |
+| 规划完不审视 | 更新只改状态/日期，不重审功能是否仍需集成进项目系统 | 优先级变动/at risk/依赖变化时重跑 Phase 2.5 集成必要性审视，剔除/降级记原因 |
 
 ## Related Skills
 

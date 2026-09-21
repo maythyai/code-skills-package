@@ -6,7 +6,7 @@
 
 ## 全流程定位
 
-**全流程**：外环 `roadmap`（战略锚点+版本号规则+版本序列路径，跑一次）→ 内环 `00` 知识中枢 → `01` PRD → `02` 需求拆解 → `03` 技术方案+Spec → `04` 任务拆解 → `05` 实施 → `06` 审查·发布 → `07` 复盘（findings 回流 roadmap/下一轮 01）。
+**全流程**：外环 `roadmap`（战略锚点+版本号规则+版本序列路径+**集成必要性审视 gate**，跑一次/低频增量）→ 内环 `00` 知识中枢 → `01` PRD → `02` 需求拆解 → `03` 技术方案+Spec → `04` 任务拆解 → `05` 实施 → `06` 审查·发布 → `07` 复盘（findings 回流 roadmap/下一轮 01）。
 
 **你现在在：外环 `roadmap`**（先于 00；每个项目跑一次，07 回流/战略调整时增量更新；下一步 → 内环 `00` 知识中枢）。
 
@@ -121,6 +121,36 @@
 
 **v1.0 = MVP**：聚焦 3-5 核心功能验证问题假设；后续版本按 Tracks 推进。
 
+### Phase 2.5：版本功能集成必要性审视（self-critique gate，强制）
+**触发**：Phase 2 产出版本序列后**强制执行**（首次规划与 07 回流/战略调整的增量更新都跑）。这是规划者**自己挑战自己刚出的规划**——已规划 ≠ 必要，审视只为过滤"功能层是否有必要集成进项目系统"，不推倒 Phase 0 锚点、不重排版本号规则。
+
+**审视对象**：Phase 2 每个版本的"关键功能（摘要级 3-5 条）"，逐条过。
+
+**审视维度**（每功能逐一过，能 auto-resolve 的直接裁决不问人）：
+1. **定位契合度**：功能是否服务 STRATEGY 锚点（target problem / approach / who）？偏离锚点的"顺手做"功能 → 降级或剔除。
+2. **用户场景必要性**：目标用户/场景是否真需要？无场景支撑、只是"技术可行就做" → 剔除。
+3. **与现有能力重叠**：是否与已发布版本 / 既有能力 / 同批次另一功能重叠？重叠 → 合并或剔除（不重复造轮子）。
+4. **集成成本 vs 价值**：集成进项目系统的成本（外部依赖 / 既有架构改造 / 长期维护负担）vs 用户/业务价值；成本高且价值低或可替代 → 降级到远期或剔除。
+5. **依赖可行性**：前置依赖（外部能力 / 上游版本）是否可达、何时可达？不可达或悬空 → defer 到依赖就绪的版本或剔除，不留死链。
+6. **攒批合理性**：是否本就该并入同模块另一版本主题？能合并的功能不单列成版本（遵循攒批原则）。
+
+**裁决**（每功能四选一，必须记依据可追溯）：
+- `纳入`：必要，留本版本不动。
+- `降级`：非本版本必要 → 移到更后版本/远期主题，标 `deferred` + 原因 + 触发条件（依赖就绪/场景成熟再评估）。
+- `剔除`：无必要集成进项目系统 → 移出版本序列，记入 STRATEGY「Not working on」或 ROADMAP Backlog 摒弃项 + 原因（不静默删）。
+- `合并`：并入同模块另一版本/功能 → 在目标版本功能行追加，原位置移除。
+
+**产出**：
+- `docs/analysis/INTEGRATION-NECESSITY-{date}.md`：审视表 `版本 | 功能 | 裁决 | 依据(锚点/场景/重叠/成本/依赖/攒批) | 去向(留/移至vX.Y/摒弃/并入vX.Y功能Z)` + 汇总（纳入 N / 降级 N / 剔除 N / 合并 N）。
+- **回写更新 ROADMAP.md**：版本序列替换为审视后的净版（剔除的移除、降级的改 status=`deferred`+去向、合并的并功能行）；FEATURES.md 同步（剔除的移除或标 `❌摒弃`、降级的移行改版本号、合并的归并）。
+- 回写 `.csp/manifest.json`：integration-necessity analysis item `source_type=doc`、`build_status=built` + `content_hash`；被剔除/降级的功能行 manifest item 标 `degraded`/移除。
+
+**红线**：
+- ① **已规划不等于必要**——审视可剔除/降级已写进 ROADMAP 的功能，"Phase 2 已列"不是保留的理由。
+- ② **剔除/降级必须记原因**（可追溯），不静默删功能行——读者要能看懂"为什么不做"。
+- ③ **self-critique 不重规划**——只过滤功能层，不动 Phase 0 锚点、不重定版本号规则、不重排 SemVer 号；战略边界争议才人工澄清。
+- ④ **默认优先仍适用**：明显重叠 / 明显偏离锚点 / 依赖悬空 → 直接裁决，不打断；仅在"功能去留牵动战略根本方向、无法 auto-resolve"时人工澄清（≤2 轮）。
+
 ### Phase 3：远期版本路径（战略主题——非 SemVer 发布号）
 战略主题演进与里程碑（如"平台化与生态"、"生态开放+全球金融"），每节点：方向性主题 + 关键能力跃迁 + 预期市场位置 + **逼近的 SemVer 号**（如"v2.0 附近"，不是确定 tag）。
 
@@ -130,9 +160,9 @@
 方向性叙事：产品终局、护城河、可持续性。一段话，不细化。
 
 ### Phase 5：产出 + 回写 + 衔接
-- 写 `docs/strategy/STRATEGY.md`（锚点）+ `docs/strategy/ROADMAP.md`（版本号规则 + 版本序列路径 + 版本-主题表）+ `docs/FEATURES.md`（功能列表：版本×模块×功能×集成状态矩阵；Phase 2 每版本的功能行落入此文件，状态初始 `📋规划中`）；若有参考文件夹，另写 `docs/analysis/COMPETITIVE-REFERENCE.md`（借鉴清单）。
-- 回写 `.csp/manifest.json`：strategy/roadmap/competitive-reference item `source_type=doc`、`build_status=built` + `content_hash`。
-- 衔接声明：01 PRD 读 ROADMAP 定位本版本主题；06 release 用版本号规则 + 标记 `docs/FEATURES.md` 已交付功能 `✅`；07 复盘 findings 回流更新 ROADMAP 下一版本主题 + 校准 FEATURES.md planned-vs-delivered 漂移。
+- 写 `docs/strategy/STRATEGY.md`（锚点）+ `docs/strategy/ROADMAP.md`（版本号规则 + **Phase 2.5 审视后的净版**版本序列路径 + 版本-主题表）+ `docs/FEATURES.md`（功能列表：版本×模块×功能×集成状态矩阵；Phase 2 每版本的功能行落入此文件，状态初始 `📋规划中`，Phase 2.5 剔除/降级/合并后同步）；若有参考文件夹，另写 `docs/analysis/COMPETITIVE-REFERENCE.md`（借鉴清单）；Phase 2.5 写 `docs/analysis/INTEGRATION-NECESSITY-{date}.md`（审视表）。
+- 回写 `.csp/manifest.json`：strategy/roadmap/competitive-reference/integration-necessity item `source_type=doc`、`build_status=built` + `content_hash`；被 Phase 2.5 剔除/降级的功能行 item 标 `degraded`/移除。
+- 衔接声明：01 PRD 读 ROADMAP（已过 Phase 2.5 净版）定位本版本主题；06 release 用版本号规则 + 标记 `docs/FEATURES.md` 已交付功能 `✅`；07 复盘 findings 回流更新 ROADMAP 下一版本主题 + 校准 FEATURES.md planned-vs-delivered 漂移；**07 回流触发增量更新时 Phase 2.5 重跑**（对新主题候选再过一遍集成必要性审视）。
 
 ## 五、产物路径规范（与 00-07 同构）
 
@@ -143,8 +173,9 @@
 │   ├── STRATEGY.md          # 战略锚点（target problem/approach/who/metrics/tracks/not-doing）
 │   └── ROADMAP.md           # 版本号规则 + 1y/3y/长期路径 + 版本-主题表
 ├── docs/analysis/
-│   └── COMPETITIVE-REFERENCE.md  # 参考/竞品借鉴清单（若有参考文件夹，Phase 0.5 产出）
-└── .csp/manifest.json       # 回写 strategy/roadmap/competitive-reference item
+│   ├── COMPETITIVE-REFERENCE.md  # 参考/竞品借鉴清单（若有参考文件夹，Phase 0.5 产出）
+│   └── INTEGRATION-NECESSITY-{date}.md  # 版本功能集成必要性审视表（Phase 2.5 产出，每次规划/更新都产出）
+└── .csp/manifest.json       # 回写 strategy/roadmap/competitive-reference/integration-necessity item
 ```
 
 **front-matter**（两文件头部）：
@@ -185,6 +216,8 @@ see_also: docs/prd/PRD-INDEX.md | .csp/review/REVIEW-FINDINGS-*.json
 | 07 findings 不回流 | 复盘发现不进下一版本主题 | 07 open/deferred findings → ROADMAP 下版本主题 |
 | 战略主题号当 SemVer 打 tag | 版本做了起步标 v2.0.0（MAJOR）但无 breaking | 战略号≠SemVer 号；additive→MINOR 增量；MAJOR 只在真实 breaking |
 | 忽略参考文件夹 | 有开源参考却没借鉴 | 探测参考文件夹，Phase 0.5 提炼 feature/差异化输入 |
+| 规划完不审视集成必要性 | Phase 2 列完功能就定稿，已规划即保留，堆功能不过滤 | Phase 2.5 强制 self-critique：6 维审视每功能，剔除/降级/合并后回写净版 ROADMAP |
+| 审视静默删功能 | 剔除/降级功能不留原因 | 剔除/降级必须记依据可追溯（INTEGRATION-NECESSITY 表 + Backlog 摒弃项） |
 | 过度问人 | 每节反复确认 | 默认优先，只在战略根本模糊时人工澄清 |
 
 ## 输出风格
@@ -205,6 +238,6 @@ see_also: docs/prd/PRD-INDEX.md | .csp/review/REVIEW-FINDINGS-*.json
  - **方向可行性**：回答"能不能做""有没有人在做""市场多大""机会窗口"。
  多模态并行搜索（按容器/按内容/按时间各一路），证据带出处，不臆造数据。
 
-调研收敛后 spawn `roadmap-planner`，基于调研结论 + 既有 `docs/strategy/ROADMAP.md`，规划**长周期、多版本结构化产品路线**：从当前最新版本号往后推演 vX.Y.0 序列（如 v0.22、v0.23 … 一直到 v1.50+），每个版本明确主题、新增 Feature 清单、对应解决的用户场景/竞品差距、优先级与依赖。不要局限在一两个版本，深入挖掘到功能饱和为止，相似功能模块可以放到一个版本，不是一个功能一个版本的。路线写回 `docs/strategy/ROADMAP.md` 。
+调研收敛后 spawn `roadmap-planner`，基于调研结论 + 既有 `docs/strategy/ROADMAP.md`，规划**长周期、多版本结构化产品路线**：从当前最新版本号往后推演 vX.Y.0 序列（如 v0.22、v0.23 … 一直到 v1.50+），每个版本明确主题、新增 Feature 清单、对应解决的用户场景/竞品差距、优先级与依赖。不要局限在一两个版本，深入挖掘到功能饱和为止，相似功能模块可以放到一个版本，不是一个功能一个版本的。路线写回 `docs/strategy/ROADMAP.md`。**规划完版本序列后，强制跑 Phase 2.5「版本功能集成必要性审视」**：对每个版本的关键功能过 6 维 self-critique（定位契合/场景必要/现有重叠/集成成本vs价值/依赖可行/攒批合理），裁决纳入/降级/剔除/合并，剔除/降级必记原因，产出 `docs/analysis/INTEGRATION-NECESSITY-{date}.md` 并把净版（剔除/降级/合并后）回写 `ROADMAP.md` + `FEATURES.md`——已规划不等于必要，过滤完才算定稿。
 
-自决策授权：调研方向、竞品取舍、版本主题与 Feature 拆分、优先级排序、跨版本依赖排布——你自己拍板，记入 DEV-LOG/ROADMAP，不打断我。gate 即授权，只在战略根本模糊/无法 auto-resolve 的报错才打断我。每个版本按进度条格式播报，全部版本清空后输出总调研+规划+发布摘要再停。
+自决策授权：调研方向、竞品取舍、版本主题与 Feature 拆分、优先级排序、跨版本依赖排布、**Phase 2.5 集成必要性裁决**——你自己拍板，记入 DEV-LOG/ROADMAP，不打断我。gate 即授权，只在战略根本模糊/无法 auto-resolve 的报错才打断我。每个版本按进度条格式播报，全部版本清空后输出总调研+规划+发布摘要再停。

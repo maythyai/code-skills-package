@@ -6,7 +6,7 @@
 
 | 顺序 | 阶段 | 文件 | 产出目录 |
 |---|---|---|---|
-| 外环 | 产品长期规划（战略锚点+版本号规则+版本序列路径） | [roadmap.md](./roadmap.md) | `docs/strategy/`（STRATEGY+ROADMAP） |
+| 外环 | 产品长期规划（战略锚点+版本号规则+版本序列路径+**版本功能集成必要性审视 gate**） | [roadmap.md](./roadmap.md) | `docs/strategy/`（STRATEGY+ROADMAP）+ `docs/analysis/`（INTEGRATION-NECESSITY） |
 | 0 | 知识中枢初始化 | [00-knowledge-hub.md](./00-knowledge-hub.md) | `.csp/AGENTS.md` + `.csp/manifest.json` |
 | 1 | PRD 生成（产品需求） | [01-prd.md](./01-prd.md) | `docs/prd/` + `.csp/product-spec/`（PMS） |
 | 2 | 需求拆解（工程级 Feature） | [02-decomposition.md](./02-decomposition.md) | `.csp/decomposition/` |
@@ -16,6 +16,7 @@
 | 6 | 审查·测试·发布交付·运维 | [06-verify-ship.md](./06-verify-ship.md) | `.csp/artifacts/{verify,review}/` + `.csp/ship/` + `.csp/ops/` + `.csp/milestones/` |
 | 7 | 整体复盘审查（产品+技术，迭代探索） | [07-reviewer.md](./07-reviewer.md) | `.csp/review/` + `docs/solutions/`（摘要） |
 | 独立 | 模块化审计+可用性审查+联动测试+roadmap bump | [audit.md](./audit.md) | `.csp/audit/` + `docs/analysis/`（摘要） |
+| 独立 | 单页面/单功能模块缺口与增强深潜（通用面+领域目录+联动） | [feature-gap-analysis.md](./feature-gap-analysis.md) | `.csp/gap-analysis/` + `docs/analysis/`（摘要） |
 | 棕地 | docs/→.csp/ 双轨整合（PRD→PMS、strategy→lifecycle、solutions→specs、analysis→audit） | [brownfield-doc-integration.md](./brownfield-doc-integration.md) | `.csp/product-spec/` + `.csp/manifest.json` + `docs/` 整理归位 |
 
 > **06 vs 07**：06 是**发布前符合性验证**（实现是否满足 PRD/Spec/AC、能否上线），是门控；07 是**里程碑后整体复盘**（产品对不对、架构稳不稳、下一步做什么），探索性/战略性，不卡发布。07 从用户视角+技术视角发现 Spec 之外的新问题，findings 回流下一迭代 01-05 + 外环 roadmap。
@@ -23,6 +24,8 @@
 > **外环 roadmap**：`roadmap.md` 先于 00 跑一次——产出战略锚点（STRATEGY.md）+ 版本号规则 + 1/3 年+迭代路径（ROADMAP.md）。01 PRD 读 ROADMAP 定位本版本主题（`roadmap_ref`/`target_version`）；06 release 用版本号规则；07 复盘 findings 回流更新 ROADMAP 下一版本主题。每个项目通常只跑一次，07 回流或战略调整时增量更新。
 
 > **独立审计 `audit`**：`audit.md` 独立于 00–07 链路，可随时运行——模块化拆解（含 DB 模块）→ 并行 fan-out 事实 → 需求可追溯缺口 → 跨层联动测试 → 逐模块可用性审查（Mode A/B + Nielsen 10）→ 评级 → 裁决报告 → findings 带 SemVer bump 建议回流 roadmap。产出 `.csp/audit/`（MODULE-LIST/USABILITY-REPORT/AUDIT-VERDICT/FINDINGS）。兼容 CSP 全部约定；不写 lifecycle、不改代码，只产审计+建议（修复归 05/06）。
+
+> **独立深潜 `feature-gap-analysis`**：`feature-gap-analysis.md` 独立于 00–07 链路，可随时运行——锁定**单个已实现的页面/功能模块**，做现状重建 → 通用能力面扫描（F1–F12 横切关注点）→ **UI 与产品维度深审（U1–U7：宏观定位/信息架构/散乱/视觉与交互一致性/色调/用户习惯/响应式与 a11y，结合 `csp-frontend-design`/`csp-html-prototype`/`dataviz` 等设计技能）** → 领域增强目录对照（认证/CRUD/列表/搜索/上传/支付/Dashboard/消息/设置/审批等功能原型）→ 边界联动检查 → 优先级评级 → 交棒。粒度细到单页面/单模块（如 login 缺密码大小写校验、缺验证码、缺找回流程），findings 前缀 `GAP-F-NN`，落 `.csp/gap-analysis/`。P0 直发 04 拆 fix task → 05 → 06；P1/P2 攒批进 roadmap 版本主题。与 `audit.md`（全项目体检）、`product-audit-to-roadmap.md`（产品级演进方向）互补：audit 出结构问题 → 本流程深潜增强点；多模块 GAP findings 可由 product-audit 聚合。不写 lifecycle、不改代码，只产缺口+建议（实现归 01/03/05）。文末附「全界面自动巡检」驱动提示词——不指定页面时自动发现全部界面逐个深潜 + 跨模块 UI 一致性/重组聚合。
 
 > **棕地文档整合 `brownfield-doc-integration`**：独立于 00–07 链路，是 00 Phase 1.5/1.7 在"docs/→.csp/ 双轨整合"上的具体化。棕地项目 onboarding 时跑——把 `docs/` 的 `prd/`/`strategy/`/`solutions/`/`analysis/` 蒸馏+索引进 `.csp/`（PRD→PMS、strategy→lifecycle/VERSION-REGISTRY、solutions→specs/review、analysis→audit/review），原文留 `docs/` 不复制全文，`.csp/` 只存工程蒸馏 + manifest 索引 + front-matter 互链。`.csp/AGENTS.md` 不存在先跑 00。可随时增量重跑（delta）。产物 `.csp/product-spec/` + `.csp/manifest.json` + `docs/` 整理归位。
 
@@ -61,7 +64,7 @@
 - **战略主题号 ≠ SemVer 发布号**：roadmap 的 v2.0/v3.0 是远期战略愿景叙事，**不是版本发布 tag**。实际发布号按 SemVer 从上一 tag 增量续编：additive（新模块/新端点/无 breaking）→ MINOR+1；breaking API → MAJOR+1；fix → PATCH+1。MAJOR 只在 06 发布时验证到**实际 breaking API 变更**才 bump——战略愿景宏大 ≠ MAJOR bump。
 - **攒批发布，feat/fix 分轨**：多个 feat 攒一个 MINOR+1 版本、多个 fix 攒一个 PATCH+1 版本，不为每个小功能单独发版；同迭代既有 feat 又有 fix → 拆两个发布（feat 批 MINOR tag + fix 批 PATCH tag），不混合成一个版本（fix 的 PATCH 性质不被 MINOR 掩盖）。
 - **版本全生命周期追踪**：`released ≠ deployed ≠ prod-verified`。`.csp/ship/VERSION-REGISTRY.md` 记录每版本全生命周期（planned→released→deployed→prod-verified→rolled-back）+ 实际交付 + 四方对齐（tag↔package.json↔prod health↔CHANGELOG）。`lifecycle-state.prod_version` ≠ `latest_release`——线上跑的不一定是最新的。05 开始前检查 prod 版本对齐。
-- **Finding ID 前缀规则（防冲突）**：audit=`AUDIT-F-NN`，07 review=`REV-F-NN`，03 TDD 评审=`TDD-REV-F-NN`，01 PRD 评审=`PRD-REV-F-NN`。不同来源 finding 不混编，追溯按前缀路由。
+- **Finding ID 前缀规则（防冲突）**：audit=`AUDIT-F-NN`，feature-gap=`GAP-F-NN`，07 review=`REV-F-NN`，03 TDD 评审=`TDD-REV-F-NN`，01 PRD 评审=`PRD-REV-F-NN`。不同来源 finding 不混编，追溯按前缀路由。
 - **audit 衔接**：audit P0 findings（`快速修复=true`）→ orchestrator 直发 04 拆 fix task（`fix(audit-F-NN)`）→ 05 fix → 06 verify（不等 roadmap/01）；P1/P2 → roadmap 版本-主题表，下一轮走 01→04→05。04 读 `.csp/audit/AUDIT-FINDINGS-{milestone-slug}.json` 拆 fix task。
 - **阶段穷尽**：每阶段必须**穷尽完成本阶段全部任务**才可标 `done`、写 lifecycle 进下一阶段，不遗留尾巴到下游。例：03 必须为 decomposition 每个 Feature 产出 Spec（硬门控 Spec 数 == Feature 数）；04 必须为每个 P0/P1 Spec 拆 Task；05 必须按全部 Wave 实施完。下游探测发现上游有缺漏 → 停步路由回上游补全，不臆造、不绕过。
 - **评审/批准 gate（默认自动，不等人）**：① **PRD 评审**（01 完成前，reviewer≠author，auto 跑、findings 自动应用、无未解 Critical 自动 `Approved` 进 02，**不要求人工批准**；仅 Rejected fundamental 才人工）；② **Git 发布**（06，S6 质量门控+S7 审查+对账全过后**自动 push+GitHub Release**，gate 即授权，不再二次人工确认；版本号一致性见 06「版本与发布规范」节）；③ **07 复盘**（里程碑后可选触发）。**仅无前置 gate 的纯破坏操作（删 source、删业务文档）才人工拍板。**
