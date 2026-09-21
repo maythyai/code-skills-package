@@ -15,12 +15,14 @@
 | `dev-lead` | 05 | Read,Write,Edit,Bash,Glob,Grep,Agent,Worktree | opus | 开发/实现/并行开发 |
 | `release-manager` | 06 | Read,Write,Edit,Bash,Glob,Grep | sonnet | 测试/审查/发布/上线 |
 | `reviewer` | 07 | Read,Glob,Grep,Bash,Write,Edit,Agent | opus | 整体复盘/架构审计/下一迭代 |
-| `lifecycle-orchestrator` | 主调度 | Read,Bash,Agent,AskUserQuestion,Write,Edit | opus | 跑流程/从 00 开始/推进 |
+| `lifecycle-orchestrator` | 主调度 | Read,Bash,Agent,AskUserQuestion,Write,Edit,Worktree | opus | 跑流程/从当前续跑/连续推进所有版本/端到端交付 |
 | `backend-engineer` | 05 角色 | Read,Write,Edit,Bash,Glob,Grep | sonnet | 由 dev-lead spawn |
 | `frontend-engineer` | 05 角色 | Read,Write,Edit,Bash,Glob,Grep | sonnet | 由 dev-lead spawn |
 | `db-engineer` | 05 角色 | Read,Write,Edit,Bash,Glob,Grep | sonnet | 由 dev-lead spawn |
 | `qa-engineer` | 05 角色 | Read,Write,Edit,Bash,Glob,Grep | sonnet | 由 dev-lead spawn |
 | `auditor` | 独立 | Read,Write,Edit,Bash,Glob,Grep,Agent | opus | 模块审计/可用性审查/项目体检 |
+| `product-auditor` | 独立 | Read,Write,Edit,Bash,Glob,Grep,Agent | opus | 产品级多角度审查/演进方向/交棒 roadmap |
+| `gap-analyst` | 独立 | Read,Write,Edit,Bash,Glob,Grep,Agent | opus | 单模块缺口深潜/UI 迭代(M1-M8)/全界面巡检 |
 | `brownfield-integrator` | 棕地(独立) | Read,Write,Edit,Glob,Grep,Bash | sonnet | 棕地文档整合/把 docs 整合进 .csp |
 
 ## 二、全流程
@@ -138,6 +140,8 @@ orchestrator 只 spawn `dev-lead` 一次；dev-lead 内部按 Wave + 文件无�
 | release-manager | 06-verify-ship.md | 06 |
 | reviewer | 07-reviewer.md | 07 |
 | auditor | audit.md | 独立 |
+| product-auditor | product-audit-to-roadmap.md | 独立 |
+| gap-analyst | feature-gap-analysis.md | 独立 |
 | brownfield-integrator | brownfield-doc-integration.md | 棕地(独立) |
 | version-management | version-management.md | 参考文件(无 frontmatter，整文件复制) |
 | (本 README) | README.md | 共享约定，不复制成 agent |
@@ -152,6 +156,22 @@ orchestrator 只 spawn `dev-lead` 一次；dev-lead 内部按 Wave + 文件无�
 ## 九、迁移到其他项目
 
 本目录可整目录 `cp -r` 到任意项目的 `.claude/agents/`，agent 自包含（共享约定在本 README，全流程定位在每个 agent 顶部），不依赖 prompts/。
+
+### 跨项目全局安装（推荐，/Users/cs/projects 下所有项目共享）
+把本目录同步到 `~/.claude/agents/`（Claude Code 全局 agent 位，所有项目可见）：
+```bash
+rsync -a .claude/agents/ ~/.claude/agents/   # 无 --delete，只覆盖更新的
+```
+任一项目只要具备以下两文件即可调用 `lifecycle-orchestrator` 跑端到端交付：
+- `docs/strategy/ROADMAP.md`（版本-主题表，已过 Phase 2.5 集成必要性审视）；
+- `.csp/lifecycle-state.json`（不存在时 orchestrator 会先 spawn roadmap-planner + knowledge-hub 初始化）。
+
+### 连续多版本循环 + worktree/PR 并行（核心能力）
+- `lifecycle-orchestrator` 默认 **continuous 模式**：06 done（push origin + tag + Release + 归档）后自动读 ROADMAP 取下一未交付版本回 01，版本间不停，直到队列清空。仅用户说"只做某个版本"才单停。
+- **05 并行委派 dev-lead**：dev-lead 用 worktree + PR + squash-merge 流水线（6.4 节）并行开发，`max_PRs` 默认 3 防 CI/并发限制；orchestrator 只 spawn dev-lead 一次，不直接管角色 agent。
+- **Spec 前置硬门控**：进 05 前必须有完整 PRD + Spec（Spec 数 == Feature 数），不写无 Spec 的代码。
+- **留尾纪律**：剩余项只能 done / BLOCKED / deferred（见第十节）；deferred 自动并入下一版本 01 入口。
+- gate 即授权，仅 5 类打断（战略模糊/PRD Rejected/真破坏/多 tag 不明/无法 auto-resolve 报错），07 复盘默认自动触发。
 
 ## 十、完成纪律（不当轮延后）
 

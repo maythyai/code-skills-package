@@ -151,6 +151,27 @@ Task D: package.json, src/config/
 - Wave 1（基础层：DB migration + 基础设施）→ 集成验证 → Wave 2（核心业务）→ … → Wave N。
 - Wave 间必须集成 + 全量测试绿才进下一 Wave；不绿停步，不带着红测试往下推。
 
+### 6.4 PR + merge 并行流水线（worktree→branch→PR→squash-merge）
+并行流不止在 worktree 里攒 commit，而是走 **PR + merge** 流水线，便于 review、CI 门控、可回滚、线性历史。每个可并行 Task/Feature 流：
+
+1. **建 worktree + feat 分支**：`git worktree add ../wt-<spec-slug> -b feat/<scope>-<desc>`（从 main 最新开），文件系统级隔离。
+2. **TDD 实现 + 原子提交**：在 worktree 内红→绿→重构，一逻辑一 commit（Conventional Commits），每 commit 独立可编译可测过。
+3. **push 分支**：`git push -u origin feat/<scope>-<desc>`。
+4. **开 PR**：PR 描述含 Summary/Changes/Testing/Related Spec(Task)；关联 `.csp/specs/SPEC-F-*-n` + `.csp/tasks/WBS.md` 行。
+5. **CI 门控**：PR 触发 CI，全绿才可合（本地绿 ≠ CI 绿）；CI 红由流负责人修，不靠人 override。
+6. **review**：≥1 approve（Lead 自审 + 跨流 review），无 unresolved conversations。
+7. **squash-merge**：`--squash` 合入主干保持线性历史，禁直接 merge（噪声）/禁 force push 已推分支；合入后删分支 + 清 worktree。
+8. **冲突解决**：后开者 `git rebase origin/main` 同步，不 force push；跨流冲突 Lead 裁决（按 Spec 语义/模块边界判合并方向）。
+
+**并发控制（防 CI/并发限制）**：
+- `max_PRs` 上限同时打开的 PR 数（默认 3，≤ CPU 核数 - 2）。CI 容量不足时 Lead 自决策调低，记 DEV-LOG。超出 `max_PRs` 的流排队，不并发开 PR 触发 CI 限流。
+- 共享资源流（migration / `package.json` / `tsconfig.json` / `go.mod`）单独串行 Wave，不进并行组（避免 PR 互改同一文件死锁）。
+- `max_streams`（跨版本，orchestrator 管）≤ 2；本节是版本内 `max_PRs`。
+
+**集成验证（所有 PR 合入后）**：Lead 跑全量测试套件 + lint + typecheck + build + 集成/E2E，全绿才标 05 done → 06；任一红停步，按根因回流的流修 delta 重合入，不带着红进 06。
+
+**与既有 worktree-per-task 衔接**：6.2 的 worktree-per-task 隔离不变；6.4 是在其上加 PR+merge 流水线（从"worktree 内 commit"升级为"worktree→PR→squash-merge"），让并行产出可 review、可门控、可回滚。S 级（单 Feature 纯后端 CRUD）Lead 独立完成时不必开 PR，直接主干 commit 即可——PR 流水线用于 M+ 级并行流。
+
 ## 七、单 Task 实施纪律（每个子 Agent 与 Lead 都遵守）
 
 1. **加载 Spec + Task**：完整读对应 `SPEC-F-*-n` + Task（`spec_ref`/`acceptance`）+ 引用的 ADR/API 契约，歧义动手前解决。
