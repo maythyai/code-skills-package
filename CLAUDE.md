@@ -38,6 +38,13 @@ npm test               # validate:all + build:graph + node --test test/ (20 inva
 - **`csp-sdk` CLI**: `query <sub>` · `doctor` · `version` · `init-skill <name> --layer <1-4>` (scaffolds a validate-passing SKILL.md). Unknown subcommands exit non-zero (no silent stub-pass).
 - **`install.sh`**: split into `install.sh` (930 lines) + `lib/platforms.sh` + `lib/bootstrap.sh`. CSP_BRANCH whitelisted (`^[A-Za-z0-9._-]+$`); remote bootstrap supports `CSP_SHA256` integrity pinning.
 - **Tests**: `test/csp-invariants.test.mjs` (registry shape, graph consistency, triggers integrity, version sync across 5 files, csp-sdk contract, npm-pack hygiene).
+- **Git push fallback (SSH 22 to github.com down)**: if `git push` / `git ls-remote` over `git@github.com` hang (port 22 blocked), switch to the HTTPS + `gh` token channel — do **not** keep retrying SSH:
+  ```bash
+  gh auth setup-git                                    # wire gh as the git credential helper for github.com
+  git remote set-url origin https://github.com/maythyai/code-skills-package.git
+  git push origin master                                # now HTTPS, authed by the gh token (no PAT entry)
+  ```
+  Verify with `gh auth status` (expects `Git operations protocol: https` + a token with `repo` scope). `gh Release` creation over HTTPS follows the same channel. Revert to SSH later: `git remote set-url origin git@github.com:maythyai/code-skills-package.git`. The commit is always safe locally first; only the push is channel-dependent.
 
 ## Docs
 
