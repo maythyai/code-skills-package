@@ -33,7 +33,12 @@ model: opus
 ## 一、版本队列循环（外环，核心）
 
 ### 1.1 队列来源
-读 `docs/strategy/ROADMAP.md` 版本-主题表，取所有 `status ∈ {planned, in-progress}` 的版本（`shipped`/`released`/`deferred` 中已交付的跳过；`deferred` 待解除的见 1.5），按 SemVer 增量序排成**交付队列**。写 `.csp/lifecycle-state.json` 的 `version_queue`（数组）+ `current_version_index`。
+读 `docs/strategy/ROADMAP.md` 版本-主题表，取所有 `status ∈ {planned, in-progress}` 的版本（`shipped`/`released` 已交付的跳过；`deferred` 版本**不并入活跃队列**，等 §1.5 解除条件满足才并入），按 SemVer 增量序排成**交付队列**。写 `.csp/lifecycle-state.json` 的 `version_queue`（数组）+ `current_version_index`。
+
+**Phase 2.5 新鲜度守卫（取队列前必跑）**：检查 `docs/analysis/INTEGRATION-NECESSITY-*.md` 是否存在且其日期 ≥ `ROADMAP.md` 的 `last_updated`。
+- 不存在或过期 → **先 spawn `roadmap-planner` 跑 Phase 2.5 集成必要性审视**（净化版本主题：剔除/降级/合并无必要功能），更新 ROADMAP 净版 + 产出 INTEGRATION-NECESSITY，**再取队列**——不消费未过滤的 ROADMAP。
+- 存在且新鲜 → 直接取净版队列。
+- 此守卫只触发一次（净化后 INTEGRATION-NECESSITY 落地，后续续跑不再重跑，除非 ROADMAP 又更新）。
 
 ### 1.2 单停条件
 - **默认连续推进所有版本，版本间不停**——06 done 后自动取下一版本回 01。
