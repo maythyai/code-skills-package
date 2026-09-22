@@ -516,6 +516,134 @@ test("page load time is acceptable", async ({ page }) => {
 });
 ```
 
+## Deep Audit Suites (Route Sweep + Button Audit + Cross-Reference)
+
+Beyond critical-journey specs, maintain two **audit specs** for release-gate / nightly runs (not PR feedback — too heavy):
+
+### Route Sweep Spec (auto-discover, no manual list)
+
+Discover routes from the **filesystem**, not a hand-maintained list, so new pages are auto-covered:
+
+```typescript
+// tests/e2e/page_sweep.spec.ts — Next.js app router example
+import { test, expect } from "@playwright/test";
+import { readdirSync } from "fs";
+import { join, relative } from "path";
+
+const PAGE_GLOB = "src/app";                    // adapt to framework
+const SKIP = /\/(api|login|\(auth\)|\[)/;       // skip api/dynamic/auth
+
+function discoverRoutes(): string[] {
+  const out: string[] = [];
+  const walk = (dir: string) => {
+    for (const entry of readdirSync(dir, { withFileTypes: true })) {
+      const p = join(dir, entry.name);
+      if (entry.isDirectory()) walk(p);
+      else if (entry.name === "page.tsx") {
+        const route = "/" + relative(PAGE_GLOB, dir).replace(/\\/g, "/")
+          .replace(/^\(.*?\)\//, "");           // strip route groups
+        if (!SKIP.test(route)) out.push(route || "/");
+      }
+    }
+  };
+  walk(PAGE_GLOB);
+  return [...new Set(out)];
+}
+
+for (const route of discoverRoutes()) {
+  test(`sweep ${route}`, async ({ page }) => {
+    const errors: string[] = [];
+    page.on("console", m => m.type() === "error" && errors.push(m.text()));
+    await page.goto(route, { waitUntil: "domcontentloaded" });
+    // max-over-mains: nested layouts can render multiple <main>
+    await expect.poll(async () => page.locator("main").count(), { timeout: 30_000 })
+      .toBeGreaterThanOrEqual(1);
+    await expect.poll(
+      async () => page.locator("main").last().locator("h1, button").first().isVisible(),
+      { timeout: 30_000 }                       // Turbopack cold compile up to 15s+
+    ).toBe(true);
+    expect(errors.filter(e => !e.includes("hydration"))).toEqual([]);  // non-benign errors
+  });
+}
+```
+
+Rules learned in production:
+- Use `expect.poll` with timeout — one-shot checks race against shell nav text rendering first.
+- One independent `page` + error probe **per route** — a shared probe can't attribute errors to a route.
+- `max-over-mains`: nested layouts render multiple `<main>`; `.last()`/`.first()` both misjudge — assert "at least one main with visible heading/button".
+- Skip `api/`, dynamic `[param]` segments, `(auth)` route groups.
+
+### Button Audit Spec (click every visible button, stream JSONL)
+
+```typescript
+// tests/e2e/button_audit.spec.ts
+import { test } from "@playwright/test";
+import { appendFileSync } from "fs";
+
+const DENY = /删除|移除|退出登录|注销|清空|重置|退订|支付|购买|立即发布|授权|绑定|停用|丢弃|
+             delete|remove|logout|reset|dissolve|pay|purchase|revoke/i;
+const AUDIT_TAG = process.env.AUDIT_TAG ?? "";
+const OUT = `/tmp/button_audit${AUDIT_TAG}.jsonl`;
+
+test("button audit", async ({ page }) => {
+  page.on("dialog", d => d.dismiss());          // prevent native dialog hang
+  page.on("filechooser", () => {});             // intercept file pickers
+  page.on("popup", p => p.close());             // close popups
+  for (const route of ROUTES) {
+    await page.goto(route);
+    const btns = await page.locator("main button:visible").all();
+    for (let i = 0; i < Math.min(btns.length, 50); i++) {   // cap per route, SKIPPED(cap) beyond
+      const btn = btns[i];
+      const label = (await btn.innerText()).trim();
+      if (DENY.test(label)) { appendFileSync(OUT, JSON.stringify({ route, i, label, react: "SKIPPED" })+"\n"); continue; }
+      const before = Date.now();
+      const reactions: string[] = [];
+      const reqs: string[] = [];
+      const onReq = (r: any) => reqs.push(`${r.method()} ${r.url()} ${r.status()}`);
+      page.on("response", onReq);
+      await btn.click({ timeout: 2000 }).catch(() => reactions.push("CLICK_FAIL"));
+      await page.waitForTimeout(300);           // observation window (see attribution caveat)
+      if (reqs.length) reactions.push("NET:" + reqs.join(","));
+      if (await page.locator("[role=dialog]").count()) reactions.push("DIALOG");
+      if (await page.locator("[data-sonner-toast]").count()) reactions.push("TOAST");
+      if (reactions.length === 0) reactions.push("NONE");   // dead-button CANDIDATE
+      appendFileSync(OUT, JSON.stringify({ route, i, label, react: reactions.join("|") })+"\n");
+      page.off("response", onReq);
+    }
+  }
+});
+```
+
+Rules:
+- **DENY-LIST is mandatory** — destructive/payment buttons are only recorded as `SKIPPED`, never clicked.
+- `NONE` is a dead-button **candidate**, not a verdict: `router.push` RSC submit is slower than the observation window, so `NONE`/`NET` can bleed into the next button. Confirm by reading the source handler + cross-referencing the static scan.
+- Stream JSONL to `/tmp` for **resume-on-failure**; shard with `--shard=i/N` + `AUDIT_TAG=_s$i`.
+- Default **off** the PR smoke suite; run nightly or on demand.
+
+### Cross-Reference Audit (static, parallelizable)
+
+Three static passes (can be parallel sub-agents):
+
+1. **Orphan routes** — all routes × all nav sources (sidebar config / settings groups / user-center nav / ⌘K palette / shortcuts / hub in-page links / deprecated-redirect middleware). Classify: true orphan / redirect alias / intentionally hidden (ops/skeleton/duplicate page).
+2. **Hidden backend features** — all backend router registrations (e.g. `include_router`) × frontend call sites. An SDK-generated function existing ≠ being called. Classify `WIRED`/`PARTIAL`/`ORPHAN`; for `PARTIAL` list the exact missing endpoints; flag "backend ready but UI says coming-soon" drift.
+3. **Dead-button static scan** — buttons with no `onClick` / non-submit form buttons / `href="#"` / `()=>{}` / bare `disabled` with no enable path / placeholder toast"coming soon" (honest placeholders listed separately, low severity). Exclude false positives (Radix `DialogClose` cancel, `Link`-wrapped `Button`, icon SVGs).
+
+### Honesty Tier for Dead UI (fix priority)
+
+When audit finds dead/unwired CTAs, resolve in this order — **never leave a lying CTA**:
+
+1. **Wire it** if the backend contract already exists (e.g. `PATCH materials_json`, hidden `LLMSettings`).
+2. **Disable + honest title** for features needing real platform/large work — `disabled` + `title` stating what's missing.
+3. **Label demo data** on the UI ("演示数据") when data is illustrative.
+4. **Forbidden**: a dead CTA that implies working functionality.
+
+### Assert-Staleness Before Fixing
+
+When an `assert` fails, first check whether the **expectation is stale** (not the page is wrong):
+- `git log` the relevant area — product decisions (codename removal, lazy-load refactor) may have made the spec/`waitForResponse` obsolete.
+- Aligning the test to a decided product change is **not** loosening the assertion.
+- Only after confirming the expectation is current should you treat it as a page defect.
+
 ## Anti-Patterns
 
 - **Testing everything via E2E** — E2E tests are slow and brittle. Use them only for critical user journeys. Business logic belongs in unit tests; API contracts in integration tests.

@@ -17,6 +17,7 @@
 | 7 | 整体复盘审查（产品+技术，迭代探索） | [07-reviewer.md](./07-reviewer.md) | `.csp/review/` + `docs/solutions/`（摘要） |
 | 独立 | 模块化审计+可用性审查+联动测试+roadmap bump | [audit.md](./audit.md) | `.csp/audit/` + `docs/analysis/`（摘要） |
 | 独立 | 单页面/单功能模块缺口与增强深潜（通用面+领域目录+联动） | [feature-gap-analysis.md](./feature-gap-analysis.md) | `.csp/gap-analysis/` + `docs/analysis/`（摘要） |
+| 独立 | E2E 深度验证（M1 交互验证+修复 / M2 建套件 / M3 取证 / M4 全路由 sweep+按钮级点击审计+孤儿路由/隐藏后端功能审计+结构健康核查） | [e2e-deep-audit.md](./e2e-deep-audit.md) | `verify/` + `evidence/` + `gap-analysis/`（零 skill 依赖，可独立粘贴） |
 | 棕地 | docs/→.csp/ 双轨整合（PRD→PMS、strategy→lifecycle、solutions→specs、analysis→audit） | [brownfield-doc-integration.md](./brownfield-doc-integration.md) | `.csp/product-spec/` + `.csp/manifest.json` + `docs/` 整理归位 |
 
 > **06 vs 07**：06 是**发布前符合性验证**（实现是否满足 PRD/Spec/AC、能否上线），是门控；07 是**里程碑后整体复盘**（产品对不对、架构稳不稳、下一步做什么），探索性/战略性，不卡发布。07 从用户视角+技术视角发现 Spec 之外的新问题，findings 回流下一迭代 01-05 + 外环 roadmap。
@@ -26,6 +27,8 @@
 > **独立审计 `audit`**：`audit.md` 独立于 00–07 链路，可随时运行——模块化拆解（含 DB 模块）→ 并行 fan-out 事实 → 需求可追溯缺口 → 跨层联动测试 → 逐模块可用性审查（Mode A/B + Nielsen 10）→ 评级 → 裁决报告 → findings 带 SemVer bump 建议回流 roadmap。产出 `.csp/audit/`（MODULE-LIST/USABILITY-REPORT/AUDIT-VERDICT/FINDINGS）。兼容 CSP 全部约定；不写 lifecycle、不改代码，只产审计+建议（修复归 05/06）。
 
 > **独立深潜 `feature-gap-analysis`**：`feature-gap-analysis.md` 独立于 00–07 链路，可随时运行——锁定**单个已实现的页面/功能模块**，做现状重建 → 通用能力面扫描（F1–F12 横切关注点）→ **UI 与产品维度深审（U1–U7：宏观定位/信息架构/散乱/视觉与交互一致性/色调/用户习惯/响应式与 a11y，结合 `csp-frontend-design`/`csp-html-prototype`/`dataviz` 等设计技能）** → 领域增强目录对照（认证/CRUD/列表/搜索/上传/支付/Dashboard/消息/设置/审批等功能原型）→ 边界联动检查 → 优先级评级 → 交棒。粒度细到单页面/单模块（如 login 缺密码大小写校验、缺验证码、缺找回流程），findings 前缀 `GAP-F-NN`，落 `.csp/gap-analysis/`。P0 直发 04 拆 fix task → 05 → 06；P1/P2 攒批进 roadmap 版本主题。与 `audit.md`（全项目体检）、`product-audit-to-roadmap.md`（产品级演进方向）互补：audit 出结构问题 → 本流程深潜增强点；多模块 GAP findings 可由 product-audit 聚合。不写 lifecycle、不改代码，只产缺口+建议（实现归 01/03/05）。文末附「全界面自动巡检」驱动提示词——不指定页面时自动发现全部界面逐个深潜 + 跨模块 UI 一致性/重组聚合。
+
+> **E2E 深度验证 `e2e-deep-audit`**：独立于 00–07 链路，发布前/大重构后全量体检用。四种模式：M1 交互验证+修复（四类证据→失败签名→最小修复→回归循环到 complete）、M2 建套件（POM+fixture+mock+storageState+CI sharding）、M3 只取证（截图/深浅色对比，不改码）、M4 深度审计（L1 存量套件→L2 全路由文件系统自动发现 sweep→L3 按钮级点击审计带安全 deny-list+JSONL 流式续析→L4 孤儿路由/隐藏后端功能/死按钮静态交叉审计→L5 schema drift/类型检查/mock 债务结构健康核查）。诚实化处置阶梯（接线>disabled+诚实 title>演示标注>禁死 CTA）、assert 过期先判、归因局限（NONE≠死按钮）、长任务脱离执行 shell、测量竞态先排除。**零 skill 依赖**，所有命令/代码/纪律内联，可直接粘贴独立执行；产物落 `verify/`+`evidence/`+`gap-analysis/`。与 `audit.md`（结构/可用性体检）互补：audit 出结构问题，本流程做页面级行为验证+死按钮审计。
 
 > **棕地文档整合 `brownfield-doc-integration`**：独立于 00–07 链路，是 00 Phase 1.5/1.7 在"docs/→.csp/ 双轨整合"上的具体化。棕地项目 onboarding 时跑——把 `docs/` 的 `prd/`/`strategy/`/`solutions/`/`analysis/` 蒸馏+索引进 `.csp/`（PRD→PMS、strategy→lifecycle/VERSION-REGISTRY、solutions→specs/review、analysis→audit/review），原文留 `docs/` 不复制全文，`.csp/` 只存工程蒸馏 + manifest 索引 + front-matter 互链。`.csp/AGENTS.md` 不存在先跑 00。可随时增量重跑（delta）。产物 `.csp/product-spec/` + `.csp/manifest.json` + `docs/` 整理归位。
 

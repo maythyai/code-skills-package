@@ -49,6 +49,17 @@ anti_rationalizations:
 
 **安全约束（一句话）**：只在测试/开发环境操作，只读优先，禁止生产写操作、真实支付与真实凭证——完整规则见 [references/security-constraints.md](references/security-constraints.md)。
 
+## 模式路由（先判属于哪种，判不清默认 M1）
+
+| 模式 | 场景 | 权限 | 核心动作 |
+|---|---|---|---|
+| **M1 交互验证+修复** | 改完想确认并修到 complete | 允许最小修复代码 | 证据→失败签名→最小修复→回归（同用例→相邻→全量） |
+| **M2 建套件/补 flaky/接 CI** | 从零建 E2E 工程 | 只产测试代码，不改被测功能 | POM+fixture+mock+sharding 工程化 |
+| **M3 只截图取证** | 视觉走查/深浅色对比 | 禁改项目代码，出 FIX_SUGGESTION | 截图+mock 注入+取证报告 |
+| **M4 深度产品审计** | 发布前/大重构后全量体检 | M1 权限 + 结构审计 | M1 基础上加 L2-L5 四层（见「深度审计模式」节） |
+
+M4 用于版本发布前/大重构后的全量体检，**不作为日常 PR 反馈**（太重）；日常走 M1+Fast Path。
+
 ## 核心机制
 
 | 机制 | 说明 |
@@ -314,6 +325,47 @@ playwright-cli kill-all       # 进程残留时强制清理
 - 已尝试：...
 - 缺失条件：...
 ```
+
+## 深度审计模式（M4）：四层 + 结构健康核查
+
+在 M1 基础上对"全页面 E2E 验证"加四层。M4 用于版本发布前/大重构后的全量体检。
+
+### L1 存量套件
+`PLAYWRIGHT_HTML_OPEN=never npx playwright test`（含路由 sweep/按钮审计 spec 则更久，shard 跑）。
+
+### L2 全路由 sweep
+- 路由来源用**文件系统遍历自动发现**（如 Next.js app router 的 `src/app/**/page.tsx`），跳过 `api/`/动态段/`login`/`(auth)`，**不手维护清单**——新增页面自动纳入。
+- 每路由断言：内容渲染（多 `<main>` 时取 **max-over-mains**，禁 `.last()`/`.first()` 误判嵌套 layout）/ 0 非良性 console error / 0 个 5xx / 可见 heading 或 button。
+- **必须 `expect.poll` 带超时**：一次性检查在 shell 导航文本先渲染时会竞态误报；Turbopack/冷编译首访可达 15s+，poll 超时给 30s。
+- 每路由**独立 page + 独立 error probe**（共享 probe 无法定位到路由）。
+
+### L3 按钮级点击审计
+- 每路由枚举可见 button，逐个真实点击；shell 按钮只在 `/dashboard` 审一次，其余页只审 `main` 内 button。
+- 每次点击记录四类反应：`NET(method+path+status)` / `DIALOG` / `TOAST` / `NAV` / `NONE(无反应=死按钮候选)`，流式写 JSONL，失败可断点续析。
+- **安全 deny-list 强制**（只记 `SKIPPED` 不点击）：删除|移除|退出登录|注销|清空|重置|退订|支付|购买|立即发布|授权|绑定|停用|丢弃|delete|remove|logout|reset|dissolve|pay|purchase|revoke…
+- 挂 `page.on("dialog"→dismiss / filechooser→拦截 / popup→close)` 防原生弹窗卡死。
+- **归因局限（判读必记）**：`router.push` 的 RSC 提交慢于观测窗，`NONE`/`NET` 会串到下一个按钮——「NONE」只是死按钮**候选**，定性必须回源码看 handler + 与静态扫描交叉。
+- 大型审计分片：`--shard=i/N` + `AUDIT_TAG=_s$i` 各写各的 JSONL。
+
+### L4 结构审计（静态，可并行子代理）
+- **孤儿路由**：全部路由 × 全部导航源（sidebar 配置 / 设置分组 / 用户中心导航 / 命令面板 / 快捷键 / hub 内链 / deprecated 重定向中间件）交叉；区分 真孤儿 / redirect 别名 / 有意隐藏（运维页、骨架页、重复页）。
+- **隐藏后端功能**：后端全部路由注册（如 `include_router`）× 前端调用点交叉（生成函数存在 ≠ 被调用）；分 `WIRED`/`PARTIAL`/`ORPHAN`；`PARTIAL` 列具体缺失端点；识别"后端已有能力但 UI 显示即将上线"的前后端进度脱节。
+- **死按钮静态扫描**：无 onClick 的 button / 非 submit 表单外按钮 / `href="#"` / `()=>{}` / 裸 disabled 无启用路径 / 仅 toast"即将上线"占位（诚实占位单列、低 severity）；排除误报（Radix DialogClose 的取消、Link 包裹的 Button、图标 SVG）。
+
+### L5 结构健康核查（M4 实证有效）
+- **schema drift（后端 500 头号根因）**：迁移工具说 head ≠ 物理 schema 到位（可能被 stamp）。用 ORM `Base.metadata` × `information_schema.columns` 全量 diff；修复**只允许 additive**（`ADD COLUMN IF NOT EXISTS`，按模型定义编译 DDL），修完复跑 diff=0。
+- **类型检查全量**（`tsc --noEmit` / 各语言等价）：按钮点击出的 ReferenceError 往往**成簇**（一个文件缺多个 import），全量一次抓完。区分"本轮触碰文件的错误（必须 0）"与"存量债（记录不扩大范围）"。
+- **mock 债务**：新增导入会让陈旧部分 mock 全文件红——用 **Proxy fallback**（未知导出→中性 div）永久免疫；`it.fails` 债务标记还清后按其契约移除。
+- **审计工具自身防悬挂**：每路由按钮上限（超出记 `SKIPPED(cap)` 不静默截断）+ 所有 locator 读取包 race 超时 + dialog/filechooser/popup 三 handler 必挂。
+
+## 审计纪律强化（M4 实证，叠加在 §6/§7 之上）
+
+- **assert 失败先判"预期是否过期"**：`git log` 找相关 commit（如代号去化、懒加载重构会令旧 spec/waitForResponse 陈旧）——对齐既定产品决策 ≠ 放宽断言。
+- **修测试 vs 修页面先分辨**：测试自身缺陷（选择器/竞态/共享状态）修测试，禁止改页面代码迁就错误断言。
+- **诚实化处置阶梯（死 UI 优先级）**：后端契约已在→直接接线 ＞ 接不了的 `disabled`+诚实 title（写清缺什么）＞ 演示数据界面标注「演示数据」＞ **禁止留说谎的死 CTA**。
+- **前后端契约错位**：以后端实际响应为准修前端（如 `{items:[]}` 包装、字段名漂移）；后端路由自身 bug 修后端。
+- **测量竞态要先排除**：批量"失败"先查是否 hasKey/共享状态竞态（实战曾 16 页"失败"实为 hasKey 竞态），再判真缺陷。
+- **长任务脱离 MCP shell**：起 dev server/后端等长进程必须用 `start_new_session=True`（macOS 无 setsid 用 `python3 -c "subprocess.Popen([...], start_new_session=True)"` 派生），产物写 /tmp 文件、短轮询（≤60s/次）读进度，**禁止长 sleep 同步等待**（runner 断连会杀 background shell 进程）。
 
 ## 9. 与现有 Playwright 测试工程协同
 
