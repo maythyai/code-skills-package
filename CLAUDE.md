@@ -53,7 +53,7 @@ npm test               # validate:all + build:graph + node --test test/ (20 inva
 - [USER-GUIDE.md](./docs/USER-GUIDE.md) — user guide
 - [INSTALL.md](./docs/INSTALL.md) — installation guide
 - [UPDATE.md](./docs/UPDATE.md) — update guide
-- [VERSIONING.md](./docs/VERSIONING.md) — version management (X=arch, Y=feature, Z=fix)
+- [VERSIONING.md](./docs/VERSIONING.md) — version management (X=arch/system-refactor, Y=module/feature, Z=fix)
 - [CONTRIBUTING.md](./CONTRIBUTING.md) — how to contribute a skill or fix
 - [scripts/README.md](./scripts/README.md) — build/validate/maintenance tooling reference
 - [docs/analysis/](./docs/analysis/project-review-2026-08.md) — audit reports + upgrade plans (project-review-2026-08, REVIEW-PROGRAMMING-SKILLS, cross-layer-testing-case-study)
