@@ -163,6 +163,8 @@
 | **P2** | 体验/一致性/边界补强/UI 视觉迭代 | 排期进 roadmap 版本-主题表，按攒批原则 |
 | **P3** | 锦上添花/低频/纯风格 | 记录备查，不强制排期 |
 
+> **`快速修复` flag 语义**：适用于"小而清晰、无需 PRD/Spec 即可修的缺陷"（如 toast 裸 err.message、自造组件该用设计系统、危险色用错 token），**不论 P 级**——P2 小清晰缺陷也可 `快速修复=true` 直发 04，不攒进 roadmap 走 01。P0 必然 `快速修复=true`。判断标准：能否在不动 PRD/PMS/Spec 的前提下直接修代码——能则 `快速修复=true` 直发 04，否则走 roadmap→01。
+
 ## 七、衔接声明（findings 如何连贯到版本迭代 / PRD 等）
 
 本审查止于"问题 + 优先级 + 依据 + 修向"，通过 findings 的 **`回流阶段` 字段**驱动下游，分三条路径汇入主线：
@@ -202,6 +204,20 @@
 **与其他审查的串联**（不重复劳动）：
 - audit（结构/可用性体检）→ 本审查（产品批评）→ feature-gap（增强深潜）可串：audit 出结构问题 → 本审查做产品 sense 批评 → feature-gap 对问题模块出增强点。三者 findings 前缀不同（`AUDIT-F`/`CRITIC-F`/`GAP-F`），可并存去重。
 - 多个单模块 critic findings 可由 `product-audit-to-roadmap` 聚合成产品演进方向，再交棒 roadmap。
+
+### 完成后衔接执行（必做，不止于 findings）
+
+本审查**不止于"产出 findings 就停"**——那会断链。findings 写完后**必须**：
+
+1. **输出"## 下一步动作"衔接块**（附在报告末与 CRITIC-SUMMARY 末），按 bucket 给**具体可执行指令 + finding ID**，不是泛泛"已带回流阶段"：
+   - **即查即修 bucket**（`快速修复=true`）：列 finding ID + 一句话问题 + 回流阶段（05），给指令：
+     `用 lifecycle-orchestrator 续跑（优先消费 .csp/critic/CRITIC-FINDINGS-{date}.json 中 快速修复=true 的项）→ orchestrator 读 manifest 发现未消化 critic findings → 直发 task-breaker 拆 fix(critic-F-NN) → dev-lead 05 → release-manager 06 verify`。
+   - **攒批进版本主题 bucket**（P1/P2 非 quick-fix）：列 finding ID + 主题候选 + 回流阶段（roadmap），给指令：
+     `用 roadmap-update 把 docs/analysis/CRITIC-TO-ROADMAP-{date}.md 并入 docs/strategy/ROADMAP.md（过 Phase 2.5 集成必要性审视）→ 通过的净版主题入队列 → 用 lifecycle-orchestrator 续跑连续推进所有版本 → 取下一版本开 01 PRD`。
+   - **回流 Spec/PMS bucket**（`回流阶段=03/01`）：列 finding ID + 缺口类型（Spec 缺口 / IA 重组 / PMS 边界），说明"在对应版本进 01/03 时由 orchestrator 路由回上游补全"。
+   - **deferred bucket**：列 finding ID + 解除条件，说明"自动并入下一版本 01 入口（orchestrator 承继），无需手动"。
+2. **明确声明"修复/开发是否已执行"**：本审查止于 findings，修复/开发**尚未执行**——下一步动作块是触发执行的指令，不是已完成记录。禁止用"已带优先级与回流阶段"制造"已完成"错觉。
+3. **gate 即授权 → 默认自动 spawn 下一环**：输出"下一步动作"块后，**默认自动 spawn lifecycle-orchestrator** 消费本批 findings（即查即修路径立即跑 04→05→06；P1/P2 路径先 spawn roadmap-update 过 Phase 2.5 再续跑），不等用户确认。仅在：(a) 用户明确说"只审查不执行"；(b) 战略根本模糊/PRD Rejected/真破坏操作/多 tag 不明/无法 auto-resolve 的报错 这五类才停。spawn 后由 orchestrator 接力，本审查角色结束。
 
 ## 八、产物路径规范（与 00-07 同构，双轨）
 
@@ -284,4 +300,4 @@ findings 只能 `open` / `BLOCKED`（附阻塞点+谁解除）/ `deferred`（附
 
 gate 即授权，全自动推进，只在：审查清单真模糊且问询后仍不明 / 基线全缺且无法限定降级 / 真破坏操作（改代码删文档）/ 无法 auto-resolve 的报错 这几类才打断我。每完成一个模块按进度条播报：
 📊 进度 [模块 i/N {slug}] [重建✓][A重复✓][B-IA✓][C视觉✓][D习惯✓][E定位✓][F完整性✓][G状态✓]
-全部模块 + 跨模块聚合完成后，输出总 findings 清单（按 P0 / P1 / P2 + 跨模块重复冗余批次分组），附产物路径，再停。
+全部模块 + 跨模块聚合完成后，先输出总 findings 清单（按 P0 / P1 / P2 + 跨模块重复冗余批次分组），附产物路径；**然后必输出"## 下一步动作"衔接块**（按 §七「完成后衔接执行」四 bucket 给具体可执行指令 + finding ID），明确声明"修复/开发尚未执行，以下是触发执行的指令"；**gate 即授权，默认自动 spawn lifecycle-orchestrator** 消费本批 findings（即查即修直跑 04→05→06，P1/P2 先 spawn roadmap-update 过 Phase 2.5 再续跑），不等你确认，仅在你说"只审查不执行"或命中五类打断条件时停。spawn 后由 orchestrator 接力，本审查结束。
