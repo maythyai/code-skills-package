@@ -219,6 +219,24 @@
 2. **明确声明"修复/开发是否已执行"**：本审查止于 findings，修复/开发**尚未执行**——下一步动作块是触发执行的指令，不是已完成记录。禁止用"已带优先级与回流阶段"制造"已完成"错觉。
 3. **gate 即授权 → 默认自动 spawn 下一环**：输出"下一步动作"块后，**默认自动 spawn lifecycle-orchestrator** 消费本批 findings（即查即修路径立即跑 04→05→06；P1/P2 路径先 spawn roadmap-update 过 Phase 2.5 再续跑），不等用户确认。仅在：(a) 用户明确说"只审查不执行"；(b) 战略根本模糊/PRD Rejected/真破坏操作/多 tag 不明/无法 auto-resolve 的报错 这五类才停。spawn 后由 orchestrator 接力，本审查角色结束。
 
+### 调用机制（防 skill/subagent 混淆导致假断链）
+
+下游 CSP 角色分两类，**调用工具不同，混用会报"找不到"假断链**：
+
+- **subagent**（在 `~/.claude/agents/` 全局注册，所有项目可见）：`lifecycle-orchestrator` / `task-breaker` / `dev-lead` / `release-manager` / `roadmap-planner` / `prd-writer` / `tech-designer` / `decomposer` / `qa-engineer`。用 **`Agent` 工具** `subagent_type="<name>"` 调用——**不是 Skill 工具，不在 skill 注册表里查**。⚠️ 在 Skill 列表里找 `lifecycle-orchestrator` 找不到 ≠ 断链，是你看错注册表了。验证存在性用 `ls ~/.claude/agents/<name>.md`，不凭 skill 列表臆断。
+- **skill**（项目级 skill 注册表，可能未装）：`csp-roadmap-update`（roadmap 增量更新）。用 **`Skill` 工具**调用。若本项目 skill 表无它，**改用 `Agent(subagent_type="roadmap-planner")`** subagent（带交棒清单 + 指令"过 Phase 2.5 集成必要性审视"），不卡死。
+
+**默认衔接动作（按 bucket，明确工具）**：
+1. 即查即修（`快速修复=true`）→ `Agent(subagent_type="lifecycle-orchestrator")` 传"续跑，优先消费 `.csp/critic/CRITIC-FINDINGS-{date}.json` 中 `快速修复=true` 的项"；orchestrator subagent 不可用则直接 `Agent(subagent_type="task-breaker")` 拆 `fix(critic-F-NN)` task → `Agent(subagent_type="dev-lead")` 实现 → `Agent(subagent_type="release-manager")` verify。
+2. P1/P2 攒批 → `Skill("csp-roadmap-update")` 并入 ROADMAP；skill 不可用 → `Agent(subagent_type="roadmap-planner")` 带交棒清单过 Phase 2.5 → 再 `Agent(subagent_type="lifecycle-orchestrator")` 续跑连续推进所有版本。
+
+**禁止"越过编排链直接修代码"兜底（铁律）**：即使几行小修复（如改个字段名、替换 demo id），仍走 `task-breaker(04)`→`dev-lead(05)`→`release-manager(06)` 维持 WBS/CMS/TMS/traceability 追溯——**quick-fix 通道是"跳过 roadmap/01"，不是"跳过 04/05/06"**。Agent 不得以"编排链未注册/skill 找不到"为由直接写业务代码绕过追溯；这是比"留尾"更严重的纪律违反（无追溯的修复=隐形变更）。
+
+**真实断链的判定与处置**（只有这两种才算断链）：
+- `Agent` 工具本身不可用（环境限制）；或
+- `ls ~/.claude/agents/<name>.md` 确认 subagent 文件真不存在。
+此时标 `BLOCKED: 下游编排 subagent <name> 不可用` + 谁解除（用户执行 `rsync -a <csp-package>/.claude/agents/ ~/.claude/agents/` 同步，或装 CSP 包），**不静默降级直写代码、不提议"越过编排链"**。先 `ls` 验证再判，不凭 skill 列表臆断断链。
+
 ## 八、产物路径规范（与 00-07 同构，双轨）
 
 ```
@@ -300,4 +318,4 @@ findings 只能 `open` / `BLOCKED`（附阻塞点+谁解除）/ `deferred`（附
 
 gate 即授权，全自动推进，只在：审查清单真模糊且问询后仍不明 / 基线全缺且无法限定降级 / 真破坏操作（改代码删文档）/ 无法 auto-resolve 的报错 这几类才打断我。每完成一个模块按进度条播报：
 📊 进度 [模块 i/N {slug}] [重建✓][A重复✓][B-IA✓][C视觉✓][D习惯✓][E定位✓][F完整性✓][G状态✓]
-全部模块 + 跨模块聚合完成后，先输出总 findings 清单（按 P0 / P1 / P2 + 跨模块重复冗余批次分组），附产物路径；**然后必输出"## 下一步动作"衔接块**（按 §七「完成后衔接执行」四 bucket 给具体可执行指令 + finding ID），明确声明"修复/开发尚未执行，以下是触发执行的指令"；**gate 即授权，默认自动 spawn lifecycle-orchestrator** 消费本批 findings（即查即修直跑 04→05→06，P1/P2 先 spawn roadmap-update 过 Phase 2.5 再续跑），不等你确认，仅在你说"只审查不执行"或命中五类打断条件时停。spawn 后由 orchestrator 接力，本审查结束。
+全部模块 + 跨模块聚合完成后，先输出总 findings 清单（按 P0 / P1 / P2 + 跨模块重复冗余批次分组），附产物路径；**然后必输出"## 下一步动作"衔接块**（按 §七「完成后衔接执行」四 bucket 给具体可执行指令 + finding ID），明确声明"修复/开发尚未执行，以下是触发执行的指令"；**gate 即授权，默认用 `Agent` 工具 `subagent_type="lifecycle-orchestrator"` 自动 spawn** 消费本批 findings（即查即修直跑 04→05→06，P1/P2 先 spawn roadmap-planner subagent 过 Phase 2.5 再续跑）——注意是 subagent 用 Agent 工具调，**不要去 Skill 注册表找**（见 §七「调用机制」）。不等你确认，仅在你说"只审查不执行"或命中五类打断条件时停。spawn 后由 orchestrator 接力，本审查结束。
