@@ -87,6 +87,7 @@ function discover(dir: string, out: string[] = []) {
 - 每路由按钮上限（超出记 `SKIPPED(cap)` 不静默截断）；大型审计分片 `--shard=i/N` + `AUDIT_TAG=_s$i` 各写各的 JSONL。
 
 ### L4 结构审计（三路静态，可并行子代理）
+> **去重契约**：本层是结构审计（孤儿路由/隐藏后端功能/死按钮）的**实机主跑方**；`audit.md` Phase 0 只标"疑似"，须在此实机确认后才成 finding。`product-critic-review` 镜头 B（IA）与 `feature-gap-analysis` Phase 4（联动）均引用本层结构 findings，不自行做按钮级/路由级实机审计。
 - **孤儿路由**：全部路由 × 全部导航源（sidebar 配置 / 设置分组 / 用户中心导航 / 命令面板 / 快捷键 / hub 内链 / deprecated 重定向中间件）交叉；区分 真孤儿 / redirect 别名 / 有意隐藏（运维页、骨架页、重复页）。
 - **隐藏后端功能**：后端全部路由注册 × 前端调用点交叉（生成函数存在 ≠ 被调用）；分 `WIRED`/`PARTIAL`/`ORPHAN`；`PARTIAL` 列具体缺失端点；识别"后端已有能力但 UI 显示即将上线"的前后端进度脱节。
 - **死按钮静态扫描**：无 onClick 的 button / 非 submit 表单外按钮 / `href="#"` / `()=>{}` / 裸 disabled 无启用路径 / 仅 toast"即将上线"占位（诚实占位单列、低 severity）；排除误报（Radix DialogClose 的取消、Link 包裹的 Button、图标 SVG）。

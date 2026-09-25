@@ -653,6 +653,16 @@ docs/analysis/
 | 替 05/06 改码发版 | 审计直接改代码 | 只产审计+建议，修复归 05/06 |
 | **降级审计** | MCP/工具不可用→用"已有数据+未验证标注"冒充完整审计→下游据虚假结论决策 | 工具不可用→报 BLOCKED+停手+重试，不产出裁决报告；恢复后再继续，不降级 |
 
+## 十六、与 critic / feature-gap / e2e 的去重契约（同次审计 pass 避免重复劳动）
+
+本审计与 `product-critic-review` / `feature-gap-analysis` / `e2e-deep-audit` 存在三处能力重叠，同次 pass 按下列归属主跑，其余引用结论不重跑：
+
+1. **Nielsen 10 可用性 + 状态覆盖**：**audit 主跑**（Phase 4 Mode A/B，带 `mode` 标注 + severity×confidence）。critic 镜头 F/G 对可用性违例引用 audit 的 `AUDIT-F` 结论、不重跑 Nielsen；critic 专注重复/散乱/定位（audit 不做的部分）。audit 未跑时 critic 自行跑。
+2. **M1–M8 设计清单**：**feature-gap 主跑**逐模块 M 命中（U1–U7 + M1–M8 细则）。critic 镜头 C/D 对视觉/交互一致性引用 gap 的 `recon` 命中、不重跑逐模块 M；critic 只做跨模块一致性批次聚合。gap 未跑时 critic 自行跑 M。
+3. **结构审计（孤儿路由 / 隐藏后端功能 / 死按钮）**：**e2e 主跑实机**（L4 真点按钮 + 文件系统交叉）。audit Phase 0 只标"疑似孤儿/隐藏后端/死按钮"为线索，交 e2e L4 实机确认后才成 finding；不静默据静态扫描报数。
+
+> 各自 findings 前缀不同（`AUDIT-F` / `CRITIC-F` / `GAP-F`），可并存去重；下游 roadmap/04 按前缀路由。
+
 ## 输出风格
 
 - 默认中文，file:line/字段名/路径保留英文。
