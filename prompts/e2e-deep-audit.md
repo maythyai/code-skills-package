@@ -55,7 +55,8 @@ ref 失效降级链：`getByRole('button',{name:'提交'})` → `getByTestId('su
 `PLAYWRIGHT_HTML_OPEN=never npx playwright test`（含路由/按钮审计 spec 则更久，shard 跑）。
 
 ### L2 全路由 sweep（文件系统自动发现，不手维护清单）
-- 路由来源：遍历文件系统（如 `src/app/**/page.tsx`），跳过 `api/`/动态段/`login`/`(auth)`，**新增页面自动纳入**。
+- 路由来源：遍历文件系统（如 `src/app/**/page.tsx`），跳过 `api/`/`login`/`(auth)`，**新增页面自动纳入**。
+- ⚠️ **动态段禁止跳过**：`[slug]`/`[id]`/`[...catchAll]` 动态路由段必须解析内部配置表（如 `[dashboard]/page.tsx:17-26` 枚举了全部子模块），不是直接用 `[slug]` 做单个 URL 请求。**本轮实证**：`phase-k/[dashboard]` 承接 11 个深度模块，扫描脚本因 `if "[" in route: return None` 全跳过——直到手动审查才发现。
 - 每路由断言：内容渲染（多 `<main>` 时取 **max-over-mains**，禁 `.last()`/`.first()` 误判嵌套 layout）/ 0 非良性 console error / 0 个 5xx / 可见 heading 或 button。
 - **必须 `expect.poll` 带超时**：一次性检查在 shell 导航文本先渲染时竞态误报；冷编译首访可达 15s+，poll 超时给 30s。
 - 每路由**独立 page + 独立 error probe**（共享 probe 无法定位到路由）。
@@ -63,15 +64,38 @@ ref 失效降级链：`getByRole('button',{name:'提交'})` → `getByTestId('su
 路由发现参考实现（按框架适配）：
 ```typescript
 // 以 Next.js app router 为例
-import { readdirSync } from "fs"; import { join, relative } from "path";
-const SKIP = /\/(api|login|\(auth\)|\[)/;
+import { readdirSync, readFileSync } from "fs"; import { join, relative } from "path";
+const SKIP = /\/(api|login|\(auth\))/;  // ← 不再跳过 [dynamic]
 function discover(dir: string, out: string[] = []) {
   for (const e of readdirSync(dir, { withFileTypes: true })) {
     const p = join(dir, e.name);
     if (e.isDirectory()) discover(p, out);
     else if (e.name === "page.tsx") {
       const r = "/" + relative("src/app", dir).replace(/\\/g,"/").replace(/^\(.*?\)\//,"");
-      if (!SKIP.test(r)) out.push(r || "/");
+      if (!SKIP.test(r)) {
+        // 动态段解析：读取 page.tsx 内的子模块配置表
+        if (r.includes("[")) {
+          const src = readFileSync(p, "utf-8");
+          // 模式 1: 枚举配置（const DASHBOARD_MODULES = [...]）
+          const configMatch = src.match(/(?:MODULES|TABS|ROUTES|ITEMS)\s*=\s*\[([\s\S]*?)\]/);
+          if (configMatch) {
+            // 从配置表中提取每个子模块的 path/slug
+            const slugs = [...configMatch[1].matchAll(/(?:path|slug|href)\s*:\s*["']([^"']+)["']/g)];
+            slugs.forEach(s => out.push(r.replace(/\[.*?\]/, s[1])));
+          } else {
+            // 模式 2: generateStaticParams（读取返回值中的 params）
+            const genMatch = src.match(/generateStaticParams[\s\S]*?return\s+\[([\s\S]*?)\]/);
+            if (genMatch) {
+              const slugs = [...genMatch[1].matchAll(/(?:slug|id)\s*:\s*["']([^"']+)["']/g)];
+              slugs.forEach(s => out.push(r.replace(/\[.*?\]/, s[1])));
+            } else {
+              out.push(r); // 无法解析配置表 → 保留原始动态路由占位
+            }
+          }
+        } else {
+          out.push(r || "/");
+        }
+      }
     }
   }
   return [...new Set(out)];
@@ -86,11 +110,55 @@ function discover(dir: string, out: string[] = []) {
 - **归因局限（判读必记）**：`router.push` 的 RSC 提交慢于观测窗，`NONE`/`NET` 会串到下一个按钮——「NONE」只是死按钮**候选**，定性必须回源码看 handler + 与静态扫描交叉。
 - 每路由按钮上限（超出记 `SKIPPED(cap)` 不静默截断）；大型审计分片 `--shard=i/N` + `AUDIT_TAG=_s$i` 各写各的 JSONL。
 
-### L4 结构审计（三路静态，可并行子代理）
+### L4 结构审计（三路静态 + 渲染引用链 + 两级引用扫描，可并行子代理）
 > **去重契约**：本层是结构审计（孤儿路由/隐藏后端功能/死按钮）的**实机主跑方**；`audit.md` Phase 0 只标"疑似"，须在此实机确认后才成 finding。`product-critic-review` 镜头 B（IA）与 `feature-gap-analysis` Phase 4（联动）均引用本层结构 findings，不自行做按钮级/路由级实机审计。
 - **孤儿路由**：全部路由 × 全部导航源（sidebar 配置 / 设置分组 / 用户中心导航 / 命令面板 / 快捷键 / hub 内链 / deprecated 重定向中间件）交叉；区分 真孤儿 / redirect 别名 / 有意隐藏（运维页、骨架页、重复页）。
+  - ⚠️ **先判渲染源再判数据源**（本轮实证）：静态扫描看到 `SETTINGS_GROUPS` 就以为它是导航，实际渲染的是 `UserCenterNav` 组件。缺"JSX 渲染引用链"分析这一步。必须追踪：哪个组件 `import` 了哪个数据常量 → 哪个组件实际渲染了导航条目 → 对比两者是否一致。
+  - ⚠️ **两级引用扫描**（本轮实证）：第一轮按 `import` 扫描后，又补了字符串级（拼接路径、常量表、`getRoute()` 等动态构造）才最终确证 4 个孤儿。**必须两级扫描后两个结果取并集**，缺一级即漏报。
 - **隐藏后端功能**：后端全部路由注册 × 前端调用点交叉（生成函数存在 ≠ 被调用）；分 `WIRED`/`PARTIAL`/`ORPHAN`；`PARTIAL` 列具体缺失端点；识别"后端已有能力但 UI 显示即将上线"的前后端进度脱节。
 - **死按钮静态扫描**：无 onClick 的 button / 非 submit 表单外按钮 / `href="#"` / `()=>{}` / 裸 disabled 无启用路径 / 仅 toast"即将上线"占位（诚实占位单列、低 severity）；排除误报（Radix DialogClose 的取消、Link 包裹的 Button、图标 SVG）。
+
+### L4.5 — 渲染引用链分析（新增，本轮实证需求）
+
+**问题**: 静态扫描看到数据常量（如 `SETTINGS_GROUPS`）不等于它就是渲染源。
+
+**分析步骤**:
+1. 找到导航入口组件（如 `Layout.tsx` / `Sidebar.tsx` / `AppShell.tsx`）
+2. 追踪其 `import` 链：谁 import 谁、谁最后渲染了导航条目
+3. 对比"数据常量"和"实际渲染组件引用的数据源"
+4. 不一致 → 报 finding（双事实源 / 渲染漂移）
+
+```typescript
+// 示例：追踪链
+// Step 1: AppShell.tsx → import Sidebar from './Sidebar'
+// Step 2: Sidebar.tsx → import { SETTINGS_GROUPS } from '@/config/settings'
+//     BUT: 实际渲染的是 <UserCenterNav /> 不是 SETTINGS_GROUPS.map()
+// Step 3: UserCenterNav.tsx → 有自己的 navItems 定义
+// Step 4: 对比 SETTINGS_GROUPS (28 条) vs UserCenterNav.navItems (26 条)
+// Step 5: → 双事实源 finding
+```
+
+### L4.6 — 两级引用扫描标准化（新增，本轮实证需求）
+
+**第一级: import 级引用扫描**
+```bash
+# 对每个路由 path，查 import 引用
+grep -r "from.*${path_segment}" src/ --include='*.ts' --include='*.tsx' -l
+```
+
+**第二级: 字符串级引用扫描**（这一级经常被漏）
+```bash
+# 拼接路径（`/settings/${tab}`）
+grep -rE "['\"]/${path_segment}" src/ --include='*.ts' --include='*.tsx'
+
+# 常量表中的路径（const ROUTES = { settings: '/settings' }）
+grep -rE "(path|href|to|route)\s*:\s*['\"].*${path_segment}" src/ --include='*.ts' --include='*.tsx'
+
+# 动态构造（getRoute('settings', { tab })）
+grep -rE "getRoute\(.*['\"]${path_segment}" src/ --include='*.ts' --include='*.tsx'
+```
+
+**裁决**: 两级结果取**并集**。only-in-import-level 或 only-in-string-level 都要标记——缺一级即漏报。
 
 ### L5 结构健康核查（实证有效）
 - **schema drift（后端 500 头号根因）**：迁移工具说 head ≠ 物理 schema 到位（可能被 stamp）。用 ORM `Base.metadata` × `information_schema.columns` 全量 diff；修复**只允许 additive**（`ADD COLUMN IF NOT EXISTS`，按模型定义编译 DDL），修完复跑 diff=0。

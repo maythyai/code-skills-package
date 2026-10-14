@@ -2,10 +2,13 @@
 Generate a UI design contract (UI-CSPEC.md) for frontend phases. Orchestrates csp-ui-researcher and csp-ui-checker with a revision loop. Inserts between discuss-phase and plan-phase in the lifecycle.
 
 UI-CSPEC.md locks spacing, typography, color, copywriting, and design system decisions before the planner creates tasks. This prevents design debt caused by ad-hoc styling decisions during execution.
+
+For the comprehensive 8-lens UI review methodology (cross-module, findings-to-roadmap, version iteration planning), see `prompts/ui-review-to-iteration.md` and the Deep Audit mode in `/csp-ui-review --deep`.
 </purpose>
 
 <required_reading>
 @~/.claude/code-skills-package/csp-workflow/references/ui-brand.md
+@~/.claude/code-skills-package/code-skills-package/prompts/ui-review-to-iteration.md
 </required_reading>
 
 <available_agent_types>
@@ -128,6 +131,17 @@ Read {CLAUDE_CONFIG_DIR}/agents/csp-ui-researcher.md for instructions.
 <objective>
 Create UI design contract for Phase {phase_number}: {phase_name}
 Answer: "What visual and interaction contracts does this phase need?"
+
+Reference the 8-lens UI review methodology from prompts/ui-review-to-iteration.md to ensure
+the design contract covers all dimensions that will later be audited:
+- Lens 1: Visual hierarchy & layout (M1 principles)
+- Lens 2: Interaction patterns & feedback (M2 patterns, anti-pattern checklist)
+- Lens 3: Information architecture & navigation (M7 bounded context)
+- Lens 4: Visual & interaction consistency (M5 visual baseline comparison)
+- Lens 5: User habits & cognition (Nielsen ①⑥)
+- Lens 6: Responsive & multi-device (M3 responsive checklist)
+- Lens 7: Accessibility (M6 a11y checklist, WCAG 2.1)
+- Lens 8: State coverage & edge cases (loading/empty/error/success/disabled)
 </objective>
 
 <files_to_read>

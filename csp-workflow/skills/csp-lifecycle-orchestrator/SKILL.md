@@ -43,6 +43,8 @@ related_skills:
   - csp-test-spec
   - csp-knowledge-hub
   - csp-roadmap-update
+  - csp-ui-review                    # UI/UX 8-lens 审查（独立，任意时点）→ 交棒 roadmap
+  - audit-pipeline                   # 全链路审计 pipeline（6 步串联）→ 聚合交棒 roadmap
 
 triggers:
   keywords: ["全生命周期", "lifecycle", "端到端", "从需求到上线", "完整开发流程",
@@ -545,6 +547,23 @@ routing_rules:
       handoff: csp-roadmap-update     # 主题候选交棒 roadmap，roadmap 定版本号/序列
       skip_if: no_evolution_signal | inspection_content_hash_unchanged
       gate: findings_have_evidence    # 每条带 file:line/反馈/指标，不臆造
+
+  # 独立 UI/UX 审查（8-lens）→ 可任意时点触发，不依赖里程碑
+  ui_review:
+    trigger: user_request             # 用户显式请求 UI 审查时触发
+    deep_audit: prompts/ui-review-to-iteration.md  # 全量 8-lens 审查
+    quick_audit: csp-ui-review        # 单阶段 6-pillar 快速审查
+    output:
+      deep: .csp/ui-review/UI-FINDINGS-{date}.json（UI-F-NN）+ docs/analysis/UI-VERSION-PLAN-{date}.md
+      quick: {phase_dir}/{padded_phase}-UI-REVIEW.md（score /24）
+    handoff: csp-roadmap-update       # UI-F-NN findings 交棒 roadmap
+
+  # 全链路审计 pipeline（6 步串联：audit → e2e → ui-review → critic → gap → product-audit-to-roadmap）
+  audit_pipeline:
+    trigger: user_request             # 用户请求全链路审计时触发
+    flow: prompts/audit-pipeline.md   # 6 步顺序推进，互不重复劳动
+    findings_prefixes: [AUDIT-F-NN, UI-F-NN, CRITIC-F-NN, GAP-F-NN]
+    handoff: csp-roadmap-update       # 聚合全部 findings 交棒 roadmap
 
   # Module Spec 治理旁路（与 S1–S9 并行，不是额外阶段）
   # 三个 living baseline 说明书：每个阶段读对应说明书再产出，ship/变更后写回 delta。

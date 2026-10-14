@@ -1,9 +1,10 @@
 <purpose>
-Retroactive 6-pillar visual audit of implemented frontend code. Standalone command that works on any project — CSP-managed or not. Produces scored UI-REVIEW.md with actionable findings.
+Retroactive UI audit of implemented frontend code. Two modes: **Quick Audit** (6-pillar visual, score /24) for per-phase checks, and **Deep Audit** (8-lens methodology from ui-review-to-iteration.md) for comprehensive cross-module review with findings-to-document mapping and version iteration planning. Standalone command that works on any project — CSP-managed or not.
 </purpose>
 
 <required_reading>
 @~/.claude/code-skills-package/csp-workflow/references/ui-brand.md
+@~/.claude/code-skills-package/code-skills-package/prompts/ui-review-to-iteration.md
 </required_reading>
 
 <available_agent_types>
@@ -179,6 +180,59 @@ tools is detected at runtime.
 csp-sdk query commit "docs(${padded_phase}): UI audit review" --files "${PHASE_DIR}/${PADDED_PHASE}-UI-REVIEW.md"
 ```
 
+---
+
+## Deep Audit Mode (Cross-Module UI Review)
+
+> When reviewing across multiple phases or the entire application, use the comprehensive 8-lens methodology from `prompts/ui-review-to-iteration.md`. This is triggered by `/csp-ui-review --deep` or when no single `PHASE_ARG` is provided.
+
+### Mode Selection
+
+**If `--deep` flag is present OR `PHASE_ARG` is empty:**
+
+```
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ CSP ► DEEP UI AUDIT — CROSS-MODULE REVIEW
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+```
+
+Skip the per-phase quick audit flow. Instead, invoke the full `prompts/ui-review-to-iteration.md` methodology:
+
+1. **Phase 1**: Establish baseline (product positioning, design system, token drift table, UI inventory)
+2. **Phase 2**: 8-lens per-module review:
+   - Lens 1: Visual hierarchy & layout (M1)
+   - Lens 2: Interaction patterns & feedback (M2)
+   - Lens 3: Information architecture & navigation (M7)
+   - Lens 4: Visual & interaction consistency (M5)
+   - Lens 5: User habits & cognition (Nielsen ①⑥)
+   - Lens 6: Responsive & multi-device (M3)
+   - Lens 7: Accessibility (M6 + WCAG 2.1)
+   - Lens 8: State coverage & edge cases
+3. **Phase 3**: Cross-module aggregation (consistency batches, IA reorganization, token drift governance)
+4. **Phase 4**: Priority matrix (severity 0-4, P0-P3) + version iteration roadmap
+5. **Phase 5**: Map findings to product documents (PRD/UI requirements, Spec/AC, Task)
+6. **Phase 6**: Version iteration execution plan + regression verification checklist
+
+Outputs go to `.csp/ui-review/` (engineering artifacts) + `docs/analysis/` (human-readable summaries):
+- `UI-REVIEW-REPORT-{date}.md` — Full review report
+- `UI-FINDINGS-{date}.json` — Structured findings (prefix `UI-F-NN`)
+- `CROSS-MODULE-UI-{date}.md` — Cross-module aggregation verdict
+- `UI-TO-ROADMAP-{date}.md` — Handoff to roadmap
+- `UI-VERSION-PLAN-{date}.md` — Version iteration roadmap
+
+### Quick Audit vs Deep Audit Comparison
+
+| Aspect | Quick Audit (6-pillar) | Deep Audit (8-lens) |
+|--------|----------------------|---------------------|
+| Scope | Single phase | Cross-module / entire app |
+| Dimensions | 6 pillars (Copywriting, Visuals, Color, Typography, Spacing, XD) | 8 lenses (Visual hierarchy, Interaction, IA, Consistency, Cognition, Responsive, a11y, States) |
+| Output | Scored UI-REVIEW.md (score /24) | Structured UI-FINDINGS.json + version iteration plan |
+| Scoring | Numeric score per pillar | Severity 0-4 + P0-P3 priority |
+| Product doc mapping | No | Yes (PRD → Spec AC → Task) |
+| Version planning | No | Yes (iteration roadmap with batch scheduling) |
+| Token drift | No | Yes (design token comparison table) |
+| Cross-module aggregation | No | Yes (consistency batches, IA reorganization) |
+
 </process>
 
 <success_criteria>
@@ -189,4 +243,6 @@ csp-sdk query commit "docs(${padded_phase}): UI audit review" --files "${PHASE_D
 - [ ] UI-REVIEW.md created in phase directory
 - [ ] Score summary displayed to user
 - [ ] Next steps presented
+- [ ] (Deep mode) 8-lens methodology invoked with correct scope
+- [ ] (Deep mode) UI-FINDINGS.json + version iteration plan produced
 </success_criteria>
