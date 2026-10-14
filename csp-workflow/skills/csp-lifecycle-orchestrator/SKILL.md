@@ -45,6 +45,7 @@ related_skills:
   - csp-roadmap-update
   - csp-ui-review                    # UI/UX 8-lens 审查（独立，任意时点）→ 交棒 roadmap
   - audit-pipeline                   # 全链路审计 pipeline（6 步串联）→ 聚合交棒 roadmap
+  - product-design-convergence       # 产品架构收敛闸门（roadmap 与 01 PRD 之间）
 
 triggers:
   keywords: ["全生命周期", "lifecycle", "端到端", "从需求到上线", "完整开发流程",
@@ -120,6 +121,11 @@ anti_rationalizations:
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
+│  外环 roadmap │ ★ 收敛闸门 convergence │ 内环 00–09                           │
+│  战略锚点+版本│ (功能架构收敛+核心取舍   │                                      │
+│  序列+主题    │  +IA方向+迭代优先级)    │                                      │
+│               │ ★ 不通过不进入内环 ★    │                                      │
+├───────────────┴───────────────────────┴──────────────────────────────────────┤
 │                                                                               │
 │  S0  hub init │ S1          S2           S2.5         S2.6        S3    S3.5 │
 │  知识中枢初始化│ 需求拆解 → 技术选型 → 技术方案 → 方案评审 → 全栈Spec → 任务拆解│
@@ -547,6 +553,20 @@ routing_rules:
       handoff: csp-roadmap-update     # 主题候选交棒 roadmap，roadmap 定版本号/序列
       skip_if: no_evolution_signal | inspection_content_hash_unchanged
       gate: findings_have_evidence    # 每条带 file:line/反馈/指标，不臆造
+
+  # ★ 收敛闸门（roadmap → PRD 之间，必跑）★
+  convergence:
+    trigger: auto                     # roadmap 产出版本-主题表后自动触发
+    flow: prompts/product-design-convergence.md
+    input: docs/strategy/ROADMAP.md + docs/FEATURES.md + .csp/product-spec/
+    output:
+      - .csp/convergence/CONVERGED-FEATURE-PLAN.md   # 01 PRD 的功能唯一输入
+      - .csp/convergence/IA-DIRECTION.md              # 03 技术方案的前置输入
+      - .csp/convergence/CONVERGENCE-REPORT-{date}.md # 审查报告+裁决记录
+    gate: convergence_passed          # 全部裁决有依据+有裁决动作+功能清单已收敛
+    skip_if: single_patch_fix         # 仅 PATCH 修复版本无架构变化 → 标 SKIPPED
+    on_failure: return_to_roadmap     # 不通过 → 回 roadmap 重排版本-主题表
+    handoff: 01-prd                   # 通过 → 01 PRD 读取 CONVERGED-FEATURE-PLAN.md
 
   # 独立 UI/UX 审查（8-lens）→ 可任意时点触发，不依赖里程碑
   ui_review:

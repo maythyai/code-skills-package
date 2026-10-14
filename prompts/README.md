@@ -7,6 +7,7 @@
 | 顺序 | 阶段 | 文件 | 产出目录 |
 |---|---|---|---|
 | 外环 | 产品长期规划（战略锚点+版本号规则+版本序列路径+**版本功能集成必要性审视 gate**） | [roadmap.md](./roadmap.md) | `docs/strategy/`（STRATEGY+ROADMAP）+ `docs/analysis/`（INTEGRATION-NECESSITY） |
+| 闸门 | 产品架构收敛审查（功能架构梳理+核心/次要取舍+IA 方向+迭代优先级——roadmap 与 01 PRD 之间的必经闸门） | [product-design-convergence.md](./product-design-convergence.md) | `.csp/convergence/`（CONVERGENCE-REPORT + CONVERGED-FEATURE-PLAN + IA-DIRECTION）+ `docs/analysis/`（摘要） |
 | 0 | 知识中枢初始化 | [00-knowledge-hub.md](./00-knowledge-hub.md) | `.csp/AGENTS.md` + `.csp/manifest.json` |
 | 1 | PRD 生成（产品需求） | [01-prd.md](./01-prd.md) | `docs/prd/` + `.csp/product-spec/`（PMS） |
 | 2 | 需求拆解（工程级 Feature） | [02-decomposition.md](./02-decomposition.md) | `.csp/decomposition/` |
@@ -25,6 +26,8 @@
 > **06 vs 07**：06 是**发布前符合性验证**（实现是否满足 PRD/Spec/AC、能否上线），是门控；07 是**里程碑后整体复盘**（产品对不对、架构稳不稳、下一步做什么），探索性/战略性，不卡发布。07 从用户视角+技术视角发现 Spec 之外的新问题，findings 回流下一迭代 01-05 + 外环 roadmap。
 
 > **外环 roadmap**：`roadmap.md` 先于 00 跑一次——产出战略锚点（STRATEGY.md）+ 版本号规则 + 1/3 年+迭代路径（ROADMAP.md）。01 PRD 读 ROADMAP 定位本版本主题（`roadmap_ref`/`target_version`）；06 release 用版本号规则；07 复盘 findings 回流更新 ROADMAP 下一版本主题。每个项目通常只跑一次，07 回流或战略调整时增量更新。
+
+> **收敛闸门 `product-design-convergence`**：roadmap 与 01 PRD 之间的**必经闸门**——不通过不进入开发。roadmap 产出功能清单后，本流程做四维度收敛审查：① 功能架构梳理与收敛（合/拆/迁/砍）② 核心与次要功能取舍（Must-have/Should-have/Nice-to-have/错误功能）③ 前端 IA 与交互流程优化方向 ④ 迭代优先级建议。产出收敛后功能清单（`CONVERGED-FEATURE-PLAN.md`）和 IA 方向（`IA-DIRECTION.md`），01 PRD 以此为唯一功能输入来源。非单功能 PATCH 修复版本必跑。
 
 > **独立审计 `audit`**：`audit.md` 独立于 00–07 链路，可随时运行——模块化拆解（含 DB 模块）→ 并行 fan-out 事实 → 需求可追溯缺口 → 跨层联动测试 → 逐模块可用性审查（Mode A/B + Nielsen 10）→ 评级 → 裁决报告 → findings 带 SemVer bump 建议回流 roadmap。产出 `.csp/audit/`（MODULE-LIST/USABILITY-REPORT/AUDIT-VERDICT/FINDINGS）。兼容 CSP 全部约定；不写 lifecycle、不改代码，只产审计+建议（修复归 05/06）。
 
