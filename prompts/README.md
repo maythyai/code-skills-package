@@ -27,7 +27,7 @@
 
 > **外环 roadmap**：`roadmap.md` 先于 00 跑一次——产出战略锚点（STRATEGY.md）+ 版本号规则 + 1/3 年+迭代路径（ROADMAP.md）。01 PRD 读 ROADMAP 定位本版本主题（`roadmap_ref`/`target_version`）；06 release 用版本号规则；07 复盘 findings 回流更新 ROADMAP 下一版本主题。每个项目通常只跑一次，07 回流或战略调整时增量更新。
 
-> **收敛闸门 `product-design-convergence`**：roadmap 与 01 PRD 之间的**必经闸门**——不通过不进入开发。roadmap 产出功能清单后，本流程做四维度收敛审查：① 功能架构梳理与收敛（合/拆/迁/砍）② 核心与次要功能取舍（Must-have/Should-have/Nice-to-have/错误功能）③ 前端 IA 与交互流程优化方向 ④ 迭代优先级建议。产出收敛后功能清单（`CONVERGED-FEATURE-PLAN.md`）和 IA 方向（`IA-DIRECTION.md`），01 PRD 以此为唯一功能输入来源。非单功能 PATCH 修复版本必跑。
+> **收敛闸门 `product-design-convergence`**：roadmap 与 01 PRD 之间的**必经硬闸门**——不通过不进入开发。核心判断："功能杂乱"不是审美问题，是治理问题；产品说的（AGENTS.md 定位）和产品做的（roadmap 功能清单）分家是根因。本流程建立**功能准入机制**：Phase 0 定位与支柱基线（AGENTS.md 最高权威）→ Phase 1 功能全景+定位对齐+支柱映射 → Phase 2 六维度收敛（D1 功能架构/D2 核心取舍/D3 IA+**导航准入三问**+导航预算/D4 迭代优先级/D5 **定位对齐与前提挑战**/D6 **系统级卫生**：后端膨胀+Feature Flag+文档权威）→ Phase 3 五类根因 Pattern 检测（A 定位漂移/B 架构无收敛/C 前端 IA 债/D 后端膨胀/E 文档权威失守）→ Phase 4 收敛后功能清单（01 PRD 唯一输入）→ Phase 5 裁决记录+交棒。导航准入三问：Q1 独立任务域？Q2 频率≥每周？Q3 导航预算内？三问不过禁止新增顶级导航。定位漂移 >30% → 整个 roadmap 回炉。产出 CONVERGED-FEATURE-PLAN + IA-DIRECTION（含导航预算）+ SYSTEM-HYGIENE。非单功能 PATCH 修复版本必跑。
 
 > **独立审计 `audit`**：`audit.md` 独立于 00–07 链路，可随时运行——模块化拆解（含 DB 模块）→ 并行 fan-out 事实 → 需求可追溯缺口 → 跨层联动测试 → 逐模块可用性审查（Mode A/B + Nielsen 10）→ 评级 → 裁决报告 → findings 带 SemVer bump 建议回流 roadmap。产出 `.csp/audit/`（MODULE-LIST/USABILITY-REPORT/AUDIT-VERDICT/FINDINGS）。兼容 CSP 全部约定；不写 lifecycle、不改代码，只产审计+建议（修复归 05/06）。
 

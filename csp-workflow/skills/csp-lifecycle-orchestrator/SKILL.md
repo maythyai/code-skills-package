@@ -558,14 +558,19 @@ routing_rules:
   convergence:
     trigger: auto                     # roadmap 产出版本-主题表后自动触发
     flow: prompts/product-design-convergence.md
-    input: docs/strategy/ROADMAP.md + docs/FEATURES.md + .csp/product-spec/
+    input: AGENTS.md + docs/strategy/STRATEGY.md + ROADMAP.md + docs/FEATURES.md + .csp/product-spec/
     output:
       - .csp/convergence/CONVERGED-FEATURE-PLAN.md   # 01 PRD 的功能唯一输入
-      - .csp/convergence/IA-DIRECTION.md              # 03 技术方案的前置输入
+      - .csp/convergence/IA-DIRECTION.md              # 03 技术方案的前置输入（含导航预算）
+      - .csp/convergence/SYSTEM-HYGIENE-{date}.md     # 系统级卫生整改（后端/Flag/文档）
       - .csp/convergence/CONVERGENCE-REPORT-{date}.md # 审查报告+裁决记录
-    gate: convergence_passed          # 全部裁决有依据+有裁决动作+功能清单已收敛
+    gate: convergence_passed          # 定位对齐+支柱映射+导航准入+系统卫生全通过
     skip_if: single_patch_fix         # 仅 PATCH 修复版本无架构变化 → 标 SKIPPED
     on_failure: return_to_roadmap     # 不通过 → 回 roadmap 重排版本-主题表
+    blocking_rules:
+      - "定位漂移 >30% → 整个 roadmap 回炉，不是逐个砍功能"
+      - "导航超预算 → 本版本禁止新增顶级导航"
+      - "DOC-STATUS 过期 >30 天 → 禁止新增功能，先修文档"
     handoff: 01-prd                   # 通过 → 01 PRD 读取 CONVERGED-FEATURE-PLAN.md
 
   # 独立 UI/UX 审查（8-lens）→ 可任意时点触发，不依赖里程碑
