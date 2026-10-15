@@ -21,7 +21,8 @@
 | 独立 | E2E 深度验证（M1 交互验证+修复 / M2 建套件 / M3 取证 / M4 全路由 sweep+按钮级点击审计+孤儿路由/隐藏后端功能审计+结构健康核查） | [e2e-deep-audit.md](./e2e-deep-audit.md) | `verify/` + `evidence/` + `gap-analysis/`（零 skill 依赖，可独立粘贴） |
 | 独立 | 产品总监批评性审查（重复/冗余/IA/视觉交互一致性/用户习惯/定位/完整性/状态 七镜头，带产品 sense 给 critic judgement） | [product-critic-review.md](./product-critic-review.md) | `.csp/critic/` + `docs/analysis/`（前缀 `CRITIC-F-NN`，交棒 roadmap→Phase 2.5） |
 | 独立 | UI/UX 设计总监审查——从审查方法到版本迭代的完整闭环（八镜头→提升点分级→落实到 PRD/Spec/Task→版本迭代路线图→回归验证） | [ui-review-to-iteration.md](./ui-review-to-iteration.md) | `.csp/ui-review/` + `docs/analysis/`（前缀 `UI-F-NN`，交棒 roadmap） |
-| 独立 | 自动化验证层——提示词↔脚本契约（9 个机器可执行治理门禁 G-POS/G-NAV/G-DOC/G-FLAG/G-PLACEHOLDER/G-DUAL-NAV/G-CONTRACT/G-BUTTON/G-LAYER，映射五类根因 Pattern，统一 JSON 报告供提示词消费） | [automation-validation.md](./automation-validation.md) | `.csp/convergence/GATE-REPORT-{date}.json`（参考实现 `scripts/validate_gates.py`） |
+| 独立 | 自动化验证层——提示词↔脚本契约（9 个机器可执行治理门禁 G-POS/G-NAV/G-DOC/G-FLAG/G-PLACEHOLDER/G-DUAL-NAV/G-CONTRACT/G-BUTTON/G-LAYER，映射五类根因 Pattern，统一 JSON 报告供提示词消费） | [automation-validation.md](./automation-validation.md) | `.csp/convergence/GATE-REPORT-{date}.json`（通用脚本 `scripts/validate_gates.py` + 配置 `gates.config.example.json`） |
+| 独立 | 连续版本交付流水线——lifecycle-orchestrator 续跑全部待交付版本，含 01 前置四读、收敛闸门、findings 闭合契约、06 双闸门（findings_closure + version_integrity） | [develop_pipeline.md](./develop_pipeline.md) | 驱动 00-07 连续迭代 + `prompts/scripts/` 发布门禁 |
 | 独立 | 开发期 UI 预防规范（8 条编码规范 N1-N8 + 5 个 CI 门禁 G1-G5 + 7 项审查链路增强，从历次审计根因提炼） | [prevention-norms.md](./prevention-norms.md) | 供 AGENTS.md 检查清单引用 |
 | 棕地 | docs/→.csp/ 双轨整合（PRD→PMS、strategy→lifecycle、solutions→specs、analysis→audit） | [brownfield-doc-integration.md](./brownfield-doc-integration.md) | `.csp/product-spec/` + `.csp/manifest.json` + `docs/` 整理归位 |
 

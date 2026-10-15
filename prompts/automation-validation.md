@@ -4,7 +4,7 @@
 >
 > **核心原则**：提示词负责"判断与裁决"（需要 product sense 的部分），脚本负责"确定性检测"（可机器判定的部分）。两者通过 `GATE-REPORT-{date}.json` 交接——脚本产出结构化证据，提示词消费证据做裁决。
 >
-> **参考实现**：`scripts/validate_gates.py`（auto_content 项目已落地，可作为模板移植到任何 CSP 项目）。
+> **通用实现**：`prompts/scripts/validate_gates.py`（配置驱动，项目无关）+ `prompts/scripts/gates.config.example.json`（配置示例）。各项目只维护自己的 `.csp/gates.config.json`，脚本随 prompts 同步。另有 `findings_closure_check.py`（findings 闭合真实性闸门）+ `version_integrity_check.py`（版本完整性闸门）两个通用脚本，见 `develop_pipeline.md` 的发布门禁。
 
 ## 一、为什么需要自动化验证层
 
@@ -36,29 +36,57 @@
 
 ## 三、统一编排命令
 
+> **通用配置驱动版**（推荐）：脚本本体项目无关，全部路径/关键词/阈值/委托脚本来自配置文件。
+> 脚本：`prompts/scripts/validate_gates.py`；配置示例：`prompts/scripts/gates.config.example.json`。
+
 ```bash
-# 全量门禁（收敛闸门 / 审计 pipeline Step 0 调用）
-python scripts/validate_gates.py
+# 0. 首次：生成项目配置（复制示例后按实际修改）
+python3 prompts/scripts/validate_gates.py --write-template .csp/gates.config.json
+#    → 编辑 .csp/gates.config.json：填 paths/thresholds/drift_keywords/delegated_gates
 
-# 仅 JSON（供提示词程序化消费）
-python scripts/validate_gates.py --json
+# 1. 全量门禁（收敛闸门 / 审计 pipeline Step 0 调用）
+python3 prompts/scripts/validate_gates.py --config .csp/gates.config.json
 
-# 单门禁（调试 / 增量）
-python scripts/validate_gates.py --gate G-NAV
+# 2. 仅 JSON（供提示词程序化消费）
+python3 prompts/scripts/validate_gates.py --config .csp/gates.config.json --json
 
-# 严格模式（任一 ERROR 即 exit 1，用于 CI）
-python scripts/validate_gates.py --strict
+# 3. 单门禁（调试 / 增量）
+python3 prompts/scripts/validate_gates.py --config .csp/gates.config.json --gate G-NAV
 
-# 占位 baseline 覆盖（registry 未更新时）
-python scripts/validate_gates.py --baseline 42
+# 4. 严格模式（任一 ERROR 即 exit 1，用于 CI）
+python3 prompts/scripts/validate_gates.py --config .csp/gates.config.json --strict
+
+# 5. 指定仓库根（脚本可在任意位置调用）
+python3 prompts/scripts/validate_gates.py --config .csp/gates.config.json --root /path/to/repo
 ```
 
 **退出码语义**：
 - `0` = 全部 PASS 或仅 WARNING（可继续，但 WARNING 须登记）
 - `1` = 至少一个**阻断门禁** ERROR（收敛闸门不通过 / CI 失败）
-- `2` = 验证器自身失败（文件缺失/解析错误——不是被审项目的问题）
+- `2` = 验证器自身失败（配置缺失/解析错误——不是被审项目的问题）
 
-**报告落点**：`.csp/convergence/GATE-REPORT-{date}.json`
+**报告落点**：`{report_dir}/GATE-REPORT-{date}.json`（report_dir 来自 config，默认 `.csp/convergence`）
+
+### 配置文件 schema（`.csp/gates.config.json`）
+
+| 字段 | 类型 | 说明 |
+|------|------|------|
+| `project_name` | str | 项目名（报告标识） |
+| `trust_model` | str | `single-operator`/`team`/`enterprise`/`multi-tenant`——G-POS/G-FLAG 据此判漂移 |
+| `paths.*` | str | 各权威文件相对路径；**留空 = 该门禁 SKIPPED**（登记解除条件，不报错） |
+| `thresholds.nav_budget` | int | 顶级导航预算（默认 7） |
+| `thresholds.doc_stale_warn_days` | int | 文档 WARNING 阈值（默认 30） |
+| `thresholds.doc_stale_error_days` | int | 文档 ERROR 阈值（默认 60） |
+| `thresholds.placeholder_baseline` | int\|null | 占位 baseline；null = 从 registry 解析"N 处占位" |
+| `drift_keywords` | list | 与 trust_model 冲突的关键词（single-operator 填 to-B 词） |
+| `severe_drift_keywords` | list | 命中 nav 即 ERROR 的子集 |
+| `flag_conflict_pattern` | str | flag 名冲突正则（仅 single-operator 生效） |
+| `delegated_gates.*` | obj | `{script, args}`——委托项目既有脚本；script 留空 = SKIPPED |
+| `enabled_gates` | list | 启用的门禁（可按项目裁剪，如无前端去掉 G-NAV/G-BUTTON） |
+| `blocking_gates` | list | ERROR 即 exit 1 的门禁 |
+| `report_dir` | str | 报告输出目录（默认 `.csp/convergence`） |
+
+> **反转检测**：to-B 产品（trust_model=enterprise）应把 `drift_keywords` 改为 to-C 关键词（如"个人/单人/self-hosted"），或禁用 G-POS（从 enabled_gates 移除）。门禁框架对称，关键词方向由 config 决定。
 
 ## 四、JSON 输出 Schema（提示词消费契约）
 
@@ -117,17 +145,23 @@ python scripts/validate_gates.py --baseline 42
 | **ui-review 镜头 7** | G-BUTTON | a11y 机器证据 |
 | **06 release** | G-PLACEHOLDER, G-DOC | 发布前占位/文档新鲜度门禁 |
 
-## 六、移植到新项目（模板化）
+## 六、移植到新项目（配置驱动，零脚本修改）
 
-`validate_gates.py` 是**项目特定**的（路径/关键词/阈值硬编码到 auto_content 结构）。移植到新模式：
+`prompts/scripts/validate_gates.py` 是**通用配置驱动版**——脚本本体项目无关，移植只需写配置文件，**不改脚本代码**：
 
-1. **复制脚本**到目标项目 `scripts/validate_gates.py`
-2. **调整路径常量**（`SIDEBAR_CONFIG` / `FEATURE_FLAGS` / `DOC_STATUS` 等指向目标项目实际文件）
-3. **调整关键词**（`TO_B_KEYWORDS` 按目标项目定位修改；如目标是 to-B 产品则反转检测 to-C 关键词）
-4. **调整阈值**（`NAV_BUDGET` / `DOC_STALE_*_DAYS` / `PLACEHOLDER_BASELINE_DEFAULT`）
-5. **委托门禁**（G-CONTRACT/G-BUTTON/G-LAYER）指向目标项目既有脚本，无则标 SKIPPED
+1. **复制脚本**（随 prompts 同步自动到位）：`prompts/scripts/validate_gates.py` + `findings_closure_check.py` + `version_integrity_check.py`
+2. **生成配置**：`python3 prompts/scripts/validate_gates.py --write-template .csp/gates.config.json`
+3. **填配置**（唯一需要项目特定的部分）：
+   - `paths.*` → 指向目标项目实际文件（nav_config/feature_flags/doc_status/...）；**没有的留空 = 该门禁 SKIPPED**
+   - `trust_model` + `drift_keywords` → 按目标项目定位填（single-operator 填 to-B 词；to-B 产品反转为 to-C 词或禁用 G-POS）
+   - `thresholds.*` → nav_budget/doc_stale/placeholder_baseline 按项目调
+   - `delegated_gates.*` → 指向目标项目既有 lint/audit 脚本；没有的留空
+   - `enabled_gates` → 裁剪不适用门禁（如纯后端项目去掉 G-NAV/G-BUTTON）
+4. **运行**：`python3 prompts/scripts/validate_gates.py --config .csp/gates.config.json`
 
-> 提示词层（convergence/audit-pipeline/prevention-norms）**保持项目无关**——它们引用门禁 ID（G-POS 等）和 JSON schema，不引用具体脚本路径。脚本层项目特定，提示词层通用。
+> **对比旧模式**：早期 auto_content 用硬编码路径的项目特定脚本（`auto_content/scripts/validate_gates.py`）。通用版改为配置驱动后，**脚本随 prompts 同步到所有项目，各项目只维护自己的 `.csp/gates.config.json`**——脚本升级一次，全项目受益。
+
+> 提示词层（convergence/audit-pipeline/prevention-norms）**保持项目无关**——引用门禁 ID（G-POS 等）+ JSON schema + config 字段名，不引用具体脚本路径或硬编码常量。
 
 ## 七、CI 集成（可选，强化强制力）
 
@@ -157,17 +191,24 @@ jobs:
 
 ## 八、与既有脚本的关系（不重复造轮子）
 
-auto_content 已有脚本，validate_gates.py **委托**而非重写：
+通用 `validate_gates.py` 通过 `delegated_gates` 配置**委托**项目既有脚本，而非重写。以 auto_content 为例：
 
-| 既有脚本 | 被委托为 | 说明 |
-|---------|---------|------|
-| `scan_contract.py --strict` | G-CONTRACT | OpenAPI 契约 + 前端孤儿 |
-| `button_audit.py` | G-BUTTON | 按钮 a11y/onClick |
-| `lint_layer.py --strict` | G-LAYER | 分层违规 |
-| `orphan_ast_classify.py` | （未委托，e2e L4 直接用） | AST 孤儿分类 |
-| `check_skeleton_registry.sh` | （未委托） | 骨架屏注册 |
+| 既有脚本 | 配置为 | 说明 |
+|---------|--------|------|
+| `scripts/scan_contract.py --strict` | `delegated_gates.G-CONTRACT` | OpenAPI 契约 + 前端孤儿 |
+| `scripts/button_audit.py` | `delegated_gates.G-BUTTON` | 按钮 a11y/onClick |
+| `scripts/lint_layer.py --strict` | `delegated_gates.G-LAYER` | 分层违规 |
+| `scripts/orphan_ast_classify.py` | （未委托，e2e L4 直接用） | AST 孤儿分类 |
 
-**新增门禁**（既有脚本未覆盖）：G-POS, G-NAV, G-DOC, G-FLAG, G-PLACEHOLDER, G-DUAL-NAV —— 这些是治理级门禁，填补了"功能准入"的自动化空白。
+**新增治理门禁**（既有脚本未覆盖，由 validate_gates.py 本体实现）：G-POS, G-NAV, G-DOC, G-FLAG, G-PLACEHOLDER, G-DUAL-NAV —— 填补"功能准入/定位漂移/导航预算/文档权威"的自动化空白。
+
+**同目录的另外两个通用闸门脚本**（独立于 validate_gates.py，发布期用）：
+| 脚本 | 用途 | 调用方 |
+|------|------|--------|
+| `prompts/scripts/findings_closure_check.py` | findings 闭合真实性（C1-C5：fixed_in 真实/verification 证据/主题交叉/时间序/空 tag），baseline 只降不增 | 06 release 收尾双闸门之一 |
+| `prompts/scripts/version_integrity_check.py` | 版本完整性（多 tag 同 commit/空 tag/六处同步/CHANGELOG） | 06 release 收尾双闸门之二 |
+
+> 三者分工：`validate_gates.py` = 收敛/审计期治理门禁；`findings_closure_check.py` + `version_integrity_check.py` = 发布期真实性门禁。均参数化可移植（`--root`/`--config`/`--baseline`）。
 
 ## 九、约束与边界
 
