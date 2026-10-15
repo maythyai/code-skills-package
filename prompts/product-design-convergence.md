@@ -63,12 +63,47 @@
 - `.csp/product-spec/`（PMS 模块边界）
 - 若有审计 findings：`AUDIT-F` / `UI-F` / `CRITIC-F` / `GAP-F`
 - 域名词典：`DOMAIN-THESAURUS.md`（如有）
+- **自动化门禁报告**：`.csp/convergence/GATE-REPORT-{date}.json`（由 `scripts/validate_gates.py` 产出，见 `automation-validation.md`）
 
 **跳过条件**：仅有 1 个功能点的 PATCH 修复版本 → 标 `SKIPPED: 单功能修复，无需架构收敛`。
+
+### 定位权威冲突解决规则（强制前置）
+
+> **本轮实证**：auto_content 的 AGENTS.md 声明 single-operator（无多租户），但 STRATEGY.md 的 T4 商业化变现 track 含"企业版/团队版"，target users 含"小型内容团队/MCN/企业内容营销部门"，feature flags 有 `team_collaboration: true`，nav 有"变现/广告主/商单/结算"。**产品说的（AGENTS.md）和产品做的（STRATEGY+代码）已经分家。**
+
+当 AGENTS.md（工程信任模型）与 STRATEGY.md（产品雄心）冲突时：
+
+| 规则 | 内容 |
+|------|------|
+| **R1 权威层级** | AGENTS.md 信任模型是**硬约束**（工程事实），STRATEGY.md 是**产品愿景**（可演进）。冲突时 AGENTS.md 优先。 |
+| **R2 修订前置** | STRATEGY track 若违反 AGENTS.md 信任模型（如 single-operator 下做 team/enterprise），必须**先正式修订 AGENTS.md**（走 ADR + 用户确认），再排期该 track。不能默默漂移。 |
+| **R3 漂移检测** | Phase 0 用 `validate_gates.py --gate G-POS` 机器检测漂移；drift 关键词命中 nav/flags = 🔴 ERROR。 |
+| **R4 回炉阈值** | roadmap 中 >30% 功能与 AGENTS.md 定位冲突 → **整个 roadmap 回炉重做**，不是逐个砍功能。 |
+| **R5 裁决记录** | 每个定位冲突功能必须裁决：砍 / 归并到合规支柱 / 触发 AGENTS.md 修订（走 R2）。不允许"保留但标 TBD"。 |
 
 ## 三、Phase 0：定位与支柱基线（强制前置——收敛的锚点）
 
 > **没有定位基线，功能收敛就是无锚点的漂流。** 本 Phase 读取"产品说的"，作为后续所有裁决的对照基准。
+
+### 3.0 自动化门禁快照（强制第一步）
+
+> 详见 `automation-validation.md`。提示词做裁决，脚本做确定性检测——先跑脚本拿机器证据，再做 product sense 判断。
+
+```bash
+# 运行全部治理门禁，产出 GATE-REPORT-{date}.json
+python scripts/validate_gates.py --json > /tmp/gates.json 2>&1
+# 或人类可读
+python scripts/validate_gates.py
+```
+
+**消费规则**：
+- `verdict == "BLOCKED"` → 收敛闸门**默认不通过**，必须先处理 blocking_errors
+- `G-POS` ERROR → 定位漂移，触发 Phase 0.2 漂移预警 + R4 回炉判定
+- `G-NAV` ERROR → 导航超预算，D3 冻结新增顶级导航
+- `G-DOC` ERROR → 文档过期 >60d，**禁止新增功能**，先修文档
+- `G-FLAG` ERROR → 定位冲突 flag，D6.2 裁决（删 flag+code 或修订 AGENTS.md）
+- `G-PLACEHOLDER` ERROR → 占位增长违反只降不增，D6 列清理任务
+- 脚本不存在/SKIPPED → 登记解除条件，不静默跳过；降级为人工检查（但须声明"无机器证据"）
 
 ### 3.1 读取产品定位（AGENTS.md 为最高权威）
 
@@ -471,8 +506,62 @@ grep -rE "label:|title:" src/sidebar/ --include='*.ts*'
 - **定位是锚点**：所有收敛裁决对照 AGENTS.md/STRATEGY.md 定位，定位漂移是 P0。
 - **裁决而非建议**："砍/合/拆/移/拦截"四种明确动作。
 - **系统级纳入**：后端膨胀/Flag 卫生/文档权威不是"技术债"，是治理失败，必须在开发前拦截。
+- **机器证据优先**：能用 `validate_gates.py` 检测的（定位漂移/导航预算/文档新鲜度/Flag/占位）必须先跑脚本拿证据，product sense 只做脚本不能做的裁决（功能取舍/支柱归属/IA 方向）。
 - **默认中文**，表格优先。
 - 完成时告知：产物路径 + "功能清单已收敛（含定位对齐声明），系统级卫生整改已列出，裁决记录已就绪。下一步：01 PRD 基于收敛后功能清单生成。"
+
+## 十二、流程职责矩阵与缺失维度审查（meta-review）
+
+> 本节是对**整个 roadmap→开发流程**的职责清晰度审查，回答"谁拥有哪个治理对象、哪个维度缺失"。每次收敛审查必须过一遍，发现职责真空即记 finding。
+
+### 12.1 治理对象职责矩阵（谁拥有什么）
+
+| 治理对象 | 定义权威 | 检测门禁 | 裁决阶段 | 整改执行 | 新鲜度负责 |
+|---------|---------|---------|---------|---------|-----------|
+| **产品定位/信任模型** | AGENTS.md | G-POS | convergence D5 | roadmap 回炉 / AGENTS.md 修订(ADR) | 战略变更时 |
+| **支柱结构** | AGENTS.md / STRATEGY.md | —（人工映射） | convergence Phase1 | 功能归并 | 季度回顾 |
+| **导航预算** | convergence D3（budget=7） | G-NAV, G-DUAL-NAV | convergence D3 | IA 收敛任务 | 每版本 |
+| **功能清单** | ROADMAP.md | — | convergence D1/D2 | CONVERGED-FEATURE-PLAN | 每版本 |
+| **DOC-STATUS** | docs/DOC-STATUS.md | G-DOC | convergence D6.3 | 文档审计刷新 | **月度**（cron） |
+| **PLACEHOLDER-REGISTRY** | docs/PLACEHOLDER-REGISTRY.md | G-PLACEHOLDER | convergence D6 / 06 release | 占位清理任务 | 每版本 |
+| **Feature Flags** | feature-flags.ts + 后端 registry | G-FLAG | convergence D6.2 | Flag 清理(TTL) | 每版本 |
+| **后端能力可见性** | OpenAPI spec | G-CONTRACT | audit Step1 / convergence D6.1 | 孤儿后端清理 | 每版本 |
+| **分层架构** | lint_layer 规则 | G-LAYER | audit Step1 | 分层重构 | 每 PR |
+| **按钮 a11y** | button_audit | G-BUTTON | ui-review 镜头7 | a11y 修复 | nightly |
+
+### 12.2 已识别的职责真空（本轮 meta-review 发现）
+
+| 真空 | 症状 | 修复 |
+|------|------|------|
+| **DOC-STATUS 无月度负责人** | last_audit 过期 57 天无人刷新 | 设月度 cron（devix-automation-skill）跑 `validate_gates.py --gate G-DOC`，过期自动建票 |
+| **定位权威冲突无解决规则** | AGENTS.md single-operator vs STRATEGY T4 企业版，无人裁决谁赢 | 新增 R1-R5 冲突解决规则（见 §二）；冲突走 ADR 修订 AGENTS.md |
+| **导航预算无机器强制** | 11 sections > 7 但无门禁拦截 | G-NAV 纳入 validate_gates.py + CI |
+| **Flag TTL 无清理机制** | team_collaboration/ab_testing 等 flag 无到期清理 | G-FLAG + convergence D6.2 裁决；新 flag 必带 TTL |
+| **占位 baseline 无更新责任** | registry 42 vs 代码 83，baseline 过期 | 06 release 负责更新 baseline；G-PLACEHOLDER 只降不增 |
+| **支柱映射无自动校验** | 功能归哪个支柱靠人工，易漏 | convergence Phase1 强制每功能标支柱，🔴无支柱=漂移候选 |
+
+### 12.3 流程通顺性检查（每次收敛必过）
+
+| 检查项 | 判定 | 不通过的处置 |
+|--------|------|------------|
+| roadmap 每个功能都能在 convergence 找到裁决（保留/砍/合/移） | | 漏裁决的功能禁止进 01 PRD |
+| convergence 每个 🔴 裁决都有对应整改任务（不是只记录） | | 无整改任务 → 裁决未闭环，标 BLOCKED |
+| 01 PRD 的功能清单 == CONVERGED-FEATURE-PLAN（无私自加功能） | | PRD 出现 plan 外功能 → 打回 convergence 补裁决 |
+| 03 技术方案的 IA == IA-DIRECTION（无私自改导航） | | 导航偏离 → 打回 convergence |
+| 06 release 前重跑 validate_gates.py 全绿（或 WARNING 已登记） | | 门禁红 → 阻断发布 |
+| 系统级卫生整改（D6）作为本版本前置任务先于功能开发 | | 卫生未整改就开发 → 在不健康地基叠加，打回 |
+
+### 12.4 缺失维度声明（本流程不覆盖的）
+
+诚实声明 convergence 闸门的边界——以下维度**不在本闸门**，由其他流程覆盖：
+
+| 维度 | 归属流程 | 说明 |
+|------|---------|------|
+| 已实现功能的批评 | product-critic-review.md | 本闸门只审待开发清单 |
+| UI 视觉/交互细节 | ui-review-to-iteration.md | 本闸门只给 IA 方向，不给视觉方案 |
+| 单模块功能缺口 | feature-gap-analysis.md | 本闸门做功能级取舍，不做模块内增强 |
+| 代码质量/安全 | audit.md / 06 verify | 本闸门做治理级，不做代码级 |
+| 技术选型 | 03 tech-design | 本闸门不给技术方案 |
 
 ---
 
