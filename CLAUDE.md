@@ -69,7 +69,7 @@ npm test               # validate:all + build:graph + node --test test/ (20 inva
 - **若 `.csp/AGENTS.md` 不存在** → 先运行 `knowledge-hub` agent 初始化：建 `AGENTS.md`/`manifest.json`/`lifecycle-state.json` + 棕地 CMS 蒸馏（`.csp/code-spec/`）+ 既有文档整改（Phase 1.5）。这是整条链路（00→07）的第一步，未初始化不进 01。
 
 ### Agent 团队（`.claude/agents/`）
-- 外环 `roadmap-planner`（战略锚点+版本号规则+1/3年路径，跑一次）
+- 外环 `roadmap-planner`（方向调研+战略锚点+版本号规则+版本序列+集成必要性审视+规划级 PRD SPEC，跑一次）
 - 内环：`knowledge-hub`(00) → `prd-writer`(01) → `decomposer`(02) → `tech-designer`(03) → `task-breaker`(04) → `dev-lead`(05) → `release-manager`(06) → `reviewer`(07)
 - 主调度：`lifecycle-orchestrator`（读 lifecycle-state 自动派 agent；gate 即授权，仅破坏性/无解才问人）
 - 05 角色：`backend-engineer`/`frontend-engineer`/`db-engineer`/`qa-engineer`（由 dev-lead spawn + worktree 并行）

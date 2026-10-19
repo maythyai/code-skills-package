@@ -6,7 +6,7 @@
 
 | agent | 阶段 | tools | model | 触发 |
 |---|---|---|---|---|
-| `roadmap-planner` | 外环 | Read,Write,Edit,Glob,Grep,WebFetch,AskUserQuestion | opus | 长期规划/路线图/版本规划 |
+| `roadmap-planner` | 外环 | Read,Write,Edit,Glob,Grep,WebFetch,AskUserQuestion | opus | 长期规划/路线图/版本规划/方向调研/规划级 PRD SPEC |
 | `knowledge-hub` | 00 | Read,Write,Edit,Glob,Grep,Bash | sonnet | 知识中枢/知识库初始化 |
 | `prd-writer` | 01 | Read,Write,Edit,Glob,Grep,AskUserQuestion,Agent | sonnet | 写 PRD/需求文档 |
 | `decomposer` | 02 | Read,Write,Edit,Glob,Grep | sonnet | 需求拆解/feature 分解 |
@@ -28,7 +28,7 @@
 ## 二、全流程
 
 ```
-外环 roadmap-planner（跑一次：战略+版本号规则+1/3年路径）
+外环 roadmap-planner（跑一次：调研+战略+版本号规则+版本序列+必要性审视+规划级 PRD SPEC）
    │
    ▼
 内环（每版本迭代）：
@@ -119,7 +119,7 @@ orchestrator 只 spawn `dev-lead` 一次；dev-lead 内部按 Wave + 文件无�
 
 ## 七、新建项目首跑顺序
 
-1. `roadmap-planner`（战略锚点 + 版本号规则 + 1/3 年路径，跑一次）
+1. `roadmap-planner`（方向调研 + 战略锚点 + 版本号规则 + 版本序列 + 必要性审视 + 规划级 PRD SPEC，跑一次）
 2. `knowledge-hub`（建 AGENTS.md/manifest/lifecycle-state，棕地蒸馏 CMS，整改既有文档）
 3. → 内环 01-06 每版本迭代
 4. → `reviewer` 复盘（可选）→ 回 roadmap → 下一轮
