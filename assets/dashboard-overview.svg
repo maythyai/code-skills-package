@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="360" viewBox="0 0 720 360" data-total="682" font-family="system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif">
+  <rect width="720" height="360" rx="14" fill="#14182b"/>
+  <text x="28" y="58" fill="#8b93a7" font-size="13" letter-spacing="3">CSP · CODE SKILLS PACKAGE</text>
+  <text x="28" y="108" fill="#ffffff" font-size="38" font-weight="700">682</text>
+  <text x="136" y="108" fill="#8b93a7" font-size="15">skills · 5 layers · auto-generated from registry</text>
+  <text x="28" y="169" fill="#aab3c5" font-size="14" font-weight="600">Router</text>
+  <rect x="146" y="158" width="470" height="12" rx="6" fill="#232941"/>
+  <rect x="146" y="158" width="1" height="12" rx="6" fill="#c0553f"/>
+  <text x="692" y="169" fill="#ffffff" font-size="15" font-weight="700" text-anchor="end">1</text>
+  <text x="28" y="207" fill="#aab3c5" font-size="14" font-weight="600">Meta</text>
+  <rect x="146" y="196" width="470" height="12" rx="6" fill="#232941"/>
+  <rect x="146" y="196" width="31" height="12" rx="6" fill="#3b5bdb"/>
+  <text x="692" y="207" fill="#ffffff" font-size="15" font-weight="700" text-anchor="end">26</text>
+  <text x="28" y="245" fill="#aab3c5" font-size="14" font-weight="600">Workflow</text>
+  <rect x="146" y="234" width="470" height="12" rx="6" fill="#232941"/>
+  <rect x="146" y="234" width="239" height="12" rx="6" fill="#2f9e44"/>
+  <text x="692" y="245" fill="#ffffff" font-size="15" font-weight="700" text-anchor="end">201</text>
+  <text x="28" y="283" fill="#aab3c5" font-size="14" font-weight="600">Patterns</text>
+  <rect x="146" y="272" width="470" height="12" rx="6" fill="#232941"/>
+  <rect x="146" y="272" width="470" height="12" rx="6" fill="#7048e8"/>
+  <text x="692" y="283" fill="#ffffff" font-size="15" font-weight="700" text-anchor="end">396</text>
+  <text x="28" y="321" fill="#aab3c5" font-size="14" font-weight="600">Runtime</text>
+  <rect x="146" y="310" width="470" height="12" rx="6" fill="#232941"/>
+  <rect x="146" y="310" width="69" height="12" rx="6" fill="#e8590c"/>
+  <text x="692" y="321" fill="#ffffff" font-size="15" font-weight="700" text-anchor="end">58</text>
+</svg>
+
