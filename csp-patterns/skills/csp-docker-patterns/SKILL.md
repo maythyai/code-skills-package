@@ -305,6 +305,27 @@ README.md
 tests/
 ```
 
+## Production Image
+
+构建生产镜像时，逐项过这张表。判据在此，可复制的配置与踩坑细节见 `references/production-image.md`。
+
+| 决策 | 默认 | 何时偏离 |
+|------|------|---------|
+| **基础镜像** | `<lang>-slim`（glibc，兼容性优先） | 纯静态二进制且已有 `kubectl debug` 流程 → distroless；需要 shell 排障且体积敏感 → alpine（但先确认不吃 musl 的坑：DNS search 域、locale、C 扩展） |
+| **层顺序** | 变动频率从低到高：基础镜像 → 系统包 → 依赖清单 → 配置 → 源码 | 无例外。`COPY . .` 出现在 `npm ci` 之前就是错的 |
+| **只读根** | staging 先跑满一个业务周期再上生产 | 有本地文件数据库（SQLite）→ 该路径必须挂 volume，不能用 tmpfs |
+| **漏洞门禁** | `trivy --ignore-unfixed --severity HIGH,CRITICAL` | 不加 `--ignore-unfixed` 的扫描三周内一定会被团队从流水线删掉 |
+| **digest 固定** | 生产镜像固定到 `@sha256:` | 固定后不要再用 `--pull`（会破坏可复现性） |
+| **HEALTHCHECK** | 只查进程与端口存活（liveness 语义） | 依赖连通性交编排层 readiness，**不要**放进 Docker HEALTHCHECK |
+
+三条最容易出事的地方：
+
+1. **distroless 里没有 shell、`curl`、`wget`** —— `HEALTHCHECK CMD wget ...` 直接失败。改用 exec 形式调用运行时自身（`CMD ["node", "-e", "..."]`）。
+2. **tmpfs 计入内存配额** —— `size=256M` 的 tmpfs 写满会吃掉 memory limit 并触发 OOMKill，症状长得像内存泄漏。给 tmpfs 显式 size 且远小于 limit。
+3. **把依赖连通性放进 Docker HEALTHCHECK** —— DB 抖动时全部 app 容器被判死并重启，局部故障放大成全局故障。
+
+> 需要瘦身清单、musl vs glibc 明细、`read_only` 写入点排查表、hadolint 高频规则、SBOM 生成、可复现构建要素 —— 读 `references/production-image.md`。
+
 ## Debugging
 
 ### Common Commands

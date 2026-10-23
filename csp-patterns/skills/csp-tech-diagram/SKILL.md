@@ -279,8 +279,9 @@ Always include a legend when 2+ arrow types are used.
 | 10 | Cloud Fabric | Cloud blue `#edf5fb` | Multi-region deployments |
 | 11 | Event Transit | Transit paper `#fbf7ee` | Event streams, topics |
 | 12 | Ops Pulse | Ops navy `#07111f` | Golden signals, traces |
+| 13 | Flat Engineering | White canvas + slate `#f8fafc` | Engineering drawings, spec sheets |
 
-Style selection fingerprints: `C4评审` → 9; `云部署/deployment topology` → 10; `事件流/event metro` → 11; `可靠性/golden signals` → 12; default → 1.
+Style selection fingerprints: `C4评审` → 9; `云部署/deployment topology` → 10; `事件流/event metro` → 11; `可靠性/golden signals` → 12; `工程图纸/flat engineering/spec sheet/蓝图平铺` → 13; default → 1.
 
 ## Rule Precedence
 

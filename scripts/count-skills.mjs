@@ -50,6 +50,7 @@ const checks = [
   { file: 'docs/SKILL-INDEX.md',       re: /状态：(\d+)\s*个技能/g },
   { file: 'docs/INSTALL.md',           re: /Total:\s*(\d+)\s+skills/g },
   { file: 'docs/INSTALL_zh.md',        re: /总计[:：]\s*(\d+)\s*个\s*skills/g },
+  { file: 'assets/dashboard-overview.svg', re: /data-total="(\d+)"/g },
 ];
 
 const mismatches = [];

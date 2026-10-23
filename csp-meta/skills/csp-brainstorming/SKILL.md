@@ -40,6 +40,14 @@ anti_rationalizations:
    - What could kill this idea
    - What you're choosing to ignore (and why that's okay for now)
 
+4. **Impact-Effort pre-screen** (quick quadrant before committing to a direction):
+   - Quick Wins (high impact, low effort) → do first
+   - Big Bets (high impact, high effort) → plan carefully, validate cheaply first
+   - Fill-ins (low impact, low effort) → do when slack allows
+   - Money Pits (low impact, high effort) → drop
+
+5. **Archive rejected ideas** — keep the discarded directions with one line on why they lost. The archive preserves decision history for future re-evaluation; a brainstorm that only reports winners hides the reasoning that led there.
+
 **Be honest, not supportive.** If an idea is weak, say so with kindness.
 
 ### Phase 3: Design & Ship
@@ -92,6 +100,33 @@ When deeper structured ideation is needed, apply these frameworks:
 | **Mind Mapping** | Complex/interconnected problems | Central concept → main themes → sub-ideas, with visual cross-links |
 | **Reverse Brainstorming** | Troubleshooting | "How could we cause this problem?" then reverse each cause into a solution |
 | **How Might We (HMW)** | Solution-oriented reframing | "How might we [achieve X]?" — turns problems into opportunity statements |
+| **Constraint Innovation** | Forcing minimal viable answers | Pick a deliberately extreme constraint (1 week only / zero new dependencies / only existing stack / change one line / users design it) and generate under it — constraints surface the minimum that truly matters |
+| **5 Whys** | Symptom ≠ problem | Ask "why" down the chain before ideating at all. See below — brainstorming the wrong problem produces a great solution nobody needs. |
+
+### 5 Whys: Dig to the Problem Before Ideating
+
+Diverging on a symptom wastes the session. Walk the causal chain first, then brainstorm against the root.
+
+| # | Question | Example (support load is rising) |
+|---|----------|-------------------------------|
+| 1 | Why is this happening? | Users file tickets for things the product already does |
+| 2 | Why does that follow? | They cannot find the feature |
+| 3 | Why can't they find it? | It is buried three levels deep and named after an internal concept |
+| 4 | Why is it named that way? | The label came from the database schema, never reviewed by a user |
+| 5 | Why was it never reviewed? | There is no naming review step in the release process |
+
+Stop when the next "why" produces something **the team can actually change**. Level 5 above is a process fix; level 6 ("because nobody was assigned ownership") is an org chart complaint — not actionable in this session.
+
+**Rules:**
+- One chain at a time. Branching at every level gives 5⁵ = 3125 paths and no conclusion.
+- Each answer must be **evidence-backed**, not a guess. "Because users are lazy" is not a cause, it is a blame assignment — and it ends the inquiry prematurely.
+- Causes are usually **process or system**, not people. A chain that ends at "X forgot" is unfinished: ask why the system allowed one person's memory to be load-bearing.
+- The root you land on determines who should be in the room. If it is a naming convention, brainstorming with engineers alone will not fix it.
+
+**Ideation rules:**
+- Diverge before judging — no "impossible/too hard" during generation; volume first, quality filter after.
+- Concrete beats abstract — "add a progress bar at step 3 of registration" beats "improve onboarding experience".
+- Every idea answers who it helps and which pain it removes; every perspective (SCAMPER lens / constraint) contributes ≥1 idea.
 
 ## Key Principles
 

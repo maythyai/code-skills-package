@@ -25,6 +25,24 @@ zero-runtime-dependency Node ≥ 18 ESM (or plain JS), invoked via the `npm run`
 | `count-skills.mjs` | `count:skills` | Authoritative skill counter — reports the canonical count from `registry.json` and fails if any hard-coded count in README/CLAUDE.md/docs drifts from it. |
 | `shared/scripts/verify-graph-source.mjs` | `verify:graph` | Confirms the SKPG graph was built from the current registry/metadata (no stale rebuild). |
 
+## Coverage audit (`npm run audit:coverage`)
+
+| Script | npm script | Purpose |
+|--------|-----------|---------|
+| `audit-skill-coverage.mjs` | `audit:coverage` | Diffs an external skill collection (default `~/.qoder/skills` + `~/.qoder/plugins`) against `registry.json` and reports each external skill as `COVERED` / `PARTIAL` / `GAP` with its nearest CSP match. Lexical, not semantic — the GAP list is a starting point for a human read, not a verdict. Non-gating: always exits 0 unless the registry is missing. |
+
+Config precedence is CLI flag > env var > default, so no personal path is baked in:
+
+```bash
+node scripts/audit-skill-coverage.mjs --source /path/to/skills --plugins /path/to/plugins
+CSP_AUDIT_SOURCE=/path/to/skills npm run audit:coverage
+npm run audit:coverage -- --json          # machine-readable, for piping elsewhere
+npm run audit:coverage -- --covered 0.6 --partial 0.3   # retune the bands
+```
+
+Company- or tool-specific skills (an internal wiki connector, a single vendor's SDK) show up as
+`GAP` and are legitimately out of scope for a general-purpose MIT package — read before acting.
+
 ## One-off / maintenance scripts
 
 | Script | Purpose |

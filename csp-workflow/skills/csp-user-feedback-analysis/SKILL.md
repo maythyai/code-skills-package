@@ -123,6 +123,17 @@ Output sentiment distribution:
 **Net Sentiment Score**: {positive% - negative%} (range: -100 to +100)
 ```
 
+**NPS calculation** (if ratings are available):
+- **NPS = %Promoters (9-10) − %Detractors (0-6)** on a 0-10 scale. Passives (7-8) are excluded from the formula.
+- 5-star conversion: 5★=10, 4★=8, 3★=6, 2★=4, 1★=2.
+- Benchmarks: SaaS 30-40, consumer apps 20-30 — use as context, compare against your own previous periods first.
+- <50 responses: label "limited sample, conclusions indicative only".
+
+**Sample-size honesty rules:**
+- <10 items: skip statistical analysis entirely; present items as anecdotes, not patterns.
+- 10-50 items: do the analysis but label "样本量有限，结论仅供参考".
+- Small-sample over-inference is forbidden: 3 mentions in 20 items ≠ "大量用户反映".
+
 ### Step 3: Topic Clustering
 
 Group feedback items into thematic clusters. Use a two-level hierarchy:
@@ -172,6 +183,12 @@ Rank pain points by a composite severity score:
 | **Frequency** | 1-5 | How many users report this (1=rare, 5=ubiquitous) |
 | **Intensity** | 1-5 | How strongly users feel about it (1=mild annoyance, 5=dealbreaker) |
 | **Business Impact** | 1-5 | How much this affects key metrics (1=minimal, 5=causes churn/revenue loss) |
+
+Optional refinement factors when the data supports them:
+- **User weight**: paying users x1.5, free users x1.0 (revenue-relevant pain ranks higher).
+- **Confidence**: high (multi-channel + multi-method corroboration) x1.2 / medium x1.0 / low (single source) x0.8.
+
+Scoring discipline: compute the score with code for accuracy; show the factor breakdown in the table so scores are challengeable, not opaque.
 
 ```markdown
 ## Pain Point Ranking
@@ -224,6 +241,13 @@ Cross-reference feedback patterns to extract user personas:
 - If app store reviews AND support tickets both mention the same issue -> high confidence
 - If only one source mentions it -> verify before acting
 - Flag contradictions (e.g., NPS says satisfied but reviews say frustrated)
+
+**Confidence grading** (apply to every insight):
+- **High**: same finding confirmed across ≥2 channels + ≥2 methods (e.g., clustering AND NPS open answers) + persistent over ≥3 weeks.
+- **Medium**: supported by 2 of the 3 dimensions (source / method / time).
+- **Low**: single source, single method, single period -> label "待验证", do not act on it alone.
+
+Every insight in the report must carry its confidence grade. Insights without evidence or grading are guesses.
 
 ### Step 7: Improvement Recommendations
 

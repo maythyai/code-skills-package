@@ -18,8 +18,8 @@ update automation, and cost/latency waste in GitHub Actions.
 ### Base image hygiene
 
 - Pin exact versions (`python:3.12-slim`, not `python`).
-- Prefer distroless or Alpine for runtime when compatible.
-- Avoid `:latest` — it breaks reproducibility.
+- Prefer distroless or Alpine for runtime when compatible — "compatible" is load-bearing: Alpine is musl (DNS search-domain, locale and C-extension differences) and distroless has no shell, so `docker exec -it ... sh` debugging is gone. Pick deliberately: see `csp-docker-patterns` → `references/production-image.md`.
+- Avoid `:latest` — it breaks reproducibility. Pin the digest (`@sha256:`) when the build must be reproducible, and let a bot propose digest bumps as reviewable PRs.
 
 ### Layer caching
 
@@ -61,7 +61,8 @@ CMD ["node", "dist/main.js"]
 - Never run as root — always `USER <nonroot>`.
 - Strip build tools from runtime (multi-stage already does this).
 - Set restrictive permissions (`chmod 600` on config files).
-- Scan final image: `docker scout cves <image>` or Trivy.
+- Scan final image: `trivy image --ignore-unfixed --severity HIGH,CRITICAL --exit-code 1 <image>` or `docker scout cves`. `--ignore-unfixed` is what keeps the gate alive — without it one unfixable base-image CVE turns every PR red and the scan gets deleted from the pipeline within weeks.
+- Emit an SBOM alongside the image (`syft <image> -o spdx-json=sbom.spdx.json`) and archive it at the same digest. An SBOM is only useful if you can later answer "which running images contain this dependency".
 - Use `--mount=type=secret` for build-time secrets — never `ARG`.
 
 ---

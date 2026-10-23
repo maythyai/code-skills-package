@@ -163,6 +163,20 @@ Cross-reference SWOT across competitors to identify:
 - Where competitor strengths expose our vulnerabilities
 - Which opportunities are contested vs. uncontested
 
+**SWOT cross strategy matrix** (mandatory output — SWOT without cross strategy is inventory, not analysis):
+
+| Strategy | Definition | Example |
+|----------|-----------|---------|
+| **SO (offensive)** | Use strengths to seize opportunities | Push our AI pipeline into the uncontested SMB segment |
+| **WO (improve)** | Overcome weaknesses to capture opportunities | Fill the mobile gap to chase the rising mobile demand |
+| **ST (defensive)** | Use strengths to neutralize threats | Lock in switching costs before incumbent bundles a rival feature |
+| **WT (retreat)** | Mitigate weaknesses and avoid threats | Exit the price-war segment where our cost structure loses |
+
+**Fact/inference/opinion three-level labeling** (apply to every claim in the report):
+- **Fact**: verified data with a graded source — normal text, source citation attached.
+- **Inference**: reasoned extrapolation — mark explicitly ("据推测/可能/预计", italic or tagged `推测`).
+- **Opinion**: analyst judgment — prefix "本报告认为". Never presented as fact.
+
 ### Step 5: Porter's Five Forces (Strategic Planning Purpose)
 
 Analyze the five competitive forces:
@@ -202,6 +216,31 @@ Unlike [alternative], we [key differentiator].
 2. **Defensive**: Where to protect our advantages
 3. **Neutral**: Where to achieve parity to remove competitive disadvantage
 ```
+
+**Three-layer differentiation strategy** (structure every differentiation plan this way):
+
+| Layer | Goal | Content |
+|-------|------|---------|
+| **Catch-up (追平层)** | Remove table-stakes disadvantage | Parity features users expect from everyone; time-boxed |
+| **Differentiate (差异层)** | Win on chosen dimensions | 2-3 dimensions where we are meaningfully better, with evidence |
+| **Innovate (创新层)** | Create new playing field | Blue-ocean features no one offers, each with a validation method |
+
+Catch-up alone is survival, not strategy. Differentiate requires naming the dimensions and proving the gap. Innovate requires a validation plan, not a wish list.
+
+**Competitive landscape archetypes** (classify before concluding):
+
+| Archetype | Signal | Implication |
+|-----------|--------|-------------|
+| One dominant + challengers | Top player >50% share | Attack niches the leader can't serve economically |
+| Duopoly | Top two combined >70% | Third-player strategy is unstable; consider adjacent positioning |
+| Fragmented | All players <20% | Consolidation opportunity or red-ocean price war risk |
+| Emerging market | No clear leader, fast growth | Speed and category definition matter more than polish |
+
+**Monitoring cadence** (analysis is a loop, not a one-shot):
+- Weekly: pricing changes, release notes of direct competitors.
+- Monthly: feature matrix refresh.
+- Quarterly: full landscape re-assessment (archetype, SWOT, strategy).
+- Event-driven: funding rounds, leadership changes, major launches — update immediately.
 
 ### Step 7: Generate Report
 

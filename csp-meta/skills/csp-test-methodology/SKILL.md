@@ -31,7 +31,7 @@ triggers:
   - "mutation testing"
   - "property based"
   - "metamorphic testing"
-related_skills: [csp-cross-layer-testing, csp-tdd, csp-e2e-testing, csp-api-tester, csp-test-engineer, csp-webapp-testing, csp-brainstorming, csp-verification]
+related_skills: [csp-cross-layer-testing, csp-tdd, csp-e2e-testing, csp-api-tester, csp-test-engineer, csp-webapp-testing, csp-brainstorming, csp-verification, csp-test-case-design]
 anti_rationalizations:
   "单测过了功能就没问题": "单测只证明纯逻辑对；集成断链、跨层不一致、UI 退化它全看不见——必须按盲点互补再叠一层"
   "E2E 覆盖了关键路径就够了": "E2E 慢且少，过不了边界数据/并发/错误路径；它有盲点，需 property/fuzz/negative 补位"
@@ -194,6 +194,16 @@ requirement ──maps──▶ [test method(s)]
 - 要跑 DB 断言 → 用 `csp-db-state-assertion`
 - 要一条命令出联动裁决 → 用 `csp-linked-test-runner`
 - 选了 E2E → 用 `csp-e2e-testing`；API → `csp-api-tester`；UI 退化 → `csp-visual-regression`
+- **选定方法后要枚举具体用例 → 用 `csp-test-case-design`**
+
+### 与 `csp-test-case-design` 的分工
+
+本技能回答"用哪种测试方法、盲点在哪、需求有没有被测过"；`csp-test-case-design` 回答
+"选定方法之后，一条需求怎么枚举成 N 条用例、要多少条、漏了什么"。
+
+两者刻意不重叠：本技能不写等价类/边界值/判定表的构造步骤，那边不重述测试金字塔。
+衔接点是第 4 节的追溯矩阵——矩阵找出"这条 AC 零用例"之后，用 `csp-test-case-design`
+的七种技术把用例补出来，再回填矩阵。
 
 ## 9. 与开发流程结合
 

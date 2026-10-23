@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "total_skills": 664,
+  "total_skills": 682,
   "shards": [],
   "skill_metadata": "skill-metadata.yaml",
   "skills": [
@@ -3744,6 +3744,21 @@
       "priority": 10
     },
     {
+      "name": "csp-de-ai-ify",
+      "description": "Remove machine-generated tells from Chinese or English prose so it reads like a person wrote it — banned vocabulary, uniform sentence rhythm, hollow enumeration, filler transitions — while preserving every factual claim, number and citation exactly. Use when the user says the text sounds like AI, wa",
+      "layer": 3,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/csp-de-ai-ify/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
       "name": "csp-deep-research",
       "description": "Multi-source deep research using firecrawl and exa MCPs. Searches the web, synthesizes findings, and delivers cited reports with source attribution. Use when the user wants thorough research on any topic with evidence and citations.",
       "layer": 3,
@@ -3770,6 +3785,21 @@
       },
       "stack_detection": false,
       "path": "csp-patterns/skills/csp-deployment/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-design-system-capture",
+      "description": "Capture or update a design system from existing UI evidence: Figma variables, Tailwind config, CSS variables, component library source, Storybook, screenshots, and DOM/computed styles. Generates or refines DESIGN.md with confirmed/inferred confidence labels, reconciles source-of-truth conflicts, ide",
+      "layer": 3,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/csp-design-system-capture/SKILL.md",
       "deps": [],
       "priority": 10
     },
@@ -4134,6 +4164,21 @@
       "priority": 10
     },
     {
+      "name": "csp-git-recovery",
+      "description": "Diagnose and repair broken git repository state without losing work: orphaned worktree metadata, phantom branch locks, detached HEAD, HEAD/ref contradictions, missing or corrupt refs, and all-zero worktree hashes. Snapshot-first, non-destructive-first, every step gated by verification. Use when git ",
+      "layer": 3,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/csp-git-recovery/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
       "name": "csp-h5-visual-testing",
       "description": "H5/移动端页面自动化视觉走查与截图取证：启动开发服务器、注入 mock 数据，用 Playwright 执行批量截图、多 Tab 遍历、深浅色模式对比、交互录屏，生成标准 HTML 测试报告。 本技能只取证不修码——发现问题一律输出 FIX_SUGGESTION.md 等用户确认，禁止直接改项目代码。 当用户需要自动化截图、H5测试、H5截图、UI走查、视觉回归、深色模式截图、主题切换截图、 Tab分支截图、交互录屏、页面渲染验证时使用。务必在涉及 H5/移动端页面批量视觉取证时使用 此 skill，而不是手动起服务肉眼检查页面。",
       "layer": 3,
@@ -4145,6 +4190,21 @@
       },
       "stack_detection": false,
       "path": "csp-patterns/skills/csp-h5-visual-testing/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-hardware-embedded",
+      "description": "Hardware and embedded engineering: device-cloud interface contracts first, then board-level architecture, component selection and BOM, firmware/driver task scheduling, and staged bring-up. Use when working on MCU/RTOS firmware, PCB and circuit review, device protocols (MQTT/Modbus/UART/BLE/CAN), har",
+      "layer": 3,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/csp-hardware-embedded/SKILL.md",
       "deps": [],
       "priority": 10
     },
@@ -4175,6 +4235,21 @@
       },
       "stack_detection": false,
       "path": "csp-patterns/skills/csp-i18n-frameworks/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-image-to-code",
+      "description": "Convert a screenshot, mockup, Figma export, or design image into faithful, self-contained HTML/CSS. Covers the four-step analysis-to-code pipeline, fidelity priorities and measurable tolerances (exact hex, ±2px spacing, ±1px font size), design-token extraction, five-state high-fidelity prototypes, a",
+      "layer": 3,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/csp-image-to-code/SKILL.md",
       "deps": [],
       "priority": 10
     },
@@ -4299,6 +4374,36 @@
       "priority": 10
     },
     {
+      "name": "csp-kubernetes-troubleshooting",
+      "description": "Evidence-first troubleshooting for live Kubernetes incidents. Collect forensic artifacts before mutating anything, then walk a per-state decision tree (Pending, ImagePullBackOff, CrashLoopBackOff, OOMKilled, Running-but-not-Ready, stuck Terminating, CreateContainerConfigError) from symptom to confir",
+      "layer": 3,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/csp-kubernetes-troubleshooting/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-literature-review",
+      "description": "Run a reproducible academic literature review end to end: PICO question framing, boolean search strings across PubMed/arXiv/Semantic Scholar/OpenAlex, PRISMA dedup and three-stage screening, risk-of-bias quality appraisal, thematic synthesis, and DOI-verified citations. Use when the user needs a sys",
+      "layer": 3,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/csp-literature-review/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
       "name": "csp-llm-app-development",
       "description": "Production LLM application development patterns covering prompt engineering, function calling, streaming, multi-model routing, guardrails, context management, structured output, error handling, and cost optimization. Use when building, reviewing, or hardening applications that call LLM APIs.",
       "layer": 3,
@@ -4310,6 +4415,21 @@
       },
       "stack_detection": false,
       "path": "csp-patterns/skills/csp-llm-app-development/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-load-testing",
+      "description": "Design and run load, stress, spike and soak tests that produce a defensible capacity number. Covers the four load-model curve shapes, tool selection (k6 / Locust / JMeter), SLA percentile thresholds, CI gating, capacity planning arithmetic, and bottleneck attribution from flamegraphs. Use when the u",
+      "layer": 3,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/csp-load-testing/SKILL.md",
       "deps": [],
       "priority": 10
     },
@@ -4385,6 +4505,21 @@
       },
       "stack_detection": false,
       "path": "csp-patterns/skills/csp-mle-workflow/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-mobile-device-testing",
+      "description": "Real-device functional testing and device automation for Android and iOS: ADB diagnostics (logcat / dumpsys / am / pm / input / uiautomator), evidence capture (screencap, screenrecord, bugreport), device-matrix design driven by real user distribution, system-level interference testing (permission tr",
+      "layer": 3,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/csp-mobile-device-testing/SKILL.md",
       "deps": [],
       "priority": 10
     },
@@ -5214,6 +5349,21 @@
       "priority": 10
     },
     {
+      "name": "csp-ssh-operations",
+      "description": "Operate SSH itself as infrastructure: secure connection and config management, host key and known_hosts hygiene, local/remote/dynamic port forwarding, ProxyJump and multi-hop bastion access, key generation and rotation, non-interactive automation with connection multiplexing, and a fault-decision ta",
+      "layer": 3,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/csp-ssh-operations/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
       "name": "csp-stories",
       "description": "Breaks an aligned design direction (Brief / Frame) into executable user stories. Each story uses a Use when working on design tasks related to stories.",
       "layer": 3,
@@ -5315,6 +5465,21 @@
       },
       "stack_detection": false,
       "path": "csp-patterns/skills/csp-tech-diagram/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-test-case-design",
+      "description": "Systematically enumerate test cases for one requirement or one function using seven black-box design techniques (equivalence partitioning, boundary value analysis, decision table, state transition, cause-effect graphing, pairwise/orthogonal arrays, scenario flows), then land them as table-driven cas",
+      "layer": 3,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/csp-test-case-design/SKILL.md",
       "deps": [],
       "priority": 10
     },
@@ -8514,6 +8679,21 @@
       "priority": 10
     },
     {
+      "name": "csp-change-impact-analysis",
+      "description": "Engineering change-impact analysis for code and architecture changes: map forward dependents across six dimensions (code, contract, data, runtime, deployment, consumers), bound propagation depth, grade risk, derive the minimal regression set, and produce an impact report before the change is made. A",
+      "layer": 2,
+      "category": "workflow",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-workflow/skills/csp-change-impact-analysis/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
       "name": "csp-code-spec",
       "description": "Code Module Spec (CMS / 代码说明书). The per-application living baseline distilled from the codebase and auto-aligned to ground truth. One CMS per application/repo. It maps entry points, call chains, module boundaries, and conventions, and feeds design / task-split / code generation / code review with an",
       "layer": 2,
@@ -8889,6 +9069,21 @@
       "priority": 10
     },
     {
+      "name": "csp-issue-triage",
+      "description": "Triage pipeline for inbound issue reports (bugs, errors, user complaints): dedup and merge by multi-signal fingerprint, classify, judge reproducibility on a five-level scale, grade P0-P3 with SLAs, route to owners without ping-pong, detect ticket surges, and close with root cause. Use when a batch o",
+      "layer": 2,
+      "category": "workflow",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-workflow/skills/csp-issue-triage/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
       "name": "csp-knowledge-hub",
       "description": "Local-first Knowledge Hub — a git-managed markdown workspace that unifies spec (PMS/CMS/TMS), wiki, and memory into one indexed, queryable hub to accelerate Agent codebase understanding, fast spec location/read/generation, and a closed loop: 需求对齐(文档spec记录) → code开发 → 测试. Platform-decoupled: replaces",
       "layer": 2,
@@ -8934,6 +9129,21 @@
       "priority": 10
     },
     {
+      "name": "csp-meeting-action-extraction",
+      "description": "Turn meeting notes (pasted text, doc, transcript) into a verified action-item report: parse assignees/tasks/deadlines, extract decisions and risks, apply action-item quality gates, and map items onto a task system (Jira/Linear/TAPD/any tracker). Nothing is created in the task system until the user c",
+      "layer": 2,
+      "category": "workflow",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-workflow/skills/csp-meeting-action-extraction/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
       "name": "csp-multi-review",
       "description": "Structured code review using tiered persona agents, confidence-gated findings, and a merge/dedup pipeline. Use when comprehensive review is needed before creating a PR. Supports graph-enhanced context when code knowledge graph is available.",
       "layer": 2,
@@ -8960,6 +9170,21 @@
       },
       "stack_detection": false,
       "path": "csp-workflow/skills/csp-parallel-worktree/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-patent-disclosure",
+      "description": "Turn an engineering solution into a software patent disclosure document (技术交底书) that a qualified patent attorney can draft claims from: patentability self-screening, prior-art search with distinction analysis, invention-point extraction, nine-section disclosure writing, claim layout thinking, and th",
+      "layer": 2,
+      "category": "workflow",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-workflow/skills/csp-patent-disclosure/SKILL.md",
       "deps": [],
       "priority": 10
     },
@@ -9024,6 +9249,21 @@
       "priority": 10
     },
     {
+      "name": "csp-prd-review",
+      "description": "Review a PRD / BRD / requirement document and return a scored, evidence-cited verdict. Three modes: (A) weighted 10-point scoring against a module rubric, (B) completeness audit across MECE dimensions with severity-ranked gaps, (C) qualitative paragraph-level annotation review for narrative document",
+      "layer": 2,
+      "category": "workflow",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-workflow/skills/csp-prd-review/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
       "name": "csp-prd-traceability",
       "description": "PRD 到功能到技术规格的完整追溯矩阵引擎。建立 PRD 条目 → Feature → Spec → Task 的 多级追溯链，支持变更影响分析、覆盖率检查和需求完整性验证。 当 PRD 和 Feature 拆解完成后需要建立追溯关系、或用户需要\"追溯矩阵\"、\"需求追溯\"、 \"RTM\"、\"需求覆盖率\"、\"需求映射\"时使用。 关键词：追溯矩阵、需求追溯、RTM、traceability matrix、需求覆盖率、 需求映射、需求跟踪、覆盖检查、需求闭环、requirement traceability、 需求验证、覆盖率分析、需求关系、prd mapping、feature mapping。",
       "layer": 2,
@@ -9035,6 +9275,21 @@
       },
       "stack_detection": false,
       "path": "csp-workflow/skills/csp-prd-traceability/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-pricing-strategy",
+      "description": "Design or revise a product's pricing: model selection, tier architecture, anchoring and presentation, discount policy, price validation, and price-increase communication. Covers B2B SaaS, B2C, usage-based and hybrid models with quantitative validation methods (Van Westendorp, conjoint, price A/B, el",
+      "layer": 2,
+      "category": "workflow",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-workflow/skills/csp-pricing-strategy/SKILL.md",
       "deps": [],
       "priority": 10
     },
@@ -9145,7 +9400,7 @@
     },
     {
       "name": "csp-requirement-prioritization",
-      "description": "Prioritize a list of requirements or user stories using RICE, ICE, MoSCoW, or Kano models. Includes a framework selection decision tree based on data availability and decision context. Use when the user says \"需求排序\", \"优先级\", \"RICE\", \"ICE\", \"需求排期\", \"MoSCoW\", \"排backlog\", \"sprint规划\", \"需求取舍\", \"迭代规划\", \"bac",
+      "description": "Prioritize a list of requirements or user stories using RICE, ICE, MoSCoW, or Kano models. Includes a framework selection decision tree based on data availability and decision context, plus a 4-stage opportunity funnel for filtering a large raw pool down to a defensible 1-3. Use when the user says \"",
       "layer": 2,
       "category": "workflow",
       "triggers": {
@@ -9230,6 +9485,21 @@
       },
       "stack_detection": false,
       "path": "csp-workflow/skills/csp-solo-oncall/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-status-report",
+      "description": "Turn a period of actual work into a decision-oriented status report: collect facts from the issue tracker, code hosting platform, release records, monitoring and meeting action items with traceable commands; rewrite progress as verifiable state transitions instead of effort claims; produce the three",
+      "layer": 2,
+      "category": "workflow",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-workflow/skills/csp-status-report/SKILL.md",
       "deps": [],
       "priority": 10
     },

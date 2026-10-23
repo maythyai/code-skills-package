@@ -134,11 +134,11 @@ Install to user home directory (`~/.xxx/skills/`), available to all projects:
 
 ## Skill Count
 
-- Total: 664 skills
+- Total: 682 skills
 - csp-router: 1
 - csp-meta: 26
-- csp-workflow: 193
-- csp-patterns: 380
+- csp-workflow: 201
+- csp-patterns: 396
 - csp-runtime: 58
 
 ## Available Tech Stacks

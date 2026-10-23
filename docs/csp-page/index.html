@@ -351,7 +351,7 @@ a { color: var(--layer-1); text-decoration: none; }
 // ═══════════════════════════════════════════════════
 const CSP_DATA = {
   "stats": {
-    "total": 661,
+    "total": 682,
     "by_layer": {
       "Meta": {
         "count": 26,
@@ -359,7 +359,7 @@ const CSP_DATA = {
         "color": "#3b82f6"
       },
       "Patterns": {
-        "count": 382,
+        "count": 396,
         "layer": "L3",
         "color": "#a855f7"
       },
@@ -374,19 +374,19 @@ const CSP_DATA = {
         "color": "#f97316"
       },
       "Workflow": {
-        "count": 194,
+        "count": 201,
         "layer": "L2",
         "color": "#22c55e"
       }
     },
     "by_category": {
       "meta": 26,
-      "patterns": 382,
+      "patterns": 396,
       "router": 1,
       "runtime": 58,
-      "workflow": 194
+      "workflow": 201
     },
-    "reviewers": 69
+    "reviewers": 71
   },
   "skills": [
     {
@@ -4090,6 +4090,25 @@ const CSP_DATA = {
       }
     },
     {
+      "name": "csp-account-research",
+      "description": "B2B target-account batch research pipeline (orchestrator entry). A four-layer funnel (L1 quick-screen → L2 signal scan → L3 light research → L4 deep research → deliverable generation) progressively converges a candidate pool into a top target list, dispatching three sub-skills under references/ on d",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "csp-account-research",
+          "account",
+          "account research",
+          "account-research",
+          "fix account research",
+          "review account research"
+        ],
+        "zh": []
+      }
+    },
+    {
       "name": "csp-agent-introspection-debugging",
       "description": "Structured self-debugging workflow for AI agent failures using capture, diagnosis, contained recovery, and introspection reports.",
       "category": "patterns",
@@ -4714,6 +4733,25 @@ const CSP_DATA = {
       }
     },
     {
+      "name": "csp-de-ai-ify",
+      "description": "Remove machine-generated tells from Chinese or English prose so it reads like a person wrote it — banned vocabulary, uniform sentence rhythm, hollow enumeration, filler transitions — while preserving every factual claim, number and citation exactly. Use when the user says the text sounds like AI, wa",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "csp-de-ai-ify",
+          "de ai ify",
+          "de-ai-ify",
+          "fix de ai ify",
+          "ify",
+          "review de ai ify"
+        ],
+        "zh": []
+      }
+    },
+    {
       "name": "csp-deep-research",
       "description": "Multi-source deep research using firecrawl and exa MCPs. Searches the web, synthesizes findings, and delivers cited reports with source attribution. Use when the user wants thorough research on any topic with evidence and citations.",
       "category": "patterns",
@@ -4739,6 +4777,27 @@ const CSP_DATA = {
           "csp-deployment"
         ],
         "zh": []
+      }
+    },
+    {
+      "name": "csp-design-system-capture",
+      "description": "Capture or update a design system from existing UI evidence: Figma variables, Tailwind config, CSS variables, component library source, Storybook, screenshots, and DOM/computed styles. Generates or refines DESIGN.md with confirmed/inferred confidence labels, reconciles source-of-truth conflicts, ide",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "csp-design-system-capture",
+          "design",
+          "design system capture",
+          "design-system-capture",
+          "fix design system capture",
+          "review design system capture"
+        ],
+        "zh": [
+          "design system capture 设计"
+        ]
       }
     },
     {
@@ -5120,6 +5179,25 @@ const CSP_DATA = {
       }
     },
     {
+      "name": "csp-git-recovery",
+      "description": "Diagnose and repair broken git repository state without losing work: orphaned worktree metadata, phantom branch locks, detached HEAD, HEAD/ref contradictions, missing or corrupt refs, and all-zero worktree hashes. Snapshot-first, non-destructive-first, every step gated by verification. Use when git ",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "csp-git-recovery",
+          "git",
+          "fix git recovery",
+          "git recovery",
+          "git-recovery",
+          "review git recovery"
+        ],
+        "zh": []
+      }
+    },
+    {
       "name": "csp-h5-visual-testing",
       "description": "H5/移动端页面自动化视觉走查与截图取证：启动开发服务器、注入 mock 数据，用 Playwright 执行批量截图、多 Tab 遍历、深浅色模式对比、交互录屏，生成标准 HTML 测试报告。 本技能只取证不修码——发现问题一律输出 FIX_SUGGESTION.md 等用户确认，禁止直接改项目代码。 当用户需要自动化截图、H5测试、H5截图、UI走查、视觉回归、深色模式截图、主题切换截图、 Tab分支截图、交互录屏、页面渲染验证时使用。务必在涉及 H5/移动端页面批量视觉取证时使用 此 skill，而不是手动起服务肉眼检查页面。",
       "category": "patterns",
@@ -5136,6 +5214,25 @@ const CSP_DATA = {
         "zh": [
           "h5 visual 测试"
         ]
+      }
+    },
+    {
+      "name": "csp-hardware-embedded",
+      "description": "Hardware and embedded engineering: device-cloud interface contracts first, then board-level architecture, component selection and BOM, firmware/driver task scheduling, and staged bring-up. Use when working on MCU/RTOS firmware, PCB and circuit review, device protocols (MQTT/Modbus/UART/BLE/CAN), har",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "csp-hardware-embedded",
+          "fix hardware embedded",
+          "hardware",
+          "hardware embedded",
+          "hardware-embedded",
+          "review hardware embedded"
+        ],
+        "zh": []
       }
     },
     {
@@ -5170,6 +5267,25 @@ const CSP_DATA = {
           "i18n",
           "internationalization",
           "translation"
+        ],
+        "zh": []
+      }
+    },
+    {
+      "name": "csp-image-to-code",
+      "description": "Convert a screenshot, mockup, Figma export, or design image into faithful, self-contained HTML/CSS. Covers the four-step analysis-to-code pipeline, fidelity priorities and measurable tolerances (exact hex, ±2px spacing, ±1px font size), design-token extraction, five-state high-fidelity prototypes, a",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "csp-image-to-code",
+          "fix image to code",
+          "image",
+          "image to code",
+          "image-to-code",
+          "review image to code"
         ],
         "zh": []
       }
@@ -5290,6 +5406,45 @@ const CSP_DATA = {
       }
     },
     {
+      "name": "csp-kubernetes-troubleshooting",
+      "description": "Evidence-first troubleshooting for live Kubernetes incidents. Collect forensic artifacts before mutating anything, then walk a per-state decision tree (Pending, ImagePullBackOff, CrashLoopBackOff, OOMKilled, Running-but-not-Ready, stuck Terminating, CreateContainerConfigError) from symptom to confir",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "csp-kubernetes-troubleshooting",
+          "fix kubernetes troubleshooting",
+          "kubernetes",
+          "kubernetes troubleshooting",
+          "kubernetes-troubleshooting",
+          "review kubernetes troubleshooting"
+        ],
+        "zh": []
+      }
+    },
+    {
+      "name": "csp-literature-review",
+      "description": "Run a reproducible academic literature review end to end: PICO question framing, boolean search strings across PubMed/arXiv/Semantic Scholar/OpenAlex, PRISMA dedup and three-stage screening, risk-of-bias quality appraisal, thematic synthesis, and DOI-verified citations. Use when the user needs a sys",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "csp-literature-review",
+          "literature code review",
+          "literature review",
+          "literature-review",
+          "review literature code"
+        ],
+        "zh": [
+          "literature 审查"
+        ]
+      }
+    },
+    {
       "name": "csp-llm-app-development",
       "description": "Production LLM application development patterns covering prompt engineering, function calling, streaming, multi-model routing, guardrails, context management, structured output, error handling, and cost optimization. Use when building, reviewing, or hardening applications that call LLM APIs.",
       "category": "patterns",
@@ -5301,6 +5456,25 @@ const CSP_DATA = {
           "csp-llm-app-development"
         ],
         "zh": []
+      }
+    },
+    {
+      "name": "csp-load-testing",
+      "description": "Design and run load, stress, spike and soak tests that produce a defensible capacity number. Covers the four load-model curve shapes, tool selection (k6 / Locust / JMeter), SLA percentile thresholds, CI gating, capacity planning arithmetic, and bottleneck attribution from flamegraphs. Use when the u",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "csp-load-testing",
+          "load test",
+          "load testing",
+          "load-testing"
+        ],
+        "zh": [
+          "load 测试"
+        ]
       }
     },
     {
@@ -5322,7 +5496,7 @@ const CSP_DATA = {
     },
     {
       "name": "csp-market-research",
-      "description": "Conduct market research, competitive analysis, investor due diligence, and industry intelligence with source attribution and decision-oriented summaries. Use when the user wants market sizing, competitor comparisons, fund research, technology scans, or research that informs business decisions.",
+      "description": "Market research that supports decisions, and the reports that carry it. Two modes: (1) decision-oriented research — market sizing, competitor comparisons, investor dossiers, technology scans, with source attribution and a go/no-go verdict; (2) comprehensive 50+ page consulting-grade report (McKinsey",
       "category": "patterns",
       "layer": "L3",
       "layer_name": "Patterns",
@@ -5377,6 +5551,25 @@ const CSP_DATA = {
           "csp-mle-workflow"
         ],
         "zh": []
+      }
+    },
+    {
+      "name": "csp-mobile-device-testing",
+      "description": "Real-device functional testing and device automation for Android and iOS: ADB diagnostics (logcat / dumpsys / am / pm / input / uiautomator), evidence capture (screencap, screenrecord, bugreport), device-matrix design driven by real user distribution, system-level interference testing (permission tr",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "csp-mobile-device-testing",
+          "mobile device test",
+          "mobile device testing",
+          "mobile-device-testing"
+        ],
+        "zh": [
+          "mobile device 测试"
+        ]
       }
     },
     {
@@ -5778,6 +5971,24 @@ const CSP_DATA = {
       }
     },
     {
+      "name": "csp-product-research",
+      "description": "Scientific, comprehensive product & business-direction research suite. Covers five scenarios: venture-direction evaluation, industry scan, competitor deep-dive, customer insight, and unit-economics. AI completes all desk research autonomously and outputs a structured report + Lean Canvas + decision ",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "csp-product-research",
+          "fix product research",
+          "product research",
+          "product-research",
+          "review product research"
+        ],
+        "zh": []
+      }
+    },
+    {
       "name": "csp-prompt-engineering",
       "description": "Production prompt engineering covering template management with Jinja2/Mustache, version control, evaluation frameworks, prompt pattern libraries (chain-of-thought, few-shot, ReAct, structured output), guardrails and safety, systematic optimization, and multi-model adaptation. Use when designing, te",
       "category": "patterns",
@@ -5987,6 +6198,27 @@ const CSP_DATA = {
           "csp-refactoring-strategies"
         ],
         "zh": []
+      }
+    },
+    {
+      "name": "csp-research-report-writing",
+      "description": "Research-report writing & refactoring craft — distilled from top consulting reports and editorial playbooks. Use it to (1) write a research/user-research/industry report from scratch, or (2) optimize/rewrite/refactor an existing report (e.g. after stakeholder feedback). Triggers when the user asks t",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "csp-research-report-writing",
+          "research",
+          "fix research report writing",
+          "research report writing",
+          "research-report-writing",
+          "review research report writing"
+        ],
+        "zh": [
+          "research report writing 研究"
+        ]
       }
     },
     {
@@ -6225,6 +6457,25 @@ const CSP_DATA = {
       }
     },
     {
+      "name": "csp-ssh-operations",
+      "description": "Operate SSH itself as infrastructure: secure connection and config management, host key and known_hosts hygiene, local/remote/dynamic port forwarding, ProxyJump and multi-hop bastion access, key generation and rotation, non-interactive automation with connection multiplexing, and a fault-decision ta",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "csp-ssh-operations",
+          "fix ssh operations",
+          "review ssh operations",
+          "ssh",
+          "ssh operations",
+          "ssh-operations"
+        ],
+        "zh": []
+      }
+    },
+    {
       "name": "csp-stories",
       "description": "Breaks an aligned design direction (Brief / Frame) into executable user stories. Each story uses a Use when working on design tasks related to stories.",
       "category": "patterns",
@@ -6326,6 +6577,27 @@ const CSP_DATA = {
           "csp-tech-diagram"
         ],
         "zh": []
+      }
+    },
+    {
+      "name": "csp-test-case-design",
+      "description": "Systematically enumerate test cases for one requirement or one function using seven black-box design techniques (equivalence partitioning, boundary value analysis, decision table, state transition, cause-effect graphing, pairwise/orthogonal arrays, scenario flows), then land them as table-driven cas",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "csp-test-case-design",
+          "test",
+          "fix test case design",
+          "review test case design",
+          "test case design",
+          "test-case-design"
+        ],
+        "zh": [
+          "test case design 测试"
+        ]
       }
     },
     {
@@ -9999,6 +10271,24 @@ const CSP_DATA = {
       }
     },
     {
+      "name": "csp-change-impact-analysis",
+      "description": "Engineering change-impact analysis for code and architecture changes: map forward dependents across six dimensions (code, contract, data, runtime, deployment, consumers), bound propagation depth, grade risk, derive the minimal regression set, and produce an impact report before the change is made. A",
+      "category": "workflow",
+      "layer": "L2",
+      "layer_name": "Workflow",
+      "layer_color": "#22c55e",
+      "triggers": {
+        "en": [
+          "csp-change-impact-analysis",
+          "change impact analysis",
+          "change-impact-analysis",
+          "fix change impact analysis",
+          "review change impact analysis"
+        ],
+        "zh": []
+      }
+    },
+    {
       "name": "csp-code-spec",
       "description": "Code Module Spec (CMS / 代码说明书). The per-application living baseline distilled from the codebase and auto-aligned to ground truth. One CMS per application/repo. It maps entry points, call chains, module boundaries, and conventions, and feeds design / task-split / code generation / code review with an",
       "category": "workflow",
@@ -10076,7 +10366,7 @@ const CSP_DATA = {
     },
     {
       "name": "csp-competitive-analysis",
-      "description": "Generate a structured competitive analysis report with feature comparison matrix, SWOT analysis, Porter's Five Forces, and differentiation strategy. Branches by analysis purpose (product design / fundraising BP / strategic planning / annual review). Use when the user says \"竞品分析\", \"功能对比\", \"竞品调研\", \"竞争",
+      "description": "Structured competitive analysis with two modes: (1) a full framework report — feature comparison matrix, SWOT, Porter's Five Forces, differentiation strategy, branching by purpose (product design / fundraising BP / strategic planning / annual review); (2) a single-movement competitive-intelligence s",
       "category": "workflow",
       "layer": "L2",
       "layer_name": "Workflow",
@@ -10214,7 +10504,7 @@ const CSP_DATA = {
     },
     {
       "name": "csp-effort-estimation",
-      "description": "工作量与资源估算引擎。从技术方案和任务拆解出发，推算开发工作量、资源需求和时间线。 支持多种估算方法：类比估算、三点估算(PERT)、COCOMO II。 考虑因素：复杂度、不确定性、团队能力、技术栈熟悉度、并行度。 输出 WBS 工时汇总、甘特图、资源计划、里程碑时间线。 当任务拆解完成后需要估算工作量、或用户需要\"工作量估算\"、\"估时\"、\"排期\"、\"资源计划\"时使用。 关键词：工作量估算、估时、工时估算、排期、资源计划、effort estimation、 work estimation、PERT、三点估算、COCOMO、甘特图、gantt chart、 开发周期、交付时间、人天、stor",
+      "description": "⚠️ AI 编程下绝对工时/人天估算无意义（产出节奏与日历无关，可能几小时完成一个版本）。本 skill 仅作**复杂度相对参考**与**依赖/并行度分析**，不产绝对时间线/排期/人天；返回时须声明\"AI 产出节奏不可估时，以下仅复杂度相对参考\"。 复杂度相对估算引擎。从技术方案和任务拆解出发，分析复杂度、不确定性、并行度（非绝对工时）。 方法：类比估算、三点估算(PERT)、COCOMO II（仅作复杂度相对参考，不产绝对人天）。 输出 WBS 复杂度汇总、依赖/并行计划、相对里程碑序列（按版本号，不按日期）。 当任务拆解完成后需要复杂度相对参考、或用户需要\"估时\"\"排期\"\"资源计划\"时使",
       "category": "workflow",
       "layer": "L2",
       "layer_name": "Workflow",
@@ -10454,6 +10744,25 @@ const CSP_DATA = {
       }
     },
     {
+      "name": "csp-issue-triage",
+      "description": "Triage pipeline for inbound issue reports (bugs, errors, user complaints): dedup and merge by multi-signal fingerprint, classify, judge reproducibility on a five-level scale, grade P0-P3 with SLAs, route to owners without ping-pong, detect ticket surges, and close with root cause. Use when a batch o",
+      "category": "workflow",
+      "layer": "L2",
+      "layer_name": "Workflow",
+      "layer_color": "#22c55e",
+      "triggers": {
+        "en": [
+          "csp-issue-triage",
+          "fix issue triage",
+          "issue",
+          "issue triage",
+          "issue-triage",
+          "review issue triage"
+        ],
+        "zh": []
+      }
+    },
+    {
       "name": "csp-knowledge-hub",
       "description": "Local-first Knowledge Hub — a git-managed markdown workspace that unifies spec (PMS/CMS/TMS), wiki, and memory into one indexed, queryable hub to accelerate Agent codebase understanding, fast spec location/read/generation, and a closed loop: 需求对齐(文档spec记录) → code开发 → 测试. Platform-decoupled: replaces",
       "category": "workflow",
@@ -10506,6 +10815,25 @@ const CSP_DATA = {
       }
     },
     {
+      "name": "csp-meeting-action-extraction",
+      "description": "Turn meeting notes (pasted text, doc, transcript) into a verified action-item report: parse assignees/tasks/deadlines, extract decisions and risks, apply action-item quality gates, and map items onto a task system (Jira/Linear/TAPD/any tracker). Nothing is created in the task system until the user c",
+      "category": "workflow",
+      "layer": "L2",
+      "layer_name": "Workflow",
+      "layer_color": "#22c55e",
+      "triggers": {
+        "en": [
+          "csp-meeting-action-extraction",
+          "fix meeting action extraction",
+          "meeting",
+          "meeting action extraction",
+          "meeting-action-extraction",
+          "review meeting action extraction"
+        ],
+        "zh": []
+      }
+    },
+    {
       "name": "csp-multi-review",
       "description": "Structured code review using tiered persona agents, confidence-gated findings, and a merge/dedup pipeline. Use when comprehensive review is needed before creating a PR. Supports graph-enhanced context when code knowledge graph is available.",
       "category": "workflow",
@@ -10529,6 +10857,25 @@ const CSP_DATA = {
       "triggers": {
         "en": [
           "csp-parallel-worktree"
+        ],
+        "zh": []
+      }
+    },
+    {
+      "name": "csp-patent-disclosure",
+      "description": "Turn an engineering solution into a software patent disclosure document (技术交底书) that a qualified patent attorney can draft claims from: patentability self-screening, prior-art search with distinction analysis, invention-point extraction, nine-section disclosure writing, claim layout thinking, and th",
+      "category": "workflow",
+      "layer": "L2",
+      "layer_name": "Workflow",
+      "layer_color": "#22c55e",
+      "triggers": {
+        "en": [
+          "csp-patent-disclosure",
+          "fix patent disclosure",
+          "patent",
+          "patent disclosure",
+          "patent-disclosure",
+          "review patent disclosure"
         ],
         "zh": []
       }
@@ -10616,6 +10963,26 @@ const CSP_DATA = {
       }
     },
     {
+      "name": "csp-prd-review",
+      "description": "Review a PRD / BRD / requirement document and return a scored, evidence-cited verdict. Three modes: (A) weighted 10-point scoring against a module rubric, (B) completeness audit across MECE dimensions with severity-ranked gaps, (C) qualitative paragraph-level annotation review for narrative document",
+      "category": "workflow",
+      "layer": "L2",
+      "layer_name": "Workflow",
+      "layer_color": "#22c55e",
+      "triggers": {
+        "en": [
+          "csp-prd-review",
+          "prd code review",
+          "prd review",
+          "prd-review",
+          "review prd code"
+        ],
+        "zh": [
+          "prd 审查"
+        ]
+      }
+    },
+    {
       "name": "csp-prd-traceability",
       "description": "PRD 到功能到技术规格的完整追溯矩阵引擎。建立 PRD 条目 → Feature → Spec → Task 的 多级追溯链，支持变更影响分析、覆盖率检查和需求完整性验证。 当 PRD 和 Feature 拆解完成后需要建立追溯关系、或用户需要\"追溯矩阵\"、\"需求追溯\"、 \"RTM\"、\"需求覆盖率\"、\"需求映射\"时使用。 关键词：追溯矩阵、需求追溯、RTM、traceability matrix、需求覆盖率、 需求映射、需求跟踪、覆盖检查、需求闭环、requirement traceability、 需求验证、覆盖率分析、需求关系、prd mapping、feature mapping。",
       "category": "workflow",
@@ -10630,6 +10997,25 @@ const CSP_DATA = {
           "prd traceability",
           "prd-traceability",
           "review prd traceability"
+        ],
+        "zh": []
+      }
+    },
+    {
+      "name": "csp-pricing-strategy",
+      "description": "Design or revise a product's pricing: model selection, tier architecture, anchoring and presentation, discount policy, price validation, and price-increase communication. Covers B2B SaaS, B2C, usage-based and hybrid models with quantitative validation methods (Van Westendorp, conjoint, price A/B, el",
+      "category": "workflow",
+      "layer": "L2",
+      "layer_name": "Workflow",
+      "layer_color": "#22c55e",
+      "triggers": {
+        "en": [
+          "csp-pricing-strategy",
+          "fix pricing strategy",
+          "pricing",
+          "pricing strategy",
+          "pricing-strategy",
+          "review pricing strategy"
         ],
         "zh": []
       }
@@ -10759,7 +11145,7 @@ const CSP_DATA = {
     },
     {
       "name": "csp-requirement-prioritization",
-      "description": "Prioritize a list of requirements or user stories using RICE, ICE, MoSCoW, or Kano models. Includes a framework selection decision tree based on data availability and decision context. Use when the user says \"需求排序\", \"优先级\", \"RICE\", \"ICE\", \"需求排期\", \"MoSCoW\", \"排backlog\", \"sprint规划\", \"需求取舍\", \"迭代规划\", \"bac",
+      "description": "Prioritize a list of requirements or user stories using RICE, ICE, MoSCoW, or Kano models. Includes a framework selection decision tree based on data availability and decision context, plus a 4-stage opportunity funnel for filtering a large raw pool down to a defensible 1-3. Use when the user says \"",
       "category": "workflow",
       "layer": "L2",
       "layer_name": "Workflow",
@@ -10855,6 +11241,25 @@ const CSP_DATA = {
           "on-call",
           "incident",
           "production issue"
+        ],
+        "zh": []
+      }
+    },
+    {
+      "name": "csp-status-report",
+      "description": "Turn a period of actual work into a decision-oriented status report: collect facts from the issue tracker, code hosting platform, release records, monitoring and meeting action items with traceable commands; rewrite progress as verifiable state transitions instead of effort claims; produce the three",
+      "category": "workflow",
+      "layer": "L2",
+      "layer_name": "Workflow",
+      "layer_color": "#22c55e",
+      "triggers": {
+        "en": [
+          "csp-status-report",
+          "fix status report",
+          "review status report",
+          "status",
+          "status report",
+          "status-report"
         ],
         "zh": []
       }

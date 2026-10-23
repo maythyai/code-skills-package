@@ -1,8 +1,8 @@
 # Skills, Agents & Scripts 综合索引
 
-> 生成时间：2026-08-13
-> 版本：v0.9.0 — PRD→技术方案 技能链路完善
-> 状态：664 个技能分布于 5 个层级，支持状态感知和置信度路由
+> 生成时间：2026-10-22
+> 版本：v0.11.x — 外部技能库覆盖补齐（+10 新技能 / 6 处扩展 / 覆盖审计脚本）
+> 状态：682 个技能分布于 5 个层级，支持状态感知和置信度路由
 
 ---
 
@@ -16,7 +16,7 @@
 | **superpowers (SP)** | 14 | — | — | ~38 + hooks | 核心元技能（meta-skills） |
 | **spec-kit** | 1 | — | — | — | 规范驱动开发工具 |
 | **awesome-copilot** | ~40 | ~2 | — | — | GitHub Copilot skills & agents |
-| **CSP 总计** | 594 | — | — | — | 5 层架构（L0-L4），状态感知路由 |
+| **CSP 总计** | 682 | — | — | — | 5 层架构（L0-L4），状态感知路由 |
 
 ---
 
@@ -568,6 +568,94 @@ PRD/需求输入
 - S2.6: `csp-tech-design-review` (技术方案评审)
 - S3.5: `csp-tech-task-breakdown` (全栈Spec → 任务拆解)
 - 可选阶段: `csp-tech-risk-assessment`, `csp-integration-design`, `csp-domain-driven-design`, `csp-prd-traceability`, `csp-effort-estimation`
+
+---
+
+### 23. 外部技能库覆盖补齐 — v0.11.x 新增
+
+对照本机外部技能集合（`~/.qoder/skills` + `~/.qoder/plugins`）做的覆盖差盘点，只补 CSP 真正缺失的能力，
+已覆盖的套件（superpowers 15/15、product-design 28/28、pr-review-toolkit 走 agents、
+architecture-visualization 走 csp-tech-diagram + csp-graph-*）不重复建。
+
+分两轮：§23.1/23.2 是第一轮（158 skills + 25 plugins，只处理审计工具报出的 GAP）；
+§23.4/23.5 是第二轮（去重后 296 skills，改为按维度密度盘点，见 §23.4 开头的判断修正）。
+
+#### 23.1 第一轮新增技能
+
+| 技能 | 层 | phase | 补的缺口 |
+|------|:--:|-------|----------|
+| `csp-meeting-action-extraction` | L2 | plan | CSP 此前无任何会议纪要类技能；行动项提取 + 确认硬门 + 任务系统字段映射 |
+| `csp-prd-review` | L2 | review | 有 PRD 生成无 PRD 评审；三模式（加权打分 / 完整性审计 / 段落级批注）+ AC 可测性校验 |
+| `csp-pricing-strategy` | L2 | define | 商业化定价空白；模型选型 → 分层 → 锚定 → 折扣 → 验证（Van Westendorp / conjoint / 价格 A/B）→ 涨价沟通 |
+| `csp-design-system-capture` | L3 | review | `csp-board` 是正向（moodboard→tokens），缺从既有 UI 反推设计系统 |
+| `csp-hardware-embedded` | L3 | build | 硬件/嵌入式维度此前仅零星提及；接口先行 + PCB 评审 + 资源预算 + 联调三阶段 + DFM |
+| `csp-load-testing` | L3 | verify | 四类负载模型（load/stress/spike/soak）+ k6/Locust/JMeter 选型 + 容量规划公式 |
+| `csp-image-to-code` | L3 | build | 设计图还原 HTML；逐图串行铁律 + 可量化容差（色值精确 / 间距 ±2px / 字号 ±1px）+ 分片并行管线 |
+| `csp-git-recovery` | L3 | build | 仓库元数据损坏的恢复；snapshot-first、非破坏优先、每步过验证门 |
+| `csp-de-ai-ify` | L3 | review | 去 AI 味的表达层改写，附事实保真机制（数字/专名/引用零改动 + 逐项 diff） |
+| `csp-literature-review` | L3 | define | 可复现学术综述：PICO → 多库检索 → PRISMA → 质量评价 → 主题综合 → DOI 校验 |
+
+#### 23.2 第一轮既有技能扩展
+
+| 技能 | 补的内容 |
+|------|----------|
+| `csp-frontend-design` | 16 种设计语言速查表 + 选型规则；Design Tokens & Theming（语义命名、明暗成对、状态全覆盖、比例尺与对比度阈值） |
+| `csp-tech-diagram` | 新增 style-13 Flat Engineering（白底 + slate 边框的工程图纸风），附 `references/style-13-flat-engineering.md` |
+| `csp-performance-optimizer` | 内存泄漏专项：三快照法、retainer/dominator 分析、8 类常见元凶、Node OOM 锯齿判定 |
+| `csp-tech-debt-assessment` | 设计债维度：10 类别 + 5 级严重度 + 检测正则 + DESIGN.md token 比对 + 修复优先链 + 漂移防控 |
+| `csp-verification` | 质量门禁与劣化门槛（覆盖率/延迟/错误率阈值须显式）+ 五维用例（正常/边界/异常/并发/幂等）+ 8 字段用例模板 + AC 双向追溯 |
+| `csp-requirement-prioritization` | 机会漏斗四阶段（硬门槛 → 加权 → 财务建模 → 选择承诺）+ 漏斗基线通过率 + 速赢偏好/战略低估风险提示 |
+
+#### 23.3 覆盖审计工具
+
+`scripts/audit-skill-coverage.mjs`（`npm run audit:coverage`）把"外部技能库 vs CSP"的盘点变成一条命令：
+读取外部 `SKILL.md` 的 name + description，与 `registry.json` 做三通道相似度匹配（词元 / 二元短语 /
+双语概念桥），输出 `COVERED / PARTIAL / GAP` 三档 + 最近似的 CSP 技能。外部目录通过 `--source` /
+`CSP_AUDIT_SOURCE` 参数化，不硬编码任何个人路径。
+
+**怎么读它的输出**（顺序很重要）：
+
+1. `CONCEPT GAP` 是唯一可直接行动的结论——它数的是"外部集合占据了、CSP 完全没有"的能力域，
+   零就是零，不受相似度调参影响。
+2. `THIN COVERAGE` 数的是**提及**某概念的技能数，不是**专职**技能数。外部描述普遍更长，
+   比率会系统性夸大缺口（`responsive 9·2` 实为 8 个顺带提及 + 1 个专职且已 COVERED）。
+   行动前先确认外部那 N 个到底是 N 个专职技能，还是 1 个专职 + N-1 个顺口一提。
+3. 逐技能的三档只是**排序阅读清单，不是分类**。在 ~680 个候选里取最近邻，几乎总能找到
+   一个看着像的；`[weak margin]` 表示第一名只勉强胜过第二名。判据看 `concepts:` 行，自己下结论。
+
+#### 23.4 第二轮新增技能（全量扫描 296 个外部技能后）
+
+第一轮只处理了审计工具报出的 6 条 GAP，把 143 条 PARTIAL 当成"已覆盖"放过了——那是判断失误。
+第二轮改为按**维度密度**盘点（测试 62 / 运维 22 / 设计 64 / 项目管理 50），运维与测试最薄。
+产品设计维度经核验**不薄**：`csp-responsive-design`、`csp-i18n-frameworks`、`csp-locale-management`、
+`csp-access`、`csp-design-system-capture`、`csp-html-prototype`、`csp-chart`、`csp-edge` 加
+product-design 移植的 28 件已构成完整覆盖，故本轮设计侧只做扩写不新建。
+
+全部 8 个技能均采用「主干 SKILL.md ≤ 300 行只留判据与路由表，细节下沉 `references/` 并按
+`§N` 分节被主干精确引用」的写法。
+
+| 技能 | 层 | phase | 补的缺口 |
+|------|:--:|-------|----------|
+| `csp-test-case-design` | L3 | verify | 全库零覆盖等价类/边界值/判定表；`csp-test-methodology` 选方法，本技能枚举用例——七技术决策路由 + 用例量级公式 + AC 双向追溯 + 裁剪顺序 |
+| `csp-mobile-device-testing` | L3 | verify | 真机功能取证空白（`csp-mobile-performance` 只管性能）；设备指纹四件套 + 五件套证据 + 系统级干扰 + 弱网 + 升级矩阵 + iOS 等价取证 |
+| `csp-kubernetes-troubleshooting` | L3 | verify | `csp-kubernetes-patterns` 全是设计与配置，无线上排障；先取证后动手 + 7 个 Pod 状态判定树 + 退出码陷阱 + L0→L6 连通性分层 |
+| `csp-ssh-operations` | L3 | build | SSH 运维零覆盖；安全边界四条不可协商（agent forwarding / StrictHostKeyChecking / 私钥不落远端 / config 该放什么）+ 隧道跳板 + 故障判定表 |
+| `csp-change-impact-analysis` | L2 | plan | 无图谱前提下的六维工程影响评估；`csp-graph-impact` 需已建代码图谱且只覆盖维度 1，`csp-prd-change-impact` 起点是需求文档 |
+| `csp-issue-triage` | L2 | plan | 被动流入工单的分诊空白（`csp-defect-mining` 是主动挖掘，`csp-incident-commander` 是事故指挥）；八步流水线 + 多信号判重 + 可复现性五级 + P0–P3 矩阵 |
+| `csp-patent-disclosure` | L2 | define | 审计工具唯一的 CONCEPT GAP；技术交底书七步 + 可专利性初筛 + 现有技术检索 + 权利要求布局思路 + 充分公开与技术秘密切分 |
+| `csp-status-report` | L2 | define | 面向人的周期性状态汇报写作空白（`csp-progress` 是给 Agent 读的上下文，`csp-retro` 是事后学习）；事实底稿 + 14 组弱/强写法 + 四受众裁剪 |
+
+#### 23.5 第二轮既有技能扩展
+
+| 技能 | 补的内容 |
+|------|----------|
+| `csp-brainstorming` | 5 Whys 追问法（全库零覆盖）：五行 worked example + 停止规则（下一个 why 要产出团队真能改的东西）+ 四条纪律（一次一条链、证据支撑、归因到流程不归因到人、根因决定该拉谁进会） |
+| `csp-requirement-prioritization` | Stage 2.5 Impact/Effort 四象限快筛（🟢速赢 / 🟡大项目 / 🔵填充 / 🔴钱坑），插在加权打分与财务建模之间；轴是序数不是数值，**禁止算 impact/effort 比值** |
+| `csp-user-story-decomposition` | Step 1.5 把 Epic 框成可测假设（For/who/we believe/will achieve/we will know when），五行"每个槽位都是承重的"+ 必须写放弃判据 + 假设决定拆解顺序 + 一个 Epic 一个假设 |
+| `csp-docker-patterns` | 新增 `## Production Image` 决策表 + `references/production-image.md`：基础镜像选型（musl vs glibc、distroless 无 shell 的排障代价）、层缓存与瘦身、只读根实战写入点表、扫描门禁（`--ignore-unfixed` 是门禁能活下来的前提）、SBOM、hadolint、digest 固定、HEALTHCHECK 三个坑 |
+| `csp-test-methodology` | 与 `csp-test-case-design` 的分工声明（选方法 vs 枚举用例）+ 衔接点（追溯矩阵发现"零用例"后交给用例设计技术补），并加入 `related_skills` |
+| `csp-cicd-pipelines` | `reference/cicd-best-practices.md` 两条过浅建议补上判据：distroless/Alpine 的 "when compatible" 具体指什么；镜像扫描为什么必须 `--ignore-unfixed`；SBOM 必须与镜像同 digest 归档 |
+| `scripts/audit-skill-coverage.mjs` | 概念桥词表补全（`i18n` 漏收 locale/RTL/pluralization 导致误报 CSP=1；`responsive`/`prototype` 同类问题）；THIN COVERAGE 的"提及≠专职"警告写进报告与 docblock |
 
 ---
 

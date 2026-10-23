@@ -4,7 +4,7 @@
 # Regenerate: node scripts/build-skill-metadata.mjs
 
 version: 2.0
-generated_at: 2026-09-20T13:03:11.564Z
+generated_at: 2026-10-22T15:36:12.412Z
 skills:
   csp-agent-teams:
     phase: review
@@ -191,6 +191,7 @@ skills:
       - csp-webapp-testing
       - csp-brainstorming
       - csp-verification
+      - csp-test-case-design
     anti_rationalizations:
       单测过了功能就没问题: "单测只证明纯逻辑对；集成断链、跨层不一致、UI 退化它全看不见——必须按盲点互补再叠一层"
       E2E 覆盖了关键路径就够了: "E2E 慢且少，过不了边界数据/并发/错误路径；它有盲点，需 property/fuzz/negative 补位"
@@ -218,6 +219,34 @@ skills:
   csp-writing-skills:
     phase: define
     domain: architecture
+  csp-change-impact-analysis:
+    phase: plan
+    domain: architecture
+    scope: analysis
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
+      - Bash
+    dependencies:
+      skills: []
+    related_skills:
+      - csp-prd-change-impact
+      - csp-code-graph
+      - csp-graph-impact
+      - csp-tech-risk-assessment
+      - csp-refactoring-strategies
+      - csp-tech-debt-assessment
+      - csp-systematic-debugging
+      - csp-graph-architecture
+    anti_rationalizations:
+      这个改动很小，不用做影响分析: 小改动引发大故障的典型是删除一个'看起来没人用'的分支——反射、字符串路由、动态注入的调用方静态搜索抓不到。改动大小不由行数决定，由被依赖程度决定。
+      没人依赖这个接口: "'没人依赖'是结论不是证据。必须给出搜索证据：全仓 grep 符号名与路径字符串、构建产物扫描、访问日志抽样，三项都为空才可以说'未发现调用方'，且要注明搜索方法与盲区。"
+      先上了再看，有问题再回滚: "不可逆变更没有'再看'的机会。删列、改字段类型、删除公开 API、数据格式转换一旦发生且新数据写入，回滚代码也回滚不了数据。先做可逆性判定，再决定发布策略。"
+      影响分析就是列出调用方: 调用方只是六维之一。契约、存量数据、共享资源、发布顺序、下游使用方任何一维漏掉都可能让'代码没问题'的变更在生产出事。
+      测试都绿了，说明没影响: "既有测试只覆盖它断言过的路径。测试绿 + 断言不覆盖受影响行为 = 假阴性。回归范围要按断言内容推导，不是按测试是否通过推导。"
   csp-code-spec:
     phase: define
     domain: architecture
@@ -685,6 +714,33 @@ skills:
       两个系统直接调 API 就行: 直接调用没有容错、没有降级、没有重试。一旦下游挂了，上游也挂了。
       分布式事务用 2PC 就行: "2PC 在分布式系统中性能差、有单点故障。大多数场景 Saga 或最终一致性更合适。"
       灰度发布太复杂，直接全量上: "全量发布 = 出问题影响全部用户。灰度是降低发布风险的基本手段。"
+  csp-issue-triage:
+    phase: plan
+    domain: patterns
+    scope: analysis
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
+      - WebSearch
+    dependencies:
+      skills: []
+    related_skills:
+      - csp-defect-mining
+      - csp-user-feedback-analysis
+      - csp-requirement-prioritization
+      - csp-incident-commander
+      - csp-systematic-debugging
+      - csp-meeting-action-extraction
+      - csp-hotfix
+    anti_rationalizations:
+      这个用户经常乱报，先放着: "报告者信誉不是定级依据。定级只看严重度 × 影响面两个客观轴；历史'乱报'用户报出的 P0 事故并不罕见。可以先补信息，不能不处理。"
+      无法复现，直接关掉: "关掉不消灭问题，只消灭证据。同类问题会反复上报且每次都从零开始。正确动作是标记待观察 + 加日志/埋点 + 设复现窗口期，到期再判。"
+      先修好再补单: "无单追踪 = 丢失根因记录、影响面证据与修复关联，下次同类问题无法判重，季度缺陷统计也少一笔。修复再急，先建单后动手，30 秒的事。"
+      标题差不多就是重复单: "同一报错信息可能来自完全不同的根因（同一条超时日志，一个是连接池耗尽，一个是下游服务挂了）。判重必须多信号：指纹 + 触发路径 + 版本 + 用户群 + 时间窗。"
+      P0 太多处理不过来，先降几个级: "降级解决不了容量问题，只让 SLA 失真。P0 数量异常本身是趋势告警信号，应该触发激增处置（暂停发布/专项），而不是改定义。"
   csp-knowledge-hub:
     phase: define
     domain: architecture
@@ -760,10 +816,36 @@ skills:
       - csp-test-spec
       - csp-knowledge-hub
       - csp-roadmap-update
+      - "csp-ui-review                    # UI/UX 8-lens 审查（独立，任意时点）→ 交棒 roadmap"
+      - "audit-pipeline                   # 全链路审计 pipeline（6 步串联）→ 聚合交棒 roadmap"
+      - "product-design-convergence       # 产品架构收敛闸门（roadmap 与 01 PRD 之间）"
     anti_rationalizations:
       Let's skip the spec phase and just code: "Skipping specs causes rework. The spec phase pays for itself."
       We can do tech selection during implementation: "Mid-implementation tech changes are 10x more expensive."
       This is too small for the full lifecycle: "Scale the lifecycle down, don't skip stages. Even a 1-feature module benefits from structured spec."
+  csp-meeting-action-extraction:
+    phase: plan
+    domain: patterns
+    scope: analysis
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
+    dependencies:
+      skills: []
+    related_skills:
+      - csp-session-knowledge-extractor
+      - csp-roadmap-update
+      - csp-effort-estimation
+      - csp-requirement-prioritization
+      - csp-user-story-decomposition
+      - csp-prd-generation
+    anti_rationalizations:
+      The notes are too messy to parse: "Messy notes are the norm. Parse patterns, flag ambiguity, never guess silently."
+      I'll just create the tasks directly: "Unconfirmed task creation pollutes the backlog. Present first, create after approval."
+      No assignee means I should pick someone: "Fabricating an assignee is worse than an unassigned task. Mark it '待认领' instead."
   csp-multi-review:
     phase: review
     domain: quality
@@ -784,6 +866,34 @@ skills:
   csp-parallel-worktree:
     phase: build
     domain: patterns
+  csp-patent-disclosure:
+    phase: define
+    domain: other
+    scope: analysis
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
+      - WebSearch
+    dependencies:
+      skills: []
+    related_skills:
+      - csp-tech-solution-design
+      - csp-deep-research
+      - csp-literature-review
+      - csp-tech-diagram
+      - csp-article-writing
+      - csp-prd-generation
+    anti_rationalizations:
+      这个功能我们已经上线了，没法申请了: 公开使用是否构成现有技术取决于公开时间、公开地域与公开方式，是需要专业判断的法律问题；发明人无权也不应自行放弃，如实写出首次公开时间交给代理人判断
+      先把代码贴进去，代理人会看懂: "代码是实现产物不是技术方案描述。代理人需要的是步骤、判定条件、数据流与原理；贴 2000 行代码只会让代理人反推不出必要技术特征"
+      效果很好，写「显著提升」就行了: "不可验证的效果描述会被要求补正，且无法支撑创造性论证。必须给出对照条件、指标口径与数值（如 P99 从 820ms 降到 210ms，同一压测脚本）"
+      权利要求写窄一点更容易授权: 过窄的权利要求授权后没有保护价值——竞品改一个非必要特征就绕开了。宽窄是代理人基于检索结果做的权衡，交底书要做的是把特征分层与「可有可无」判断交出去
+      检索不到相关现有技术，说明我们很创新: "检索不到 ≠ 不存在。多数免费库有 18 个月公开延迟，且检索式覆盖不足会漏检。检索结论只能写「在本轮检索范围内未发现」"
+      一个交底书把这个项目所有功能都写进去更省事: 一份交底书混入多个发明构思，会导致每个构思都写不透，代理人只能挑一个或强行合并，最终两件都弱。按发明构思拆分
+      这个方案是常规做法，不值得交底: 是否常规由检索与代理人判断。发明人常见误判是把自己反复打磨到能跑的方案当成显然；如实描述「难在哪」比自我审查更有价值
   csp-plan-phase:
     phase: plan
     domain: architecture
@@ -884,6 +994,32 @@ skills:
     anti_rationalizations:
       PRD 直接看就行，不用解析: "不同格式的 PRD 结构不同，直接看容易遗漏。标准化解析保证完整性。"
       手动提取功能点就行: 手动提取容易遗漏约束条件、非功能性需求等隐含信息。结构化解析不会遗漏。
+  csp-prd-review:
+    phase: review
+    domain: patterns
+    scope: analysis
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
+    dependencies:
+      skills: []
+    related_skills:
+      - csp-prd-generation
+      - csp-prd-parser
+      - csp-prd-traceability
+      - csp-prd-change-impact
+      - csp-requirement-decomposition
+      - csp-requirement-prioritization
+      - csp-tech-design-review
+      - csp-doc-review
+    anti_rationalizations:
+      The PRD is basically fine, just a few typos: "Typos are cosmetic. Missing acceptance criteria, unstated dependencies, and unquantified goals are what cause rework. Score the substance, not the surface."
+      I know what they meant, so I won't flag the ambiguity: "If you had to infer it, the next reader will infer something different. Ambiguity that required interpretation is a defect — cite it."
+      The team is in a hurry, a harsh review will slow them down: "A review that passes a broken PRD costs 10x more downstream. The cheapest place to fix a requirement is before code exists."
+      This module doesn't apply to this product, so I'll skip it silently: "Skip it explicitly and say why. A silent skip reads as 'reviewed and found nothing'."
   csp-prd-traceability:
     phase: review
     domain: quality
@@ -910,6 +1046,31 @@ skills:
       追溯矩阵太形式化，不需要: 没有追溯矩阵，你无法回答'这个需求有没有被实现'或'这个代码对应哪个需求'。这是需求完整性的基本保障。
       PRD 和 Feature 肯定是一一对应的: "很少有一一对应。一个 PRD 条目可能拆成多个 Feature，也可能多个 PRD 条目合并为一个 Feature。"
       覆盖率检查不重要: "缺失的覆盖率 = 遗漏的需求 = 返工。覆盖率检查是需求闭环的最后一道防线。"
+  csp-pricing-strategy:
+    phase: define
+    domain: patterns
+    scope: analysis
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
+      - WebSearch
+    dependencies:
+      skills: []
+    related_skills:
+      - csp-competitive-analysis
+      - csp-market-research
+      - csp-strategy
+      - csp-product-metrics-review
+      - csp-requirement-prioritization
+      - csp-user-feedback-analysis
+    anti_rationalizations:
+      Let's just copy the competitor's price: "Their price reflects their cost structure, brand equity and segment — none of which you share. Copying gives you their number without their justification."
+      We'll launch cheap and raise prices later: "Early adopters are the segment most willing to pay for uncertainty. Underpricing them trains the market that your product is cheap, and every later increase reads as a betrayal."
+      Discounts will drive adoption: "A discount changes who buys, not how many. It permanently lowers the reference price and attracts the segment most likely to churn."
+      Nobody reads the pricing page: "The pricing page is the highest-intent page on the site. Confusion there converts directly into lost revenue."
   csp-product-discovery-orchestrator:
     phase: define
     domain: architecture
@@ -1092,10 +1253,15 @@ skills:
       - csp-product-metrics-review
       - csp-requirement-decomposition
       - csp-product-discovery-orchestrator
+      - csp-strategy
+      - csp-effort-estimation
+      - csp-roadmap-update
     anti_rationalizations:
       Everything is high priority: "If everything is P0, nothing is P0. Force-rank if needed."
       Let's just do what the loudest stakeholder wants: "Stakeholder volume is not a prioritization framework."
       We don't have data for RICE: "Use ICE or MoSCoW which work with less data. Absence of data is itself information."
+      Let's score all 50 ideas with RICE: "Effort and reach estimates for ideas that should never have been evaluated are invention. Run the funnel's cheap binary gates first."
+      The weighting came out wrong, let's adjust it: "Changing a threshold after seeing which ideas it killed is reverse-engineering the answer. Record the reason or leave it."
   csp-roadmap-update:
     phase: review
     domain: patterns
@@ -1162,6 +1328,35 @@ skills:
   csp-solo-oncall:
     phase: build
     domain: patterns
+  csp-status-report:
+    phase: ship
+    domain: patterns
+    scope: analysis
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
+      - Bash
+    dependencies:
+      skills: []
+    related_skills:
+      - csp-retro
+      - csp-plan-phase
+      - csp-product-metrics-review
+      - csp-meeting-action-extraction
+      - csp-roadmap-update
+      - csp-tech-risk-assessment
+    anti_rationalizations:
+      这期没什么进展，写短点: 没进展本身就是最重要的信息。写清卡在哪一步、卡在谁那里、需要什么才能动——这比一段进展描述更有决策价值
+      风险还没确认，先不写，等确认了再报: 未确认的风险正是要上报以求资源去确认的。等确认完再报，通常已经变成事故报告了
+      这个数字不好看，换一个指标: 口径漂移会让报告失去纵向可比性，等于每期都在重新开始。要换口径必须显式声明并给出新旧口径的换算
+      把提交数列出来能体现工作量: "提交数是活动量不是成果。读者无法从 187 个提交推断出任何决策，只会得出「这人很忙」"
+      风险那栏写「暂无」比较稳妥: 「暂无」不是结论是失职。连续两期「暂无」的团队通常只是没在找——按主动挖风险的五个信号源过一遍再写
+      决策项写「请领导指示」最安全: "只抛问题不给选项等于把分析工作推给读者。必须给 2–3 个方案、各自代价、你的建议与理由、不决策的后果、截止时间"
+      上期的内容改改日期就能发: 读者会对比上期。复制粘贴会让「上期计划本期交代」这条规则失效，计划随即退化成许愿
+      四个受众写四份太累，发同一份: 同一份底层事实，四种裁剪。发同一份的结果是高管看不完、跨团队找不到与自己相关的部分、团队内部拿不到任务粒度
   csp-strategy:
     phase: define
     domain: patterns
@@ -1675,12 +1870,43 @@ skills:
       查一下总数变了就行: 总数变化不等于正确——必须行级断言具体字段值与不变量，否则会漏掉'多写一行+少写一行'的对冲错误
       用例间共享数据没事: "共享可变状态是 flaky 之首；联动 DB 断言必须事务隔离或独立 seed，否则并行跑必然互相污染"
       直接连生产库查一下: "只读优先、禁生产写；即使只读也应优先连 test 库(环境变量参数化)，绝不硬编码生产连接串"
+  csp-de-ai-ify:
+    phase: review
+    domain: patterns
+    scope: review
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
+    related_skills:
+      - csp-article-writing
+      - csp-brand-voice
+      - csp-doc-review
+      - csp-deep-research
   csp-deep-research:
     phase: build
     domain: patterns
   csp-deployment:
     phase: build
     domain: patterns
+  csp-design-system-capture:
+    phase: review
+    domain: patterns
+    scope: design
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
+    related_skills:
+      - csp-board
+      - csp-brief
+      - csp-frontend-design
+      - csp-responsive-design
+      - csp-design-hub
   csp-django-patterns:
     phase: build
     domain: patterns
@@ -1841,6 +2067,23 @@ skills:
   csp-frontend-slides:
     phase: build
     domain: patterns
+  csp-git-recovery:
+    phase: build
+    domain: devops
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
+      - Bash
+    related_skills:
+      - csp-using-git-worktrees
+      - csp-systematic-debugging
+      - csp-finishing-a-development-branch
+      - csp-git-conventions
+      - csp-parallel-worktree
   csp-h5-visual-testing:
     phase: verify
     domain: testing
@@ -1864,6 +2107,23 @@ skills:
       失败了我顺手把代码改了: "本技能只取证不修码，必须生成 FIX_SUGGESTION.md 等用户同意"
       only-on-failure 截图更省事: "必须 screenshot/video 全开，通过的用例同样需要截图作为渲染正确的证据"
       用 git checkout 恢复 mock 改动: "git checkout 会丢失用户测试期间的新改动，必须用备份文件恢复"
+  csp-hardware-embedded:
+    phase: build
+    domain: patterns
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
+      - Bash
+    related_skills:
+      - csp-integration-design
+      - csp-api-tester
+      - csp-systematic-debugging
+      - csp-webhook-architecture
+      - csp-observability-and-instrumentation
   csp-html-prototype:
     phase: plan
     domain: patterns
@@ -1878,6 +2138,23 @@ skills:
   csp-i18n-frameworks:
     phase: build
     domain: patterns
+  csp-image-to-code:
+    phase: build
+    domain: patterns
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
+    related_skills:
+      - csp-frontend-design
+      - csp-design-system-capture
+      - csp-responsive-design
+      - csp-html-prototype
+      - csp-flow-web
+      - csp-web-artifacts
   csp-infrastructure-as-code:
     phase: build
     domain: patterns
@@ -1910,9 +2187,64 @@ skills:
   csp-kubernetes-patterns:
     phase: build
     domain: patterns
+  csp-kubernetes-troubleshooting:
+    phase: verify
+    domain: devops
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
+    related_skills:
+      - csp-kubernetes-patterns
+      - csp-deployment
+      - csp-monitoring-alerting
+      - csp-incident-commander
+      - csp-observability-and-instrumentation
+      - csp-solo-oncall
+      - csp-systematic-debugging
+  csp-literature-review:
+    phase: define
+    domain: other
+    scope: analysis
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
+      - Bash
+      - WebSearch
+      - WebFetch
+    related_skills:
+      - csp-paper-reader
+      - csp-deep-research
+      - csp-article-writing
+      - csp-market-research
   csp-llm-app-development:
     phase: build
     domain: patterns
+  csp-load-testing:
+    phase: verify
+    domain: quality
+    scope: testing
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
+      - Bash
+    related_skills:
+      - csp-backend-performance
+      - csp-qa-test-engineering
+      - csp-web-performance-auditor
+      - csp-frontend-performance
+      - csp-observability-and-instrumentation
+      - csp-api-tester
   csp-locale-management:
     phase: build
     domain: patterns
@@ -1962,6 +2294,34 @@ skills:
   csp-mle-workflow:
     phase: build
     domain: patterns
+  csp-mobile-device-testing:
+    phase: verify
+    domain: testing
+    role: specialist
+    scope: testing
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
+    related_skills:
+      - csp-mobile-performance
+      - csp-h5-visual-testing
+      - csp-e2e-testing
+      - csp-playwright-ui-test
+      - csp-cross-platform-strategy
+      - csp-browser-testing-with-devtools
+    anti_rationalizations:
+      在模拟器上过了就行: "模拟器覆盖不到厂商 ROM 的后台管控、真实射频弱网、真实 GPU 与传感器；至少要有一台最低配真机和一台主流厂商 ROM 真机"
+      缺陷复现不了，先记个偶现: "偶现 = 未取证。必须给出复现率 x/y 与设备指纹，取不到就写明取不到，不要写'偶现'了事"
+      截图太麻烦，口头描述一下现象: "缺陷报告五件套缺一即打回：复现步骤 / 时间戳对齐的日志 / 截图或录屏 / 设备指纹 / 应用版本"
+      设备太多，挑几台测测: 设备矩阵必须由真实用户占比数据裁剪，不是凭手头有什么机器；没有占比数据就先补埋点，别拍脑袋
+      覆盖安装没问题，重装也一样: "覆盖升级、降级、卸载重装走的是完全不同的数据迁移路径；schema 兼容只能在覆盖升级路径上暴露"
+      弱网就是关掉 WiFi: "断网 ≠ 弱网。高延迟、丢包、限带宽、切网、离线队列、重复提交幂等是六种不同场景，必须分别构造"
+      权限拒绝一次就够了: "首次弹窗 / 拒绝 / 永久拒绝是三态，永久拒绝后必须引导去系统设置页，死循环弹窗是最常见的实现缺陷"
+      控件定位不到就用坐标点: "坐标在换分辨率、换密度、弹系统窗后全部失效；先补 testID / resource-id / semanticLabel，坐标只作最后兜底并标注脆弱"
   csp-mobile-performance:
     phase: build
     domain: patterns
@@ -2080,6 +2440,7 @@ skills:
       这个改动很小不用测 UI: "共享组件的小改动可能影响所有使用方，按 Fast Path 快速验证而不是跳过"
       偶发失败重跑就好了: 先提取失败签名定位根因，盲目重跑会掩盖时序/数据依赖问题
       环境起不来所以 blocked: "先排查端口/依赖/mock 降级，只有外部依赖确实不可用才算 blocked"
+      下一个性价比最高的遗留项是 X，需要时说一声: "禁止遗留菜单。审计范围圈定后范围内必须穷尽；范围外显式标'本次范围外'列出，不混入遗留菜单。未做项要么本轮做完 done、要么 BLOCKED(附真实外部阻塞+谁解除)、要么 deferred(附真实解除条件如'沙箱开通后补')。'性价比低/优先级低/按指示搁置'不是 deferred 理由——优先级只用于轮内排序，不跨轮延后；自决策授权下下一个该做的项自己拍板做，不抛菜单给用户。"
   csp-poster:
     phase: build
     domain: patterns
@@ -2360,6 +2721,26 @@ skills:
     domain: patterns
   csp-sql-reviewer:
     phase: review
+  csp-ssh-operations:
+    phase: build
+    domain: devops
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
+    related_skills:
+      - csp-vps-deploy
+      - csp-platform-deploy
+      - csp-indie-deploy-ops
+      - csp-deployment
+      - csp-infrastructure-as-code
+      - csp-cicd-pipelines
+      - csp-security-review
+      - csp-docker-patterns
   csp-stories:
     phase: plan
     domain: patterns
@@ -2436,6 +2817,33 @@ skills:
       We can't find users right now: "Mode B works without users — code review + Nielsen heuristics."
       Let's just do a quick walkthrough: "A walkthrough catches ~30% of issues; Mode B catches ~60-75%."
       The design is too early to test: "Mode B works on raw code — no prototype needed."
+  csp-test-case-design:
+    phase: verify
+    domain: testing
+    role: specialist
+    scope: testing
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
+      - Bash
+    related_skills:
+      - csp-test-methodology
+      - csp-verification
+      - csp-cross-layer-testing
+      - csp-qa-test-engineering
+      - csp-test-spec
+      - csp-e2e-testing
+    anti_rationalizations:
+      正常流程跑通了，用例就够了: "只覆盖 happy path 的用例集对变更风险零信息量——每个输入维度至少要有 on/off/by-1 三点，每个无效等价类至少一条独立用例"
+      边界值就是测 min 和 max: "只测边界本身不测边界外一步，等于没测校验逻辑；on point + off point + in point 三点缺一不可"
+      条件太多，挑几个组合测测: 多条件组合必须先建判定表再合并规则，否则你挑的组合大概率重复覆盖同一分支、同时漏掉整条规则
+      全组合跑不完，算了: "跑不完就用 pairwise 把组合压到 5–15%，不是放弃覆盖；压完还要手工加回高风险组合"
+      用例写了一堆，AC 对不对得上不重要: "双向追溯是硬要求：孤儿用例说明在测没人要的东西，未覆盖 AC 说明有一个未经验证的声明"
+      这个状态不可能出现，不用测: 不可能的迁移恰恰要测——断言它被拒绝且状态不变，否则状态机被非法事件打穿时无人发现
+      时间不够，随便砍一批: "裁剪必须按固定顺序砍且留记录，绝不砍 P0、绝不砍每个无效类的代表用例、绝不让任何 AC 掉到零用例"
   csp-typescript-patterns:
     phase: build
     domain: language

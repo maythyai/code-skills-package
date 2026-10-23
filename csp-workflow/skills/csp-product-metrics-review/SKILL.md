@@ -192,6 +192,29 @@ If retention is a concern, perform cohort-based retention analysis:
 - Retention cliff: {at which day does retention drop most sharply}
 ```
 
+**Retention curve shape diagnosis** (shape reveals the problem, not just the value):
+
+| Curve Shape | Pattern | Diagnosis | Action |
+|-------------|---------|-----------|--------|
+| Steep-drop | D1→D7 loss >60% | Activation problem (first-run value not delivered) | Fix onboarding/first-run experience |
+| Slow-decay | Gradual decline without plateau | Missing long-term hook | Add re-engagement loops, content, or habit features |
+| L-shaped convergence | Curve flattens into a stable plateau | Healthy baseline | Focus on raising the plateau level |
+| Recovery | Curve rises after initial drop | Cyclical/periodic usage scenario | Understand the return trigger; double down on it |
+
+**Retention benchmark reference** (D1/D7/D30, Chinese internet products — calibrate to your market):
+
+| Product Type | D1 | D7 | D30 |
+|---|---|---|---|
+| Social/community | >70% | >50% | >35% |
+| Tool | >40% | >25% | >15% |
+| Content | >35% | >20% | >10% |
+| E-commerce | >25% | >15% | >8% |
+| Gaming | >40% | >20% | >10% |
+| B2B SaaS | >60% | >45% | >30% |
+| Mini-program | >20% | >10% | >5% |
+
+> Benchmarks are context, not verdicts: a tool at 30% D7 may be excellent for its niche. Always compare against your own previous periods first.
+
 ### Step 7: A/B Experiment Interpretation (if applicable)
 
 If there are active A/B experiments, interpret the results:
@@ -218,6 +241,17 @@ If there are active A/B experiments, interpret the results:
 - p >= 0.05 -> Inconclusive; either run longer or accept no significant difference
 - Always check practical significance, not just statistical significance
 
+**Five-point experiment validity check** (before trusting any A/B result):
+1. **Significance**: p < 0.05 on the primary metric.
+2. **Effect size**: lift > MDE (minimum detectable effect); a significant 0.1% lift may be noise in practice.
+3. **Sample size**: meets the pre-registered power analysis; underpowered experiments produce false "no difference".
+4. **Duration**: ran ≥1-2 natural weeks (covers weekday/weekend cycles); one-day results are novelty effects.
+5. **AA validation**: an A/A test (or pre-period parity check) passes — if AA shows a "significant" difference, the measurement system itself is broken.
+
+**Four A/B traps**: peeking (checking results early inflates false positives) / ignoring guardrails (primary metric up but retention or revenue down) / novelty effects (users react to change, not to the feature) / multiple-comparison (testing 20 metrics, celebrating the 1 that hit p<0.05 by chance).
+
+**Goodhart guardrail awareness**: when a metric becomes a target, it stops being a good measure. Always pair an optimized metric with a counter-balance guardrail (e.g., conversion rate vs. refund rate) to detect gaming.
+
 ### Step 8: Attribution and Root Cause
 
 For metrics with significant changes, perform root cause attribution:
@@ -237,6 +271,26 @@ For metrics with significant changes, perform root cause attribution:
 ### Confounding Factors
 - {External event, seasonality, data quality issue, etc.}
 ```
+
+**Anomaly attribution procedure** (five steps):
+1. **Quantify**: define the anomaly precisely (magnitude, exact time window, affected segments).
+2. **Dimension drill-down**: split by channel / region / app version / user cohort to localize the change.
+3. **Time alignment**: align the anomaly onset with release times, campaign launches, outages, external events.
+4. **Elimination**: rule out candidates one by one with evidence (not vibes).
+5. **Cross-validation**: confirm the surviving hypothesis with a second independent data source.
+
+**Six-category anomaly cause checklist** (always scan all six before concluding):
+
+| Category | Examples | Verification |
+|----------|----------|--------------|
+| Version release | New release, config change | Correlate with release log timestamps |
+| Operational campaign | Promo, push blast, red-envelope activity | Check campaign calendar and cohort behavior |
+| Technical incident | Latency spike, crash, API outage | Check error rates, crash logs, service health |
+| External factors | Competitor move, policy change, holiday | Cross-check industry news and seasonality |
+| Channel change | Ad channel paused, store ranking drop | Check acquisition source breakdown |
+| Seasonality | Weekly/monthly/annual cycles | Compare with same-period historical data |
+
+**Statistical trap awareness**: Simpson's paradox (always compare within segments before aggregating) / survivorship bias (analyze churned users too, not just active ones) / vanity metrics (impressions that don't move revenue) / time-window cherry-picking (choosing the window that shows the wanted trend).
 
 ### Step 9: Action Recommendations
 

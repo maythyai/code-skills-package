@@ -118,6 +118,34 @@ For each milestone on the roadmap, assess progress:
 - **Completed**: All planned work done and shipped
 - **Cancelled**: Milestone no longer relevant; work redirected
 
+**Delay root-cause attribution** (every delayed item must carry a cause, not just a new date):
+
+| Category | Typical Signal | Response |
+|----------|---------------|----------|
+| Requirement change | Scope grew mid-sprint | Re-run necessity review on the added scope |
+| Estimation error | Consistently underestimating similar work | Calibrate estimates; use last-3-sprint velocity |
+| Technical risk | Unknowns surfaced during implementation | Spike/ADR first before committing to dates |
+| Dependency blocked | Waiting on another team/API | Escalate; build mock/contract to decouple |
+| Capacity change | People leave, holidays, context switches | Adjust forecast; never re-plan on paper capacity |
+
+Same root cause recurring ≥3 consecutive iterations → escalate from item-level fix to process-level improvement (retro action), not another "we'll do better".
+
+### Roadmap Health Score (weighted, compute every update)
+
+| Dimension | Weight | Scoring (1/3/5) |
+|-----------|--------|-----------------|
+| On-time delivery rate | 30% | 5: ≥90% on time / 3: 70-90% / 1: <70% |
+| Scope stability | 20% | 5: minimal churn / 3: some descoping / 1: constant churn |
+| Dependency resolution | 20% | 5: dependencies cleared early / 3: some delays / 1: chronic blocking |
+| OKR alignment | 15% | 5: all milestones map to OKRs / 3: partial / 1: drift |
+| Team confidence | 15% | 5: team believes dates / 3: skeptical / 1: dates are fiction |
+
+**Verdict**: weighted ≥4 healthy / 3-4 at risk (investigate + recovery plan) / <3 emergency re-plan (cut scope, not dates).
+
+**Capacity allocation guardrail**: planned features 70% + tech debt 20% + buffer 10%. A roadmap at 100% feature load has zero slack for surprises — flag it as over-committed even if it looks "on track".
+
+**Feature Cut decision framework** (when a milestone is at risk): cut scope > extend date > add people (Brooks's law — adding people to a late project makes it later). Cut order: nice-to-haves → Could-haves → features with no committed customer → partial scope of Must-haves.
+
 ### Step 3: Priority Change Log
 
 Document any priority changes since the last roadmap update:

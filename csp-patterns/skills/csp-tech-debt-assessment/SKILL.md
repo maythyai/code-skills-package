@@ -137,6 +137,108 @@ npx depcruise src/ --output-type dot | dot -T svg > deps.svg
 # Define and enforce coupling/cohesion thresholds in CI
 ```
 
+## Design Debt (Frontend Visual Layer)
+
+Code debt is invisible to users; design debt is the only debt category they can see. It
+accumulates fastest in AI-generated UI, where every component is written from scratch with
+fresh literal values instead of consuming the design system.
+
+### The ten categories
+
+| Category | What it looks like | Why it costs |
+|---|---|---|
+| `hard-coded-color` | `#3b82f6`, `rgb(59 130 246)` in a component | Rebranding becomes a grep-and-pray across hundreds of files |
+| `arbitrary-tailwind` | `p-[13px]`, `text-[#444]`, `w-[calc(100%-7px)]` | Bypasses the scale; every arbitrary value is a one-off decision |
+| `inline-style` | `style={{ marginTop: 8 }}` | Uncascadable, unthemeable, invisible to static analysis |
+| `magic-number` | `padding: 13px`, `height: 47px` | Off-scale spacing destroys the visual rhythm |
+| `non-token-shadow` | `box-shadow: 0 2px 7px rgba(0,0,0,.13)` | Elevation hierarchy becomes arbitrary |
+| `non-token-radius` | `border-radius: 7px` | Corner treatment inconsistent across components |
+| `typography-drift` | Six font sizes where the scale defines four | Text hierarchy loses meaning |
+| `duplicate-component-pattern` | Two near-identical card implementations | Both must be fixed for every change |
+| `mixed-library-style` | Tailwind + styled-components + raw CSS in one tree | Three mental models, three sources of specificity bugs |
+| `undocumented-exception` | A deviation with no comment saying why | The next reader cannot tell if it is intentional |
+
+### Severity
+
+| Level | Meaning | Blocks merge? |
+|---|---|---|
+| `blocker` | Breaks theming or accessibility (e.g. hard-coded text colour on a themed surface) | Yes |
+| `major` | Off-system value in a shared/reused component | Yes |
+| `minor` | Off-system value in a leaf component | No — tracked |
+| `debt` | Consistent deviation that should become a token | No — backlog |
+| `info` | Style observation, no action required | No |
+
+**Pass criterion: zero `blocker` and zero `major`.** Everything below is tracked, not gating.
+
+### Detection
+
+```bash
+# Hard-coded colours — hex (3/4/6/8 digit), rgb(), hsl()
+grep -rnE "#[0-9a-fA-F]{3,8}\b|\brgb[a]?\(|\bhsl[a]?\(" src/ --include="*.tsx" --include="*.css"
+
+# Arbitrary Tailwind values
+grep -rnE "\b[a-z-]+-\[[^]]+\]" src/ --include="*.tsx"
+
+# Inline styles
+grep -rn "style={{" src/ --include="*.tsx"
+
+# Magic px numbers — 2px and above; 0 and 1px are exempt (hairlines and resets are legitimate)
+grep -rnE "\b(?:[2-9]|[1-9][0-9]{1,3})px\b" src/ --include="*.css" --include="*.tsx"
+
+# Non-token shadows
+grep -rnE "box-shadow:|shadow-\[" src/
+```
+
+Rules that keep the signal clean:
+
+1. **Skip token declaration lines.** A line matching `^\s*--[\w-]+\s*:` is *defining* the design
+   system, not violating it. Exempt it.
+2. **Apply an allowlist.** `allowedColorValues` — e.g. `transparent`, `currentColor`, `#fff` in a
+   print stylesheet — suppresses findings for values that are legitimately literal.
+3. **Compare against the token set.** Parse `DESIGN.md` frontmatter (or `tokens.css`) and diff:
+   every literal in the codebase that is *not* in the token set is a finding. Literals that match
+   a token value are still findings (`debt` level) — they should reference the token, not repeat it.
+4. **Cap the report at 1000 findings.** Beyond that, the output is noise; group by category and
+   report counts with representative locations instead.
+
+### Exempt contexts
+
+Do not flag these — they are supposed to hold literal values:
+
+- Token and theme definition files (`tokens.css`, `theme.ts`, `DESIGN.md`)
+- Component primitives / the design-system package itself
+- CSS resets and normalizers
+- Chart and canvas geometry (SVG coordinates, `d=` paths, plot math)
+- Wrappers around third-party components whose API demands literal values
+
+### Fix priority chain
+
+Work down this list; stop at the first option that applies.
+
+```
+1. Use an existing token                     ← the vast majority of fixes
+2. Use an existing component variant
+3. Add a variant to an existing component
+4. Introduce a new semantic token            ← needs a design decision, not just a rename
+5. Document the exception inline with a reason
+6. Encode the rule as a lint rule or codemod ← so it cannot regress
+```
+
+Step 6 is what makes the fix stick. A design-debt cleanup without a lint rule is a design-debt
+cleanup that repeats next quarter.
+
+### Drift prevention
+
+| Control | Catches |
+|---|---|
+| ESLint / Stylelint rule banning literal colours and off-scale spacing | New violations at authoring time |
+| CI design-debt scan on changed files only | Regressions in a PR without drowning in legacy findings |
+| Token export sync check (Figma ↔ code) | The two sources diverging |
+| Component-alignment check (raw HTML vs. design-system primitives) | Bypassed components |
+| Visual regression baselines per component | Any visual change, intentional or not |
+
+See `csp-design-system-capture` to build the token set this scan compares against.
+
 ## Debt Quantification
 
 ### The Debt Quadrant
@@ -367,3 +469,5 @@ Track these metrics over time to show progress or regression:
 - `csp-code-simplification` — Quick wins for code-level debt reduction
 - `csp-code-review` — Prevent new debt from entering the codebase
 - `csp-verification` — Verify that debt reduction did not introduce regressions
+- `csp-design-system-capture` — Build the token set the design-debt scan compares against
+- `csp-frontend-design` — Design language and token discipline that keeps visual debt from forming

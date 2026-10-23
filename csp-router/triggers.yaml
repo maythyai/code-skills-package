@@ -46,7 +46,7 @@ trigger_index:
     skills: [csp-plan-phase, csp-brainstorming, csp-solutioning-phase]
     weight: 40
   "test":
-    skills: [csp-tdd, csp-e2e-testing, csp-pr-test-analyzer, csp-test-coverage, csp-test, csp-qa-test-engineering, csp-test-methodology, csp-test-spec]
+    skills: [csp-tdd, csp-e2e-testing, csp-pr-test-analyzer, csp-test-coverage, csp-test, csp-qa-test-engineering, csp-test-methodology, csp-test-spec, csp-test-case-design]
     weight: 45
   "测试":
     skills: [csp-tdd]
@@ -2133,7 +2133,7 @@ trigger_index:
     skills: [csp-gan-planner]
     weight: 40
   "git":
-    skills: [csp-git-master]
+    skills: [csp-git-master, csp-git-recovery]
     weight: 40
   "git master":
     skills: [csp-git-master]
@@ -5276,7 +5276,7 @@ trigger_index:
     skills: [csp-code-understanding]
     weight: 40
   "design":
-    skills: [csp-design-hub]
+    skills: [csp-design-hub, csp-design-system-capture]
     weight: 40
   "design hub":
     skills: [csp-design-hub]
@@ -5471,6 +5471,270 @@ trigger_index:
     weight: 40
   "review research report writing":
     skills: [csp-research-report-writing]
+    weight: 40
+
+  # ─── auto-generated triggers (generate-triggers.mjs) ───
+  "design system capture":
+    skills: [csp-design-system-capture]
+    weight: 40
+  "design system capture 设计":
+    skills: [csp-design-system-capture]
+    weight: 40
+  "design-system-capture":
+    skills: [csp-design-system-capture]
+    weight: 40
+  "fix design system capture":
+    skills: [csp-design-system-capture]
+    weight: 40
+  "fix meeting action extraction":
+    skills: [csp-meeting-action-extraction]
+    weight: 40
+  "meeting":
+    skills: [csp-meeting-action-extraction]
+    weight: 40
+  "meeting action extraction":
+    skills: [csp-meeting-action-extraction]
+    weight: 40
+  "meeting-action-extraction":
+    skills: [csp-meeting-action-extraction]
+    weight: 40
+  "review design system capture":
+    skills: [csp-design-system-capture]
+    weight: 40
+  "review meeting action extraction":
+    skills: [csp-meeting-action-extraction]
+    weight: 40
+
+  # ─── auto-generated triggers (generate-triggers.mjs) ───
+  "de ai ify":
+    skills: [csp-de-ai-ify]
+    weight: 40
+  "de-ai-ify":
+    skills: [csp-de-ai-ify]
+    weight: 40
+  "fix de ai ify":
+    skills: [csp-de-ai-ify]
+    weight: 40
+  "fix git recovery":
+    skills: [csp-git-recovery]
+    weight: 40
+  "fix hardware embedded":
+    skills: [csp-hardware-embedded]
+    weight: 40
+  "fix image to code":
+    skills: [csp-image-to-code]
+    weight: 40
+  "fix pricing strategy":
+    skills: [csp-pricing-strategy]
+    weight: 40
+  "git recovery":
+    skills: [csp-git-recovery]
+    weight: 40
+  "git-recovery":
+    skills: [csp-git-recovery]
+    weight: 40
+  "hardware":
+    skills: [csp-hardware-embedded]
+    weight: 40
+  "hardware embedded":
+    skills: [csp-hardware-embedded]
+    weight: 40
+  "hardware-embedded":
+    skills: [csp-hardware-embedded]
+    weight: 40
+  "ify":
+    skills: [csp-de-ai-ify]
+    weight: 40
+  "image":
+    skills: [csp-image-to-code]
+    weight: 40
+  "image to code":
+    skills: [csp-image-to-code]
+    weight: 40
+  "image-to-code":
+    skills: [csp-image-to-code]
+    weight: 40
+  "literature code review":
+    skills: [csp-literature-review]
+    weight: 40
+  "literature review":
+    skills: [csp-literature-review]
+    weight: 40
+  "literature 审查":
+    skills: [csp-literature-review]
+    weight: 40
+  "literature-review":
+    skills: [csp-literature-review]
+    weight: 40
+  "load test":
+    skills: [csp-load-testing]
+    weight: 40
+  "load testing":
+    skills: [csp-load-testing]
+    weight: 40
+  "load 测试":
+    skills: [csp-load-testing]
+    weight: 40
+  "load-testing":
+    skills: [csp-load-testing]
+    weight: 40
+  "prd code review":
+    skills: [csp-prd-review]
+    weight: 40
+  "prd review":
+    skills: [csp-prd-review]
+    weight: 40
+  "prd 审查":
+    skills: [csp-prd-review]
+    weight: 40
+  "prd-review":
+    skills: [csp-prd-review]
+    weight: 40
+  "pricing":
+    skills: [csp-pricing-strategy]
+    weight: 40
+  "pricing strategy":
+    skills: [csp-pricing-strategy]
+    weight: 40
+  "pricing-strategy":
+    skills: [csp-pricing-strategy]
+    weight: 40
+  "review de ai ify":
+    skills: [csp-de-ai-ify]
+    weight: 40
+  "review git recovery":
+    skills: [csp-git-recovery]
+    weight: 40
+  "review hardware embedded":
+    skills: [csp-hardware-embedded]
+    weight: 40
+  "review image to code":
+    skills: [csp-image-to-code]
+    weight: 40
+  "review literature code":
+    skills: [csp-literature-review]
+    weight: 40
+  "review prd code":
+    skills: [csp-prd-review]
+    weight: 40
+  "review pricing strategy":
+    skills: [csp-pricing-strategy]
+    weight: 40
+
+  # ─── auto-generated triggers (generate-triggers.mjs) ───
+  "change impact analysis":
+    skills: [csp-change-impact-analysis]
+    weight: 40
+  "change-impact-analysis":
+    skills: [csp-change-impact-analysis]
+    weight: 40
+  "fix change impact analysis":
+    skills: [csp-change-impact-analysis]
+    weight: 40
+  "fix issue triage":
+    skills: [csp-issue-triage]
+    weight: 40
+  "fix kubernetes troubleshooting":
+    skills: [csp-kubernetes-troubleshooting]
+    weight: 40
+  "fix patent disclosure":
+    skills: [csp-patent-disclosure]
+    weight: 40
+  "fix ssh operations":
+    skills: [csp-ssh-operations]
+    weight: 40
+  "fix status report":
+    skills: [csp-status-report]
+    weight: 40
+  "fix test case design":
+    skills: [csp-test-case-design]
+    weight: 40
+  "issue":
+    skills: [csp-issue-triage]
+    weight: 40
+  "issue triage":
+    skills: [csp-issue-triage]
+    weight: 40
+  "issue-triage":
+    skills: [csp-issue-triage]
+    weight: 40
+  "kubernetes":
+    skills: [csp-kubernetes-troubleshooting]
+    weight: 40
+  "kubernetes troubleshooting":
+    skills: [csp-kubernetes-troubleshooting]
+    weight: 40
+  "kubernetes-troubleshooting":
+    skills: [csp-kubernetes-troubleshooting]
+    weight: 40
+  "mobile device test":
+    skills: [csp-mobile-device-testing]
+    weight: 40
+  "mobile device testing":
+    skills: [csp-mobile-device-testing]
+    weight: 40
+  "mobile device 测试":
+    skills: [csp-mobile-device-testing]
+    weight: 40
+  "mobile-device-testing":
+    skills: [csp-mobile-device-testing]
+    weight: 40
+  "patent":
+    skills: [csp-patent-disclosure]
+    weight: 40
+  "patent disclosure":
+    skills: [csp-patent-disclosure]
+    weight: 40
+  "patent-disclosure":
+    skills: [csp-patent-disclosure]
+    weight: 40
+  "review change impact analysis":
+    skills: [csp-change-impact-analysis]
+    weight: 40
+  "review issue triage":
+    skills: [csp-issue-triage]
+    weight: 40
+  "review kubernetes troubleshooting":
+    skills: [csp-kubernetes-troubleshooting]
+    weight: 40
+  "review patent disclosure":
+    skills: [csp-patent-disclosure]
+    weight: 40
+  "review ssh operations":
+    skills: [csp-ssh-operations]
+    weight: 40
+  "review status report":
+    skills: [csp-status-report]
+    weight: 40
+  "review test case design":
+    skills: [csp-test-case-design]
+    weight: 40
+  "ssh":
+    skills: [csp-ssh-operations]
+    weight: 40
+  "ssh operations":
+    skills: [csp-ssh-operations]
+    weight: 40
+  "ssh-operations":
+    skills: [csp-ssh-operations]
+    weight: 40
+  "status":
+    skills: [csp-status-report]
+    weight: 40
+  "status report":
+    skills: [csp-status-report]
+    weight: 40
+  "status-report":
+    skills: [csp-status-report]
+    weight: 40
+  "test case design":
+    skills: [csp-test-case-design]
+    weight: 40
+  "test case design 测试":
+    skills: [csp-test-case-design]
+    weight: 40
+  "test-case-design":
+    skills: [csp-test-case-design]
     weight: 40
 stack_rules:
   python:
@@ -5999,7 +6263,7 @@ stack_rules:
     skills: [csp-mcp-builder]
     weight: 40
   "change":
-    skills: [csp-minimal-change-engineer]
+    skills: [csp-minimal-change-engineer, csp-change-impact-analysis]
     weight: 40
   "csp-minimal-change-engineer":
     skills: [csp-minimal-change-engineer]
