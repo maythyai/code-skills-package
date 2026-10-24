@@ -7,6 +7,13 @@ description: >
 metadata:
   globs: ["**/*.sql", "**/migrations/**"]
 phase: plan
+domain: database
+layer: 3
+category: patterns
+version: "1.0.0"
+role: specialist
+scope: analysis
+tools: [Read, Write, Edit, Glob, Grep]
 ---
 
 # PostgreSQL Performance Optimizer

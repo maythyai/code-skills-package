@@ -6,6 +6,13 @@ description: >
 metadata:
   globs: ["**/*.cs", "**/*.csproj"]
 tools: ["Read", "Grep", "Glob", "Bash"]
+phase: review
+domain: language
+layer: 3
+category: patterns
+version: "1.0.0"
+role: reviewer
+scope: review
 ---
 
 ## Prompt Defense Baseline

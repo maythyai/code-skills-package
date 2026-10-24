@@ -1,12 +1,16 @@
 ---
 name: csp-team
-description: N coordinated agents on shared task list using Claude Code native teams
+description: "N coordinated agents on shared task list using Claude Code native teams. Spins up role-specialized workers and reviewers around a shared task list with per-stage routing. Use for multi-agent team execution of a plan."
 argument-hint: "[N:agent-type] [ralph] <task description>"
 aliases: []
 layer: 4
 category: patterns
 domain: patterns
 phase: build
+version: "1.0.0"
+role: specialist
+scope: implementation
+tools: [Read, Write, Edit, Bash, Glob, Grep]
 ---
 
 | Stage | Workers | Reviewers | Routing Notes |

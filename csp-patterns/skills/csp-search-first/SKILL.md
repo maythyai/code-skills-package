@@ -9,6 +9,10 @@ layer: 3
 category: patterns
 phase: build
 domain: patterns
+version: "1.0.0"
+role: specialist
+scope: analysis
+tools: [Read, Write, Edit, Bash, Glob, Grep, WebFetch, WebSearch]
 ---
 
 | Search Result | Strategy | Action |

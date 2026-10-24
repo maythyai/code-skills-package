@@ -1,12 +1,6 @@
 ---
 name: csp-typescript-testing
-description: >
-  TypeScript testing best practices for TypeScript 5.x: choosing between Vitest
-  and Jest, the Arrange-Act-Assert structure, type-level testing with
-  expectTypeOf and tsd, mocking with vi.mock / jest.mock and module mocks,
-  async testing, coverage with v8 (c8) or istanbul, and pointers to component
-  and E2E testing. Use when writing or improving TypeScript tests, setting up a
-  test runner, or asserting on types.
+description: "TypeScript testing best practices for TypeScript 5.x: choosing between Vitest and Jest, the Arrange-Act-Assert structure, type-level testing with expectTypeOf and tsd, mocking with vi.mock / jest.mock and module mocks, async testing, coverage with v8 (c8) or istanbul."
 metadata:
   globs:
     ["**/*.ts", "**/*.tsx", "**/*.mts", "**/*.cts", "**/*.test.ts", "**/*.spec.ts"]
@@ -14,6 +8,10 @@ layer: 3
 category: patterns
 phase: verify
 domain: testing
+version: "1.0.0"
+role: specialist
+scope: testing
+tools: [Read, Write, Edit, Bash, Glob, Grep]
 ---
 
 # TypeScript Testing

@@ -1,15 +1,14 @@
 ---
 name: csp-legacy-modernization
-description: >
-  End-to-end legacy modernization workflow covering assessment (codebase audit, dependency
-  analysis, architecture review), planning (migration strategy, risk assessment, timeline),
-  execution (incremental migration, strangler fig, parallel run), verification (regression
-  testing, performance comparison, data integrity), and common migration scenarios.
-  Use when modernizing a legacy system or planning a major migration.
+description: "End-to-end legacy modernization workflow: assessment (codebase audit, architecture review), planning (migration strategy, risk), execution (strangler fig, parallel run), and verification (regression testing, performance). Use when modernizing a legacy system or planning a major migration."
 layer: 2
 category: workflow
 phase: verify
 domain: patterns
+version: "1.0.0"
+role: specialist
+scope: testing
+tools: [Read, Write, Edit, Bash, Glob, Grep]
 ---
 
 | Metric | What to Measure | Tool |

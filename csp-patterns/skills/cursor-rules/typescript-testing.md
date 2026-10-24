@@ -1,4 +1,5 @@
 ---
+name: csp-cursor-rules-typescript-testing
 description: "TypeScript testing extending common rules"
 globs: ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx"]
 alwaysApply: false

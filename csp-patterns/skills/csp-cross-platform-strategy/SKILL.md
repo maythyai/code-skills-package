@@ -1,14 +1,14 @@
 ---
 name: csp-cross-platform-strategy
-description: >
-  Cross-platform development strategy covering platform selection (React Native vs Flutter
-  vs Native vs KMP vs MAUI), code sharing strategies, platform adaptation, testing across
-  platforms, CI/CD for multi-platform, app store considerations, and when to go native.
-  Use when making cross-platform architecture decisions or evaluating technology choices.
+description: "Cross-platform development strategy: platform selection (React Native vs Flutter vs Native vs KMP vs MAUI), code sharing strategies, platform adaptation, testing across platforms, CI/CD, app store considerations. Use when making cross-platform architecture decisions."
 layer: 3
 category: patterns
 domain: patterns
 phase: build
+version: "1.0.0"
+role: specialist
+scope: implementation
+tools: [Read, Write, Edit, Bash, Glob, Grep]
 ---
 
 | Platform | Language | Rendering | Best For | Team Profile |
@@ -531,6 +531,6 @@ Before choosing a cross-platform approach:
 
 - `csp-react-native-patterns` — React Native implementation patterns
 - `csp-mobile-performance` — Cross-platform performance optimization
-- `csp-flutter-patterns` — Flutter-specific patterns (if Flutter chosen)
+- `csp-flutter-review` / `csp-flutter-build` / `csp-flutter-test` — Flutter implementation workflow (if Flutter chosen)
 - `csp-kotlin-patterns` — Kotlin patterns (if KMP chosen)
-- `csp-swiftui-patterns` — SwiftUI patterns (if native iOS chosen)
+- SwiftUI patterns (if native iOS chosen) — no dedicated skill yet; follow this strategy's native guidance

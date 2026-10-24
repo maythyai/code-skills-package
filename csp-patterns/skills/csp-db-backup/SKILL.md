@@ -7,6 +7,9 @@ layer: 3
 category: patterns
 phase: build
 domain: patterns
+role: specialist
+scope: implementation
+tools: [Read, Write, Edit, Bash, Glob, Grep]
 ---
 
 # Database Backup and Recovery

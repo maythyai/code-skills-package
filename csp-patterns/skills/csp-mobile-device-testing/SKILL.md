@@ -1,17 +1,6 @@
 ---
 name: csp-mobile-device-testing
-description: >
-  Real-device functional testing and device automation for Android and iOS: ADB diagnostics
-  (logcat / dumpsys / am / pm / input / uiautomator), evidence capture (screencap, screenrecord,
-  bugreport), device-matrix design driven by real user distribution, system-level interference
-  testing (permission tri-state, background kill, rotation, dark mode, font scaling, low battery),
-  weak/offline network simulation, install-upgrade-downgrade data migration, and the iOS
-  equivalents (xcrun simctl, xcrun devicectl, Instruments). Use when a defect only reproduces on
-  a real handset, when you need reproducible evidence for a mobile bug report, or when planning
-  which devices to cover.
-  触发：真机测试、设备矩阵、adb、logcat、dumpsys、uiautomator、截图取证、录屏取证、bugreport、
-  弱网测试、断网测试、权限弹窗、后台被杀、屏幕旋转、深色模式、字体缩放、覆盖安装、升级测试、
-  降级测试、数据迁移、simctl、devicectl、Instruments、mobile device testing.
+description: "Real-device functional testing and automation for Android and iOS: ADB diagnostics (logcat / dumpsys / uiautomator), interference testing (permissions, background kill, rotation), weak/offline network simulation. iOS equivalents via simctl, devicectl, Instruments."
 version: "1.0.0"
 layer: 3
 category: patterns

@@ -1,6 +1,6 @@
 ---
 name: csp-systematic-debugging
-description: Use when encountering any bug, test failure, or unexpected behavior, before proposing fixes
+description: "Use when encountering any bug, test failure, or unexpected behavior, before proposing fixes. Four-phase evidence-first debugging with anti-rationalization guardrails. Use for every debugging task — simple issues have root causes too."
 layer: 1
 category: meta
 phase: build
@@ -10,6 +10,8 @@ tools: [Read, Write, Edit, Bash, Glob, Grep]
 anti_rationalizations:
   "I see the problem, let me fix it": "Seeing symptoms ≠ understanding root cause."
   "One more fix attempt": "3+ failures = architectural problem. Question pattern, don't fix again."
+version: "1.0.0"
+role: specialist
 ---
 
 | Rationalization | Counter |

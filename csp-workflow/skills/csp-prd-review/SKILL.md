@@ -1,13 +1,6 @@
 ---
 name: csp-prd-review
-description: >
-  Review a PRD / BRD / requirement document and return a scored, evidence-cited verdict.
-  Three modes: (A) weighted 10-point scoring against a module rubric, (B) completeness audit
-  across MECE dimensions with severity-ranked gaps, (C) qualitative paragraph-level annotation
-  review for narrative documents. Also validates acceptance criteria for testability.
-  Use when the user says "PRD评审", "需求评审", "PRD打分", "评审这份PRD", "PRD质量",
-  "需求文档审查", "PRD completeness", "BRD评审", "需求评审意见", "验收标准检查",
-  "PRD review", "requirement review", "spec review", "需求文档打分", "PRD体检".
+description: "Review a PRD / BRD / requirement document and return a scored, evidence-cited verdict. Three modes: (A) weighted 10-point scoring against a module rubric, (B) completeness audit across MECE dimensions with severity-ranked gaps. Use when the user says 'PRD评审', '需求评审', 'PRD review'."
 version: "1.0.0"
 layer: 2
 category: workflow
@@ -48,6 +41,7 @@ triggers:
     - "pre_development_gate"
     - "requirement_handoff"
     - "before_decomposition"
+role: specialist
 ---
 
 # PRD Review

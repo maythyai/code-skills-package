@@ -1,5 +1,5 @@
 ---
-name: evolve
+name: csp-evolve
 description: Analyze instincts and suggest or generate evolved structures
 command: true
 ---

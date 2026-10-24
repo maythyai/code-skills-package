@@ -1,4 +1,5 @@
 ---
+name: csp-flutter-build
 description: Fix Dart analyzer errors and Flutter build failures incrementally. Invokes the dart-build-resolver agent for minimal, surgical fixes.
 ---
 

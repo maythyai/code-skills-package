@@ -1,4 +1,5 @@
 ---
+name: csp-cursor-rules-common-patterns
 description: "Common patterns: repository, API response, skeleton projects"
 alwaysApply: true
 ---

@@ -1,4 +1,5 @@
 ---
+name: csp-multi-execute
 description: Execute a multi-model implementation plan while preserving Claude as the only filesystem writer.
 ---
 

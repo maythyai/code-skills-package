@@ -1,4 +1,5 @@
 ---
+name: csp-cursor-rules-php-patterns
 description: "PHP patterns extending common rules"
 globs: ["**/*.php", "**/composer.json"]
 alwaysApply: false

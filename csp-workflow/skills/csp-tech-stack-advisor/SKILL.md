@@ -1,13 +1,6 @@
 ---
 name: csp-tech-stack-advisor
-description: |
-  全栈技术选型决策引擎。基于 Feature 需求的技术维度，为每个 Feature 和系统整体推荐最优技术栈：
-  主语言、Web 框架、数据库、缓存、消息队列、AI 框架、向量库、搜索引擎、实时通信、
-  对象存储、任务调度、监控可观测性等。输出结构化技术决策记录(ADR)和选型理由。
-  当需求拆解完成后需要进行技术选型、或用户询问"用什么技术"时使用。
-  关键词：技术选型、tech stack、technology selection、架构选型、技术栈推荐、
-  用什么数据库、用什么框架、tech decision、ADR、技术决策、选型建议、
-  消息队列选型、AI框架、向量库选择、database selection、framework choice。
+description: "全栈技术选型决策引擎。基于 Feature 需求的技术维度，为每个 Feature 和系统整体推荐最优技术栈：主语言、Web 框架、数据库、缓存、消息队列、AI 框架、向量库、搜索引擎、对象存储、任务调度、监控可观测性等。输出结构化技术决策记录(ADR)和选型理由。当需求拆解完成后需要进行技术选型、或用户询问'用什么技术'时使用。"
 version: "1.0.0"
 layer: 2
 category: workflow
@@ -40,6 +33,7 @@ anti_rationalizations:
   "I'll just use the same stack as last time": "Different requirements demand different tools. Evaluate fresh."
   "This technology is trendy so let's use it": "Trend != fit. Evaluate against actual requirements."
   "We don't need a message queue for this": "Async processing, event-driven architecture, and decoupling often need one. Check the requirements."
+role: specialist
 ---
 
 # Tech Stack Advisor

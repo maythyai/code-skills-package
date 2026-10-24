@@ -1,12 +1,14 @@
 ---
 name: csp-debug
-description: Diagnose the current CSP session or repo state using logs, traces, state, and focused reproduction
+description: "Diagnose the current CSP session or repo state using logs, traces, state, and focused checks. Finds the real failure signal and explains the next corrective step. Use when a CSP session behaves unexpectedly or configuration seems broken."
 layer: 4
 category: workflow
 phase: build
 domain: quality
 scope: implementation
 tools: [Read, Write, Edit, Bash, Glob, Grep]
+version: "1.0.0"
+role: specialist
 ---
 
 # Debug

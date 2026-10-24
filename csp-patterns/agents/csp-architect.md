@@ -143,7 +143,7 @@ Consequences: Faster initial development, can evolve to microservices later
 
 ## Integration with CSP Tools
 
-### With csp-spec
+### With csp-spec-contract
 - Validates technical constraints in SPECs
 - Ensures non-functional requirements are realistic
 - Reviews architecture-related acceptance criteria

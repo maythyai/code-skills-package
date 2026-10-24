@@ -1,17 +1,14 @@
 ---
 name: csp-db-migration
-description: >
-  Database migration best practices for schema changes, data migrations, rollbacks,
-  and zero-downtime deployments across PostgreSQL and MySQL and common ORMs/tools
-  (Prisma, Drizzle, TypeORM, Knex, Django, Alembic, Flyway, golang-migrate, Atlas).
-  Execute zero-downtime migrations using expand-contract patterns, online schema
-  changes, and safe CI/CD pipeline integration. Use when planning or implementing
-  database schema changes.
+description: "Database migration best practices for schema changes, data migrations, rollbacks, and zero-downtime deployments across PostgreSQL and MySQL and common ORMs/tools (Prisma, Drizzle, Alembic, Flyway). Covers expand-contract patterns, online schema changes, and safe CI/CD integration."
 version: 0.1.0
 layer: 3
 category: patterns
 domain: patterns
 phase: build
+role: specialist
+scope: implementation
+tools: [Read, Write, Edit, Bash, Glob, Grep]
 ---
 
 # Database Migration Patterns

@@ -5,6 +5,10 @@ layer: 3
 category: patterns
 phase: plan
 domain: patterns
+version: "1.0.0"
+role: specialist
+scope: design
+tools: [Read, Write, Edit, Glob, Grep]
 ---
 
 # Agent Sort

@@ -1,4 +1,5 @@
 ---
+name: csp-refactor-clean
 description: Safely identify and remove dead code with verification after each change.
 ---
 

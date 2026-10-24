@@ -1,4 +1,5 @@
 ---
+name: csp-cursor-rules-swift-testing
 description: "Swift testing extending common rules"
 globs: ["**/*.swift", "**/Package.swift"]
 alwaysApply: false

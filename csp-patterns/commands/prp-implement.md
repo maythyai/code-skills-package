@@ -1,4 +1,5 @@
 ---
+name: csp-prp-implement
 description: Execute an implementation plan with rigorous validation loops
 argument-hint: <path/to/plan.md>
 ---

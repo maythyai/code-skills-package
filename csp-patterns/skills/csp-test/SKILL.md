@@ -1,13 +1,6 @@
 ---
 name: csp-test
-description: >
-  Usability testing & expert heuristic review for design validation. Mode A covers the
-  full lifecycle with real users: Plan → Script → Conduct → Analyze (Nielsen 0-4 severity,
-  task success rates, evidence chains). Mode B (Expert Heuristic Review) is a degradation
-  mode for when no real users are available — conducts code review + Nielsen 10 heuristics
-  evaluation with parallel multi-module scanning, producing findings tagged as
-  `mode: heuristic-review`. Supports 7 test types (Moderated / Unmoderated / RITE /
-  5-Second / First-Click / Wizard of Oz / Heuristic Review).
+description: "Usability testing & expert heuristic review for design validation. Mode A covers the full lifecycle with real users: Plan → Script → Conduct → Analyze. Mode B (Expert Heuristic Review) is a degradation mode when no real users are available — code review + Nielsen 10 heuristics."
 version: "2.0.0"
 layer: 3
 category: design
@@ -45,6 +38,7 @@ related_skills:
 
 dependencies:
   skills: []
+role: specialist
 ---
 
 # 可用性测试

@@ -1,13 +1,6 @@
 ---
 name: csp-knowledge-hub
-description: >
-  Local-first Knowledge Hub — a git-managed markdown workspace that unifies spec (PMS/CMS/TMS),
-  wiki, and memory into one indexed, queryable hub to accelerate Agent codebase understanding,
-  fast spec location/read/generation, and a closed loop: 需求对齐(文档spec记录) → code开发 → 测试.
-  Platform-decoupled: replaces platform-hosted knowledge interaction with local markdown + git + AGENTS.md routing + a sole manifest index. Use when
-  the user says "knowledge hub", "知识中枢", "init workspace", "local wiki workspace",
-  "spec 索引", "locate spec", "知识库初始化", "align docs to code", "knowledge workspace",
-  "本地知识库", or wants a single local hub indexing specs + wiki + memory across the lifecycle.
+description: "Local-first Knowledge Hub — a git-managed markdown workspace that unifies spec (PMS/CMS/TMS), wiki, and memory into one indexed, queryable hub to accelerate Agent codebase understanding. Platform-decoupled: local markdown + git + AGENTS.md routing + a sole manifest index."
 version: "1.0.0"
 layer: 2
 category: workflow

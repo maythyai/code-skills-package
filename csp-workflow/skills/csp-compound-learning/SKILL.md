@@ -7,6 +7,8 @@ phase: build
 domain: quality
 scope: implementation
 tools: [Read, Write, Edit, Bash, Glob, Grep]
+version: "1.0.0"
+role: specialist
 ---
 
 | Mode | Trigger | Behavior |

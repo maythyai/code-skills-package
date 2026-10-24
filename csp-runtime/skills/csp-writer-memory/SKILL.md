@@ -1,8 +1,15 @@
 ---
 name: csp-writer-memory
-description: Agentic memory system for writers - track characters, relationships, scenes, and themes
+description: "Agentic memory system for writers — track characters, relationships, scenes, and themes across sessions. Initializes per-project memory and updates it as the story evolves. Use when writing long-form fiction or serial content that needs continuity."
 argument-hint: "init|char|rel|scene|query|validate|synopsis|status|export [args]"
 layer: 4
+phase: build
+domain: other
+category: patterns
+version: "1.0.0"
+role: specialist
+scope: implementation
+tools: [Read, Write, Edit, Bash, Glob, Grep]
 ---
 
 | Command | Description |

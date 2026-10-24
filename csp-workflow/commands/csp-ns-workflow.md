@@ -1,5 +1,5 @@
 ---
-name: csp-workflow
+name: csp-ns-workflow
 description: "workflow | discuss plan execute verify phase progress"
 argument-hint: ""
 allowed-tools:

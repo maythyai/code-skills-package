@@ -9,6 +9,9 @@ layer: 2
 category: workflow
 phase: ship
 domain: patterns
+role: specialist
+scope: implementation
+tools: [Read, Write, Edit, Bash, Glob, Grep]
 ---
 
 # Indie Deploy Ops

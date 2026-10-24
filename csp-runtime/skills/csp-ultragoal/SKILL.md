@@ -6,6 +6,10 @@ layer: 4
 category: runtime
 phase: plan
 domain: architecture
+version: "1.0.0"
+role: specialist
+scope: design
+tools: [Read, Write, Edit, Glob, Grep]
 ---
 
 <Purpose>

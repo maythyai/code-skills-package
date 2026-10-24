@@ -1,13 +1,6 @@
 ---
 name: csp-user-feedback-analysis
-description: >
-  Analyze user feedback data (Excel/CSV/text) to auto-classify, extract high-frequency patterns,
-  and output an insight report with sentiment analysis, pain point ranking, and improvement suggestions.
-  Supports topic clustering, trend analysis, and triangulation to extract user personas from feedback.
-  Use when the user says "用户反馈", "反馈分析", "用户声音", "VOC分析", "NPS分析",
-  "用户评价分析", "应用商店评论", "客诉分析", "用户调研", "满意度分析", "差评分析",
-  "好评分析", "反馈聚类", "反馈趋势", "用户画像提炼", "user feedback", "feedback analysis",
-  "VOC", "voice of customer", "NPS analysis", "app store review analysis".
+description: "Analyze user feedback data (Excel/CSV/text) to auto-classify, extract high-frequency patterns, and output an insight report with sentiment analysis and pain point ranking. Supports topic clustering and trend analysis."
 version: "1.0.0"
 layer: 2
 category: workflow
@@ -44,6 +37,7 @@ triggers:
     - "after_feature_launch"
     - "quarterly_review"
     - "pre_prd_writing"
+role: specialist
 ---
 
 # User Feedback Analysis

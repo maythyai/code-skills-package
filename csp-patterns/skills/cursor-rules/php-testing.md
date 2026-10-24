@@ -1,4 +1,5 @@
 ---
+name: csp-cursor-rules-php-testing
 description: "PHP testing extending common rules"
 globs: ["**/*.php", "**/phpunit.xml", "**/phpunit.xml.dist", "**/composer.json"]
 alwaysApply: false

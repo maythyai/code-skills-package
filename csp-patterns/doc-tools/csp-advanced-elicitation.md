@@ -313,7 +313,7 @@ Output: Meeting summary format with decisions, action items, and key points
 
 ### With Other CSP Tools
 - **csp-brainstorming**: Processes brainstorming outputs
-- \*\*csp-spec**: Converts elicited requirements to SPECs
+- \*\*csp-spec-contract**: Converts elicited requirements to SPECs
 - \*\*csp-party-mode**: Elicits insights from multi-agent discussions
 - **Phase Workflows**: Used in Analysis and Planning phases
 

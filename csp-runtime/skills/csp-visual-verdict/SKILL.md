@@ -1,10 +1,14 @@
 ---
 name: csp-visual-verdict
-description: Structured visual QA verdict for screenshot-to-reference comparisons
+description: "Structured visual QA verdict for screenshot-to-reference comparisons. Compares generated UI screenshots against reference images and returns a structured verdict with deviations. Use when verifying visual output against a design reference."
 layer: 4
 category: workflow
 phase: verify
 domain: patterns
+version: "1.0.0"
+role: specialist
+scope: testing
+tools: [Read, Write, Edit, Bash, Glob, Grep]
 ---
 
 <Purpose>

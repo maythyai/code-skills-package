@@ -8,6 +8,10 @@ layer: 3
 category: patterns
 domain: patterns
 phase: build
+version: "1.0.0"
+role: specialist
+scope: implementation
+tools: [Read, Write, Edit, Bash, Glob, Grep]
 ---
 
 # Frontend Patterns (Framework-Agnostic)

@@ -1,4 +1,5 @@
 ---
+name: csp-cursor-rules-kotlin-testing
 description: "Kotlin testing extending common rules"
 globs: ["**/*.kt", "**/*.kts", "**/build.gradle.kts"]
 alwaysApply: false

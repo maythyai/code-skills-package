@@ -1,15 +1,6 @@
 ---
 name: csp-market-research
-description: >
-  Market research that supports decisions, and the reports that carry it. Two modes:
-  (1) decision-oriented research — market sizing, competitor comparisons, investor dossiers,
-  technology scans, with source attribution and a go/no-go verdict; (2) comprehensive 50+ page
-  consulting-grade report (McKinsey/BCG/Gartner style) with LaTeX formatting, generated visuals,
-  and multi-framework analysis (Porter's Five Forces, PESTLE, SWOT, TAM/SAM/SOM, BCG Matrix).
-  Use when the user wants market sizing, competitor comparisons, fund/industry intelligence,
-  a market-entry or due-diligence report, or any research that informs a business decision.
-  Triggers: "市场调研", "market research", "market sizing", "竞品对比", "investor dossier",
-  "industry report", "行业分析报告", "due diligence", "TAM SAM SOM", "market entry".
+description: "Market research that supports decisions, and the reports that carry it. Two modes: (1) decision-oriented research — market sizing, competitor comparisons, investor dossiers, technology scans; (2) comprehensive report with multi-framework analysis (PESTLE, SWOT, TAM/SAM/SOM)."
 version: "2.0.0"
 layer: 3
 category: patterns
@@ -45,6 +36,7 @@ triggers:
     - "user needs a comprehensive consulting-grade market report (50+ pages)"
     - "user is preparing due-diligence or market-entry materials"
   context: ["define", "strategy_planning", "before_prd_writing"]
+role: specialist
 ---
 
 # Market Research

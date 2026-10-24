@@ -1,4 +1,5 @@
 ---
+name: csp-hookify-configure
 description: Enable or disable hookify rules interactively
 ---
 

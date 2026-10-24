@@ -16,6 +16,8 @@ anti_rationalizations:
   "Users will expect this on day one": "Users don't know what they want until they use something. Ship and iterate."
   "It's harder to add later": "Adding to a working product is easier than debugging a bloated one that never shipped."
   "This is the minimum": "If you can't describe why each feature is essential, it isn't."
+version: "1.0.0"
+role: specialist
 ---
 
 # MVP Scoping

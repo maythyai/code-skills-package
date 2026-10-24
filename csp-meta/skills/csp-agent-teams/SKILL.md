@@ -1,14 +1,14 @@
 ---
 name: csp-agent-teams
-description: >
-  Orchestrate multiple AI agents for parallel or sequential task execution.
-  Includes CSP agent-team collaboration (per-task dispatch with two-stage review)
-  and parallel agent dispatch (independent problems solved concurrently).
-  Use when executing implementation plans with independent tasks, or facing 2+ independent failures.
+description: "Orchestrate multiple AI agents for parallel or sequential execution. Includes agent-team collaboration (per-task dispatch with two-stage review) and parallel dispatch of independent problems. Use when executing implementation plans with independent tasks, or facing 2+ independent failures."
 layer: 1
 category: meta
 phase: review
 domain: architecture
+version: "1.0.0"
+role: specialist
+scope: review
+tools: [Read, Write, Edit, Bash, Glob, Grep]
 ---
 
 | Task Type | Characteristics | Model Tier |

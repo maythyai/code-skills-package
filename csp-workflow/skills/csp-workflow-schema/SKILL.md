@@ -8,6 +8,10 @@ layer: 2
 category: workflow
 phase: define
 domain: patterns
+version: "1.0.0"
+role: specialist
+scope: design
+tools: [Read, Write, Edit, Glob, Grep]
 ---
 
 # CSP Workflow Schema

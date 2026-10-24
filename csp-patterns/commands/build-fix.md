@@ -1,4 +1,5 @@
 ---
+name: csp-build-fix
 description: Detect the project build system and incrementally fix build/type errors with minimal safe changes.
 ---
 

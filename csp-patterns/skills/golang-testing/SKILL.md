@@ -10,6 +10,10 @@ layer: 3
 category: patterns
 phase: verify
 domain: patterns
+version: "1.0.0"
+role: specialist
+scope: testing
+tools: [Read, Write, Edit, Bash, Glob, Grep]
 ---
 
 # Go Testing

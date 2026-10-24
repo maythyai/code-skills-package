@@ -6,6 +6,13 @@ description: >
 metadata:
   globs: ["**/*.test.{js,ts,jsx,tsx}", "**/*.spec.{js,ts,jsx,tsx}", "**/cypress/**", "**/playwright/**"]
 phase: verify
+domain: testing
+layer: 3
+category: patterns
+version: "1.0.0"
+role: specialist
+scope: testing
+tools: [Read, Write, Edit, Bash, Glob, Grep]
 ---
 
 # Web Application Testing

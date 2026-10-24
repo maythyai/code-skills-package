@@ -1,6 +1,6 @@
 ---
 name: csp-product-pulse
-description: "Generate a time-windowed pulse report on what users experienced and how the product performed - usage, quality, errors, signals worth investigating. Use when the user says 'run a pulse', 'show me the pulse', 'how are we doing', 'weekly recap', 'launch-day check', or passes a time window like '24h' or '7d'. Configures via .csp/config.local.yaml and saves reports to docs/pulse-reports/."
+description: "Generate a time-windowed pulse report on what users experienced and how the product performed — usage, quality, errors, signals worth investigating. Use when the user says 'run a pulse', 'show me the pulse', 'how are we doing', 'weekly recap', or 'launch-day check'."
 argument-hint: "[lookback window, e.g. '24h', '7d', '1h'; default 24h]"
 allowed-tools:
   - Read
@@ -14,6 +14,10 @@ category: workflow
 domain: patterns
 phase: build
 related_skills: [csp-product-discovery-orchestrator]
+version: "1.0.0"
+role: specialist
+scope: implementation
+tools: [Read, Write, Edit, Bash, Glob, Grep, WebFetch, WebSearch]
 ---
 
 ## Headless Mode

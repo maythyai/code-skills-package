@@ -1,14 +1,14 @@
 ---
 name: csp-deployment
-description: >
-  Deployment workflows, CI/CD quality gates, Docker containerization, health checks,
-  rollback strategies, feature flags, and production readiness checklists.
-  Combines deployment patterns with CI/CD automation and shift-left quality strategy.
-  Use when setting up deployment infrastructure, configuring CI pipelines, or planning releases.
+description: "Deployment workflows, CI/CD quality gates, Docker containerization, health checks, rollback strategies, feature flags, and production readiness checklists. Use when setting up deployment infrastructure, configuring CI pipelines, or planning releases."
 layer: 3
 category: patterns
 domain: patterns
 phase: build
+version: "1.0.0"
+role: specialist
+scope: implementation
+tools: [Read, Write, Edit, Bash, Glob, Grep]
 ---
 
 | Rationalization | Counter |

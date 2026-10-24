@@ -1,4 +1,5 @@
 ---
+name: csp-cursor-rules-php-hooks
 description: "PHP hooks extending common rules"
 globs: ["**/*.php", "**/composer.json", "**/phpstan.neon", "**/phpstan.neon.dist", "**/psalm.xml"]
 alwaysApply: false

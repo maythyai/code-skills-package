@@ -1,4 +1,5 @@
 ---
+name: csp-cursor-rules-common-development-workflow
 description: "Development workflow: plan, TDD, review, commit pipeline"
 alwaysApply: true
 ---

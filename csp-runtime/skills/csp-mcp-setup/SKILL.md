@@ -1,10 +1,14 @@
 ---
 name: csp-mcp-setup
-description: Configure popular MCP servers for enhanced agent capabilities
+description: "Configure popular MCP servers for enhanced agent capabilities. Walks through MCP server setup interactively, one question at a time with at most 3 options per question. Use when the user wants to add MCP servers or extend agent tooling."
 layer: 4
 category: workflow
 domain: patterns
 phase: build
+version: "1.0.0"
+role: specialist
+scope: implementation
+tools: [Read, Write, Edit, Bash, Glob, Grep]
 ---
 
 # MCP Setup

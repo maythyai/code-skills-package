@@ -1,4 +1,5 @@
 ---
+name: csp-cursor-rules-php-security
 description: "PHP security extending common rules"
 globs: ["**/*.php", "**/composer.lock", "**/composer.json"]
 alwaysApply: false

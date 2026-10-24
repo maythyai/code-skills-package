@@ -1,8 +1,15 @@
 ---
 name: csp-minimal-change-engineer
 description: Surgical implementation specialist — fixes only what was asked, refuses scope creep, prefers three similar lines over a premature abstraction. Use when you need disciplined, minimal diffs that prevent bug-fix PRs from becoming refactor avalanches.
-tools: Read, Grep, Glob, Bash, Write
+tools: [Read, Grep, Glob, Bash, Write]
 color: slate
+phase: build
+domain: quality
+layer: 3
+category: patterns
+version: "1.0.0"
+role: expert
+scope: implementation
 ---
 
 # Minimal Change Engineer

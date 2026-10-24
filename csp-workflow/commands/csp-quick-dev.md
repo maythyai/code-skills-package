@@ -319,7 +319,7 @@ Output:
 
 ### With Other CSP Tools
 - **csp-brainstorming**: Can brainstorm before quick dev
-- **csp-spec**: Can create SPEC after quick dev validates concept
+- **csp-spec-contract**: Can create SPEC after quick dev validates concept
 - **csp-party-mode**: Can review quick dev output
 - **Phase Workflows**: Quick dev can feed into full workflow for production
 

@@ -1,15 +1,6 @@
 ---
 name: csp-test-case-design
-description: >
-  Systematically enumerate test cases for one requirement or one function using seven black-box
-  design techniques (equivalence partitioning, boundary value analysis, decision table, state
-  transition, cause-effect graphing, pairwise/orthogonal arrays, scenario flows), then land them
-  as table-driven case code, a bidirectional AC traceability matrix, and a priority-based pruning
-  plan. Use when you have an AC / spec / function signature and need to answer "which cases, and
-  how many, and what did I miss".
-  触发：设计测试用例、用例枚举、用例生成、等价类划分、边界值分析、判定表、状态迁移、因果图、
-  pairwise、正交实验、场景法、AC 追溯矩阵、用例优先级裁剪、test case design、boundary value
-  analysis、decision table、state transition testing.
+description: "Systematically enumerate test cases for one requirement or function using seven black-box design techniques (equivalence partitioning, boundary value analysis, decision table, state transition, pairwise), then land them as table-driven cases and an AC traceability matrix."
 version: "1.0.0"
 layer: 3
 category: patterns

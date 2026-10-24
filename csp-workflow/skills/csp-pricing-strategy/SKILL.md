@@ -1,13 +1,6 @@
 ---
 name: csp-pricing-strategy
-description: >
-  Design or revise a product's pricing: model selection, tier architecture, anchoring and
-  presentation, discount policy, price validation, and price-increase communication.
-  Covers B2B SaaS, B2C, usage-based and hybrid models with quantitative validation methods
-  (Van Westendorp, conjoint, price A/B, elasticity). Use when the user says "定价", "价格策略",
-  "定价方案", "收费模式", "套餐设计", "分层定价", "涨价", "价格调整", "免费版设计",
-  "pricing", "pricing strategy", "monetization", "tier design", "price increase",
-  "subscription pricing", "usage-based pricing", "定价页".
+description: "Design or revise a product's pricing: model selection, tier architecture, discount policy, price validation, and price-increase communication. Covers B2B SaaS, B2C, usage-based and hybrid models with quantitative validation (Van Westendorp, conjoint, price A/B)."
 version: "1.0.0"
 layer: 2
 category: workflow
@@ -46,6 +39,7 @@ triggers:
     - "pre_launch"
     - "monetization_design"
     - "business_model_change"
+role: specialist
 ---
 
 # Pricing Strategy

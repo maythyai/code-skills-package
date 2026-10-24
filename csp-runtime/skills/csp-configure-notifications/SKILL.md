@@ -1,6 +1,6 @@
 ---
 name: csp-configure-notifications
-description: Configure notification integrations (Telegram, Discord, Slack) via natural language
+description: "Configure notification integrations (Telegram, Discord, Slack) via natural language. Interactive setup walks through credential collection and webhook wiring so CSP can message you when sessions end or need input. Use when enabling session notifications."
 triggers:
   - "configure notifications"
   - "setup notifications"
@@ -17,6 +17,10 @@ layer: 4
 category: workflow
 domain: patterns
 phase: build
+version: "1.0.0"
+role: specialist
+scope: implementation
+tools: [Read, Write, Edit, Bash, Glob, Grep]
 ---
 
 ## Telegram Setup

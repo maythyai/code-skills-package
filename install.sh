@@ -222,6 +222,40 @@ is_home_dir() {
   [ "$real_dir" = "$real_home" ]
 }
 
+# Extract a frontmatter field value from a SKILL.md. Handles inline,
+# quoted, and block-scalar (> folded, | literal, with/without chomping
+# indicators) values; multi-line values are folded onto one line.
+extract_frontmatter_field() {
+  local file="$1" field="$2"
+  awk -v f="$field" '
+    /^---[ \t]*$/ { if (in_fm) exit; in_fm = 1; next }
+    !in_fm { next }
+    collecting {
+      if ($0 ~ /^---[ \t]*$/) exit
+      if ($0 ~ /^[ \t]/) {
+        line = $0
+        sub(/^[ \t]+/, "", line)
+        if (line != "") val = (val == "" ? line : val " " line)
+        next
+      }
+      if ($0 == "") next
+      exit
+    }
+    index($0, f ":") == 1 {
+      line = $0
+      sub(/^[^:]*:[ \t]*/, "", line)
+      if (line == ">" || line == ">-" || line == ">+" ||
+          line == "|" || line == "|-" || line == "|+") {
+        collecting = 1
+        next
+      }
+      val = line
+      exit
+    }
+    END { print val }
+  ' "$file"
+}
+
 # Scan SKILL.md entries recursively: output "name|description" per line
 scan_skill_entries() {
   for layer in $CSP_LAYERS; do
@@ -230,8 +264,11 @@ scan_skill_entries() {
     while read -r skill_file; do
       [ -z "$skill_file" ] && continue
       local name desc
-      name=$(grep -m1 '^name:' "$skill_file" 2>/dev/null | sed 's/^name: *//' | sed "s/^[\"']//;s/[\"']$//" || true)
-      desc=$(grep -m1 '^description:' "$skill_file" 2>/dev/null | sed 's/^description: *//' | sed "s/^[\"']//;s/[\"']$//" | cut -c1-80 || true)
+      name=$(extract_frontmatter_field "$skill_file" name | sed "s/^[\"']//;s/[\"']$//")
+      # en_US.UTF-8 makes cut -c character-based; without it CJK text would be
+      # split mid-byte into invalid UTF-8. Falls back to plain cut if the
+      # locale is unavailable (same behavior as before the fix).
+      desc=$(extract_frontmatter_field "$skill_file" description | sed "s/^[\"']//;s/[\"']$//" | LC_ALL=en_US.UTF-8 cut -c1-80 2>/dev/null || true)
       [ -n "$name" ] && echo "${name}|${desc}"
     done <<< "$(find "$src" -name "SKILL.md" -type f 2>/dev/null)"
   done

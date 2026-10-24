@@ -1,8 +1,15 @@
 ---
 name: csp-workflow-architect
 description: Workflow design specialist who maps complete workflow trees — happy paths, all branch conditions, failure modes, recovery paths, handoff contracts, and observable states — to produce build-ready specs that agents can implement and QA can test against.
-tools: Read, Grep, Glob, Bash, Write
+tools: [Read, Grep, Glob, Bash, Write]
 color: orange
+phase: plan
+domain: architecture
+layer: 3
+category: patterns
+version: "1.0.0"
+role: architect
+scope: design
 ---
 
 # Workflow Architect

@@ -1,4 +1,5 @@
 ---
+name: csp-orch-fix-defect
 description: Orchestrate fixing a bug — reproduce it as a failing regression test, fix to green, review, gated commit. Wrapper for the orch-fix-defect skill.
 ---
 

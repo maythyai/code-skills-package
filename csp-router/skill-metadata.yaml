@@ -4,14 +4,24 @@
 # Regenerate: node scripts/build-skill-metadata.mjs
 
 version: 2.0
-generated_at: 2026-10-22T15:36:12.412Z
+generated_at: 2026-10-23T13:23:34.490Z
 skills:
   csp-agent-teams:
     phase: review
     domain: architecture
+    role: specialist
+    scope: review
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-brainstorming:
     phase: define
     domain: architecture
+    role: specialist
     scope: design
     tools:
       - Read
@@ -52,24 +62,74 @@ skills:
   csp-context-engineering:
     phase: define
     domain: architecture
+    role: specialist
+    scope: design
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
   csp-doc-review:
     phase: plan
     domain: architecture
+    role: specialist
+    scope: review
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
   csp-doubt-driven-development:
     phase: verify
     domain: architecture
+    role: specialist
+    scope: testing
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-executing-plans:
     phase: plan
     domain: architecture
+    role: specialist
+    scope: design
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
   csp-finishing-a-development-branch:
     phase: define
     domain: architecture
+    role: specialist
+    scope: design
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
   csp-interview-me:
     phase: plan
     domain: architecture
+    role: specialist
+    scope: analysis
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
   csp-mvp-scoping:
     phase: define
     domain: architecture
+    role: specialist
     scope: design
     tools:
       - Read
@@ -90,15 +150,42 @@ skills:
   csp-party-mode:
     phase: define
     domain: architecture
+    role: specialist
+    scope: design
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
   csp-receiving-code-review:
     phase: review
     domain: architecture
+    role: specialist
+    scope: review
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-requesting-code-review:
     phase: verify
     domain: architecture
+    role: specialist
+    scope: review
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-scope-guard:
     phase: plan
     domain: quality
+    role: specialist
     scope: design
     tools:
       - Read
@@ -116,12 +203,30 @@ skills:
   csp-skill-optimizer:
     phase: verify
     domain: architecture
+    role: specialist
+    scope: analysis
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-source-driven-development:
     phase: define
     domain: architecture
+    role: specialist
+    scope: design
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
   csp-spec-contract:
     phase: define
     domain: quality
+    role: specialist
     scope: design
     tools:
       - Read
@@ -134,6 +239,7 @@ skills:
   csp-spec-driven-development:
     phase: build
     domain: patterns
+    role: specialist
     scope: implementation
     tools:
       - Read
@@ -145,6 +251,7 @@ skills:
   csp-systematic-debugging:
     phase: build
     domain: quality
+    role: specialist
     scope: implementation
     tools:
       - Read
@@ -159,6 +266,7 @@ skills:
   csp-tdd:
     phase: build
     domain: testing
+    role: specialist
     scope: implementation
     tools:
       - Read
@@ -182,6 +290,12 @@ skills:
     domain: testing
     role: architect
     scope: design
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
     related_skills:
       - csp-cross-layer-testing
       - csp-tdd
@@ -200,15 +314,41 @@ skills:
   csp-using-git-worktrees:
     phase: define
     domain: architecture
+    role: specialist
+    scope: design
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
   csp-using-skills:
     phase: define
     domain: architecture
+    role: specialist
+    scope: design
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
   csp-verification:
     phase: build
     domain: architecture
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-writing-plans:
     phase: plan
     domain: architecture
+    role: specialist
     scope: design
     tools:
       - Read
@@ -219,9 +359,18 @@ skills:
   csp-writing-skills:
     phase: define
     domain: architecture
+    role: specialist
+    scope: design
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
   csp-change-impact-analysis:
     phase: plan
     domain: architecture
+    role: specialist
     scope: analysis
     tools:
       - Read
@@ -347,6 +496,7 @@ skills:
   csp-codebase-audit:
     phase: review
     domain: architecture
+    role: specialist
     scope: review
     tools:
       - Read
@@ -361,7 +511,7 @@ skills:
     related_skills:
       - csp-code-review
       - csp-verification
-      - csp-architecture-review
+      - csp-architect
       - csp-defect-mining
     anti_rationalizations:
       I'll just read the code myself: "One context can't hold a large codebase; parallel agents cover more dimensions than a single pass."
@@ -370,6 +520,7 @@ skills:
   csp-competitive-analysis:
     phase: define
     domain: patterns
+    role: specialist
     scope: analysis
     tools:
       - Read
@@ -398,6 +549,7 @@ skills:
   csp-compound-learning:
     phase: build
     domain: quality
+    role: specialist
     scope: implementation
     tools:
       - Read
@@ -409,9 +561,19 @@ skills:
   csp-compound-refresh:
     phase: review
     domain: patterns
+    role: specialist
+    scope: review
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-defect-mining:
     phase: verify
     domain: testing
+    role: specialist
     scope: testing
     tools:
       - Read
@@ -436,6 +598,15 @@ skills:
   csp-deprecation-and-migration:
     phase: build
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-design-hub:
     phase: plan
     domain: architecture
@@ -466,9 +637,18 @@ skills:
   csp-doc-lifecycle-manager:
     phase: plan
     domain: patterns
+    role: specialist
+    scope: design
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
   csp-domain-driven-design:
     phase: define
     domain: architecture
+    role: specialist
     scope: design
     tools:
       - Read
@@ -492,6 +672,7 @@ skills:
   csp-effort-estimation:
     phase: plan
     domain: quality
+    role: specialist
     scope: analysis
     tools:
       - Read
@@ -517,6 +698,7 @@ skills:
   csp-explore:
     phase: plan
     domain: patterns
+    role: specialist
     scope: analysis
     tools:
       - Read
@@ -527,9 +709,19 @@ skills:
   csp-full:
     phase: build
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-fullstack-spec-generator:
     phase: plan
     domain: architecture
+    role: specialist
     scope: design
     tools:
       - Read
@@ -658,6 +850,8 @@ skills:
   csp-hotfix:
     phase: build
     domain: patterns
+    role: specialist
+    scope: implementation
     tools:
       - Read
       - Write
@@ -676,6 +870,7 @@ skills:
   csp-implementation-phase:
     phase: build
     domain: patterns
+    role: specialist
     scope: implementation
     tools:
       - Read
@@ -690,9 +885,19 @@ skills:
   csp-indie-deploy-ops:
     phase: ship
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-integration-design:
     phase: plan
     domain: architecture
+    role: specialist
     scope: design
     tools:
       - Read
@@ -717,6 +922,7 @@ skills:
   csp-issue-triage:
     phase: plan
     domain: patterns
+    role: specialist
     scope: analysis
     tools:
       - Read
@@ -781,9 +987,19 @@ skills:
   csp-legacy-modernization:
     phase: verify
     domain: patterns
+    role: specialist
+    scope: testing
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-lifecycle-orchestrator:
     phase: define
     domain: architecture
+    role: specialist
     scope: design
     tools:
       - Read
@@ -826,6 +1042,7 @@ skills:
   csp-meeting-action-extraction:
     phase: plan
     domain: patterns
+    role: specialist
     scope: analysis
     tools:
       - Read
@@ -866,9 +1083,19 @@ skills:
   csp-parallel-worktree:
     phase: build
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-patent-disclosure:
     phase: define
     domain: other
+    role: specialist
     scope: analysis
     tools:
       - Read
@@ -897,6 +1124,7 @@ skills:
   csp-plan-phase:
     phase: plan
     domain: architecture
+    role: specialist
     scope: design
     tools:
       - Read
@@ -924,6 +1152,7 @@ skills:
   csp-prd-change-impact:
     phase: review
     domain: quality
+    role: specialist
     scope: review
     tools:
       - Read
@@ -949,6 +1178,7 @@ skills:
   csp-prd-generation:
     phase: define
     domain: architecture
+    role: specialist
     scope: design
     tools:
       - Read
@@ -975,6 +1205,7 @@ skills:
   csp-prd-parser:
     phase: define
     domain: architecture
+    role: specialist
     scope: analysis
     tools:
       - Read
@@ -997,6 +1228,7 @@ skills:
   csp-prd-review:
     phase: review
     domain: patterns
+    role: specialist
     scope: analysis
     tools:
       - Read
@@ -1023,6 +1255,7 @@ skills:
   csp-prd-traceability:
     phase: review
     domain: quality
+    role: specialist
     scope: review
     tools:
       - Read
@@ -1049,6 +1282,7 @@ skills:
   csp-pricing-strategy:
     phase: define
     domain: patterns
+    role: specialist
     scope: analysis
     tools:
       - Read
@@ -1074,6 +1308,7 @@ skills:
   csp-product-discovery-orchestrator:
     phase: define
     domain: architecture
+    role: specialist
     scope: design
     tools:
       - Read
@@ -1115,6 +1350,7 @@ skills:
   csp-product-metrics-review:
     phase: review
     domain: patterns
+    role: specialist
     scope: analysis
     tools:
       - Read
@@ -1138,6 +1374,17 @@ skills:
   csp-product-pulse:
     phase: build
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
+      - WebFetch
+      - WebSearch
     related_skills:
       - csp-product-discovery-orchestrator
   csp-product-spec:
@@ -1187,6 +1434,14 @@ skills:
   csp-project-doc-architect:
     phase: plan
     domain: patterns
+    role: architect
+    scope: design
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
   csp-qa-cr-review:
     phase: review
     domain: quality
@@ -1210,6 +1465,7 @@ skills:
   csp-requirement-decomposition:
     phase: define
     domain: architecture
+    role: specialist
     scope: analysis
     tools:
       - Read
@@ -1237,6 +1493,7 @@ skills:
   csp-requirement-prioritization:
     phase: plan
     domain: patterns
+    role: specialist
     scope: analysis
     tools:
       - Read
@@ -1265,6 +1522,7 @@ skills:
   csp-roadmap-update:
     phase: review
     domain: patterns
+    role: specialist
     scope: analysis
     tools:
       - Read
@@ -1289,9 +1547,19 @@ skills:
   csp-session-knowledge-extractor:
     phase: review
     domain: patterns
+    role: specialist
+    scope: review
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-shipping-and-launch:
     phase: ship
     domain: devops
+    role: specialist
     scope: implementation
     tools:
       - Read
@@ -1328,9 +1596,19 @@ skills:
   csp-solo-oncall:
     phase: build
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-status-report:
     phase: ship
     domain: patterns
+    role: specialist
     scope: analysis
     tools:
       - Read
@@ -1360,14 +1638,32 @@ skills:
   csp-strategy:
     phase: define
     domain: patterns
+    role: specialist
+    scope: design
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
     related_skills:
       - csp-product-discovery-orchestrator
   csp-tech-debt-paydown:
     phase: build
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-tech-design-review:
     phase: review
     domain: architecture
+    role: specialist
     scope: review
     tools:
       - Read
@@ -1393,6 +1689,7 @@ skills:
   csp-tech-risk-assessment:
     phase: review
     domain: quality
+    role: specialist
     scope: review
     tools:
       - Read
@@ -1417,6 +1714,7 @@ skills:
   csp-tech-solution-design:
     phase: plan
     domain: architecture
+    role: specialist
     scope: design
     tools:
       - Read
@@ -1446,6 +1744,7 @@ skills:
   csp-tech-stack-advisor:
     phase: plan
     domain: architecture
+    role: specialist
     scope: design
     tools:
       - Read
@@ -1470,6 +1769,7 @@ skills:
   csp-tech-task-breakdown:
     phase: plan
     domain: architecture
+    role: specialist
     scope: design
     tools:
       - Read
@@ -1537,7 +1837,15 @@ skills:
   csp-tweak:
     phase: build
     domain: patterns
+    role: specialist
     scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
     related_skills:
       - csp-hotfix
       - csp-simple-dev
@@ -1545,6 +1853,7 @@ skills:
   csp-user-feedback-analysis:
     phase: review
     domain: patterns
+    role: specialist
     scope: analysis
     tools:
       - Read
@@ -1568,6 +1877,7 @@ skills:
   csp-user-story-decomposition:
     phase: plan
     domain: patterns
+    role: specialist
     scope: design
     tools:
       - Read
@@ -1591,6 +1901,7 @@ skills:
   csp-verify-phase:
     phase: verify
     domain: quality
+    role: specialist
     scope: testing
     tools:
       - Read
@@ -1605,9 +1916,18 @@ skills:
   csp-workflow-schema:
     phase: define
     domain: patterns
+    role: specialist
+    scope: design
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
   csp-access:
     phase: verify
     domain: patterns
+    role: specialist
     scope: review
     tools:
       - Read
@@ -1621,6 +1941,7 @@ skills:
   csp-account-research:
     phase: define
     domain: patterns
+    role: specialist
     scope: analysis
     tools:
       - Read
@@ -1646,24 +1967,126 @@ skills:
       The competitor list is obvious: "Never hardcode competitor vendors. The user's product and competing vendors are collected in Phase 0 and stored in brief.json. Defaults are empty."
       I recall this company's signals: "Model memory is not a source. Every signal and conclusion must trace to a retrieved public source, or be marked [信息缺失]."
       The gate is a formality: "G1–G6 are mandatory. A gate is never skipped because 'it seems fine'. Run check.sh + check-structure before showing any gate."
+  deliverable:
+    phase: build
+    domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
+      - WebFetch
+      - WebSearch
+      - Agent
+  depth-research:
+    phase: define
+    domain: patterns
+    role: specialist
+    scope: analysis
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
+      - WebFetch
+      - WebSearch
+      - Agent
+  signal-scan:
+    phase: define
+    domain: patterns
+    role: specialist
+    scope: analysis
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
+      - WebFetch
+      - WebSearch
+      - Agent
   csp-agent-introspection-debugging:
     phase: build
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-agent-sort:
     phase: plan
     domain: patterns
+    role: specialist
+    scope: design
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
   csp-agentic-engineering:
     phase: build
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
+  csp-api-codegen:
+    phase: build
+    domain: api
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-api-governance:
     phase: build
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-article-writing:
     phase: build
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-audit:
     phase: review
     domain: patterns
+    role: specialist
     scope: review
     tools:
       - Read
@@ -1677,9 +2100,19 @@ skills:
   csp-autonomous-loops:
     phase: build
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-avatar:
     phase: build
     domain: patterns
+    role: specialist
     scope: implementation
     tools:
       - Read
@@ -1691,12 +2124,31 @@ skills:
   csp-backend-patterns:
     phase: build
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-backend-performance:
     phase: build
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-bench:
     phase: define
     domain: patterns
+    role: specialist
     scope: analysis
     tools:
       - Read
@@ -1710,6 +2162,7 @@ skills:
   csp-board:
     phase: plan
     domain: patterns
+    role: specialist
     scope: design
     tools:
       - Read
@@ -1721,9 +2174,19 @@ skills:
   csp-brand-voice:
     phase: build
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-brief:
     phase: define
     domain: patterns
+    role: specialist
     scope: design
     tools:
       - Read
@@ -1735,15 +2198,43 @@ skills:
   csp-browser-testing-with-devtools:
     phase: verify
     domain: patterns
+    role: specialist
+    scope: testing
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-bun-runtime:
     phase: verify
     domain: patterns
+    role: specialist
+    scope: testing
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-changelog-management:
     phase: ship
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-chart:
     phase: build
     domain: patterns
+    role: specialist
     scope: implementation
     tools:
       - Read
@@ -1755,6 +2246,7 @@ skills:
   csp-check:
     phase: verify
     domain: patterns
+    role: specialist
     scope: review
     tools:
       - Read
@@ -1766,9 +2258,27 @@ skills:
   csp-cicd-pipelines:
     phase: build
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-cloud-platform-patterns:
     phase: build
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-code-review:
     phase: review
     domain: quality
@@ -1793,26 +2303,110 @@ skills:
   csp-code-simplification:
     phase: build
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
+  csp-code-tour-guide:
+    phase: define
+    domain: other
+    role: specialist
+    scope: design
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
+  csp-codeql-analyst:
+    phase: review
+    domain: security
+    role: specialist
+    scope: review
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-coding-standards:
     phase: build
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-content-engine:
     phase: build
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-content-hash-cache-pattern:
     phase: build
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-cpp-coding-standards:
     phase: build
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-cpp-testing:
     phase: verify
     domain: patterns
+    role: specialist
+    scope: testing
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-cross-layer-testing:
     phase: verify
     domain: testing
     role: architect
     scope: testing
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
     related_skills:
       - csp-db-state-assertion
       - csp-linked-test-runner
@@ -1828,12 +2422,31 @@ skills:
   csp-cross-platform-strategy:
     phase: build
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-crosspost:
     phase: build
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-data-analysis:
     phase: build
     domain: database
+    role: specialist
     scope: implementation
     tools:
       - Read
@@ -1846,20 +2459,63 @@ skills:
   csp-data-pipeline-patterns:
     phase: build
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-db-backup:
     phase: build
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-db-migration:
     phase: build
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-db-performance:
     phase: build
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-db-state-assertion:
     phase: verify
     domain: database
     role: expert
     scope: testing
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
     related_skills:
       - csp-cross-layer-testing
       - csp-linked-test-runner
@@ -1873,6 +2529,7 @@ skills:
   csp-de-ai-ify:
     phase: review
     domain: patterns
+    role: specialist
     scope: review
     tools:
       - Read
@@ -1888,12 +2545,33 @@ skills:
   csp-deep-research:
     phase: build
     domain: patterns
+    role: specialist
+    scope: analysis
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
+      - WebFetch
+      - WebSearch
   csp-deployment:
     phase: build
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-design-system-capture:
     phase: review
     domain: patterns
+    role: specialist
     scope: design
     tools:
       - Read
@@ -1910,6 +2588,8 @@ skills:
   csp-django-patterns:
     phase: build
     domain: patterns
+    role: specialist
+    scope: implementation
     tools:
       - Read
       - Write
@@ -1931,17 +2611,53 @@ skills:
   csp-django-security:
     phase: build
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
     related_skills:
       - csp-python-coding-standards
   csp-dmux-workflows:
     phase: build
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-docker-patterns:
     phase: build
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-docs-lookup:
     phase: build
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-e2e-case-automation:
     phase: verify
     domain: testing
@@ -1969,9 +2685,19 @@ skills:
   csp-e2e-testing:
     phase: build
     domain: patterns
+    role: specialist
+    scope: testing
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-edge:
     phase: build
     domain: patterns
+    role: specialist
     scope: implementation
     tools:
       - Read
@@ -1983,18 +2709,57 @@ skills:
   csp-email-systems:
     phase: build
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-eval-harness:
     phase: build
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-everything-claude-code:
     phase: build
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-exa-search:
     phase: build
     domain: patterns
+    role: specialist
+    scope: analysis
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
+      - WebFetch
+      - WebSearch
   csp-extract:
     phase: build
     domain: patterns
+    role: specialist
     scope: analysis
     tools:
       - Read
@@ -2008,15 +2773,43 @@ skills:
   csp-fal-ai-media:
     phase: build
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-fastapi-patterns:
     phase: build
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-file-storage:
     phase: build
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-flow-mobile:
     phase: build
     domain: patterns
+    role: specialist
     scope: implementation
     tools:
       - Read
@@ -2028,6 +2821,7 @@ skills:
   csp-flow-web:
     phase: build
     domain: patterns
+    role: specialist
     scope: implementation
     tools:
       - Read
@@ -2039,6 +2833,7 @@ skills:
   csp-frame:
     phase: define
     domain: patterns
+    role: specialist
     scope: design
     tools:
       - Read
@@ -2050,6 +2845,7 @@ skills:
   csp-frontend-design:
     phase: plan
     domain: patterns
+    role: specialist
     scope: design
     tools:
       - Read
@@ -2061,15 +2857,55 @@ skills:
   csp-frontend-patterns:
     phase: build
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-frontend-performance:
     phase: build
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-frontend-slides:
     phase: build
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
+  csp-git-conventions:
+    phase: build
+    domain: devops
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-git-recovery:
     phase: build
     domain: devops
+    role: specialist
     scope: implementation
     tools:
       - Read
@@ -2110,6 +2946,7 @@ skills:
   csp-hardware-embedded:
     phase: build
     domain: patterns
+    role: specialist
     scope: implementation
     tools:
       - Read
@@ -2127,6 +2964,7 @@ skills:
   csp-html-prototype:
     phase: plan
     domain: patterns
+    role: specialist
     scope: design
     tools:
       - Read
@@ -2138,9 +2976,19 @@ skills:
   csp-i18n-frameworks:
     phase: build
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-image-to-code:
     phase: build
     domain: patterns
+    role: specialist
     scope: implementation
     tools:
       - Read
@@ -2158,21 +3006,67 @@ skills:
   csp-infrastructure-as-code:
     phase: build
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-investor-materials:
     phase: build
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-investor-outreach:
     phase: build
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-java-coding-standards:
     phase: build
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-java-testing:
     phase: verify
     domain: testing
+    role: specialist
+    scope: testing
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-journey:
     phase: plan
     domain: patterns
+    role: specialist
     scope: design
     tools:
       - Read
@@ -2184,12 +3078,31 @@ skills:
   csp-jpa-patterns:
     phase: build
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-kubernetes-patterns:
     phase: build
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-kubernetes-troubleshooting:
     phase: verify
     domain: devops
+    role: specialist
     scope: implementation
     tools:
       - Read
@@ -2209,6 +3122,7 @@ skills:
   csp-literature-review:
     phase: define
     domain: other
+    role: specialist
     scope: analysis
     tools:
       - Read
@@ -2227,9 +3141,19 @@ skills:
   csp-llm-app-development:
     phase: build
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-load-testing:
     phase: verify
     domain: quality
+    role: specialist
     scope: testing
     tools:
       - Read
@@ -2248,9 +3172,19 @@ skills:
   csp-locale-management:
     phase: build
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-market-research:
     phase: define
     domain: patterns
+    role: specialist
     scope: analysis
     tools:
       - Read
@@ -2280,9 +3214,19 @@ skills:
   csp-mcp-server-patterns:
     phase: build
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-metric:
     phase: build
     domain: patterns
+    role: specialist
     scope: design
     tools:
       - Read
@@ -2294,6 +3238,15 @@ skills:
   csp-mle-workflow:
     phase: build
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-mobile-device-testing:
     phase: verify
     domain: testing
@@ -2325,18 +3278,55 @@ skills:
   csp-mobile-performance:
     phase: build
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-mock-strategies:
     phase: build
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-monitoring-alerting:
     phase: build
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-monorepo-tooling:
     phase: build
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-motion-apply:
     phase: build
     domain: patterns
+    role: specialist
     scope: implementation
     tools:
       - Read
@@ -2348,6 +3338,7 @@ skills:
   csp-motion-plan:
     phase: build
     domain: patterns
+    role: specialist
     scope: design
     tools:
       - Read
@@ -2359,21 +3350,67 @@ skills:
   csp-nestjs-patterns:
     phase: build
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-nextjs-turbopack:
     phase: build
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-oauth-integration:
     phase: build
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-observability-and-instrumentation:
     phase: build
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-package-publishing:
     phase: ship
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-paper-reader:
     phase: review
     domain: other
+    role: specialist
     scope: analysis
     tools:
       - Read
@@ -2387,9 +3424,19 @@ skills:
   csp-payment-integration:
     phase: build
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-performance-optimizer:
     phase: build
     domain: quality
+    role: specialist
     scope: implementation
     tools:
       - Read
@@ -2404,6 +3451,7 @@ skills:
   csp-pitch:
     phase: review
     domain: patterns
+    role: specialist
     scope: design
     tools:
       - Read
@@ -2415,6 +3463,15 @@ skills:
   csp-platform-deploy:
     phase: ship
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-playwright-ui-test:
     phase: verify
     domain: testing
@@ -2444,6 +3501,7 @@ skills:
   csp-poster:
     phase: build
     domain: patterns
+    role: specialist
     scope: implementation
     tools:
       - Read
@@ -2454,12 +3512,31 @@ skills:
       - Bash
   csp-postgres-optimizer:
     phase: plan
+    domain: database
+    role: specialist
+    scope: analysis
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
   csp-postgres-patterns:
     phase: build
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-prd:
     phase: build
     domain: patterns
+    role: specialist
     scope: design
     tools:
       - Read
@@ -2471,9 +3548,19 @@ skills:
   csp-privacy-compliance:
     phase: build
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-probe:
     phase: define
     domain: patterns
+    role: specialist
     scope: analysis
     tools:
       - Read
@@ -2485,11 +3572,20 @@ skills:
   csp-product-capability:
     phase: plan
     domain: patterns
+    role: specialist
+    scope: design
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
     related_skills:
       - csp-product-discovery-orchestrator
   csp-product-research:
     phase: define
     domain: patterns
+    role: specialist
     scope: analysis
     tools:
       - Read
@@ -2517,9 +3613,27 @@ skills:
   csp-prompt-engineering:
     phase: build
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-python-coding-standards:
     phase: build
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
     related_skills:
       - csp-python-testing
       - csp-python-patterns
@@ -2554,9 +3668,19 @@ skills:
   csp-pytorch-patterns:
     phase: build
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-qa:
     phase: verify
     domain: patterns
+    role: specialist
     scope: review
     tools:
       - Read
@@ -2591,15 +3715,45 @@ skills:
   csp-rag-architecture:
     phase: build
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
+      - WebFetch
+      - WebSearch
   csp-react-native-patterns:
     phase: build
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-react-patterns:
     phase: build
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-react-reviewer:
     phase: review
     domain: language
+    role: reviewer
     scope: review
     tools:
       - Read
@@ -2608,12 +3762,55 @@ skills:
   csp-react-testing:
     phase: build
     domain: patterns
+    role: specialist
+    scope: testing
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
+  csp-react-version-patterns:
+    phase: build
+    domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
+  csp-refactorer:
+    phase: build
+    domain: quality
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-refactoring-strategies:
     phase: build
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-research-report-writing:
     phase: review
     domain: patterns
+    role: specialist
     scope: analysis
     tools:
       - Read
@@ -2637,6 +3834,7 @@ skills:
   csp-responsive-design:
     phase: build
     domain: patterns
+    role: specialist
     scope: implementation
     tools:
       - Read
@@ -2648,6 +3846,7 @@ skills:
   csp-retro:
     phase: review
     domain: patterns
+    role: specialist
     scope: analysis
     tools:
       - Read
@@ -2658,17 +3857,46 @@ skills:
       - Bash
   csp-ruff-fixer:
     phase: review
+    domain: quality
+    role: specialist
+    scope: review
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
     related_skills:
       - csp-python-coding-standards
   csp-rust-patterns:
     phase: build
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-rust-testing:
     phase: build
     domain: patterns
+    role: specialist
+    scope: testing
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-scope:
     phase: define
     domain: patterns
+    role: specialist
     scope: analysis
     tools:
       - Read
@@ -2680,9 +3908,21 @@ skills:
   csp-search-first:
     phase: build
     domain: patterns
+    role: specialist
+    scope: analysis
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
+      - WebFetch
+      - WebSearch
   csp-security-review:
     phase: review
     domain: security
+    role: specialist
     scope: review
     tools:
       - Read
@@ -2691,9 +3931,21 @@ skills:
   csp-seo-engineering:
     phase: build
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
+      - WebFetch
+      - WebSearch
   csp-signal:
     phase: define
     domain: patterns
+    role: specialist
     scope: analysis
     tools:
       - Read
@@ -2705,6 +3957,7 @@ skills:
   csp-sitemap:
     phase: plan
     domain: patterns
+    role: specialist
     scope: design
     tools:
       - Read
@@ -2713,17 +3966,54 @@ skills:
       - Glob
       - Grep
       - Bash
+  csp-spec-adr:
+    phase: plan
+    domain: architecture
+    role: specialist
+    scope: design
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
   csp-springboot-patterns:
     phase: build
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-springboot-security:
     phase: build
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-sql-reviewer:
     phase: review
+    domain: database
+    role: reviewer
+    scope: review
+    tools:
+      - Read
+      - Grep
+      - Glob
   csp-ssh-operations:
     phase: build
     domain: devops
+    role: specialist
     scope: implementation
     tools:
       - Read
@@ -2744,6 +4034,7 @@ skills:
   csp-stories:
     phase: plan
     domain: patterns
+    role: specialist
     scope: design
     tools:
       - Read
@@ -2755,18 +4046,62 @@ skills:
   csp-strategic-compact:
     phase: build
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-subscription-management:
     phase: plan
     domain: patterns
+    role: specialist
+    scope: design
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
   csp-swift-actor-persistence:
     phase: build
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-swift-protocol-di-testing:
     phase: build
     domain: patterns
+    role: specialist
+    scope: testing
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-tech-debt-assessment:
     phase: build
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-tech-diagram:
     phase: build
     domain: architecture
@@ -2791,6 +4126,7 @@ skills:
   csp-test:
     phase: verify
     domain: patterns
+    role: specialist
     scope: testing
     tools:
       - Read
@@ -2847,27 +4183,115 @@ skills:
   csp-typescript-patterns:
     phase: build
     domain: language
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-typescript-testing:
     phase: verify
     domain: testing
+    role: specialist
+    scope: testing
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
+  csp-ui-alignment-review:
+    phase: verify
+    domain: patterns
+    role: specialist
+    scope: review
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
+      - Bash
   csp-user-analytics:
     phase: build
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-video-editing:
     phase: build
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-visual-regression:
     phase: build
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
+  csp-visual-regression-review:
+    phase: verify
+    domain: patterns
+    role: specialist
+    scope: review
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
+      - Bash
   csp-vllm-serving:
     phase: build
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-vps-deploy:
     phase: ship
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-web-artifacts:
     phase: build
     domain: patterns
+    role: specialist
     scope: implementation
     tools:
       - Read
@@ -2880,60 +4304,227 @@ skills:
   csp-webhook-architecture:
     phase: build
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-x-api:
     phase: build
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
+      - WebFetch
+      - WebSearch
   golang-patterns:
     phase: build
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   golang-testing:
     phase: verify
     domain: patterns
+    role: specialist
+    scope: testing
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   kotlin-patterns:
     phase: build
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   kotlin-testing:
     phase: build
     domain: patterns
+    role: specialist
+    scope: testing
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   python-patterns:
     phase: build
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
     related_skills:
       - csp-python-coding-standards
   python-testing:
     phase: verify
     domain: patterns
+    role: specialist
+    scope: testing
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
     related_skills:
       - csp-python-coding-standards
   webapp-testing:
     phase: verify
+    domain: testing
+    role: specialist
+    scope: testing
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-ask:
     phase: build
     domain: architecture
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-autopilot:
     phase: build
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-autoresearch:
     phase: build
     domain: patterns
+    role: specialist
+    scope: analysis
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
+      - WebFetch
+      - WebSearch
   csp-budget-enforcer:
     phase: build
     domain: architecture
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-cancel:
     phase: build
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-ccg:
     phase: build
     domain: architecture
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-cli-teams:
     phase: build
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-complexity-classifier:
     phase: build
     domain: architecture
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-configure-notifications:
     phase: build
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-create-skill:
     phase: build
     domain: architecture
@@ -2953,6 +4544,7 @@ skills:
   csp-debug:
     phase: build
     domain: quality
+    role: specialist
     scope: implementation
     tools:
       - Read
@@ -2964,19 +4556,71 @@ skills:
   csp-deep-dive:
     phase: build
     domain: architecture
+    role: specialist
+    scope: analysis
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
+      - WebFetch
+      - WebSearch
   csp-deep-interview:
     phase: build
+    domain: other
+    role: specialist
+    scope: analysis
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-deepinit:
     phase: build
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-doctor:
     phase: build
+    domain: quality
+    role: expert
+    scope: analysis
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-external-context:
     phase: build
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
+      - WebFetch
+      - WebSearch
   csp-file-organizer:
     phase: build
     domain: devops
+    role: specialist
     scope: implementation
     tools:
       - Read
@@ -2989,9 +4633,31 @@ skills:
   csp-hud:
     phase: build
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
+  csp-learner:
+    phase: build
+    domain: architecture
+    role: specialist
+    scope: analysis
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-learning-loop:
     phase: ship
     domain: quality
+    role: specialist
     scope: analysis
     tools:
       - Read
@@ -3026,15 +4692,43 @@ skills:
   csp-local-build-reminder:
     phase: build
     domain: architecture
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-mcp-setup:
     phase: build
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-model-selector:
     phase: build
     domain: architecture
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-plan:
     phase: plan
     domain: architecture
+    role: specialist
     scope: design
     tools:
       - Read
@@ -3047,55 +4741,212 @@ skills:
   csp-project-session-manager:
     phase: build
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-ralph:
     phase: build
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-reference:
     phase: build
     domain: architecture
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-release:
     phase: ship
+    domain: devops
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-remember:
     phase: review
     domain: architecture
+    role: specialist
+    scope: review
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-scientist:
     phase: build
     domain: patterns
+    role: expert
+    scope: analysis
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-self-improve:
     phase: build
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-setup:
     phase: build
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-skill:
     phase: build
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
+      - WebFetch
+      - WebSearch
   csp-skill-creator:
     phase: build
     domain: architecture
+    role: specialist
+    scope: analysis
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-skillify:
     phase: build
     domain: architecture
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-team:
     phase: build
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-trace:
     phase: build
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-ultragoal:
     phase: plan
     domain: architecture
+    role: specialist
+    scope: design
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
   csp-ultraqa:
     phase: verify
+    domain: testing
+    role: specialist
+    scope: testing
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-ultrawork:
     phase: build
     domain: patterns
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-visual-verdict:
     phase: verify
     domain: patterns
+    role: specialist
+    scope: testing
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-wiki:
     phase: build
     domain: architecture
+    role: specialist
     scope: implementation
     tools:
       - Read
@@ -3117,3 +4968,15 @@ skills:
       log 写错了改一下: "log.md 只追加不修改，是编译历史的唯一事实源。"
       源文档信息太少也凑合用: "低信息源（空/仅占位/信息不足）不得作主 sources，必须切同主题备选。"
       ingest 建好骨架就结束: "首次编译至少 3 篇实质内容页，禁止仅建骨架。"
+  csp-writer-memory:
+    phase: build
+    domain: other
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep

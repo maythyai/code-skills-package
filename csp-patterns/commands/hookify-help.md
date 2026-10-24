@@ -1,4 +1,5 @@
 ---
+name: csp-hookify-help
 description: Get help with the hookify system
 ---
 

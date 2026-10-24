@@ -1,10 +1,14 @@
 ---
 name: csp-doc-lifecycle-manager
-description: "Manage project documentation lifecycle: categorize, archive, index, and prune documents. Use when organizing docs into folders (design/plan/architecture/prototypes/reference), creating INDEX.md files, archiving obsolete docs, or doing documentation health checks. Triggers: 整理文档, doc cleanup, organize docs, 文档归类, 文档管理, archive docs, documentation hygiene."
+description: "Manage project documentation lifecycle: categorize, archive, index, and prune documents. Use when organizing docs into folders, archiving obsolete docs, or doing documentation health checks. Triggers: 整理文档, doc cleanup, organize docs, 文档归类, archive docs."
 layer: 2
 category: workflow
 phase: plan
 domain: patterns
+version: "1.0.0"
+role: specialist
+scope: design
+tools: [Read, Write, Edit, Glob, Grep]
 ---
 
 # Documentation Lifecycle Manager

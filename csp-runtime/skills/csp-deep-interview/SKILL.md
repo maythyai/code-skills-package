@@ -1,12 +1,18 @@
 ---
 name: csp-deep-interview
-description: Socratic deep interview with mathematical ambiguity gating before explicit execution approval
+description: "Socratic deep interview with mathematical ambiguity gating before explicit execution. One-question-at-a-time probing until requirements are unambiguous. Use when an ask is underspecified and silently filling in assumptions is risky."
 argument-hint: "[--quick|--standard|--deep] [--autoresearch] <idea or vague description>"
 pipeline: [deep-interview, plan]
 handoff-policy: approval-required
 handoff: .csp/specs/deep-interview-{slug}.md
 layer: 4
 phase: build
+domain: other
+category: patterns
+version: "1.0.0"
+role: specialist
+scope: analysis
+tools: [Read, Write, Edit, Bash, Glob, Grep]
 ---
 
 | Dimension | Question Type | Example |

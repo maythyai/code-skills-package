@@ -5,6 +5,10 @@ layer: 4
 category: runtime
 phase: review
 domain: architecture
+version: "1.0.0"
+role: specialist
+scope: review
+tools: [Read, Write, Edit, Bash, Glob, Grep]
 ---
 
 # Remember

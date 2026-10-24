@@ -1,5 +1,5 @@
 ---
-name: csp-quality
+name: csp-ns-review
 description: "quality gates | code review debug audit security eval ui"
 argument-hint: ""
 allowed-tools:

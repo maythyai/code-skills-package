@@ -1,12 +1,6 @@
 ---
 name: csp-wiki
-description: >
-  LLM Wiki — persistent, self-maintained markdown knowledge base that compounds across
-  sessions (Karpathy model). Two-layer: raw source docs (read-only truth) vs an AI-maintained
-  _wiki layer (index.md + append-only log.md + topic pages). Ingest compiles sources into
-  structured pages; lint checks health; query synthesizes answers with citations. Use when
-  the user says "wiki", "compile wiki", "build knowledge base", "整理知识库", "wiki lint",
-  "wiki query", "建立主题目录", "维护 index/log".
+description: "LLM Wiki — persistent, self-maintained markdown knowledge base that compounds across sessions. Two-layer: raw source docs (read-only truth) vs an AI-maintained _wiki layer (index.md + log.md + topic pages). Ingest compiles sources into structured pages; lint checks health."
 version: "2.0.0"
 layer: 4
 category: runtime
@@ -41,6 +35,7 @@ anti_rationalizations:
   "log 写错了改一下": "log.md 只追加不修改，是编译历史的唯一事实源。"
   "源文档信息太少也凑合用": "低信息源（空/仅占位/信息不足）不得作主 sources，必须切同主题备选。"
   "ingest 建好骨架就结束": "首次编译至少 3 篇实质内容页，禁止仅建骨架。"
+role: specialist
 ---
 
 # LLM Wiki

@@ -1,11 +1,15 @@
 ---
 name: csp-ralph
-description: Self-referential loop until task completion with configurable verification reviewer
+description: "Self-referential loop until task completion with configurable verification reviewer. Iterates on a task, checking output against a completion promise, until the reviewer verifies success or the iteration cap is hit. Use for autonomous retry-until-done execution."
 argument-hint: "[--no-deslop] [--critic=architect|critic|codex] <task description>"
 layer: 4
 category: patterns
 domain: patterns
 phase: build
+version: "1.0.0"
+role: specialist
+scope: implementation
+tools: [Read, Write, Edit, Bash, Glob, Grep]
 ---
 
 [RALPH + ULTRAWORK - ITERATION {{ITERATION}}/{{MAX}}]

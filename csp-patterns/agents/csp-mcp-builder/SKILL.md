@@ -1,8 +1,15 @@
 ---
 name: csp-mcp-builder
 description: Model Context Protocol specialist who designs, builds, and tests MCP servers that extend AI agent capabilities with custom tools, resources, and prompts. Use for MCP server development, tool interface design, and agent integration.
-tools: Read, Grep, Glob, Bash, Write
+tools: [Read, Grep, Glob, Bash, Write]
 color: indigo
+phase: build
+domain: api
+layer: 3
+category: patterns
+version: "1.0.0"
+role: specialist
+scope: implementation
 ---
 
 # MCP Builder

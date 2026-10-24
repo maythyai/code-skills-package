@@ -1,4 +1,5 @@
 ---
+name: csp-cursor-rules-common-testing
 description: "Testing requirements: 80% coverage, TDD workflow, test types"
 alwaysApply: true
 ---

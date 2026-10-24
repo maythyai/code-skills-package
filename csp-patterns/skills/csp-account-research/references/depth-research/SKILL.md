@@ -1,4 +1,12 @@
 ---
+version: "1.0.0"
+layer: 3
+category: patterns
+domain: patterns
+phase: define
+scope: analysis
+role: specialist
+tools: [Read, Write, Edit, Bash, Glob, Grep, WebFetch, WebSearch, Agent]
 name: depth-research
 description: 深度调研单家或少数 B2B 目标客户并产出画像与攻坚路径。在需要验证 L2 分层判定或为重点客户生成完整技术采购画像时使用——支持 L3 轻度（10-15 分钟/家，初步产品匹配与竞对关系判定）和 L4 深度（30-60 分钟/家，生成 20 维度画像、决策链、攻坚路径）两种模式，统一采用 [F]/[I]/[A]/[E] 四级证据强度标签。通常由 account-research orchestrator 调用，也可单独对特定公司执行。触发：'深入调研这家公司'、'轻度调研'、'deep research on company X'、'L3'、'L4'。
 ---

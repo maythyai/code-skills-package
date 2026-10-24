@@ -1,15 +1,6 @@
 ---
 name: csp-code-spec
-description: >
-  Code Module Spec (CMS / 代码说明书). The per-application living baseline distilled from
-  the codebase and auto-aligned to ground truth. One CMS per application/repo. It maps
-  entry points, call chains, module boundaries, and conventions, and feeds design /
-  task-split / code generation / code review with an authoritative codebase map.
-  Generalizes the "code distillation" concept using git + a configurable remote
-  (CSP_GIT_REMOTE, default github.com) — no internal platform names. Use when
-  establishing or re-aligning a code knowledge baseline, when "代码说明书", "CMS",
-  "代码蒸馏", "code distillation", "knowledge graph", "调用链", "入口点", "代码基线",
-  "align code spec", or "代码规格书" is needed.
+description: "Code Module Spec (CMS / 代码说明书). The per-application living baseline distilled from the codebase. It maps entry points, module boundaries, and conventions, and feeds design / task-split / code generation / code review. Use when '代码说明书', 'CMS', '代码蒸馏', or 'code distillation' is needed."
 version: "1.0.0"
 layer: 2
 category: workflow

@@ -1,6 +1,6 @@
 ---
 name: csp-file-organizer
-description: "通过理解上下文、查找重复文件、建议更合理的目录结构并自动化清理任务，智能整理你电脑中的文件与文件夹。降低整理负担，让数字工作空间长期保持整洁有序。"
+description: "通过理解上下文、查找重复文件、建议更合理的目录结构并自动化清理任务，智能整理电脑中的文件与文件夹，让数字工作空间长期保持整洁有序。触发：整理文件夹、清理重复文件、帮我归类文件、整理下载目录。"
 version: 0.2.0
 layer: 4
 category: runtime
@@ -9,6 +9,7 @@ domain: devops
 scope: implementation
 tools: [Read, Write, Edit, Bash, Glob, Grep]
 related_skills: []
+role: specialist
 ---
 
 # file-organizer

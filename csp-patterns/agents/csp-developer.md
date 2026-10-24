@@ -164,7 +164,7 @@ class UserRegistrationService:
 
 ## Integration with CSP Tools
 
-### With csp-spec
+### With csp-spec-contract
 - Implements features according to SPECs
 - Validates acceptance criteria through tests
 - Identifies implementation risks and constraints

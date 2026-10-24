@@ -1,15 +1,23 @@
 ---
 name: csp-access
-description: >
-  Full accessibility audit (WCAG 2.1 AA/AAA). Performs a systematic accessibility compliance check
-  Use when working on design tasks related to access.
-version: "1.0.0"
+description: "Full frontend accessibility audit (WCAG 2.1 AA/AAA) plus a11y evidence review: interpret axe / Playwright / Lighthouse reports, check contrast, keyboard navigation, focus-visible, ARIA, form labels, alt text, headings, touch targets. Use when working on design tasks related to access."
+version: "1.1.0"
 layer: 3
 category: design
 phase: verify
 domain: patterns
 scope: review
 tools: [Read, Write, Edit, Glob, Grep, Bash, WebFetch, WebSearch]
+triggers:
+  - "无障碍审计"
+  - "WCAG 合规"
+  - "a11y 审查"
+  - "解释 axe 报告"
+  - "键盘可达性"
+  - "对比度检查"
+  - "accessibility audit"
+  - "screen reader 问题"
+role: specialist
 ---
 
 # 无障碍检查
@@ -558,6 +566,47 @@ WCAG 官方表态："**AAA 不应作为通用商业产品的目标**"。
 - 中国：2024 年《无障碍环境建设法》生效，政府 / 公共服务部门必须无障碍
 
 如项目跨多地区，**取最严要求**。
+
+---
+
+## 自动化证据解读与修复分层（v1.1.0 扩展）
+
+完整 WCAG 审计之外，本 Skill 同时负责**把自动化扫描证据转译为修复行动**。自动化是起点，不是无障碍批准。
+
+**四镜头框架**（审查任何发现前先套用）：
+
+- **Operable**：键盘与触控用户能否到达并使用每个关键控件？
+- **Perceivable**：文本、icon、焦点环、状态指示是否可见且不只靠颜色？
+- **Understandable**：label、名称、说明、错误、标题是否清晰？
+- **Robust**：语义、ARIA、焦点管理、组件状态是否跨辅助技术可用？
+
+**自动化证据解读规则**：
+
+- 自动扫描（axe / Playwright a11y / Lighthouse）能抓：对比度、缺表单 label、缺可访问名称、重复 ID、非法 ARIA、标题顺序、缺 alt、缺 landmark、非法 role/state 关系。
+- 按**组件**归组重复违规（同一修复适用时不要逐实例重复报告），按**用户影响**排序，不按原始数量。
+- 自动扫描证据 ≠ 批准：标注 `manual-review` 的部分必须人工验证。
+
+**用户路径优先级**：sign in / sign up → checkout / payment → create/edit/submit 表单 → 搜索与筛选 → 导航与设置 → 破坏性操作 → 错误恢复。
+
+**修复层选择顺序**（从高到低）：
+
+1. 共享组件原语（问题重复出现时）
+2. 组件 variant/状态（模式特定时）
+3. 页面组合（确属局部时）
+4. Token（对比度/焦点/状态色是系统级问题时）
+5. 文案/内容（可访问名称或说明文本不清晰时）
+
+**常见问题模式**（详见 `references/automated-a11y-evidence.md`）：
+
+- 占位符当 label → 加持久 label 并关联 input
+- icon-only 按钮 → 提供可访问名称
+- Modal 打开无焦点管理 → 焦点入内、圈定、关闭后还原
+- 错误仅视觉呈现 → `aria-describedby` 关联 + invalid 状态
+- 可点击 `div` → 用原生 button/link
+- focus ring 被移除 → 用设计 token 恢复可见 focus-visible
+- 仅颜色区分状态 → 加 icon/文本/形状或程序化状态
+
+详细 automated/manual 检查清单与验证步骤见 `references/automated-a11y-evidence.md`。
 
 ---
 

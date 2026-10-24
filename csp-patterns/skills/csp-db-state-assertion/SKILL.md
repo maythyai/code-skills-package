@@ -1,12 +1,6 @@
 ---
 name: csp-db-state-assertion
-description: >
-  Assert database state before and after a single user action, and correlate the changed rows
-  with the API call that triggered the write using a trace id or time window. Use when an
-  integration test must prove "this click persisted exactly the expected rows and did not
-  break an invariant", when debugging "API returned 200 but the wrong rows landed in the DB",
-  when checking that a write had no unintended side effects, or when seeding/rolling back test
-  data for a round-trip test. Bridges the database layer into cross-layer testing.
+description: "Assert database state before and after a single user action, and correlate changed rows with the API call via a trace id or time window. Use when a test must prove a click persisted exactly the expected rows, or when debugging 'API 200 but wrong rows in DB'."
 version: 0.1.0
 layer: 3
 category: patterns
@@ -29,6 +23,7 @@ anti_rationalizations:
   "查一下总数变了就行": "总数变化不等于正确——必须行级断言具体字段值与不变量，否则会漏掉'多写一行+少写一行'的对冲错误"
   "用例间共享数据没事": "共享可变状态是 flaky 之首；联动 DB 断言必须事务隔离或独立 seed，否则并行跑必然互相污染"
   "直接连生产库查一下": "只读优先、禁生产写；即使只读也应优先连 test 库(环境变量参数化)，绝不硬编码生产连接串"
+tools: [Read, Write, Edit, Bash, Glob, Grep]
 ---
 
 # Database State Assertion

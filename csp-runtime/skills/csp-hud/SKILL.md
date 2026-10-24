@@ -1,6 +1,6 @@
 ---
 name: csp-hud
-description: Configure HUD display options (layout, presets, display elements)
+description: "Configure HUD display options (layout, presets, display elements). Customizes the session HUD via natural language or commands. Use when adjusting what status information is shown during CSP sessions."
 argument-hint: "[setup|minimal|focused|full|status]"
 # scope omitted — this skill writes to ~/.claude/ config (statusline), which does not
 # match the v2 scope enum (implementation/review/analysis/design/testing). Validator
@@ -9,6 +9,10 @@ layer: 4
 category: workflow
 domain: patterns
 phase: build
+version: "1.0.0"
+role: specialist
+scope: implementation
+tools: [Read, Write, Edit, Bash, Glob, Grep]
 ---
 
 | Command | Description |

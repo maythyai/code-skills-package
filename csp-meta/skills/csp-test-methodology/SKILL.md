@@ -1,14 +1,6 @@
 ---
 name: csp-test-methodology
-description: >
-  Choose and combine testing methods so no requirement falls through the cracks. Use when
-  planning test strategy for a feature, when single-layer tests pass but the feature breaks
-  end-to-end, when deciding smoke vs sanity vs E2E vs integration vs contract vs property vs
-  fuzz vs mutation vs exploratory vs chaos vs load vs a11y vs security testing, when mapping
-  requirements to test methods to find untested functionality, or when preventing fragmented
-  ("割裂") testing that validates one function in isolation and misses linked effects. Provides
-  the full testing-method taxonomy, a blind-spot complementarity matrix, and requirement
-  traceability gap analysis. The methodology layer above csp-cross-layer-testing.
+description: "Choose and combine testing methods so no requirement falls through the cracks: smoke, sanity, E2E, integration, contract, property, fuzz, mutation, exploratory, chaos, load, a11y, security. Use when planning test strategy, or when single-layer tests pass but the feature breaks end-to-end."
 version: 0.1.0
 layer: 1
 category: meta
@@ -37,6 +29,7 @@ anti_rationalizations:
   "E2E 覆盖了关键路径就够了": "E2E 慢且少，过不了边界数据/并发/错误路径；它有盲点，需 property/fuzz/negative 补位"
   "我测了下单这个功能点": "测一个功能点≠测了联动效果——割裂测试正是漏 bug 的主因；见 [[csp-cross-layer-testing]]"
   "测试方法越多越好全上": "联想不是堆砌；按需求风险选最小互补集，广而快的在前，慢而深的在后"
+tools: [Read, Write, Edit, Glob, Grep]
 ---
 
 # Test Methodology — 测试方法谱系与联想覆盖

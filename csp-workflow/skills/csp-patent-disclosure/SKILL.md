@@ -1,13 +1,6 @@
 ---
 name: csp-patent-disclosure
-description: >
-  Turn an engineering solution into a software patent disclosure document (技术交底书) that a
-  qualified patent attorney can draft claims from: patentability self-screening, prior-art search
-  with distinction analysis, invention-point extraction, nine-section disclosure writing, claim
-  layout thinking, and the sufficiency-vs-trade-secret split. Produces a technical disclosure
-  draft, never a legal opinion and never a decision on patentability.
-  触发：专利交底书、技术交底、写专利、申请专利、发明点提炼、可专利性初筛、现有技术检索、
-  区别技术特征、交底材料、patent disclosure、invention disclosure、prior art search.
+description: "Turn an engineering solution into a software patent disclosure document (技术交底书) that a patent attorney can draft claims from: patentability self-screening, prior-art search, invention-point extraction, and claim layout thinking. Produces a technical disclosure draft, never a legal opinion."
 version: "1.0.0"
 layer: 2
 category: workflow
@@ -51,6 +44,7 @@ triggers:
     - "an engineer needs to write 交底书 for the first time and has no template"
     - "a technical solution doc exists (PRD / tech design) and must be converted to patent language"
     - "before public release, conference talk, or open-sourcing, to preserve filing options"
+role: specialist
 ---
 
 # 专利交底书（Software Patent Disclosure）

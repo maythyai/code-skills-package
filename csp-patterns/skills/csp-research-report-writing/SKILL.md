@@ -1,14 +1,6 @@
 ---
 name: csp-research-report-writing
-description: >
-  Research-report writing & refactoring craft — distilled from top consulting reports and
-  editorial playbooks. Use it to (1) write a research/user-research/industry report from
-  scratch, or (2) optimize/rewrite/refactor an existing report (e.g. after stakeholder
-  feedback). Triggers when the user asks to write a research report, tighten report
-  structure, rewrite a report, add insight or action items, add data baselines, tension
-  structure, "in-practice" boxes, or sharpen the close. Also used by other research skills
-  (csp-product-research, csp-market-research, csp-account-research) as the writing-craft
-  layer for their deliverables.
+description: "Research-report writing & refactoring craft. Use to write a research/user-research/industry report from scratch, or to optimize/rewrite/refactor an existing report after stakeholder feedback. Also used by other research skills as the writing-craft layer for their deliverables."
 version: "1.4.0"
 layer: 3
 category: patterns
@@ -42,6 +34,7 @@ triggers:
     - "user brings an existing report and wants it restructured or sharpened"
     - "user received stakeholder feedback and wants the report revised"
   context: ["review", "define", "after_research"]
+role: specialist
 ---
 
 # Research Report Writing & Refactoring

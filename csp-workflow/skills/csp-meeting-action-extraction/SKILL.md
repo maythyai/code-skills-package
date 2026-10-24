@@ -1,12 +1,6 @@
 ---
 name: csp-meeting-action-extraction
-description: >
-  Turn meeting notes (pasted text, doc, transcript) into a verified action-item report:
-  parse assignees/tasks/deadlines, extract decisions and risks, apply action-item quality
-  gates, and map items onto a task system (Jira/Linear/TAPD/any tracker). Nothing is created
-  in the task system until the user confirms the parsed list.
-  Use when the user says "会议纪要", "会议记录", "行动项", "待办提取", "会议任务", "meeting notes",
-  "meeting minutes", "action items", "extract tasks from meeting", "会后跟进", "会议结论整理".
+description: "Turn meeting notes (pasted text, doc, transcript) into a verified action-item report: parse assignees/tasks/deadlines, extract decisions and risks, apply action-item quality gates, and map items onto a task system (Jira/Linear/any tracker)."
 version: "1.0.0"
 layer: 2
 category: workflow
@@ -39,6 +33,7 @@ triggers:
     - "user wants to extract action items and tasks from meeting notes"
     - "user wants meeting decisions and open questions summarized"
     - "user wants parsed meeting action items created in a task tracker"
+role: specialist
 ---
 
 # Meeting Action Extraction

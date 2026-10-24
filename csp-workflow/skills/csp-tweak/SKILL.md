@@ -16,6 +16,9 @@ related_skills:
   - csp-hotfix
   - csp-simple-dev
   - csp-full
+version: "1.0.0"
+role: specialist
+tools: [Read, Write, Edit, Bash, Glob, Grep]
 ---
 
 # CSP Tweak Workflow

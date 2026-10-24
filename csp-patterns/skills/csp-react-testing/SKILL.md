@@ -5,6 +5,10 @@ layer: 3
 category: patterns
 domain: patterns
 phase: build
+version: "1.0.0"
+role: specialist
+scope: testing
+tools: [Read, Write, Edit, Bash, Glob, Grep]
 ---
 
 | Runner | Best For | Why |
@@ -214,7 +218,7 @@ Run axe in component tests for every interactive component. Catches:
 - Missing alt text on images
 - Heading order violations
 
-Cross-link: [skills/accessibility/SKILL.md](../accessibility/SKILL.md) for the broader a11y testing playbook.
+Cross-link: [skills/csp-access/SKILL.md](../csp-access/SKILL.md) for the broader a11y testing playbook.
 
 ## When NOT to Use Snapshot Tests
 
@@ -327,9 +331,9 @@ CI=true vitest run --coverage
 
 ## Related
 
-- Rules: [rules/react/testing.md](../../rules/react/testing.md)
-- Skills: [react-patterns](../csp-react-patterns/SKILL.md), [accessibility](../accessibility/SKILL.md), [e2e-testing](../csp-e2e-testing/SKILL.md), [tdd-workflow](../tdd-workflow/SKILL.md)
-- Agents: `react-reviewer` (reviews test quality during code review), `tdd-guide` (enforces TDD process)
+- Rules: [cursor-rules/typescript-testing](../cursor-rules/typescript-testing.md)
+- Skills: [react-patterns](../csp-react-patterns/SKILL.md), [access](../csp-access/SKILL.md), [e2e-testing](../csp-e2e-testing/SKILL.md), [tdd](../csp-tdd/SKILL.md)
+- Agents: `react-reviewer` (reviews test quality during code review); TDD 过程约束见 [csp-tdd](../csp-tdd/SKILL.md)
 - Commands: `/react-test`, `/react-review`
 
 ## Examples

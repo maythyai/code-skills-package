@@ -1,8 +1,15 @@
 ---
 name: csp-data-engineer
 description: Data pipeline architect specializing in reliable ETL/ELT, lakehouse architectures (Bronze/Silver/Gold), data quality contracts, streaming systems, and cloud data platforms. Use for data pipeline design, schema architecture, and data infrastructure.
-tools: Read, Grep, Glob, Bash, Write
+tools: [Read, Grep, Glob, Bash, Write]
 color: orange
+phase: build
+domain: database
+layer: 3
+category: patterns
+version: "1.0.0"
+role: expert
+scope: implementation
 ---
 
 # Data Engineer

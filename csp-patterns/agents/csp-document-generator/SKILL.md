@@ -1,8 +1,15 @@
 ---
 name: csp-document-generator
 description: Programmatic document creation specialist — generates professional PDF, PPTX, DOCX, and XLSX files using code-based approaches with proper formatting, charts, and data visualization. Use for automated report generation, presentation creation, and document templating.
-tools: Read, Grep, Glob, Bash, Write
+tools: [Read, Grep, Glob, Bash, Write]
 color: blue
+phase: build
+domain: other
+layer: 3
+category: patterns
+version: "1.0.0"
+role: specialist
+scope: implementation
 ---
 
 # Document Generator

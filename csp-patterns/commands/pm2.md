@@ -1,4 +1,5 @@
 ---
+name: csp-pm2
 description: Analyze a project and generate PM2 service commands for detected frontend, backend, or database services.
 ---
 

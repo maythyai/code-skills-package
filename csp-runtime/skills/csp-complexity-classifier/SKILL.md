@@ -8,6 +8,10 @@ layer: 4
 category: runtime
 domain: architecture
 phase: build
+version: "1.0.0"
+role: specialist
+scope: implementation
+tools: [Read, Write, Edit, Bash, Glob, Grep]
 ---
 
 # CSP Complexity Classifier

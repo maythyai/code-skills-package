@@ -1,11 +1,15 @@
 ---
 name: csp-autopilot
-description: Full autonomous execution from idea to working code
+description: "Full autonomous execution from idea to working code. Takes a brief product idea and autonomously handles the entire lifecycle — requirements, design, implementation, testing — without stopping for confirmation. Use when the user wants end-to-end autonomous delivery from a short idea."
 argument-hint: "<product idea or task description>"
 layer: 4
 category: patterns
 domain: patterns
 phase: build
+version: "1.0.0"
+role: specialist
+scope: implementation
+tools: [Read, Write, Edit, Bash, Glob, Grep]
 ---
 
 <Purpose>

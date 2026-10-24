@@ -234,7 +234,7 @@ Output: Review identifying:
 - Can be used at any phase for validation
 
 ### With Other CSP Tools
-- \*\*csp-spec**: Reviews SPECs for completeness and feasibility
+- \*\*csp-spec-contract**: Reviews SPECs for completeness and feasibility
 - \*\*csp-party-mode**: Adversarial agent contributes skeptical perspective
 - **Phase Workflows**: Used in quality gates between phases
 

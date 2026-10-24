@@ -7,6 +7,9 @@ layer: 3
 category: patterns
 domain: patterns
 phase: build
+role: specialist
+scope: implementation
+tools: [Read, Write, Edit, Bash, Glob, Grep]
 ---
 
 # User Analytics

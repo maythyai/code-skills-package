@@ -15,6 +15,10 @@ layer: 4
 category: runtime
 domain: architecture
 phase: build
+version: "1.0.0"
+role: specialist
+scope: analysis
+tools: [Read, Write, Edit, Bash, Glob, Grep, WebFetch, WebSearch]
 ---
 
 | Hypothesis | Evidence | Confidence | Strength | Verdict |

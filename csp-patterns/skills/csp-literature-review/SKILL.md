@@ -1,6 +1,6 @@
 ---
 name: csp-literature-review
-description: "Run a reproducible academic literature review end to end: PICO question framing, boolean search strings across PubMed/arXiv/Semantic Scholar/OpenAlex, PRISMA dedup and three-stage screening, risk-of-bias quality appraisal, thematic synthesis, and DOI-verified citations. Use when the user needs a systematic review, scoping review, related-work section, evidence summary, or a reproducible search protocol for a research topic."
+description: "Run a reproducible academic literature review: PICO question framing, PRISMA dedup and screening, thematic synthesis, and DOI-verified citations. Use when the user needs a systematic review, scoping review, related-work section, or evidence summary."
 version: 0.1.0
 layer: 3
 category: patterns
@@ -9,6 +9,7 @@ domain: other
 scope: analysis
 tools: [Read, Write, Edit, Glob, Grep, Bash, WebSearch, WebFetch]
 related_skills: [csp-paper-reader, csp-deep-research, csp-article-writing, csp-market-research]
+role: specialist
 ---
 
 # Literature Review

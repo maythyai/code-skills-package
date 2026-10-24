@@ -1,5 +1,5 @@
 ---
-name: csp-ideate
+name: csp-ns-ideate
 description: "exploration capture | explore sketch spike spec capture"
 argument-hint: ""
 allowed-tools:

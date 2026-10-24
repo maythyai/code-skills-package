@@ -1,13 +1,6 @@
 ---
 name: csp-prd-parser
-description: |
-  多格式 PRD 文档解析器。统一解析多种格式的 PRD 文档（语雀/Notion/Confluence 等在线文档、Markdown、纯文本），
-  提取结构化信息，输出标准化的 PRD-IR（PRD 中间表示），供下游 skill 消费。
-  支持自动格式检测、章节识别、功能点提取、用户故事提取、约束条件识别。
-  当用户提供 PRD 文档链接或内容需要解析、或需要"解析 PRD"、"提取需求"、"PRD格式化"时使用。
-  关键词：解析 PRD、PRD 解析、提取需求、需求提取、PRD 格式化、
-  文档解析、结构化需求、parse PRD、extract requirements、PRD 结构化、
-  文档转需求、需求文档解析、PRD 链接解析、prd parser。
+description: "多格式 PRD 文档解析器。统一解析多种格式的 PRD 文档（语雀/Notion/Confluence 等在线文档、Markdown、纯文本），提取结构化信息，输出标准化的 PRD-IR（PRD 中间表示），供下游 skill 消费。支持自动格式检测、章节识别、功能点提取、用户故事提取、约束条件识别。当用户提供 PRD 文档链接或内容需要解析、或需要'解析 PRD''提取需求''PRD格式化'时使用。"
 version: "1.0.0"
 layer: 2
 category: workflow
@@ -41,6 +34,7 @@ triggers:
 anti_rationalizations:
   "PRD 直接看就行，不用解析": "不同格式的 PRD 结构不同，直接看容易遗漏。标准化解析保证完整性。"
   "手动提取功能点就行": "手动提取容易遗漏约束条件、非功能性需求等隐含信息。结构化解析不会遗漏。"
+role: specialist
 ---
 
 # PRD Parser

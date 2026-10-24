@@ -32,7 +32,7 @@ The Planning Phase defines what will be built, why it matters, and how success w
 
 **Tools**:
 ```
-csp-spec [requirements]
+csp-spec-contract [requirements]
 csp-party-mode --agents john,mary
 ```
 
@@ -92,7 +92,7 @@ csp-party-mode --agents winston,amelia
 
 **Tools**:
 ```
-csp-spec [validated requirements]
+csp-spec-contract [validated requirements]
 csp-party-mode --mode review [spec documents]
 ```
 
@@ -138,7 +138,7 @@ Before transitioning to Solutioning Phase:
 
 ## Integration with CSP Tools
 
-### With csp-spec
+### With csp-spec-contract
 - Converts requirements to formal SPEC contracts
 - Validates SPEC completeness and clarity
 - Tracks SPEC versions and changes

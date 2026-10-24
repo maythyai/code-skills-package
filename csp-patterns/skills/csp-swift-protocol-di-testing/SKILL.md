@@ -5,6 +5,10 @@ layer: 3
 category: patterns
 domain: patterns
 phase: build
+version: "1.0.0"
+role: specialist
+scope: testing
+tools: [Read, Write, Edit, Bash, Glob, Grep]
 ---
 
 # Swift Protocol-Based Dependency Injection for Testing

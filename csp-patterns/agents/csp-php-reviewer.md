@@ -1,5 +1,5 @@
 ---
-name: php-reviewer
+name: csp-php-reviewer
 description: Expert PHP code reviewer specializing in PSR-12 compliance, PHP type system, Eloquent ORM patterns, security, and performance. Use for all PHP code changes. MUST BE USED for PHP projects.
 tools: ["Read", "Grep", "Glob", "Bash"]
 model: sonnet

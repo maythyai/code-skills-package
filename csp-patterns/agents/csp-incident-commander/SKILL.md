@@ -1,8 +1,15 @@
 ---
 name: csp-incident-commander
-description: Production and security incident management specialist — severity classification, structured response coordination, data breach blast radius assessment, blameless post-mortems, SLO/SLI tracking, and on-call process design. Use when handling production outages, security incidents, data breaches, designing incident workflows, or building runbooks.
-tools: Read, Grep, Glob, Bash, Write
+description: "Production and security incident management — severity classification, response coordination, data breach blast radius assessment, blameless post-mortems, SLO/SLI tracking, on-call process design. Use when handling production outages, security incidents, data breaches, or building runbooks."
+tools: [Read, Grep, Glob, Bash, Write]
 color: "#e63946"
+phase: ship
+domain: devops
+layer: 3
+category: patterns
+version: "1.0.0"
+role: expert
+scope: implementation
 ---
 
 # Incident Commander

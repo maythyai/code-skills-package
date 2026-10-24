@@ -17,6 +17,8 @@ anti_rationalizations:
   "I'll add tests later": "Later never comes. Write tests first."
   "This is too simple to test": "Simple code has bugs too. Tests are cheap."
   "Tests slow me down": "Tests prevent debugging sessions that take longer."
+version: "1.0.0"
+role: specialist
 ---
 
 | Test Layer | Scope | When to Write |

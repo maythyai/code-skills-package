@@ -10,6 +10,8 @@ tools: [Read, Write, Edit, Bash, Glob, Grep]
 anti_rationalizations:
   "I'll refactor later": "Later never comes. Implement it right the first time."
   "This pattern is overkill": "Patterns exist for a reason. Follow established conventions."
+version: "1.0.0"
+role: specialist
 ---
 
 # Implementation Phase

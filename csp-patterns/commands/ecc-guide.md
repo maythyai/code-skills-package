@@ -1,4 +1,5 @@
 ---
+name: csp-ecc-guide
 description: Navigate CSP's current agents, skills, commands, hooks, install profiles, and docs from the live repository surface.
 ---
 

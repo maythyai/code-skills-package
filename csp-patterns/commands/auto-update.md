@@ -1,4 +1,5 @@
 ---
+name: csp-auto-update
 description: Pull the latest CSP repo changes and reinstall the current managed targets.
 disable-model-invocation: true
 ---

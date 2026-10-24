@@ -1,4 +1,5 @@
 ---
+name: csp-gradle-build
 description: Fix Gradle build errors for Android and KMP projects
 ---
 

@@ -9,6 +9,7 @@ role: reviewer
 scope: review
 tools: [Read, Grep, Glob, Bash, Agent]
 related_skills: [csp-code-graph, csp-graph-impact, csp-graph-review, csp-code-review, csp-qa-cr-review]
+version: "1.0.0"
 ---
 
 | Priority | Definition | Action |
@@ -191,7 +192,7 @@ Move demoted findings to `testing_gaps` or `residual_risks`.
 ### Protected Artifacts
 
 Never flag for deletion/removal/gitignore:
-- `docs/brainstorms/*` — requirements from csp-brainstorm
+- `docs/brainstorms/*` — requirements from csp-brainstorming
 - `docs/plans/*.md` — plan files from csp-plan
 - `docs/solutions/*.md` — solution docs from csp-compound
 

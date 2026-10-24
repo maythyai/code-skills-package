@@ -1,6 +1,6 @@
 ---
 name: csp-hardware-embedded
-description: "Hardware and embedded engineering: device-cloud interface contracts first, then board-level architecture, component selection and BOM, firmware/driver task scheduling, and staged bring-up. Use when working on MCU/RTOS firmware, PCB and circuit review, device protocols (MQTT/Modbus/UART/BLE/CAN), hardware-software co-debugging, board resource budgets, power and real-time constraints, or device telemetry/control integration with a backend."
+description: "Hardware and embedded engineering: device-cloud interface contracts first, then board-level architecture, component selection and BOM, firmware/driver task scheduling. Use when working on MCU/RTOS firmware, PCB and circuit review, device protocols (MQTT/Modbus/UART/BLE/CAN)."
 version: 0.1.0
 layer: 3
 category: patterns
@@ -9,6 +9,7 @@ domain: patterns
 scope: implementation
 tools: [Read, Write, Edit, Glob, Grep, Bash]
 related_skills: [csp-integration-design, csp-api-tester, csp-systematic-debugging, csp-webhook-architecture, csp-observability-and-instrumentation]
+role: specialist
 ---
 
 # Hardware & Embedded Engineering

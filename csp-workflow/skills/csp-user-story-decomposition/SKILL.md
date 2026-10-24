@@ -1,12 +1,6 @@
 ---
 name: csp-user-story-decomposition
-description: >
-  Decompose an Epic or large requirement into independently deliverable User Stories,
-  each with Acceptance Criteria and Story Point estimation.
-  Uses INVEST principle validation and 5 story splitting patterns.
-  Use when the user says "用户故事", "需求拆解", "AC", "Story拆分", "拆需求",
-  "拆Epic", "写user story", "验收标准", "拆任务", "story map", "backlog整理",
-  "sprint拆解", "user story", "acceptance criteria", "story splitting", "backlog grooming".
+description: "Decompose an Epic or large requirement into independently deliverable User Stories, each with Acceptance Criteria and Story Point estimation. Uses INVEST principle validation and 5 story splitting patterns. Use when the user says '用户故事', '需求拆解', 'AC', 'Story拆分', '拆Epic', '验收标准'."
 version: "1.0.0"
 layer: 2
 category: workflow
@@ -43,6 +37,7 @@ triggers:
     - "after_prd_approval"
     - "sprint_planning"
     - "backlog_grooming"
+role: specialist
 ---
 
 # User Story Decomposition

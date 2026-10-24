@@ -10,6 +10,9 @@ layer: 3
 category: patterns
 phase: ship
 domain: patterns
+role: specialist
+scope: implementation
+tools: [Read, Write, Edit, Bash, Glob, Grep]
 ---
 
 # Package Publishing Workflows

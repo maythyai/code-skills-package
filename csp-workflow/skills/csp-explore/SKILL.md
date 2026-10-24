@@ -7,6 +7,8 @@ phase: plan
 domain: patterns
 scope: analysis
 tools: [Read, Glob, Grep, WebFetch, WebSearch]
+version: "1.0.0"
+role: specialist
 ---
 
 # Explore Phase

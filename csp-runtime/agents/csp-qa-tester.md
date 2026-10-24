@@ -1,5 +1,5 @@
 ---
-name: qa-tester
+name: csp-qa-tester
 description: Interactive CLI testing specialist using tmux for session management
 model: sonnet
 level: 3

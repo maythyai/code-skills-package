@@ -1,4 +1,5 @@
 ---
+name: csp-aside
 description: Answer a quick side question without interrupting or losing context from the current task. Resume work automatically after answering.
 ---
 

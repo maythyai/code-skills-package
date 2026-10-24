@@ -1,6 +1,6 @@
 ---
 name: csp-graph-architecture
-description: "Codebase architecture analysis via knowledge graph. Use when onboarding to a codebase, understanding module boundaries, detecting coupling issues, identifying hub/bridge nodes, or generating architecture documentation. Covers community detection, centrality analysis, surprise scoring, and visualization."
+description: "Codebase architecture analysis via knowledge graph. Use when onboarding to a codebase, understanding module boundaries, detecting coupling issues, identifying hub/bridge nodes, or generating architecture documentation. Covers community detection, centrality analysis, and visualization."
 layer: 2
 category: workflow
 version: 1.0.0

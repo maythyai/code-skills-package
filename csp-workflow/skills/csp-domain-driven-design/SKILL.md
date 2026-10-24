@@ -1,14 +1,6 @@
 ---
 name: csp-domain-driven-design
-description: |
-  领域驱动设计(DDD)建模引擎。对复杂业务系统进行 DDD 建模，识别限界上下文、
-  设计聚合根/实体/值对象、建模领域事件、绘制上下文映射。
-  与 csp-requirement-decomposition 的域划分协同，将业务域映射为技术域。
-  当业务逻辑复杂需要使用 DDD 方法、或用户需要"DDD"、"领域驱动设计"、
-  "聚合根"、"限界上下文"、"领域建模"时使用。
-  关键词：DDD、领域驱动设计、聚合根、限界上下文、领域建模、domain driven design、
-  领域事件、上下文映射、aggregate root、bounded context、domain model、
-  实体设计、值对象、领域服务、领域层设计。
+description: "领域驱动设计(DDD)建模引擎。对复杂业务系统进行 DDD 建模：识别限界上下文、设计聚合根/实体/值对象、建模领域事件、绘制上下文映射。与 csp-requirement-decomposition 的域划分协同，将业务域映射为技术域。当业务逻辑复杂需要 DDD 方法、或用户需要'DDD''领域驱动设计''聚合根''限界上下文'时使用。"
 version: "1.0.0"
 layer: 2
 category: workflow
@@ -43,6 +35,7 @@ anti_rationalizations:
   "DDD 太复杂，不适合我们": "DDD 有战术模式和战略模式。简单项目用战术模式的一部分（实体、值对象），复杂项目才需要全量。"
   "按数据库表建模型就行": "数据库建模 ≠ 领域建模。数据驱动设计导致贫血模型，业务逻辑散落在 Service 层。"
   "限界上下文就是微服务": "限界上下文是逻辑边界，不一定是物理边界。一个微服务可以包含多个限界上下文，反之亦然。"
+role: specialist
 ---
 
 # Domain-Driven Design

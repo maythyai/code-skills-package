@@ -1,14 +1,6 @@
 ---
 name: csp-code-wiki
-description: >
-  Source-grounded Code Wiki — generate/maintain a Git-native Q&A knowledge wiki from one
-  logical code system (one or more repos), with optional knowledge-doc dependencies. Every
-  material claim cites a frozen commit (`/blob/<sha>/<path>#Lx`); pages are organized by
-  owned systems/concepts/workflows, not by mirroring the source tree. Uses bounded subagents
-  for survey + write + independent black-box semantic verification. Use when the user says
-  "generate codewiki", "refresh codewiki", "代码知识 wiki", "source-grounded wiki",
-  "build codebase wiki", "维护代码 wiki", "source-grounded codebase wiki", or wants a queryable
-  Q&A wiki generated FROM code (not hand-authored docs).
+description: "Source-grounded Code Wiki — generate/maintain a Git-native Q&A knowledge wiki from one logical code system. Every material claim cites a frozen commit; pages organized by owned systems/concepts/workflows. Use when the user says 'generate codewiki' or '代码知识 wiki'."
 version: "1.0.0"
 layer: 2
 category: workflow

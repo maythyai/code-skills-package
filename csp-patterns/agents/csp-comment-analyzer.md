@@ -1,5 +1,5 @@
 ---
-name: comment-analyzer
+name: csp-comment-analyzer
 description: Analyze code comments for accuracy, completeness, maintainability, and comment rot risk.
 model: sonnet
 tools: [Read, Grep, Glob]

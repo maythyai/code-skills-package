@@ -1,4 +1,12 @@
 ---
+version: "1.0.0"
+layer: 3
+category: patterns
+domain: patterns
+phase: define
+scope: analysis
+role: specialist
+tools: [Read, Write, Edit, Bash, Glob, Grep, WebFetch, WebSearch, Agent]
 name: signal-scan
 description: 批量扫描 B2B 目标客户的公开信号并输出 A/B/C/信息缺失四级分层。在已有公司名单（数十到数百家）、需要为后续 L3 轻度调研锁定优先级范围时使用——按 13 维度（招聘、技术选型、高管动向、合作关系、增长态势等）逐家结构化评分，输出评分量表、分层分析报告与五层字段架构的 CSV。通常由 account-research orchestrator 调用，也可单独使用。触发：'扫描这批公司的 AI 采购信号'、'signal scan'、'信号扫描'。
 ---

@@ -1,14 +1,14 @@
 ---
 name: csp-react-native-patterns
-description: >
-  React Native patterns covering navigation (React Navigation, Expo Router), state management
-  (Zustand, Jotai, Redux Toolkit), native module bridging (TurboModules, JSI), performance
-  (Hermes, FlashList, Reanimated), OTA updates, testing, new architecture (Fabric, TurboModules),
-  and Expo vs bare workflow decisions. Use for React Native project architecture and implementation.
+description: "React Native patterns covering navigation (React Navigation), state management (Zustand, Redux Toolkit), native module bridging (TurboModules, JSI), performance (Hermes, FlashList, Reanimated), OTA updates, testing, and Expo vs bare workflow decisions."
 layer: 3
 category: patterns
 domain: patterns
 phase: build
+version: "1.0.0"
+role: specialist
+scope: implementation
+tools: [Read, Write, Edit, Bash, Glob, Grep]
 ---
 
 | Aspect | Expo (Managed) | Bare Workflow |
@@ -629,5 +629,5 @@ hermesEnabled=true
 - `csp-mobile-performance` — Deep dive into mobile performance optimization
 - `csp-cross-platform-strategy` — Choosing the right cross-platform approach
 - `csp-react-patterns` — Web React patterns (shared concepts)
-- `csp-flutter-patterns` — Flutter alternative patterns
+- `csp-flutter-review` — Flutter alternative workflow
 - `csp-react-native-build-resolver` — Fix React Native build errors

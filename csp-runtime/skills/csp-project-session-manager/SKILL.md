@@ -1,11 +1,15 @@
 ---
 name: csp-project-session-manager
-description: Worktree-first dev environment manager for issues, PRs, and features with optional tmux sessions
+description: "Worktree-first dev environment manager for issues, PRs, and features with optional tmux. Creates isolated worktrees per task and tracks session state. Use when juggling multiple issues or PRs in parallel without polluting the main tree."
 aliases: [psm]
 layer: 4
 category: workflow
 domain: patterns
 phase: build
+version: "1.0.0"
+role: specialist
+scope: implementation
+tools: [Read, Write, Edit, Bash, Glob, Grep]
 ---
 
 | Command | Purpose | Example |

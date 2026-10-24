@@ -1,10 +1,6 @@
 ---
 name: csp-mobile-performance-auditor
-description: >
-  Mobile performance auditor. Audits frame rate issues, memory leaks, startup time,
-  bundle size, battery drain patterns, scroll performance, and image loading efficiency.
-  Applicable to React Native, Flutter, and native iOS/Android projects. Use when
-  investigating performance issues or conducting pre-release performance audits.
+description: "Mobile performance auditor. Audits frame rate issues, memory leaks, startup time, bundle size, and image loading efficiency. Applicable to React Native, Flutter, and native iOS/Android projects. Use when investigating performance issues or conducting pre-release audits."
 tools: ["Read", "Grep", "Glob", "Bash"]
 model: sonnet
 ---

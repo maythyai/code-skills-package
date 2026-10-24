@@ -6,6 +6,14 @@ description: >
   branch naming, and git workflow questions.
 metadata:
   globs: ["**/.git/**", "**/.github/**"]
+phase: build
+domain: devops
+layer: 3
+category: patterns
+version: "1.0.0"
+role: specialist
+scope: implementation
+tools: [Read, Write, Edit, Bash, Glob, Grep]
 ---
 
 # Git Conventions

@@ -1,8 +1,15 @@
 ---
 name: csp-multi-agent-architect
 description: Systems architect for multi-agent AI pipelines — topology selection, context management, inter-agent trust, failure recovery, human-in-the-loop gating, and observability for production-grade agent systems.
-tools: Read, Grep, Glob, Bash, Write
+tools: [Read, Grep, Glob, Bash, Write]
 color: cyan
+phase: plan
+domain: architecture
+layer: 3
+category: patterns
+version: "1.0.0"
+role: architect
+scope: design
 ---
 
 # Multi-Agent Systems Architect

@@ -1,10 +1,14 @@
 ---
 name: csp-writing-skills
-description: Use when creating new skills, editing existing skills, or verifying skills work before deployment
+description: "Use when creating new skills, editing existing skills, or verifying skills work before release. Covers frontmatter, progressive disclosure, reference files, and skill testing. Use for any skill authoring or maintenance task."
 layer: 1
 category: meta
 domain: architecture
 phase: define
+version: "1.0.0"
+role: specialist
+scope: design
+tools: [Read, Write, Edit, Glob, Grep]
 ---
 
 | TDD Concept | Skill Equivalent |
@@ -108,7 +112,7 @@ What goes wrong + fixes
 2. **Keyword coverage** — Include error messages, symptoms, synonyms, and tool names Claude would search for.
 3. **Descriptive naming** — Active voice, verb-first (`creating-skills` not `skill-creation`).
 4. **Token efficiency** — Frequently-loaded skills: <200 words. Use cross-references and compress examples.
-5. **Cross-referencing** — Use skill name with requirement markers (`**REQUIRED SUB-SKILL:** Use csp-test-driven-development`). Never use `@` links (force-loads, burns context).
+5. **Cross-referencing** — Use skill name with requirement markers (`**REQUIRED SUB-SKILL:** Use csp-tdd`). Never use `@` links (force-loads, burns context).
 
 For the complete CSO guide with examples, bad/good comparisons, and token efficiency techniques, see [references/cso-guide.md](references/cso-guide.md).
 
@@ -207,7 +211,7 @@ Edit skill without testing? Same violation.
 - Don't "adapt" while running tests
 - Delete means delete
 
-**REQUIRED BACKGROUND:** The csp-test-driven-development skill explains why this matters. Same principles apply to documentation.
+**REQUIRED BACKGROUND:** The csp-tdd skill explains why this matters. Same principles apply to documentation.
 
 ## Testing and RED-GREEN-REFACTOR
 

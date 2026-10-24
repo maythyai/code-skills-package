@@ -1,4 +1,5 @@
 ---
+name: csp-gan-design
 description: Run a generator/evaluator design loop for frontend or visual work with bounded iterations and scoring.
 ---
 

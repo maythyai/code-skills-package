@@ -1,13 +1,6 @@
 ---
 name: csp-issue-triage
-description: >
-  Triage pipeline for inbound issue reports (bugs, errors, user complaints): dedup and
-  merge by multi-signal fingerprint, classify, judge reproducibility on a five-level
-  scale, grade P0-P3 with SLAs, route to owners without ping-pong, detect ticket surges,
-  and close with root cause. Use when a batch of reports arrives and needs judging,
-  merging, grading, assigning and response commitments.
-  触发：工单分诊、问题分诊、缺陷分诊、工单去重、批量工单处理、bug 定级、issue triage、
-  triage、判重合并、工单激增、P0 定级.
+description: "Triage pipeline for inbound issue reports (bugs, errors, user complaints): dedup and merge by multi-signal fingerprint, classify, judge reproducibility, grade P0-P3 with SLAs, route to owners without ping-pong, detect ticket surges, and close with root cause."
 version: "1.0.0"
 layer: 2
 category: workflow
@@ -48,6 +41,7 @@ triggers:
     - "daily/weekly triage of an issue tracker queue"
     - "after a release, screening incoming reports for regressions"
     - "before planning a sprint, cleaning and grading the defect backlog"
+role: specialist
 ---
 
 # Issue Triage

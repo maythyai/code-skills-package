@@ -10,6 +10,7 @@ phase: build
 domain: patterns
 scope: design
 tools: [Read, Write, Edit, Glob, Grep, Bash]
+role: specialist
 ---
 
 ## 能力矩阵

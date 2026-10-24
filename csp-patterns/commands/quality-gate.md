@@ -1,4 +1,5 @@
 ---
+name: csp-quality-gate
 description: Run the CSP formatter quality gate for a single file and report remediation steps.
 ---
 

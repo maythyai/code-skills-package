@@ -1,13 +1,6 @@
 ---
 name: csp-requirement-decomposition
-description: |
-  需求全维度拆解引擎。将模糊需求/PRD/想法彻底分解为原子级 Feature，每个 Feature 附带用户故事、
-  验收标准、前后端边界、数据实体、技术维度和依赖关系。
-  当用户给出一个产品需求、功能描述、或想要从零构建系统时，第一步使用此 skill 进行结构化拆解。
-  关键词：需求拆解、feature 分解、requirement decomposition、break down requirements、
-  拆解需求、功能拆分、feature breakdown、需求分析、feature list、功能清单、
-  拆解功能、分解需求、analyze requirements、feature extraction、需求结构化。
-  即使用户只说"帮我做一个XX系统"，也应先使用此 skill 进行完整拆解再进入后续阶段。
+description: "需求全维度拆解引擎。将模糊需求/PRD/想法彻底分解为原子级 Feature，每个 Feature 附带用户故事、验收标准、前后端边界、数据实体、技术维度和依赖关系。当用户给出产品需求、功能描述、或想从零构建系统时，第一步使用此 skill 进行结构化拆解。即使用户只说'帮我做一个XX系统'，也应先使用此 skill 完整拆解再进入后续阶段。"
 version: "1.0.0"
 layer: 2
 category: workflow
@@ -44,6 +37,7 @@ anti_rationalizations:
   "This requirement is simple enough, no need to decompose": "Even simple requirements have hidden complexity. Decompose first."
   "I'll figure out the features during implementation": "Undiscovered features become tech debt. Map them now."
   "The user already listed the features": "Validate completeness. Users describe what they want, not everything they need."
+role: specialist
 ---
 
 # Requirement Decomposition Engine

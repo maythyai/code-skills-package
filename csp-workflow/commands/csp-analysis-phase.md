@@ -149,7 +149,7 @@ Before transitioning to Planning Phase:
 - Debate mode for evaluating options
 - Ensures all perspectives are considered
 
-### With csp-spec
+### With csp-spec-contract
 - Converts validated opportunity to preliminary SPEC
 - Documents requirements and constraints
 

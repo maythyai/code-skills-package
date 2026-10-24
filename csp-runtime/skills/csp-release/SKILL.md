@@ -3,6 +3,12 @@ name: csp-release
 description: Generic release assistant — analyzes repo release rules, caches them in .csp/RELEASE_RULE.md, then guides the release
 layer: 4
 phase: ship
+domain: devops
+category: patterns
+version: "1.0.0"
+role: specialist
+scope: implementation
+tools: [Read, Write, Edit, Bash, Glob, Grep]
 ---
 
 ### Step 1 — Repo Analysis (first run or --refresh)

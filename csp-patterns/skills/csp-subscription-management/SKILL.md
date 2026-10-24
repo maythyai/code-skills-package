@@ -7,6 +7,9 @@ layer: 3
 category: patterns
 phase: plan
 domain: patterns
+role: specialist
+scope: design
+tools: [Read, Write, Edit, Glob, Grep]
 ---
 
 # Subscription Management

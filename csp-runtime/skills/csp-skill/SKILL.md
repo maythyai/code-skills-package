@@ -1,11 +1,15 @@
 ---
 name: csp-skill
-description: Manage local skills - list, add, remove, search, edit, setup wizard
+description: "Manage local skills — list, add, remove, search, edit, setup wizard. Full lifecycle management for the csp-learned skills directory. Use when the user wants to organize, install, or modify skills."
 argument-hint: "<command> [args]"
 layer: 4
 category: workflow
 domain: patterns
 phase: build
+version: "1.0.0"
+role: specialist
+scope: implementation
+tools: [Read, Write, Edit, Bash, Glob, Grep, WebFetch, WebSearch]
 ---
 
 | Skill Name | Triggers | Quality |

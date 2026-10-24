@@ -16,6 +16,8 @@ anti_rationalizations:
   "I'm already in this file, might as well fix it": "Drive-by fixes bypass review and introduce regressions."
   "The user asked for it": "The user asked for a solution, not every possible feature."
   "It'll be harder to do later": "If it's not critical now, it might never need doing."
+version: "1.0.0"
+role: specialist
 ---
 
 # Scope Guard

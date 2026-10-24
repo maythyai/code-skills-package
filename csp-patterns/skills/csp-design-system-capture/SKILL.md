@@ -1,6 +1,6 @@
 ---
 name: csp-design-system-capture
-description: "Capture or update a design system from existing UI evidence: Figma variables, Tailwind config, CSS variables, component library source, Storybook, screenshots, and DOM/computed styles. Generates or refines DESIGN.md with confirmed/inferred confidence labels, reconciles source-of-truth conflicts, identifies token/component drift, and outputs drift-prevention rules. Use when the user asks to 反推设计系统, 整理设计 tokens, 生成 DESIGN.md, capture design system from existing UI, or 检测 Figma 与代码 token 漂移."
+description: "Capture or update a design system from existing UI evidence: Figma variables, Tailwind config, CSS variables, screenshots, DOM/computed styles. Generates or refines DESIGN.md with confidence labels, reconciles source-of-truth conflicts, and identifies token/component drift."
 version: 0.1.0
 layer: 3
 category: patterns
@@ -14,6 +14,7 @@ related_skills:
   - csp-frontend-design
   - csp-responsive-design
   - csp-design-hub
+role: specialist
 ---
 
 # Design System Capture

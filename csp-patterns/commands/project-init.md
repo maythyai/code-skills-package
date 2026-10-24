@@ -1,4 +1,5 @@
 ---
+name: csp-project-init
 description: Detect a project's stack and produce a dry-run CSP onboarding plan using the repository's install manifests and stack mappings.
 ---
 

@@ -1,11 +1,6 @@
 ---
 name: csp-prd-generation
-description: >
-  Generate a reviewable Product Requirements Document from feature descriptions.
-  Branches by product type (B2C/B2B/internal-tool/platform) with type-specific emphasis.
-  Use when the user says "write PRD", "product requirements", "feature spec",
-  "需求文档", "产品需求", "功能文档", "写需求", "PRD模板", "feature spec",
-  "产品需求文档", "功能规格", "需求规格说明", "出需求文档".
+description: "Generate a reviewable Product Requirements Document from feature descriptions. Branches by product type (B2C/B2B/internal-tool/platform) with type-specific emphasis. Use when the user says 'write PRD', 'product requirements', 'feature spec', '需求文档', '产品需求', '功能文档', '写需求', 'PRD模板', '出需求文档'."
 version: "1.0.0"
 layer: 2
 category: workflow
@@ -42,6 +37,7 @@ triggers:
   context:
     - "after_brainstorming"
     - "after_requirement_decomposition"
+role: specialist
 ---
 
 # PRD Generation

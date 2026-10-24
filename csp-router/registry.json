@@ -1,12 +1,12 @@
 {
   "version": "1.0",
-  "total_skills": 682,
+  "total_skills": 685,
   "shards": [],
   "skill_metadata": "skill-metadata.yaml",
   "skills": [
     {
       "name": "csp-agent-teams",
-      "description": "Orchestrate multiple AI agents for parallel or sequential task execution. Includes CSP agent-team collaboration (per-task dispatch with two-stage review) and parallel agent dispatch (independent problems solved concurrently). Use when executing implementation plans with independent tasks, or facing ",
+      "description": "Orchestrate multiple AI agents for parallel or sequential execution. Includes agent-team collaboration (per-task dispatch with two-stage review) and parallel dispatch of independent problems. Use when executing implementation plans with independent tasks, or facing 2+ independent failures.",
       "layer": 1,
       "category": "meta",
       "triggers": {
@@ -21,7 +21,7 @@
     },
     {
       "name": "csp-brainstorming",
-      "description": "Collaborative design partner that turns raw ideas into fully formed specs. Combines structured divergent-convergent ideation with interactive design dialogue. Use before any creative work — creating features, building components, adding functionality, or modifying behavior. Includes idea refinement,",
+      "description": "Collaborative design partner that turns raw ideas into fully formed specs. Combines structured divergent-convergent ideation with interactive design dialogue. Use before any creative work — creating features, building components, adding functionality, or modifying behavior.",
       "layer": 1,
       "category": "meta",
       "triggers": {
@@ -81,7 +81,7 @@
     },
     {
       "name": "csp-doubt-driven-development",
-      "description": "Subjects every non-trivial decision to a fresh-context adversarial review before it stands. Use when correctness matters more than speed, when working in unfamiliar code, when stakes are high (production, security-sensitive logic, irreversible operations), or any time a confident output would be che",
+      "description": "Subjects every non-trivial decision to a fresh-context adversarial review before it stands. Use when correctness matters more than speed, in unfamiliar code, when stakes are high (production, security-sensitive logic, irreversible operations), or when verifying now beats debugging later.",
       "layer": 1,
       "category": "meta",
       "triggers": {
@@ -126,7 +126,7 @@
     },
     {
       "name": "csp-interview-me",
-      "description": "Extracts what the user actually wants instead of what they think they should want. Achieves this through one-question-at-a-time interview until ~95% confidence about the underlying intent. Use when an ask is underspecified (\"build me X\" without \"for whom\" or \"why now\"), when the user explicitly invo",
+      "description": "Extracts what the user actually wants instead of what they think they should want, via one-question-at-a-time interview until ~95% confidence. Use when an ask is underspecified (\\\"build me X\\\" without \\\"for whom\\\" or \\\"why now\\\"), or when you silently fill in ambiguous requirements.",
       "layer": 1,
       "category": "meta",
       "triggers": {
@@ -156,7 +156,7 @@
     },
     {
       "name": "csp-party-mode",
-      "description": "Multi-agent collaboration for complex problem-solving with specialized AI agents",
+      "description": "Multi-agent collaboration for complex problem-solving with specialized AI agents. Design-stage skill (CLI commands not yet implemented); use csp-brainstorming for structured ideation today. Use when exploring multi-perspective discussion of a problem.",
       "layer": 1,
       "category": "meta",
       "triggers": {
@@ -276,7 +276,7 @@
     },
     {
       "name": "csp-systematic-debugging",
-      "description": "Use when encountering any bug, test failure, or unexpected behavior, before proposing fixes",
+      "description": "Use when encountering any bug, test failure, or unexpected behavior, before proposing fixes. Four-phase evidence-first debugging with anti-rationalization guardrails. Use for every debugging task — simple issues have root causes too.",
       "layer": 1,
       "category": "meta",
       "triggers": {
@@ -306,7 +306,7 @@
     },
     {
       "name": "csp-test-methodology",
-      "description": "Choose and combine testing methods so no requirement falls through the cracks. Use when planning test strategy for a feature, when single-layer tests pass but the feature breaks end-to-end, when deciding smoke vs sanity vs E2E vs integration vs contract vs property vs fuzz vs mutation vs exploratory",
+      "description": "Choose and combine testing methods so no requirement falls through the cracks: smoke, sanity, E2E, integration, contract, property, fuzz, mutation, exploratory, chaos, load, a11y, security. Use when planning test strategy, or when single-layer tests pass but the feature breaks end-to-end.",
       "layer": 1,
       "category": "meta",
       "triggers": {
@@ -366,7 +366,7 @@
     },
     {
       "name": "csp-writing-plans",
-      "description": "Use when you have a spec or requirements for a multi-step task, before touching code",
+      "description": "Use when you have a spec or requirements for a multi-step task, before touching code. Transforms specs into fully detailed, step-by-step implementation plans with file-level changes and verification steps. Use for planning non-trivial implementation work.",
       "layer": 1,
       "category": "meta",
       "triggers": {
@@ -381,7 +381,7 @@
     },
     {
       "name": "csp-writing-skills",
-      "description": "Use when creating new skills, editing existing skills, or verifying skills work before deployment",
+      "description": "Use when creating new skills, editing existing skills, or verifying skills work before release. Covers frontmatter, progressive disclosure, reference files, and skill testing. Use for any skill authoring or maintenance task.",
       "layer": 1,
       "category": "meta",
       "triggers": {
@@ -622,6 +622,21 @@
       "priority": 10
     },
     {
+      "name": "csp-correctness-reviewer",
+      "description": "Logic-correctness code-review persona for large blast radius or high-risk changes. Traces data flow, invariants, edge cases, and error paths to find bugs that unit tests and style reviews miss. Complements csp-adversarial-reviewer (failure scenarios) and csp-security-reviewer (attack surface).",
+      "layer": 3,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/agents/csp-correctness-reviewer.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
       "name": "csp-cpp-build-resolver",
       "description": "C++ build, CMake, and compilation error resolution specialist. Fixes build errors, linker issues, and template errors with minimal changes. Use when C++ builds fail.",
       "layer": 3,
@@ -713,7 +728,7 @@
     },
     {
       "name": "csp-data-pipeline-reviewer",
-      "description": "Data pipeline code reviewer. Reviews for idempotency, incremental correctness, schema evolution safety, data quality checks, error handling, retry logic, monitoring/alerting, and cost efficiency. Use for any codebase implementing ETL/ELT pipelines, data transformations, or batch/streaming data proce",
+      "description": "Data pipeline code reviewer. Reviews for idempotency, incremental correctness, schema evolution safety, data quality checks, retry logic, monitoring/alerting, and cost efficiency. Use for any codebase implementing ETL/ELT pipelines, data transformations, or batch/streaming processing.",
       "layer": 3,
       "category": "patterns",
       "triggers": {
@@ -1043,7 +1058,7 @@
     },
     {
       "name": "csp-incident-commander",
-      "description": "Production and security incident management specialist — severity classification, structured response coordination, data breach blast radius assessment, blameless post-mortems, SLO/SLI tracking, and on-call process design. Use when handling production outages, security incidents, data breaches, desi",
+      "description": "Production and security incident management — severity classification, response coordination, data breach blast radius assessment, blameless post-mortems, SLO/SLI tracking, on-call process design. Use when handling production outages, security incidents, data breaches, or building runbooks.",
       "layer": 3,
       "category": "patterns",
       "triggers": {
@@ -1118,7 +1133,7 @@
     },
     {
       "name": "csp-llm-app-reviewer",
-      "description": "LLM application code reviewer. Reviews for prompt injection vulnerabilities, cost control (token usage, caching), streaming correctness, error handling, guardrails completeness, model selection rationale, and structured output validation. Use for any codebase integrating with LLM APIs (OpenAI, Anthr",
+      "description": "LLM application code reviewer. Reviews for prompt injection vulnerabilities, cost control (token usage, caching), guardrails completeness, model selection rationale, and structured output validation. Use for any codebase integrating with LLM APIs (OpenAI, Anthropic, local models).",
       "layer": 3,
       "category": "patterns",
       "triggers": {
@@ -1148,7 +1163,7 @@
     },
     {
       "name": "csp-marketing-agent",
-      "description": "Marketing strategist and copywriter for campaign planning, audience research, positioning, copy creation, and content review. Covers landing pages, email sequences, social posts, ad copy, short-form video scripts, and content calendars. Use when the user wants to plan or execute a product launch or ",
+      "description": "Marketing strategist and copywriter for campaign planning, positioning, copy creation, and content review. Covers landing pages, email sequences, social posts, ad copy, and content calendars. Use when the user wants to plan or execute a product launch or marketing campaign.",
       "layer": 3,
       "category": "patterns",
       "triggers": {
@@ -1208,7 +1223,7 @@
     },
     {
       "name": "csp-mobile-performance-auditor",
-      "description": "Mobile performance auditor. Audits frame rate issues, memory leaks, startup time, bundle size, battery drain patterns, scroll performance, and image loading efficiency. Applicable to React Native, Flutter, and native iOS/Android projects. Use when investigating performance issues or conducting pre-r",
+      "description": "Mobile performance auditor. Audits frame rate issues, memory leaks, startup time, bundle size, and image loading efficiency. Applicable to React Native, Flutter, and native iOS/Android projects. Use when investigating performance issues or conducting pre-release audits.",
       "layer": 3,
       "category": "patterns",
       "triggers": {
@@ -1435,7 +1450,7 @@
     },
     {
       "name": "csp-project-standards-reviewer",
-      "description": "Always-on code-review persona. Audits changes against the project's own CLAUDE.md and AGENTS.md standards -- frontmatter rules, reference inclusion, naming conventions, cross-platform portability, and tool selection policies.",
+      "description": "Always-on code-review persona. Audits changes against project standards files (CLAUDE.md, AGENTS.md) — frontmatter rules, reference inclusion, naming, portability, tool selection — and extracts implicit standards from existing code. Use for establishing or reviewing project coding standards.",
       "layer": 3,
       "category": "patterns",
       "triggers": {
@@ -1444,7 +1459,7 @@
         "context": []
       },
       "stack_detection": false,
-      "path": "csp-patterns/agents/csp-project-standards-reviewer.md",
+      "path": "csp-patterns/agents/csp-project-standards-reviewer/SKILL.md",
       "deps": [],
       "priority": 10
     },
@@ -1495,7 +1510,7 @@
     },
     {
       "name": "csp-react-build-resolver",
-      "description": "Diagnose and fix React build failures across Vite, webpack, Next.js, CRA, Parcel, esbuild, and Bun. Handles JSX/TSX compile errors, hydration mismatches, server/client component boundary failures, missing types, and bundler-specific configuration issues with minimal, surgical changes. MUST BE USED w",
+      "description": "Diagnose and fix React build failures across Vite, webpack, Next.js, CRA, Parcel, esbuild, and Bun. Handles JSX/TSX compile errors, server/client component boundary failures, missing types, and bundler-specific configuration issues. MUST BE USED when a React build fails.",
       "layer": 3,
       "category": "patterns",
       "triggers": {
@@ -1525,7 +1540,7 @@
     },
     {
       "name": "csp-react-native-reviewer",
-      "description": "React Native code reviewer. Reviews bridge efficiency, native module usage, memory leaks, platform API correctness, navigation patterns, and performance anti-patterns including unnecessary re-renders and inline styles. Use for any change touching React Native (.tsx/.jsx) files in a React Native proj",
+      "description": "React Native code reviewer. Reviews bridge efficiency, native module usage, memory leaks, platform API correctness, navigation patterns, and performance anti-patterns. Use for any change touching React Native (.tsx/.jsx) files in a React Native project.",
       "layer": 3,
       "category": "patterns",
       "triggers": {
@@ -1700,6 +1715,21 @@
       },
       "stack_detection": false,
       "path": "csp-patterns/agents/csp-tech-writer.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-test-engineer",
+      "description": "QA engineer specialized in test strategy, test writing, and coverage analysis. Use for designing test suites, writing tests for existing code, evaluating test quality, hardening flaky tests, or TDD workflows.",
+      "layer": 3,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/agents/csp-test-engineer/SKILL.md",
       "deps": [],
       "priority": 10
     },
@@ -3115,7 +3145,7 @@
     },
     {
       "name": "csp-access",
-      "description": "Full accessibility audit (WCAG 2.1 AA/AAA). Performs a systematic accessibility compliance check Use when working on design tasks related to access.",
+      "description": "Full frontend accessibility audit (WCAG 2.1 AA/AAA) plus a11y evidence review: interpret axe / Playwright / Lighthouse reports, check contrast, keyboard navigation, focus-visible, ARIA, form labels, alt text, headings, touch targets. Use when working on design tasks related to access.",
       "layer": 3,
       "category": "patterns",
       "triggers": {
@@ -3130,7 +3160,7 @@
     },
     {
       "name": "csp-account-research",
-      "description": "B2B target-account batch research pipeline (orchestrator entry). A four-layer funnel (L1 quick-screen → L2 signal scan → L3 light research → L4 deep research → deliverable generation) progressively converges a candidate pool into a top target list, dispatching three sub-skills under references/ on d",
+      "description": "B2B target-account batch research pipeline (orchestrator entry). Four-layer funnel: quick-screen, signal scan, light research, deep research, then deliverable generation. Each move is source-graded and traceable; no conclusion is fabricated. Triggers: 帮我调研一批客户, 行业客户摸底, signal scan.",
       "layer": 3,
       "category": "patterns",
       "triggers": {
@@ -3220,7 +3250,7 @@
     },
     {
       "name": "csp-article-writing",
-      "description": "Write articles, guides, blog posts, tutorials, newsletter issues, and other long-form content in a distinctive voice derived from supplied examples or brand guidance. Use when the user wants polished written content longer than a paragraph, especially when voice consistency, structure, and credibili",
+      "description": "Write articles, guides, blog posts, tutorials, newsletter issues, and other long-form content in a distinctive voice derived from supplied examples or brand guidance. Use when the user wants polished written content longer than a paragraph.",
       "layer": 3,
       "category": "patterns",
       "triggers": {
@@ -3370,7 +3400,7 @@
     },
     {
       "name": "csp-browser-testing-with-devtools",
-      "description": "Tests in real browsers via Chrome DevTools MCP. Use when building or debugging anything that runs in a browser. Use when you need to inspect the DOM, capture console errors, analyze network requests, profile performance, or verify visual output with real runtime data. Requires the chrome-devtools MC",
+      "description": "Tests in real browsers via Chrome DevTools MCP. Use when building or debugging anything that runs in a browser — inspect the DOM, capture console errors, analyze network requests, profile performance, or verify visual output. Requires the chrome-devtools MCP server.",
       "layer": 3,
       "category": "patterns",
       "triggers": {
@@ -3490,7 +3520,7 @@
     },
     {
       "name": "csp-code-simplification",
-      "description": "Simplify code for clarity, remove dead code, and clean AI-generated slop. Combines five simplification principles, dead-code detection tools (knip, depcheck, ts-prune), and AI slop cleanup workflow. Use when refactoring for clarity, removing unused code, or cleaning bloated AI-generated implementati",
+      "description": "Simplify code for clarity, remove dead code, and clean AI-generated slop. Combines five simplification principles, dead-code detection tools (knip, depcheck, ts-prune), and an AI slop cleanup workflow. Use when refactoring for clarity, removing unused code, or cleaning bloated AI output.",
       "layer": 3,
       "category": "patterns",
       "triggers": {
@@ -3610,7 +3640,7 @@
     },
     {
       "name": "csp-cross-layer-testing",
-      "description": "Design and assert full-stack round-trip tests that correlate one user action across the UI, API, and database layers in a single traceable verdict. Use when a feature must be verified end-to-end — e.g. \"click should persist a record and reflect it on screen\", when single-layer tests pass but the int",
+      "description": "Design and assert full-stack round-trip tests correlating one user action across UI, API, and database in a single traceable verdict. Use when a feature must be verified end-to-end, when single-layer tests pass but the integration is broken, or when building traceable test contracts.",
       "layer": 3,
       "category": "patterns",
       "triggers": {
@@ -3625,7 +3655,7 @@
     },
     {
       "name": "csp-cross-platform-strategy",
-      "description": "Cross-platform development strategy covering platform selection (React Native vs Flutter vs Native vs KMP vs MAUI), code sharing strategies, platform adaptation, testing across platforms, CI/CD for multi-platform, app store considerations, and when to go native. Use when making cross-platform archit",
+      "description": "Cross-platform development strategy: platform selection (React Native vs Flutter vs Native vs KMP vs MAUI), code sharing strategies, platform adaptation, testing across platforms, CI/CD, app store considerations. Use when making cross-platform architecture decisions.",
       "layer": 3,
       "category": "patterns",
       "triggers": {
@@ -3670,7 +3700,7 @@
     },
     {
       "name": "csp-data-pipeline-patterns",
-      "description": "Production data pipeline patterns covering Airflow DAG design, dbt transformations, data quality checks, incremental processing, idempotent pipelines, schema evolution, data lineage, partitioned data warehouse patterns (BigQuery / Snowflake / generic ANSI SQL), data lake/warehouse patterns, and CDC ",
+      "description": "Production data pipeline patterns: Airflow DAG design, dbt transformations, data quality checks, incremental processing, idempotent pipelines, data lineage, data lake/warehouse patterns, CDC with Debezium. Use when designing, building, or debugging data pipelines.",
       "layer": 3,
       "category": "patterns",
       "triggers": {
@@ -3700,7 +3730,7 @@
     },
     {
       "name": "csp-db-migration",
-      "description": "Database migration best practices for schema changes, data migrations, rollbacks, and zero-downtime deployments across PostgreSQL and MySQL and common ORMs/tools (Prisma, Drizzle, TypeORM, Knex, Django, Alembic, Flyway, golang-migrate, Atlas). Execute zero-downtime migrations using expand-contract p",
+      "description": "Database migration best practices for schema changes, data migrations, rollbacks, and zero-downtime deployments across PostgreSQL and MySQL and common ORMs/tools (Prisma, Drizzle, Alembic, Flyway). Covers expand-contract patterns, online schema changes, and safe CI/CD integration.",
       "layer": 3,
       "category": "patterns",
       "triggers": {
@@ -3730,7 +3760,7 @@
     },
     {
       "name": "csp-db-state-assertion",
-      "description": "Assert database state before and after a single user action, and correlate the changed rows with the API call that triggered the write using a trace id or time window. Use when an integration test must prove \"this click persisted exactly the expected rows and did not break an invariant\", when debugg",
+      "description": "Assert database state before and after a single user action, and correlate changed rows with the API call via a trace id or time window. Use when a test must prove a click persisted exactly the expected rows, or when debugging 'API 200 but wrong rows in DB'.",
       "layer": 3,
       "category": "patterns",
       "triggers": {
@@ -3745,7 +3775,7 @@
     },
     {
       "name": "csp-de-ai-ify",
-      "description": "Remove machine-generated tells from Chinese or English prose so it reads like a person wrote it — banned vocabulary, uniform sentence rhythm, hollow enumeration, filler transitions — while preserving every factual claim, number and citation exactly. Use when the user says the text sounds like AI, wa",
+      "description": "Remove machine-generated tells from Chinese or English prose so it reads like a person wrote it, while preserving every factual claim, number, and citation exactly. Use when the user says the text sounds like AI, wants a human rewrite, or asks to 去AI味.",
       "layer": 3,
       "category": "patterns",
       "triggers": {
@@ -3775,7 +3805,7 @@
     },
     {
       "name": "csp-deployment",
-      "description": "Deployment workflows, CI/CD quality gates, Docker containerization, health checks, rollback strategies, feature flags, and production readiness checklists. Combines deployment patterns with CI/CD automation and shift-left quality strategy. Use when setting up deployment infrastructure, configuring C",
+      "description": "Deployment workflows, CI/CD quality gates, Docker containerization, health checks, rollback strategies, feature flags, and production readiness checklists. Use when setting up deployment infrastructure, configuring CI pipelines, or planning releases.",
       "layer": 3,
       "category": "patterns",
       "triggers": {
@@ -3790,7 +3820,7 @@
     },
     {
       "name": "csp-design-system-capture",
-      "description": "Capture or update a design system from existing UI evidence: Figma variables, Tailwind config, CSS variables, component library source, Storybook, screenshots, and DOM/computed styles. Generates or refines DESIGN.md with confirmed/inferred confidence labels, reconciles source-of-truth conflicts, ide",
+      "description": "Capture or update a design system from existing UI evidence: Figma variables, Tailwind config, CSS variables, screenshots, DOM/computed styles. Generates or refines DESIGN.md with confidence labels, reconciles source-of-truth conflicts, and identifies token/component drift.",
       "layer": 3,
       "category": "patterns",
       "triggers": {
@@ -3955,7 +3985,7 @@
     },
     {
       "name": "csp-everything-claude-code",
-      "description": "Development conventions and patterns for JavaScript projects with conventional commits.",
+      "description": "Development conventions and patterns for JavaScript projects with conventional commits. Codifies file naming, project structure, and commit message conventions. Use when establishing or checking conventions in a JS/TS project.",
       "layer": 3,
       "category": "patterns",
       "triggers": {
@@ -4090,7 +4120,7 @@
     },
     {
       "name": "csp-frontend-design",
-      "description": "Create distinctive, production-grade frontend interfaces with high design quality. Use this skill when the user asks to build web components, pages, artifacts, posters, or applications (examples include websites, landing pages, dashboards, React components, HTML/CSS layouts, or when styling/beautify",
+      "description": "Create distinctive, production-grade frontend interfaces with high design quality. Use when building web components, pages, artifacts, posters, or applications — websites, landing pages, dashboards, React components, HTML/CSS layouts, or styling any web UI.",
       "layer": 3,
       "category": "patterns",
       "triggers": {
@@ -4135,7 +4165,7 @@
     },
     {
       "name": "csp-frontend-slides",
-      "description": "Create stunning, animation-rich HTML presentations from scratch or by converting PowerPoint files. Use when the user wants to build a presentation, convert a PPT/PPTX to web, or create slides for a talk/pitch. Helps non-designers discover their aesthetic through visual exploration rather than abstra",
+      "description": "Create stunning, animation-rich HTML presentations from scratch or by converting PowerPoint files. Use when the user wants to build a presentation, convert a PPT/PPTX to web, or create slides for a talk/pitch. Helps non-designers discover their aesthetic through visual exploration.",
       "layer": 3,
       "category": "patterns",
       "triggers": {
@@ -4165,7 +4195,7 @@
     },
     {
       "name": "csp-git-recovery",
-      "description": "Diagnose and repair broken git repository state without losing work: orphaned worktree metadata, phantom branch locks, detached HEAD, HEAD/ref contradictions, missing or corrupt refs, and all-zero worktree hashes. Snapshot-first, non-destructive-first, every step gated by verification. Use when git ",
+      "description": "Diagnose and repair broken git repository state without losing work: orphaned worktree metadata, detached HEAD, HEAD/ref contradictions, missing or corrupt refs. Snapshot-first, non-destructive-first, every step gated by verification. Use when git status errors out or the repo is broken.",
       "layer": 3,
       "category": "patterns",
       "triggers": {
@@ -4195,7 +4225,7 @@
     },
     {
       "name": "csp-hardware-embedded",
-      "description": "Hardware and embedded engineering: device-cloud interface contracts first, then board-level architecture, component selection and BOM, firmware/driver task scheduling, and staged bring-up. Use when working on MCU/RTOS firmware, PCB and circuit review, device protocols (MQTT/Modbus/UART/BLE/CAN), har",
+      "description": "Hardware and embedded engineering: device-cloud interface contracts first, then board-level architecture, component selection and BOM, firmware/driver task scheduling. Use when working on MCU/RTOS firmware, PCB and circuit review, device protocols (MQTT/Modbus/UART/BLE/CAN).",
       "layer": 3,
       "category": "patterns",
       "triggers": {
@@ -4210,7 +4240,7 @@
     },
     {
       "name": "csp-html-prototype",
-      "description": "生成用于 UI 线框图和模型图的交互式 HTML 原型页面。当用户要求创建原型、线框图、模型图、页面设计或 UI 布局时使用。支持移动端、桌面端和平板设备，并可采用高保真或低保真风格。",
+      "description": "生成用于 UI 线框图和模型图的交互式 HTML 原型页面。支持移动端、桌面端和平板设备，并可采用高保真或低保真风格。当用户要求创建原型、线框图、模型图、页面设计或 UI 布局时使用。",
       "layer": 3,
       "category": "patterns",
       "triggers": {
@@ -4240,7 +4270,7 @@
     },
     {
       "name": "csp-image-to-code",
-      "description": "Convert a screenshot, mockup, Figma export, or design image into faithful, self-contained HTML/CSS. Covers the four-step analysis-to-code pipeline, fidelity priorities and measurable tolerances (exact hex, ±2px spacing, ±1px font size), design-token extraction, five-state high-fidelity prototypes, a",
+      "description": "Convert a screenshot, mockup, Figma export, or design image into faithful, self-contained HTML/CSS. Fidelity tolerances, design-token extraction, and five-state prototypes. Use when the user supplies an image and asks for HTML, a page rebuild, or D2C conversion.",
       "layer": 3,
       "category": "patterns",
       "triggers": {
@@ -4270,7 +4300,7 @@
     },
     {
       "name": "csp-investor-materials",
-      "description": "Create and update pitch decks, one-pagers, investor memos, accelerator applications, financial models, and fundraising materials. Use when the user needs investor-facing documents, projections, use-of-funds tables, milestone plans, or materials that must stay internally consistent across multiple fu",
+      "description": "Create and update pitch decks, one-pagers, investor memos, accelerator applications, financial models, and fundraising materials. Use when the user needs investor-facing documents, projections, use-of-funds tables, or milestone plans.",
       "layer": 3,
       "category": "patterns",
       "triggers": {
@@ -4315,7 +4345,7 @@
     },
     {
       "name": "csp-java-testing",
-      "description": "Java testing best practices using JUnit 5 (Jupiter), AssertJ fluent assertions, Mockito (mock/spy/verify/ArgumentCaptor), and Testcontainers for integration tests against real dependencies. Covers parameterized and nested tests, lifecycle hooks, Spring Boot test slices (@WebMvcTest, @DataJpaTest), t",
+      "description": "Java testing best practices using JUnit 5, AssertJ fluent assertions, Mockito, and Testcontainers for integration tests. Covers parameterized and nested tests, lifecycle hooks, Spring Boot test slices (@WebMvcTest, @DataJpaTest), test naming, and JaCoCo coverage.",
       "layer": 3,
       "category": "patterns",
       "triggers": {
@@ -4375,7 +4405,7 @@
     },
     {
       "name": "csp-kubernetes-troubleshooting",
-      "description": "Evidence-first troubleshooting for live Kubernetes incidents. Collect forensic artifacts before mutating anything, then walk a per-state decision tree (Pending, ImagePullBackOff, CrashLoopBackOff, OOMKilled, Running-but-not-Ready, stuck Terminating, CreateContainerConfigError) from symptom to confir",
+      "description": "Evidence-first troubleshooting for live Kubernetes incidents: walk a per-state decision tree (Pending, ImagePullBackOff, CrashLoopBackOff, OOMKilled, NotReady, stuck Terminating) from symptom to confirmed root cause to verified fix. Use when a workload is already broken in a running cluster.",
       "layer": 3,
       "category": "patterns",
       "triggers": {
@@ -4390,7 +4420,7 @@
     },
     {
       "name": "csp-literature-review",
-      "description": "Run a reproducible academic literature review end to end: PICO question framing, boolean search strings across PubMed/arXiv/Semantic Scholar/OpenAlex, PRISMA dedup and three-stage screening, risk-of-bias quality appraisal, thematic synthesis, and DOI-verified citations. Use when the user needs a sys",
+      "description": "Run a reproducible academic literature review: PICO question framing, PRISMA dedup and screening, thematic synthesis, and DOI-verified citations. Use when the user needs a systematic review, scoping review, related-work section, or evidence summary.",
       "layer": 3,
       "category": "patterns",
       "triggers": {
@@ -4420,7 +4450,7 @@
     },
     {
       "name": "csp-load-testing",
-      "description": "Design and run load, stress, spike and soak tests that produce a defensible capacity number. Covers the four load-model curve shapes, tool selection (k6 / Locust / JMeter), SLA percentile thresholds, CI gating, capacity planning arithmetic, and bottleneck attribution from flamegraphs. Use when the u",
+      "description": "Design and run load, stress, spike and soak tests. Tool selection (k6 / Locust / JMeter), SLA percentile thresholds, CI gating, capacity planning, and bottleneck attribution from flamegraphs. Use when you need to know how much traffic a service survives, or validate an SLA.",
       "layer": 3,
       "category": "patterns",
       "triggers": {
@@ -4450,7 +4480,7 @@
     },
     {
       "name": "csp-market-research",
-      "description": "Market research that supports decisions, and the reports that carry it. Two modes: (1) decision-oriented research — market sizing, competitor comparisons, investor dossiers, technology scans, with source attribution and a go/no-go verdict; (2) comprehensive 50+ page consulting-grade report (McKinsey",
+      "description": "Market research that supports decisions, and the reports that carry it. Two modes: (1) decision-oriented research — market sizing, competitor comparisons, investor dossiers, technology scans; (2) comprehensive report with multi-framework analysis (PESTLE, SWOT, TAM/SAM/SOM).",
       "layer": 3,
       "category": "patterns",
       "triggers": {
@@ -4510,7 +4540,7 @@
     },
     {
       "name": "csp-mobile-device-testing",
-      "description": "Real-device functional testing and device automation for Android and iOS: ADB diagnostics (logcat / dumpsys / am / pm / input / uiautomator), evidence capture (screencap, screenrecord, bugreport), device-matrix design driven by real user distribution, system-level interference testing (permission tr",
+      "description": "Real-device functional testing and automation for Android and iOS: ADB diagnostics (logcat / dumpsys / uiautomator), interference testing (permissions, background kill, rotation), weak/offline network simulation. iOS equivalents via simctl, devicectl, Instruments.",
       "layer": 3,
       "category": "patterns",
       "triggers": {
@@ -4525,7 +4555,7 @@
     },
     {
       "name": "csp-mobile-performance",
-      "description": "Mobile performance optimization covering startup optimization, memory management, list/scroll performance, bundle size, battery optimization, profiling tools, and frame rate optimization. Applicable to React Native, Flutter, and native iOS/Android development. Use when diagnosing or preventing mobil",
+      "description": "Mobile performance optimization covering startup optimization, memory management, list/scroll performance, profiling tools, and frame rate optimization. Applicable to React Native, Flutter, and native iOS/Android development. Use when diagnosing or preventing mobile performance issues.",
       "layer": 3,
       "category": "patterns",
       "triggers": {
@@ -4660,7 +4690,7 @@
     },
     {
       "name": "csp-observability-and-instrumentation",
-      "description": "Instruments code so production behavior is visible and diagnosable. Use when adding logging, metrics, tracing, or alerting. Use when shipping any feature that runs in production and you need evidence it works. Use when production issues are reported but you can't tell what happened from the availabl",
+      "description": "Instruments code so production behavior is visible and diagnosable. Use when adding logging, metrics, tracing, or alerting. Use when shipping any feature that runs in production and you need evidence it works.",
       "layer": 3,
       "category": "patterns",
       "triggers": {
@@ -4885,7 +4915,7 @@
     },
     {
       "name": "csp-product-research",
-      "description": "Scientific, comprehensive product & business-direction research suite. Covers five scenarios: venture-direction evaluation, industry scan, competitor deep-dive, customer insight, and unit-economics. AI completes all desk research autonomously and outputs a structured report + Lean Canvas + decision ",
+      "description": "Scientific, comprehensive product & business-direction research: venture-direction evaluation, industry scan, competitor deep-dive, customer insight, and unit-economics. Outputs a structured report + Lean Canvas + decision memo. Triggers: 评估这个方向, 行业分析, 竞品分析, market sizing.",
       "layer": 3,
       "category": "patterns",
       "triggers": {
@@ -4900,7 +4930,7 @@
     },
     {
       "name": "csp-prompt-engineering",
-      "description": "Production prompt engineering covering template management with Jinja2/Mustache, version control, evaluation frameworks, prompt pattern libraries (chain-of-thought, few-shot, ReAct, structured output), guardrails and safety, systematic optimization, and multi-model adaptation. Use when designing, te",
+      "description": "Production prompt engineering covering template management, version control, evaluation frameworks, prompt pattern libraries (chain-of-thought, few-shot, ReAct), guardrails, and systematic optimization. Use when designing, testing, versioning, or optimizing prompts for LLM applications.",
       "layer": 3,
       "category": "patterns",
       "triggers": {
@@ -4915,7 +4945,7 @@
     },
     {
       "name": "csp-python-coding-standards",
-      "description": "Python coding standards (Python 3.10+) covering naming & style (PEP 8), type annotations (PEP 484+), language features, exceptions & logging, modern syntax & concurrency, security, unit testing, project structure (pyproject.toml), and toolchain (Ruff/mypy). Use when writing, reviewing, or refactorin",
+      "description": "Python coding standards covering naming & style, type annotations, exceptions & logging, modern syntax & concurrency, security, unit testing, project structure, and toolchain (Ruff/mypy). Use when writing, reviewing, or refactoring Python code to enforce idiomatic, safe, typed practices.",
       "layer": 3,
       "category": "patterns",
       "triggers": {
@@ -4960,7 +4990,7 @@
     },
     {
       "name": "csp-qa-test-engineering",
-      "description": "全生命周期 QA 测试工程技能。覆盖需求分析→测试计划→测试用例→自动化执行→生产问题调查完整流程。涉及测试规划、测试策略、用例生成、接口测试、回归测试、生产调试、事件分析等场景时使用。",
+      "description": "全生命周期 QA 测试工程技能。覆盖需求分析→测试计划→测试用例→自动化执行→生产问题调查完整流程，涉及测试规划、测试策略、用例生成、接口测试、回归测试、生产调试、事件分析。触发：做测试、设计测试策略、质量保证。",
       "layer": 3,
       "category": "patterns",
       "triggers": {
@@ -4975,7 +5005,7 @@
     },
     {
       "name": "csp-qa",
-      "description": "Design QA / Implementation Fidelity Review. After engineering or a coding agent completes the Use when working on design tasks related to qa.",
+      "description": "Design QA / implementation fidelity review with release verdict (Pass / Pass with warnings / Fail / Inconclusive). Reviews screenshots against DESIGN.md / SCREEN_SPEC.md, Figma frame, prototype — checking design system, components, accessibility, and design intent.",
       "layer": 3,
       "category": "patterns",
       "triggers": {
@@ -5005,7 +5035,7 @@
     },
     {
       "name": "csp-react-native-patterns",
-      "description": "React Native patterns covering navigation (React Navigation, Expo Router), state management (Zustand, Jotai, Redux Toolkit), native module bridging (TurboModules, JSI), performance (Hermes, FlashList, Reanimated), OTA updates, testing, new architecture (Fabric, TurboModules), and Expo vs bare workfl",
+      "description": "React Native patterns covering navigation (React Navigation), state management (Zustand, Redux Toolkit), native module bridging (TurboModules, JSI), performance (Hermes, FlashList, Reanimated), OTA updates, testing, and Expo vs bare workflow decisions.",
       "layer": 3,
       "category": "patterns",
       "triggers": {
@@ -5065,7 +5095,7 @@
     },
     {
       "name": "csp-react-version-patterns",
-      "description": "React version-specific patterns and migration guide. Covers React 18 batching, concurrent features, Suspense, and React 19 Server Components, Actions, use() hook. Includes migration recipes from class components, Enzyme→RTL, and legacy Context. Use when upgrading React versions or adopting version-s",
+      "description": "React version-specific patterns and migration guide. Covers React 18 batching, concurrent features, Suspense, and React 19 Server Components, Actions, use() hook. Includes migration recipes (class components, Enzyme→RTL, legacy Context). Use when upgrading React versions.",
       "layer": 3,
       "category": "patterns",
       "triggers": {
@@ -5095,7 +5125,7 @@
     },
     {
       "name": "csp-refactoring-strategies",
-      "description": "Large-scale refactoring strategies including Strangler Fig, Branch by Abstraction, Parallel Run, Feature Toggle migration, and classic refactoring patterns. Covers safety practices, characterization tests, code smell taxonomy, and incremental migration techniques. Use when planning or executing sign",
+      "description": "Large-scale refactoring strategies including Strangler Fig, Branch by Abstraction, Parallel Run, Feature Toggle migration, and classic refactoring patterns. Use when planning or executing significant refactoring across a codebase.",
       "layer": 3,
       "category": "patterns",
       "triggers": {
@@ -5110,7 +5140,7 @@
     },
     {
       "name": "csp-research-report-writing",
-      "description": "Research-report writing & refactoring craft — distilled from top consulting reports and editorial playbooks. Use it to (1) write a research/user-research/industry report from scratch, or (2) optimize/rewrite/refactor an existing report (e.g. after stakeholder feedback). Triggers when the user asks t",
+      "description": "Research-report writing & refactoring craft. Use to write a research/user-research/industry report from scratch, or to optimize/rewrite/refactor an existing report after stakeholder feedback. Also used by other research skills as the writing-craft layer for their deliverables.",
       "layer": 3,
       "category": "patterns",
       "triggers": {
@@ -5350,7 +5380,7 @@
     },
     {
       "name": "csp-ssh-operations",
-      "description": "Operate SSH itself as infrastructure: secure connection and config management, host key and known_hosts hygiene, local/remote/dynamic port forwarding, ProxyJump and multi-hop bastion access, key generation and rotation, non-interactive automation with connection multiplexing, and a fault-decision ta",
+      "description": "Operate SSH itself as infrastructure: host key and known_hosts hygiene, local/remote/dynamic port forwarding, ProxyJump and multi-hop bastion access, key generation and rotation. Use when you need to reach a machine, tunnel to a service behind it, or diagnose why a connection fails.",
       "layer": 3,
       "category": "patterns",
       "triggers": {
@@ -5455,7 +5485,7 @@
     },
     {
       "name": "csp-tech-diagram",
-      "description": "Use when the user asks to create, visualize, or animate a technical diagram — software architecture, data flow, flowcharts, sequence diagrams, C4 models, cloud deployments, event streams, observability traces, agent/memory systems, UML, ER, network topology, timelines, or technical concept maps. Pro",
+      "description": "Use when the user asks to create, visualize, or animate a technical diagram — software architecture, data flow, flowcharts, sequence diagrams, C4 models, cloud deployments, UML, ER, network topology. Produces geometry-checked SVG, SVG-to-GIF motion, and offline interactive HTML.",
       "layer": 3,
       "category": "patterns",
       "triggers": {
@@ -5470,7 +5500,7 @@
     },
     {
       "name": "csp-test-case-design",
-      "description": "Systematically enumerate test cases for one requirement or one function using seven black-box design techniques (equivalence partitioning, boundary value analysis, decision table, state transition, cause-effect graphing, pairwise/orthogonal arrays, scenario flows), then land them as table-driven cas",
+      "description": "Systematically enumerate test cases for one requirement or function using seven black-box design techniques (equivalence partitioning, boundary value analysis, decision table, state transition, pairwise), then land them as table-driven cases and an AC traceability matrix.",
       "layer": 3,
       "category": "patterns",
       "triggers": {
@@ -5485,7 +5515,7 @@
     },
     {
       "name": "csp-test",
-      "description": "Usability testing & expert heuristic review for design validation. Mode A covers the full lifecycle with real users: Plan → Script → Conduct → Analyze (Nielsen 0-4 severity, task success rates, evidence chains). Mode B (Expert Heuristic Review) is a degradation mode for when no real users are availa",
+      "description": "Usability testing & expert heuristic review for design validation. Mode A covers the full lifecycle with real users: Plan → Script → Conduct → Analyze. Mode B (Expert Heuristic Review) is a degradation mode when no real users are available — code review + Nielsen 10 heuristics.",
       "layer": 3,
       "category": "patterns",
       "triggers": {
@@ -5500,7 +5530,7 @@
     },
     {
       "name": "csp-typescript-patterns",
-      "description": "TypeScript-specific design patterns and best practices for TypeScript 5.x: the type system (generics, conditional types, `infer`, mapped types, template literal types), `type` vs `interface`, discriminated unions, the `satisfies` operator, strict mode and key tsconfig options, ESM vs CJS, type guard",
+      "description": "TypeScript design patterns and best practices for TypeScript 5.x: generics, conditional types, infer, template literal types, type vs interface, discriminated unions, satisfies, strict mode, ESM vs CJS, type guards, utility types. Use when writing, reviewing, or refactoring TypeScript code.",
       "layer": 3,
       "category": "patterns",
       "triggers": {
@@ -5515,7 +5545,7 @@
     },
     {
       "name": "csp-typescript-testing",
-      "description": "TypeScript testing best practices for TypeScript 5.x: choosing between Vitest and Jest, the Arrange-Act-Assert structure, type-level testing with expectTypeOf and tsd, mocking with vi.mock / jest.mock and module mocks, async testing, coverage with v8 (c8) or istanbul, and pointers to component and E",
+      "description": "TypeScript testing best practices for TypeScript 5.x: choosing between Vitest and Jest, the Arrange-Act-Assert structure, type-level testing with expectTypeOf and tsd, mocking with vi.mock / jest.mock and module mocks, async testing, coverage with v8 (c8) or istanbul.",
       "layer": 3,
       "category": "patterns",
       "triggers": {
@@ -5525,6 +5555,21 @@
       },
       "stack_detection": false,
       "path": "csp-patterns/skills/csp-typescript-testing/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-ui-alignment-review",
+      "description": "Reviews whether frontend UI implementation is aligned with an approved Figma frame, prototype screenshot, baseline image, DESIGN.md contract, and component system. Turns screenshot diff evidence into alignment findings with categories (layout, spacing, typography, tokens), severity.",
+      "layer": 3,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/csp-ui-alignment-review/SKILL.md",
       "deps": [],
       "priority": 10
     },
@@ -5545,7 +5590,7 @@
     },
     {
       "name": "csp-video-editing",
-      "description": "AI-assisted video editing workflows for cutting, structuring, and augmenting real footage. Covers the full pipeline from raw capture through FFmpeg, Remotion, ElevenLabs, fal.ai, and final polish in Descript or CapCut. Use when the user wants to edit video, cut footage, create vlogs, or build video ",
+      "description": "AI-assisted video editing workflows for cutting, structuring, and augmenting real footage. Covers the full pipeline from raw capture through FFmpeg, Remotion, ElevenLabs, fal.ai, and final polish in Descript or CapCut. Use when the user wants to edit video, cut footage, or build video content.",
       "layer": 3,
       "category": "patterns",
       "triggers": {
@@ -5555,6 +5600,21 @@
       },
       "stack_detection": false,
       "path": "csp-patterns/skills/csp-video-editing/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-visual-regression-review",
+      "description": "Compares UI screenshots against approved baselines, Figma exports, prototype images, or reference screenshots. Covers regression mode (current UI vs last approved baseline) and conformance mode (current UI vs design reference), threshold tuning, and baseline update policy.",
+      "layer": 3,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/csp-visual-regression-review/SKILL.md",
       "deps": [],
       "priority": 10
     },
@@ -5575,7 +5635,7 @@
     },
     {
       "name": "csp-vllm-serving",
-      "description": "Production vLLM inference serving patterns covering Docker setup, continuous batching, PagedAttention, tensor parallelism, OpenAI-compatible APIs, LoRA multiplexing, quantization, performance tuning, health checks, Kubernetes scaling, and multi-model serving. Use when deploying, optimizing, or opera",
+      "description": "Production vLLM inference serving patterns covering Docker setup, continuous batching, PagedAttention, tensor parallelism, OpenAI-compatible APIs, quantization, performance tuning, Kubernetes scaling, and multi-model serving. Use when deploying, optimizing, or operating LLM inference with vLLM.",
       "layer": 3,
       "category": "patterns",
       "triggers": {
@@ -6459,21 +6519,6 @@
       "priority": 10
     },
     {
-      "name": "csp-test-engineer",
-      "description": "Test strategy, integration/e2e coverage, flaky test hardening, TDD workflows",
-      "layer": 4,
-      "category": "runtime",
-      "triggers": {
-        "keywords": [],
-        "file_patterns": [],
-        "context": []
-      },
-      "stack_detection": false,
-      "path": "csp-runtime/agents/csp-test-engineer.md",
-      "deps": [],
-      "priority": 10
-    },
-    {
       "name": "csp-tracer",
       "description": "Evidence-driven causal tracing with competing hypotheses, evidence for/against, uncertainty tracking, and next-probe recommendations",
       "layer": 4,
@@ -6580,7 +6625,7 @@
     },
     {
       "name": "csp-autopilot",
-      "description": "Full autonomous execution from idea to working code",
+      "description": "Full autonomous execution from idea to working code. Takes a brief product idea and autonomously handles the entire lifecycle — requirements, design, implementation, testing — without stopping for confirmation. Use when the user wants end-to-end autonomous delivery from a short idea.",
       "layer": 4,
       "category": "runtime",
       "triggers": {
@@ -6685,7 +6730,7 @@
     },
     {
       "name": "csp-configure-notifications",
-      "description": "Configure notification integrations (Telegram, Discord, Slack) via natural language",
+      "description": "Configure notification integrations (Telegram, Discord, Slack) via natural language. Interactive setup walks through credential collection and webhook wiring so CSP can message you when sessions end or need input. Use when enabling session notifications.",
       "layer": 4,
       "category": "runtime",
       "triggers": {
@@ -6715,7 +6760,7 @@
     },
     {
       "name": "csp-debug",
-      "description": "Diagnose the current CSP session or repo state using logs, traces, state, and focused reproduction",
+      "description": "Diagnose the current CSP session or repo state using logs, traces, state, and focused checks. Finds the real failure signal and explains the next corrective step. Use when a CSP session behaves unexpectedly or configuration seems broken.",
       "layer": 4,
       "category": "runtime",
       "triggers": {
@@ -6745,7 +6790,7 @@
     },
     {
       "name": "csp-deep-interview",
-      "description": "Socratic deep interview with mathematical ambiguity gating before explicit execution approval",
+      "description": "Socratic deep interview with mathematical ambiguity gating before explicit execution. One-question-at-a-time probing until requirements are unambiguous. Use when an ask is underspecified and silently filling in assumptions is risky.",
       "layer": 4,
       "category": "runtime",
       "triggers": {
@@ -6760,7 +6805,7 @@
     },
     {
       "name": "csp-deepinit",
-      "description": "Deep codebase initialization with hierarchical AGENTS.md documentation",
+      "description": "Deep codebase initialization with hierarchical AGENTS.md documentation. Analyzes the repository and generates layered AGENTS.md files at each directory level. Use when setting up a new project for agent-assisted development.",
       "layer": 4,
       "category": "runtime",
       "triggers": {
@@ -6775,7 +6820,7 @@
     },
     {
       "name": "csp-doctor",
-      "description": "Diagnose and fix code-skills-package installation issues",
+      "description": "Diagnose and fix code-skills-package installation issues. Runs a battery of health checks over the CSP environment, then reports [HEALTHY / ISSUES FOUND] with concrete fixes. Use when CSP commands fail, skills are missing, or setup behaves unexpectedly.",
       "layer": 4,
       "category": "runtime",
       "triggers": {
@@ -6790,7 +6835,7 @@
     },
     {
       "name": "csp-external-context",
-      "description": "Invoke parallel document-specialist agents for external web searches and documentation lookup",
+      "description": "Invoke parallel document-specialist agents for external web searches and documentation. Decomposes a query into 2-5 facets and fetches external context in parallel. Use when the current session lacks needed documentation or external references.",
       "layer": 4,
       "category": "runtime",
       "triggers": {
@@ -6805,7 +6850,7 @@
     },
     {
       "name": "csp-file-organizer",
-      "description": "通过理解上下文、查找重复文件、建议更合理的目录结构并自动化清理任务，智能整理你电脑中的文件与文件夹。降低整理负担，让数字工作空间长期保持整洁有序。",
+      "description": "通过理解上下文、查找重复文件、建议更合理的目录结构并自动化清理任务，智能整理电脑中的文件与文件夹，让数字工作空间长期保持整洁有序。触发：整理文件夹、清理重复文件、帮我归类文件、整理下载目录。",
       "layer": 4,
       "category": "runtime",
       "triggers": {
@@ -6820,7 +6865,7 @@
     },
     {
       "name": "csp-hud",
-      "description": "Configure HUD display options (layout, presets, display elements)",
+      "description": "Configure HUD display options (layout, presets, display elements). Customizes the session HUD via natural language or commands. Use when adjusting what status information is shown during CSP sessions.",
       "layer": 4,
       "category": "runtime",
       "triggers": {
@@ -6835,7 +6880,7 @@
     },
     {
       "name": "csp-learner",
-      "description": "Extract a learned skill from the current conversation",
+      "description": "Extract a learned skill from the current conversation. Captures reusable principles and decision-making rules discovered during a session, stores them as a durable skill, and improves them over time as new patterns emerge. Use after solving a novel problem worth remembering.",
       "layer": 4,
       "category": "runtime",
       "triggers": {
@@ -6850,7 +6895,7 @@
     },
     {
       "name": "csp-learning-loop",
-      "description": "Automatic session-boundary learning orchestrator. Extracts, classifies, and stores learnings across 5 dimensions (project core, user needs, developer profile, long-term memory, skill feedback). Delegates to csp-remember, csp-learner, skill-optimizer, csp-compound. [PLANNED] Runs at Stop/PreCompact/S",
+      "description": "Session-boundary learning orchestrator. Extracts, classifies, and stores learnings across 5 dimensions (project, user needs, developer profile, memory, skill feedback). Delegates to csp-remember, csp-learner, skill-optimizer, csp-compound. [PLANNED] Runs at Stop/PreCompact/SessionEnd hooks.",
       "layer": 4,
       "category": "runtime",
       "triggers": {
@@ -6865,7 +6910,7 @@
     },
     {
       "name": "csp-linked-test-runner",
-      "description": "Orchestrate a full cross-layer round-trip test for one feature: seed the DB, drive a UI action with Playwright, capture its API request, assert the resulting DB state, verify the UI reflects that state, and emit a single linked verdict that names the broken layer if any. Use when you need to verify ",
+      "description": "Orchestrate a full cross-layer round-trip test for one feature: seed the DB, drive a UI action with Playwright, verify the UI reflects the resulting DB state, and emit a single linked verdict naming the broken layer. Use when single-layer tests pass but the feature is broken end-to-end.",
       "layer": 4,
       "category": "runtime",
       "triggers": {
@@ -6895,7 +6940,7 @@
     },
     {
       "name": "csp-mcp-setup",
-      "description": "Configure popular MCP servers for enhanced agent capabilities",
+      "description": "Configure popular MCP servers for enhanced agent capabilities. Walks through MCP server setup interactively, one question at a time with at most 3 options per question. Use when the user wants to add MCP servers or extend agent tooling.",
       "layer": 4,
       "category": "runtime",
       "triggers": {
@@ -6940,7 +6985,7 @@
     },
     {
       "name": "csp-project-session-manager",
-      "description": "Worktree-first dev environment manager for issues, PRs, and features with optional tmux sessions",
+      "description": "Worktree-first dev environment manager for issues, PRs, and features with optional tmux. Creates isolated worktrees per task and tracks session state. Use when juggling multiple issues or PRs in parallel without polluting the main tree.",
       "layer": 4,
       "category": "runtime",
       "triggers": {
@@ -6955,7 +7000,7 @@
     },
     {
       "name": "csp-ralph",
-      "description": "Self-referential loop until task completion with configurable verification reviewer",
+      "description": "Self-referential loop until task completion with configurable verification reviewer. Iterates on a task, checking output against a completion promise, until the reviewer verifies success or the iteration cap is hit. Use for autonomous retry-until-done execution.",
       "layer": 4,
       "category": "runtime",
       "triggers": {
@@ -7015,7 +7060,7 @@
     },
     {
       "name": "csp-scientist",
-      "description": "Orchestrate parallel scientist agents for comprehensive analysis with AUTO mode",
+      "description": "Orchestrate parallel scientist agents for comprehensive analysis with AUTO mode. Dispatches task-type-matched agents (light models for enumeration, strong models for synthesis) for parallel analysis. Use for broad codebase investigation or research questions.",
       "layer": 4,
       "category": "runtime",
       "triggers": {
@@ -7030,7 +7075,7 @@
     },
     {
       "name": "csp-self-improve",
-      "description": "Autonomous evolutionary code improvement engine with tournament selection",
+      "description": "Autonomous evolutionary code improvement engine with tournament selection. Iterates code variants through test gates without pausing for confirmation. Use when running a self-directed improvement loop on a codebase.",
       "layer": 4,
       "category": "runtime",
       "triggers": {
@@ -7075,7 +7120,7 @@
     },
     {
       "name": "csp-skill",
-      "description": "Manage local skills - list, add, remove, search, edit, setup wizard",
+      "description": "Manage local skills — list, add, remove, search, edit, setup wizard. Full lifecycle management for the csp-learned skills directory. Use when the user wants to organize, install, or modify skills.",
       "layer": 4,
       "category": "runtime",
       "triggers": {
@@ -7090,7 +7135,7 @@
     },
     {
       "name": "csp-skillify",
-      "description": "Turn a repeatable workflow from the current session into a reusable CSP skill draft",
+      "description": "Turn a repeatable workflow from the current session into a reusable CSP skill draft. Extracts the session process into frontmatter, triggers, and instructions. Use after completing a workflow worth repeating.",
       "layer": 4,
       "category": "runtime",
       "triggers": {
@@ -7105,7 +7150,7 @@
     },
     {
       "name": "csp-team",
-      "description": "N coordinated agents on shared task list using Claude Code native teams",
+      "description": "N coordinated agents on shared task list using Claude Code native teams. Spins up role-specialized workers and reviewers around a shared task list with per-stage routing. Use for multi-agent team execution of a plan.",
       "layer": 4,
       "category": "runtime",
       "triggers": {
@@ -7150,7 +7195,7 @@
     },
     {
       "name": "csp-ultraqa",
-      "description": "QA cycling workflow - test, verify, fix, repeat until goal met",
+      "description": "QA cycling workflow — test, verify, fix, repeat until goal met. Runs test suites, verifies results, and fixes failures in a loop until the success criteria pass. Use when iterating on code until tests pass or a quality gate is met.",
       "layer": 4,
       "category": "runtime",
       "triggers": {
@@ -7165,7 +7210,7 @@
     },
     {
       "name": "csp-ultrawork",
-      "description": "Parallel execution engine for high-throughput task completion",
+      "description": "Parallel execution engine for high-throughput task completion. Dispatches independent work items to parallel agents and aggregates the results. Use when facing many independent tasks that can run concurrently without shared state.",
       "layer": 4,
       "category": "runtime",
       "triggers": {
@@ -7180,7 +7225,7 @@
     },
     {
       "name": "csp-visual-verdict",
-      "description": "Structured visual QA verdict for screenshot-to-reference comparisons",
+      "description": "Structured visual QA verdict for screenshot-to-reference comparisons. Compares generated UI screenshots against reference images and returns a structured verdict with deviations. Use when verifying visual output against a design reference.",
       "layer": 4,
       "category": "runtime",
       "triggers": {
@@ -7195,7 +7240,7 @@
     },
     {
       "name": "csp-wiki",
-      "description": "LLM Wiki — persistent, self-maintained markdown knowledge base that compounds across sessions (Karpathy model). Two-layer: raw source docs (read-only truth) vs an AI-maintained _wiki layer (index.md + append-only log.md + topic pages). Ingest compiles sources into structured pages; lint checks healt",
+      "description": "LLM Wiki — persistent, self-maintained markdown knowledge base that compounds across sessions. Two-layer: raw source docs (read-only truth) vs an AI-maintained _wiki layer (index.md + log.md + topic pages). Ingest compiles sources into structured pages; lint checks health.",
       "layer": 4,
       "category": "runtime",
       "triggers": {
@@ -7210,7 +7255,7 @@
     },
     {
       "name": "csp-writer-memory",
-      "description": "Agentic memory system for writers - track characters, relationships, scenes, and themes",
+      "description": "Agentic memory system for writers — track characters, relationships, scenes, and themes across sessions. Initializes per-project memory and updates it as the story evolves. Use when writing long-form fiction or serial content that needs continuity.",
       "layer": 4,
       "category": "runtime",
       "triggers": {
@@ -7240,7 +7285,7 @@
     },
     {
       "name": "csp-ai-researcher",
-      "description": "Researches a chosen AI framework's official docs to produce implementation-ready guidance — best practices, syntax, core patterns, and pitfalls distilled for the specific use case. Writes the Framework Quick Reference and Implementation Guidance sections of AI-SPEC.md. Spawned by /csp-ai-integration",
+      "description": "Researches a chosen AI framework's official docs to produce implementation-ready guidance — best practices, syntax, core patterns, and pitfalls. Writes the Framework Quick Reference and Implementation Guidance sections of AI-SPEC.md. Spawned by /csp-ai-integration-phase orchestrator.",
       "layer": 2,
       "category": "workflow",
       "triggers": {
@@ -7330,7 +7375,7 @@
     },
     {
       "name": "csp-doc-synthesizer",
-      "description": "Synthesizes classified planning docs into a single consolidated context. Applies precedence rules, detects cross-ref cycles, enforces LOCKED-vs-LOCKED hard-blocks, and writes INGEST-CONFLICTS.md with three buckets (auto-resolved, competing-variants, unresolved-blockers). Spawned by /csp-ingest-docs.",
+      "description": "Synthesizes classified planning docs into a single consolidated context. Applies precedence rules, detects cross-ref cycles, enforces LOCKED-vs-LOCKED hard-blocks, and writes INGEST-CONFLICTS.md. Spawned by /csp-ingest-docs.",
       "layer": 2,
       "category": "workflow",
       "triggers": {
@@ -7375,7 +7420,7 @@
     },
     {
       "name": "csp-domain-researcher",
-      "description": "Researches the business domain and real-world application context of the AI system being built. Surfaces domain expert evaluation criteria, industry-specific failure modes, regulatory context, and what \"good\" looks like for practitioners in this field — before the eval-planner turns it into measurab",
+      "description": "Researches the business domain and real-world application context of the AI system being built. Surfaces domain expert evaluation criteria, industry-specific failure modes, and what 'good' looks like for practitioners in this field. Spawned by /csp-ai-integration-phase orchestrator.",
       "layer": 2,
       "category": "workflow",
       "triggers": {
@@ -7390,7 +7435,7 @@
     },
     {
       "name": "csp-eval-auditor",
-      "description": "Retroactive audit of an implemented AI phase's evaluation coverage. Checks implementation against the AI-SPEC.md evaluation plan. Scores each eval dimension as COVERED/PARTIAL/MISSING. Produces a scored EVAL-REVIEW.md with findings, gaps, and remediation guidance. Spawned by /csp-eval-review orchest",
+      "description": "Retroactive audit of an implemented AI phase's evaluation coverage. Checks implementation against the AI-SPEC.md evaluation plan. Scores each eval dimension as COVERED/PARTIAL/MISSING. Produces a scored EVAL-REVIEW.md. Spawned by /csp-eval-review orchestrator.",
       "layer": 2,
       "category": "workflow",
       "triggers": {
@@ -7405,7 +7450,7 @@
     },
     {
       "name": "csp-eval-planner",
-      "description": "Designs a structured evaluation strategy for an AI phase. Identifies critical failure modes, selects eval dimensions with rubrics, recommends tooling, and specifies the reference dataset. Writes the Evaluation Strategy, Guardrails, and Production Monitoring sections of AI-SPEC.md. Spawned by /csp-ai",
+      "description": "Designs a structured evaluation strategy for an AI phase. Identifies critical failure modes, selects eval dimensions with rubrics. Writes the Evaluation Strategy and Guardrails sections of AI-SPEC.md. Spawned by /csp-ai-integration-phase orchestrator.",
       "layer": 2,
       "category": "workflow",
       "triggers": {
@@ -8680,7 +8725,7 @@
     },
     {
       "name": "csp-change-impact-analysis",
-      "description": "Engineering change-impact analysis for code and architecture changes: map forward dependents across six dimensions (code, contract, data, runtime, deployment, consumers), bound propagation depth, grade risk, derive the minimal regression set, and produce an impact report before the change is made. A",
+      "description": "Engineering change-impact analysis for code and architecture changes: map forward dependents across six dimensions (code, contract, data, runtime, deployment, consumers), grade risk, derive the minimal regression set, and produce an impact report before the change is made.",
       "layer": 2,
       "category": "workflow",
       "triggers": {
@@ -8695,7 +8740,7 @@
     },
     {
       "name": "csp-code-spec",
-      "description": "Code Module Spec (CMS / 代码说明书). The per-application living baseline distilled from the codebase and auto-aligned to ground truth. One CMS per application/repo. It maps entry points, call chains, module boundaries, and conventions, and feeds design / task-split / code generation / code review with an",
+      "description": "Code Module Spec (CMS / 代码说明书). The per-application living baseline distilled from the codebase. It maps entry points, module boundaries, and conventions, and feeds design / task-split / code generation / code review. Use when '代码说明书', 'CMS', '代码蒸馏', or 'code distillation' is needed.",
       "layer": 2,
       "category": "workflow",
       "triggers": {
@@ -8710,7 +8755,7 @@
     },
     {
       "name": "csp-code-understanding",
-      "description": "代码理解文档自动生成引擎。产出结构化、可增量更新的代码理解文档（模块依赖图、 关键执行路径、数据流、调用关系、入口点、外部依赖），持久化到 .csp/code-understanding/ 下 system/module/function 三级 Markdown。消费 csp-code-graph 图谱数据（如可用） + csp-explore 探索方法论，支持增量更新（检测代码变更后重新生成受影响部分）。 当用户需要\"代码理解文档\"\"模块依赖图\"\"代码结构文档\"\"onboarding 文档\"时使用。 关键词：代码理解、模块依赖、调用关系、代码结构文档、code understanding、 ",
+      "description": "代码理解文档自动生成引擎。产出结构化、可增量更新的代码理解文档（模块依赖图、关键执行路径、数据流、调用关系、入口点、外部依赖），持久化到 .csp/code-understanding/ 下三级 Markdown。支持增量更新（检测代码变更后重新生成受影响部分）。当用户需要'代码理解文档''模块依赖图''onboarding 文档'时使用。",
       "layer": 2,
       "category": "workflow",
       "triggers": {
@@ -8725,7 +8770,7 @@
     },
     {
       "name": "csp-code-wiki",
-      "description": "Source-grounded Code Wiki — generate/maintain a Git-native Q&A knowledge wiki from one logical code system (one or more repos), with optional knowledge-doc dependencies. Every material claim cites a frozen commit (`/blob/<sha>/<path>#Lx`); pages are organized by owned systems/concepts/workflows, not",
+      "description": "Source-grounded Code Wiki — generate/maintain a Git-native Q&A knowledge wiki from one logical code system. Every material claim cites a frozen commit; pages organized by owned systems/concepts/workflows. Use when the user says 'generate codewiki' or '代码知识 wiki'.",
       "layer": 2,
       "category": "workflow",
       "triggers": {
@@ -8740,7 +8785,7 @@
     },
     {
       "name": "csp-codebase-audit",
-      "description": "Multi-dimensional codebase audit: parallel Explore agents investigate one dimension each (functionality/architecture/data/frontend/engineering-quality), high-risk findings are verified on-machine, then assembled into a single decision-source document (problem report + design + upgrade plan). Trigger",
+      "description": "Multi-dimensional codebase audit: parallel Explore agents investigate one dimension each, high-risk findings verified on-machine, then assembled into a decision-source document (problem report + upgrade plan). Trigger on full review requests, '项目体检', or 'codebase audit'.",
       "layer": 2,
       "category": "workflow",
       "triggers": {
@@ -8755,7 +8800,7 @@
     },
     {
       "name": "csp-competitive-analysis",
-      "description": "Structured competitive analysis with two modes: (1) a full framework report — feature comparison matrix, SWOT, Porter's Five Forces, differentiation strategy, branching by purpose (product design / fundraising BP / strategic planning / annual review); (2) a single-movement competitive-intelligence s",
+      "description": "Structured competitive analysis with two modes: (1) full framework report — feature comparison matrix, SWOT, Porter's Five Forces, differentiation strategy; (2) single-movement competitive-intelligence scan — source-graded recent-move digest. Both modes enforce zero fabrication.",
       "layer": 2,
       "category": "workflow",
       "triggers": {
@@ -8785,7 +8830,7 @@
     },
     {
       "name": "csp-compound-refresh",
-      "description": "Refresh stale learning and pattern docs under docs/solutions/ by reviewing them against the current codebase, then updating, consolidating, or deleting drifted ones. Use when the user asks to \"refresh my learnings\", \"audit docs/solutions/\", \"clean up stale learnings\", or \"consolidate overlapping doc",
+      "description": "Refresh stale learning and pattern docs under docs/solutions/, then update, consolidate, or delete drifted ones. Use when the user asks to 'refresh my learnings', 'audit docs/solutions/', or 'clean up stale learnings', or when csp-compound flags an older doc as superseded.",
       "layer": 2,
       "category": "workflow",
       "triggers": {
@@ -8800,7 +8845,7 @@
     },
     {
       "name": "csp-defect-mining",
-      "description": "Systematic defect discovery via DIVERSE test methodologies — when a test suite has plateaued (more unit tests find 0 bugs), switch methods, not add quantity. Layers: basic (unit/BVA) → structural (mutation / error-path enumeration / type-tightening) → adversarial (fuzz / property-based / state-trans",
+      "description": "Systematic defect discovery via diverse test methodologies — when a test suite has plateaued, switch methods, not add quantity. Layers: adversarial (fuzz / property-based / state-transition) → system (concurrency / cross-module invariants). Use when auditing test effectiveness or hunting bugs.",
       "layer": 2,
       "category": "workflow",
       "triggers": {
@@ -8830,7 +8875,7 @@
     },
     {
       "name": "csp-design-hub",
-      "description": "设计方案多模式生成与同步引擎。支持 summary/detailed/rapid/local-rapid/regenerate 五种模式切换 + 模式互切，输出到现有 .csp/tech-design/ 目录。 与 csp-tech-solution-design 协作：本技能做模式分发与设计-实现同步管理， csp-tech-solution-design 做实际 TDD 生成。支持\"设计文档与实现同步\"—— 检测代码漂移，标记需同步的设计章节。 当用户需要\"设计方案多模式切换\"\"设计文档重新生成\"\"概要设计\"\"极速设计\"时使用。 关键词：设计模式切换、概要设计、详细设计、极速设计、本地极速",
+      "description": "设计方案多模式生成与同步引擎。支持 summary/detailed/rapid/local-rapid/regenerate 五种模式切换 + 模式互切，输出到现有 .csp/tech-design/ 目录。与 csp-tech-solution-design 协作：本技能做模式分发与设计-实现同步管理，后者做实际 TDD 生成。支持'设计文档与实现同步'——检测代码漂移，标记需同步的设计章节。当用户需要'设计方案多模式切换''概要设计''极速设计'时使用。",
       "layer": 2,
       "category": "workflow",
       "triggers": {
@@ -8845,7 +8890,7 @@
     },
     {
       "name": "csp-doc-lifecycle-manager",
-      "description": "Manage project documentation lifecycle: categorize, archive, index, and prune documents. Use when organizing docs into folders (design/plan/architecture/prototypes/reference), creating INDEX.md files, archiving obsolete docs, or doing documentation health checks. Triggers: 整理文档, doc cleanup, organiz",
+      "description": "Manage project documentation lifecycle: categorize, archive, index, and prune documents. Use when organizing docs into folders, archiving obsolete docs, or doing documentation health checks. Triggers: 整理文档, doc cleanup, organize docs, 文档归类, archive docs.",
       "layer": 2,
       "category": "workflow",
       "triggers": {
@@ -8860,7 +8905,7 @@
     },
     {
       "name": "csp-domain-driven-design",
-      "description": "领域驱动设计(DDD)建模引擎。对复杂业务系统进行 DDD 建模，识别限界上下文、 设计聚合根/实体/值对象、建模领域事件、绘制上下文映射。 与 csp-requirement-decomposition 的域划分协同，将业务域映射为技术域。 当业务逻辑复杂需要使用 DDD 方法、或用户需要\"DDD\"、\"领域驱动设计\"、 \"聚合根\"、\"限界上下文\"、\"领域建模\"时使用。 关键词：DDD、领域驱动设计、聚合根、限界上下文、领域建模、domain driven design、 领域事件、上下文映射、aggregate root、bounded context、domain model、 实体设计、",
+      "description": "领域驱动设计(DDD)建模引擎。对复杂业务系统进行 DDD 建模：识别限界上下文、设计聚合根/实体/值对象、建模领域事件、绘制上下文映射。与 csp-requirement-decomposition 的域划分协同，将业务域映射为技术域。当业务逻辑复杂需要 DDD 方法、或用户需要'DDD''领域驱动设计''聚合根''限界上下文'时使用。",
       "layer": 2,
       "category": "workflow",
       "triggers": {
@@ -8875,7 +8920,7 @@
     },
     {
       "name": "csp-effort-estimation",
-      "description": "⚠️ AI 编程下绝对工时/人天估算无意义（产出节奏与日历无关，可能几小时完成一个版本）。本 skill 仅作**复杂度相对参考**与**依赖/并行度分析**，不产绝对时间线/排期/人天；返回时须声明\"AI 产出节奏不可估时，以下仅复杂度相对参考\"。 复杂度相对估算引擎。从技术方案和任务拆解出发，分析复杂度、不确定性、并行度（非绝对工时）。 方法：类比估算、三点估算(PERT)、COCOMO II（仅作复杂度相对参考，不产绝对人天）。 输出 WBS 复杂度汇总、依赖/并行计划、相对里程碑序列（按版本号，不按日期）。 当任务拆解完成后需要复杂度相对参考、或用户需要\"估时\"\"排期\"\"资源计划\"时使",
+      "description": "⚠️ AI 编程下绝对工时/人天估算无意义（产出节奏与日历无关）。本 skill 仅作复杂度相对参考与依赖/并行度分析，不产绝对时间线/排期/人天。方法：类比估算、三点估算(PERT)、COCOMO II（仅作相对参考）。输出 WBS 复杂度汇总、依赖/并行计划、相对里程碑序列。当任务拆解完成后需要复杂度参考、或用户需要'估时''排期''资源计划'时使用。",
       "layer": 2,
       "category": "workflow",
       "triggers": {
@@ -8905,7 +8950,7 @@
     },
     {
       "name": "csp-full",
-      "description": "CSP Full — 全链路产品交付工作流，从想法到生产部署的端到端自动化。 覆盖：需求澄清 → PRD → 技术设计 → 并行开发 → 测试 → 代码审查 → 发布 → 运维监控。 支持企业协作模式（多角色、审批门控）和独立开发者模式（精简快速）。 支持多轮里程碑迭代（MVP → v1 → v2）。 当用户描述一个产品想法、想要从零构建一个应用、需要端到端全流程交付时使用。 关键词：csp-full, \"full workflow\", \"full pipeline\", \"端到端\", \"全流程\", \"从需求到发布\", \"从想法到产品\", \"从概念到上线\", \"build me a produc",
+      "description": "CSP Full — 全链路产品交付工作流，从想法到生产部署的端到端自动化。覆盖：需求澄清 → PRD → 技术设计 → 并行开发 → 测试 → 代码审查 → 发布 → 运维监控。支持企业协作模式（多角色、审批门控）和独立开发者模式，支持多轮里程碑迭代（MVP → v1 → v2）。当用户描述产品想法、想从零构建应用、或需要端到端全流程交付时使用。即使用户只说模糊想法（如'帮我做一个习惯打卡 app'），只要涉及从零构建完整产品就应使用；纯代码审查、bug 修复、单文件修改不要用。",
       "layer": 2,
       "category": "workflow",
       "triggers": {
@@ -8920,7 +8965,7 @@
     },
     {
       "name": "csp-fullstack-spec-generator",
-      "description": "全栈技术规格生成器。为每个 Feature 生成完整的、可直接指导实现的技术规格文档，覆盖： UI/UX 原型描述、数据库 Schema（DDL 级）、API 契约（OpenAPI 级）、后端架构设计、 前端组件树、基础设施需求、测试策略、安全考量。 当技术选型完成后需要生成详细实现规格、或用户需要\"每个 feature 的完整技术细节\"时使用。 关键词：全栈spec、fullstack spec、技术规格、implementation spec、详细设计、 数据库设计、API设计、schema design、前端设计、组件设计、接口契约、 generate spec、生成规格、feature",
+      "description": "全栈技术规格生成器。为每个 Feature 生成完整的、可直接指导实现的技术规格文档，覆盖：UI/UX 原型描述、数据库 Schema（DDL 级）、API 契约（OpenAPI 级）、后端架构设计、前端组件树、测试策略、安全考量。当技术选型完成后需要生成详细实现规格、或用户需要'每个 feature 的完整技术细节'时使用。",
       "layer": 2,
       "category": "workflow",
       "triggers": {
@@ -8935,7 +8980,7 @@
     },
     {
       "name": "csp-graph-architecture",
-      "description": "Codebase architecture analysis via knowledge graph. Use when onboarding to a codebase, understanding module boundaries, detecting coupling issues, identifying hub/bridge nodes, or generating architecture documentation. Covers community detection, centrality analysis, surprise scoring, and visualizat",
+      "description": "Codebase architecture analysis via knowledge graph. Use when onboarding to a codebase, understanding module boundaries, detecting coupling issues, identifying hub/bridge nodes, or generating architecture documentation. Covers community detection, centrality analysis, and visualization.",
       "layer": 2,
       "category": "workflow",
       "triggers": {
@@ -9055,7 +9100,7 @@
     },
     {
       "name": "csp-integration-design",
-      "description": "跨系统集成方案设计引擎。当 PRD 涉及多个系统/服务时的集成方案设计。 覆盖：系统间接口契约设计（API/消息/事件）、数据一致性策略（分布式事务/Saga/最终一致性）、 集成测试策略、灰度发布与回滚方案、故障隔离与降级策略。 当技术方案涉及多系统集成、或用户需要\"集成方案\"、\"系统对接\"、\"服务间通信\"、\"接口设计\"时使用。 关键词：集成方案、系统集成、系统对接、服务间通信、接口设计、集成设计、 integration design、system integration、service communication、 跨系统、分布式事务、Saga、最终一致性、API 集成、消息集成、事件驱",
+      "description": "跨系统集成方案设计引擎。当 PRD 涉及多个系统/服务时的集成方案设计。覆盖：系统间接口契约设计（API/消息/事件）、数据一致性策略（分布式事务/Saga/最终一致性）、集成测试策略、灰度发布与回滚方案、故障隔离与降级策略。当技术方案涉及多系统集成、或用户需要'集成方案''系统对接''服务间通信'时使用。",
       "layer": 2,
       "category": "workflow",
       "triggers": {
@@ -9070,7 +9115,7 @@
     },
     {
       "name": "csp-issue-triage",
-      "description": "Triage pipeline for inbound issue reports (bugs, errors, user complaints): dedup and merge by multi-signal fingerprint, classify, judge reproducibility on a five-level scale, grade P0-P3 with SLAs, route to owners without ping-pong, detect ticket surges, and close with root cause. Use when a batch o",
+      "description": "Triage pipeline for inbound issue reports (bugs, errors, user complaints): dedup and merge by multi-signal fingerprint, classify, judge reproducibility, grade P0-P3 with SLAs, route to owners without ping-pong, detect ticket surges, and close with root cause.",
       "layer": 2,
       "category": "workflow",
       "triggers": {
@@ -9085,7 +9130,7 @@
     },
     {
       "name": "csp-knowledge-hub",
-      "description": "Local-first Knowledge Hub — a git-managed markdown workspace that unifies spec (PMS/CMS/TMS), wiki, and memory into one indexed, queryable hub to accelerate Agent codebase understanding, fast spec location/read/generation, and a closed loop: 需求对齐(文档spec记录) → code开发 → 测试. Platform-decoupled: replaces",
+      "description": "Local-first Knowledge Hub — a git-managed markdown workspace that unifies spec (PMS/CMS/TMS), wiki, and memory into one indexed, queryable hub to accelerate Agent codebase understanding. Platform-decoupled: local markdown + git + AGENTS.md routing + a sole manifest index.",
       "layer": 2,
       "category": "workflow",
       "triggers": {
@@ -9100,7 +9145,7 @@
     },
     {
       "name": "csp-legacy-modernization",
-      "description": "End-to-end legacy modernization workflow covering assessment (codebase audit, dependency analysis, architecture review), planning (migration strategy, risk assessment, timeline), execution (incremental migration, strangler fig, parallel run), verification (regression testing, performance comparison,",
+      "description": "End-to-end legacy modernization workflow: assessment (codebase audit, architecture review), planning (migration strategy, risk), execution (strangler fig, parallel run), and verification (regression testing, performance). Use when modernizing a legacy system or planning a major migration.",
       "layer": 2,
       "category": "workflow",
       "triggers": {
@@ -9115,7 +9160,7 @@
     },
     {
       "name": "csp-lifecycle-orchestrator",
-      "description": "产品全生命周期编排引擎。串联需求拆解→技术选型→全栈Spec→实施规划→并行开发→测试→审查→发布→运维 的完整链路，管理阶段间产物流转、门控检查、动态路由和迭代推进。 是 csp-requirement-decomposition、csp-tech-stack-advisor、csp-fullstack-spec-generator 的 上层编排器，同时与 csp-full 互补（csp-full 侧重执行，本 skill 侧重规格化拆解与选型）。 当用户需要\"从需求到上线的完整流程\"、\"自动化产品开发全链路\"时使用。 关键词：全生命周期、lifecycle、端到端编排、产品迭代、从需求到上",
+      "description": "产品全生命周期编排引擎。串联需求拆解→技术选型→全栈Spec→实施规划→并行开发→测试→审查→发布→运维的完整链路，管理阶段间产物流转、门控检查、动态路由和迭代推进。是 csp-requirement-decomposition、csp-tech-stack-advisor、csp-fullstack-spec-generator 的上层编排器，与 csp-full 互补。当用户需要'从需求到上线的完整流程''自动化产品开发全链路'时使用。",
       "layer": 2,
       "category": "workflow",
       "triggers": {
@@ -9130,7 +9175,7 @@
     },
     {
       "name": "csp-meeting-action-extraction",
-      "description": "Turn meeting notes (pasted text, doc, transcript) into a verified action-item report: parse assignees/tasks/deadlines, extract decisions and risks, apply action-item quality gates, and map items onto a task system (Jira/Linear/TAPD/any tracker). Nothing is created in the task system until the user c",
+      "description": "Turn meeting notes (pasted text, doc, transcript) into a verified action-item report: parse assignees/tasks/deadlines, extract decisions and risks, apply action-item quality gates, and map items onto a task system (Jira/Linear/any tracker).",
       "layer": 2,
       "category": "workflow",
       "triggers": {
@@ -9175,7 +9220,7 @@
     },
     {
       "name": "csp-patent-disclosure",
-      "description": "Turn an engineering solution into a software patent disclosure document (技术交底书) that a qualified patent attorney can draft claims from: patentability self-screening, prior-art search with distinction analysis, invention-point extraction, nine-section disclosure writing, claim layout thinking, and th",
+      "description": "Turn an engineering solution into a software patent disclosure document (技术交底书) that a patent attorney can draft claims from: patentability self-screening, prior-art search, invention-point extraction, and claim layout thinking. Produces a technical disclosure draft, never a legal opinion.",
       "layer": 2,
       "category": "workflow",
       "triggers": {
@@ -9220,7 +9265,7 @@
     },
     {
       "name": "csp-prd-generation",
-      "description": "Generate a reviewable Product Requirements Document from feature descriptions. Branches by product type (B2C/B2B/internal-tool/platform) with type-specific emphasis. Use when the user says \"write PRD\", \"product requirements\", \"feature spec\", \"需求文档\", \"产品需求\", \"功能文档\", \"写需求\", \"PRD模板\", \"feature spec\", \"产",
+      "description": "Generate a reviewable Product Requirements Document from feature descriptions. Branches by product type (B2C/B2B/internal-tool/platform) with type-specific emphasis. Use when the user says 'write PRD', 'product requirements', 'feature spec', '需求文档', '产品需求', '功能文档', '写需求', 'PRD模板', '出需求文档'.",
       "layer": 2,
       "category": "workflow",
       "triggers": {
@@ -9235,7 +9280,7 @@
     },
     {
       "name": "csp-prd-parser",
-      "description": "多格式 PRD 文档解析器。统一解析多种格式的 PRD 文档（语雀/Notion/Confluence 等在线文档、Markdown、纯文本）， 提取结构化信息，输出标准化的 PRD-IR（PRD 中间表示），供下游 skill 消费。 支持自动格式检测、章节识别、功能点提取、用户故事提取、约束条件识别。 当用户提供 PRD 文档链接或内容需要解析、或需要\"解析 PRD\"、\"提取需求\"、\"PRD格式化\"时使用。 关键词：解析 PRD、PRD 解析、提取需求、需求提取、PRD 格式化、 文档解析、结构化需求、parse PRD、extract requirements、PRD 结构化、 文档转需",
+      "description": "多格式 PRD 文档解析器。统一解析多种格式的 PRD 文档（语雀/Notion/Confluence 等在线文档、Markdown、纯文本），提取结构化信息，输出标准化的 PRD-IR（PRD 中间表示），供下游 skill 消费。支持自动格式检测、章节识别、功能点提取、用户故事提取、约束条件识别。当用户提供 PRD 文档链接或内容需要解析、或需要'解析 PRD''提取需求''PRD格式化'时使用。",
       "layer": 2,
       "category": "workflow",
       "triggers": {
@@ -9250,7 +9295,7 @@
     },
     {
       "name": "csp-prd-review",
-      "description": "Review a PRD / BRD / requirement document and return a scored, evidence-cited verdict. Three modes: (A) weighted 10-point scoring against a module rubric, (B) completeness audit across MECE dimensions with severity-ranked gaps, (C) qualitative paragraph-level annotation review for narrative document",
+      "description": "Review a PRD / BRD / requirement document and return a scored, evidence-cited verdict. Three modes: (A) weighted 10-point scoring against a module rubric, (B) completeness audit across MECE dimensions with severity-ranked gaps. Use when the user says 'PRD评审', '需求评审', 'PRD review'.",
       "layer": 2,
       "category": "workflow",
       "triggers": {
@@ -9280,7 +9325,7 @@
     },
     {
       "name": "csp-pricing-strategy",
-      "description": "Design or revise a product's pricing: model selection, tier architecture, anchoring and presentation, discount policy, price validation, and price-increase communication. Covers B2B SaaS, B2C, usage-based and hybrid models with quantitative validation methods (Van Westendorp, conjoint, price A/B, el",
+      "description": "Design or revise a product's pricing: model selection, tier architecture, discount policy, price validation, and price-increase communication. Covers B2B SaaS, B2C, usage-based and hybrid models with quantitative validation (Van Westendorp, conjoint, price A/B).",
       "layer": 2,
       "category": "workflow",
       "triggers": {
@@ -9295,7 +9340,7 @@
     },
     {
       "name": "csp-product-discovery-orchestrator",
-      "description": "产品发现与交付前编排引擎。串联市场调研/竞品分析/用户反馈 → 产品策略与路线图 → 需求拆解与优先级 → PRD/用户故事/Spec 契约 → 交付桥接（capability contract）的完整链路，管理阶段间产物流转、门控检查、 动态路由与迭代推进。是 14 个产品管理 skill 的上层编排器，覆盖\"产品需求调研到交付给技术开发之前\" 的全流程；在交付边界把 capability contract 交给 csp-lifecycle-orchestrator 的 S2（技术选型）， 由后者接管 S1 拆解→S9 运维的技术生命周期。 当用户需要\"从调研到开发\"、\"产品发现全流程\"、\"",
+      "description": "产品发现与交付前编排引擎。串联市场调研/竞品分析/用户反馈 → 产品策略与路线图 → 需求拆解与优先级 → PRD/用户故事/Spec 契约 → 交付桥接（capability contract）的完整链路，管理阶段间产物流转、门控检查、动态路由与迭代推进。是 14 个产品管理 skill 的上层编排器；在交付边界把 capability contract 交给 csp-lifecycle-orchestrator。当用户需要'从调研到开发''产品发现全流程''PM 端到端'时使用。",
       "layer": 2,
       "category": "workflow",
       "triggers": {
@@ -9310,7 +9355,7 @@
     },
     {
       "name": "csp-product-metrics-review",
-      "description": "Analyze product metrics for a given time period, output health assessment, trend analysis, attribution analysis, and action recommendations. Includes North Star metric decomposition, retention analysis, conversion funnel, and A/B experiment interpretation. Use when the user says \"指标复盘\", \"数据复盘\", \"DAU",
+      "description": "Analyze product metrics for a given time period, output health assessment, trend and attribution analysis. Includes North Star metric decomposition, retention analysis, and conversion funnel. Use when the user says '指标复盘', '数据复盘', 'DAU分析', '留存分析', '转化漏斗', 'metrics review'.",
       "layer": 2,
       "category": "workflow",
       "triggers": {
@@ -9325,7 +9370,7 @@
     },
     {
       "name": "csp-product-pulse",
-      "description": "Generate a time-windowed pulse report on what users experienced and how the product performed - usage, quality, errors, signals worth investigating. Use when the user says 'run a pulse', 'show me the pulse', 'how are we doing', 'weekly recap', 'launch-day check', or passes a time window like '24h' o",
+      "description": "Generate a time-windowed pulse report on what users experienced and how the product performed — usage, quality, errors, signals worth investigating. Use when the user says 'run a pulse', 'show me the pulse', 'how are we doing', 'weekly recap', or 'launch-day check'.",
       "layer": 2,
       "category": "workflow",
       "triggers": {
@@ -9340,7 +9385,7 @@
     },
     {
       "name": "csp-product-spec",
-      "description": "Product Module Spec (PMS / 产品说明书). The living, versioned baseline that governs PRD generation quality for a product. Defines module decomposition, boundaries, and the acceptance standard every PRD must meet; downstream skills (PRD generation, decomposition, traceability, change-impact) read it befor",
+      "description": "Product Module Spec (PMS / 产品说明书). The living, versioned baseline that governs PRD generation quality for a product. Defines module decomposition, boundaries, and the acceptance standard every PRD must meet; downstream skills read it before producing their own artifacts.",
       "layer": 2,
       "category": "workflow",
       "triggers": {
@@ -9355,7 +9400,7 @@
     },
     {
       "name": "csp-project-doc-architect",
-      "description": "Design and maintain project documentation architecture: folder structure, naming conventions, index files, and cross-references. Use when setting up docs for a new project, restructuring existing docs, or creating documentation standards. Triggers: 文档架构, doc structure, 文件夹结构, documentation architect",
+      "description": "Design and maintain project documentation architecture: folder structure, naming conventions, index files, and cross-references. Use when setting up docs for a new project, restructuring existing docs, or creating documentation standards. Triggers: 文档架构, doc structure, 文件夹结构.",
       "layer": 2,
       "category": "workflow",
       "triggers": {
@@ -9385,7 +9430,7 @@
     },
     {
       "name": "csp-requirement-decomposition",
-      "description": "需求全维度拆解引擎。将模糊需求/PRD/想法彻底分解为原子级 Feature，每个 Feature 附带用户故事、 验收标准、前后端边界、数据实体、技术维度和依赖关系。 当用户给出一个产品需求、功能描述、或想要从零构建系统时，第一步使用此 skill 进行结构化拆解。 关键词：需求拆解、feature 分解、requirement decomposition、break down requirements、 拆解需求、功能拆分、feature breakdown、需求分析、feature list、功能清单、 拆解功能、分解需求、analyze requirements、feature ext",
+      "description": "需求全维度拆解引擎。将模糊需求/PRD/想法彻底分解为原子级 Feature，每个 Feature 附带用户故事、验收标准、前后端边界、数据实体、技术维度和依赖关系。当用户给出产品需求、功能描述、或想从零构建系统时，第一步使用此 skill 进行结构化拆解。即使用户只说'帮我做一个XX系统'，也应先使用此 skill 完整拆解再进入后续阶段。",
       "layer": 2,
       "category": "workflow",
       "triggers": {
@@ -9400,7 +9445,7 @@
     },
     {
       "name": "csp-requirement-prioritization",
-      "description": "Prioritize a list of requirements or user stories using RICE, ICE, MoSCoW, or Kano models. Includes a framework selection decision tree based on data availability and decision context, plus a 4-stage opportunity funnel for filtering a large raw pool down to a defensible 1-3. Use when the user says \"",
+      "description": "Prioritize a list of requirements or user stories using RICE, ICE, MoSCoW, or Kano models. Includes a framework selection decision tree based on data availability and decision context, plus a 4-stage opportunity funnel for filtering a large raw pool down to a defensible 1-3.",
       "layer": 2,
       "category": "workflow",
       "triggers": {
@@ -9415,7 +9460,7 @@
     },
     {
       "name": "csp-roadmap-update",
-      "description": "Aggregate iteration status, evaluate milestone progress, record priority changes, and output a roadmap update report with next-step planning recommendations. Supports pulling project status from Linear or other project management tools. Use when the user says \"路线图\", \"Roadmap\", \"版本规划\", \"迭代计划\", \"里程碑\",",
+      "description": "Aggregate iteration status, evaluate milestone progress, record priority changes, and output a roadmap update report with next-step planning recommendations. Use when the user says '路线图', 'Roadmap', '迭代计划', '里程碑', 'Sprint回顾', 'roadmap update'.",
       "layer": 2,
       "category": "workflow",
       "triggers": {
@@ -9490,7 +9535,7 @@
     },
     {
       "name": "csp-status-report",
-      "description": "Turn a period of actual work into a decision-oriented status report: collect facts from the issue tracker, code hosting platform, release records, monitoring and meeting action items with traceable commands; rewrite progress as verifiable state transitions instead of effort claims; produce the three",
+      "description": "Turn a period of actual work into a decision-oriented status report: collect facts from the issue tracker, code hosting, release records, and meetings; rewrite progress as verifiable state transitions instead of effort claims; produce the three-part skeleton (progress / risks / decisions).",
       "layer": 2,
       "category": "workflow",
       "triggers": {
@@ -9505,7 +9550,7 @@
     },
     {
       "name": "csp-strategy",
-      "description": "Create or maintain STRATEGY.md - the product's target problem, approach, users, key metrics, and tracks of work. Use when starting a new product, updating direction, or when prompts like 'write our strategy', 'update the roadmap', 'what are we working on', or 'set up the strategy doc' come up. Also ",
+      "description": "Create or maintain STRATEGY.md — the product's target problem, approach, users, key metrics, and tracks of work. Use when starting a new product, updating direction, or when prompts like 'write our strategy', 'update the roadmap', or 'set up the strategy doc' come up.",
       "layer": 2,
       "category": "workflow",
       "triggers": {
@@ -9535,7 +9580,7 @@
     },
     {
       "name": "csp-tech-design-review",
-      "description": "技术方案评审引擎。对技术方案设计文档(TDD)进行多角色并行评审，发现架构层面的问题。 评审角色包括：架构师、安全专家、性能专家、DBA、运维专家、成本分析师。 评审维度：架构合理性、可扩展性、安全性、性能、可维护性、可靠性、成本。 输出分级评审报告（CRITICAL/WARNING/INFO），类似于 code review 但针对设计文档。 当技术方案完成后需要评审、或用户需要\"方案评审\"、\"设计评审\"、\"架构评审\"时使用。 关键词：技术方案评审、设计评审、架构评审、方案评审、tech design review、 design review、architecture review、技术评",
+      "description": "技术方案评审引擎。对技术方案设计文档(TDD)进行多角色并行评审，发现架构层面的问题。评审角色：架构师、安全专家、性能专家、DBA、运维专家、成本分析师。评审维度：架构合理性、可扩展性、安全性、性能、可维护性、可靠性、成本。输出分级评审报告（CRITICAL/WARNING/INFO），类似 code review 但针对设计文档。当技术方案完成后需要评审、或用户需要'方案评审''设计评审''架构评审'时使用。",
       "layer": 2,
       "category": "workflow",
       "triggers": {
@@ -9565,7 +9610,7 @@
     },
     {
       "name": "csp-tech-solution-design",
-      "description": "技术方案设计引擎。从 Feature 拆解、技术选型和产品能力约束出发，生成系统级技术方案设计文档(TDD)。 覆盖：系统架构设计、服务/模块划分、部署拓扑、数据架构设计、接口架构设计、安全架构设计、 关键技术难点攻克方案、多方案对比分析。是\"需求拆解→技术选型\"到\"全栈Spec\"之间的关键桥梁。 当需求拆解和技术选型完成后需要输出系统级技术方案、或用户需要\"技术方案设计\"、\"架构设计\"、 \"系统设计\"、\"总体方案\"时使用。 关键词：技术方案、系统架构、架构设计、系统设计、总体方案、技术设计、tech design、 solution design、system architecture、te",
+      "description": "技术方案设计引擎。从 Feature 拆解、技术选型和产品能力约束出发，生成系统级技术方案设计文档(TDD)。覆盖：系统架构设计、服务/模块划分、部署拓扑、数据架构设计、接口架构设计、安全架构设计、关键技术难点攻克方案、多方案对比分析。是'需求拆解→技术选型'到'全栈Spec'之间的关键桥梁。当需求拆解和技术选型完成后需要输出系统级技术方案、或用户需要'技术方案设计''架构设计''系统设计'时使用。",
       "layer": 2,
       "category": "workflow",
       "triggers": {
@@ -9580,7 +9625,7 @@
     },
     {
       "name": "csp-tech-stack-advisor",
-      "description": "全栈技术选型决策引擎。基于 Feature 需求的技术维度，为每个 Feature 和系统整体推荐最优技术栈： 主语言、Web 框架、数据库、缓存、消息队列、AI 框架、向量库、搜索引擎、实时通信、 对象存储、任务调度、监控可观测性等。输出结构化技术决策记录(ADR)和选型理由。 当需求拆解完成后需要进行技术选型、或用户询问\"用什么技术\"时使用。 关键词：技术选型、tech stack、technology selection、架构选型、技术栈推荐、 用什么数据库、用什么框架、tech decision、ADR、技术决策、选型建议、 消息队列选型、AI框架、向量库选择、database sel",
+      "description": "全栈技术选型决策引擎。基于 Feature 需求的技术维度，为每个 Feature 和系统整体推荐最优技术栈：主语言、Web 框架、数据库、缓存、消息队列、AI 框架、向量库、搜索引擎、对象存储、任务调度、监控可观测性等。输出结构化技术决策记录(ADR)和选型理由。当需求拆解完成后需要进行技术选型、或用户询问'用什么技术'时使用。",
       "layer": 2,
       "category": "workflow",
       "triggers": {
@@ -9595,7 +9640,7 @@
     },
     {
       "name": "csp-tech-task-breakdown",
-      "description": "技术方案到开发任务拆解引擎。从技术方案和 Feature Spec 出发，拆解为可执行的原子开发任务。 每个任务包含：精确文件路径、技术要点、依赖、优先级、WBS 编号、验收标准。 支持 Waves 划分、并行策略优化、关键路径识别。 当技术方案评审通过后需要拆解任务、或用户需要\"任务拆解\"、\"WBS\"、\"开发计划\"、\"Sprint拆解\"时使用。 关键词：任务拆解、WBS、开发任务、Sprint拆解、任务分解、开发计划、task breakdown、 工作分解、开发排期、task list、任务清单、开发估算、实施计划、拆分任务、 开发任务拆解、编码任务、编程任务清单、开发 backlog、s",
+      "description": "技术方案到开发任务拆解引擎。从技术方案和 Feature Spec 出发，拆解为可执行的原子开发任务。每个任务包含：精确文件路径、技术要点、依赖、优先级、WBS 编号、验收标准。支持 Waves 划分、并行策略优化、关键路径识别。当技术方案评审通过后需要拆解任务、或用户需要'任务拆解''WBS''开发计划''Sprint拆解'时使用。",
       "layer": 2,
       "category": "workflow",
       "triggers": {
@@ -9610,7 +9655,7 @@
     },
     {
       "name": "csp-test-spec",
-      "description": "Test Module Spec (TMS / 测试说明书). The per-module living test baseline — a branch of PMS. Maintains the stock (existing) test-case inventory and the requirement→method trace matrix, and generates stock + incremental test cases from requirement/design docs. When a change lands, TMS emits only the increm",
+      "description": "Test Module Spec (TMS / 测试说明书). The per-module living test baseline. Generates stock + incremental test cases from requirement/design docs; when a change lands, TMS emits only the incremental cases the delta requires, not a from-scratch rewrite.",
       "layer": 2,
       "category": "workflow",
       "triggers": {
@@ -9640,7 +9685,7 @@
     },
     {
       "name": "csp-user-feedback-analysis",
-      "description": "Analyze user feedback data (Excel/CSV/text) to auto-classify, extract high-frequency patterns, and output an insight report with sentiment analysis, pain point ranking, and improvement suggestions. Supports topic clustering, trend analysis, and triangulation to extract user personas from feedback. U",
+      "description": "Analyze user feedback data (Excel/CSV/text) to auto-classify, extract high-frequency patterns, and output an insight report with sentiment analysis and pain point ranking. Supports topic clustering and trend analysis.",
       "layer": 2,
       "category": "workflow",
       "triggers": {
@@ -9655,7 +9700,7 @@
     },
     {
       "name": "csp-user-story-decomposition",
-      "description": "Decompose an Epic or large requirement into independently deliverable User Stories, each with Acceptance Criteria and Story Point estimation. Uses INVEST principle validation and 5 story splitting patterns. Use when the user says \"用户故事\", \"需求拆解\", \"AC\", \"Story拆分\", \"拆需求\", \"拆Epic\", \"写user story\", \"验收标准\"",
+      "description": "Decompose an Epic or large requirement into independently deliverable User Stories, each with Acceptance Criteria and Story Point estimation. Uses INVEST principle validation and 5 story splitting patterns. Use when the user says '用户故事', '需求拆解', 'AC', 'Story拆分', '拆Epic', '验收标准'.",
       "layer": 2,
       "category": "workflow",
       "triggers": {

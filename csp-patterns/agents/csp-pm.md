@@ -129,7 +129,7 @@ The Product Manager uses this hierarchy for product decisions:
 
 ## Integration with CSP Tools
 
-### With csp-spec
+### With csp-spec-contract
 - Writes user stories and acceptance criteria
 - Validates SPECs from user perspective
 - Ensures requirements are testable and user-focused

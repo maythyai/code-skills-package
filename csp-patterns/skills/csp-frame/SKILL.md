@@ -10,6 +10,7 @@ phase: define
 domain: patterns
 scope: design
 tools: [Read, Write, Edit, Glob, Grep, Bash]
+role: specialist
 ---
 
 # 问题框定

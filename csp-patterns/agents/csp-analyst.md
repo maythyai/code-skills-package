@@ -109,7 +109,7 @@ The Business Analyst uses this hierarchy for evaluating options:
 
 ## Integration with CSP Tools
 
-### With csp-spec
+### With csp-spec-contract
 - Validates business requirements in SPECs
 - Ensures acceptance criteria align with business value
 - Reviews technical constraints for business impact

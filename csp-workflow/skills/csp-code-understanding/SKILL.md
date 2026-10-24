@@ -1,14 +1,6 @@
 ---
 name: csp-code-understanding
-description: |
-  代码理解文档自动生成引擎。产出结构化、可增量更新的代码理解文档（模块依赖图、
-  关键执行路径、数据流、调用关系、入口点、外部依赖），持久化到 .csp/code-understanding/
-  下 system/module/function 三级 Markdown。消费 csp-code-graph 图谱数据（如可用）
-  + csp-explore 探索方法论，支持增量更新（检测代码变更后重新生成受影响部分）。
-  当用户需要"代码理解文档""模块依赖图""代码结构文档""onboarding 文档"时使用。
-  关键词：代码理解、模块依赖、调用关系、代码结构文档、code understanding、
-  module dependencies、代码导览、onboarding doc、codebase documentation、
-  代码地图、系统理解、架构理解文档。
+description: "代码理解文档自动生成引擎。产出结构化、可增量更新的代码理解文档（模块依赖图、关键执行路径、数据流、调用关系、入口点、外部依赖），持久化到 .csp/code-understanding/ 下三级 Markdown。支持增量更新（检测代码变更后重新生成受影响部分）。当用户需要'代码理解文档''模块依赖图''onboarding 文档'时使用。"
 version: "1.0.0"
 layer: 2
 category: workflow

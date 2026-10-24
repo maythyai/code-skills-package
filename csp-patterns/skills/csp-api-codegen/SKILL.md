@@ -7,6 +7,14 @@ description: >
   "TypeSpec to code".
 metadata:
   globs: ["**/*.{yaml,yml,json}", "**/openapi*", "**/typespec*"]
+phase: build
+domain: api
+layer: 3
+category: patterns
+version: "1.0.0"
+role: specialist
+scope: implementation
+tools: [Read, Write, Edit, Bash, Glob, Grep]
 ---
 
 # API Codegen

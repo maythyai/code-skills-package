@@ -1,18 +1,6 @@
 ---
 name: csp-account-research
-description: >
-  B2B target-account batch research pipeline (orchestrator entry). A four-layer funnel
-  (L1 quick-screen → L2 signal scan → L3 light research → L4 deep research → deliverable
-  generation) progressively converges a candidate pool into a top target list, dispatching
-  three sub-skills under references/ on demand. Each move is source-graded and traceable;
-  no conclusion is fabricated. Deliverables land under docs/account-research/ (battle-handbook,
-  decision-support, methodology, process-archive); orchestrator metadata under
-  .csp/account-research/runs/<run_id>/; runtime state under .csp/account-research/state/<scope>/.
-  Triggers: "帮我调研一批客户", "行业客户摸底", "批量客户筛选", "目标客户分析",
-  "market research on X companies", "customer research pipeline", "B2B target account research",
-  "扫描这批公司的采购信号", "signal scan", "信号扫描", "深入调研这家公司", "轻度调研",
-  "deep research on company X", "把调研数据整理成作战手册", "生成客户攻坚方案",
-  "generate research deliverables".
+description: "B2B target-account batch research pipeline (orchestrator entry). Four-layer funnel: quick-screen, signal scan, light research, deep research, then deliverable generation. Each move is source-graded and traceable; no conclusion is fabricated. Triggers: 帮我调研一批客户, 行业客户摸底, signal scan."
 version: "1.0.0"
 layer: 3
 category: patterns
@@ -50,6 +38,7 @@ triggers:
     - "user wants a deep profile on one or a few companies"
     - "user has L2-L4 research data and wants deliverables (battle handbook, exec summary)"
   context: ["define", "strategy_planning", "before_prd_writing"]
+role: specialist
 ---
 
 # Account Research — B2B Target-Account Batch Research Pipeline (orchestrator)

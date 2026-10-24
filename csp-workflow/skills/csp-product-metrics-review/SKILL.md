@@ -1,12 +1,6 @@
 ---
 name: csp-product-metrics-review
-description: >
-  Analyze product metrics for a given time period, output health assessment, trend analysis,
-  attribution analysis, and action recommendations. Includes North Star metric decomposition,
-  retention analysis, conversion funnel, and A/B experiment interpretation.
-  Use when the user says "指标复盘", "数据复盘", "DAU分析", "留存分析", "转化漏斗",
-  "北极星指标", "产品数据", "周报数据", "月报数据", "指标下降", "数据异常",
-  "增长分析", "MAU分析", "用户增长", "漏斗分析", "metrics review", "data review".
+description: "Analyze product metrics for a given time period, output health assessment, trend and attribution analysis. Includes North Star metric decomposition, retention analysis, and conversion funnel. Use when the user says '指标复盘', '数据复盘', 'DAU分析', '留存分析', '转化漏斗', 'metrics review'."
 version: "1.0.0"
 layer: 2
 category: workflow
@@ -43,6 +37,7 @@ triggers:
     - "monthly_review"
     - "post_launch_review"
     - "metric_anomaly_investigation"
+role: specialist
 ---
 
 # Product Metrics Review

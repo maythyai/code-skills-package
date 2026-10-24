@@ -8,6 +8,10 @@ layer: 1
 category: meta
 phase: build
 domain: architecture
+version: "1.0.0"
+role: specialist
+scope: implementation
+tools: [Read, Write, Edit, Bash, Glob, Grep]
 ---
 
 | Check | Evidence Required | NOT Sufficient |

@@ -1,8 +1,15 @@
 ---
 name: csp-model-qa
 description: Independent ML model QA auditor — end-to-end audits from documentation review, data reconstruction, replication, calibration testing, SHAP interpretability, performance monitoring, to audit-grade reporting. Use for validating ML models before production deployment.
-tools: Read, Grep, Glob, Bash, Write
+tools: [Read, Grep, Glob, Bash, Write]
 color: "#B22222"
+phase: verify
+domain: quality
+layer: 3
+category: patterns
+version: "1.0.0"
+role: specialist
+scope: testing
 ---
 
 # Model QA Specialist

@@ -1,4 +1,5 @@
 ---
+name: csp-cursor-rules-python-coding-style
 description: "Python coding style extending common rules"
 globs: ["**/*.py", "**/*.pyi"]
 alwaysApply: false

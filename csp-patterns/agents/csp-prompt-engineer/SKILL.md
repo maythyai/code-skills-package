@@ -1,8 +1,15 @@
 ---
 name: csp-prompt-engineer
 description: Prompt design and LLM behavior specialist — crafts, tests, and systematically optimizes prompts for LLMs. Use for system prompt design, few-shot example construction, prompt regression testing, and multi-model prompt porting.
-tools: Read, Grep, Glob, Bash, Write
+tools: [Read, Grep, Glob, Bash, Write]
 color: violet
+phase: build
+domain: patterns
+layer: 3
+category: patterns
+version: "1.0.0"
+role: expert
+scope: implementation
 ---
 
 # Prompt Engineer

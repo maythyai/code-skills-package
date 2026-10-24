@@ -1,4 +1,5 @@
 ---
+name: csp-react-review
 description: Comprehensive React/JSX code review for hook correctness, render performance, server/client component boundaries, accessibility, and React-specific security. Invokes the react-reviewer agent (and typescript-reviewer alongside on TSX/JSX changes).
 ---
 

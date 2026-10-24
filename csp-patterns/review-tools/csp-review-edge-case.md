@@ -334,7 +334,7 @@ Output: Edge case report identifying:
 - Can be used during implementation and testing phases
 
 ### With Other CSP Tools
-- \*\*csp-spec**: Identifies edge cases in specifications
+- \*\*csp-spec-contract**: Identifies edge cases in specifications
 - \*\*csp-review-adversarial**: Complements adversarial review
 - **Phase Workflows**: Used in quality gates
 

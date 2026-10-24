@@ -1,12 +1,14 @@
 ---
 name: csp-writing-plans
-description: Use when you have a spec or requirements for a multi-step task, before touching code
+description: "Use when you have a spec or requirements for a multi-step task, before touching code. Transforms specs into fully detailed, step-by-step implementation plans with file-level changes and verification steps. Use for planning non-trivial implementation work."
 layer: 1
 category: meta
 phase: plan
 domain: architecture
 scope: design
 tools: [Read, Write, Edit, Glob, Grep]
+version: "1.0.0"
+role: specialist
 ---
 
 # Writing Plans

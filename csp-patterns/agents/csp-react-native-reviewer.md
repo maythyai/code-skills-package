@@ -1,10 +1,6 @@
 ---
 name: csp-react-native-reviewer
-description: >
-  React Native code reviewer. Reviews bridge efficiency, native module usage, memory leaks,
-  platform API correctness, navigation patterns, and performance anti-patterns including
-  unnecessary re-renders and inline styles. Use for any change touching React Native
-  (.tsx/.jsx) files in a React Native project.
+description: "React Native code reviewer. Reviews bridge efficiency, native module usage, memory leaks, platform API correctness, navigation patterns, and performance anti-patterns. Use for any change touching React Native (.tsx/.jsx) files in a React Native project."
 tools: ["Read", "Grep", "Glob", "Bash"]
 model: sonnet
 ---

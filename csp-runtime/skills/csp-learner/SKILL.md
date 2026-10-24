@@ -1,7 +1,14 @@
 ---
 name: csp-learner
-description: Extract a learned skill from the current conversation
+description: "Extract a learned skill from the current conversation. Captures reusable principles and decision-making rules discovered during a session, stores them as a durable skill, and improves them over time as new patterns emerge. Use after solving a novel problem worth remembering."
 layer: 4
+phase: build
+domain: architecture
+category: patterns
+version: "1.0.0"
+role: specialist
+scope: analysis
+tools: [Read, Write, Edit, Bash, Glob, Grep]
 ---
 
 ## Expertise

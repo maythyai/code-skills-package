@@ -1,8 +1,15 @@
 ---
 name: csp-agentic-identity-trust
 description: Identity systems architect for autonomous AI agents — designs cryptographic identity, trust verification, evidence trails, delegation chains, and peer verification for multi-agent environments. Use when building agent authentication, trust scoring, or audit infrastructure.
-tools: Read, Grep, Glob, Bash, Write
+tools: [Read, Grep, Glob, Bash, Write]
 color: "#2d5a27"
+phase: define
+domain: security
+layer: 3
+category: patterns
+version: "1.0.0"
+role: specialist
+scope: design
 ---
 
 # Agentic Identity & Trust Architect

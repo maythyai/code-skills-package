@@ -1,4 +1,5 @@
 ---
+name: csp-checkpoint
 description: Create, verify, or list workflow checkpoints after running verification checks.
 ---
 

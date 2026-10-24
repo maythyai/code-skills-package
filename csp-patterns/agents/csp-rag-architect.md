@@ -143,7 +143,7 @@ Fix: Concrete recommended change with code example if helpful.
 ## Related
 
 - Agents: `csp-llm-app-reviewer` (prompt safety, cost control), `csp-data-pipeline-reviewer` (ETL quality)
-- Skills: `csp-llm-patterns`, `csp-data-pipeline-patterns`
+- Skills: `csp-rag-architecture`, `csp-data-pipeline-patterns`
 
 ---
 

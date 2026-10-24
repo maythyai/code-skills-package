@@ -1,13 +1,6 @@
 ---
 name: csp-change-impact-analysis
-description: >
-  Engineering change-impact analysis for code and architecture changes: map forward
-  dependents across six dimensions (code, contract, data, runtime, deployment, consumers),
-  bound propagation depth, grade risk, derive the minimal regression set, and produce an
-  impact report before the change is made. Answers "if I change A, what breaks, what must
-  be re-tested, and how do I roll it out safely".
-  触发：影响面分析、变更影响评估、改动会炸到哪里、回归范围、blast radius、
-  impact analysis、change impact、这个改动影响什么、发布顺序评估、不可逆变更评估.
+description: "Engineering change-impact analysis for code and architecture changes: map forward dependents across six dimensions (code, contract, data, runtime, deployment, consumers), grade risk, derive the minimal regression set, and produce an impact report before the change is made."
 version: "1.0.0"
 layer: 2
 category: workflow
@@ -49,6 +42,7 @@ triggers:
     - "before modifying a shared module, schema, API or config"
     - "before deleting or renaming a public symbol, endpoint, field or CLI flag"
     - "when planning multi-service release order"
+role: specialist
 ---
 
 # Change Impact Analysis

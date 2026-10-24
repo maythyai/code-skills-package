@@ -1,6 +1,6 @@
 ---
 name: csp-de-ai-ify
-description: "Remove machine-generated tells from Chinese or English prose so it reads like a person wrote it — banned vocabulary, uniform sentence rhythm, hollow enumeration, filler transitions — while preserving every factual claim, number and citation exactly. Use when the user says the text sounds like AI, wants a human rewrite, asks to 去AI味, or needs a document to pass a human-sounding review."
+description: "Remove machine-generated tells from Chinese or English prose so it reads like a person wrote it, while preserving every factual claim, number, and citation exactly. Use when the user says the text sounds like AI, wants a human rewrite, or asks to 去AI味."
 version: 0.1.0
 layer: 3
 category: patterns
@@ -9,6 +9,7 @@ domain: patterns
 scope: review
 tools: [Read, Write, Edit, Glob, Grep]
 related_skills: [csp-article-writing, csp-brand-voice, csp-doc-review, csp-deep-research]
+role: specialist
 ---
 
 # De-AI-ify

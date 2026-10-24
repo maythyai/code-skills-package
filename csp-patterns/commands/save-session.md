@@ -1,4 +1,5 @@
 ---
+name: csp-save-session
 description: Save current session state to a dated file in {CSP_DATA_DIR}/session-data/ so work can be resumed in a future session with full context.
 ---
 

@@ -1,4 +1,5 @@
 ---
+name: csp-cursor-rules-common-agents
 description: "Agent orchestration: available agents, parallel execution, multi-perspective analysis"
 alwaysApply: true
 ---

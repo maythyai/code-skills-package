@@ -1,4 +1,5 @@
 ---
+name: csp-resume-session
 description: Load the most recent session file from ~/.claude/session-data/ and resume work with full context from where the last session ended.
 ---
 

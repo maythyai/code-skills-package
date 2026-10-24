@@ -1,5 +1,5 @@
 ---
-name: document-specialist
+name: csp-document-specialist
 description: External Documentation & Reference Specialist
 model: sonnet
 level: 2

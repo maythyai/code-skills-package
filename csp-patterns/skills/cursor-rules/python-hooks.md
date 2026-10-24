@@ -1,4 +1,5 @@
 ---
+name: csp-cursor-rules-python-hooks
 description: "Python hooks extending common rules"
 globs: ["**/*.py", "**/*.pyi"]
 alwaysApply: false

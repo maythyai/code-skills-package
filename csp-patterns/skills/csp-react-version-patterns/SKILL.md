@@ -1,12 +1,16 @@
 ---
 name: csp-react-version-patterns
-description: >
-  React version-specific patterns and migration guide. Covers React 18 batching,
-  concurrent features, Suspense, and React 19 Server Components, Actions, use() hook.
-  Includes migration recipes from class components, Enzyme→RTL, and legacy Context.
-  Use when upgrading React versions or adopting version-specific features.
+description: "React version-specific patterns and migration guide. Covers React 18 batching, concurrent features, Suspense, and React 19 Server Components, Actions, use() hook. Includes migration recipes (class components, Enzyme→RTL, legacy Context). Use when upgrading React versions."
 metadata:
   globs: ["**/*.{tsx,jsx}", "**/react*"]
+phase: build
+domain: patterns
+layer: 3
+category: patterns
+version: "1.0.0"
+role: specialist
+scope: implementation
+tools: [Read, Write, Edit, Bash, Glob, Grep]
 ---
 
 # React Version-Specific Patterns & Migration

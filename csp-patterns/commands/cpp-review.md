@@ -1,4 +1,5 @@
 ---
+name: csp-cpp-review
 description: Comprehensive C++ code review for memory safety, modern C++ idioms, concurrency, and security. Invokes the cpp-reviewer agent.
 ---
 

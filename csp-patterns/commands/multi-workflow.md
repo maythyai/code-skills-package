@@ -1,4 +1,5 @@
 ---
+name: csp-multi-workflow
 description: Run a full multi-model development workflow with research, planning, execution, optimization, and review.
 ---
 

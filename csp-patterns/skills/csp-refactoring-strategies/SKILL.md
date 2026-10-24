@@ -1,14 +1,14 @@
 ---
 name: csp-refactoring-strategies
-description: >
-  Large-scale refactoring strategies including Strangler Fig, Branch by Abstraction,
-  Parallel Run, Feature Toggle migration, and classic refactoring patterns. Covers safety
-  practices, characterization tests, code smell taxonomy, and incremental migration techniques.
-  Use when planning or executing significant refactoring across a codebase.
+description: "Large-scale refactoring strategies including Strangler Fig, Branch by Abstraction, Parallel Run, Feature Toggle migration, and classic refactoring patterns. Use when planning or executing significant refactoring across a codebase."
 layer: 3
 category: patterns
 domain: patterns
 phase: build
+version: "1.0.0"
+role: specialist
+scope: implementation
+tools: [Read, Write, Edit, Bash, Glob, Grep]
 ---
 
 | Risk | Mitigation |

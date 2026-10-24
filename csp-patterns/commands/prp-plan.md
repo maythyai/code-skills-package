@@ -1,4 +1,5 @@
 ---
+name: csp-prp-plan
 description: Create comprehensive feature implementation plan with codebase analysis and pattern extraction
 argument-hint: <feature description | path/to/prd.md>
 ---

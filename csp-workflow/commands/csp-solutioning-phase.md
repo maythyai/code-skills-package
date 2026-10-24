@@ -72,7 +72,7 @@ csp-party-mode --agents amelia,winston
 
 **Tools**:
 ```
-csp-spec --convert-to-stories [spec documents]
+csp-spec-contract --convert-to-stories [spec documents]
 ```
 
 ### 4. Implementation Readiness Check
@@ -139,7 +139,7 @@ Before transitioning to Implementation Phase:
 
 ## Integration with CSP Tools
 
-### With csp-spec
+### With csp-spec-contract
 - Converts SPECs to epics and stories
 - Validates that implementation covers SPEC requirements
 - Tracks traceability from SPEC to implementation

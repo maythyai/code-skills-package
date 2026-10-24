@@ -1,11 +1,15 @@
 ---
 name: csp-ultrawork
-description: Parallel execution engine for high-throughput task completion
+description: "Parallel execution engine for high-throughput task completion. Dispatches independent work items to parallel agents and aggregates the results. Use when facing many independent tasks that can run concurrently without shared state."
 argument-hint: "<task description with parallel work items>"
 layer: 4
 category: patterns
 domain: patterns
 phase: build
+version: "1.0.0"
+role: specialist
+scope: implementation
+tools: [Read, Write, Edit, Bash, Glob, Grep]
 ---
 
 <Purpose>

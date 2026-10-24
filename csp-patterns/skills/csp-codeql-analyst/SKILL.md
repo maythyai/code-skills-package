@@ -7,6 +7,14 @@ description: >
   and supply chain security.
 metadata:
   globs: ["**/*.{js,ts,py,java,go,cs,cpp,rb}"]
+phase: review
+domain: security
+layer: 3
+category: patterns
+version: "1.0.0"
+role: specialist
+scope: review
+tools: [Read, Write, Edit, Bash, Glob, Grep]
 ---
 
 # CodeQL Analyst

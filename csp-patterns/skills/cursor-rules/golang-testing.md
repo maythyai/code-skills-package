@@ -1,4 +1,5 @@
 ---
+name: csp-cursor-rules-golang-testing
 description: "Go testing extending common rules"
 globs: ["**/*.go", "**/go.mod", "**/go.sum"]
 alwaysApply: false

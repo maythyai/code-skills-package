@@ -9,6 +9,7 @@ domain: patterns
 scope: implementation
 tools: [Read, Write, Edit, Glob, Grep]
 related_skills: []
+role: specialist
 ---
 
 # Responsive Design

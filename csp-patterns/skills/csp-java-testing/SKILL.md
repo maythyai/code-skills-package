@@ -1,17 +1,16 @@
 ---
 name: csp-java-testing
-description: >
-  Java testing best practices using JUnit 5 (Jupiter), AssertJ fluent assertions,
-  Mockito (mock/spy/verify/ArgumentCaptor), and Testcontainers for integration tests
-  against real dependencies. Covers parameterized and nested tests, lifecycle hooks,
-  Spring Boot test slices (@WebMvcTest, @DataJpaTest), test naming conventions, and
-  JaCoCo coverage. Use when writing or improving tests for Java 17+ services.
+description: "Java testing best practices using JUnit 5, AssertJ fluent assertions, Mockito, and Testcontainers for integration tests. Covers parameterized and nested tests, lifecycle hooks, Spring Boot test slices (@WebMvcTest, @DataJpaTest), test naming, and JaCoCo coverage."
 metadata:
   globs: ["**/*Test.java", "**/*Tests.java", "**/src/test/**/*.java"]
 layer: 3
 category: patterns
 phase: verify
 domain: testing
+version: "1.0.0"
+role: specialist
+scope: testing
+tools: [Read, Write, Edit, Bash, Glob, Grep]
 ---
 
 # Java Testing

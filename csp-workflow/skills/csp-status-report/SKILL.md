@@ -1,13 +1,6 @@
 ---
 name: csp-status-report
-description: >
-  Turn a period of actual work into a decision-oriented status report: collect facts from the
-  issue tracker, code hosting platform, release records, monitoring and meeting action items with
-  traceable commands; rewrite progress as verifiable state transitions instead of effort claims;
-  produce the three-part skeleton (progress / risks and blockers / decisions needed); tailor one
-  fact base to four audiences; and keep metric definitions stable across periods.
-  触发：周报、双周报、月报、状态报告、进展汇报、项目状态、工作汇报、给老板的汇报、
-  status report、weekly report、progress update、project status.
+description: "Turn a period of actual work into a decision-oriented status report: collect facts from the issue tracker, code hosting, release records, and meetings; rewrite progress as verifiable state transitions instead of effort claims; produce the three-part skeleton (progress / risks / decisions)."
 version: "1.0.0"
 layer: 2
 category: workflow
@@ -52,6 +45,7 @@ triggers:
     - "a project is drifting and leadership asks 'where are we'"
     - "a blocker needs escalation with options and a deadline"
     - "a new reporting cadence is being established and needs a stable template"
+role: specialist
 ---
 
 # 状态报告（Status Report）

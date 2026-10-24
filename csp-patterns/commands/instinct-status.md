@@ -1,5 +1,5 @@
 ---
-name: instinct-status
+name: csp-instinct-status
 description: Show learned instincts (project + global) with confidence
 command: true
 ---

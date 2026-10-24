@@ -1,6 +1,6 @@
 ---
 name: csp-html-prototype
-description: "生成用于 UI 线框图和模型图的交互式 HTML 原型页面。当用户要求创建原型、线框图、模型图、页面设计或 UI 布局时使用。支持移动端、桌面端和平板设备，并可采用高保真或低保真风格。"
+description: "生成用于 UI 线框图和模型图的交互式 HTML 原型页面。支持移动端、桌面端和平板设备，并可采用高保真或低保真风格。当用户要求创建原型、线框图、模型图、页面设计或 UI 布局时使用。"
 version: 0.3.0
 layer: 3
 category: patterns
@@ -9,6 +9,7 @@ domain: patterns
 scope: design
 tools: [Read, Write, Edit, Glob, Grep]
 related_skills: []
+role: specialist
 ---
 
 # HTML Prototype Generator

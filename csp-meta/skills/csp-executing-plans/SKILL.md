@@ -5,6 +5,10 @@ layer: 1
 category: meta
 phase: plan
 domain: architecture
+version: "1.0.0"
+role: specialist
+scope: design
+tools: [Read, Write, Edit, Glob, Grep]
 ---
 
 # Executing Plans

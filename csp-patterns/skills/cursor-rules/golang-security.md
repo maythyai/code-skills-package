@@ -1,4 +1,5 @@
 ---
+name: csp-cursor-rules-golang-security
 description: "Go security extending common rules"
 globs: ["**/*.go", "**/go.mod", "**/go.sum"]
 alwaysApply: false

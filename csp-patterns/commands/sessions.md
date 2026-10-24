@@ -1,4 +1,5 @@
 ---
+name: csp-sessions
 description: Manage Claude Code session history, aliases, and session metadata.
 ---
 

@@ -1,15 +1,22 @@
 ---
 name: csp-qa
-description: >
-  Design QA / Implementation Fidelity Review. After engineering or a coding agent completes the
-  Use when working on design tasks related to qa.
-version: "1.0.0"
+description: "Design QA / implementation fidelity review with release verdict (Pass / Pass with warnings / Fail / Inconclusive). Reviews screenshots against DESIGN.md / SCREEN_SPEC.md, Figma frame, prototype — checking design system, components, accessibility, and design intent."
+version: "1.1.0"
 layer: 3
 category: design
 phase: verify
 domain: patterns
 scope: review
 tools: [Read, Write, Edit, Glob, Grep, Bash, WebFetch, WebSearch]
+triggers:
+  - "设计验收"
+  - "Design QA"
+  - "还原度核查"
+  - "发布裁决"
+  - "design acceptance"
+  - "实现跟设计稿差多少"
+  - "design verdict"
+role: specialist
 ---
 
 # 设计验收
@@ -184,6 +191,28 @@ tools: [Read, Write, Edit, Glob, Grep, Bash, WebFetch, WebSearch]
 
 告知用户当前选择的模式 + 局限性，等用户确认后进入 Step 3。
 
+### Step 2.5 — 设计契约读取与证据分级（v1.1.0 扩展）
+
+在开始逐项核查前，**先建立设计契约与证据分层**，否则 9 维度核查没有"通过标准"：
+
+1. **设计契约读取**（按优先级）：
+   - 项目根 `DESIGN.md`（全局设计契约：语义色 token、排版 scale、间距节奏、圆角/阴影/层级、组件使用规则、Do/Don't）
+   - `SCREEN_SPEC.md`（页面级规格：布局、状态、空/错/加载行为、文案约束、响应式预期）
+   - 无契约文件时，降级用 Brief.design_criteria + Flow 输出 + 用户口述，并在报告中标注"契约缺失，通过标准基于降级来源"。
+
+2. **证据分级**（冲突时高优先级优先）：
+   1. 当前设计师批准的系统文档（DESIGN.md、组件文档、token 文件）
+   2. 屏幕级规格（SCREEN_SPEC.md、产品验收标准）
+   3. 已批准参考图（Figma 导出、原型截图、已批准基线）
+   4. 确定性自动化报告（截图 diff JSON、a11y 扫描、组件审计、设计债审计）
+   5. 实现源码（组件 import、CSS/Tailwind/theme 配置、Storybook）
+   6. 渲染截图或用户截图
+   7. 从产品惯例推断（必须标注为推断）
+
+3. **参考图可能过期时**（早于代码或产品规格）：不假设其权威，标记 `needs-design-decision`。
+
+详细裁决规则见 `references/design-qa-verdict-guide.md`（七维审查、严重度指南、裁决规则、反越界）。
+
 ### Step 3 — 按 9 维度逐项核查
 
 每条命中按 [dimension] [severity] [design_source] [implementation] [delta] [suggestion] [location] 七元组记录。
@@ -292,6 +321,7 @@ tools: [Read, Write, Edit, Glob, Grep, Bash, WebFetch, WebSearch]
 ```markdown
 # 设计验收报告
 
+**验收裁决**：Pass / Pass with warnings / Fail / Inconclusive
 **验收目标**：[target]
 **验收时间**：[generated_at]
 **验收模式**：自动比对 / 截图对照 / 清单模式
@@ -303,6 +333,8 @@ tools: [Read, Write, Edit, Glob, Grep, Bash, WebFetch, WebSearch]
 | 🔴 Blocker | N |
 | 🟠 Major | N |
 | 🟡 Minor | N |
+| 🧾 Debt（维护性/漂移风险，当前 UI 可能可接受） | N |
+| 🔵 Needs Design Decision（证据冲突或契约未定义） | N |
 
 **通过维度**（无 deviation）：[列出通过的维度名]
 **Check finding 解决率**：[已解决 N / 总 M]
@@ -332,6 +364,12 @@ tools: [Read, Write, Edit, Glob, Grep, Bash, WebFetch, WebSearch]
 - 建议修复（其他 Major）：N 项
 - 可延后（Minor）：N 项
 ```
+
+**裁决规则**（v1.1.0）：
+- `Fail`：至少 1 个 blocker，或多个削弱设计意图的 major。
+- `Pass with warnings`：无 blocker，但仍有 minor/major/debt 项且本次发布可接受。
+- `Pass`：无阻断或实质问题，证据质量强。
+- `Inconclusive`：参考、路由、截图或实现证据不足——**禁止凭代码路径或记忆给 Pass**。
 
 #### 4.1.1 报告文件保存（必做）
 
@@ -429,19 +467,20 @@ QA 已保存：project=[project_name]，target=[flow 名]，[N] 个 deviations�
 - 不做性能 / 兼容性 / 安全测试（开发自测）
 - 自动模式下，CSS-in-JS / 动态样式难以静态扫描，可能漏标
 - 与 Check 严格区分：设计稿自身的逻辑问题请用 Check Skill
+- 不产出逐像素 diff 证据（请用 csp-visual-regression-review）；不产出设计师/前端对齐问题清单（请用 csp-ui-alignment-review）
 
 ---
 
 ## 与兄弟 Skill 的边界（v0.4.0 补充）
 
-| | QA（本 Skill） | Check | Access | Test（未来） |
-| --- | --- | --- | --- | --- |
-| 验证对象 | **前端实现 vs 设计稿** | 设计稿本身 | 实现 / 稿子的合规性 | 真实用户行为 |
-| 核心问题 | 还原度有没有偏差 | 设计稿质量如何 | 是否合规 WCAG | 用户能不能用 |
-| 验证维度 | 间距 / 颜色 / 字体 / 交互 / 响应式 / 动效 / 复制粘贴 / 国际化 / 状态 9 维 | 10 类基础体检 | WCAG 50+ 项 | 任务完成率 / 出错率 |
-| 触发时机 | **前端实现后、上线前** | 设计稿完成后 | 合规场景 | 上线后 / 灰度 |
-| 输出 | deviations 清单（按严重度 + 维度） | findings 清单 | 合规报告 | 测试结论 |
-| 是否需要工程师配合 | ✅（核对 / 修 bug） | ❌ | 部分 | 部分 |
+| | QA（本 Skill） | Check | Access | Visual Regression | UI Alignment | Test（未来） |
+| --- | --- | --- | --- | --- | --- | --- |
+| 验证对象 | **前端实现 vs 设计稿** | 设计稿本身 | 实现 / 稿子的合规性 | 截图对（基线/Figma） | 具体屏幕 vs 参考图 | 真实用户行为 |
+| 核心问题 | 还原度有没有偏差，能不能发布 | 设计稿质量如何 | 是否合规 WCAG | 哪里变了 | 该修什么、谁来修 | 用户能不能用 |
+| 验证维度 | 间距 / 颜色 / 字体 / 交互 / 响应式 / 动效 / 复制粘贴 / 国际化 / 状态 9 维 | 10 类基础体检 | WCAG 50+ 项 | 像素 diff + 区域分类 | 对齐类别 + 锚点测量 | 任务完成率 / 出错率 |
+| 触发时机 | **前端实现后、上线前** | 设计稿完成后 | 合规场景 | 需要 diff 证据时 | 交接对齐时 | 上线后 / 灰度 |
+| 输出 | 发布裁决 + deviations 清单 | findings 清单 | 合规报告 | diff 证据 + 分类 | 对齐问题清单 | 测试结论 |
+| 是否需要工程师配合 | ✅（核对 / 修 bug） | ❌ | 部分 | 部分 | ✅ | 部分 |
 
 **典型衔接**：Flow（设计稿）→ Check（自检稿子）→ Handoff → 工程实现 → **QA（验收还原度）** → Access（合规复核）→ 上线。
 

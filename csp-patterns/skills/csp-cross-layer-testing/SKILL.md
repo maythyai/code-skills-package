@@ -1,13 +1,6 @@
 ---
 name: csp-cross-layer-testing
-description: >
-  Design and assert full-stack round-trip tests that correlate one user action across the UI,
-  API, and database layers in a single traceable verdict. Use when a feature must be verified
-  end-to-end — e.g. "click should persist a record and reflect it on screen", when single-layer
-  tests pass but the integration is broken, when debugging a data inconsistency between what the
-  API returns and what is stored, or when building traceable test contracts that bind a
-  requirement to UI step + API expectation + DB expectation + UI assertion. Also covers
-  vertical-slice integration testing that sits between unit and E2E in the test pyramid.
+description: "Design and assert full-stack round-trip tests correlating one user action across UI, API, and database in a single traceable verdict. Use when a feature must be verified end-to-end, when single-layer tests pass but the integration is broken, or when building traceable test contracts."
 version: 0.1.0
 layer: 3
 category: patterns
@@ -32,6 +25,7 @@ anti_rationalizations:
   "E2E 测过登录流就算联动了": "走过场≠断言因果；联动测试必须断言'动作导致了预期 DB 变化且 UI 反映该变化'，而不只是页面跳转"
   "DB 是后端的事，前端测试不碰库": "联动测试的核心就是把 DB 状态纳入同一断言集，否则无法发现'接口成功但落库错/界面读旧数据'的缺陷"
   "用例写了但没对齐 trace_id": "没有对齐键的跨层证据无法证明因果，只能证明'各自都发生了'，等价于没联动"
+tools: [Read, Write, Edit, Bash, Glob, Grep]
 ---
 
 # Cross-Layer / Round-Trip Testing

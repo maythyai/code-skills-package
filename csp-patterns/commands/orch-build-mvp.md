@@ -1,4 +1,5 @@
 ---
+name: csp-orch-build-mvp
 description: Orchestrate bootstrapping a working MVP from a design/spec doc — ingest, slice, scaffold, TDD, review, gated commit (reuses the GAN harness). Wrapper for the orch-build-mvp skill.
 ---
 

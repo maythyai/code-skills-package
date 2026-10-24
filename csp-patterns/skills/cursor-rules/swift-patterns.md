@@ -1,4 +1,5 @@
 ---
+name: csp-cursor-rules-swift-patterns
 description: "Swift patterns extending common rules"
 globs: ["**/*.swift", "**/Package.swift"]
 alwaysApply: false

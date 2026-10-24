@@ -1,4 +1,5 @@
 ---
+name: csp-kotlin-test
 description: Enforce TDD workflow for Kotlin. Write Kotest tests first, then implement. Verify 80%+ coverage with Kover.
 ---
 

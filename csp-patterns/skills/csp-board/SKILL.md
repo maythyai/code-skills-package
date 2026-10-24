@@ -10,6 +10,7 @@ phase: plan
 domain: patterns
 scope: design
 tools: [Read, Write, Edit, Glob, Grep, Bash]
+role: specialist
 ---
 
 # 视觉情绪板

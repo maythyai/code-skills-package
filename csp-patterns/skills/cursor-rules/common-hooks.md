@@ -1,4 +1,5 @@
 ---
+name: csp-cursor-rules-common-hooks
 description: "Hooks system: types, auto-accept permissions, TodoWrite best practices"
 alwaysApply: true
 ---

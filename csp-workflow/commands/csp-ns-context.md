@@ -1,5 +1,5 @@
 ---
-name: csp-context
+name: csp-ns-context
 description: "codebase intelligence | map graphify docs learnings"
 argument-hint: ""
 allowed-tools:

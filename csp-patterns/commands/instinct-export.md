@@ -1,5 +1,5 @@
 ---
-name: instinct-export
+name: csp-instinct-export
 description: Export instincts from project/global scope to a file
 command: /instinct-export
 ---

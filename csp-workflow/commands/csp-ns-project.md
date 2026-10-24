@@ -1,5 +1,5 @@
 ---
-name: csp-project
+name: csp-ns-project
 description: "project lifecycle | milestones audits summary"
 argument-hint: ""
 allowed-tools:

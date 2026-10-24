@@ -1,4 +1,5 @@
 ---
+name: csp-cursor-rules-php-coding-style
 description: "PHP coding style extending common rules"
 globs: ["**/*.php", "**/composer.json"]
 alwaysApply: false

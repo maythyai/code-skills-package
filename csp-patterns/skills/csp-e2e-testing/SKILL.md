@@ -9,6 +9,9 @@ layer: 3
 category: patterns
 phase: build
 domain: patterns
+role: specialist
+scope: testing
+tools: [Read, Write, Edit, Bash, Glob, Grep]
 ---
 
 # End-to-End Testing Engineering

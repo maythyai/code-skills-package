@@ -1,4 +1,5 @@
 ---
+name: csp-cpp-build
 description: Fix C++ build errors, CMake issues, and linker problems incrementally. Invokes the cpp-build-resolver agent for minimal, surgical fixes.
 ---
 

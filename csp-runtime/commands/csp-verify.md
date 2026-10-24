@@ -1,4 +1,5 @@
 ---
+name: csp-verify
 description: "Verify that a code change actually works using tests, direct commands, and observable evidence before claiming completion"
 ---
 

@@ -1,6 +1,6 @@
 ---
 name: csp-load-testing
-description: "Design and run load, stress, spike and soak tests that produce a defensible capacity number. Covers the four load-model curve shapes, tool selection (k6 / Locust / JMeter), SLA percentile thresholds, CI gating, capacity planning arithmetic, and bottleneck attribution from flamegraphs. Use when the user needs to know how much traffic a service survives, validate an SLA, reproduce a production load pattern, or gate a release on performance."
+description: "Design and run load, stress, spike and soak tests. Tool selection (k6 / Locust / JMeter), SLA percentile thresholds, CI gating, capacity planning, and bottleneck attribution from flamegraphs. Use when you need to know how much traffic a service survives, or validate an SLA."
 version: 0.1.0
 layer: 3
 category: patterns
@@ -9,6 +9,7 @@ domain: quality
 scope: testing
 tools: [Read, Write, Edit, Glob, Grep, Bash]
 related_skills: [csp-backend-performance, csp-qa-test-engineering, csp-web-performance-auditor, csp-frontend-performance, csp-observability-and-instrumentation, csp-api-tester]
+role: specialist
 ---
 
 # Load Testing

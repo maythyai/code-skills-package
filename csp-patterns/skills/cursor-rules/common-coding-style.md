@@ -1,4 +1,5 @@
 ---
+name: csp-cursor-rules-common-coding-style
 description: "CSP coding style: immutability, file organization, error handling, validation"
 alwaysApply: true
 ---

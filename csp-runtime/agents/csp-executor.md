@@ -1,5 +1,5 @@
 ---
-name: executor
+name: csp-executor
 description: Focused task executor for implementation work (Sonnet)
 model: sonnet
 level: 2

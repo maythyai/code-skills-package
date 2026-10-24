@@ -9,6 +9,7 @@ domain: other
 scope: analysis
 tools: [Read, Write, Bash, Glob, Grep, WebFetch, WebSearch]
 related_skills: []
+role: specialist
 ---
 
 # 全方位论文阅读

@@ -1,13 +1,6 @@
 ---
 name: csp-requirement-prioritization
-description: >
-  Prioritize a list of requirements or user stories using RICE, ICE, MoSCoW, or Kano models.
-  Includes a framework selection decision tree based on data availability and decision context,
-  plus a 4-stage opportunity funnel for filtering a large raw pool down to a defensible 1-3.
-  Use when the user says "需求排序", "优先级", "RICE", "ICE", "需求排期", "MoSCoW",
-  "排backlog", "sprint规划", "需求取舍", "迭代规划", "backlog排序", "需求评估", "机会漏斗",
-  "机会筛选", "立项评估", "资源分配", "prioritize requirements", "backlog prioritization",
-  "sprint planning", "requirement ranking", "opportunity funnel", "initiative selection".
+description: "Prioritize a list of requirements or user stories using RICE, ICE, MoSCoW, or Kano models. Includes a framework selection decision tree based on data availability and decision context, plus a 4-stage opportunity funnel for filtering a large raw pool down to a defensible 1-3."
 version: "1.0.0"
 layer: 2
 category: workflow
@@ -52,6 +45,7 @@ triggers:
     - "sprint_planning"
     - "roadmap_planning"
     - "quarterly_planning"
+role: specialist
 ---
 
 # Requirement Prioritization

@@ -1,10 +1,14 @@
 ---
 name: csp-self-improve
-description: Autonomous evolutionary code improvement engine with tournament selection
+description: "Autonomous evolutionary code improvement engine with tournament selection. Iterates code variants through test gates without pausing for confirmation. Use when running a self-directed improvement loop on a codebase."
 layer: 4
 category: patterns
 domain: patterns
 phase: build
+version: "1.0.0"
+role: specialist
+scope: implementation
+tools: [Read, Write, Edit, Bash, Glob, Grep]
 ---
 
 ## Autonomous Execution Policy

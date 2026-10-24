@@ -7,6 +7,14 @@ description: >
   "onboarding", "explain this code", "mentor me".
 metadata:
   globs: ["**/.tours/**", "**/*.{ts,tsx,js,jsx,py,java,go,rs}"]
+phase: define
+domain: other
+layer: 3
+category: patterns
+version: "1.0.0"
+role: specialist
+scope: design
+tools: [Read, Write, Edit, Glob, Grep]
 ---
 
 # Code Tour Guide

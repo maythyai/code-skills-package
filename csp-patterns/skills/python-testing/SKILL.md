@@ -11,6 +11,10 @@ category: patterns
 phase: verify
 domain: patterns
 related_skills: [csp-python-coding-standards]
+version: "1.0.0"
+role: specialist
+scope: testing
+tools: [Read, Write, Edit, Bash, Glob, Grep]
 ---
 
 # Python Testing

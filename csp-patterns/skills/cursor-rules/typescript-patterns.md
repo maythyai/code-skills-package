@@ -1,4 +1,5 @@
 ---
+name: csp-cursor-rules-typescript-patterns
 description: "TypeScript patterns extending common rules"
 globs: ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx"]
 alwaysApply: false

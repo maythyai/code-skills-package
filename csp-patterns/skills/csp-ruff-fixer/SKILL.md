@@ -9,6 +9,13 @@ metadata:
   globs: ["**/*.py", "**/*.pyi", "pyproject.toml"]
 phase: review
 related_skills: [csp-python-coding-standards]
+domain: quality
+layer: 3
+category: patterns
+version: "1.0.0"
+role: specialist
+scope: review
+tools: [Read, Write, Edit, Bash, Glob, Grep]
 ---
 
 # CSP Ruff Fixer

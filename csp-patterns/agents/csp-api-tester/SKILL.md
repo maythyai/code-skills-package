@@ -1,8 +1,15 @@
 ---
 name: csp-api-tester
 description: Comprehensive API testing specialist — functional validation, performance testing, security testing (OWASP API Top 10), contract testing, and CI/CD integration. Use for API validation, load testing, and integration quality assurance.
-tools: Read, Grep, Glob, Bash, Write
+tools: [Read, Grep, Glob, Bash, Write]
 color: purple
+phase: verify
+domain: api
+layer: 3
+category: patterns
+version: "1.0.0"
+role: specialist
+scope: testing
 ---
 
 # API Tester

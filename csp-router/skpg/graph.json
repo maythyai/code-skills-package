@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generated_at": "2026-10-22T23:34:23.617Z",
+  "generated_at": "2026-10-23T23:56:38.863Z",
   "nodes": {
     "5b37ecd541b4": {
       "id": "5b37ecd541b4",
@@ -11,6 +11,7 @@
         "category": "meta",
         "phase": "review",
         "domain": "architecture",
+        "role": "specialist",
         "path": "csp-meta/skills/csp-agent-teams/SKILL.md"
       }
     },
@@ -23,6 +24,7 @@
         "category": "meta",
         "phase": "define",
         "domain": "architecture",
+        "role": "specialist",
         "path": "csp-meta/skills/csp-brainstorming/SKILL.md"
       }
     },
@@ -48,6 +50,7 @@
         "category": "meta",
         "phase": "define",
         "domain": "architecture",
+        "role": "specialist",
         "path": "csp-meta/skills/csp-context-engineering/SKILL.md"
       }
     },
@@ -60,6 +63,7 @@
         "category": "meta",
         "phase": "plan",
         "domain": "architecture",
+        "role": "specialist",
         "path": "csp-meta/skills/csp-doc-review/SKILL.md"
       }
     },
@@ -72,6 +76,7 @@
         "category": "meta",
         "phase": "verify",
         "domain": "architecture",
+        "role": "specialist",
         "path": "csp-meta/skills/csp-doubt-driven-development/SKILL.md"
       }
     },
@@ -84,6 +89,7 @@
         "category": "meta",
         "phase": "plan",
         "domain": "architecture",
+        "role": "specialist",
         "path": "csp-meta/skills/csp-executing-plans/SKILL.md"
       }
     },
@@ -96,6 +102,7 @@
         "category": "meta",
         "phase": "define",
         "domain": "architecture",
+        "role": "specialist",
         "path": "csp-meta/skills/csp-finishing-a-development-branch/SKILL.md"
       }
     },
@@ -108,6 +115,7 @@
         "category": "meta",
         "phase": "plan",
         "domain": "architecture",
+        "role": "specialist",
         "path": "csp-meta/skills/csp-interview-me/SKILL.md"
       }
     },
@@ -120,6 +128,7 @@
         "category": "meta",
         "phase": "define",
         "domain": "architecture",
+        "role": "specialist",
         "path": "csp-meta/skills/csp-mvp-scoping/SKILL.md"
       }
     },
@@ -132,6 +141,7 @@
         "category": "meta",
         "phase": "define",
         "domain": "architecture",
+        "role": "specialist",
         "path": "csp-meta/skills/csp-party-mode/SKILL.md"
       }
     },
@@ -144,6 +154,7 @@
         "category": "meta",
         "phase": "review",
         "domain": "architecture",
+        "role": "specialist",
         "path": "csp-meta/skills/csp-receiving-code-review/SKILL.md"
       }
     },
@@ -156,6 +167,7 @@
         "category": "meta",
         "phase": "verify",
         "domain": "architecture",
+        "role": "specialist",
         "path": "csp-meta/skills/csp-requesting-code-review/SKILL.md"
       }
     },
@@ -168,6 +180,7 @@
         "category": "meta",
         "phase": "plan",
         "domain": "quality",
+        "role": "specialist",
         "path": "csp-meta/skills/csp-scope-guard/SKILL.md"
       }
     },
@@ -180,6 +193,7 @@
         "category": "meta",
         "phase": "verify",
         "domain": "architecture",
+        "role": "specialist",
         "path": "csp-meta/skills/csp-skill-optimizer/SKILL.md"
       }
     },
@@ -192,6 +206,7 @@
         "category": "meta",
         "phase": "define",
         "domain": "architecture",
+        "role": "specialist",
         "path": "csp-meta/skills/csp-source-driven-development/SKILL.md"
       }
     },
@@ -204,6 +219,7 @@
         "category": "meta",
         "phase": "define",
         "domain": "quality",
+        "role": "specialist",
         "path": "csp-meta/skills/csp-spec-contract/SKILL.md"
       }
     },
@@ -216,6 +232,7 @@
         "category": "meta",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-meta/skills/csp-spec-driven-development/SKILL.md"
       }
     },
@@ -228,6 +245,7 @@
         "category": "meta",
         "phase": "build",
         "domain": "quality",
+        "role": "specialist",
         "path": "csp-meta/skills/csp-systematic-debugging/SKILL.md"
       }
     },
@@ -240,6 +258,7 @@
         "category": "meta",
         "phase": "build",
         "domain": "testing",
+        "role": "specialist",
         "path": "csp-meta/skills/csp-tdd/SKILL.md"
       }
     },
@@ -265,6 +284,7 @@
         "category": "meta",
         "phase": "define",
         "domain": "architecture",
+        "role": "specialist",
         "path": "csp-meta/skills/csp-using-git-worktrees/SKILL.md"
       }
     },
@@ -277,6 +297,7 @@
         "category": "meta",
         "phase": "define",
         "domain": "architecture",
+        "role": "specialist",
         "path": "csp-meta/skills/csp-using-skills/SKILL.md"
       }
     },
@@ -289,6 +310,7 @@
         "category": "meta",
         "phase": "build",
         "domain": "architecture",
+        "role": "specialist",
         "path": "csp-meta/skills/csp-verification/SKILL.md"
       }
     },
@@ -301,6 +323,7 @@
         "category": "meta",
         "phase": "plan",
         "domain": "architecture",
+        "role": "specialist",
         "path": "csp-meta/skills/csp-writing-plans/SKILL.md"
       }
     },
@@ -313,6 +336,7 @@
         "category": "meta",
         "phase": "define",
         "domain": "architecture",
+        "role": "specialist",
         "path": "csp-meta/skills/csp-writing-skills/SKILL.md"
       }
     },
@@ -464,6 +488,16 @@
         "layer": 3,
         "category": "patterns",
         "path": "csp-patterns/agents/csp-conversation-analyzer.md"
+      }
+    },
+    "a6a0de419674": {
+      "id": "a6a0de419674",
+      "kind": "skill",
+      "name": "csp-correctness-reviewer",
+      "metadata": {
+        "layer": 3,
+        "category": "patterns",
+        "path": "csp-patterns/agents/csp-correctness-reviewer.md"
       }
     },
     "029faa0582da": {
@@ -1013,7 +1047,7 @@
       "metadata": {
         "layer": 3,
         "category": "patterns",
-        "path": "csp-patterns/agents/csp-project-standards-reviewer.md"
+        "path": "csp-patterns/agents/csp-project-standards-reviewer/SKILL.md"
       }
     },
     "b1703ae5eb41": {
@@ -1184,6 +1218,16 @@
         "layer": 3,
         "category": "patterns",
         "path": "csp-patterns/agents/csp-tech-writer.md"
+      }
+    },
+    "88425ce7fc02": {
+      "id": "88425ce7fc02",
+      "kind": "skill",
+      "name": "csp-test-engineer",
+      "metadata": {
+        "layer": 3,
+        "category": "patterns",
+        "path": "csp-patterns/agents/csp-test-engineer/SKILL.md"
       }
     },
     "a867438846f1": {
@@ -2135,6 +2179,7 @@
         "category": "patterns",
         "phase": "verify",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-access/SKILL.md"
       }
     },
@@ -2147,6 +2192,7 @@
         "category": "patterns",
         "phase": "define",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-account-research/SKILL.md"
       }
     },
@@ -2159,6 +2205,7 @@
         "category": "patterns",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-agent-introspection-debugging/SKILL.md"
       }
     },
@@ -2171,6 +2218,7 @@
         "category": "patterns",
         "phase": "plan",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-agent-sort/SKILL.md"
       }
     },
@@ -2183,6 +2231,7 @@
         "category": "patterns",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-agentic-engineering/SKILL.md"
       }
     },
@@ -2193,6 +2242,9 @@
       "metadata": {
         "layer": 3,
         "category": "patterns",
+        "phase": "build",
+        "domain": "api",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-api-codegen/SKILL.md"
       }
     },
@@ -2205,6 +2257,7 @@
         "category": "patterns",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-api-governance/SKILL.md"
       }
     },
@@ -2217,6 +2270,7 @@
         "category": "patterns",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-article-writing/SKILL.md"
       }
     },
@@ -2229,6 +2283,7 @@
         "category": "patterns",
         "phase": "review",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-audit/SKILL.md"
       }
     },
@@ -2241,6 +2296,7 @@
         "category": "patterns",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-autonomous-loops/SKILL.md"
       }
     },
@@ -2253,6 +2309,7 @@
         "category": "patterns",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-avatar/SKILL.md"
       }
     },
@@ -2265,6 +2322,7 @@
         "category": "patterns",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-backend-patterns/SKILL.md"
       }
     },
@@ -2277,6 +2335,7 @@
         "category": "patterns",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-backend-performance/SKILL.md"
       }
     },
@@ -2289,6 +2348,7 @@
         "category": "patterns",
         "phase": "define",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-bench/SKILL.md"
       }
     },
@@ -2301,6 +2361,7 @@
         "category": "patterns",
         "phase": "plan",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-board/SKILL.md"
       }
     },
@@ -2313,6 +2374,7 @@
         "category": "patterns",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-brand-voice/SKILL.md"
       }
     },
@@ -2325,6 +2387,7 @@
         "category": "patterns",
         "phase": "define",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-brief/SKILL.md"
       }
     },
@@ -2337,6 +2400,7 @@
         "category": "patterns",
         "phase": "verify",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-browser-testing-with-devtools/SKILL.md"
       }
     },
@@ -2349,6 +2413,7 @@
         "category": "patterns",
         "phase": "verify",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-bun-runtime/SKILL.md"
       }
     },
@@ -2361,6 +2426,7 @@
         "category": "patterns",
         "phase": "ship",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-changelog-management/SKILL.md"
       }
     },
@@ -2373,6 +2439,7 @@
         "category": "patterns",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-chart/SKILL.md"
       }
     },
@@ -2385,6 +2452,7 @@
         "category": "patterns",
         "phase": "verify",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-check/SKILL.md"
       }
     },
@@ -2397,6 +2465,7 @@
         "category": "patterns",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-cicd-pipelines/SKILL.md"
       }
     },
@@ -2409,6 +2478,7 @@
         "category": "patterns",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-cloud-platform-patterns/SKILL.md"
       }
     },
@@ -2434,6 +2504,7 @@
         "category": "patterns",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-code-simplification/SKILL.md"
       }
     },
@@ -2444,6 +2515,9 @@
       "metadata": {
         "layer": 3,
         "category": "patterns",
+        "phase": "define",
+        "domain": "other",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-code-tour-guide/SKILL.md"
       }
     },
@@ -2454,6 +2528,9 @@
       "metadata": {
         "layer": 3,
         "category": "patterns",
+        "phase": "review",
+        "domain": "security",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-codeql-analyst/SKILL.md"
       }
     },
@@ -2466,6 +2543,7 @@
         "category": "patterns",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-coding-standards/SKILL.md"
       }
     },
@@ -2478,6 +2556,7 @@
         "category": "patterns",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-content-engine/SKILL.md"
       }
     },
@@ -2490,6 +2569,7 @@
         "category": "patterns",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-content-hash-cache-pattern/SKILL.md"
       }
     },
@@ -2502,6 +2582,7 @@
         "category": "patterns",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-cpp-coding-standards/SKILL.md"
       }
     },
@@ -2514,6 +2595,7 @@
         "category": "patterns",
         "phase": "verify",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-cpp-testing/SKILL.md"
       }
     },
@@ -2539,6 +2621,7 @@
         "category": "patterns",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-cross-platform-strategy/SKILL.md"
       }
     },
@@ -2551,6 +2634,7 @@
         "category": "patterns",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-crosspost/SKILL.md"
       }
     },
@@ -2563,6 +2647,7 @@
         "category": "patterns",
         "phase": "build",
         "domain": "database",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-data-analysis/SKILL.md"
       }
     },
@@ -2575,6 +2660,7 @@
         "category": "patterns",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-data-pipeline-patterns/SKILL.md"
       }
     },
@@ -2587,6 +2673,7 @@
         "category": "patterns",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-db-backup/SKILL.md"
       }
     },
@@ -2599,6 +2686,7 @@
         "category": "patterns",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-db-migration/SKILL.md"
       }
     },
@@ -2611,6 +2699,7 @@
         "category": "patterns",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-db-performance/SKILL.md"
       }
     },
@@ -2636,6 +2725,7 @@
         "category": "patterns",
         "phase": "review",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-de-ai-ify/SKILL.md"
       }
     },
@@ -2648,6 +2738,7 @@
         "category": "patterns",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-deep-research/SKILL.md"
       }
     },
@@ -2660,6 +2751,7 @@
         "category": "patterns",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-deployment/SKILL.md"
       }
     },
@@ -2672,6 +2764,7 @@
         "category": "patterns",
         "phase": "review",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-design-system-capture/SKILL.md"
       }
     },
@@ -2684,6 +2777,7 @@
         "category": "patterns",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-django-patterns/SKILL.md"
       }
     },
@@ -2696,6 +2790,7 @@
         "category": "patterns",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-django-security/SKILL.md"
       }
     },
@@ -2708,6 +2803,7 @@
         "category": "patterns",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-dmux-workflows/SKILL.md"
       }
     },
@@ -2720,6 +2816,7 @@
         "category": "patterns",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-docker-patterns/SKILL.md"
       }
     },
@@ -2732,6 +2829,7 @@
         "category": "patterns",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-docs-lookup/SKILL.md"
       }
     },
@@ -2757,6 +2855,7 @@
         "category": "patterns",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-e2e-testing/SKILL.md"
       }
     },
@@ -2769,6 +2868,7 @@
         "category": "patterns",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-edge/SKILL.md"
       }
     },
@@ -2781,6 +2881,7 @@
         "category": "patterns",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-email-systems/SKILL.md"
       }
     },
@@ -2793,6 +2894,7 @@
         "category": "patterns",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-eval-harness/SKILL.md"
       }
     },
@@ -2805,6 +2907,7 @@
         "category": "patterns",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-everything-claude-code/SKILL.md"
       }
     },
@@ -2817,6 +2920,7 @@
         "category": "patterns",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-exa-search/SKILL.md"
       }
     },
@@ -2829,6 +2933,7 @@
         "category": "patterns",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-extract/SKILL.md"
       }
     },
@@ -2841,6 +2946,7 @@
         "category": "patterns",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-fal-ai-media/SKILL.md"
       }
     },
@@ -2853,6 +2959,7 @@
         "category": "patterns",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-fastapi-patterns/SKILL.md"
       }
     },
@@ -2865,6 +2972,7 @@
         "category": "patterns",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-file-storage/SKILL.md"
       }
     },
@@ -2877,6 +2985,7 @@
         "category": "patterns",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-flow-mobile/SKILL.md"
       }
     },
@@ -2889,6 +2998,7 @@
         "category": "patterns",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-flow-web/SKILL.md"
       }
     },
@@ -2901,6 +3011,7 @@
         "category": "patterns",
         "phase": "define",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-frame/SKILL.md"
       }
     },
@@ -2913,6 +3024,7 @@
         "category": "patterns",
         "phase": "plan",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-frontend-design/SKILL.md"
       }
     },
@@ -2925,6 +3037,7 @@
         "category": "patterns",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-frontend-patterns/SKILL.md"
       }
     },
@@ -2937,6 +3050,7 @@
         "category": "patterns",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-frontend-performance/SKILL.md"
       }
     },
@@ -2949,6 +3063,7 @@
         "category": "patterns",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-frontend-slides/SKILL.md"
       }
     },
@@ -2959,6 +3074,9 @@
       "metadata": {
         "layer": 3,
         "category": "patterns",
+        "phase": "build",
+        "domain": "devops",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-git-conventions/SKILL.md"
       }
     },
@@ -2971,6 +3089,7 @@
         "category": "patterns",
         "phase": "build",
         "domain": "devops",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-git-recovery/SKILL.md"
       }
     },
@@ -2996,6 +3115,7 @@
         "category": "patterns",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-hardware-embedded/SKILL.md"
       }
     },
@@ -3008,6 +3128,7 @@
         "category": "patterns",
         "phase": "plan",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-html-prototype/SKILL.md"
       }
     },
@@ -3020,6 +3141,7 @@
         "category": "patterns",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-i18n-frameworks/SKILL.md"
       }
     },
@@ -3032,6 +3154,7 @@
         "category": "patterns",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-image-to-code/SKILL.md"
       }
     },
@@ -3044,6 +3167,7 @@
         "category": "patterns",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-infrastructure-as-code/SKILL.md"
       }
     },
@@ -3056,6 +3180,7 @@
         "category": "patterns",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-investor-materials/SKILL.md"
       }
     },
@@ -3068,6 +3193,7 @@
         "category": "patterns",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-investor-outreach/SKILL.md"
       }
     },
@@ -3080,6 +3206,7 @@
         "category": "patterns",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-java-coding-standards/SKILL.md"
       }
     },
@@ -3092,6 +3219,7 @@
         "category": "patterns",
         "phase": "verify",
         "domain": "testing",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-java-testing/SKILL.md"
       }
     },
@@ -3104,6 +3232,7 @@
         "category": "patterns",
         "phase": "plan",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-journey/SKILL.md"
       }
     },
@@ -3116,6 +3245,7 @@
         "category": "patterns",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-jpa-patterns/SKILL.md"
       }
     },
@@ -3128,6 +3258,7 @@
         "category": "patterns",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-kubernetes-patterns/SKILL.md"
       }
     },
@@ -3140,6 +3271,7 @@
         "category": "patterns",
         "phase": "verify",
         "domain": "devops",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-kubernetes-troubleshooting/SKILL.md"
       }
     },
@@ -3152,6 +3284,7 @@
         "category": "patterns",
         "phase": "define",
         "domain": "other",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-literature-review/SKILL.md"
       }
     },
@@ -3164,6 +3297,7 @@
         "category": "patterns",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-llm-app-development/SKILL.md"
       }
     },
@@ -3176,6 +3310,7 @@
         "category": "patterns",
         "phase": "verify",
         "domain": "quality",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-load-testing/SKILL.md"
       }
     },
@@ -3188,6 +3323,7 @@
         "category": "patterns",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-locale-management/SKILL.md"
       }
     },
@@ -3200,6 +3336,7 @@
         "category": "patterns",
         "phase": "define",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-market-research/SKILL.md"
       }
     },
@@ -3212,6 +3349,7 @@
         "category": "patterns",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-mcp-server-patterns/SKILL.md"
       }
     },
@@ -3224,6 +3362,7 @@
         "category": "patterns",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-metric/SKILL.md"
       }
     },
@@ -3236,6 +3375,7 @@
         "category": "patterns",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-mle-workflow/SKILL.md"
       }
     },
@@ -3261,6 +3401,7 @@
         "category": "patterns",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-mobile-performance/SKILL.md"
       }
     },
@@ -3273,6 +3414,7 @@
         "category": "patterns",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-mock-strategies/SKILL.md"
       }
     },
@@ -3285,6 +3427,7 @@
         "category": "patterns",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-monitoring-alerting/SKILL.md"
       }
     },
@@ -3297,6 +3440,7 @@
         "category": "patterns",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-monorepo-tooling/SKILL.md"
       }
     },
@@ -3309,6 +3453,7 @@
         "category": "patterns",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-motion-apply/SKILL.md"
       }
     },
@@ -3321,6 +3466,7 @@
         "category": "patterns",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-motion-plan/SKILL.md"
       }
     },
@@ -3333,6 +3479,7 @@
         "category": "patterns",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-nestjs-patterns/SKILL.md"
       }
     },
@@ -3345,6 +3492,7 @@
         "category": "patterns",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-nextjs-turbopack/SKILL.md"
       }
     },
@@ -3357,6 +3505,7 @@
         "category": "patterns",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-oauth-integration/SKILL.md"
       }
     },
@@ -3369,6 +3518,7 @@
         "category": "patterns",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-observability-and-instrumentation/SKILL.md"
       }
     },
@@ -3381,6 +3531,7 @@
         "category": "patterns",
         "phase": "ship",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-package-publishing/SKILL.md"
       }
     },
@@ -3393,6 +3544,7 @@
         "category": "patterns",
         "phase": "review",
         "domain": "other",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-paper-reader/SKILL.md"
       }
     },
@@ -3405,6 +3557,7 @@
         "category": "patterns",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-payment-integration/SKILL.md"
       }
     },
@@ -3417,6 +3570,7 @@
         "category": "patterns",
         "phase": "build",
         "domain": "quality",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-performance-optimizer/SKILL.md"
       }
     },
@@ -3429,6 +3583,7 @@
         "category": "patterns",
         "phase": "review",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-pitch/SKILL.md"
       }
     },
@@ -3441,6 +3596,7 @@
         "category": "patterns",
         "phase": "ship",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-platform-deploy/SKILL.md"
       }
     },
@@ -3466,6 +3622,7 @@
         "category": "patterns",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-poster/SKILL.md"
       }
     },
@@ -3477,6 +3634,8 @@
         "layer": 3,
         "category": "patterns",
         "phase": "plan",
+        "domain": "database",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-postgres-optimizer/SKILL.md"
       }
     },
@@ -3489,6 +3648,7 @@
         "category": "patterns",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-postgres-patterns/SKILL.md"
       }
     },
@@ -3501,6 +3661,7 @@
         "category": "patterns",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-prd/SKILL.md"
       }
     },
@@ -3513,6 +3674,7 @@
         "category": "patterns",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-privacy-compliance/SKILL.md"
       }
     },
@@ -3525,6 +3687,7 @@
         "category": "patterns",
         "phase": "define",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-probe/SKILL.md"
       }
     },
@@ -3537,6 +3700,7 @@
         "category": "patterns",
         "phase": "plan",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-product-capability/SKILL.md"
       }
     },
@@ -3549,6 +3713,7 @@
         "category": "patterns",
         "phase": "define",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-product-research/SKILL.md"
       }
     },
@@ -3561,6 +3726,7 @@
         "category": "patterns",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-prompt-engineering/SKILL.md"
       }
     },
@@ -3573,6 +3739,7 @@
         "category": "patterns",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-python-coding-standards/SKILL.md"
       }
     },
@@ -3598,6 +3765,7 @@
         "category": "patterns",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-pytorch-patterns/SKILL.md"
       }
     },
@@ -3623,6 +3791,7 @@
         "category": "patterns",
         "phase": "verify",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-qa/SKILL.md"
       }
     },
@@ -3635,6 +3804,7 @@
         "category": "patterns",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-rag-architecture/SKILL.md"
       }
     },
@@ -3647,6 +3817,7 @@
         "category": "patterns",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-react-native-patterns/SKILL.md"
       }
     },
@@ -3659,6 +3830,7 @@
         "category": "patterns",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-react-patterns/SKILL.md"
       }
     },
@@ -3671,6 +3843,7 @@
         "category": "patterns",
         "phase": "review",
         "domain": "language",
+        "role": "reviewer",
         "path": "csp-patterns/skills/csp-react-reviewer/SKILL.md"
       }
     },
@@ -3683,6 +3856,7 @@
         "category": "patterns",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-react-testing/SKILL.md"
       }
     },
@@ -3693,6 +3867,9 @@
       "metadata": {
         "layer": 3,
         "category": "patterns",
+        "phase": "build",
+        "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-react-version-patterns/SKILL.md"
       }
     },
@@ -3703,6 +3880,9 @@
       "metadata": {
         "layer": 3,
         "category": "patterns",
+        "phase": "build",
+        "domain": "quality",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-refactorer/SKILL.md"
       }
     },
@@ -3715,6 +3895,7 @@
         "category": "patterns",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-refactoring-strategies/SKILL.md"
       }
     },
@@ -3727,6 +3908,7 @@
         "category": "patterns",
         "phase": "review",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-research-report-writing/SKILL.md"
       }
     },
@@ -3739,6 +3921,7 @@
         "category": "patterns",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-responsive-design/SKILL.md"
       }
     },
@@ -3751,6 +3934,7 @@
         "category": "patterns",
         "phase": "review",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-retro/SKILL.md"
       }
     },
@@ -3762,6 +3946,8 @@
         "layer": 3,
         "category": "patterns",
         "phase": "review",
+        "domain": "quality",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-ruff-fixer/SKILL.md"
       }
     },
@@ -3774,6 +3960,7 @@
         "category": "patterns",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-rust-patterns/SKILL.md"
       }
     },
@@ -3786,6 +3973,7 @@
         "category": "patterns",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-rust-testing/SKILL.md"
       }
     },
@@ -3798,6 +3986,7 @@
         "category": "patterns",
         "phase": "define",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-scope/SKILL.md"
       }
     },
@@ -3810,6 +3999,7 @@
         "category": "patterns",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-search-first/SKILL.md"
       }
     },
@@ -3822,6 +4012,7 @@
         "category": "patterns",
         "phase": "review",
         "domain": "security",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-security-review/SKILL.md"
       }
     },
@@ -3834,6 +4025,7 @@
         "category": "patterns",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-seo-engineering/SKILL.md"
       }
     },
@@ -3846,6 +4038,7 @@
         "category": "patterns",
         "phase": "define",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-signal/SKILL.md"
       }
     },
@@ -3858,6 +4051,7 @@
         "category": "patterns",
         "phase": "plan",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-sitemap/SKILL.md"
       }
     },
@@ -3868,6 +4062,9 @@
       "metadata": {
         "layer": 3,
         "category": "patterns",
+        "phase": "plan",
+        "domain": "architecture",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-spec-adr/SKILL.md"
       }
     },
@@ -3880,6 +4077,7 @@
         "category": "patterns",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-springboot-patterns/SKILL.md"
       }
     },
@@ -3892,6 +4090,7 @@
         "category": "patterns",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-springboot-security/SKILL.md"
       }
     },
@@ -3903,6 +4102,8 @@
         "layer": 3,
         "category": "patterns",
         "phase": "review",
+        "domain": "database",
+        "role": "reviewer",
         "path": "csp-patterns/skills/csp-sql-reviewer/SKILL.md"
       }
     },
@@ -3915,6 +4116,7 @@
         "category": "patterns",
         "phase": "build",
         "domain": "devops",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-ssh-operations/SKILL.md"
       }
     },
@@ -3927,6 +4129,7 @@
         "category": "patterns",
         "phase": "plan",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-stories/SKILL.md"
       }
     },
@@ -3939,6 +4142,7 @@
         "category": "patterns",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-strategic-compact/SKILL.md"
       }
     },
@@ -3951,6 +4155,7 @@
         "category": "patterns",
         "phase": "plan",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-subscription-management/SKILL.md"
       }
     },
@@ -3963,6 +4168,7 @@
         "category": "patterns",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-swift-actor-persistence/SKILL.md"
       }
     },
@@ -3975,6 +4181,7 @@
         "category": "patterns",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-swift-protocol-di-testing/SKILL.md"
       }
     },
@@ -3987,6 +4194,7 @@
         "category": "patterns",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-tech-debt-assessment/SKILL.md"
       }
     },
@@ -4025,6 +4233,7 @@
         "category": "patterns",
         "phase": "verify",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-test/SKILL.md"
       }
     },
@@ -4037,6 +4246,7 @@
         "category": "patterns",
         "phase": "build",
         "domain": "language",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-typescript-patterns/SKILL.md"
       }
     },
@@ -4049,7 +4259,21 @@
         "category": "patterns",
         "phase": "verify",
         "domain": "testing",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-typescript-testing/SKILL.md"
+      }
+    },
+    "d5259211faad": {
+      "id": "d5259211faad",
+      "kind": "skill",
+      "name": "csp-ui-alignment-review",
+      "metadata": {
+        "layer": 3,
+        "category": "patterns",
+        "phase": "verify",
+        "domain": "patterns",
+        "role": "specialist",
+        "path": "csp-patterns/skills/csp-ui-alignment-review/SKILL.md"
       }
     },
     "d2d95b1b473a": {
@@ -4061,6 +4285,7 @@
         "category": "patterns",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-user-analytics/SKILL.md"
       }
     },
@@ -4073,7 +4298,21 @@
         "category": "patterns",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-video-editing/SKILL.md"
+      }
+    },
+    "63e7e1142296": {
+      "id": "63e7e1142296",
+      "kind": "skill",
+      "name": "csp-visual-regression-review",
+      "metadata": {
+        "layer": 3,
+        "category": "patterns",
+        "phase": "verify",
+        "domain": "patterns",
+        "role": "specialist",
+        "path": "csp-patterns/skills/csp-visual-regression-review/SKILL.md"
       }
     },
     "e288a7772e3c": {
@@ -4085,6 +4324,7 @@
         "category": "patterns",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-visual-regression/SKILL.md"
       }
     },
@@ -4097,6 +4337,7 @@
         "category": "patterns",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-vllm-serving/SKILL.md"
       }
     },
@@ -4109,6 +4350,7 @@
         "category": "patterns",
         "phase": "ship",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-vps-deploy/SKILL.md"
       }
     },
@@ -4121,6 +4363,7 @@
         "category": "patterns",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-web-artifacts/SKILL.md"
       }
     },
@@ -4133,6 +4376,7 @@
         "category": "patterns",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-webhook-architecture/SKILL.md"
       }
     },
@@ -4145,6 +4389,7 @@
         "category": "patterns",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-patterns/skills/csp-x-api/SKILL.md"
       }
     },
@@ -4688,16 +4933,6 @@
         "path": "csp-runtime/agents/csp-qa-tester.md"
       }
     },
-    "88425ce7fc02": {
-      "id": "88425ce7fc02",
-      "kind": "skill",
-      "name": "csp-test-engineer",
-      "metadata": {
-        "layer": 4,
-        "category": "runtime",
-        "path": "csp-runtime/agents/csp-test-engineer.md"
-      }
-    },
     "2fac08e6f9d8": {
       "id": "2fac08e6f9d8",
       "kind": "skill",
@@ -4767,6 +5002,7 @@
         "category": "runtime",
         "phase": "build",
         "domain": "architecture",
+        "role": "specialist",
         "path": "csp-runtime/skills/csp-ask/SKILL.md"
       }
     },
@@ -4779,6 +5015,7 @@
         "category": "runtime",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-runtime/skills/csp-autopilot/SKILL.md"
       }
     },
@@ -4791,6 +5028,7 @@
         "category": "runtime",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-runtime/skills/csp-autoresearch/SKILL.md"
       }
     },
@@ -4803,6 +5041,7 @@
         "category": "runtime",
         "phase": "build",
         "domain": "architecture",
+        "role": "specialist",
         "path": "csp-runtime/skills/csp-budget-enforcer/SKILL.md"
       }
     },
@@ -4815,6 +5054,7 @@
         "category": "runtime",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-runtime/skills/csp-cancel/SKILL.md"
       }
     },
@@ -4827,6 +5067,7 @@
         "category": "runtime",
         "phase": "build",
         "domain": "architecture",
+        "role": "specialist",
         "path": "csp-runtime/skills/csp-ccg/SKILL.md"
       }
     },
@@ -4839,6 +5080,7 @@
         "category": "runtime",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-runtime/skills/csp-cli-teams/SKILL.md"
       }
     },
@@ -4851,6 +5093,7 @@
         "category": "runtime",
         "phase": "build",
         "domain": "architecture",
+        "role": "specialist",
         "path": "csp-runtime/skills/csp-complexity-classifier/SKILL.md"
       }
     },
@@ -4863,6 +5106,7 @@
         "category": "runtime",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-runtime/skills/csp-configure-notifications/SKILL.md"
       }
     },
@@ -4888,6 +5132,7 @@
         "category": "runtime",
         "phase": "build",
         "domain": "quality",
+        "role": "specialist",
         "path": "csp-runtime/skills/csp-debug/SKILL.md"
       }
     },
@@ -4900,6 +5145,7 @@
         "category": "runtime",
         "phase": "build",
         "domain": "architecture",
+        "role": "specialist",
         "path": "csp-runtime/skills/csp-deep-dive/SKILL.md"
       }
     },
@@ -4911,6 +5157,8 @@
         "layer": 4,
         "category": "runtime",
         "phase": "build",
+        "domain": "other",
+        "role": "specialist",
         "path": "csp-runtime/skills/csp-deep-interview/SKILL.md"
       }
     },
@@ -4923,6 +5171,7 @@
         "category": "runtime",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-runtime/skills/csp-deepinit/SKILL.md"
       }
     },
@@ -4934,6 +5183,8 @@
         "layer": 4,
         "category": "runtime",
         "phase": "build",
+        "domain": "quality",
+        "role": "expert",
         "path": "csp-runtime/skills/csp-doctor/SKILL.md"
       }
     },
@@ -4946,6 +5197,7 @@
         "category": "runtime",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-runtime/skills/csp-external-context/SKILL.md"
       }
     },
@@ -4958,6 +5210,7 @@
         "category": "runtime",
         "phase": "build",
         "domain": "devops",
+        "role": "specialist",
         "path": "csp-runtime/skills/csp-file-organizer/SKILL.md"
       }
     },
@@ -4970,6 +5223,7 @@
         "category": "runtime",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-runtime/skills/csp-hud/SKILL.md"
       }
     },
@@ -4980,6 +5234,9 @@
       "metadata": {
         "layer": 4,
         "category": "runtime",
+        "phase": "build",
+        "domain": "architecture",
+        "role": "specialist",
         "path": "csp-runtime/skills/csp-learner/SKILL.md"
       }
     },
@@ -4992,6 +5249,7 @@
         "category": "runtime",
         "phase": "ship",
         "domain": "quality",
+        "role": "specialist",
         "path": "csp-runtime/skills/csp-learning-loop/SKILL.md"
       }
     },
@@ -5017,6 +5275,7 @@
         "category": "runtime",
         "phase": "build",
         "domain": "architecture",
+        "role": "specialist",
         "path": "csp-runtime/skills/csp-local-build-reminder/SKILL.md"
       }
     },
@@ -5029,6 +5288,7 @@
         "category": "runtime",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-runtime/skills/csp-mcp-setup/SKILL.md"
       }
     },
@@ -5041,6 +5301,7 @@
         "category": "runtime",
         "phase": "build",
         "domain": "architecture",
+        "role": "specialist",
         "path": "csp-runtime/skills/csp-model-selector/SKILL.md"
       }
     },
@@ -5053,6 +5314,7 @@
         "category": "runtime",
         "phase": "plan",
         "domain": "architecture",
+        "role": "specialist",
         "path": "csp-runtime/skills/csp-plan/SKILL.md"
       }
     },
@@ -5065,6 +5327,7 @@
         "category": "runtime",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-runtime/skills/csp-project-session-manager/SKILL.md"
       }
     },
@@ -5077,6 +5340,7 @@
         "category": "runtime",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-runtime/skills/csp-ralph/SKILL.md"
       }
     },
@@ -5089,6 +5353,7 @@
         "category": "runtime",
         "phase": "build",
         "domain": "architecture",
+        "role": "specialist",
         "path": "csp-runtime/skills/csp-reference/SKILL.md"
       }
     },
@@ -5100,6 +5365,8 @@
         "layer": 4,
         "category": "runtime",
         "phase": "ship",
+        "domain": "devops",
+        "role": "specialist",
         "path": "csp-runtime/skills/csp-release/SKILL.md"
       }
     },
@@ -5112,6 +5379,7 @@
         "category": "runtime",
         "phase": "review",
         "domain": "architecture",
+        "role": "specialist",
         "path": "csp-runtime/skills/csp-remember/SKILL.md"
       }
     },
@@ -5124,6 +5392,7 @@
         "category": "runtime",
         "phase": "build",
         "domain": "patterns",
+        "role": "expert",
         "path": "csp-runtime/skills/csp-scientist/SKILL.md"
       }
     },
@@ -5136,6 +5405,7 @@
         "category": "runtime",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-runtime/skills/csp-self-improve/SKILL.md"
       }
     },
@@ -5148,6 +5418,7 @@
         "category": "runtime",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-runtime/skills/csp-setup/SKILL.md"
       }
     },
@@ -5160,6 +5431,7 @@
         "category": "runtime",
         "phase": "build",
         "domain": "architecture",
+        "role": "specialist",
         "path": "csp-runtime/skills/csp-skill-creator/SKILL.md"
       }
     },
@@ -5172,6 +5444,7 @@
         "category": "runtime",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-runtime/skills/csp-skill/SKILL.md"
       }
     },
@@ -5184,6 +5457,7 @@
         "category": "runtime",
         "phase": "build",
         "domain": "architecture",
+        "role": "specialist",
         "path": "csp-runtime/skills/csp-skillify/SKILL.md"
       }
     },
@@ -5196,6 +5470,7 @@
         "category": "runtime",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-runtime/skills/csp-team/SKILL.md"
       }
     },
@@ -5208,6 +5483,7 @@
         "category": "runtime",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-runtime/skills/csp-trace/SKILL.md"
       }
     },
@@ -5220,6 +5496,7 @@
         "category": "runtime",
         "phase": "plan",
         "domain": "architecture",
+        "role": "specialist",
         "path": "csp-runtime/skills/csp-ultragoal/SKILL.md"
       }
     },
@@ -5231,6 +5508,8 @@
         "layer": 4,
         "category": "runtime",
         "phase": "verify",
+        "domain": "testing",
+        "role": "specialist",
         "path": "csp-runtime/skills/csp-ultraqa/SKILL.md"
       }
     },
@@ -5243,6 +5522,7 @@
         "category": "runtime",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-runtime/skills/csp-ultrawork/SKILL.md"
       }
     },
@@ -5255,6 +5535,7 @@
         "category": "runtime",
         "phase": "verify",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-runtime/skills/csp-visual-verdict/SKILL.md"
       }
     },
@@ -5267,6 +5548,7 @@
         "category": "runtime",
         "phase": "build",
         "domain": "architecture",
+        "role": "specialist",
         "path": "csp-runtime/skills/csp-wiki/SKILL.md"
       }
     },
@@ -5277,6 +5559,9 @@
       "metadata": {
         "layer": 4,
         "category": "runtime",
+        "phase": "build",
+        "domain": "other",
+        "role": "specialist",
         "path": "csp-runtime/skills/csp-writer-memory/SKILL.md"
       }
     },
@@ -6259,6 +6544,7 @@
         "category": "workflow",
         "phase": "plan",
         "domain": "architecture",
+        "role": "specialist",
         "path": "csp-workflow/skills/csp-change-impact-analysis/SKILL.md"
       }
     },
@@ -6310,6 +6596,7 @@
         "category": "workflow",
         "phase": "review",
         "domain": "architecture",
+        "role": "specialist",
         "path": "csp-workflow/skills/csp-codebase-audit/SKILL.md"
       }
     },
@@ -6322,6 +6609,7 @@
         "category": "workflow",
         "phase": "define",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-workflow/skills/csp-competitive-analysis/SKILL.md"
       }
     },
@@ -6334,6 +6622,7 @@
         "category": "workflow",
         "phase": "build",
         "domain": "quality",
+        "role": "specialist",
         "path": "csp-workflow/skills/csp-compound-learning/SKILL.md"
       }
     },
@@ -6346,6 +6635,7 @@
         "category": "workflow",
         "phase": "review",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-workflow/skills/csp-compound-refresh/SKILL.md"
       }
     },
@@ -6358,6 +6648,7 @@
         "category": "workflow",
         "phase": "verify",
         "domain": "testing",
+        "role": "specialist",
         "path": "csp-workflow/skills/csp-defect-mining/SKILL.md"
       }
     },
@@ -6370,6 +6661,7 @@
         "category": "workflow",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-workflow/skills/csp-deprecation-and-migration/SKILL.md"
       }
     },
@@ -6395,6 +6687,7 @@
         "category": "workflow",
         "phase": "plan",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-workflow/skills/csp-doc-lifecycle-manager/SKILL.md"
       }
     },
@@ -6407,6 +6700,7 @@
         "category": "workflow",
         "phase": "define",
         "domain": "architecture",
+        "role": "specialist",
         "path": "csp-workflow/skills/csp-domain-driven-design/SKILL.md"
       }
     },
@@ -6419,6 +6713,7 @@
         "category": "workflow",
         "phase": "plan",
         "domain": "quality",
+        "role": "specialist",
         "path": "csp-workflow/skills/csp-effort-estimation/SKILL.md"
       }
     },
@@ -6431,6 +6726,7 @@
         "category": "workflow",
         "phase": "plan",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-workflow/skills/csp-explore/SKILL.md"
       }
     },
@@ -6443,6 +6739,7 @@
         "category": "workflow",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-workflow/skills/csp-full/SKILL.md"
       }
     },
@@ -6455,6 +6752,7 @@
         "category": "workflow",
         "phase": "plan",
         "domain": "architecture",
+        "role": "specialist",
         "path": "csp-workflow/skills/csp-fullstack-spec-generator/SKILL.md"
       }
     },
@@ -6532,6 +6830,7 @@
         "category": "workflow",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-workflow/skills/csp-hotfix/SKILL.md"
       }
     },
@@ -6544,6 +6843,7 @@
         "category": "workflow",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-workflow/skills/csp-implementation-phase/SKILL.md"
       }
     },
@@ -6556,6 +6856,7 @@
         "category": "workflow",
         "phase": "ship",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-workflow/skills/csp-indie-deploy-ops/SKILL.md"
       }
     },
@@ -6568,6 +6869,7 @@
         "category": "workflow",
         "phase": "plan",
         "domain": "architecture",
+        "role": "specialist",
         "path": "csp-workflow/skills/csp-integration-design/SKILL.md"
       }
     },
@@ -6580,6 +6882,7 @@
         "category": "workflow",
         "phase": "plan",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-workflow/skills/csp-issue-triage/SKILL.md"
       }
     },
@@ -6605,6 +6908,7 @@
         "category": "workflow",
         "phase": "verify",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-workflow/skills/csp-legacy-modernization/SKILL.md"
       }
     },
@@ -6617,6 +6921,7 @@
         "category": "workflow",
         "phase": "define",
         "domain": "architecture",
+        "role": "specialist",
         "path": "csp-workflow/skills/csp-lifecycle-orchestrator/SKILL.md"
       }
     },
@@ -6629,6 +6934,7 @@
         "category": "workflow",
         "phase": "plan",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-workflow/skills/csp-meeting-action-extraction/SKILL.md"
       }
     },
@@ -6654,6 +6960,7 @@
         "category": "workflow",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-workflow/skills/csp-parallel-worktree/SKILL.md"
       }
     },
@@ -6666,6 +6973,7 @@
         "category": "workflow",
         "phase": "define",
         "domain": "other",
+        "role": "specialist",
         "path": "csp-workflow/skills/csp-patent-disclosure/SKILL.md"
       }
     },
@@ -6678,6 +6986,7 @@
         "category": "workflow",
         "phase": "plan",
         "domain": "architecture",
+        "role": "specialist",
         "path": "csp-workflow/skills/csp-plan-phase/SKILL.md"
       }
     },
@@ -6690,6 +6999,7 @@
         "category": "workflow",
         "phase": "review",
         "domain": "quality",
+        "role": "specialist",
         "path": "csp-workflow/skills/csp-prd-change-impact/SKILL.md"
       }
     },
@@ -6702,6 +7012,7 @@
         "category": "workflow",
         "phase": "define",
         "domain": "architecture",
+        "role": "specialist",
         "path": "csp-workflow/skills/csp-prd-generation/SKILL.md"
       }
     },
@@ -6714,6 +7025,7 @@
         "category": "workflow",
         "phase": "define",
         "domain": "architecture",
+        "role": "specialist",
         "path": "csp-workflow/skills/csp-prd-parser/SKILL.md"
       }
     },
@@ -6726,6 +7038,7 @@
         "category": "workflow",
         "phase": "review",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-workflow/skills/csp-prd-review/SKILL.md"
       }
     },
@@ -6738,6 +7051,7 @@
         "category": "workflow",
         "phase": "review",
         "domain": "quality",
+        "role": "specialist",
         "path": "csp-workflow/skills/csp-prd-traceability/SKILL.md"
       }
     },
@@ -6750,6 +7064,7 @@
         "category": "workflow",
         "phase": "define",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-workflow/skills/csp-pricing-strategy/SKILL.md"
       }
     },
@@ -6762,6 +7077,7 @@
         "category": "workflow",
         "phase": "define",
         "domain": "architecture",
+        "role": "specialist",
         "path": "csp-workflow/skills/csp-product-discovery-orchestrator/SKILL.md"
       }
     },
@@ -6774,6 +7090,7 @@
         "category": "workflow",
         "phase": "review",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-workflow/skills/csp-product-metrics-review/SKILL.md"
       }
     },
@@ -6786,6 +7103,7 @@
         "category": "workflow",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-workflow/skills/csp-product-pulse/SKILL.md"
       }
     },
@@ -6811,6 +7129,7 @@
         "category": "workflow",
         "phase": "plan",
         "domain": "patterns",
+        "role": "architect",
         "path": "csp-workflow/skills/csp-project-doc-architect/SKILL.md"
       }
     },
@@ -6836,6 +7155,7 @@
         "category": "workflow",
         "phase": "define",
         "domain": "architecture",
+        "role": "specialist",
         "path": "csp-workflow/skills/csp-requirement-decomposition/SKILL.md"
       }
     },
@@ -6848,6 +7168,7 @@
         "category": "workflow",
         "phase": "plan",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-workflow/skills/csp-requirement-prioritization/SKILL.md"
       }
     },
@@ -6860,6 +7181,7 @@
         "category": "workflow",
         "phase": "review",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-workflow/skills/csp-roadmap-update/SKILL.md"
       }
     },
@@ -6872,6 +7194,7 @@
         "category": "workflow",
         "phase": "review",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-workflow/skills/csp-session-knowledge-extractor/SKILL.md"
       }
     },
@@ -6884,6 +7207,7 @@
         "category": "workflow",
         "phase": "ship",
         "domain": "devops",
+        "role": "specialist",
         "path": "csp-workflow/skills/csp-shipping-and-launch/SKILL.md"
       }
     },
@@ -6909,6 +7233,7 @@
         "category": "workflow",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-workflow/skills/csp-solo-oncall/SKILL.md"
       }
     },
@@ -6921,6 +7246,7 @@
         "category": "workflow",
         "phase": "ship",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-workflow/skills/csp-status-report/SKILL.md"
       }
     },
@@ -6933,6 +7259,7 @@
         "category": "workflow",
         "phase": "define",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-workflow/skills/csp-strategy/SKILL.md"
       }
     },
@@ -6945,6 +7272,7 @@
         "category": "workflow",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-workflow/skills/csp-tech-debt-paydown/SKILL.md"
       }
     },
@@ -6957,6 +7285,7 @@
         "category": "workflow",
         "phase": "review",
         "domain": "architecture",
+        "role": "specialist",
         "path": "csp-workflow/skills/csp-tech-design-review/SKILL.md"
       }
     },
@@ -6969,6 +7298,7 @@
         "category": "workflow",
         "phase": "review",
         "domain": "quality",
+        "role": "specialist",
         "path": "csp-workflow/skills/csp-tech-risk-assessment/SKILL.md"
       }
     },
@@ -6981,6 +7311,7 @@
         "category": "workflow",
         "phase": "plan",
         "domain": "architecture",
+        "role": "specialist",
         "path": "csp-workflow/skills/csp-tech-solution-design/SKILL.md"
       }
     },
@@ -6993,6 +7324,7 @@
         "category": "workflow",
         "phase": "plan",
         "domain": "architecture",
+        "role": "specialist",
         "path": "csp-workflow/skills/csp-tech-stack-advisor/SKILL.md"
       }
     },
@@ -7005,6 +7337,7 @@
         "category": "workflow",
         "phase": "plan",
         "domain": "architecture",
+        "role": "specialist",
         "path": "csp-workflow/skills/csp-tech-task-breakdown/SKILL.md"
       }
     },
@@ -7030,6 +7363,7 @@
         "category": "workflow",
         "phase": "build",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-workflow/skills/csp-tweak/SKILL.md"
       }
     },
@@ -7042,6 +7376,7 @@
         "category": "workflow",
         "phase": "review",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-workflow/skills/csp-user-feedback-analysis/SKILL.md"
       }
     },
@@ -7054,6 +7389,7 @@
         "category": "workflow",
         "phase": "plan",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-workflow/skills/csp-user-story-decomposition/SKILL.md"
       }
     },
@@ -7066,6 +7402,7 @@
         "category": "workflow",
         "phase": "verify",
         "domain": "quality",
+        "role": "specialist",
         "path": "csp-workflow/skills/csp-verify-phase/SKILL.md"
       }
     },
@@ -7078,6 +7415,7 @@
         "category": "workflow",
         "phase": "define",
         "domain": "patterns",
+        "role": "specialist",
         "path": "csp-workflow/skills/csp-workflow-schema/SKILL.md"
       }
     },
@@ -18863,6 +19201,96 @@
       "id": "f57882f1a8a9",
       "kind": "trigger",
       "name": "test-case-design",
+      "metadata": {}
+    },
+    "834c80846446": {
+      "id": "834c80846446",
+      "kind": "trigger",
+      "name": "review ui alignment code",
+      "metadata": {}
+    },
+    "09587ce6bf75": {
+      "id": "09587ce6bf75",
+      "kind": "trigger",
+      "name": "review visual regression code",
+      "metadata": {}
+    },
+    "aea4e763ea9c": {
+      "id": "aea4e763ea9c",
+      "kind": "trigger",
+      "name": "ui alignment code review",
+      "metadata": {}
+    },
+    "207527d8047f": {
+      "id": "207527d8047f",
+      "kind": "trigger",
+      "name": "ui alignment review",
+      "metadata": {}
+    },
+    "30970404bc0e": {
+      "id": "30970404bc0e",
+      "kind": "trigger",
+      "name": "ui alignment 审查",
+      "metadata": {}
+    },
+    "981a5e833993": {
+      "id": "981a5e833993",
+      "kind": "trigger",
+      "name": "ui-alignment-review",
+      "metadata": {}
+    },
+    "f991eea4b59b": {
+      "id": "f991eea4b59b",
+      "kind": "trigger",
+      "name": "visual regression code review",
+      "metadata": {}
+    },
+    "984165ffbca6": {
+      "id": "984165ffbca6",
+      "kind": "trigger",
+      "name": "visual regression review",
+      "metadata": {}
+    },
+    "f4aff4b8dab0": {
+      "id": "f4aff4b8dab0",
+      "kind": "trigger",
+      "name": "visual regression 审查",
+      "metadata": {}
+    },
+    "51147d94c8d7": {
+      "id": "51147d94c8d7",
+      "kind": "trigger",
+      "name": "visual-regression-review",
+      "metadata": {}
+    },
+    "5dac1cfcf7fb": {
+      "id": "5dac1cfcf7fb",
+      "kind": "trigger",
+      "name": "correctness code review",
+      "metadata": {}
+    },
+    "dd4fffc1f8da": {
+      "id": "dd4fffc1f8da",
+      "kind": "trigger",
+      "name": "correctness review",
+      "metadata": {}
+    },
+    "284e95c6dd28": {
+      "id": "284e95c6dd28",
+      "kind": "trigger",
+      "name": "correctness 审查",
+      "metadata": {}
+    },
+    "f06de1c3f737": {
+      "id": "f06de1c3f737",
+      "kind": "trigger",
+      "name": "correctness-reviewer",
+      "metadata": {}
+    },
+    "935ddf646438": {
+      "id": "935ddf646438",
+      "kind": "trigger",
+      "name": "review correctness code",
       "metadata": {}
     }
   },
@@ -31450,6 +31878,96 @@
       "metadata": {}
     },
     {
+      "source": "834c80846446",
+      "target": "d5259211faad",
+      "kind": "triggers",
+      "metadata": {}
+    },
+    {
+      "source": "09587ce6bf75",
+      "target": "63e7e1142296",
+      "kind": "triggers",
+      "metadata": {}
+    },
+    {
+      "source": "aea4e763ea9c",
+      "target": "d5259211faad",
+      "kind": "triggers",
+      "metadata": {}
+    },
+    {
+      "source": "207527d8047f",
+      "target": "d5259211faad",
+      "kind": "triggers",
+      "metadata": {}
+    },
+    {
+      "source": "30970404bc0e",
+      "target": "d5259211faad",
+      "kind": "triggers",
+      "metadata": {}
+    },
+    {
+      "source": "981a5e833993",
+      "target": "d5259211faad",
+      "kind": "triggers",
+      "metadata": {}
+    },
+    {
+      "source": "f991eea4b59b",
+      "target": "63e7e1142296",
+      "kind": "triggers",
+      "metadata": {}
+    },
+    {
+      "source": "984165ffbca6",
+      "target": "63e7e1142296",
+      "kind": "triggers",
+      "metadata": {}
+    },
+    {
+      "source": "f4aff4b8dab0",
+      "target": "63e7e1142296",
+      "kind": "triggers",
+      "metadata": {}
+    },
+    {
+      "source": "51147d94c8d7",
+      "target": "63e7e1142296",
+      "kind": "triggers",
+      "metadata": {}
+    },
+    {
+      "source": "5dac1cfcf7fb",
+      "target": "a6a0de419674",
+      "kind": "triggers",
+      "metadata": {}
+    },
+    {
+      "source": "dd4fffc1f8da",
+      "target": "a6a0de419674",
+      "kind": "triggers",
+      "metadata": {}
+    },
+    {
+      "source": "284e95c6dd28",
+      "target": "a6a0de419674",
+      "kind": "triggers",
+      "metadata": {}
+    },
+    {
+      "source": "f06de1c3f737",
+      "target": "a6a0de419674",
+      "kind": "triggers",
+      "metadata": {}
+    },
+    {
+      "source": "935ddf646438",
+      "target": "a6a0de419674",
+      "kind": "triggers",
+      "metadata": {}
+    },
+    {
       "source": "b2e754d45580",
       "target": "5b37ecd541b4",
       "kind": "contains",
@@ -31692,6 +32210,12 @@
     {
       "source": "e94f651cc1ba",
       "target": "95d9f20daecd",
+      "kind": "contains",
+      "metadata": {}
+    },
+    {
+      "source": "e94f651cc1ba",
+      "target": "a6a0de419674",
       "kind": "contains",
       "metadata": {}
     },
@@ -32124,6 +32648,12 @@
     {
       "source": "e94f651cc1ba",
       "target": "cc4c309f2914",
+      "kind": "contains",
+      "metadata": {}
+    },
+    {
+      "source": "e94f651cc1ba",
+      "target": "88425ce7fc02",
       "kind": "contains",
       "metadata": {}
     },
@@ -33659,6 +34189,12 @@
     },
     {
       "source": "e94f651cc1ba",
+      "target": "d5259211faad",
+      "kind": "contains",
+      "metadata": {}
+    },
+    {
+      "source": "e94f651cc1ba",
       "target": "d2d95b1b473a",
       "kind": "contains",
       "metadata": {}
@@ -33666,6 +34202,12 @@
     {
       "source": "e94f651cc1ba",
       "target": "9e3e8e8712f8",
+      "kind": "contains",
+      "metadata": {}
+    },
+    {
+      "source": "e94f651cc1ba",
+      "target": "63e7e1142296",
       "kind": "contains",
       "metadata": {}
     },
@@ -34026,12 +34568,6 @@
     {
       "source": "58945d676490",
       "target": "257c33b94988",
-      "kind": "contains",
-      "metadata": {}
-    },
-    {
-      "source": "58945d676490",
-      "target": "88425ce7fc02",
       "kind": "contains",
       "metadata": {}
     },
@@ -35729,6 +36265,12 @@
     },
     {
       "source": "4df9fd7d77be",
+      "target": "1ae057c39977",
+      "kind": "contains",
+      "metadata": {}
+    },
+    {
+      "source": "4df9fd7d77be",
       "target": "bfbdb0245fb3",
       "kind": "contains",
       "metadata": {}
@@ -35844,6 +36386,18 @@
     {
       "source": "4df9fd7d77be",
       "target": "8b4bed029eb1",
+      "kind": "contains",
+      "metadata": {}
+    },
+    {
+      "source": "ea5a4594970a",
+      "target": "44ff927c4b87",
+      "kind": "contains",
+      "metadata": {}
+    },
+    {
+      "source": "f297e9873811",
+      "target": "8bbf0563f59d",
       "kind": "contains",
       "metadata": {}
     },
@@ -36090,6 +36644,12 @@
     {
       "source": "4df9fd7d77be",
       "target": "398364b65753",
+      "kind": "contains",
+      "metadata": {}
+    },
+    {
+      "source": "4df9fd7d77be",
+      "target": "dd5ae9e24aee",
       "kind": "contains",
       "metadata": {}
     },
@@ -36455,6 +37015,18 @@
     },
     {
       "source": "4df9fd7d77be",
+      "target": "348ae9cac4ea",
+      "kind": "contains",
+      "metadata": {}
+    },
+    {
+      "source": "4df9fd7d77be",
+      "target": "363d1b032951",
+      "kind": "contains",
+      "metadata": {}
+    },
+    {
+      "source": "4df9fd7d77be",
       "target": "1f7a641a1f89",
       "kind": "contains",
       "metadata": {}
@@ -36528,6 +37100,12 @@
     {
       "source": "b0245c519a34",
       "target": "ea58b5850569",
+      "kind": "contains",
+      "metadata": {}
+    },
+    {
+      "source": "b0245c519a34",
+      "target": "0be2866188ac",
       "kind": "contains",
       "metadata": {}
     },
@@ -36622,6 +37200,12 @@
       "metadata": {}
     },
     {
+      "source": "207aa78c0c90",
+      "target": "d5259211faad",
+      "kind": "contains",
+      "metadata": {}
+    },
+    {
       "source": "4df9fd7d77be",
       "target": "d2d95b1b473a",
       "kind": "contains",
@@ -36630,6 +37214,12 @@
     {
       "source": "4df9fd7d77be",
       "target": "9e3e8e8712f8",
+      "kind": "contains",
+      "metadata": {}
+    },
+    {
+      "source": "207aa78c0c90",
+      "target": "63e7e1142296",
       "kind": "contains",
       "metadata": {}
     },
@@ -36778,6 +37368,12 @@
       "metadata": {}
     },
     {
+      "source": "4df9fd7d77be",
+      "target": "8438c4c61177",
+      "kind": "contains",
+      "metadata": {}
+    },
+    {
       "source": "ab71f59186ff",
       "target": "bcf9b9497f8d",
       "kind": "contains",
@@ -36918,6 +37514,12 @@
     {
       "source": "4df9fd7d77be",
       "target": "3d37c529a99c",
+      "kind": "contains",
+      "metadata": {}
+    },
+    {
+      "source": "4df9fd7d77be",
+      "target": "78b96d730672",
       "kind": "contains",
       "metadata": {}
     },
@@ -37782,6 +38384,12 @@
     {
       "source": "1179b083c804",
       "target": "4d8ffb285e88",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "1179b083c804",
+      "target": "6b7b05a08f5e",
       "kind": "related_to",
       "metadata": {}
     },
@@ -41291,7 +41899,13 @@
     },
     {
       "source": "d2e76df3357b",
-      "target": "f248367726e7",
+      "target": "3c187c080b19",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "d2e76df3357b",
+      "target": "d8ddd7c38474",
       "kind": "depends_on",
       "metadata": {}
     },
@@ -41346,6 +41960,12 @@
     {
       "source": "fb31db638bbf",
       "target": "e612ca87e754",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "fb31db638bbf",
+      "target": "3827da1ec890",
       "kind": "depends_on",
       "metadata": {}
     },
@@ -41549,7 +42169,7 @@
     },
     {
       "source": "418ee149ca3b",
-      "target": "f248367726e7",
+      "target": "88425ce7fc02",
       "kind": "depends_on",
       "metadata": {}
     },
@@ -41603,7 +42223,13 @@
     },
     {
       "source": "3e6c5a67a97b",
-      "target": "f248367726e7",
+      "target": "3c187c080b19",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "ec05ec37dca5",
+      "target": "3827da1ec890",
       "kind": "depends_on",
       "metadata": {}
     },
@@ -41615,7 +42241,25 @@
     },
     {
       "source": "6b7b05a08f5e",
+      "target": "3827da1ec890",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "6b7b05a08f5e",
       "target": "fb31db638bbf",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "a6a0de419674",
+      "target": "795cbf00b346",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "a6a0de419674",
+      "target": "855b924e1c03",
       "kind": "depends_on",
       "metadata": {}
     },
@@ -41638,6 +42282,18 @@
       "metadata": {}
     },
     {
+      "source": "cd6043a8aaae",
+      "target": "3e743563058d",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "0410ed8f4594",
+      "target": "3827da1ec890",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
       "source": "0410ed8f4594",
       "target": "fb31db638bbf",
       "kind": "depends_on",
@@ -41652,6 +42308,12 @@
     {
       "source": "382912813418",
       "target": "cd6043a8aaae",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "382912813418",
+      "target": "efbfa55c8c44",
       "kind": "depends_on",
       "metadata": {}
     },
@@ -41699,6 +42361,12 @@
     },
     {
       "source": "3bcfb4d1772a",
+      "target": "3827da1ec890",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "3bcfb4d1772a",
       "target": "fb31db638bbf",
       "kind": "depends_on",
       "metadata": {}
@@ -41712,6 +42380,12 @@
     {
       "source": "309416faa1cd",
       "target": "cd6043a8aaae",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "309416faa1cd",
+      "target": "cbce994514ba",
       "kind": "depends_on",
       "metadata": {}
     },
@@ -41777,7 +42451,19 @@
     },
     {
       "source": "cc4c309f2914",
+      "target": "3827da1ec890",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "cc4c309f2914",
       "target": "fb31db638bbf",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "539d97f0f9e9",
+      "target": "3827da1ec890",
       "kind": "depends_on",
       "metadata": {}
     },
@@ -41891,6 +42577,18 @@
     },
     {
       "source": "c94f5352f070",
+      "target": "3c187c080b19",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "c94f5352f070",
+      "target": "9679e0e03f5f",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "c94f5352f070",
       "target": "254b9286a000",
       "kind": "depends_on",
       "metadata": {}
@@ -41945,6 +42643,12 @@
     },
     {
       "source": "b1c52d9a1bb1",
+      "target": "3827da1ec890",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "b1c52d9a1bb1",
       "target": "fb31db638bbf",
       "kind": "depends_on",
       "metadata": {}
@@ -41987,7 +42691,19 @@
     },
     {
       "source": "d6d829d58e66",
+      "target": "3827da1ec890",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "d6d829d58e66",
       "target": "fb31db638bbf",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "8034ffba1ba4",
+      "target": "3827da1ec890",
       "kind": "depends_on",
       "metadata": {}
     },
@@ -42004,8 +42720,20 @@
       "metadata": {}
     },
     {
+      "source": "1a7140ba67a8",
+      "target": "3827da1ec890",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
       "source": "a2f6e5d38cf6",
       "target": "1a7140ba67a8",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "a2f6e5d38cf6",
+      "target": "3827da1ec890",
       "kind": "depends_on",
       "metadata": {}
     },
@@ -42318,6 +43046,24 @@
     {
       "source": "f03cf0c7d3f4",
       "target": "8b5b966e6d2d",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "f03cf0c7d3f4",
+      "target": "0ee034800d6f",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "f03cf0c7d3f4",
+      "target": "b859d6e6e157",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "f03cf0c7d3f4",
+      "target": "3f7e6aaaab9f",
       "kind": "depends_on",
       "metadata": {}
     },
@@ -43264,6 +44010,12 @@
       "metadata": {}
     },
     {
+      "source": "d42a20929685",
+      "target": "855b924e1c03",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
       "source": "2d8b935c34cf",
       "target": "d9f4cf39bb44",
       "kind": "depends_on",
@@ -43552,6 +44304,18 @@
       "metadata": {}
     },
     {
+      "source": "abaff530dbcf",
+      "target": "63e7e1142296",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "abaff530dbcf",
+      "target": "d5259211faad",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
       "source": "808f34c72009",
       "target": "8b5b966e6d2d",
       "kind": "depends_on",
@@ -43571,6 +44335,12 @@
     },
     {
       "source": "808f34c72009",
+      "target": "0ee034800d6f",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "808f34c72009",
       "target": "fd1e8625c2d0",
       "kind": "depends_on",
       "metadata": {}
@@ -43583,7 +44353,37 @@
     },
     {
       "source": "c4b318c761d0",
+      "target": "9679e0e03f5f",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "c4b318c761d0",
+      "target": "808f34c72009",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "c4b318c761d0",
+      "target": "bf5b83ed23d4",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "c4b318c761d0",
       "target": "c54eeaac4e99",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "c4b318c761d0",
+      "target": "f03cf0c7d3f4",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "91cb3703da8c",
+      "target": "9679e0e03f5f",
       "kind": "depends_on",
       "metadata": {}
     },
@@ -43596,6 +44396,12 @@
     {
       "source": "91cb3703da8c",
       "target": "c4b318c761d0",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "91cb3703da8c",
+      "target": "3c187c080b19",
       "kind": "depends_on",
       "metadata": {}
     },
@@ -43643,13 +44449,13 @@
     },
     {
       "source": "2685e10a1a0f",
-      "target": "ddeb2d8771c1",
+      "target": "ee550ccf695a",
       "kind": "depends_on",
       "metadata": {}
     },
     {
       "source": "2685e10a1a0f",
-      "target": "ee550ccf695a",
+      "target": "ddeb2d8771c1",
       "kind": "depends_on",
       "metadata": {}
     },
@@ -43930,6 +44736,42 @@
       "metadata": {}
     },
     {
+      "source": "d5259211faad",
+      "target": "63e7e1142296",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "d5259211faad",
+      "target": "abaff530dbcf",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "d5259211faad",
+      "target": "6a0d86c4361f",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "d5259211faad",
+      "target": "5c24b812218b",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "d5259211faad",
+      "target": "a419aeebed65",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "d5259211faad",
+      "target": "9679e0e03f5f",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
       "source": "d2d95b1b473a",
       "target": "828ea0b39391",
       "kind": "depends_on",
@@ -43950,6 +44792,36 @@
     {
       "source": "d2d95b1b473a",
       "target": "94d7416625e6",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "63e7e1142296",
+      "target": "d5259211faad",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "63e7e1142296",
+      "target": "abaff530dbcf",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "63e7e1142296",
+      "target": "5c24b812218b",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "63e7e1142296",
+      "target": "9679e0e03f5f",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "63e7e1142296",
+      "target": "7755ebec1efc",
       "kind": "depends_on",
       "metadata": {}
     },
@@ -44164,6 +45036,12 @@
       "metadata": {}
     },
     {
+      "source": "257c33b94988",
+      "target": "abaff530dbcf",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
       "source": "ae8badc28982",
       "target": "563d72c1e163",
       "kind": "depends_on",
@@ -44309,7 +45187,7 @@
     },
     {
       "source": "ac0aca348df2",
-      "target": "21ff55b99207",
+      "target": "366e9b0583cd",
       "kind": "depends_on",
       "metadata": {}
     },
@@ -44321,13 +45199,7 @@
     },
     {
       "source": "ac0aca348df2",
-      "target": "e288a7772e3c",
-      "kind": "depends_on",
-      "metadata": {}
-    },
-    {
-      "source": "ac0aca348df2",
-      "target": "366e9b0583cd",
+      "target": "21ff55b99207",
       "kind": "depends_on",
       "metadata": {}
     },
@@ -44346,6 +45218,12 @@
     {
       "source": "ac0aca348df2",
       "target": "6ed77fefcdc0",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "ac0aca348df2",
+      "target": "e288a7772e3c",
       "kind": "depends_on",
       "metadata": {}
     },
@@ -44914,6 +45792,12 @@
       "metadata": {}
     },
     {
+      "source": "4b207fd0cb04",
+      "target": "3827da1ec890",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
       "source": "385d13b53085",
       "target": "e70df71c4fdb",
       "kind": "depends_on",
@@ -45437,13 +46321,13 @@
     },
     {
       "source": "bf3dfab76c10",
-      "target": "fb31db638bbf",
+      "target": "3827da1ec890",
       "kind": "depends_on",
       "metadata": {}
     },
     {
       "source": "bf3dfab76c10",
-      "target": "3827da1ec890",
+      "target": "fb31db638bbf",
       "kind": "depends_on",
       "metadata": {}
     },
@@ -45456,6 +46340,12 @@
     {
       "source": "f95871fa40ee",
       "target": "e612ca87e754",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "f95871fa40ee",
+      "target": "3827da1ec890",
       "kind": "depends_on",
       "metadata": {}
     },
@@ -45492,6 +46382,12 @@
     {
       "source": "8fbab7a1514f",
       "target": "fb31db638bbf",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "8fbab7a1514f",
+      "target": "3827da1ec890",
       "kind": "depends_on",
       "metadata": {}
     },
@@ -45725,13 +46621,13 @@
     },
     {
       "source": "3e7e58b784ef",
-      "target": "91c598dea98d",
+      "target": "c70c4a875502",
       "kind": "depends_on",
       "metadata": {}
     },
     {
       "source": "3e7e58b784ef",
-      "target": "c70c4a875502",
+      "target": "91c598dea98d",
       "kind": "depends_on",
       "metadata": {}
     },
@@ -45839,6 +46735,12 @@
     },
     {
       "source": "1179b083c804",
+      "target": "6b7b05a08f5e",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "1179b083c804",
       "target": "480c8767f617",
       "kind": "depends_on",
       "metadata": {}
@@ -45922,6 +46824,12 @@
       "metadata": {}
     },
     {
+      "source": "39233688d342",
+      "target": "e612ca87e754",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
       "source": "480c8767f617",
       "target": "1179b083c804",
       "kind": "depends_on",
@@ -45935,7 +46843,7 @@
     },
     {
       "source": "480c8767f617",
-      "target": "f248367726e7",
+      "target": "88425ce7fc02",
       "kind": "depends_on",
       "metadata": {}
     },
@@ -46715,7 +47623,19 @@
     },
     {
       "source": "e96bb6eb8f05",
+      "target": "a6a0de419674",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "e96bb6eb8f05",
       "target": "795cbf00b346",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "e96bb6eb8f05",
+      "target": "e612ca87e754",
       "kind": "depends_on",
       "metadata": {}
     },
@@ -47663,13 +48583,19 @@
     },
     {
       "source": "e9e1e2af8e75",
-      "target": "7648612eadf8",
+      "target": "d90eb85a4a0a",
       "kind": "depends_on",
       "metadata": {}
     },
     {
       "source": "e9e1e2af8e75",
-      "target": "d90eb85a4a0a",
+      "target": "e612ca87e754",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "e9e1e2af8e75",
+      "target": "7648612eadf8",
       "kind": "depends_on",
       "metadata": {}
     },
@@ -49133,6 +50059,12 @@
     },
     {
       "source": "95d9f20daecd",
+      "target": "a6a0de419674",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "a6a0de419674",
       "target": "029faa0582da",
       "kind": "related_to",
       "metadata": {}
@@ -49565,6 +50497,12 @@
     },
     {
       "source": "cc4c309f2914",
+      "target": "88425ce7fc02",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "88425ce7fc02",
       "target": "a867438846f1",
       "kind": "related_to",
       "metadata": {}
@@ -51065,6 +52003,12 @@
     },
     {
       "source": "5dcdf722af65",
+      "target": "d5259211faad",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "d5259211faad",
       "target": "d2d95b1b473a",
       "kind": "related_to",
       "metadata": {}
@@ -51077,6 +52021,12 @@
     },
     {
       "source": "9e3e8e8712f8",
+      "target": "63e7e1142296",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "63e7e1142296",
       "target": "e288a7772e3c",
       "kind": "related_to",
       "metadata": {}
@@ -51425,12 +52375,6 @@
     },
     {
       "source": "257c33b94988",
-      "target": "88425ce7fc02",
-      "kind": "related_to",
-      "metadata": {}
-    },
-    {
-      "source": "88425ce7fc02",
       "target": "2fac08e6f9d8",
       "kind": "related_to",
       "metadata": {}
@@ -52979,19 +53923,19 @@
     }
   ],
   "stats": {
-    "node_count": 2586,
-    "edge_count": 5685,
-    "skill_count": 682,
-    "trigger_count": 1894,
+    "node_count": 2604,
+    "edge_count": 5771,
+    "skill_count": 685,
+    "trigger_count": 1909,
     "phase_count": 6,
     "category_count": 5,
-    "depends_on_count": 1395,
-    "related_to_count": 1213,
+    "depends_on_count": 1448,
+    "related_to_count": 1217,
     "edge_types": {
-      "contains": 980,
-      "triggers": 2097,
-      "depends_on": 1395,
-      "related_to": 1213
+      "contains": 994,
+      "triggers": 2112,
+      "depends_on": 1448,
+      "related_to": 1217
     }
   }
 }

@@ -1,5 +1,5 @@
 ---
-name: skill-health
+name: csp-skill-health
 description: Show skill portfolio health dashboard with charts and analytics
 command: true
 ---

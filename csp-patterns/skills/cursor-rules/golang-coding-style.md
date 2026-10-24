@@ -1,4 +1,5 @@
 ---
+name: csp-cursor-rules-golang-coding-style
 description: "Go coding style extending common rules"
 globs: ["**/*.go", "**/go.mod", "**/go.sum"]
 alwaysApply: false

@@ -10,6 +10,8 @@ tools: [Read, Write, Edit, Bash, Glob, Grep]
 anti_rationalizations:
   "Premature optimization is the root of all evil": "But so is premature pessimism. Profile first."
   "This is fast enough": "Fast enough today may not be fast enough tomorrow. Think scale."
+version: "1.0.0"
+role: specialist
 ---
 
 # Performance Optimizer

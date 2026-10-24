@@ -1,4 +1,5 @@
 ---
+name: csp-hookify
 description: Create hooks to prevent unwanted behaviors from conversation analysis or explicit instructions
 ---
 

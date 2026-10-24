@@ -1,15 +1,6 @@
 ---
 name: csp-design-hub
-description: |
-  设计方案多模式生成与同步引擎。支持 summary/detailed/rapid/local-rapid/regenerate
-  五种模式切换 + 模式互切，输出到现有 .csp/tech-design/ 目录。
-  与 csp-tech-solution-design 协作：本技能做模式分发与设计-实现同步管理，
-  csp-tech-solution-design 做实际 TDD 生成。支持"设计文档与实现同步"——
-  检测代码漂移，标记需同步的设计章节。
-  当用户需要"设计方案多模式切换""设计文档重新生成""概要设计""极速设计"时使用。
-  关键词：设计模式切换、概要设计、详细设计、极速设计、本地极速、重新生成、
-  design mode、summary design、rapid design、regenerate design、
-  设计同步、design sync、模式互切、design hub。
+description: "设计方案多模式生成与同步引擎。支持 summary/detailed/rapid/local-rapid/regenerate 五种模式切换 + 模式互切，输出到现有 .csp/tech-design/ 目录。与 csp-tech-solution-design 协作：本技能做模式分发与设计-实现同步管理，后者做实际 TDD 生成。支持'设计文档与实现同步'——检测代码漂移，标记需同步的设计章节。当用户需要'设计方案多模式切换''概要设计''极速设计'时使用。"
 version: "1.0.0"
 layer: 2
 category: workflow

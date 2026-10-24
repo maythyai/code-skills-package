@@ -292,7 +292,7 @@ MIT
 
 ## Integration with CSP Tools
 
-### With csp-spec
+### With csp-spec-contract
 - Creates clear, comprehensive SPECs
 - Ensures documentation requirements are included
 - Reviews SPECs for clarity and completeness

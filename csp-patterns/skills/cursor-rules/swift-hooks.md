@@ -1,4 +1,5 @@
 ---
+name: csp-cursor-rules-swift-hooks
 description: "Swift hooks extending common rules"
 globs: ["**/*.swift", "**/Package.swift"]
 alwaysApply: false

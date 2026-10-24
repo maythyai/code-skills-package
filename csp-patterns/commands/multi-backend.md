@@ -1,4 +1,5 @@
 ---
+name: csp-multi-backend
 description: Run a backend-focused multi-model workflow for APIs, algorithms, data, and business logic.
 ---
 

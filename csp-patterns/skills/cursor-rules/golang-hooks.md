@@ -1,4 +1,5 @@
 ---
+name: csp-cursor-rules-golang-hooks
 description: "Go hooks extending common rules"
 globs: ["**/*.go", "**/go.mod", "**/go.sum"]
 alwaysApply: false

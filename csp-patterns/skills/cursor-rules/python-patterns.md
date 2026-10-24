@@ -1,4 +1,5 @@
 ---
+name: csp-cursor-rules-python-patterns
 description: "Python patterns extending common rules"
 globs: ["**/*.py", "**/*.pyi"]
 alwaysApply: false

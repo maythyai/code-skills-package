@@ -1,4 +1,12 @@
 ---
+version: "1.0.0"
+layer: 3
+category: patterns
+domain: patterns
+phase: build
+scope: implementation
+role: specialist
+tools: [Read, Write, Edit, Bash, Glob, Grep, WebFetch, WebSearch, Agent]
 name: deliverable
 description: 从 B2B 客户调研数据生成销售作战交付物。在 L2-L4 调研已完成、需要把结构化数据转化为面向销售一线与管理层的可执行文档时使用——产出 D1 客户攻坚作战手册、D2 高管摘要、D3 产品场景匹配矩阵、D4 行业市场洞察、D5 高潜力客户特征模型、D6 公司全景表、D7 风险矩阵与核心假设、D8 行动路线图等 8 个标准交付物（可按需选子集）。通常由 account-research orchestrator 在 Phase 5 调用。触发：'把调研数据整理成作战手册'、'生成客户攻坚方案'、'出一份调研交付物'、'generate research deliverables'。
 ---

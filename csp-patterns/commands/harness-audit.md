@@ -1,4 +1,5 @@
 ---
+name: csp-harness-audit
 description: Run a deterministic repository harness audit and return a prioritized scorecard.
 ---
 

@@ -6,6 +6,10 @@ layer: 3
 category: patterns
 phase: build
 domain: patterns
+version: "1.0.0"
+role: specialist
+scope: implementation
+tools: [Read, Write, Edit, Bash, Glob, Grep]
 ---
 
 # Coding Standards & Best Practices

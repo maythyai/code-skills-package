@@ -10,6 +10,7 @@ phase: review
 domain: patterns
 scope: review
 tools: [Read, Write, Edit, Glob, Grep, Bash, WebFetch, WebSearch]
+role: specialist
 ---
 
 # 启发评估

@@ -1,4 +1,5 @@
 ---
+name: csp-cursor-rules-common-performance
 description: "Performance: model selection, context management, build troubleshooting"
 alwaysApply: true
 ---

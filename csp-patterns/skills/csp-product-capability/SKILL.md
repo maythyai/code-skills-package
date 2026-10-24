@@ -6,6 +6,10 @@ category: patterns
 phase: plan
 domain: patterns
 related_skills: [csp-product-discovery-orchestrator]
+version: "1.0.0"
+role: specialist
+scope: design
+tools: [Read, Write, Edit, Glob, Grep]
 ---
 
 # Product Capability

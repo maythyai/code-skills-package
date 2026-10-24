@@ -399,7 +399,7 @@ Output: Editorial review identifying:
 
 ### With Other CSP Tools
 - \*\*csp-review-editorial-structure**: Complements with structural review
-- \*\*csp-spec**: Reviews SPEC documents for clarity
+- \*\*csp-spec-contract**: Reviews SPEC documents for clarity
 - **Phase Workflows**: Reviews documentation in implementation phase
 
 ### With Specialized Agents

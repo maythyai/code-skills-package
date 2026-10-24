@@ -1,4 +1,5 @@
 ---
+name: csp-cursor-rules-kotlin-hooks
 description: "Kotlin hooks extending common rules"
 globs: ["**/*.kt", "**/*.kts", "**/build.gradle.kts"]
 alwaysApply: false

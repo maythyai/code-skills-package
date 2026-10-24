@@ -5,6 +5,10 @@ layer: 1
 category: meta
 phase: verify
 domain: architecture
+version: "1.0.0"
+role: specialist
+scope: analysis
+tools: [Read, Write, Edit, Bash, Glob, Grep]
 ---
 
 | Signal | Meaning | Action |

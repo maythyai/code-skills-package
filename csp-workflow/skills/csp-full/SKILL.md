@@ -1,28 +1,14 @@
 ---
 name: csp-full
-description: |
-  CSP Full — 全链路产品交付工作流，从想法到生产部署的端到端自动化。
-  覆盖：需求澄清 → PRD → 技术设计 → 并行开发 → 测试 → 代码审查 → 发布 → 运维监控。
-  支持企业协作模式（多角色、审批门控）和独立开发者模式（精简快速）。
-  支持多轮里程碑迭代（MVP → v1 → v2）。
-  当用户描述一个产品想法、想要从零构建一个应用、需要端到端全流程交付时使用。
-  关键词：csp-full, "full workflow", "full pipeline", "端到端", "全流程",
-  "从需求到发布", "从想法到产品", "从概念到上线",
-  "build me a product", "build me an app", "build me a tool", "build me a platform",
-  "ship a feature", "ship a product", "MVP to production", "from scratch to production",
-  "complete pipeline", "end to end", "end-to-end delivery", "idea to product",
-  "enterprise workflow", "product lifecycle", "多轮迭代", "完整交付", "全链路",
-  "帮我做一个", "帮我搭建", "帮我构建", "帮我开发一个",
-  "搭建一个完整的", "构建一个完整", "开发一个完整",
-  "做一个产品", "做一个平台", "做一个系统",
-  "从零开始", "从0到1", "从0开始", "从零搭建",
-  "一站式", "新建一个应用", "新建一个产品", "create a complete", "build from scratch"。
-  即使用户只说了一个模糊想法（如"帮我做一个习惯打卡 app"、"构建一个完整的博客系统"），只要涉及从零构建完整产品，就应使用此 skill。
-  如果用户只是要求代码审查、bug 修复、解释概念或单文件修改，不要使用。
+description: "CSP Full — 全链路产品交付工作流，从想法到生产部署的端到端自动化。覆盖：需求澄清 → PRD → 技术设计 → 并行开发 → 测试 → 代码审查 → 发布 → 运维监控。支持企业协作模式（多角色、审批门控）和独立开发者模式，支持多轮里程碑迭代（MVP → v1 → v2）。当用户描述产品想法、想从零构建应用、或需要端到端全流程交付时使用。即使用户只说模糊想法（如'帮我做一个习惯打卡 app'），只要涉及从零构建完整产品就应使用；纯代码审查、bug 修复、单文件修改不要用。"
 layer: 2
 category: workflow
 phase: build
 domain: patterns
+version: "1.0.0"
+role: specialist
+scope: implementation
+tools: [Read, Write, Edit, Bash, Glob, Grep]
 ---
 
 | 维度 | 简单工作流 | 完整工作流 |

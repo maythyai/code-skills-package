@@ -1,4 +1,5 @@
 ---
+name: csp-model-route
 description: Recommend the best model tier for the current task based on complexity, risk, and budget.
 ---
 

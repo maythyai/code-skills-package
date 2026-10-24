@@ -1,6 +1,6 @@
 ---
 name: csp-image-to-code
-description: "Convert a screenshot, mockup, Figma export, or design image into faithful, self-contained HTML/CSS. Covers the four-step analysis-to-code pipeline, fidelity priorities and measurable tolerances (exact hex, ±2px spacing, ±1px font size), design-token extraction, five-state high-fidelity prototypes, and the sharded parallel pipeline for large design sets. Use when the user supplies an image and asks for HTML, a page rebuild, a prototype, D2C, or design-to-code conversion."
+description: "Convert a screenshot, mockup, Figma export, or design image into faithful, self-contained HTML/CSS. Fidelity tolerances, design-token extraction, and five-state prototypes. Use when the user supplies an image and asks for HTML, a page rebuild, or D2C conversion."
 version: 0.1.0
 layer: 3
 category: patterns
@@ -9,6 +9,7 @@ domain: patterns
 scope: implementation
 tools: [Read, Write, Edit, Glob, Grep]
 related_skills: [csp-frontend-design, csp-design-system-capture, csp-responsive-design, csp-html-prototype, csp-flow-web, csp-web-artifacts]
+role: specialist
 ---
 
 # Image to Code

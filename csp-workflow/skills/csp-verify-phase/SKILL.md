@@ -10,6 +10,8 @@ tools: [Read, Write, Edit, Bash, Glob, Grep]
 anti_rationalizations:
   "Tests passed, we're done": "Passing tests don't guarantee correctness. Verify against requirements."
   "It works on my machine": "Local success ≠ production readiness. Check environment parity."
+version: "1.0.0"
+role: specialist
 ---
 
 # Verify Phase

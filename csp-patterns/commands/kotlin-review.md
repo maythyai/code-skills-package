@@ -1,4 +1,5 @@
 ---
+name: csp-kotlin-review
 description: Comprehensive Kotlin code review for idiomatic patterns, null safety, coroutine safety, and security. Invokes the kotlin-reviewer agent.
 ---
 

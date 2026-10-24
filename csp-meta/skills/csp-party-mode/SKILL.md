@@ -1,10 +1,14 @@
 ---
 name: csp-party-mode
-description: Multi-agent collaboration for complex problem-solving with specialized AI agents
+description: "Multi-agent collaboration for complex problem-solving with specialized AI agents. Design-stage skill (CLI commands not yet implemented); use csp-brainstorming for structured ideation today. Use when exploring multi-perspective discussion of a problem."
 layer: 1
 category: meta
 domain: architecture
 phase: define
+version: "1.0.0"
+role: specialist
+scope: design
+tools: [Read, Write, Edit, Glob, Grep]
 ---
 
 > **⚠️ Status: DESIGN ONLY** — This skill describes a planned multi-agent discussion feature.
@@ -214,7 +218,7 @@ Output: Developer reviews implementation quality, System Architect reviews archi
 - Can chain to SPEC generation or phase workflows
 
 ### With Other CSP Tools
-- **csp-spec**: Party mode can review generated SPECs
+- **csp-spec-contract**: Party mode can review generated SPEC contracts
 - **csp-brainstorming**: Party mode extends brainstorming with multi-agent perspectives
 - **Phase Workflows**: Party mode used for key decisions in each phase
 - **Review Tools**: Party mode orchestrates multi-agent reviews

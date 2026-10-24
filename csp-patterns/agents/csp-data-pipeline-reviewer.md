@@ -1,10 +1,6 @@
 ---
 name: csp-data-pipeline-reviewer
-description: >
-  Data pipeline code reviewer. Reviews for idempotency, incremental correctness, schema
-  evolution safety, data quality checks, error handling, retry logic, monitoring/alerting,
-  and cost efficiency. Use for any codebase implementing ETL/ELT pipelines, data
-  transformations, or batch/streaming data processing.
+description: "Data pipeline code reviewer. Reviews for idempotency, incremental correctness, schema evolution safety, data quality checks, retry logic, monitoring/alerting, and cost efficiency. Use for any codebase implementing ETL/ELT pipelines, data transformations, or batch/streaming processing."
 tools: ["Read", "Grep", "Glob", "Bash"]
 model: sonnet
 ---
@@ -215,7 +211,7 @@ Fix: Concrete recommended change with code example if helpful.
 ## Related
 
 - Agents: `csp-rag-architect` (RAG data pipelines), `csp-llm-app-reviewer` (LLM integration)
-- Skills: `csp-data-pipeline-patterns`, `csp-database-patterns`
+- Skills: `csp-data-pipeline-patterns`, `csp-database-reviewer`
 
 ---
 

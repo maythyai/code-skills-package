@@ -1,4 +1,5 @@
 ---
+name: csp-cursor-rules-swift-coding-style
 description: "Swift coding style extending common rules"
 globs: ["**/*.swift", "**/Package.swift"]
 alwaysApply: false

@@ -1,4 +1,5 @@
 ---
+name: csp-react-test
 description: Enforce TDD workflow for React. Write React Testing Library tests first (behavior-focused, accessibility-first), then implement components. Detects Vitest or Jest and verifies coverage targets.
 ---
 
@@ -13,7 +14,7 @@ This command enforces test-driven development for React using React Testing Libr
 3. **Run Tests**: Verify they fail for the right reason
 4. **Implement Minimal Code**: Just enough to pass — GREEN
 5. **Refactor**: Improve while keeping tests green
-6. **Check Coverage**: Hit the targets in [rules/react/testing.md](../rules/react/testing.md)
+6. **Check Coverage**: Hit the targets in [csp-react-testing](../skills/csp-react-testing/SKILL.md) 的 Coverage Targets 节
 
 ## When to Use
 
@@ -260,6 +261,6 @@ CI=true vitest run --coverage
 
 ## Related
 
-- Skills: `skills/csp-react-testing/`, `skills/tdd-workflow/`, `skills/accessibility/`, `skills/csp-e2e-testing/`
-- Rules: `rules/react/testing.md`
-- Agents: `react-reviewer` (reviews test quality), `tdd-guide` (enforces TDD process)
+- Skills: `skills/csp-react-testing/`, `skills/csp-tdd/`, `skills/csp-access/`, `skills/csp-e2e-testing/`
+- Rules: `skills/cursor-rules/typescript-testing.md`
+- Agents: `react-reviewer` (reviews test quality); TDD 过程约束见 `skills/csp-tdd/`

@@ -1,11 +1,15 @@
 ---
 name: csp-skillify
 aliases: [learner]
-description: Turn a repeatable workflow from the current session into a reusable CSP skill draft
+description: "Turn a repeatable workflow from the current session into a reusable CSP skill draft. Extracts the session process into frontmatter, triggers, and instructions. Use after completing a workflow worth repeating."
 layer: 4
 category: runtime
 domain: architecture
 phase: build
+version: "1.0.0"
+role: specialist
+scope: implementation
+tools: [Read, Write, Edit, Bash, Glob, Grep]
 ---
      name: <skill-name>
      description: <one-line description>

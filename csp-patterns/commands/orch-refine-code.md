@@ -1,4 +1,5 @@
 ---
+name: csp-orch-refine-code
 description: Orchestrate a behavior-preserving refactor — confirm tests green, restructure without changing behavior, keep green, review, gated commit. Wrapper for the orch-refine-code skill.
 ---
 

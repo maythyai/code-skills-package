@@ -1,5 +1,5 @@
 ---
-name: network-troubleshooter
+name: csp-network-troubleshooter
 description: Diagnoses network connectivity, routing, DNS, interface, and policy symptoms with a read-only OSI-layer workflow and evidence-backed root cause summary.
 tools: ["Read", "Bash", "Grep"]
 model: sonnet

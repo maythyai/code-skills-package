@@ -37,7 +37,7 @@ Python 代码规范与审查技能——覆盖编码风格、类型安全、安�
 
 ## When NOT to Use
 
-- 纯算法/数据科学 notebook 评审（用 `csp-data-science-reviewer`）
+- 纯算法/数据科学 notebook 评审（超出本 skill 范围，建议走通用代码评审流程）
 - 已有明确 bug 需要调试（用 `csp-systematic-debugging`）
 - 仅跑 lint/type-check 命令（直接执行即可）
 

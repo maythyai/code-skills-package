@@ -1,4 +1,5 @@
 ---
+name: csp-gan-build
 description: Run a generator/evaluator build loop for implementation tasks with bounded iterations and scoring.
 ---
 

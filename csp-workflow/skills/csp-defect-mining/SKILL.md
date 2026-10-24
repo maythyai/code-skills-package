@@ -1,6 +1,6 @@
 ---
 name: csp-defect-mining
-description: "Systematic defect discovery via DIVERSE test methodologies — when a test suite has plateaued (more unit tests find 0 bugs), switch methods, not add quantity. Layers: basic (unit/BVA) → structural (mutation / error-path enumeration / type-tightening) → adversarial (fuzz / property-based / state-transition) → system (bootstrap/DI / cross-module invariants / concurrency). Use when auditing a project's test effectiveness, hunting bugs in parsers/state-machines/financial code, or breaking out of a '0 new bugs' plateau."
+description: "Systematic defect discovery via diverse test methodologies — when a test suite has plateaued, switch methods, not add quantity. Layers: adversarial (fuzz / property-based / state-transition) → system (concurrency / cross-module invariants). Use when auditing test effectiveness or hunting bugs."
 version: 1.0.0
 layer: 2
 category: workflow
@@ -21,6 +21,7 @@ anti_rationalizations:
   "Fuzz found nothing on round 1, skip it": "Round-1 fuzz calibrates the generator. Rounds 2-3 with adjusted seeds (deeper nesting, embedded escapes) find the parser short-circuits."
   "These are equivalent mutants, ignore": "Equivalent mutants are noise — triage them manually, don't blindly trust 'survived = weak tests'. But the NON-equivalent survivors are real blind spots."
   "noUncheckedIndexedAccess is too noisy": "It reports many false positives (.returning()/.count() always return rows). Triage for real bugs, fix locally — don't enable globally and drown in noise."
+role: specialist
 ---
 
 # Defect Mining

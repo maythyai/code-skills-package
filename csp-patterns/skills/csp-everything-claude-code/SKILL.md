@@ -1,10 +1,14 @@
 ---
 name: csp-everything-claude-code
-description: Development conventions and patterns for JavaScript projects with conventional commits.
+description: "Development conventions and patterns for JavaScript projects with conventional commits. Codifies file naming, project structure, and commit message conventions. Use when establishing or checking conventions in a JS/TS project."
 layer: 3
 category: patterns
 domain: patterns
 phase: build
+version: "1.0.0"
+role: specialist
+scope: implementation
+tools: [Read, Write, Edit, Bash, Glob, Grep]
 ---
 
 | Element | Convention |

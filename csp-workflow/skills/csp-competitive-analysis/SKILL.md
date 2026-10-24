@@ -1,14 +1,6 @@
 ---
 name: csp-competitive-analysis
-description: >
-  Structured competitive analysis with two modes: (1) a full framework report — feature
-  comparison matrix, SWOT, Porter's Five Forces, differentiation strategy, branching by
-  purpose (product design / fundraising BP / strategic planning / annual review); (2) a
-  single-movement competitive-intelligence scan — business-scenario-driven, 6-month
-  time-windowed, source-graded (A–E) recent-move digest. Both modes enforce zero fabrication
-  and forced disconfirmation. Use when the user says "竞品分析", "功能对比", "竞品调研",
-  "竞争分析", "竞品动向", "友商分析", "竞品扫描", "competitive analysis", "competitor
-  research", "market analysis", "competitive intelligence".
+description: "Structured competitive analysis with two modes: (1) full framework report — feature comparison matrix, SWOT, Porter's Five Forces, differentiation strategy; (2) single-movement competitive-intelligence scan — source-graded recent-move digest. Both modes enforce zero fabrication."
 version: "2.0.0"
 layer: 2
 category: workflow
@@ -49,6 +41,7 @@ triggers:
   context:
     - "before_prd_writing"
     - "strategy_planning"
+role: specialist
 ---
 
 # Competitive Analysis

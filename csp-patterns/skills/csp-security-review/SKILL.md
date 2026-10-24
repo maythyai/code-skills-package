@@ -8,6 +8,8 @@ phase: review
 domain: security
 scope: review
 tools: [Read, Grep, Glob]
+version: "1.0.0"
+role: specialist
 ---
 
 **Remember**: Security is not optional. One vulnerability can compromise the entire platform. When in doubt, err on the side of caution.

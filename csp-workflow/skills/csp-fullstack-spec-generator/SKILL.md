@@ -1,13 +1,6 @@
 ---
 name: csp-fullstack-spec-generator
-description: |
-  全栈技术规格生成器。为每个 Feature 生成完整的、可直接指导实现的技术规格文档，覆盖：
-  UI/UX 原型描述、数据库 Schema（DDL 级）、API 契约（OpenAPI 级）、后端架构设计、
-  前端组件树、基础设施需求、测试策略、安全考量。
-  当技术选型完成后需要生成详细实现规格、或用户需要"每个 feature 的完整技术细节"时使用。
-  关键词：全栈spec、fullstack spec、技术规格、implementation spec、详细设计、
-  数据库设计、API设计、schema design、前端设计、组件设计、接口契约、
-  generate spec、生成规格、feature spec、模块设计、detailed design。
+description: "全栈技术规格生成器。为每个 Feature 生成完整的、可直接指导实现的技术规格文档，覆盖：UI/UX 原型描述、数据库 Schema（DDL 级）、API 契约（OpenAPI 级）、后端架构设计、前端组件树、测试策略、安全考量。当技术选型完成后需要生成详细实现规格、或用户需要'每个 feature 的完整技术细节'时使用。"
 version: "1.0.0"
 layer: 2
 category: workflow
@@ -42,6 +35,7 @@ anti_rationalizations:
   "The feature is simple, no need for detailed spec": "Simple features have hidden edge cases. Spec them."
   "I'll design the schema during implementation": "Schema changes cascade. Design first, implement second."
   "API contract can be informal": "Informal contracts break frontend-backend integration. Formalize."
+role: specialist
 ---
 
 # Full-Stack Spec Generator

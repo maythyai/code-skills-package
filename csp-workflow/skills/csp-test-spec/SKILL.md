@@ -1,14 +1,6 @@
 ---
 name: csp-test-spec
-description: >
-  Test Module Spec (TMS / 测试说明书). The per-module living test baseline — a branch of
-  PMS. Maintains the stock (existing) test-case inventory and the requirement→method trace
-  matrix, and generates stock + incremental test cases from requirement/design docs. When a
-  change lands, TMS emits only the incremental cases the delta newly requires (entry × state
-  matrix), not a from-scratch rewrite. Governs test-case quality the way PMS governs PRD
-  quality. Use when establishing a test baseline, when "测试说明书", "TMS", "存量用例",
-  "增量用例", "test baseline", "test module spec", "测试基线", "需求用例矩阵", or
-  "regression inventory" is needed.
+description: "Test Module Spec (TMS / 测试说明书). The per-module living test baseline. Generates stock + incremental test cases from requirement/design docs; when a change lands, TMS emits only the incremental cases the delta requires, not a from-scratch rewrite."
 version: "1.0.0"
 layer: 2
 category: workflow

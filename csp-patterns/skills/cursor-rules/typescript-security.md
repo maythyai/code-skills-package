@@ -1,4 +1,5 @@
 ---
+name: csp-cursor-rules-typescript-security
 description: "TypeScript security extending common rules"
 globs: ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx"]
 alwaysApply: false

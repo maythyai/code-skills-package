@@ -1,13 +1,6 @@
 ---
 name: csp-product-spec
-description: >
-  Product Module Spec (PMS / 产品说明书). The living, versioned baseline that governs
-  PRD generation quality for a product. Defines module decomposition, boundaries,
-  and the acceptance standard every PRD must meet; downstream skills (PRD generation,
-  decomposition, traceability, change-impact) read it before producing their own
-  artifacts and write deltas back when modules ship. Use when establishing or
-  maintaining the product baseline, when "需求基线", "产品说明书", "PMS",
-  "module spec", "产品基线", "模块边界", or "需求质量基线" is needed.
+description: "Product Module Spec (PMS / 产品说明书). The living, versioned baseline that governs PRD generation quality for a product. Defines module decomposition, boundaries, and the acceptance standard every PRD must meet; downstream skills read it before producing their own artifacts."
 version: "1.0.0"
 layer: 2
 category: workflow

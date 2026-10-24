@@ -5,6 +5,10 @@ layer: 2
 category: workflow
 phase: review
 domain: patterns
+version: "1.0.0"
+role: specialist
+scope: review
+tools: [Read, Write, Edit, Bash, Glob, Grep]
 ---
 
 # Session Knowledge Extractor

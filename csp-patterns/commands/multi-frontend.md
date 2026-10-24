@@ -1,4 +1,5 @@
 ---
+name: csp-multi-frontend
 description: Run a frontend-focused multi-model workflow for components, layouts, animation, and UI polish.
 ---
 

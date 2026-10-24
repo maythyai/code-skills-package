@@ -1,20 +1,16 @@
 ---
 name: csp-typescript-patterns
-description: >
-  TypeScript-specific design patterns and best practices for TypeScript 5.x:
-  the type system (generics, conditional types, `infer`, mapped types, template
-  literal types), `type` vs `interface`, discriminated unions, the `satisfies`
-  operator, strict mode and key tsconfig options, ESM vs CJS, type guards and
-  assertion functions, utility types, Result-style error handling, avoiding
-  `any` in favour of `unknown`, module organization, and common anti-patterns.
-  Use when writing, reviewing, or refactoring TypeScript code to apply
-  type-safe, idiomatic patterns.
+description: "TypeScript design patterns and best practices for TypeScript 5.x: generics, conditional types, infer, template literal types, type vs interface, discriminated unions, satisfies, strict mode, ESM vs CJS, type guards, utility types. Use when writing, reviewing, or refactoring TypeScript code."
 metadata:
   globs: ["**/*.ts", "**/*.tsx", "**/*.mts", "**/*.cts"]
 layer: 3
 category: patterns
 phase: build
 domain: language
+version: "1.0.0"
+role: specialist
+scope: implementation
+tools: [Read, Write, Edit, Bash, Glob, Grep]
 ---
 
 # TypeScript Patterns

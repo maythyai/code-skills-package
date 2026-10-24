@@ -1,5 +1,5 @@
 ---
-name: csp-manage
+name: csp-ns-manage
 description: "config workspace | workstreams thread update ship inbox"
 argument-hint: ""
 allowed-tools:

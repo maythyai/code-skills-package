@@ -1,8 +1,14 @@
 ---
 name: csp-doctor
-description: Diagnose and fix code-skills-package installation issues
+description: "Diagnose and fix code-skills-package installation issues. Runs a battery of health checks over the CSP environment, then reports [HEALTHY / ISSUES FOUND] with concrete fixes. Use when CSP commands fail, skills are missing, or setup behaves unexpectedly."
 layer: 4
 phase: build
+domain: quality
+category: patterns
+version: "1.0.0"
+role: expert
+scope: analysis
+tools: [Read, Write, Edit, Bash, Glob, Grep]
 ---
 
 ## Report Format

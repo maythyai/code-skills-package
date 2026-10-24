@@ -1,4 +1,5 @@
 ---
+name: csp-santa-loop
 description: Adversarial dual-review convergence loop — two independent model reviewers must both approve before code ships.
 ---
 

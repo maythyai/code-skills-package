@@ -1,16 +1,6 @@
 ---
 name: csp-ssh-operations
-description: >
-  Operate SSH itself as infrastructure: secure connection and config management, host key and
-  known_hosts hygiene, local/remote/dynamic port forwarding, ProxyJump and multi-hop bastion
-  access, key generation and rotation, non-interactive automation with connection multiplexing,
-  and a fault-decision table for the connection errors people actually hit. Use when you need to
-  reach a machine, tunnel to a service behind it, set up passwordless deploy access, script SSH
-  in CI, or diagnose why a connection fails — as opposed to deploying an application on top of it.
-  触发：SSH 连不上、配置 ssh config、端口转发、内网穿透、隧道、跳板机、堡垒机、ProxyJump、
-  免密登录、ssh 密钥、ssh-copy-id、known_hosts、主机指纹、Permission denied publickey、
-  Too many authentication failures、ControlMaster 连接复用、ssh 自动化脚本、会话交接、
-  ssh tunnel、port forwarding、jump host、bastion.
+description: "Operate SSH itself as infrastructure: host key and known_hosts hygiene, local/remote/dynamic port forwarding, ProxyJump and multi-hop bastion access, key generation and rotation. Use when you need to reach a machine, tunnel to a service behind it, or diagnose why a connection fails."
 version: "1.0.0"
 layer: 3
 category: patterns
@@ -43,6 +33,7 @@ related_skills:
   - csp-cicd-pipelines
   - csp-security-review
   - csp-docker-patterns
+role: specialist
 ---
 
 # SSH 运维操作

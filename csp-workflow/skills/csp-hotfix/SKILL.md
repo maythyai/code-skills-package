@@ -15,6 +15,9 @@ related_skills: [csp-tweak, csp-full, csp-systematic-debugging, csp-simple-dev]
 anti_rationalizations:
   "I'll do a full review later": "Hotfixes skip review by design. But you MUST add a regression test."
   "This is too small for a formal process": "Small fixes can cause big regressions. The verify step is non-negotiable."
+version: "1.0.0"
+role: specialist
+scope: implementation
 ---
 
 # CSP Hotfix Workflow

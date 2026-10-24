@@ -1,11 +1,15 @@
 ---
 name: csp-scientist
-description: Orchestrate parallel scientist agents for comprehensive analysis with AUTO mode
+description: "Orchestrate parallel scientist agents for comprehensive analysis with AUTO mode. Dispatches task-type-matched agents (light models for enumeration, strong models for synthesis) for parallel analysis. Use for broad codebase investigation or research questions."
 argument-hint: <research goal>
 layer: 4
 category: patterns
 domain: patterns
 phase: build
+version: "1.0.0"
+role: expert
+scope: analysis
+tools: [Read, Write, Edit, Bash, Glob, Grep]
 ---
 
 | Task Type | Agent | Model | Examples |

@@ -7,6 +7,13 @@ description: >
 metadata:
   globs: ["**/*.sql", "**/migrations/**"]
 phase: review
+domain: database
+layer: 3
+category: patterns
+version: "1.0.0"
+role: reviewer
+scope: review
+tools: [Read, Grep, Glob]
 ---
 
 # SQL Code Review Agent

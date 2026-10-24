@@ -1,5 +1,5 @@
 ---
-name: kotlin-reviewer
+name: csp-kotlin-reviewer
 description: Kotlin and Android/KMP code reviewer. Reviews Kotlin code for idiomatic patterns, coroutine safety, Compose best practices, clean architecture violations, and common Android pitfalls.
 tools: ["Read", "Grep", "Glob", "Bash"]
 model: sonnet

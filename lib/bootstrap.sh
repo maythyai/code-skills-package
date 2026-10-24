@@ -81,6 +81,8 @@ generate_skill_list() {
 
 generate_skill_table() {
   scan_skill_entries | while IFS='|' read -r name desc; do
+    # Escape pipes so descriptions containing | don't break the markdown table
+    desc="${desc//|/\\|}"
     echo "| ${name} | ${desc} |"
   done
 }

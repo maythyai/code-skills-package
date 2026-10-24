@@ -8,6 +8,9 @@ category: router
 phase: plan
 domain: architecture
 tools: [Read, Glob, Grep]
+version: "1.0.0"
+role: specialist
+scope: design
 ---
 
 # CSP Router

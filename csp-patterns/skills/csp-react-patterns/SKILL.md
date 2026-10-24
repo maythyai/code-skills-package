@@ -5,6 +5,10 @@ layer: 3
 category: patterns
 domain: patterns
 phase: build
+version: "1.0.0"
+role: specialist
+scope: implementation
+tools: [Read, Write, Edit, Bash, Glob, Grep]
 ---
 
 | Use Case | Solution |
@@ -91,7 +95,7 @@ Wrap a component in `React.memo` only when:
 - Form inputs need labels — `<label htmlFor>` or `aria-label` if visually labeled by an icon
 - Manage focus on route changes and modal open/close
 - Run `axe` in component tests (see [skills/csp-react-testing](../csp-react-testing/SKILL.md))
-- Cross-link: [skills/accessibility/SKILL.md](../accessibility/SKILL.md) covers WCAG criteria and pattern libraries
+- Cross-link: [skills/csp-access/SKILL.md](../csp-access/SKILL.md) covers WCAG criteria and pattern libraries
 
 ## Routing
 
@@ -100,7 +104,7 @@ This skill is router-agnostic. The patterns above work with React Router, TanSta
 ## Out of Scope (Pointer Sections)
 
 - **Next.js specifics**: App Router data loading, Route Handlers, Middleware, Parallel Routes — separate concern, use Next.js docs
-- **React Native**: Platform-specific patterns differ enough to warrant a separate `react-native-patterns` skill (not present yet)
+- **React Native**: Platform-specific patterns differ enough — see [react-native-patterns](../csp-react-native-patterns/SKILL.md)
 - **Remix**: Loader/action conventions overlap with RSC but follow Remix docs
 
 ## Advanced UI Patterns
@@ -115,8 +119,8 @@ For premium frontend craftsmanship, Container/Presentation architecture, and Rea
 
 ## Related
 
-- Rules: [rules/react/](../../rules/react/) — coding-style, hooks, patterns, security, testing
-- Skills: [react-performance](../react-performance/SKILL.md) for the Vercel-derived performance ruleset, [frontend-patterns](../csp-frontend-patterns/SKILL.md) for cross-framework UI concerns, [accessibility](../accessibility/SKILL.md), [angular-developer](../angular-developer/SKILL.md) for framework comparison
+- Rules: [cursor-rules/typescript-*](../cursor-rules/) — coding-style / hooks / patterns / security / testing（TS/React 通用）
+- Skills: [frontend-performance](../csp-frontend-performance/SKILL.md) for the Vercel-derived performance ruleset, [frontend-patterns](../csp-frontend-patterns/SKILL.md) for cross-framework UI concerns, [access](../csp-access/SKILL.md) for WCAG audit, [cross-platform-strategy](../csp-cross-platform-strategy/SKILL.md) for framework comparison
 - Agents: `react-reviewer` for code review, `react-build-resolver` for build/bundler errors
 - Commands: `/react-review`, `/react-build`, `/react-test`
 

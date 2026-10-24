@@ -451,5 +451,5 @@ playwright-cli kill-all       # 进程残留时强制清理
 | [references/video-recording.md](references/video-recording.md) | 视频录制 |
 | [references/element-attributes.md](references/element-attributes.md) | 元素属性检查 |
 | [references/running-code.md](references/running-code.md) | 直接执行 Playwright 代码片段 |
-| [csp-cross-layer-testing](../../csp-patterns/skills/csp-cross-layer-testing/SKILL.md) | 跨层联动测试契约与证据矩阵 |
-| [csp-linked-test-runner](../../csp-runtime/skills/csp-linked-test-runner/SKILL.md) | 联动编排器(消费 linked-evidence-{test_id}.json) |
+| [csp-cross-layer-testing](../csp-cross-layer-testing/SKILL.md) | 跨层联动测试契约与证据矩阵 |
+| [csp-linked-test-runner](../../../csp-runtime/skills/csp-linked-test-runner/SKILL.md) | 联动编排器(消费 linked-evidence-{test_id}.json) |

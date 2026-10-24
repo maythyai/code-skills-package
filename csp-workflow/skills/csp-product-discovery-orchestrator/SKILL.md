@@ -1,15 +1,6 @@
 ---
 name: csp-product-discovery-orchestrator
-description: |
-  产品发现与交付前编排引擎。串联市场调研/竞品分析/用户反馈 → 产品策略与路线图 → 需求拆解与优先级 →
-  PRD/用户故事/Spec 契约 → 交付桥接（capability contract）的完整链路，管理阶段间产物流转、门控检查、
-  动态路由与迭代推进。是 14 个产品管理 skill 的上层编排器，覆盖"产品需求调研到交付给技术开发之前"
-  的全流程；在交付边界把 capability contract 交给 csp-lifecycle-orchestrator 的 S2（技术选型），
-  由后者接管 S1 拆解→S9 运维的技术生命周期。
-  当用户需要"从调研到开发"、"产品发现全流程"、"PM 端到端"、"需求到交付前"时使用。
-  关键词：产品发现、产品调研、PM 全流程、需求到交付、调研到开发、PRD 流程、
-  product discovery、idea to spec、PM lifecycle、需求到技术开发、交付前流程、
-  产品需求调研、产品管理流程、market to spec、discovery to dev。
+description: "产品发现与交付前编排引擎。串联市场调研/竞品分析/用户反馈 → 产品策略与路线图 → 需求拆解与优先级 → PRD/用户故事/Spec 契约 → 交付桥接（capability contract）的完整链路，管理阶段间产物流转、门控检查、动态路由与迭代推进。是 14 个产品管理 skill 的上层编排器；在交付边界把 capability contract 交给 csp-lifecycle-orchestrator。当用户需要'从调研到开发''产品发现全流程''PM 端到端'时使用。"
 version: "1.0.0"
 layer: 2
 category: workflow
@@ -65,6 +56,7 @@ anti_rationalizations:
   "PRD 里直接写技术实现省一轮沟通": "PRD 描述 WHAT 不描述 HOW。技术实现是工程决策权，混入 PRD 会绑架技术选型、模糊需求边界。"
   "不写 capability contract，直接把 PRD 丢给开发": "PRD 只说做什么，不说实现前必须成立哪些约束/不变量。丢给开发 = 把隐藏假设留给工程师猜，跨服务/跨团队时必出问题。"
   "一次性全量调研再启动": "调研是持续活动不是前置 gate。按 MVP 范围做够支撑决策的最小调研，剩余在迭代中补。"
+role: specialist
 ---
 
 # Product Discovery Orchestrator

@@ -1,10 +1,6 @@
 ---
 name: csp-llm-app-reviewer
-description: >
-  LLM application code reviewer. Reviews for prompt injection vulnerabilities, cost control
-  (token usage, caching), streaming correctness, error handling, guardrails completeness,
-  model selection rationale, and structured output validation. Use for any codebase
-  integrating with LLM APIs (OpenAI, Anthropic, Google, local models).
+description: "LLM application code reviewer. Reviews for prompt injection vulnerabilities, cost control (token usage, caching), guardrails completeness, model selection rationale, and structured output validation. Use for any codebase integrating with LLM APIs (OpenAI, Anthropic, local models)."
 tools: ["Read", "Grep", "Glob", "Bash"]
 model: sonnet
 ---
@@ -204,7 +200,7 @@ Fix: Concrete recommended change with code example if helpful.
 ## Related
 
 - Agents: `csp-rag-architect` (RAG-specific review), `csp-data-pipeline-reviewer` (ETL quality)
-- Skills: `csp-llm-patterns`, `csp-prompt-engineering`
+- Skills: `csp-llm-app-development`, `csp-prompt-engineering`
 
 ---
 

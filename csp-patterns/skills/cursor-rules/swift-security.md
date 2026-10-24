@@ -1,4 +1,5 @@
 ---
+name: csp-cursor-rules-swift-security
 description: "Swift security extending common rules"
 globs: ["**/*.swift", "**/Package.swift"]
 alwaysApply: false

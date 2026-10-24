@@ -1,10 +1,14 @@
 ---
 name: csp-browser-testing-with-devtools
-description: Tests in real browsers via Chrome DevTools MCP. Use when building or debugging anything that runs in a browser. Use when you need to inspect the DOM, capture console errors, analyze network requests, profile performance, or verify visual output with real runtime data. Requires the chrome-devtools MCP server to be configured.
+description: "Tests in real browsers via Chrome DevTools MCP. Use when building or debugging anything that runs in a browser — inspect the DOM, capture console errors, analyze network requests, profile performance, or verify visual output. Requires the chrome-devtools MCP server."
 layer: 3
 category: patterns
 phase: verify
 domain: patterns
+version: "1.0.0"
+role: specialist
+scope: testing
+tools: [Read, Write, Edit, Bash, Glob, Grep]
 ---
 
 | Tool | What It Does | Use For |

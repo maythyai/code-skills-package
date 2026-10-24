@@ -7,6 +7,8 @@ phase: ship
 domain: devops
 scope: implementation
 tools: [Read, Write, Edit, Bash, Glob, Grep]
+version: "1.0.0"
+role: specialist
 ---
 
 | Metric | Green (OK) | Yellow (Monitor) | Red (Roll Back) |

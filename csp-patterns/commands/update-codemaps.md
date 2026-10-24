@@ -1,4 +1,5 @@
 ---
+name: csp-update-codemaps
 description: Scan project structure and generate token-lean architecture codemaps.
 ---
 

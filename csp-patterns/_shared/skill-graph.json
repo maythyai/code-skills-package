@@ -1,0 +1,426 @@
+{
+  "suite": "product-design",
+  "version": "1.0.0",
+  "phases": ["define", "plan", "build", "verify", "review"],
+  "anchors": ["frame", "scope", "audit"],
+  "skills": {
+    "frame": {
+      "id": "frame",
+      "skill": "csp-frame",
+      "command": "/frame",
+      "name_zh": "问题框定",
+      "phase": "define",
+      "next_hint": {
+        "preferred": "brief",
+        "reason": "Frame 已收敛出方向，直接进 Brief 一页纸把目标/用户/策略落定。",
+        "alternatives": [
+          { "id": "probe", "when": "想先用研验证假设" },
+          { "id": "bench", "when": "想先看竞品参考" }
+        ],
+        "emoji": "🎯"
+      }
+    },
+    "brief": {
+      "id": "brief",
+      "skill": "csp-brief",
+      "command": "/brief",
+      "name_zh": "设计简报",
+      "phase": "define",
+      "next_hint": {
+        "preferred": "journey",
+        "reason": "用户视角可视化（含情感曲线 + dropout-risk 标注）通常是 Brief 之后最有价值的一步——把抽象策略变成可视的体验断点。",
+        "alternatives": [
+          { "id": "stories", "when": "想直接做工程拆解走结构化路径" },
+          { "id": "pitch", "when": "需要先对齐决策者再执行" },
+          { "id": "sitemap", "when": "已确定走 IA 优先路径" }
+        ],
+        "emoji": "🎨"
+      }
+    },
+    "scope": {
+      "id": "scope",
+      "skill": "csp-scope",
+      "command": "/scope",
+      "name_zh": "需求拆解",
+      "phase": "define",
+      "next_hint": {
+        "preferred": "brief",
+        "reason": "PRD 已拆解出设计目标与约束，进 Brief 把它收敛成可执行简报。",
+        "alternatives": [
+          { "id": "audit", "when": "改版项目想先做现状走查" }
+        ],
+        "emoji": "📋"
+      }
+    },
+    "probe": {
+      "id": "probe",
+      "skill": "csp-probe",
+      "command": "/probe",
+      "name_zh": "用户研究",
+      "phase": "define",
+      "next_hint": {
+        "preferred": "brief",
+        "reason": "JTBD / persona / 情感曲线已沉淀，进 Brief 把洞察转策略最直接。",
+        "alternatives": [
+          { "id": "journey", "when": "想直接画用户旅程把痛点可视化" }
+        ],
+        "emoji": "👥"
+      }
+    },
+    "bench": {
+      "id": "bench",
+      "skill": "csp-bench",
+      "command": "/bench",
+      "name_zh": "竞品参考",
+      "phase": "define",
+      "next_hint": {
+        "preferred": "brief",
+        "reason": "竞品启发已转化为差异化策略候选，进 Brief 收敛。",
+        "alternatives": [
+          { "id": "probe", "when": "想用研验证竞品做法在自家用户身上是否成立" }
+        ],
+        "emoji": "🔬"
+      }
+    },
+    "signal": {
+      "id": "signal",
+      "skill": "csp-signal",
+      "command": "/signal",
+      "name_zh": "用户反馈分析",
+      "phase": "define",
+      "next_hint": {
+        "preferred": "brief",
+        "reason": "高频痛点 + affected_pages 已锁定，进 Brief 锚定本次改版的优先级。",
+        "alternatives": [
+          { "id": "journey", "when": "想把工单证据并入旅程地图" }
+        ],
+        "emoji": "📞"
+      }
+    },
+    "audit": {
+      "id": "audit",
+      "skill": "csp-audit",
+      "command": "/audit",
+      "name_zh": "体验走查",
+      "phase": "review",
+      "next_hint": {
+        "preferred": "brief",
+        "reason": "走查 findings 已就位，进 Brief 锚定本次改版的策略与边界。",
+        "alternatives": [
+          { "id": "stories", "when": "想直接把 finding 转成修复型故事" }
+        ],
+        "emoji": "🔍"
+      }
+    },
+    "journey": {
+      "id": "journey",
+      "skill": "csp-journey",
+      "command": "/journey",
+      "name_zh": "用户旅程",
+      "phase": "plan",
+      "next_hint": {
+        "preferred": "stories",
+        "reason": "旅程断点 + 情感低谷已识别，进 Stories 把每个触点拆成可执行用户故事。",
+        "alternatives": [
+          { "id": "sitemap", "when": "想先搭 IA 骨架再回头做故事" },
+          { "id": "flow-web", "when": "项目较紧、想直接进页面级设计" }
+        ],
+        "emoji": "📋"
+      }
+    },
+    "sitemap": {
+      "id": "sitemap",
+      "skill": "csp-sitemap",
+      "command": "/sitemap",
+      "name_zh": "信息架构",
+      "phase": "plan",
+      "next_hint": {
+        "preferred": "flow-web",
+        "reason": "IA 骨架就绪，直接进 Web 端页面级 Flow 设计。",
+        "alternatives": [
+          { "id": "flow-mobile", "when": "Mobile 优先项目" },
+          { "id": "edge", "when": "想先盘点异常态覆盖度" },
+          { "id": "chart", "when": "项目以数据展示为主可先做图表规格" }
+        ],
+        "emoji": "🏗️"
+      }
+    },
+    "stories": {
+      "id": "stories",
+      "skill": "csp-stories",
+      "command": "/stories",
+      "name_zh": "用户故事",
+      "phase": "plan",
+      "next_hint": {
+        "preferred": "sitemap",
+        "reason": "故事 + 设计触点已就绪，搭 IA 骨架把故事映射到页面节点。",
+        "alternatives": [
+          { "id": "flow-web", "when": "已有 IA 草稿、想直接进页面级 Web 设计" },
+          { "id": "flow-mobile", "when": "Mobile 优先项目" },
+          { "id": "prd", "when": "想直接生成工程交付 PRD" }
+        ],
+        "emoji": "🏗️"
+      }
+    },
+    "board": {
+      "id": "board",
+      "skill": "csp-board",
+      "command": "/board",
+      "name_zh": "情绪板",
+      "phase": "plan",
+      "next_hint": {
+        "preferred": "flow-web",
+        "reason": "色彩 / 字体 / 组件调性已定，进 Web 页面设计把视觉语言落到页面 Flow。",
+        "alternatives": [
+          { "id": "motion-plan", "when": "想先定动效调性（消费 board.typography）" },
+          { "id": "chart", "when": "页面含数据展示需先定图表配色（消费 board.color）" }
+        ],
+        "emoji": "🎨"
+      }
+    },
+    "flow-web": {
+      "id": "flow-web",
+      "skill": "csp-flow-web",
+      "command": "/flow-web",
+      "name_zh": "Web 页面设计",
+      "phase": "build",
+      "next_hint": {
+        "preferred": "check",
+        "reason": "页面级设计完成立刻自检（路由可达性 / 死代码 / token 消费 / Brief 一致性），防止下游 QA 翻车。",
+        "alternatives": [
+          { "id": "edge", "when": "先补全异常态覆盖" },
+          { "id": "flow-mobile", "when": "继续做 Mobile 端对应 Flow" },
+          { "id": "chart", "when": "页面含数据展示需补图表规格" }
+        ],
+        "emoji": "🔍"
+      }
+    },
+    "flow-mobile": {
+      "id": "flow-mobile",
+      "skill": "csp-flow-mobile",
+      "command": "/flow-mobile",
+      "name_zh": "Mobile 页面设计",
+      "phase": "build",
+      "next_hint": {
+        "preferred": "check",
+        "reason": "Mobile 页面完成立刻自检，提前抓出适配 / 触达 / 状态覆盖问题。",
+        "alternatives": [
+          { "id": "edge", "when": "补全异常态（Mobile 异常更多）" },
+          { "id": "flow-web", "when": "继续做 Web 端对应 Flow" }
+        ],
+        "emoji": "🔍"
+      }
+    },
+    "edge": {
+      "id": "edge",
+      "skill": "csp-edge",
+      "command": "/edge",
+      "name_zh": "异常态设计",
+      "phase": "build",
+      "next_hint": {
+        "preferred": "check",
+        "reason": "异常态补完后整体自检，确保新增状态没破坏主流程一致性。",
+        "alternatives": [
+          { "id": "qa", "when": "进入交付侧验收" }
+        ],
+        "emoji": "🔍"
+      }
+    },
+    "chart": {
+      "id": "chart",
+      "skill": "csp-chart",
+      "command": "/chart",
+      "name_zh": "数据可视化",
+      "phase": "build",
+      "next_hint": {
+        "preferred": "flow-web",
+        "reason": "图表规格已就绪，回主流程把图表组件嵌回页面 Flow。",
+        "alternatives": [
+          { "id": "edge", "when": "图表的空 / 加载 / 错态需要单独覆盖" },
+          { "id": "check", "when": "页面 + 图表完整后整体自检" }
+        ],
+        "emoji": "📊"
+      }
+    },
+    "avatar": {
+      "id": "avatar",
+      "skill": "csp-avatar",
+      "command": "/avatar",
+      "name_zh": "IP / 头像设计",
+      "phase": "build",
+      "next_hint": {
+        "preferred": "flow-web",
+        "reason": "IP / 头像主视觉就位，回到主流程把头像嵌入页面 Flow。",
+        "alternatives": [
+          { "id": "flow-mobile", "when": "头像出现在 Mobile 客服 / 主屏" },
+          { "id": "pitch", "when": "把主视觉装进决策者汇报" }
+        ],
+        "emoji": "🎭"
+      }
+    },
+    "motion-plan": {
+      "id": "motion-plan",
+      "skill": "csp-motion-plan",
+      "command": "/motion-plan",
+      "name_zh": "动效规划",
+      "phase": "build",
+      "next_hint": {
+        "preferred": "motion-apply",
+        "reason": "Personality + 时长谱系 + element specs 已定，进动效开发把规范落到代码。",
+        "alternatives": [],
+        "emoji": "🎬"
+      }
+    },
+    "motion-apply": {
+      "id": "motion-apply",
+      "skill": "csp-motion-apply",
+      "command": "/motion-apply",
+      "name_zh": "动效开发",
+      "phase": "build",
+      "next_hint": {
+        "preferred": "check",
+        "reason": "动效已实现，进设计走查做动效合规核查（Personality 是否守住 / reduced-motion 是否兜底）。",
+        "alternatives": [],
+        "emoji": "✨"
+      }
+    },
+    "pitch": {
+      "id": "pitch",
+      "skill": "csp-pitch",
+      "command": "/pitch",
+      "name_zh": "决策者汇报",
+      "phase": "review",
+      "next_hint": {
+        "preferred": "prd",
+        "reason": "提案对齐决策后进 PRD 把方案落到工程交付文档。",
+        "alternatives": [
+          { "id": "flow-web", "when": "提案获批后开始 / 继续执行页面设计" },
+          { "id": "metric", "when": "提案 asks 含数据度量，先定指标体系" },
+          { "id": "retro", "when": "项目阶段性结束做复盘" }
+        ],
+        "emoji": "💼"
+      }
+    },
+    "check": {
+      "id": "check",
+      "skill": "csp-check",
+      "command": "/check",
+      "name_zh": "设计走查",
+      "phase": "verify",
+      "next_hint": {
+        "preferred": "qa",
+        "reason": "自检发现的 Blocker 已修，进 QA 做交付前还原度验收。",
+        "alternatives": [
+          { "id": "edge", "when": "走查发现状态覆盖不全" },
+          { "id": "access", "when": "走查触发了 WCAG 合规需要专项核查" }
+        ],
+        "emoji": "✅"
+      }
+    },
+    "access": {
+      "id": "access",
+      "skill": "csp-access",
+      "command": "/access",
+      "name_zh": "无障碍审计",
+      "phase": "verify",
+      "next_hint": {
+        "preferred": "qa",
+        "reason": "WCAG 合规已确认，进 QA 做交付前整体还原度验收。",
+        "alternatives": [
+          { "id": "check", "when": "回到全局走查做整体一致性核查" }
+        ],
+        "emoji": "♿"
+      }
+    },
+    "test": {
+      "id": "test",
+      "skill": "csp-test",
+      "command": "/test",
+      "name_zh": "可用性测试",
+      "phase": "verify",
+      "next_hint": {
+        "preferred": "metric",
+        "reason": "可用性测试结果直接转可观测指标，进 Metric 把『测试发现的瓶颈』变成『上线后可追踪』。",
+        "alternatives": [
+          { "id": "retro", "when": "项目结束直接做复盘" }
+        ],
+        "emoji": "🧪"
+      }
+    },
+    "metric": {
+      "id": "metric",
+      "skill": "csp-metric",
+      "command": "/metric",
+      "name_zh": "指标定义",
+      "phase": "build",
+      "next_hint": {
+        "preferred": "prd",
+        "reason": "NSM + 埋点清单已定，进 PRD 把度量蓝图写入 Section 4 让工程一并交付。",
+        "alternatives": [
+          { "id": "retro", "when": "上线后用 Metric 蓝图做复盘" }
+        ],
+        "emoji": "📈"
+      }
+    },
+    "qa": {
+      "id": "qa",
+      "skill": "csp-qa",
+      "command": "/qa",
+      "name_zh": "设计验收",
+      "phase": "verify",
+      "next_hint": {
+        "preferred": "retro",
+        "reason": "验收通过 = 项目阶段性结束，进 Retro 沉淀经验。",
+        "alternatives": [
+          { "id": "metric", "when": "上线前最后定一次跟踪指标" },
+          { "id": "prd", "when": "把验收发现的 deviation 回写 PRD constraints" }
+        ],
+        "emoji": "🔁"
+      }
+    },
+    "prd": {
+      "id": "prd",
+      "skill": "csp-prd",
+      "command": "/prd",
+      "name_zh": "设计交付 PRD",
+      "phase": "build",
+      "next_hint": {
+        "preferred": "extract",
+        "reason": "PRD 已交付工程，进 Extract 把设计 token 抽出来给工程实现侧消费，让代码与设计稿对齐。",
+        "alternatives": [
+          { "id": "qa", "when": "等工程实现后做还原度验收" },
+          { "id": "metric", "when": "PRD Section 4 想用 Metric 蓝图替代 Brief 简版" }
+        ],
+        "emoji": "📄"
+      }
+    },
+    "extract": {
+      "id": "extract",
+      "skill": "csp-extract",
+      "command": "/extract",
+      "name_zh": "设计 Token 抽取",
+      "phase": "build",
+      "next_hint": {
+        "preferred": "retro",
+        "reason": "Tokens / design language 已落地，进 Retro 做闭环复盘把工具链产出的发现并入经验沉淀。",
+        "alternatives": [
+          { "id": "qa", "when": "用 Extract 的 SparkDesign diff 做实现侧二次核查" }
+        ],
+        "emoji": "🔧"
+      }
+    },
+    "retro": {
+      "id": "retro",
+      "skill": "csp-retro",
+      "command": "/retro",
+      "name_zh": "项目复盘",
+      "phase": "review",
+      "next_hint": {
+        "preferred": null,
+        "reason": "本项目链路已闭环。可考虑：归档 .csp/spark/ 到项目仓库 / 把 Retro 摘要复制到团队 wiki / 开启下一个项目（清空 .csp/spark/context/）。",
+        "alternatives": [],
+        "emoji": "🔁"
+      }
+    }
+  }
+}

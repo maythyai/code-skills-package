@@ -13,6 +13,7 @@ anti_rationalizations:
   "This code looks fine": "Looks can deceive. Review for correctness, reuse, and efficiency."
   "It works, let's move on": "Working code can still be wasteful or hard to maintain."
   "The diff is small, skip impact analysis": "Small diffs in hub functions cascade widely. Check structural impact when graph is available."
+version: "1.0.0"
 ---
 
 # Code Review

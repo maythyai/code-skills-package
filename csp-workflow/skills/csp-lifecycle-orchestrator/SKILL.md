@@ -1,15 +1,6 @@
 ---
 name: csp-lifecycle-orchestrator
-description: |
-  产品全生命周期编排引擎。串联需求拆解→技术选型→全栈Spec→实施规划→并行开发→测试→审查→发布→运维
-  的完整链路，管理阶段间产物流转、门控检查、动态路由和迭代推进。
-  是 csp-requirement-decomposition、csp-tech-stack-advisor、csp-fullstack-spec-generator 的
-  上层编排器，同时与 csp-full 互补（csp-full 侧重执行，本 skill 侧重规格化拆解与选型）。
-  当用户需要"从需求到上线的完整流程"、"自动化产品开发全链路"时使用。
-  关键词：全生命周期、lifecycle、端到端编排、产品迭代、从需求到上线、
-  full lifecycle、product lifecycle、orchestrate、编排、全链路、
-  需求到产品、idea to launch、requirement to production、完整开发流程、
-  自动化开发、automate development、product pipeline、开发流水线。
+description: "产品全生命周期编排引擎。串联需求拆解→技术选型→全栈Spec→实施规划→并行开发→测试→审查→发布→运维的完整链路，管理阶段间产物流转、门控检查、动态路由和迭代推进。是 csp-requirement-decomposition、csp-tech-stack-advisor、csp-fullstack-spec-generator 的上层编排器，与 csp-full 互补。当用户需要'从需求到上线的完整流程''自动化产品开发全链路'时使用。"
 version: "1.0.0"
 layer: 2
 category: workflow
@@ -61,6 +52,7 @@ anti_rationalizations:
   "Let's skip the spec phase and just code": "Skipping specs causes rework. The spec phase pays for itself."
   "We can do tech selection during implementation": "Mid-implementation tech changes are 10x more expensive."
   "This is too small for the full lifecycle": "Scale the lifecycle down, don't skip stages. Even a 1-feature module benefits from structured spec."
+role: specialist
 ---
 
 # Lifecycle Orchestrator

@@ -1,16 +1,6 @@
 ---
 name: csp-kubernetes-troubleshooting
-description: >
-  Evidence-first troubleshooting for live Kubernetes incidents. Collect forensic artifacts
-  before mutating anything, then walk a per-state decision tree (Pending, ImagePullBackOff,
-  CrashLoopBackOff, OOMKilled, Running-but-not-Ready, stuck Terminating,
-  CreateContainerConfigError) from symptom to confirmed root cause to verified fix. Use when
-  a workload is already broken in a running cluster — pod stuck, crash looping, node NotReady,
-  service unreachable, PVC never bound, rollout hung — and you must find out why without
-  destroying the scene.
-  触发：K8s 排障、Pod 起不来、容器反复重启、CrashLoopBackOff、OOMKilled、ImagePullBackOff、
-  节点 NotReady、Service 访问不通、DNS 解析失败、PVC 一直 Pending、滚动更新卡住、
-  kubectl debug、线上故障诊断、事故复盘、kubernetes troubleshooting.
+description: "Evidence-first troubleshooting for live Kubernetes incidents: walk a per-state decision tree (Pending, ImagePullBackOff, CrashLoopBackOff, OOMKilled, NotReady, stuck Terminating) from symptom to confirmed root cause to verified fix. Use when a workload is already broken in a running cluster."
 version: "1.0.0"
 layer: 3
 category: patterns
@@ -43,6 +33,7 @@ related_skills:
   - csp-observability-and-instrumentation
   - csp-solo-oncall
   - csp-systematic-debugging
+role: specialist
 ---
 
 # Kubernetes 故障诊断（线上排障）

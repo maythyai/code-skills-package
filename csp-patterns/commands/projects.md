@@ -1,5 +1,5 @@
 ---
-name: projects
+name: csp-projects
 description: List known projects and their instinct statistics
 command: true
 ---

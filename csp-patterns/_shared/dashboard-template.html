@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>设计全链进度看板 · CSP Spark Dashboard</title>
+<style>
+  :root {
+    --bg: #0f1115;
+    --panel: #171a21;
+    --border: #262b36;
+    --text: #e6e8ee;
+    --muted: #8b93a5;
+    --accent: #4f8cff;
+    --done: #35c08f;
+    --current: #f5b84b;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+    padding: 32px 24px 64px;
+    line-height: 1.5;
+  }
+  header { max-width: 1080px; margin: 0 auto 28px; }
+  h1 { font-size: 22px; font-weight: 650; letter-spacing: 0.2px; }
+  .meta { color: var(--muted); font-size: 13px; margin-top: 6px; }
+  .progressbar {
+    max-width: 1080px; margin: 0 auto 32px;
+    background: var(--panel); border: 1px solid var(--border); border-radius: 10px;
+    padding: 14px 18px; display: flex; align-items: center; gap: 14px;
+  }
+  .bar-track { flex: 1; height: 8px; background: #222733; border-radius: 99px; overflow: hidden; }
+  .bar-fill { height: 100%; background: linear-gradient(90deg, var(--done), var(--accent)); border-radius: 99px; transition: width .4s ease; }
+  .bar-label { font-size: 13px; color: var(--muted); white-space: nowrap; }
+  .bar-label b { color: var(--text); }
+  main { max-width: 1080px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
+  .phase { background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: 16px 14px; }
+  .phase h2 { font-size: 13px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 12px; }
+  .phase h2 span { float: right; font-weight: 500; }
+  .node {
+    display: flex; align-items: center; gap: 8px;
+    padding: 8px 10px; margin-bottom: 6px;
+    border-radius: 8px; font-size: 13px;
+    border: 1px solid transparent;
+  }
+  .node .dot { width: 8px; height: 8px; border-radius: 50%; flex: none; }
+  .node.done { background: rgba(53, 192, 143, 0.10); border-color: rgba(53, 192, 143, 0.30); }
+  .node.done .dot { background: var(--done); box-shadow: 0 0 6px rgba(53, 192, 143, 0.7); }
+  .node.current { background: rgba(245, 184, 75, 0.08); border-color: rgba(245, 184, 75, 0.35); }
+  .node.current .dot { background: var(--current); box-shadow: 0 0 6px rgba(245, 184, 75, 0.7); }
+  .node.pending { color: var(--muted); }
+  .node.pending .dot { background: #3a4150; }
+  .node .name { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .node .cmd { font-size: 11px; color: var(--muted); font-family: ui-monospace, monospace; }
+  .node .summary { display: none; }
+  .node.done:hover .summary {
+    display: block; grid-column: 1 / -1; color: var(--muted); font-size: 12px;
+    white-space: normal; padding: 2px 0 2px 16px;
+  }
+  footer { max-width: 1080px; margin: 28px auto 0; color: var(--muted); font-size: 12px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>🪄 设计全链进度看板</h1>
+  <div class="meta" id="meta">项目：— · 生成时间：—</div>
+</header>
+
+<div class="progressbar">
+  <div class="bar-label">链路进度 <b id="doneCount">0</b>/27</div>
+  <div class="bar-track"><div class="bar-fill" id="barFill" style="width:0%"></div></div>
+  <div class="bar-label" id="healthLabel">未开始</div>
+</div>
+
+<main id="board"></main>
+
+<footer>
+  由 CSP 产品设计套件自动生成（chain-protocol §九）。跑完任一设计 Skill 都会自动更新本文件。
+</footer>
+
+<script>
+const STATE = /*__SPARK_STATE_INJECT__*/null;
+
+const GRAPH = {
+  phases: ["define", "plan", "build", "verify", "review"],
+  phaseNames: { define: "01 定义", plan: "02 规划", build: "03 构建", verify: "04 验证", review: "05 复盘" },
+  skills: {
+    frame:    { cmd: "/frame",        zh: "问题框定" },
+    brief:    { cmd: "/brief",        zh: "设计简报" },
+    scope:    { cmd: "/scope",        zh: "需求拆解" },
+    probe:    { cmd: "/probe",        zh: "用户研究" },
+    bench:    { cmd: "/bench",        zh: "竞品参考" },
+    signal:   { cmd: "/signal",       zh: "用户反馈分析" },
+    audit:    { cmd: "/audit",        zh: "体验走查" },
+    journey:  { cmd: "/journey",      zh: "用户旅程" },
+    sitemap:  { cmd: "/sitemap",      zh: "信息架构" },
+    stories:  { cmd: "/stories",      zh: "用户故事" },
+    board:    { cmd: "/board",        zh: "情绪板" },
+    "flow-web":    { cmd: "/flow-web",    zh: "Web 页面设计" },
+    "flow-mobile": { cmd: "/flow-mobile", zh: "Mobile 页面设计" },
+    edge:     { cmd: "/edge",         zh: "异常态设计" },
+    chart:    { cmd: "/chart",        zh: "数据可视化" },
+    avatar:   { cmd: "/avatar",       zh: "IP / 头像" },
+    "motion-plan":  { cmd: "/motion-plan",  zh: "动效规划" },
+    "motion-apply": { cmd: "/motion-apply", zh: "动效开发" },
+    pitch:    { cmd: "/pitch",        zh: "决策者汇报" },
+    check:    { cmd: "/check",        zh: "设计走查" },
+    access:   { cmd: "/access",       zh: "无障碍审计" },
+    test:     { cmd: "/test",         zh: "可用性测试" },
+    metric:   { cmd: "/metric",       zh: "指标定义" },
+    qa:       { cmd: "/qa",           zh: "设计验收" },
+    prd:      { cmd: "/prd",          zh: "交付 PRD" },
+    extract:  { cmd: "/extract",      zh: "Token 抽取" },
+    retro:    { cmd: "/retro",        zh: "项目复盘" }
+  },
+  nodePhase: {
+    define: ["frame", "brief", "scope", "probe", "bench", "signal"],
+    plan:   ["journey", "sitemap", "stories", "board"],
+    build:  ["flow-web", "flow-mobile", "edge", "chart", "avatar", "motion-plan", "motion-apply", "metric", "prd", "extract"],
+    verify: ["check", "access", "test", "qa"],
+    review: ["audit", "pitch", "retro"]
+  }
+};
+
+const board = document.getElementById("board");
+const doneIds = STATE ? Object.keys(STATE.contexts || {}) : [];
+const doneSet = new Set(doneIds);
+
+document.getElementById("meta").textContent =
+  "项目：" + (STATE && STATE.project ? STATE.project : "—") +
+  " · 生成时间：" + (STATE && STATE.generated_at ? STATE.generated_at : "—");
+document.getElementById("doneCount").textContent = doneIds.length;
+document.getElementById("barFill").style.width = Math.round(doneIds.length / 27 * 100) + "%";
+document.getElementById("healthLabel").textContent =
+  doneIds.length === 0 ? "未开始" :
+  doneIds.length >= 27 ? "全链闭环 ✅" : "进行中 · 已完成 " + doneIds.length + " 步";
+
+// 当前节点 = 最后一个已完成的下一步（粗略启发：按 graph 拓扑找第一个未完成）
+let currentFound = false;
+
+for (const phase of GRAPH.phases) {
+  const sec = document.createElement("section");
+  sec.className = "phase";
+  const doneInPhase = GRAPH.nodePhase[phase].filter((id) => doneSet.has(id)).length;
+  sec.innerHTML = "<h2>" + GRAPH.phaseNames[phase] +
+    " <span>" + doneInPhase + "/" + GRAPH.nodePhase[phase].length + "</span></h2>";
+  for (const id of GRAPH.nodePhase[phase]) {
+    const node = document.createElement("div");
+    const meta = GRAPH.skills[id] || { cmd: "/" + id, zh: id };
+    const isDone = doneSet.has(id);
+    const isCurrent = !isDone && !currentFound;
+    if (isCurrent) currentFound = true;
+    node.className = "node " + (isDone ? "done" : (isCurrent ? "current" : "pending"));
+    let summary = "";
+    if (isDone && STATE.contexts[id] && STATE.contexts[id].summary) {
+      summary = "<div class=\"summary\">" + STATE.contexts[id].summary + "</div>";
+    }
+    node.innerHTML =
+      "<span class=\"dot\"></span><span class=\"name\">" + meta.zh + "</span>" +
+      "<span class=\"cmd\">" + meta.cmd + "</span>" + summary;
+    sec.appendChild(node);
+  }
+  board.appendChild(sec);
+}
+</script>
+</body>
+</html>

@@ -1,12 +1,6 @@
 ---
 name: csp-roadmap-update
-description: >
-  Aggregate iteration status, evaluate milestone progress, record priority changes,
-  and output a roadmap update report with next-step planning recommendations.
-  Supports pulling project status from Linear or other project management tools.
-  Use when the user says "路线图", "Roadmap", "版本规划", "迭代计划", "里程碑",
-  "迭代状态", "版本进度", "Sprint回顾", "迭代周报", "延期分析", "roadmap update",
-  "milestone review", "release planning", "sprint status".
+description: "Aggregate iteration status, evaluate milestone progress, record priority changes, and output a roadmap update report with next-step planning recommendations. Use when the user says '路线图', 'Roadmap', '迭代计划', '里程碑', 'Sprint回顾', 'roadmap update'."
 version: "1.0.0"
 layer: 2
 category: workflow
@@ -44,6 +38,7 @@ triggers:
     - "milestone_check"
     - "quarterly_planning"
     - "stakeholder_update"
+role: specialist
 ---
 
 # Roadmap Update

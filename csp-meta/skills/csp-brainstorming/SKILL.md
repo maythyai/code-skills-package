@@ -1,10 +1,6 @@
 ---
 name: csp-brainstorming
-description: >
-  Collaborative design partner that turns raw ideas into fully formed specs.
-  Combines structured divergent-convergent ideation with interactive design dialogue.
-  Use before any creative work — creating features, building components, adding functionality,
-  or modifying behavior. Includes idea refinement, assumption surfacing, and approach exploration.
+description: "Collaborative design partner that turns raw ideas into fully formed specs. Combines structured divergent-convergent ideation with interactive design dialogue. Use before any creative work — creating features, building components, adding functionality, or modifying behavior."
 layer: 1
 category: meta
 phase: define
@@ -15,6 +11,8 @@ related_skills: [csp-plan-phase, csp-spec-contract, csp-product-discovery-orches
 anti_rationalizations:
   "Let's just start coding": "Design first prevents rework. 30 min brainstorming saves 3 hours."
   "I know what to build": "Assumptions are bugs waiting to happen. Surface them explicitly."
+version: "1.0.0"
+role: specialist
 ---
 
 | Technique | Best For | How |

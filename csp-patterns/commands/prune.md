@@ -1,5 +1,5 @@
 ---
-name: prune
+name: csp-prune
 description: Delete pending instincts older than 30 days that were never promoted
 command: true
 ---

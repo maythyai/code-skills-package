@@ -1,4 +1,5 @@
 ---
+name: csp-loop-status
 description: Inspect active loop state, progress, failure signals, and recommended intervention.
 ---
 

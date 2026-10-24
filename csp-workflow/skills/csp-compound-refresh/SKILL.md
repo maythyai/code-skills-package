@@ -1,11 +1,15 @@
 ---
 name: csp-compound-refresh
-description: Refresh stale learning and pattern docs under docs/solutions/ by reviewing them against the current codebase, then updating, consolidating, or deleting drifted ones. Use when the user asks to "refresh my learnings", "audit docs/solutions/", "clean up stale learnings", or "consolidate overlapping docs", or when csp-compound flags an older doc as superseded. Do not trigger for general refactor, debugging, or code-review work unless the user has explicitly pointed at docs/solutions/.
+description: "Refresh stale learning and pattern docs under docs/solutions/, then update, consolidate, or delete drifted ones. Use when the user asks to 'refresh my learnings', 'audit docs/solutions/', or 'clean up stale learnings', or when csp-compound flags an older doc as superseded."
 argument-hint: "[optional: scope hint — directory, filename, module, or keyword] [mode:headless] "
 layer: 2
 category: workflow
 phase: review
 domain: patterns
+version: "1.0.0"
+role: specialist
+scope: review
+tools: [Read, Write, Edit, Bash, Glob, Grep]
 ---
 
 | Mode | Trigger | Behavior |
@@ -35,7 +39,7 @@ In headless mode there is no user to ask: default to the refresh cycle (vocabula
 
 **These principles apply to interactive mode only. In headless mode, skip all user questions and apply the headless mode rules above.**
 
-Follow the same interaction style as `csp-brainstorm`:
+Follow the same interaction style as `csp-brainstorming`:
 
 - Ask questions **one at a time** — use the platform's blocking question tool: `AskUserQuestion` in Claude Code (call `ToolSearch` with `select:AskUserQuestion` first if its schema isn't loaded), `request_user_input` in Codex, `ask_user` in Gemini, `ask_user` in Pi (requires the `pi-ask-user` extension). Fall back to numbered options in plain text only when no blocking tool exists in the harness or the call errors (e.g., Codex edit modes) — not because a schema load is required. Never silently skip the question
 - Prefer **multiple choice** when natural options exist

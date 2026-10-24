@@ -1,4 +1,5 @@
 ---
+name: csp-compact
 description: "Prepare CSP context for a manual Claude Code /compact handoff."
 argument-hint: "[optional compaction note]"
 ---

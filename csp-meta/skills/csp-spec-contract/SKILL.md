@@ -8,6 +8,8 @@ domain: quality
 scope: design
 tools: [Read, Write, Edit, Glob, Grep]
 related_skills: [csp-product-discovery-orchestrator]
+version: "1.0.0"
+role: specialist
 ---
 
 | Criterion | Rule |

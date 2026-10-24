@@ -7,6 +7,14 @@ description: >
   "clean up this code", "reduce complexity", "extract method".
 metadata:
   globs: ["**/*.{ts,tsx,js,jsx,py,java,kt,go,rs,cs,cpp,rb,php}"]
+phase: build
+domain: quality
+layer: 3
+category: patterns
+version: "1.0.0"
+role: specialist
+scope: implementation
+tools: [Read, Write, Edit, Bash, Glob, Grep]
 ---
 
 # csp-refactorer

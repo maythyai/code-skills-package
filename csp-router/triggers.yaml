@@ -5736,6 +5736,55 @@ trigger_index:
   "test-case-design":
     skills: [csp-test-case-design]
     weight: 40
+
+  # ─── auto-generated triggers (generate-triggers.mjs) ───
+  "review ui alignment code":
+    skills: [csp-ui-alignment-review]
+    weight: 40
+  "review visual regression code":
+    skills: [csp-visual-regression-review]
+    weight: 40
+  "ui alignment code review":
+    skills: [csp-ui-alignment-review]
+    weight: 40
+  "ui alignment review":
+    skills: [csp-ui-alignment-review]
+    weight: 40
+  "ui alignment 审查":
+    skills: [csp-ui-alignment-review]
+    weight: 40
+  "ui-alignment-review":
+    skills: [csp-ui-alignment-review]
+    weight: 40
+  "visual regression code review":
+    skills: [csp-visual-regression-review]
+    weight: 40
+  "visual regression review":
+    skills: [csp-visual-regression-review]
+    weight: 40
+  "visual regression 审查":
+    skills: [csp-visual-regression-review]
+    weight: 40
+  "visual-regression-review":
+    skills: [csp-visual-regression-review]
+    weight: 40
+
+  # ─── auto-generated triggers (generate-triggers.mjs) ───
+  "correctness code review":
+    skills: [csp-correctness-reviewer]
+    weight: 40
+  "correctness review":
+    skills: [csp-correctness-reviewer]
+    weight: 40
+  "correctness 审查":
+    skills: [csp-correctness-reviewer]
+    weight: 40
+  "correctness-reviewer":
+    skills: [csp-correctness-reviewer]
+    weight: 40
+  "review correctness code":
+    skills: [csp-correctness-reviewer]
+    weight: 40
 stack_rules:
   python:
     files: ["pyproject.toml", "setup.py", "requirements.txt", "Pipfile"]

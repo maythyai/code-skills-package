@@ -1,4 +1,5 @@
 ---
+name: csp-cursor-rules-python-security
 description: "Python security extending common rules"
 globs: ["**/*.py", "**/*.pyi"]
 alwaysApply: false

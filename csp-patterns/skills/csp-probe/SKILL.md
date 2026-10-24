@@ -10,6 +10,7 @@ phase: define
 domain: patterns
 scope: analysis
 tools: [Read, Write, Edit, Glob, Grep, Bash]
+role: specialist
 ---
 
 # 用户研究

@@ -496,7 +496,7 @@ Output: Structural review identifying:
 
 ### With Other CSP Tools
 - \*\*csp-review-editorial-prose**: Complements with prose review
-- \*\*csp-spec**: Reviews SPEC structure
+- \*\*csp-spec-contract**: Reviews SPEC structure
 - **Phase Workflows**: Reviews documentation structure
 
 ### With Specialized Agents

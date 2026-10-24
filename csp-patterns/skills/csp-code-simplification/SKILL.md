@@ -1,14 +1,14 @@
 ---
 name: csp-code-simplification
-description: >
-  Simplify code for clarity, remove dead code, and clean AI-generated slop.
-  Combines five simplification principles, dead-code detection tools (knip, depcheck, ts-prune),
-  and AI slop cleanup workflow. Use when refactoring for clarity, removing unused code,
-  or cleaning bloated AI-generated implementations.
+description: "Simplify code for clarity, remove dead code, and clean AI-generated slop. Combines five simplification principles, dead-code detection tools (knip, depcheck, ts-prune), and an AI slop cleanup workflow. Use when refactoring for clarity, removing unused code, or cleaning bloated AI output."
 layer: 3
 category: patterns
 domain: patterns
 phase: build
+version: "1.0.0"
+role: specialist
+scope: implementation
+tools: [Read, Write, Edit, Bash, Glob, Grep]
 ---
 
 | Smell | Fix |

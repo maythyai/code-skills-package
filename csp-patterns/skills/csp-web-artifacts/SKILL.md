@@ -9,6 +9,7 @@ domain: patterns
 scope: implementation
 tools: [Read, Write, Edit, Bash, Glob, Grep]
 related_skills: []
+role: specialist
 ---
 
 # Web Artifacts Builder

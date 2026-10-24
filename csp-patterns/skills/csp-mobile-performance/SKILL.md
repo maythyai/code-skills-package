@@ -1,14 +1,14 @@
 ---
 name: csp-mobile-performance
-description: >
-  Mobile performance optimization covering startup optimization, memory management,
-  list/scroll performance, bundle size, battery optimization, profiling tools, and
-  frame rate optimization. Applicable to React Native, Flutter, and native iOS/Android
-  development. Use when diagnosing or preventing mobile performance issues.
+description: "Mobile performance optimization covering startup optimization, memory management, list/scroll performance, profiling tools, and frame rate optimization. Applicable to React Native, Flutter, and native iOS/Android development. Use when diagnosing or preventing mobile performance issues."
 layer: 3
 category: patterns
 domain: patterns
 phase: build
+version: "1.0.0"
+role: specialist
+scope: implementation
+tools: [Read, Write, Edit, Bash, Glob, Grep]
 ---
 
 | Start Type | Definition | Target |

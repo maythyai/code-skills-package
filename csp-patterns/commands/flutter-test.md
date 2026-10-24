@@ -1,4 +1,5 @@
 ---
+name: csp-flutter-test
 description: Run Flutter/Dart tests, report failures, and incrementally fix test issues. Covers unit, widget, golden, and integration tests.
 ---
 

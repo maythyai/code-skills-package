@@ -1,4 +1,5 @@
 ---
+name: csp-code-reviewer
 description: "DEPRECATED — Use csp-runtime/agents/csp-code-reviewer.md instead. This file is kept as a redirect pointer."
 deprecated: true
 redirect: "csp-runtime/agents/csp-code-reviewer.md"

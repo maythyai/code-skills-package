@@ -1,16 +1,6 @@
 ---
 name: csp-product-research
-description: >
-  Scientific, comprehensive product & business-direction research suite. Covers five
-  scenarios: venture-direction evaluation, industry scan, competitor deep-dive, customer
-  insight, and unit-economics. AI completes all desk research autonomously and outputs a
-  structured report + Lean Canvas + decision memo. Built on 35+ methodologies with strict
-  data-quality rules. Activate even when the user does not say "research" — any question
-  about direction feasibility, market opportunity, or competitive landscape ("can this be
-  done?", "is anyone doing this?", "how big is the market?") triggers systematic analysis.
-  Explicit triggers: "评估这个方向", "能不能做", "行业分析", "竞品分析", "客户洞察",
-  "经济模型", "商业验算", "创业调研", "方向评估", "市场调研", "这个赛道怎么样",
-  "有没有机会", "evaluate this direction", "market sizing", "is there an opportunity".
+description: "Scientific, comprehensive product & business-direction research: venture-direction evaluation, industry scan, competitor deep-dive, customer insight, and unit-economics. Outputs a structured report + Lean Canvas + decision memo. Triggers: 评估这个方向, 行业分析, 竞品分析, market sizing."
 version: "1.0.0"
 layer: 3
 category: patterns
@@ -44,6 +34,7 @@ triggers:
     - "user asks about market size, competition, or customer demand before building"
     - "user needs a go/no-go/pivot decision backed by research"
   context: ["define", "strategy_planning", "before_prd_writing"]
+role: specialist
 ---
 
 # Product Research

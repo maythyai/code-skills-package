@@ -1,6 +1,6 @@
 ---
 name: csp-codebase-audit
-description: "Multi-dimensional codebase audit: parallel Explore agents investigate one dimension each (functionality/architecture/data/frontend/engineering-quality), high-risk findings are verified on-machine, then assembled into a single decision-source document (problem report + design + upgrade plan). Trigger when the user asks for a full/multi-dimensional review, '项目体检', 'codebase audit', or a problem-report + technical-upgrade plan."
+description: "Multi-dimensional codebase audit: parallel Explore agents investigate one dimension each, high-risk findings verified on-machine, then assembled into a decision-source document (problem report + upgrade plan). Trigger on full review requests, '项目体检', or 'codebase audit'."
 version: 1.0.0
 layer: 2
 category: workflow
@@ -13,12 +13,13 @@ dependencies:
 related_skills:
   - csp-code-review
   - csp-verification
-  - csp-architecture-review
+  - csp-architect
   - csp-defect-mining
 anti_rationalizations:
   "I'll just read the code myself": "One context can't hold a large codebase; parallel agents cover more dimensions than a single pass."
   "The agent's finding looks right, skip verification": "P0/P1 findings MUST be machine-verified — agents hallucinate dangling refs and missing files."
   "Skip the report, just tell the user": "The single decision-source doc is the deliverable; verbal summaries lose the upgrade plan's testable acceptance criteria."
+role: specialist
 ---
 
 # Codebase Multidim Audit

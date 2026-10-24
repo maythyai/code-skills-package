@@ -1,10 +1,14 @@
 ---
 name: csp-vllm-serving
-description: Production vLLM inference serving patterns covering Docker setup, continuous batching, PagedAttention, tensor parallelism, OpenAI-compatible APIs, LoRA multiplexing, quantization, performance tuning, health checks, Kubernetes scaling, and multi-model serving. Use when deploying, optimizing, or operating LLM inference with vLLM.
+description: "Production vLLM inference serving patterns covering Docker setup, continuous batching, PagedAttention, tensor parallelism, OpenAI-compatible APIs, quantization, performance tuning, Kubernetes scaling, and multi-model serving. Use when deploying, optimizing, or operating LLM inference with vLLM."
 layer: 3
 category: patterns
 domain: patterns
 phase: build
+version: "1.0.0"
+role: specialist
+scope: implementation
+tools: [Read, Write, Edit, Bash, Glob, Grep]
 ---
 
 | Method | Bits | Compression | Quality Impact | Calibration Required |

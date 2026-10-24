@@ -1,10 +1,14 @@
 ---
 name: csp-deepinit
-description: Deep codebase initialization with hierarchical AGENTS.md documentation
+description: "Deep codebase initialization with hierarchical AGENTS.md documentation. Analyzes the repository and generates layered AGENTS.md files at each directory level. Use when setting up a new project for agent-assisted development."
 layer: 4
 category: patterns
 domain: patterns
 phase: build
+version: "1.0.0"
+role: specialist
+scope: implementation
+tools: [Read, Write, Edit, Bash, Glob, Grep]
 ---
 
 | File | Purpose |

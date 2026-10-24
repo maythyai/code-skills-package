@@ -9,6 +9,9 @@ layer: 2
 category: workflow
 domain: patterns
 phase: build
+role: specialist
+scope: implementation
+tools: [Read, Write, Edit, Bash, Glob, Grep]
 ---
 
 # Solo On-Call Response

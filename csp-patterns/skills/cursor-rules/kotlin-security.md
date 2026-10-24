@@ -1,4 +1,5 @@
 ---
+name: csp-cursor-rules-kotlin-security
 description: "Kotlin security extending common rules"
 globs: ["**/*.kt", "**/*.kts", "**/build.gradle.kts"]
 alwaysApply: false

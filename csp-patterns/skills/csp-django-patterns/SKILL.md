@@ -11,6 +11,9 @@ anti_rationalizations:
   "Django has built-in admin, no need for API": "Admin is for internal use. APIs are for programmatic access and frontend separation."
   "I'll add select_related later": "N+1 queries in production can bring down the database. Optimize queries from the start."
   "Just put it in the view": "Fat views are the #1 source of untestable Django code. Use service layers."
+version: "1.0.0"
+role: specialist
+scope: implementation
 ---
 
 # Django Patterns

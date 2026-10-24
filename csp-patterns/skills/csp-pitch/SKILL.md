@@ -10,6 +10,7 @@ phase: review
 domain: patterns
 scope: design
 tools: [Read, Write, Edit, Glob, Grep, Bash]
+role: specialist
 ---
 
 # 设计提案

@@ -1,6 +1,6 @@
 ---
 name: csp-python-coding-standards
-description: "Python coding standards (Python 3.10+) covering naming & style (PEP 8), type annotations (PEP 484+), language features, exceptions & logging, modern syntax & concurrency, security, unit testing, project structure (pyproject.toml), and toolchain (Ruff/mypy). Use when writing, reviewing, or refactoring Python code to enforce idiomatic, safe, typed, and maintainable practices — even when the user does not explicitly ask to 'check style' or 'run PEP 8'."
+description: "Python coding standards covering naming & style, type annotations, exceptions & logging, modern syntax & concurrency, security, unit testing, project structure, and toolchain (Ruff/mypy). Use when writing, reviewing, or refactoring Python code to enforce idiomatic, safe, typed practices."
 version: 0.1.0
 layer: 3
 category: patterns
@@ -9,6 +9,9 @@ domain: patterns
 metadata:
   globs: ["**/*.py", "**/*.pyi", "pyproject.toml"]
 related_skills: [csp-python-testing, csp-python-patterns, csp-python-reviewer, csp-ruff-fixer, csp-django-patterns, csp-django-security]
+role: specialist
+scope: implementation
+tools: [Read, Write, Edit, Bash, Glob, Grep]
 ---
 
 # Python Coding Standards

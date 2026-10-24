@@ -7,6 +7,8 @@ phase: build
 domain: patterns
 scope: implementation
 tools: [Read, Write, Edit, Bash, Glob, Grep]
+version: "1.0.0"
+role: specialist
 ---
 
 | Phase | Command | Artifact |

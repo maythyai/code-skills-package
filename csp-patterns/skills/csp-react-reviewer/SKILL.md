@@ -7,6 +7,8 @@ phase: review
 domain: language
 scope: review
 tools: [Read, Grep, Glob]
+version: "1.0.0"
+role: reviewer
 ---
 
 # React Reviewer

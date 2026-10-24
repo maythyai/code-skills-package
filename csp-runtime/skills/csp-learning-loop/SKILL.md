@@ -1,11 +1,6 @@
 ---
 name: csp-learning-loop
-description: >
-  Automatic session-boundary learning orchestrator. Extracts, classifies, and
-  stores learnings across 5 dimensions (project core, user needs, developer profile,
-  long-term memory, skill feedback). Delegates to csp-remember, csp-learner,
-  skill-optimizer, csp-compound. [PLANNED] Runs at Stop/PreCompact/SessionEnd hooks.
-  Manual trigger: /csp-learning-loop [--full|--delta|--query <dimension>]
+description: "Session-boundary learning orchestrator. Extracts, classifies, and stores learnings across 5 dimensions (project, user needs, developer profile, memory, skill feedback). Delegates to csp-remember, csp-learner, skill-optimizer, csp-compound. [PLANNED] Runs at Stop/PreCompact/SessionEnd hooks."
 layer: 4
 category: runtime
 triggers:
@@ -19,6 +14,8 @@ phase: ship
 domain: quality
 scope: analysis
 tools: [Read, Write, Edit, Bash, Glob, Grep]
+version: "1.0.0"
+role: specialist
 ---
 
 # CSP Learning Loop

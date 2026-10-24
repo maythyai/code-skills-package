@@ -1,6 +1,6 @@
 ---
 name: csp-git-recovery
-description: "Diagnose and repair broken git repository state without losing work: orphaned worktree metadata, phantom branch locks, detached HEAD, HEAD/ref contradictions, missing or corrupt refs, and all-zero worktree hashes. Snapshot-first, non-destructive-first, every step gated by verification. Use when git status errors out, a branch cannot be checked out, a worktree is stuck, HEAD points somewhere unexpected, or the user says the repo is broken."
+description: "Diagnose and repair broken git repository state without losing work: orphaned worktree metadata, detached HEAD, HEAD/ref contradictions, missing or corrupt refs. Snapshot-first, non-destructive-first, every step gated by verification. Use when git status errors out or the repo is broken."
 version: 0.1.0
 layer: 3
 category: patterns
@@ -9,6 +9,7 @@ domain: devops
 scope: implementation
 tools: [Read, Write, Edit, Glob, Grep, Bash]
 related_skills: [csp-using-git-worktrees, csp-systematic-debugging, csp-finishing-a-development-branch, csp-git-conventions, csp-parallel-worktree]
+role: specialist
 ---
 
 # Git Recovery

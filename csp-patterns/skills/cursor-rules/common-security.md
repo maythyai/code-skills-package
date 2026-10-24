@@ -1,4 +1,5 @@
 ---
+name: csp-cursor-rules-common-security
 description: "Security: mandatory checks, secret management, response protocol"
 alwaysApply: true
 ---

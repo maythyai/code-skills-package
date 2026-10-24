@@ -1,11 +1,15 @@
 ---
 name: csp-external-context
-description: Invoke parallel document-specialist agents for external web searches and documentation lookup
+description: "Invoke parallel document-specialist agents for external web searches and documentation. Decomposes a query into 2-5 facets and fetches external context in parallel. Use when the current session lacks needed documentation or external references."
 argument-hint: <search query or topic>
 layer: 4
 category: patterns
 domain: patterns
 phase: build
+version: "1.0.0"
+role: specialist
+scope: implementation
+tools: [Read, Write, Edit, Bash, Glob, Grep, WebFetch, WebSearch]
 ---
 
 # External Context Skill

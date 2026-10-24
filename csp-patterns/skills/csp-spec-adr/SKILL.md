@@ -6,6 +6,14 @@ description: >
   Use when the team needs structured documentation without a heavy process tool.
 metadata:
   globs: ["**/*.md", "**/docs/**"]
+phase: plan
+domain: architecture
+layer: 3
+category: patterns
+version: "1.0.0"
+role: specialist
+scope: design
+tools: [Read, Write, Edit, Glob, Grep]
 ---
 
 # Spec & ADR Writer

@@ -1,13 +1,6 @@
 ---
 name: csp-linked-test-runner
-description: >
-  Orchestrate a full cross-layer round-trip test for one feature: seed the DB, drive a UI action
-  with Playwright, capture its API request, assert the resulting DB state, verify the UI
-  reflects that state, and emit a single linked verdict that names the broken layer if any.
-  Use when you need to verify a feature works across all layers at once, when single-layer tests
-  pass but the feature is broken end-to-end, when reproducing a data/UI inconsistency, or as a
-  release gate before shipping a write-path feature. Composes csp-playwright-ui-test,
-  csp-db-state-assertion, and csp-visual-regression/visual-verdict.
+description: "Orchestrate a full cross-layer round-trip test for one feature: seed the DB, drive a UI action with Playwright, verify the UI reflects the resulting DB state, and emit a single linked verdict naming the broken layer. Use when single-layer tests pass but the feature is broken end-to-end."
 version: 0.1.0
 layer: 4
 category: runtime

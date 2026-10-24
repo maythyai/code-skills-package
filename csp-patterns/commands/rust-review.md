@@ -1,4 +1,5 @@
 ---
+name: csp-rust-review
 description: Comprehensive Rust code review for ownership, lifetimes, error handling, unsafe usage, and idiomatic patterns. Invokes the rust-reviewer agent.
 ---
 

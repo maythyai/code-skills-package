@@ -6,6 +6,14 @@ description: >
   applications in Java or Kotlin.
 metadata:
   globs: ["**/*.{java,kt}", "**/application*.yml", "**/application*.properties"]
+phase: review
+domain: language
+layer: 3
+category: patterns
+version: "1.0.0"
+role: reviewer
+scope: review
+tools: [Read, Grep, Glob]
 ---
 
 # Spring Boot Reviewer

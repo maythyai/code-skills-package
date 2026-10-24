@@ -1,14 +1,6 @@
 ---
 name: csp-tech-diagram
-description: >-
-  Use when the user asks to create, visualize, or animate a technical diagram —
-  software architecture, data flow, flowcharts, sequence diagrams, C4 models,
-  cloud deployments, event streams, observability traces, agent/memory systems,
-  UML, ER, network topology, timelines, or technical concept maps. Produces
-  geometry-checked SVG, high-resolution PNG, validated semantic SVG-to-GIF
-  motion, and offline interactive HTML. Integrates with doc-lifecycle for
-  version-controlled diagram assets and doc-insight for extracting structure
-  from technical documents before visualization.
+description: "Use when the user asks to create, visualize, or animate a technical diagram — software architecture, data flow, flowcharts, sequence diagrams, C4 models, cloud deployments, UML, ER, network topology. Produces geometry-checked SVG, SVG-to-GIF motion, and offline interactive HTML."
 version: 1.0.0
 layer: 3
 category: patterns

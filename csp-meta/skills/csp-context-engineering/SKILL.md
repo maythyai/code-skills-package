@@ -5,6 +5,10 @@ layer: 1
 category: meta
 domain: architecture
 phase: define
+version: "1.0.0"
+role: specialist
+scope: design
+tools: [Read, Write, Edit, Glob, Grep]
 ---
 
 | MCP Server | Value |

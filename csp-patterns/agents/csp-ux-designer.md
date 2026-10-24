@@ -162,7 +162,7 @@ The UX Designer uses this hierarchy for design decisions:
 
 ## Integration with CSP Tools
 
-### With csp-spec
+### With csp-spec-contract
 - Validates user experience requirements
 - Ensures acceptance criteria include usability aspects
 - Reviews designs for user-centered approach

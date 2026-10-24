@@ -9,6 +9,7 @@ domain: database
 scope: implementation
 tools: [Read, Write, Edit, Bash, Glob, Grep]
 related_skills: []
+role: specialist
 ---
 
 # Analytics and Data Analysis

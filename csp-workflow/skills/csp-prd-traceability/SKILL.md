@@ -45,6 +45,7 @@ anti_rationalizations:
   "追溯矩阵太形式化，不需要": "没有追溯矩阵，你无法回答'这个需求有没有被实现'或'这个代码对应哪个需求'。这是需求完整性的基本保障。"
   "PRD 和 Feature 肯定是一一对应的": "很少有一一对应。一个 PRD 条目可能拆成多个 Feature，也可能多个 PRD 条目合并为一个 Feature。"
   "覆盖率检查不重要": "缺失的覆盖率 = 遗漏的需求 = 返工。覆盖率检查是需求闭环的最后一道防线。"
+role: specialist
 ---
 
 # PRD Traceability

@@ -1,9 +1,15 @@
 ---
 name: csp-ultraqa
-description: QA cycling workflow - test, verify, fix, repeat until goal met
+description: "QA cycling workflow — test, verify, fix, repeat until goal met. Runs test suites, verifies results, and fixes failures in a loop until the success criteria pass. Use when iterating on code until tests pass or a quality gate is met."
 argument-hint: "[--tests|--build|--lint|--typecheck|--custom <pattern>] [--interactive]"
 layer: 4
 phase: verify
+domain: testing
+category: patterns
+version: "1.0.0"
+role: specialist
+scope: testing
+tools: [Read, Write, Edit, Bash, Glob, Grep]
 ---
 
 | Command | Goal Type | Success Criteria |

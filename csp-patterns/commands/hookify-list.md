@@ -1,4 +1,5 @@
 ---
+name: csp-hookify-list
 description: List all configured hookify rules
 ---
 

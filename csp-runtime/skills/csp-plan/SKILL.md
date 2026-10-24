@@ -11,6 +11,8 @@ phase: plan
 domain: architecture
 scope: design
 tools: [Read, Write, Edit, Glob, Grep, WebFetch, WebSearch]
+version: "1.0.0"
+role: specialist
 ---
 
 | Mode | When to Use | Behavior |

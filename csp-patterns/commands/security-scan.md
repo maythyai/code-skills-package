@@ -1,4 +1,5 @@
 ---
+name: csp-security-scan
 description: Run AgentShield against agent, hook, MCP, permission, and secret surfaces.
 agent: csp-security-reviewer
 subtask: true

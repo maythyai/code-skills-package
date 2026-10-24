@@ -1,4 +1,5 @@
 ---
+name: csp-psm
 description: "Compatibility alias for project-session-manager, managing worktree-based dev environments with tmux sessions"
 ---
 
