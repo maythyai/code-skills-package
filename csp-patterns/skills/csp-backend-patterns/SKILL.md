@@ -233,3 +233,7 @@ breakers when load and failure modes justify them — not before.
   role-based access control, and rate limiting.
 - [references/queue-patterns.md](references/queue-patterns.md) — Background jobs and
   simple queue implementations.
+
+## Related Skills
+
+- [[csp-user-system-design]] — User system architecture methodology: account model, RBAC, auth security, data modeling, and design checklist

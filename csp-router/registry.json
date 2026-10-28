@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "total_skills": 685,
+  "total_skills": 686,
   "shards": [],
   "skill_metadata": "skill-metadata.yaml",
   "skills": [
@@ -5585,6 +5585,21 @@
       },
       "stack_detection": false,
       "path": "csp-patterns/skills/csp-user-analytics/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-user-system-design",
+      "description": "Comprehensive user system design methodology covering layered architecture, account model, identity & role design (RBAC), permission systems, authentication & security, user tier & growth, data modeling, system integration patterns, design principles, common pitfalls, and a reusable review checklist. Use when designing, reviewing, or refactoring user/auth systems for any application.",
+      "layer": 3,
+      "category": "patterns",
+      "triggers": {
+        "keywords": ["用户体系", "用户系统", "账号系统", "权限设计", "RBAC", "角色权限", "认证体系", "用户数据模型", "user system", "auth system", "identity management", "account model", "permission system"],
+        "file_patterns": [],
+        "context": ["design", "review", "plan"]
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/csp-user-system-design/SKILL.md",
       "deps": [],
       "priority": 10
     },

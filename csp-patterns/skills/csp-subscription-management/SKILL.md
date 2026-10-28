@@ -529,6 +529,7 @@ async function checkFeatureAccess(
 
 ## Related Skills
 
+- [[csp-user-system-design]] — User system architecture, user tier and growth design methodology
 - [[csp-payment-integration]] -- Payment provider setup and checkout flows
 - [[csp-webhook-architecture]] -- Reliable webhook delivery and processing
 - [[csp-email-systems]] -- Dunning emails and subscription notifications

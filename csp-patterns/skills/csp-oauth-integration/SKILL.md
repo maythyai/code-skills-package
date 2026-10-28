@@ -609,6 +609,7 @@ function generateAppleClientSecret(): string {
 
 ## Related Skills
 
+- [[csp-user-system-design]] — User system architecture, account model, RBAC and permission design methodology
 - [[csp-webhook-architecture]] -- Processing OAuth-related webhooks (token revocation events)
 - [[csp-api-governance]] -- API key and scope management patterns
 - [[csp-security-review]] -- Security review for authentication implementations

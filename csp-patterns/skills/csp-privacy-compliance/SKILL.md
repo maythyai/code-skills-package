@@ -830,6 +830,7 @@ const cookieDeclaration = [
 
 ## Related Skills
 
+- [[csp-user-system-design]] — User system design, data lifecycle and account deletion patterns
 - [[csp-db-backup]]
 - [[csp-monitoring-alerting]]
 - [[csp-platform-deploy]]
