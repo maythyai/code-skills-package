@@ -44,6 +44,7 @@
 | 棕地 | docs/→.csp/ 双轨整合（PRD→PMS、strategy→lifecycle、solutions→specs、analysis→audit） | [brownfield-doc-integration.md](./brownfield-doc-integration.md) | `.csp/product-spec/` + `.csp/manifest.json` + `docs/` 整理归位 |
 | 参考 | 版本号管理规范——SemVer/CalVer 机制、tag 纪律、攒批发布 feat/fix 分轨、多平台六处一致的权威定义（roadmap/05/06 引用，冲突时以其为准） | [version-management.md](./version-management.md) | 被各提示词引用，无独立产物 |
 | 参考 | PRD 预设检查清单——实证评审提炼的 11 类高频 Critical 模式（可测指标禁 [TBD]/分母一致/安全闸门治理/known-limit 上界/双模式显式/恢复路径/HOW 不具名/三处同步/信任模型/入出站对称/选型不外渗），01 升级/评审前必过；项目以 `.csp/agent-conventions/PRD-PRESET-CHECKLIST.md` overlay 叠加 | [prd-preset-checklist.md](./prd-preset-checklist.md) | 被 01/prd-writer 引用，无独立产物 |
+| 参考 | 项目通用规则——从全部 prompts + CLAUDE.md + skills 提炼的最一般约定（三层文档定位/目录白名单/.csp 结构/文档增改删归档/front-matter+manifest 回写/一致性与 Finding ID/版本与提交纪律/工程纪律/写作排版/CSP 自身内容红线+快速自查），任何阶段都要遵守的底线，冲突时以各阶段提示词具体条款为准 | [project-general-rules.md](./project-general-rules.md) | 被各提示词引用，无独立产物 |
 | 模板 | 技能解耦移植任务模板——把外部借鉴的平台耦合技能解耦为目标框架原生等价物（本地 markdown+git+脚本）；A 表场景变量 + B–H 不变方法论，换场景只重填 A 表 | [skill-port-decouple.md](./skill-port-decouple.md) | 目标技能目录（按任务填充） |
 
 > **06 vs 07**：06 是**发布前符合性验证**（实现是否满足 PRD/Spec/AC、能否上线），是门控；07 是**里程碑后整体复盘**（产品对不对、架构稳不稳、下一步做什么），探索性/战略性，不卡发布。07 从用户视角+技术视角发现 Spec 之外的新问题，findings 回流下一迭代 01-05 + 外环 roadmap。
