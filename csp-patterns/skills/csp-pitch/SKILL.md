@@ -10,6 +10,7 @@ phase: review
 domain: patterns
 scope: design
 tools: [Read, Write, Edit, Glob, Grep, Bash]
+related_skills: [[[prd]], [[flow-web]], [[metric]], [[retro]]]
 role: specialist
 ---
 

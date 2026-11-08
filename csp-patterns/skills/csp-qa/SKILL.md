@@ -8,6 +8,7 @@ phase: verify
 domain: patterns
 scope: review
 tools: [Read, Write, Edit, Glob, Grep, Bash, WebFetch, WebSearch]
+related_skills: [[[retro]], [[metric]], [[prd]]]
 triggers:
   - "设计验收"
   - "Design QA"

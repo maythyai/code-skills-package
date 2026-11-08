@@ -11,23 +11,28 @@ tools: [Read, Write, Edit, Glob, Grep, Bash]
 
 dependencies:
   skills:
-    - csp-requirement-decomposition
-    - csp-tech-stack-advisor
-    - csp-tech-solution-design
-    - csp-tech-design-review
-    - csp-fullstack-spec-generator
-    - csp-tech-task-breakdown
+    - [[workflow:csp-requirement-decomposition]]
+    - [[workflow:csp-tech-stack-advisor]]
+    - [[workflow:csp-tech-solution-design]]
+    - [[workflow:csp-tech-design-review]]
+    - [[workflow:csp-fullstack-spec-generator]]
+    - [[workflow:csp-tech-task-breakdown]]
 
 related_skills:
-  - csp-full
-  - csp-implementation-phase
-  - csp-verify-phase
-  - csp-ship
-  - csp-plan-phase
-  - csp-tdd
-  - csp-code-review
-  - csp-product-discovery-orchestrator
-  - csp-effort-estimation
+  - [[workflow:csp-full]]
+  - [[workflow:csp-implementation-phase]]
+  - [[workflow:csp-verify-phase]]
+  - [[workflow:csp-ship]]
+  - [[workflow:csp-plan-phase]]
+  - [[meta:csp-tdd]]
+  - [[workflow:csp-code-review]]
+  - [[workflow:csp-product-discovery-orchestrator]]
+  - [[workflow:csp-effort-estimation]]
+  - [[workflow:csp-knowledge-hub]]
+  - [[workflow:csp-roadmap-update]]
+  - [[pattern:csp-product-capability]]
+  - [[meta:csp-mvp-scoping]]
+  - [[workflow:csp-design-to-workflow-bridge]]
   - csp-tech-risk-assessment
   - csp-product-spec
   - csp-code-spec

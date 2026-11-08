@@ -10,6 +10,7 @@ phase: review
 domain: patterns
 scope: analysis
 tools: [Read, Write, Edit, Glob, Grep, Bash]
+related_skills: []
 role: specialist
 ---
 

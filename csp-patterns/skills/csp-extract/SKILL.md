@@ -10,6 +10,7 @@ phase: build
 domain: patterns
 scope: analysis
 tools: [Read, Write, Edit, Glob, Grep, Bash, WebFetch, WebSearch]
+related_skills: [[[retro]], [[qa]]]
 role: specialist
 ---
 

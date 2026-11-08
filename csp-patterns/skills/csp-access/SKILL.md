@@ -8,6 +8,7 @@ phase: verify
 domain: patterns
 scope: review
 tools: [Read, Write, Edit, Glob, Grep, Bash, WebFetch, WebSearch]
+related_skills: [[[qa]], [[check]]]
 triggers:
   - "无障碍审计"
   - "WCAG 合规"

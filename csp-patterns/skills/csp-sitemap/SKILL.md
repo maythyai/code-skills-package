@@ -10,6 +10,7 @@ phase: plan
 domain: patterns
 scope: design
 tools: [Read, Write, Edit, Glob, Grep, Bash]
+related_skills: [[[flow-web]], [[flow-mobile]], [[edge]], [[chart]]]
 role: specialist
 ---
 

@@ -2435,6 +2435,48 @@ trigger_index:
   "lifecycle-orchestrator":
     skills: [csp-lifecycle-orchestrator]
     weight: 40
+  "end-to-end":
+    skills: [csp-lifecycle-orchestrator]
+    weight: 40
+  "end to end":
+    skills: [csp-lifecycle-orchestrator]
+    weight: 40
+  "full product lifecycle":
+    skills: [csp-lifecycle-orchestrator]
+    weight: 40
+  "complete lifecycle":
+    skills: [csp-lifecycle-orchestrator]
+    weight: 40
+  "全链路":
+    skills: [csp-lifecycle-orchestrator]
+    weight: 40
+  "全生命周期":
+    skills: [csp-lifecycle-orchestrator]
+    weight: 40
+  "端到端":
+    skills: [csp-lifecycle-orchestrator]
+    weight: 40
+  "design to dev":
+    skills: [csp-prd, csp-requirement-decomposition]
+    weight: 35
+  "design handoff":
+    skills: [csp-prd, csp-requirement-decomposition]
+    weight: 35
+  "设计交付开发":
+    skills: [csp-prd, csp-requirement-decomposition]
+    weight: 35
+  "开发反馈设计":
+    skills: [csp-check, csp-verify-phase]
+    weight: 35
+  "design feedback":
+    skills: [csp-check, csp-verify-phase]
+    weight: 35
+  "product discovery":
+    skills: [csp-product-discovery-orchestrator]
+    weight: 40
+  "产品发现":
+    skills: [csp-product-discovery-orchestrator]
+    weight: 40
   "list":
     skills: [csp-list-phase-assumptions, csp-list-workspaces]
     weight: 40

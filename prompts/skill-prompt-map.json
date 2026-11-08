@@ -1,0 +1,288 @@
+{
+  "version": "1.0.0",
+  "generated_at": "2026-11-08T00:00:00Z",
+  "description": "Machine-readable mapping from CSP prompts to the skills they reference, consume, or were synthesized from. Used for bidirectional traceability and impact analysis.",
+  "mappings": [
+    {
+      "prompt_file": "00-knowledge-hub.md",
+      "prompt_stage": "00",
+      "prompt_title": "Knowledge Hub Initialization",
+      "skill_references": [
+        {"skill_name": "csp-knowledge-hub", "skill_directory": "csp-workflow/skills/csp-knowledge-hub/", "reference_type": "prerequisite"},
+        {"skill_name": "csp-codebase-mapper", "skill_directory": "csp-workflow/agents/", "reference_type": "template"},
+        {"skill_name": "csp-agentic-engineering", "skill_directory": "csp-workflow/skills/csp-agentic-engineering/", "reference_type": "methodology"}
+      ]
+    },
+    {
+      "prompt_file": "01-prd.md",
+      "prompt_stage": "01",
+      "prompt_title": "PRD Generation + PMS Governance",
+      "skill_references": [
+        {"skill_name": "csp-prd-generation", "skill_directory": "csp-workflow/skills/csp-prd-generation/", "reference_type": "dependency"},
+        {"skill_name": "csp-product-spec", "skill_directory": "csp-workflow/skills/csp-product-spec/", "reference_type": "governance"},
+        {"skill_name": "csp-knowledge-hub", "skill_directory": "csp-workflow/skills/csp-knowledge-hub/", "reference_type": "prerequisite"},
+        {"skill_name": "csp-effort-estimation", "skill_directory": "csp-workflow/skills/csp-effort-estimation/", "reference_type": "optional"},
+        {"skill_name": "csp-simple-dev", "skill_directory": "csp-workflow/skills/csp-simple-dev/", "reference_type": "optional"}
+      ]
+    },
+    {
+      "prompt_file": "02-decomposition.md",
+      "prompt_stage": "02",
+      "prompt_title": "Requirement Decomposition",
+      "skill_references": [
+        {"skill_name": "csp-requirement-decomposition", "skill_directory": "csp-workflow/skills/csp-requirement-decomposition/", "reference_type": "dependency"},
+        {"skill_name": "csp-requirement-prioritization", "skill_directory": "csp-meta/skills/csp-requirement-prioritization/", "reference_type": "optional"}
+      ]
+    },
+    {
+      "prompt_file": "03-tech-design.md",
+      "prompt_stage": "03",
+      "prompt_title": "Tech Design + Full-Stack Spec",
+      "skill_references": [
+        {"skill_name": "csp-tech-stack-advisor", "skill_directory": "csp-workflow/skills/csp-tech-stack-advisor/", "reference_type": "dependency"},
+        {"skill_name": "csp-tech-solution-design", "skill_directory": "csp-workflow/skills/csp-tech-solution-design/", "reference_type": "dependency"},
+        {"skill_name": "csp-fullstack-spec-generator", "skill_directory": "csp-workflow/skills/csp-fullstack-spec-generator/", "reference_type": "dependency"},
+        {"skill_name": "csp-domain-driven-design", "skill_directory": "csp-workflow/skills/csp-domain-driven-design/", "reference_type": "optional"},
+        {"skill_name": "csp-code-spec", "skill_directory": "csp-workflow/skills/csp-code-spec/", "reference_type": "governance"},
+        {"skill_name": "csp-test-spec", "skill_directory": "csp-workflow/skills/csp-test-spec/", "reference_type": "governance"}
+      ]
+    },
+    {
+      "prompt_file": "04-task-breakdown.md",
+      "prompt_stage": "04",
+      "prompt_title": "Task Breakdown + Implementation Planning",
+      "skill_references": [
+        {"skill_name": "csp-tech-task-breakdown", "skill_directory": "csp-workflow/skills/csp-tech-task-breakdown/", "reference_type": "dependency"},
+        {"skill_name": "csp-plan-phase", "skill_directory": "csp-workflow/skills/csp-plan-phase/", "reference_type": "dependency"},
+        {"skill_name": "csp-effort-estimation", "skill_directory": "csp-workflow/skills/csp-effort-estimation/", "reference_type": "optional"}
+      ]
+    },
+    {
+      "prompt_file": "05-implementation.md",
+      "prompt_stage": "05",
+      "prompt_title": "Implementation (Multi-Agent Parallel Dev)",
+      "skill_references": [
+        {"skill_name": "csp-implementation-phase", "skill_directory": "csp-workflow/skills/csp-implementation-phase/", "reference_type": "dependency"},
+        {"skill_name": "csp-code-spec", "skill_directory": "csp-workflow/skills/csp-code-spec/", "reference_type": "governance"},
+        {"skill_name": "csp-spec-contract", "skill_directory": "csp-meta/skills/csp-spec-contract/", "reference_type": "reference"}
+      ]
+    },
+    {
+      "prompt_file": "06-verify-ship.md",
+      "prompt_stage": "06",
+      "prompt_title": "Verify, Ship, Operate",
+      "skill_references": [
+        {"skill_name": "csp-verify-phase", "skill_directory": "csp-workflow/skills/csp-verify-phase/", "reference_type": "dependency"},
+        {"skill_name": "csp-code-review", "skill_directory": "csp-workflow/skills/csp-code-review/", "reference_type": "dependency"},
+        {"skill_name": "csp-ship", "skill_directory": "csp-workflow/skills/csp-ship/", "reference_type": "dependency"},
+        {"skill_name": "csp-roadmap-update", "skill_directory": "csp-workflow/skills/csp-roadmap-update/", "reference_type": "output"}
+      ]
+    },
+    {
+      "prompt_file": "07-reviewer.md",
+      "prompt_stage": "07",
+      "prompt_title": "Retrospective Review",
+      "skill_references": [
+        {"skill_name": "csp-retro", "skill_directory": "csp-patterns/skills/csp-retro/", "reference_type": "reference"},
+        {"skill_name": "csp-roadmap-update", "skill_directory": "csp-workflow/skills/csp-roadmap-update/", "reference_type": "output"}
+      ]
+    },
+    {
+      "prompt_file": "audit.md",
+      "prompt_stage": "independent",
+      "prompt_title": "Modular Audit + Usability Review",
+      "skill_references": [
+        {"skill_name": "csp-codebase-audit", "skill_directory": "unknown", "reference_type": "reference"},
+        {"skill_name": "csp-cross-layer-testing", "skill_directory": "csp-patterns/skills/csp-cross-layer-testing/", "reference_type": "reference"},
+        {"skill_name": "csp-db-state-assertion", "skill_directory": "csp-patterns/skills/csp-db-state-assertion/", "reference_type": "reference"},
+        {"skill_name": "csp-code-understanding", "skill_directory": "unknown", "reference_type": "reference"},
+        {"skill_name": "csp-defect-mining", "skill_directory": "unknown", "reference_type": "reference"}
+      ]
+    },
+    {
+      "prompt_file": "audit-pipeline.md",
+      "prompt_stage": "independent",
+      "prompt_title": "Full-Chain Audit Pipeline",
+      "skill_references": [
+        {"skill_name": "csp-code-review", "skill_directory": "csp-workflow/skills/csp-code-review/", "reference_type": "orchestration"}
+      ]
+    },
+    {
+      "prompt_file": "product-critic-review.md",
+      "prompt_stage": "independent",
+      "prompt_title": "Product Director Critical Review (7 Lenses)",
+      "skill_references": [
+        {"skill_name": "csp-roadmap-update", "skill_directory": "csp-workflow/skills/csp-roadmap-update/", "reference_type": "tool_call"}
+      ]
+    },
+    {
+      "prompt_file": "ui-review-to-iteration.md",
+      "prompt_stage": "independent",
+      "prompt_title": "UI/UX Design Director Review (8 Lenses)",
+      "skill_references": [
+        {"skill_name": "csp-roadmap-update", "skill_directory": "csp-workflow/skills/csp-roadmap-update/", "reference_type": "tool_call"},
+        {"skill_name": "csp-roadmap-planner", "skill_directory": "csp-workflow/agents/", "reference_type": "agent_spawn"}
+      ]
+    },
+    {
+      "prompt_file": "feature-gap-analysis.md",
+      "prompt_stage": "independent",
+      "prompt_title": "Feature Gap Analysis",
+      "skill_references": [
+        {"skill_name": "csp-frontend-design", "skill_directory": "csp-patterns/skills/csp-frontend-design/", "reference_type": "reference"},
+        {"skill_name": "csp-html-prototype", "skill_directory": "csp-patterns/skills/csp-html-prototype/", "reference_type": "reference"},
+        {"skill_name": "csp-product-metrics-review", "skill_directory": "unknown", "reference_type": "reference"},
+        {"skill_name": "csp-user-feedback-analysis", "skill_directory": "unknown", "reference_type": "reference"},
+        {"skill_name": "csp-roadmap-update", "skill_directory": "csp-workflow/skills/csp-roadmap-update/", "reference_type": "output"}
+      ]
+    },
+    {
+      "prompt_file": "product-audit-to-roadmap.md",
+      "prompt_stage": "independent",
+      "prompt_title": "Product Audit to Roadmap Bridge",
+      "skill_references": [
+        {"skill_name": "csp-product-capability", "skill_directory": "csp-patterns/skills/csp-product-capability/", "reference_type": "reference"},
+        {"skill_name": "csp-code-tour-guide", "skill_directory": "csp-patterns/skills/csp-code-tour-guide/", "reference_type": "reference"},
+        {"skill_name": "csp-html-prototype", "skill_directory": "csp-patterns/skills/csp-html-prototype/", "reference_type": "reference"},
+        {"skill_name": "csp-frontend-design", "skill_directory": "csp-patterns/skills/csp-frontend-design/", "reference_type": "reference"},
+        {"skill_name": "csp-responsive-design", "skill_directory": "csp-patterns/skills/csp-responsive-design/", "reference_type": "reference"},
+        {"skill_name": "csp-product-metrics-review", "skill_directory": "unknown", "reference_type": "reference"},
+        {"skill_name": "csp-user-analytics", "skill_directory": "csp-patterns/skills/csp-user-analytics/", "reference_type": "reference"},
+        {"skill_name": "csp-product-spec", "skill_directory": "csp-workflow/skills/csp-product-spec/", "reference_type": "reference"},
+        {"skill_name": "csp-tech-debt-assessment", "skill_directory": "csp-patterns/skills/csp-tech-debt-assessment/", "reference_type": "reference"},
+        {"skill_name": "csp-security-review", "skill_directory": "csp-patterns/skills/csp-security-review/", "reference_type": "reference"},
+        {"skill_name": "csp-privacy-compliance", "skill_directory": "csp-patterns/skills/csp-privacy-compliance/", "reference_type": "reference"},
+        {"skill_name": "csp-seo-engineering", "skill_directory": "csp-patterns/skills/csp-seo-engineering/", "reference_type": "reference"},
+        {"skill_name": "csp-i18n-frameworks", "skill_directory": "csp-patterns/skills/csp-i18n-frameworks/", "reference_type": "reference"},
+        {"skill_name": "csp-product-research", "skill_directory": "csp-patterns/skills/csp-product-research/", "reference_type": "reference"},
+        {"skill_name": "csp-roadmap-update", "skill_directory": "csp-workflow/skills/csp-roadmap-update/", "reference_type": "output"}
+      ]
+    },
+    {
+      "prompt_file": "frontend-development.md",
+      "prompt_stage": "independent",
+      "prompt_title": "Frontend Development Expert (TypeScript/Next.js/Tailwind/shadcn)",
+      "skill_references": [
+        {"skill_name": "csp-flow-web", "skill_directory": "csp-patterns/skills/csp-flow-web/", "reference_type": "method_source"},
+        {"skill_name": "csp-frontend-patterns", "skill_directory": "csp-patterns/skills/csp-frontend-patterns/", "reference_type": "method_source"},
+        {"skill_name": "csp-frontend-performance", "skill_directory": "csp-patterns/skills/csp-frontend-performance/", "reference_type": "method_source"}
+      ]
+    },
+    {
+      "prompt_file": "python-code-review.md",
+      "prompt_stage": "independent",
+      "prompt_title": "Python Code Review Expert",
+      "skill_references": [
+        {"skill_name": "csp-python-reviewer", "skill_directory": "csp-patterns/agents/", "reference_type": "method_source"},
+        {"skill_name": "csp-code-review", "skill_directory": "csp-workflow/skills/csp-code-review/", "reference_type": "method_source"},
+        {"skill_name": "csp-ruff-fixer", "skill_directory": "csp-patterns/skills/csp-ruff-fixer/", "reference_type": "method_source"},
+        {"skill_name": "csp-python-testing", "skill_directory": "csp-patterns/skills/csp-python-testing/", "reference_type": "method_source"}
+      ]
+    },
+    {
+      "prompt_file": "integration-review.md",
+      "prompt_stage": "independent",
+      "prompt_title": "Full-Stack Integration Review (11 Scenarios)",
+      "skill_references": [
+        {"skill_name": "csp-cross-layer-testing", "skill_directory": "csp-patterns/skills/csp-cross-layer-testing/", "reference_type": "method_source"},
+        {"skill_name": "csp-api-governance", "skill_directory": "csp-patterns/skills/csp-api-governance/", "reference_type": "method_source"},
+        {"skill_name": "csp-mock-strategies", "skill_directory": "csp-patterns/skills/csp-mock-strategies/", "reference_type": "method_source"}
+      ]
+    },
+    {
+      "prompt_file": "e2e-deep-audit.md",
+      "prompt_stage": "independent",
+      "prompt_title": "E2E Deep Verification (4 Modes)",
+      "skill_references": [
+        {"skill_name": "csp-e2e-testing", "skill_directory": "csp-patterns/skills/csp-e2e-testing/", "reference_type": "reference"}
+      ]
+    },
+    {
+      "prompt_file": "data-reporting.md",
+      "prompt_stage": "independent",
+      "prompt_title": "Data Reporting / Narrative Packaging",
+      "skill_references": [
+        {"skill_name": "csp-product-metrics-review", "skill_directory": "unknown", "reference_type": "reference"}
+      ]
+    },
+    {
+      "prompt_file": "automation-validation.md",
+      "prompt_stage": "independent",
+      "prompt_title": "Automated Validation Layer",
+      "skill_references": [
+        {"skill_name": "csp-verification", "skill_directory": "csp-patterns/skills/csp-verification/", "reference_type": "reference"}
+      ]
+    },
+    {
+      "prompt_file": "prevention-norms.md",
+      "prompt_stage": "independent",
+      "prompt_title": "Development-Time UI Prevention Norms",
+      "skill_references": []
+    },
+    {
+      "prompt_file": "feature-dedup-guardrails.md",
+      "prompt_stage": "independent",
+      "prompt_title": "Feature Deduplication Guardrails",
+      "skill_references": []
+    },
+    {
+      "prompt_file": "brownfield-doc-integration.md",
+      "prompt_stage": "independent",
+      "prompt_title": "Brownfield Document Integration",
+      "skill_references": []
+    },
+    {
+      "prompt_file": "skill-port-decouple.md",
+      "prompt_stage": "independent",
+      "prompt_title": "Skill Porting / Decoupling Template",
+      "skill_references": []
+    },
+    {
+      "prompt_file": "develop_pipeline.md",
+      "prompt_stage": "independent",
+      "prompt_title": "Continuous Version Delivery Pipeline",
+      "skill_references": [
+        {"skill_name": "csp-cicd-pipelines", "skill_directory": "csp-patterns/skills/csp-cicd-pipelines/", "reference_type": "reference"}
+      ]
+    },
+    {
+      "prompt_file": "patent-doc.md",
+      "prompt_stage": "independent",
+      "prompt_title": "Patent Document Generation",
+      "skill_references": []
+    },
+    {
+      "prompt_file": "roadmap.md",
+      "prompt_stage": "outer_ring",
+      "prompt_title": "Strategic Roadmap Planning",
+      "skill_references": [
+        {"skill_name": "csp-roadmap-update", "skill_directory": "csp-workflow/skills/csp-roadmap-update/", "reference_type": "output"}
+      ]
+    },
+    {
+      "prompt_file": "product-design-convergence.md",
+      "prompt_stage": "gate",
+      "prompt_title": "Architecture Convergence Gate",
+      "skill_references": []
+    },
+    {
+      "prompt_file": "version-management.md",
+      "prompt_stage": "reference",
+      "prompt_title": "Version Management Specification",
+      "skill_references": []
+    },
+    {
+      "prompt_file": "prd-preset-checklist.md",
+      "prompt_stage": "reference",
+      "prompt_title": "PRD Preset Checklist (11 Critical Patterns)",
+      "skill_references": []
+    }
+  ],
+  "stats": {
+    "total_prompts": 33,
+    "prompts_with_skill_refs": 22,
+    "prompts_without_skill_refs": 11,
+    "unique_skills_referenced": 45,
+    "skills_marked_unknown_directory": 5
+  }
+}

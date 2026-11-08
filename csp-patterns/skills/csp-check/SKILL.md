@@ -10,6 +10,7 @@ phase: verify
 domain: patterns
 scope: review
 tools: [Read, Write, Edit, Glob, Grep, Bash]
+related_skills: [[[qa]], [[edge]], [[access]]]
 role: specialist
 ---
 

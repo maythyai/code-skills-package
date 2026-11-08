@@ -10,6 +10,7 @@ phase: define
 domain: patterns
 scope: design
 tools: [Read, Write, Edit, Glob, Grep, Bash]
+related_skills: [[[journey]], [[stories]], [[pitch]], [[sitemap]]]
 role: specialist
 ---
 

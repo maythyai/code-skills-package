@@ -10,6 +10,7 @@ phase: build
 domain: patterns
 scope: design
 tools: [Read, Write, Edit, Glob, Grep, Bash]
+related_skills: [[[extract]], [[qa]], [[metric]]]
 role: specialist
 ---
 
