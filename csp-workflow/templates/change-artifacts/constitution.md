@@ -32,6 +32,59 @@
 - 日志格式统一使用结构化 JSON
 - 无内部域名硬编码（内部域名如 `*.corp.example` 等用 `{VAR_API_BASE}` + 环境变量参数化）
 
+## Pre-Implementation Phase Gates
+
+> 以下门控在计划阶段（03/04）执行。违反任一条 → 设计退回修改，不得进入实现。
+
+### Gate 1: Simplicity Gate (Article I)
+- [ ] 实现方案使用 ≤ 3 个项目/模块？
+- [ ] 无「为未来准备」的预留字段/抽象？
+- [ ] 如果使用了框架，是否直接使用其标准模式（非过度封装）？
+- 违反记录在 `## Complexity Tracking` 表，需注明替代方案被拒绝的原因
+
+### Gate 2: Anti-Abstraction Gate (Article II)
+- [ ] 没有为单一消费者创建的抽象层？
+- [ ] 数据模型只用一种表示（无多套 ORM/VO/DTO 映射链）？
+- [ ] 接口是消费方定义的，而非实现方定义的？
+
+### Gate 3: Integration-First Gate (Article III)
+- [ ] 所有接口契约（API/DB/Message）在代码之前定义？
+- [ ] 契约测试文件已在 `contracts/` 目录创建？
+- [ ] 前后端接口对齐方式已有明确约定？
+
+### Gate 4: Pre-Implementation Convergence
+- [ ] spec 与 plan 已进行 ≥ 1 轮双向细化？
+- [ ] 无新增 `[NEEDS CLARIFICATION]` 标记残留？
+- [ ] 无「待实现时决定」的开放项？
+
+## Spec Uncertainty Handling
+
+### `[NEEDS CLARIFICATION]` 标记规则
+
+所有规格文档中，**任何不确定的字段、逻辑、边界条件必须显式标记**，不得静默假设：
+
+```markdown
+### Requirement FR-007: User Notification Preferences
+- Users MUST be able to configure notification channels
+- [NEEDS CLARIFICATION: Which channels? Email only, or also push/SMS?]
+- [NEEDS CLARIFICATION: Per-category granularity or all-or-nothing?]
+```
+
+**标记规范：**
+- 格式：`[NEEDS CLARIFICATION: 具体问题（不是模糊描述）]`
+- 每个标记在进入实现阶段前必须有明确答案
+- 标记转决议：`[CLARIFIED: 答案 + 来源（PRD v2/用户确认/技术约束）]`
+- 实现阶段检出残留 NEEDS CLARIFICATION → 阻断，退回澄清
+
+## Complexity Tracking
+
+当实现方案违反以上门控时，在此记录豁免理由：
+
+| Violation | Why Needed | Simpler Alternative Rejected |
+|-----------|-----------|------------------------------|
+| 使用 4 个项目 | 前端/后端/Worker/Shared 物理隔离不同部署单元 | 三项目会导致 Worker 和后端共享无意义依赖 |
+| （无违反时留空） | | |
+
 ## How Specs Inherit This
 
 - **spec.md**：约束条款只写「本 Feature 的外部限制」（如「必须兼容现有 OAuth2.0 流程」），

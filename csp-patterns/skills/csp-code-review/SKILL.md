@@ -13,6 +13,9 @@ anti_rationalizations:
   "This code looks fine": "Looks can deceive. Review for correctness, reuse, and efficiency."
   "It works, let's move on": "Working code can still be wasteful or hard to maintain."
   "The diff is small, skip impact analysis": "Small diffs in hub functions cascade widely. Check structural impact when graph is available."
+  "I only fixed one instance, the rest is out of scope": "Fixing one instance while leaving 12 identical bugs is a false sense of security. Search and fix ALL occurrences (see dimension 7)."
+  "I'll write the tests later": "Later never comes. If the PR adds behavior, it adds tests. A bug fix without a regression test is a time bomb."
+  "The tests pass, I'm done": "Tests passing means existing behavior is intact. It proves nothing about new behavior being correct or edge cases being handled."
 version: "1.0.0"
 ---
 
