@@ -385,6 +385,30 @@ ALTER TABLE orders RENAME COLUMN amount_v2 TO amount;
 ## Migration Testing
 
 ### Dry-Run Against Production Clone
+...（现有内容保持不变）
+
+### Post-Migration Alignment Check（迁移后对齐验证，CRITICAL）
+
+迁移执行完毕后，在克隆库上依次验证，确保代码与数据库之间无断裂：
+
+1. **ORM 对齐**：运行 `prisma generate` 或等效命令，确认 ORM client 能正确生成。
+   若生成时报类型错误 → **BLOCKING**（新列类型与 ORM 类型不兼容）
+
+2. **API 响应 shape 对齐**：对每个涉及迁移表的 API 端点，发送 GET 请求并做 snapshot diff：
+   ```bash
+   curl -s http://clone/api/endpoint | jq '.' > /tmp/post_migrate.json
+   diff <(jq 'keys' /tmp/pre_migrate.json) <(jq 'keys' /tmp/post_migrate.json)
+   ```
+   若删除或重命名了旧字段 → **BREAKING**（前端可能断裂）
+
+3. **前端类型检查**：迁移后执行 `tsc --noEmit`。
+   若有新增类型错误（与迁移相关的文件）→ **BLOCKING**（前端类型定义未同步）
+
+4. **运行时 schema drift 检查**：执行 `information_schema` 交叉验证（见 `integration-review.md` 场景 5A）。
+
+**门控**：以上四项任一项失败 → BLOCKING，不进 S7。修复后重新执行全部四项验证。
+
+### Dry-Run Against Production Clone
 
 ```bash
 #!/bin/bash

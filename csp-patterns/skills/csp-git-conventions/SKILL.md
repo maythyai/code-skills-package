@@ -131,3 +131,24 @@ Only tests changed?             → test
 Build/deps/CI changed?          → build | ci
 Otherwise housekeeping?         → chore
 ```
+
+## 6. Tag Discipline
+
+Tags are immutable release anchors. A release tag commits your code to a version.
+
+### Rules
+- **一 commit 一 tag**：每个 commit 最多承载一个版本 tag。同一 commit 上多个 tag → 版本污染 → 立即纠正。
+- **格式**：`v` 前缀 + SemVer (`vX.Y.Z[-pre.N]`)；**annotated tag（`-a`）**；轻量 tag 禁止。
+- **不可变**：已推送的 tag 不移动/不删除（若需纠正，标 deprecated + 新 commit 打新 tag）。
+- **触发规则**：tag 取 roadmap 规划的版本号；提前/延后交付不改 tag。
+- **禁止空 tag**：纯文档/注释 commit 不打版本 tag——版本 tag 只用于有代码交付的 commit。
+
+### Detection & Recovery
+```bash
+# 检测同一 commit 多 tag（T1 违规）
+git for-each-ref refs/tags/ --format='%(objectname) %(refname:short)' | sort | uniq -w40 -d
+
+# 若检出：保留语义正确的 tag，删除多余 tag
+git tag -d <wrong-tag>
+# 若已推送：标 deprecated，下一 commit 打正确 tag
+git tag -a vX.Y.Z-corrected <commit> -m "Replaces deprecated multi-tag commit"

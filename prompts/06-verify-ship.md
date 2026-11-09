@@ -87,6 +87,16 @@
 
 > **工具链故障 = 环境 BLOCKER，不是代码 bug**——不路由 05 fix（Fix Loop 的"基础设施/环境"路由仅限代码内配置问题；工具链本身不可用需人工/infra 修，标 BLOCKED 报用户）。**禁止用 grep/code review 替代动态验证。** 若 pnpm install 死在 link：尝试 `pnpm store prune` + 升 pnpm + `pnpm --filter <单包> install` 隔离诊断，但不降级门控。
 
+### Phase 0.6：发布复发性格栅（release recurrence check，S6 前置）
+
+在 S6 入口处运行，检测累积未发布变更的风险：
+
+- [ ] 读取 VERSION-REGISTRY，确定上次 `prod-verified` 发布的日期
+- [ ] 计算距今天数：若 &gt; 项目发布节奏阈值（`.csp/gates.config.json` 的 `release_cadence_days`，默认 14 天）→ **WARNING: 发布节奏中断**
+- [ ] `git log $(git describe --tags --abbrev=0 2>/dev/null || echo 'HEAD~100')..HEAD --oneline | wc -l`：若 unshipped commits &gt; 阈值（默认 20）→ **WARNING: 累积未发布提交超过安全窗口**
+- [ ] 任一 WARNING 触发 → 在 verification-report.md 记录，不阻断 S6，但必须在发布裁决中注明"累积发布债务"
+- [ ] 若 unshipped commits &gt; 临界阈值（默认 50）且距上次发布 &gt; 30 天 → **BLOCKED: 发布债务临界，必须发布后再迭代**
+
 按序执行，每步产出证据：
 
 | # | 检查 | 通过标准 | 证据+执行方式 |
@@ -346,10 +356,21 @@ verify/review 发现需 fix 时按下述闭环，**不 ship、不问人怎么修
   > **任何 S6/S7 gate `not-run`（工具链不可用/降级为 grep）→ 裁决=阻断发布**，tag 标 `v{milestone}-draft`/`unverified`，release notes 标"未验证脚手架/draft"。auto-proceed **不触发**（仅认 ran+exit 0）。
   > **`deferred` 增量项（硬边界 11）计入缺口 K**：有 `deferred` 项 → 裁决不得为"放行"，至少"有条件发布"，且 release notes 列明每项 deferred 的阻塞原因 + 解除条件 + 下一轮入口，不得隐瞒。
 - [ ] S6/S7 全部门控 `ran` 通过（不是 `not-run`）、证据已提交
-- [ ] **版本全源对齐通过**（verify-version 脚本，见 `version-management.md` §十）：`git tag` == canonical（`VERSION`/`version.py`）== `package.json` / `pyproject` / `tauri` / Docker / iOS == 代码内常量（`__version__`/`CSP_VERSION`）== CHANGELOG 最新条目 == GitHub Release tag，全一致；任一不一致 = BLOCKED，tag 标 `-draft`，不发布
+- [ ] **版本完整性闸门通过**（`version_integrity_check.py --baseline .csp/version-baseline.json` exit 0）：
+  - T1 多 tag 同 commit（零违规——每个 commit 仅一个版本 tag）
+  - T2 空 tag（零违规——纯文档 commit 不打版本 tag）
+  - T3 六处版本同步（全一致）
+  - T4 CHANGELOG 对齐（最新条目 == tag）
+  - T5 tag 领先版本文件（疑似打了 tag 忘 bump）→ WARNING
+  - T6 发布缺失（最新 tag 后存在非文档 commit 但无新 tag）→ 若有则补齐或确认攒批
+  任一 T1/T2/T3 违规 → BLOCKED，不发布
 - [ ] feature flag 配置好（kill switch，设过期时间与 owner）
 - [ ] 回滚计划文档化（触发条件/步骤/时间预算/DB 回滚）
 - [ ] **攒批聚合确认**：本版本聚合了所有待发的**同类**变更（feat 批 或 fix 批，release notes / CHANGELOG 列清），不逐功能发版；feat 走 MINOR+1、fix 走 PATCH+1；同迭代既有 feat 又有 fix → 拆两个发布（两个 tag），不混合（见 `version-management.md` §二 feat/fix 分轨）
+  - [ ] **C-01 批量交付 S6 完整性格栅**：批次内每个 Feature/Wave 的 AC 在 S6 Check 5 中有独立演示证据
+  - [ ] 批次内每个 Feature 的代码路径被 test/typecheck/build 覆盖（非"全量套件跑过"间接推断）
+  - [ ] 批次内任一项缺 S6 独立证据 → **BLOCKED**，该缺项回 S6 补证后才进 S8
+  - [ ] 批次证据链写入 verification-report.md 的 `batch_evidence_map`（feature_id → gate_results），不可省略
 - [ ] 监控大盘 + 错误上报就绪
 - [ ] 团队通知发布窗口
 - [ ] 非"周五下午"

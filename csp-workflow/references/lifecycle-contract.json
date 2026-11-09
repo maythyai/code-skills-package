@@ -129,7 +129,18 @@
       },
       "skip_if": null,
       "max_retries": 5, "next": "S7",
-      "note": "Build/test/lint gate. command override via gate.commands in .csp/lifecycle-state.json."
+      "note": "Build/test/lint gate. command override via gate.commands in .csp/lifecycle-state.json.",
+      "recurrence": {
+        "check_command": "git log $(git describe --tags --abbrev=0 2>/dev/null || echo 'HEAD~100')..HEAD --oneline | wc -l",
+        "cadence_days": 14,
+        "max_unshipped_commits_warn": 20,
+        "max_unshipped_commits_block": 50
+      },
+      "batch_verification": {
+        "require_per_feature_evidence": true,
+        "batch_evidence_map_field": "batch_evidence_map",
+        "evidence_schema": { "feature_id": "string", "gate_results": { "test": "exit_code", "lint": "exit_code", "build": "exit_code", "typecheck": "exit_code", "ac_demo": "boolean" } }
+      }
     },
     {
       "id": "S7", "name": "Review & Validation", "skill": "csp-verify-phase",

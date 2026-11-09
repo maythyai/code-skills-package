@@ -40,6 +40,9 @@
 - `v` 前缀 + annotated tag（`-a`）+ 不可变（已推送不移动/删除）。
 - CI 触发 `tags: ['v*']`。
 - tag 取 **roadmap 规划的版本号**，不以今日日期生成 tag。
+- **一 commit 一 tag**：每个 commit 最多承载一个版本 tag。禁止在同一 commit 上打多个版本 tag（含同一个 commit 被不同版本号标记的场景）。一个版本号 = 一次独立代码交付 = 一个唯一 commit。
+- **多 tag 检测与纠正**：若检测到同一 commit 上有多个 tag（`version_integrity_check.py` T1），视为版本污染——立即纠正：保留语义正确的 tag，删除多余 tag（若已推送则标 deprecated + 在下一 commit 打正确 tag；不移动已推送 tag）；原因记入 DEV-LOG。
+- **空 tag 禁止**：纯文档/纯注释 commit（无代码行为变更）不得打版本 tag——版本 tag 只用于有代码交付的 commit。
 
 ## 六、预发布与质量分级
 
@@ -135,12 +138,21 @@ package.json / VERSION 与**已发布 git tag** 不一致 → 以 tag 为 canoni
 
 release 后从 `git log <prev-tag>..<tag> --oneline` + CHANGELOG 回填"Main Features"到 VERSION-REGISTRY + roadmap version-主题表（`实际交付` 字段），与规划对比标 `planned vs delivered` 差异。
 
-## 十四、05 版本叠加检查
+## 十四、05 版本叠加检查 + 发布复发检测
 
 开始新版本开发前，检查：
 1. 上一版 06 门控执行记录——若任一 gate 是 `not-run`（降级/跳过）→ 警告"代码叠在未验证地基上"。
 2. VERSION-REGISTRY 最新行 status——若不是 `prod-verified` → 警告"线上版本与最新 tag 不对齐"。
 3. `lifecycle-state.prod_version` vs `latest_release` 不一致 → 警告"线上落后于最新发布"。
+
+**4. 发布复发检测（T6）**：距上次 `prod-verified` 发布的天数；若超过项目发布节奏（`.csp/gates.config.json` 的 `release_cadence_days`，默认 14 天）且 HEAD 有未发布提交 → 警告"累积发布债务"并建议在开始新迭代前先发布。
+- 检测命令：`git log $(git describe --tags --abbrev=0 2>/dev/null || echo 'HEAD~100')..HEAD --oneline | wc -l`
+- 若 unshipped commits > 20 且距上次发布 > 14 天 → WARNING
+- 若 unshipped commits > 50 且距上次发布 > 30 天 → BLOCKED（发布债务临界，必须发布后再迭代）
+
+**5. 提交-标签闭合规则（T6）**：在 `git log <latest-tag>..HEAD` 中存在非文档变更的 commit 时，必须存在至少一个包含 HEAD 的版本 tag。若 HEAD 无 tag 覆盖且存在非文档 commit → 发布缺失。
+- 缺口分类：feat commit 未闭合 → 缺失 MINOR 发布；fix commit 未闭合 → 缺失 PATCH 发布。
+- 纠正：按 feat/fix 分轨规则，对未闭合的 commit 序列补打对应级别的版本 tag。
 
 ## 十五、反模式
 
