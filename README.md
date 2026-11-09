@@ -7,8 +7,8 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
 [![npm](https://img.shields.io/npm/v/code-skills-package)](https://www.npmjs.com/package/code-skills-package)
 [![v0.12.0](https://img.shields.io/badge/version-0.12.0-green)](./CHANGELOG.md)
-[![Skills: 692](https://img.shields.io/badge/skills-692-orange)](./docs/SKILL-INDEX.md)
-[![Platforms: 22+](https://img.shields.io/badge/platforms-22+-brightgreen)](./docs/INSTALL.md)
+[![Skills: 692](https://img.shields.io/badge/skills-692-orange)](./docs/reference/SKILL-INDEX.md)
+[![Platforms: 22+](https://img.shields.io/badge/platforms-22+-brightgreen)](./docs/guides/INSTALL.md)
 
 **Unified AI Programming Skills · 22+ Platforms · 15+ Languages · 692 Skills**
 
@@ -154,7 +154,7 @@ cd /your/project && csp-install --platform cursor
 ./install.sh --list
 ```
 
-Complete installation documentation: [INSTALL.md](./docs/INSTALL.md) · Update Guide: [UPDATE.md](./docs/UPDATE.md)
+Complete installation documentation: [INSTALL.md](./docs/guides/INSTALL.md) · Update Guide: [UPDATE.md](./docs/guides/UPDATE.md)
 
 ## Usage
 
@@ -252,7 +252,7 @@ User input → State detection (Git/tech stack/phase)
 | Dynamic unloading (release L3/L4 content after completion) | Long sessions reduced by 30% |
 | Shared context (pass via `.csp/artifacts/`) | Cross-skill calls reduced by 20% |
 
-Detailed architecture design, DAG orchestration engine, skill knowledge graph, skill retrieval strategy, etc., please refer to [ARCHITECTURE.md](./docs/ARCHITECTURE.md).
+Detailed architecture design, DAG orchestration engine, skill knowledge graph, skill retrieval strategy, etc., please refer to [ARCHITECTURE.md](./docs/architecture/ARCHITECTURE.md).
 
 ## Skill Orchestration
 
@@ -340,15 +340,15 @@ node bin/csp-sdk.mjs init-skill csp-my-skill --layer 3 --phase build
 
 | Document | Description |
 |----------|-------------|
-| [ARCHITECTURE.md](./docs/ARCHITECTURE.md) | Complete architecture design (14 chapters · DAG orchestration · SKPG · Token strategy) |
-| [SKILL-INDEX.md](./docs/SKILL-INDEX.md) | Complete index of 684 skills/agents |
-| [INSTALL.md](./docs/INSTALL.md) | Complete installation guide (22+ platforms) |
-| [UPDATE.md](./docs/UPDATE.md) | How to keep an installed skill package up to date |
-| [SKILL-AUTHORING.md](./docs/SKILL-AUTHORING.md) | Skill authoring best practices |
-| [SKILL-SPEC.md](./docs/SKILL-SPEC.md) | SKILL.md specification document |
-| [VERSIONING.md](./docs/VERSIONING.md) | Version management policy (X=arch, Y=feature, Z=fix) |
-| [FEATURES.md](./docs/FEATURES.md) | Feature inventory (version × module × feature × integration status) |
-| [USER-GUIDE.md](./docs/USER-GUIDE.md) | User guide |
+| [ARCHITECTURE.md](./docs/architecture/ARCHITECTURE.md) | Complete architecture design (14 chapters · DAG orchestration · SKPG · Token strategy) |
+| [SKILL-INDEX.md](./docs/reference/SKILL-INDEX.md) | Complete index of 684 skills/agents |
+| [INSTALL.md](./docs/guides/INSTALL.md) | Complete installation guide (22+ platforms) |
+| [UPDATE.md](./docs/guides/UPDATE.md) | How to keep an installed skill package up to date |
+| [SKILL-AUTHORING.md](./docs/guides/SKILL-AUTHORING.md) | Skill authoring best practices |
+| [SKILL-SPEC.md](./docs/reference/SKILL-SPEC.md) | SKILL.md specification document |
+| [VERSIONING.md](./docs/reference/VERSIONING.md) | Version management policy (X=arch, Y=feature, Z=fix) |
+| [FEATURES.md](./docs/reports/FEATURES.md) | Feature inventory (version × module × feature × integration status) |
+| [USER-GUIDE.md](./docs/guides/USER-GUIDE.md) | User guide |
 | [examples/](./examples/README.md) | Five worked examples (code review, security review, build-fix, simplification, dashboard) |
 | [scripts/](./scripts/README.md) | Build / validation / maintenance tooling reference |
 | [CONTRIBUTING.md](./CONTRIBUTING.md) | How to contribute a skill or fix |

@@ -86,6 +86,7 @@ Create or update `INDEX.md` at root and each category level. Keep indexes short 
 
 ## Related Skills
 
-- `csp-project-doc-architect` — designs the folder structure this skill maintains
-- `csp-session-knowledge-extractor` — creates new docs that need lifecycle tracking
-- `csp-deprecation-and-migration` — governs system deprecation, this handles doc deprecation
+- [[workflow:csp-documentation-governance]] — **权威治理规则**：定义对内/对外文档分界、更新触发规则、文档生命周期。本技能执行治理规则中定义的生命周期转换（Active→Archived）。
+- [[workflow:csp-project-doc-architect]] — 设计本技能维护的文件夹结构
+- [[workflow:csp-session-knowledge-extractor]] — 创建需要生命周期跟踪的新文档
+- [[pattern:csp-deprecation-and-migration]] — 管理系统废弃，本技能处理文档废弃

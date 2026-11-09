@@ -72,6 +72,7 @@ Only extract knowledge that passes ALL of these:
 
 ## Related Skills
 
-- `csp-doc-lifecycle-manager` — newly created docs need lifecycle tracking
-- `csp-project-doc-architect` — extracted ADRs expand the documentation architecture
-- `csp-remember` (L4) — routes knowledge to the correct memory surface
+- [[workflow:csp-documentation-governance]] — **权威治理规则**：定义知识类型路由表（什么类型的知识去 `docs/` 还是 `.csp/`）。本技能执行治理规则中定义的路由决策。
+- [[workflow:csp-doc-lifecycle-manager]] — 新创建的文档需要生命周期跟踪
+- [[workflow:csp-project-doc-architect]] — 提取的 ADR 扩展文档架构
+- [[runtime:csp-remember]] — 将知识路由到正确的记忆表面

@@ -91,5 +91,6 @@ Every `INDEX.md` must include:
 
 ## Related Skills
 
-- `csp-doc-lifecycle-manager` — maintains the structure this skill designs
-- `csp-session-knowledge-extractor` — fills the structure with extracted knowledge
+- [[workflow:csp-documentation-governance]] — **权威治理规则**：定义文件夹分类、命名规范、INDEX.md 要求。本技能执行治理规则中定义的文件结构搭建。
+- [[workflow:csp-doc-lifecycle-manager]] — 维护本技能设计的结构
+- [[workflow:csp-session-knowledge-extractor]] — 用提取的知识填充结构

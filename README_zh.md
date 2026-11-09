@@ -7,8 +7,8 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
 [![npm](https://img.shields.io/npm/v/code-skills-package)](https://www.npmjs.com/package/code-skills-package)
 [![v0.12.0](https://img.shields.io/badge/version-0.12.0-green)](./CHANGELOG.md)
-[![Skills: 692](https://img.shields.io/badge/skills-692-orange)](./docs/SKILL-INDEX.md)
-[![Platforms: 22+](https://img.shields.io/badge/platforms-22+-brightgreen)](./docs/INSTALL.md)
+[![Skills: 692](https://img.shields.io/badge/skills-692-orange)](./docs/reference/SKILL-INDEX.md)
+[![Platforms: 22+](https://img.shields.io/badge/platforms-22+-brightgreen)](./docs/guides/INSTALL.md)
 
 **统一 AI 编程技能 · 22+ 个平台 · 15+ 语言 · 692 个技能**
 
@@ -152,7 +152,7 @@ cd /your/project && csp-install --platform cursor
 ./install.sh --uninstall --global
 ```
 
-完整安装文档见 [INSTALL.md](./docs/INSTALL.md) · 更新指南见 [UPDATE.md](./docs/UPDATE.md)
+完整安装文档见 [INSTALL.md](./docs/guides/INSTALL.md) · 更新指南见 [UPDATE.md](./docs/guides/UPDATE.md)
 
 ## 使用方式
 
@@ -250,7 +250,7 @@ CSP 采用五层分层架构。仅路由器（L0）在会话启动时加载，�
 | 动态卸载（完成后释放 L3/L4 正文） | 长会话减少 30% |
 | 共享上下文（`.csp/artifacts/` 传递） | 跨 skill 调用减少 20% |
 
-详细的架构设计、DAG 编排引擎、技能知识图谱、Skill 检索策略等内容，请参阅 [ARCHITECTURE_zh.md](./docs/ARCHITECTURE_zh.md)。
+详细的架构设计、DAG 编排引擎、技能知识图谱、Skill 检索策略等内容，请参阅 [ARCHITECTURE_zh.md](./docs/architecture/ARCHITECTURE_zh.md)。
 
 ## 技能编排
 
@@ -338,15 +338,15 @@ node bin/csp-sdk.mjs init-skill csp-my-skill --layer 3 --phase build
 
 | 文档 | 说明 |
 |------|------|
-| [ARCHITECTURE_zh.md](./docs/ARCHITECTURE_zh.md) | 完整架构设计（14 章 · DAG 编排 · SKPG · Token 策略） |
-| [SKILL-INDEX.md](./docs/SKILL-INDEX.md) | 全部 692 个 skill/agent 索引 |
-| [INSTALL.md](./docs/INSTALL.md) / [INSTALL_zh.md](./docs/INSTALL_zh.md) | 完整安装指南（22+ 平台） |
-| [UPDATE.md](./docs/UPDATE.md) | 如何为已安装的技能包获取更新 |
-| [SKILL-AUTHORING_zh.md](./docs/SKILL-AUTHORING_zh.md) | Skill 编写最佳实践 |
-| [SKILL-SPEC.md](./docs/SKILL-SPEC.md) | SKILL.md 规范文档 |
-| [VERSIONING.md](./docs/VERSIONING.md) | 版本管理规范（X=架构，Y=功能，Z=修复） |
-| [FEATURES.md](./docs/FEATURES.md) | 功能列表（版本×模块×功能×集成状态） |
-| [USER-GUIDE.md](./docs/USER-GUIDE.md) | 用户使用指南 |
+| [ARCHITECTURE_zh.md](./docs/architecture/ARCHITECTURE_zh.md) | 完整架构设计（14 章 · DAG 编排 · SKPG · Token 策略） |
+| [SKILL-INDEX.md](./docs/reference/SKILL-INDEX.md) | 全部 692 个 skill/agent 索引 |
+| [INSTALL.md](./docs/guides/INSTALL.md) / [INSTALL_zh.md](./docs/guides/INSTALL_zh.md) | 完整安装指南（22+ 平台） |
+| [UPDATE.md](./docs/guides/UPDATE.md) | 如何为已安装的技能包获取更新 |
+| [SKILL-AUTHORING_zh.md](./docs/guides/SKILL-AUTHORING_zh.md) | Skill 编写最佳实践 |
+| [SKILL-SPEC.md](./docs/reference/SKILL-SPEC.md) | SKILL.md 规范文档 |
+| [VERSIONING.md](./docs/reference/VERSIONING.md) | 版本管理规范（X=架构，Y=功能，Z=修复） |
+| [FEATURES.md](./docs/reports/FEATURES.md) | 功能列表（版本×模块×功能×集成状态） |
+| [USER-GUIDE.md](./docs/guides/USER-GUIDE.md) | 用户使用指南 |
 | [examples/](./examples/README.md) | 五个真实运行示例（代码审查、安全审查、构建修复、代码简化、仪表盘） |
 | [scripts/](./scripts/README.md) | 构建 / 校验 / 维护工具参考 |
 | [CONTRIBUTING.md](./CONTRIBUTING.md) | 如何贡献 skill 或修复 |

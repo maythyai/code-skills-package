@@ -19,23 +19,19 @@
 
 ## 三、docs/ 目录索引（本仓库）
 
-本仓库是 CSP 技能包源码，`docs/` 是「如何安装/使用/编写技能」的对外文档：
+本仓库是 CSP 技能包源码，`docs/` 是「如何安装/使用/编写技能」的对外文档。按分类组织：
 
-| 文件 | 内容 |
-|---|---|
-| `INSTALL.md` / `INSTALL_zh.md` | 安装指南（22+ 平台） |
-| `UPDATE.md` | 更新指南 |
-| `VERSIONING.md` | 版本管理（X=arch, Y=feature, Z=fix） |
-| `FEATURES.md` | 功能列表（版本×模块×功能×集成状态矩阵） |
-| `USER-GUIDE.md` | 使用指南 |
-| `ARCHITECTURE.md` / `ARCHITECTURE_zh.md` | 完整架构设计（DAG 编排 / SKPG / Token 策略） |
-| `SKILL-INDEX.md` | 全部 skills/agents 索引 |
-| `SKILL-AUTHORING.md` / `SKILL-AUTHORING_zh.md` | 技能编写最佳实践 |
-| `SKILL-SPEC.md` | SKILL.md 规范 |
-| `analysis/` | 审计与分析报告（项目评审、跨层测试案例） |
-| `csp-page/` | 生成的技能浏览页（derived，勿手改） |
+| 目录 | 内容 | 入口 |
+|------|------|------|
+| `architecture/` | 架构设计、系统地图、衔接标准 | [INDEX](architecture/INDEX.md) |
+| `guides/` | 安装、使用、更新、贡献、技能编写指南 | [INDEX](guides/INDEX.md) |
+| `reference/` | 技能索引、技能规范、版本管理规则 | [INDEX](reference/INDEX.md) |
+| `reports/` | 项目审查、功能矩阵、案例分析 | [INDEX](reports/INDEX.md) |
+| `analysis/` | 能力地图、对齐检查清单 | [INDEX](analysis/INDEX.md) |
+| `archive/` | 历史版本文档快照 | [INDEX](archive/INDEX.md) |
 
-> **消费者项目额外**：使用 CSP 的业务项目在 `docs/` 下还会有 `prd/`（PRD 人类原文，工程形态 PMS 在 `.csp/product-spec/`）、`strategy/`（roadmap/战略，人类可读 + manifest 索引）、`solutions/`（人类可读摘要，链回 `.csp/` 全文）。
+> 根 `docs/INDEX.md` 是文档导航中枢。每个分类目录下的 `INDEX.md` 列出该分类的所有文件及状态。
+> **消费者项目额外**：使用 CSP 的业务项目在 `docs/` 下还会有 `design/`（设计稿）、`strategy/`（roadmap/战略）、`prototypes/`（HTML 原型）。
 
 ## 棕地项目文档整合（docs/ → .csp/ 蒸馏）
 
