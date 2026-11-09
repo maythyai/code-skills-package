@@ -4,9 +4,46 @@ All notable changes to CSP will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
-## Unreleased
+## [0.12.0] — 2026-11-09
 
-_(暂无未发布内容)_
+### Added
+- **`csp-user-system-design`** — 用户体系设计方法论：四层架构（数据/安全/业务/呈现）、六大核心模块（账号模型/身份角色/RBAC权限/认证安全/用户分层/数据模型）、跨系统关联模式、20 个反模式清单、60+ 项评审检查清单、7 个深度参考文档
+- **`csp-agent-self-evaluation`** (from ECC) — 任务后 5 轴结构化自评（准确性/完整性/清晰度/可操作性/简洁性），评分锚点 1-5，基于阈值的改进行动，边缘案例规则
+- **`csp-santa-method`** (from ECC) — 双独立对抗验证，4 阶段工作流，上下文隔离（全新子代理），3 轮收敛循环，人工升级上限，领域特定评分标准扩展，批量采样（15-20%成本，>90%检出率）
+- **`csp-council`** (from ECC) — 四声部决策框架（架构师/怀疑者/务实者/批评家），6 步工作流，反锚定机制，紧凑裁决格式（含共识+异议+前提检查）
+- **`csp-ai-regression-testing`** (from ECC) — 5 种系统性 AI 盲点模式（沙箱/生产路径不匹配、SELECT 遗漏、错误状态泄漏、缺少回滚、空值屏蔽），沙箱模式 API 测试，bug 检查工作流
+- **`csp-agent-governance`** (from awesome-copilot) — 6 种治理模式，包含完整 Python 参考实现，4 个治理级别（开放/标准/严格/锁定），工具级装饰器，带时间衰减的信任评分，JSONL 审计跟踪
+- **`csp-design-to-workflow-bridge`** — 将设计套件输出（.csp/spark/context/*.json）翻译为工作流兼容格式，桥接 csp-patterns 与 csp-workflow 的断层
+
+### Enhanced
+- **`csp-privacy-compliance`** — 新增 `references/gdpr-engineering-reference.md`：15 节 GDPR 工程参考（核心原则/数据最小化/API 设计规则/日志规则/加密标准/密码哈希/密钥管理/匿名化/PR 审查清单/保留默认值）
+- **`csp-code-review`** — 新增维度 7（同类问题全局修复）+ 维度 8（跨层字段对齐），强化 anti_rationalizations（6 条）
+- **`csp-db-migration`** — 新增触发规则"迁移必需要求" + 迁移后对齐验证（ORM/API/FE/运行时模式漂移）
+- **`csp-fullstack-spec-generator`** — 2 条新 anti_rationalizations："只添加了一个字段不需要迁移"、"稍后更新其他层"
+- **`csp-coding-standards`** — 新增原则 8（跨层字段对齐）+ 文件命名反模式（禁止版本号命名，历史不改新增禁用策略）
+- **`csp-python-coding-standards`** — 规则 67-69：文件命名条款含明确的"历史不改、新增禁用"策略
+- **`csp-git-conventions`** — 新增 §6 Tag Discipline 章节（一 commit 一 tag 规则、annotated tag 要求、不可变性、检测与恢复命令）
+- 27 个设计链技能从 `skill-graph.json` 批量填充 `related_skills`
+
+### System Connectivity Optimization
+- **`docs/CONNECTIVITY-STANDARD.md`** — 统一交叉引用格式（`[[skill-name]]`）、10 字段交接协议、S*/P*/D*/00-07 四套阶段词汇映射、强制 SKILL.md 章节规范、状态保持规则、6 类边界场景处理
+- **`csp-patterns/chain-protocol.md`** → v2.0.0：统一交接字段（§2.1.4）、跨子系统桥接（§10.7/§12）、JSON损坏恢复路径（§10.8/§11）
+- **`prompts/skill-prompt-map.json`** — 33 条提示词与 45 个技能的机器可读映射
+- **`docs/CSP-SYSTEM-MAP.md`** — 架构全图、模块连接矩阵、4 条用户旅程路径
+- **`scripts/validate-skill-refs.py`** — 自动化交叉引用校验器
+- **`csp-workflow/references/lifecycle-contract.json`** — 扩展阶段别名、跨子系统桥接路径、复发检测字段、批次验证字段
+- **`csp-router/triggers.yaml`** — 15 条新触发词（端到端全生命周期、设计转开发、开发反馈设计、产品发现）
+
+### Retrospective Gap Fixes (L1-L6)
+- **L1 (批次 S6 打折)** — `06-verify-ship.md` 新增 C-01 批量交付 S6 完整性格栅（batch_evidence_map）、Phase 0.6 发布复发检测
+- **L2 (多 tag 同 commit)** — `version-management.md` §五 新增一 commit 一 tag 规则、tag 污染检测与纠正流程
+- **L3 (Release 缺失)** — T6 发布缺失检测（提交-标签闭合规则）、发布节奏阈值（14 天）、提交阈值（20/50）
+- **L4/L5 (Schema 漂移 + 版本命名)** — `csp-db-migration` 迁移后对齐验证、`csp-coding-standards` 文件命名反模式
+- **约束模板** — `constitution.md` 新增 4 个预实现阶段门控 + `[NEEDS CLARIFICATION]` 标记系统
+
+### Infrastructure
+- **`scripts/sync-reference-projects.sh`** — 15 个 Git 仓库的 pull/clone 同步脚本，支持 --status/--clone-only 模式
+- 技能计数 685 → 692 同步至 README/README_zh/SKILL-INDEX/CLAUDE.md/registry.json
 
 ## [0.11.1] — 2026-09-10
 
