@@ -102,6 +102,7 @@
 | # | 检查 | 通过标准 | 证据+执行方式 |
 |---|---|---|---|
 | 1 | 测试 | 单测+集成+E2E 全绿，零"为通过而 skip"的测试 | `ran: <test cmd> exit 0` 全量输出；**禁止** `not-run: 替代为 grep` |
+| 1.5 | **Backend API 测试**（有后端时**必检，不可跳过**） | `tests/backend/api/` 或项目等价路径下所有 API 集成测试全绿；每个 API 端点有至少 1 个集成测试覆盖；build 后 API 路由全部可达 | `ran: pytest tests/backend/api/ -v exit 0` 或 `ran: npm test -- --testPathPattern=api exit 0`；**禁止** `not-run` |
 | 2 | Lint | 零错误、零新增警告（存量警告追踪但不忽略） | `ran: <lint cmd> exit 0` |
 | 3 | Build | 构建无错误、无新增警告 | `ran: <build cmd> exit 0` 构建日志 |
 | 4 | TypeCheck | 零类型错误，改的代码无 `any`/无理由 `type: ignore` | `ran: <tsc/mypy> exit 0` 全量输出 |
@@ -126,7 +127,7 @@
 |---|---|---|
 | Lint | 0 errors | oxlint/eslint/ruff |
 | TypeCheck | 0 errors | tsc/tsgo/mypy |
-| 单元测试 | 100% 通过 | Vitest/pytest |
+| **Backend API 测试** | **100% 通过**（有后端时必检）| pytest / vitest / jest |
 | 覆盖率 | 核心模块 ≥80% | Istanbul/pytest-cov |
 | 构建 | 全平台成功 | CI matrix（fail-fast:false） |
 | 安全审计 | 无高危漏洞 | pnpm audit/safety/pip-audit |

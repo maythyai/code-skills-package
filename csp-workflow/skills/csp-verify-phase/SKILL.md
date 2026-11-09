@@ -28,6 +28,12 @@ Run these checks in order. A failure at any step stops the pipeline.
 - **Pass**: All tests green, zero skipped tests that relate to the changed code
 - **Fail**: Any red test, or tests skipped to make the suite pass — investigate and fix
 
+### Check 1.5: Backend API Tests（有后端时必检，不可跳过）
+- **Run**: `tests/backend/api/` 或项目等价路径下所有 API 集成测试；build 后 API 路由全部可达
+- **Pass**: 每个 API 端点有至少 1 个集成测试覆盖；全绿 exit 0
+- **Fail**: 任何 API 测试失败或缺失 → **BLOCKED**，不进 Check 2
+- **历史教训**：R2b 和 v6.1.1 两次回归均因 backend API tests 未纳入 S6 门禁。此后 S6 门禁**必含** backend API 测试。
+
 ### Check 2: Linter
 
 - **Run**: Project linter (eslint, ruff, clippy, etc.) on all changed files and their imports
@@ -62,7 +68,7 @@ Run these checks in order. A failure at any step stops the pipeline.
 
 | Claim | Evidence Required | Insufficient Evidence |
 |-------|-------------------|----------------------|
-| "Tests pass" | Full test output with exit code 0 | "I ran the tests" with no output |
+| "Backend API tests pass" | Full test output from `tests/backend/api/` with exit 0 | "The unit tests cover the API paths" (unit tests don't test routes) |
 | "No regressions" | Diff of test results before/after change | "Nothing else changed" |
 | "Acceptance criteria met" | Per-criterion demonstration with output | "It matches the spec" (no proof) |
 | "Build is clean" | Build log with zero errors/warnings | "It compiled fine" |
@@ -90,6 +96,7 @@ After implementation, the spec itself may need updating:
 
 | What you tell yourself | What's actually happening |
 |------------------------|--------------------------|
+| "单元测试覆盖了 API，不用跑集成测试" | "单元测试不测 HTTP 路由、中间件、序列化。R2b/v6.1.1 两次回归均因跳过 backend API 测试。必跑。" |
 | "Tests passed, we're done" | Tests verify code behavior, not requirement satisfaction. Check the spec. |
 | "It works on my machine" | Environment differences cause production failures. Verify parity. |
 | "The flaky test isn't related" | Flaky tests hide real regressions. Fix or quarantine the flake before merging. |
