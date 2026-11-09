@@ -35,6 +35,8 @@ anti_rationalizations:
   "The feature is simple, no need for detailed spec": "Simple features have hidden edge cases. Spec them."
   "I'll design the schema during implementation": "Schema changes cascade. Design first, implement second."
   "API contract can be informal": "Informal contracts break frontend-backend integration. Formalize."
+  "I only added one field, don't need migration": "Every field addition to any layer REQUIRES cross-layer updates: DB migration + ORM model + API schema + frontend types. Single-layer field change is a BLOCKING bug. See [[csp-coding-standards]] principle 8."
+  "I'll update the other layers later": "Later never comes. Cross-layer field alignment is a hard gate — all four layers must be updated in the same feature cycle."
 role: specialist
 ---
 

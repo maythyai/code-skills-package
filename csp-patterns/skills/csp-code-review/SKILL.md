@@ -96,6 +96,54 @@ Can this be tested, and is it?
 - [ ] Dependencies are injectable so units can be isolated (time, randomness, I/O)
 - [ ] Tests are deterministic (no real network, no sleeps, no shared mutable state)
 
+### 7. Pattern Exhaustiveness — 同类问题全局修复（CRITICAL）
+
+When a systemic defect pattern is found during review, you MUST search for and fix
+**all occurrences** of the same pattern across the entire relevant codebase — not
+just the one instance surfaced in the diff.
+
+- [ ] If a wrong API usage, missing null check, incorrect import, or security gap
+      is identified → search the entire module/app for the same pattern
+- [ ] Use `grep` / `rg` to find all call sites of the problematic function/pattern
+- [ ] Every occurrence must be either fixed (same commit/PR) or explicitly documented
+      with a reason why it's deferred (tracking ticket + assigned owner)
+- [ ] Pattern search scope: minimum the same module; prefer the entire app/repo
+      for critical issues (security, data loss, auth bypass)
+
+**Rationale**: Fixing one instance while leaving 12 identical bugs is not a fix —
+it's a false sense of security. The reviewer who found the pattern owns ensuring
+it's globally resolved, not just locally patched.
+
+**Anti-pattern**:
+```
+❌ PR fixes one XSS vector → remaining 7 in the same form remain unfixed
+❌ PR fixes one missing null check → same pattern exists in 3 sibling components
+❌ "I fixed the one I saw, the rest is out of scope" → scope is ALL occurrences
+```
+
+**When deferred instances are acceptable**: Only when the fix is non-trivial and
+the defect severity is LOW — create a tracking issue and reference it in a
+`TODO(issue-#123)` comment at each unfixed site.
+
+### 8. Cross-Layer Field Alignment — 跨层字段对齐
+
+When a PR adds/modifies a field in any layer, verify ALL corresponding layers
+are updated:
+
+| If PR touches... | MUST also check... |
+|-----------------|-------------------|
+| DB schema / migration | ORM model, API response DTO, frontend types |
+| API request/response schema | DB migration, ORM model, frontend form/type |
+| ORM model/entity | DB migration, API schema |
+| Frontend form/type | API schema, DB storage |
+
+- [ ] Single-layer field change without corresponding updates to other layers
+      is a **BLOCKING** finding
+- [ ] Check that field types are consistent across layers (no type drift: `string`
+      in API but `integer` in DB, `Date` in frontend but `string` in API)
+- [ ] If the field is optional/nullable in one layer, verify the same semantics
+      in ALL layers — don't let a frontend-optional field become DB NOT NULL
+
 ## Review Order
 
 Read in this sequence so context builds before you judge details:

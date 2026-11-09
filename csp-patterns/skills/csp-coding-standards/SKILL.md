@@ -369,6 +369,57 @@ lib/formatDate.ts             # camelCase for utilities
 types/market.types.ts         # camelCase with .types suffix
 ```
 
+### File Naming — Anti-Pattern: Version Numbers in Filenames (CRITICAL)
+
+**文件/目录禁止包含版本号。** 文件不应命名为 `handler_v2.ts`、`v60.py`、`model-v1.go`、`service-v3.java`。
+
+| 错误 ❌ | 正确 ✅ |
+|---------|--------|
+| `api_v1.py` | `api.py` |
+| `user-v2.ts` | `user.ts` |
+| `v60_handler.py` | `handler.py` |
+| `diagram-v1.schema.json` | `diagram.schema.json` |
+
+**版本管理的正确位置：**
+- API 版本放 URL：`/v1/users`（不是 `users_v1.py`）
+- Schema 版本放文件元数据：`"$schema": "https://.../v1/diagram.schema.json"`（不是 `diagram-v1.schema.json`）
+- 迭代版本放 Git 历史 + tag（不是文件名后缀）
+
+**约束原则：「历史不改、新增禁用」**
+- **历史不改**：存量系统中已存在按版本命名的文件，已有 import/reference 依赖链；不强制批量重命名（风险不可控）
+- **新增禁用**：任何新建文件（含新模块、新项目）绝对禁止在文件名或目录名中嵌入版本号；Code Review 时此类命名视为 **BLOCKING 级发现**，必须改名后才能合并
+
+### 8. Cross-Layer Field Alignment — 跨层字段对齐（CRITICAL）
+
+**当你在任意一层新增一个字段时，必须同步更新所有关联层。单层字段新增而忽略其他层是 BLOCKING 级缺陷。**
+
+```
+新增字段 → 更新全部四层：
+  ┌─────────────────────────────────────────────┐
+  │ Layer 1  DB Schema    │  DDL migration     │
+  │ Layer 2  ORM/Model    │  Entity/Prisma/等   │
+  │ Layer 3  API Contract │  request/response   │
+  │ Layer 4  Frontend     │  类型定义 + 表单     │
+  └─────────────────────────────────────────────┘
+```
+
+**强制规则：**
+- 新增 API 字段 → 必须有对应的 DB migration（新增列或 JSONB key）
+- 新增 DB 列 → 必须更新 ORM model + API schema + 前端类型
+- 新增前端表单字段 → 必须有对应的 API schema + DB 存储
+- 任何单层变更，Code Review 必须检查其余三层是否同步
+
+**反模式**：
+```
+❌ "我先加个 API 字段，数据库后面再加"    → 上线即炸
+❌ "这个字段只在 ORM 里用到，不用 migration"  → 表结构漂移
+❌ "前端先做，后端以后再说"                    → 永远不做
+```
+
+**检查方式**：
+1. PR 涉及 schema/model/API/frontend 任一文件 → reviewer 必须确认其余三层对应变更存在
+2. 缺失对应层变更 → BLOCKING finding，注明缺失哪一层
+
 ## Comments & Documentation
 
 ### When to Comment

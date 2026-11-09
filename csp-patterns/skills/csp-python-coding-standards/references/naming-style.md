@@ -399,3 +399,40 @@ This chapter is primarily based on **PEP 8 -- Style Guide for Python Code** (htt
     > Source: PEP 8 § Public and Internal Interfaces、§ Global Variable Names
 
 (For the specific syntax choices of type annotations, generic notation, `Protocol`/`TypedDict` etc., see `type-annotations.md`)
+
+### 1.15 File Naming — Anti-Pattern: Version Numbers in Filenames (CRITICAL, organizational rule)
+
+> This rule is an organizational-level constraint layered on top of PEP 8; PEP 8 has no explicit position on version-based filenames.
+
+67. **MUST** File and directory names must NOT contain version numbers. Version information belongs in Git history + tags, URL paths (e.g. `/v1/users`), or file-level metadata (e.g. `"$schema": "https://.../v1/diagram.schema.json"`), never in the filename itself.
+
+    Correct ✅:
+    ```
+    api.py
+    user_handler.py
+    diagram.schema.json
+    ```
+
+    Incorrect ❌:
+    ```
+    api_v1.py
+    v60_handler.py
+    user-v2.ts
+    service_v3.go
+    diagram-v1.schema.json
+    ```
+
+68. **MUST** When a module has multiple versions, use directories:
+    ```
+    api/
+    ├── v1/
+    │   └── handler.py     # 正确：版本在目录名
+    └── v2/
+        └── handler.py     # 正确
+    ```
+
+69. **MUST** Organization-wide policy: 「历史不改、新增禁用」
+    - **历史不改**：Existing files already named with version patterns (e.g., `handler_v1.py`) have established import/reference chains; bulk renaming is forbidden due to uncontrollable breakage risk. These files are grandfathered.
+    - **新增禁用**：Any new file (in any module, any project) MUST NOT embed a version number in its filename or directory name. During code review, such naming is a **BLOCKING** finding — the file MUST be renamed before merge.
+
+> **Why this matters**: Versioned filenames are a fragile anti-pattern. They encode development timeline into code structure, create false "version divergence" when the file content outgrows its name suffix, and encourage copy-paste instead of proper version management. Put version info where versioning tools can manage it — Git tags, API path prefixes, and schema `$id` URIs.

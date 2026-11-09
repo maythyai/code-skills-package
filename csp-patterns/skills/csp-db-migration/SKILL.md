@@ -24,6 +24,32 @@ Execute schema and data migrations with zero downtime using the expand-contract 
 - Migrating large tables (millions of rows) without locking
 - Setting up multi-tenant migration across multiple databases
 
+## Trigger Rule: Migration Required for Schema-Affecting Changes
+
+**Any code change that adds, removes, or modifies a field/column MUST have a
+corresponding migration file.** This is not optional — it is a hard gate.
+
+| Code Change | Migration Required? |
+|-------------|-------------------|
+| New ORM model field | YES — add column migration |
+| Changed column type | YES — alter column migration |
+| New table/entity | YES — create table migration |
+| Removed field | YES — drop column migration (after safety period) |
+| New index for query perf | YES — create index migration |
+| Changed enum values | YES — alter constraint migration |
+| JSONB key addition (no DDL) | Depends — if key is mandatory in app logic, document in migration notes |
+
+**Anti-pattern**:
+```
+❌ "Just add the field to the Prisma schema, I'll do migration later" → creates drift
+❌ PR contains model change but no migration file → BLOCKING finding in review
+❌ Migration file exists but is not tested against production-scale clone → WARNING
+```
+
+**Enforcement in Code Review**: Per `[[csp-code-review]]` dimension 8, a PR that
+touches a schema/ORM/API model without a corresponding migration is a BLOCKING
+finding.
+
 ## Migration Tool Comparison
 
 | Tool             | Language   | DB Support             | Approach          | Best For               |
