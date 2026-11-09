@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "total_skills": 693,
+  "total_skills": 695,
   "shards": [],
   "skill_metadata": "skill-metadata.yaml",
   "skills": [
@@ -4787,6 +4787,31 @@
       "priority": 10
     },
     {
+      "name": "csp-integration-review",
+      "description": "Full-stack integration review across 11 scenarios — API URL consistency, change impact analysis, full-chain DB→API→FE alignment, OpenAPI vs implementation, error handling, cross-layer causality, runtime DB vs ORM type validation, FE TypeScript vs API runtime validation. Use when reviewing cross-layer contracts before merge.",
+      "layer": 3,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [
+          "integration review",
+          "full-stack review",
+          "API contract review",
+          "cross-layer review",
+          "DB to FE alignment",
+          "集成审查"
+        ],
+        "file_patterns": [],
+        "context": [
+          "verify",
+          "review"
+        ]
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/csp-integration-review/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
       "name": "csp-intel-updater",
       "description": "Analyzes codebase and writes structured intel files to .csp/planning/intel/.",
       "layer": 2,
@@ -7860,6 +7885,34 @@
       },
       "stack_detection": false,
       "path": "csp-runtime/skills/csp-release/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-release-manager",
+      "description": "End-to-end release management: S6 quality gate (11 checks + backend API tests) → S7 review → S8 ship → S9 ops. Orchestrates csp-verify-phase, csp-code-review, csp-ship into a single pipeline with exit code enforcement, batch evidence tracking, release recurrence checks, and version integrity validation. Use when preparing a release.",
+      "layer": 2,
+      "category": "workflow",
+      "triggers": {
+        "keywords": [
+          "release",
+          "ship",
+          "deploy",
+          "publish",
+          "发布",
+          "上线",
+          "release manager",
+          "verify ship",
+          "S6 gate"
+        ],
+        "file_patterns": [],
+        "context": [
+          "verify",
+          "ship"
+        ]
+      },
+      "stack_detection": false,
+      "path": "csp-workflow/skills/csp-release-manager/SKILL.md",
       "deps": [],
       "priority": 10
     },
