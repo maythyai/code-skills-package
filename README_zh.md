@@ -7,10 +7,10 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
 [![npm](https://img.shields.io/npm/v/code-skills-package)](https://www.npmjs.com/package/code-skills-package)
 [![v0.12.0](https://img.shields.io/badge/version-0.12.0-green)](./CHANGELOG.md)
-[![Skills: 692](https://img.shields.io/badge/skills-692-orange)](./docs/reference/SKILL-INDEX.md)
+[![Skills: 693](https://img.shields.io/badge/skills-693-orange)](./docs/reference/SKILL-INDEX.md)
 [![Platforms: 22+](https://img.shields.io/badge/platforms-22+-brightgreen)](./docs/guides/INSTALL.md)
 
-**统一 AI 编程技能 · 22+ 个平台 · 15+ 语言 · 692 个技能**
+**统一 AI 编程技能 · 22+ 个平台 · 15+ 语言 · 693 个技能**
 
 整合多个开源 AI 编程项目为分层自动路由框架，以极低的 token 成本完成复杂开发任务。
 
@@ -24,7 +24,7 @@
 
 <a href="https://maythyai.github.io/code-skills-package/"><img src="./assets/dashboard-overview.svg" alt="CSP 技能仪表盘总览 — 五层架构与技能统计，由 registry 自动生成" width="640" /></a>
 
-**🔗 [在线交互式仪表盘](https://maythyai.github.io/code-skills-package/)** — 按层级、分类、触发词浏览全部 692 个技能
+**🔗 [在线交互式仪表盘](https://maythyai.github.io/code-skills-package/)** — 按层级、分类、触发词浏览全部 693 个技能
 
 </div>
 
@@ -95,7 +95,7 @@ CSP 积极自动化但从失控收手：审批门控在拆解确认、技术栈�
 
 ### 全开发生命周期覆盖
 
-692 个技能分布在 5 个层级，覆盖需求规划、代码实现、审查、调试、测试、发布全流程，并延伸至 AI 工程（RAG/LLM/vLLM）、DevOps（CI/CD/IaC/K8s）、移动端（React Native/跨平台）、安全审计（STRIDE-A/CodeQL/事件响应）等专业领域。此外，31 个技能专为独立开发者设计，覆盖部署运维（Vercel/Railway/VPS）、商业化运营（Stripe/订阅/SEO/分析）、性能调优、API 集成（Webhook/OAuth）、测试工程（E2E/视觉回归）、国际化和 Monorepo 管理。每个技能遵循 SKILL.md v2 规范，含 phase/domain/role 等结构化字段。
+693 个技能分布在 5 个层级，覆盖需求规划、代码实现、审查、调试、测试、发布全流程，并延伸至 AI 工程（RAG/LLM/vLLM）、DevOps（CI/CD/IaC/K8s）、移动端（React Native/跨平台）、安全审计（STRIDE-A/CodeQL/事件响应）等专业领域。此外，31 个技能专为独立开发者设计，覆盖部署运维（Vercel/Railway/VPS）、商业化运营（Stripe/订阅/SEO/分析）、性能调优、API 集成（Webhook/OAuth）、测试工程（E2E/视觉回归）、国际化和 Monorepo 管理。每个技能遵循 SKILL.md v2 规范，含 phase/domain/role 等结构化字段。
 
 **三说明书治理层**（PMS 产品说明书 / CMS 代码说明书 / TMS 测试说明书）作为 living baseline 与生命周期并行运行：每个阶段先读对应说明书再产出，发布后写回 delta 增量——无需额外工具即可让 PRD、代码、测试相互可追溯。
 
@@ -222,7 +222,7 @@ CSP 采用五层分层架构。仅路由器（L0）在会话启动时加载，�
 │  L4  csp-runtime     运行时（~300 tokens/skill · 58 个）     │
 │      持续学习 · 自主执行 · 知识管理 · Token 预算 · 文件整理 · 并行编排│
 └──────────────────────────────────────────────────────────────┘
-                    总计：692 个技能
+                    总计：693 个技能
 ```
 
 ### 路由流程
@@ -339,7 +339,7 @@ node bin/csp-sdk.mjs init-skill csp-my-skill --layer 3 --phase build
 | 文档 | 说明 |
 |------|------|
 | [ARCHITECTURE_zh.md](./docs/architecture/ARCHITECTURE_zh.md) | 完整架构设计（14 章 · DAG 编排 · SKPG · Token 策略） |
-| [SKILL-INDEX.md](./docs/reference/SKILL-INDEX.md) | 全部 692 个 skill/agent 索引 |
+| [SKILL-INDEX.md](./docs/reference/SKILL-INDEX.md) | 全部 693 个 skill/agent 索引 |
 | [INSTALL.md](./docs/guides/INSTALL.md) / [INSTALL_zh.md](./docs/guides/INSTALL_zh.md) | 完整安装指南（22+ 平台） |
 | [UPDATE.md](./docs/guides/UPDATE.md) | 如何为已安装的技能包获取更新 |
 | [SKILL-AUTHORING_zh.md](./docs/guides/SKILL-AUTHORING_zh.md) | Skill 编写最佳实践 |

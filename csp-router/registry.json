@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "total_skills": 692,
+  "total_skills": 693,
   "shards": [],
   "skill_metadata": "skill-metadata.yaml",
   "skills": [
@@ -3139,6 +3139,30 @@
       },
       "stack_detection": false,
       "path": "csp-runtime/agents/csp-document-specialist.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-documentation-governance",
+      "description": "Comprehensive documentation governance: defines internal vs external doc zones, content-type boundaries, update-trigger rules (when X changes, update Y), document lifecycle (create→maintain→archive), folder taxonomy enforcement, INDEX.md requirements, and cross-skill integration rules. Use when setting up project docs, auditing doc health, or establishing documentation standards.",
+      "layer": 2,
+      "category": "workflow",
+      "triggers": {
+        "keywords": [
+          "documentation governance",
+          "doc governance",
+          "doc update rules",
+          "文档治理",
+          "文档管理规则"
+        ],
+        "file_patterns": [],
+        "context": [
+          "plan",
+          "design"
+        ]
+      },
+      "stack_detection": false,
+      "path": "csp-workflow/skills/csp-documentation-governance/SKILL.md",
       "deps": [],
       "priority": 10
     },

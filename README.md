@@ -7,10 +7,10 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
 [![npm](https://img.shields.io/npm/v/code-skills-package)](https://www.npmjs.com/package/code-skills-package)
 [![v0.12.0](https://img.shields.io/badge/version-0.12.0-green)](./CHANGELOG.md)
-[![Skills: 692](https://img.shields.io/badge/skills-692-orange)](./docs/reference/SKILL-INDEX.md)
+[![Skills: 693](https://img.shields.io/badge/skills-693-orange)](./docs/reference/SKILL-INDEX.md)
 [![Platforms: 22+](https://img.shields.io/badge/platforms-22+-brightgreen)](./docs/guides/INSTALL.md)
 
-**Unified AI Programming Skills · 22+ Platforms · 15+ Languages · 692 Skills**
+**Unified AI Programming Skills · 22+ Platforms · 15+ Languages · 693 Skills**
 
 Integrates capabilities from multiple open-source AI coding projects into a layered, auto-routing framework with extremely low token costs to complete complex development tasks.
 
@@ -24,7 +24,7 @@ Integrates capabilities from multiple open-source AI coding projects into a laye
 
 <a href="https://maythyai.github.io/code-skills-package/"><img src="./assets/dashboard-overview.svg" alt="CSP skills dashboard overview — five layers and totals, auto-generated from the registry" width="640" /></a>
 
-**🔗 [Live Interactive Dashboard](https://maythyai.github.io/code-skills-package/)** — explore all 692 skills by layer, category, and triggers
+**🔗 [Live Interactive Dashboard](https://maythyai.github.io/code-skills-package/)** — explore all 693 skills by layer, category, and triggers
 
 </div>
 
@@ -95,7 +95,7 @@ Automatically extracts knowledge in 5 dimensions at session end — project arch
 
 ### Full Development Lifecycle Coverage
 
-692 skills distributed across 5 layers, covering the full process of requirement planning, code implementation, review, debugging, testing, and release, extending to specialized areas such as AI Engineering (RAG/LLM/vLLM), DevOps (CI/CD/IaC/K8s), mobile (React Native/cross-platform), security auditing (STRIDE-A/CodeQL/incident response). Additionally, 31 skills are specifically designed for independent developers, covering deployment (Vercel/Railway/VPS), monetization (Stripe/subscriptions/SEO/analytics), performance tuning, API integration (webhooks/OAuth), testing engineering (E2E/visual regression), internationalization, and monorepo management. Each skill follows the SKILL.md v2 specification, with structured fields like phase/domain/role.
+693 skills distributed across 5 layers, covering the full process of requirement planning, code implementation, review, debugging, testing, and release, extending to specialized areas such as AI Engineering (RAG/LLM/vLLM), DevOps (CI/CD/IaC/K8s), mobile (React Native/cross-platform), security auditing (STRIDE-A/CodeQL/incident response). Additionally, 31 skills are specifically designed for independent developers, covering deployment (Vercel/Railway/VPS), monetization (Stripe/subscriptions/SEO/analytics), performance tuning, API integration (webhooks/OAuth), testing engineering (E2E/visual regression), internationalization, and monorepo management. Each skill follows the SKILL.md v2 specification, with structured fields like phase/domain/role.
 
 A **three-spec governance layer** (PMS product-spec / CMS code-spec / TMS test-spec) runs alongside the lifecycle as living baselines: each stage reads the relevant spec before producing, and writes back deltas after shipping — keeping PRD, code, and tests mutually traceable without a separate tool.
 
@@ -224,7 +224,7 @@ CSP uses a five-layer layered architecture. Only the router (L0) loads at sessio
 │      Continuous learning · Autonomous execution · Knowledge  │
 │      management · Token budget · File-organizer · Parallel   │
 └──────────────────────────────────────────────────────────────┘
-                    Total: 692 skills
+                    Total: 693 skills
 ```
 
 ### Routing Process

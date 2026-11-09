@@ -13,13 +13,14 @@ dependencies:
   skills: []
 
 related_skills:
-  - csp-requirement-decomposition
-  - csp-user-story-decomposition
-  - csp-competitive-analysis
-  - csp-requirement-prioritization
-  - csp-mvp-scoping
-  - csp-brainstorming
-  - csp-product-discovery-orchestrator
+  - [[csp-requirement-decomposition]]
+  - [[csp-user-story-decomposition]]
+  - [[csp-competitive-analysis]]
+  - [[csp-requirement-prioritization]]
+  - [[csp-mvp-scoping]]
+  - [[csp-brainstorming]]
+  - [[csp-product-discovery-orchestrator]]
+  - [[pattern:csp-prd]]
 
 anti_rationalizations:
   "PRD doesn't need to be detailed": "Vague PRDs create vague implementations. Detail prevents rework."
