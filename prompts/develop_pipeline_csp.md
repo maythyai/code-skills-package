@@ -24,7 +24,7 @@ Spec 验收门：PRD 含背景/目标/功能清单/Given-When-Then 验收标准�
 
 循环收敛：06 未过按根因回 05/03 修 delta 重验，循环到全绿；超 5 轮再报我。跨版本熔断：连续 3 个版本因同一根因失败，暂停并报我，附根因证据链。
 
-06 done 硬定义（按 prompts/06-verify-ship.md 执行，任一不满足即 06 未过）：
+06 done 硬定义（由 [[workflow:csp-release-manager]] 执行全流程，详见 prompts/06-verify-ship.md，任一不满足即 06 未过）：
 - S6 质量门控全 ran（附命令+exit code 证据，禁止 not-run 降级）：
   Check 1: 测试 → [[workflow:csp-verify-phase]] Check 1
   Check 1.5: Backend API 测试（必检，不可跳过）→ tests/backend/api/ 全绿
@@ -34,12 +34,14 @@ Spec 验收门：PRD 含背景/目标/功能清单/Given-When-Then 验收标准�
   Check 5: AC 逐条演示
   （工具链不可用 = BLOCKED，不得用 grep/review 替代动态门控）
 - S7 审查无 CRITICAL → [[workflow:csp-code-review]] + [[pattern:csp-santa-method]]（关键模块双审）
+- 跨层集成验证 → [[pattern:csp-integration-review]]（11 场景全栈契约审查）
 - 7.6 对账 reconciled=true（含 findings 闭合闸门 exit 0）
   → `python3 prompts/scripts/findings_closure_check.py --baseline .csp/findings-baseline.json`
 - 版本对齐（版本完整性闸门全部通过）
   → `python3 prompts/scripts/version_integrity_check.py --baseline .csp/version-baseline.json`
   T1 多 tag 同 commit（零违规）/ T2 空 tag / T3 六处同步 / T4 CHANGELOG / T5 tag 领先 / T6 发布缺失
 - 归档完成 → [[workflow:csp-ship]] + 里程碑归档
+- 文档结构维护 → [[workflow:csp-documentation-governance]]（对外/对内文档分界 + 更新触发规则）
 - C-01 批量交付 S6 完整性格栅：batch_evidence_map 不得缺失
 - Phase 0.6 发布复发检测：WARNING/BLOCKED 按阈值处理
 
@@ -61,7 +63,7 @@ findings 回写契约：仅对"本版本真实修复且已验证"的 findings �
 
 每版本 checkpoint 落盘：更新 .csp/lifecycle-state.json + DEV-LOG 追加本轮决策摘要，保证会话中断可无损续跑。
 
-gate 即授权，全自动推进。打断条件（仅 5 类）：战略根本模糊 / PRD Rejected / 真破坏操作 / 多 tag 不明 / 无法 auto-resolve 的报错。07 复盘默认自动触发（[[pattern:csp-retro]]），lessons 并入下一版本 01 入口清单。
+gate 即授权，全自动推进。打断条件（仅 5 类）：战略根本模糊 / PRD Rejected / 真破坏操作 / 多 tag 不明 / 无法 auto-resolve 的报错。07 复盘默认自动触发（[[pattern:csp-retro]]），lessons 并入下一版本 01 入口清单。质量自评可选用 [[pattern:csp-agent-self-evaluation]] 做 5 轴结构性复盘。
 
 完成每个版本按进度条格式播报，全部版本清空后输出总发布摘要再停。
 
@@ -83,20 +85,26 @@ gate 即授权，全自动推进。打断条件（仅 5 类）：战略根本模
 | 全栈 Spec（S3） | `[[workflow:csp-fullstack-spec-generator]]` |
 | 任务拆解（S3.5） | `[[workflow:csp-tech-task-breakdown]]` |
 | 实施规划（S4） | `[[workflow:csp-plan-phase]]` |
+| 设计→开发桥接 | `[[workflow:csp-design-to-workflow-bridge]]` |
 | 并行开发（S5） | `[[workflow:csp-implementation-phase]]` |
 | TDD | `[[meta:csp-tdd]]` |
 | 编码规范 | `[[pattern:csp-coding-standards]]` |
 | 质量门控（S6） | `[[workflow:csp-release-manager]]`（全流程）或 `[[workflow:csp-verify-phase]]`（单独验证） |
-| 验证（S7） | `[[workflow:csp-verify-phase]]` |
-| 代码审查 | `[[workflow:csp-code-review]]` |
+| 审查（S7） | `[[workflow:csp-code-review]]` |
 | 双审对抗验证 | `[[pattern:csp-santa-method]]` |
-| 发布（S8） | `[[workflow:csp-ship]]` + `[[workflow:csp-release-manager]]` |
+| 跨层集成审查 | `[[pattern:csp-integration-review]]` |
+| 四声部决策 | `[[pattern:csp-council]]`（架构/怀疑/务实/批评） |
+| AI 盲点回归测试 | `[[pattern:csp-ai-regression-testing]]` |
+| 任务自评 | `[[pattern:csp-agent-self-evaluation]]`（5 轴结构性复盘） |
+| Agent 治理 | `[[workflow:csp-agent-governance]]`（4 级安全护栏） |
+| 发布（S8） | `[[workflow:csp-ship]]` |
 | Git 规范 | `[[pattern:csp-git-conventions]]` |
 | 版本管理 | prompts/version-management.md（规则参考文档） |
 | 复盘（S10） | `[[pattern:csp-retro]]` |
 | 文档治理 | `[[workflow:csp-documentation-governance]]` |
 | 文档生命周期 | `[[workflow:csp-doc-lifecycle-manager]]` |
-| 跨层集成审查 | `[[pattern:csp-integration-review]]` |
+| 用户体系设计 | `[[pattern:csp-user-system-design]]`（账号/RBAC/认证/数据模型） |
+| GDPR 隐私合规 | `[[pattern:csp-privacy-compliance]]`（含 GDPR 工程参考） |
 | 前端开发 | prompts/frontend-development.md（零依赖独立 prompt） |
 
 ---
