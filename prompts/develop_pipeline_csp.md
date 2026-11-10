@@ -32,6 +32,10 @@ Spec 验收门：PRD 含背景/目标/功能清单/Given-When-Then 验收标准�
   Check 3: Build → ran: <build cmd> exit 0
   Check 4: TypeCheck → ran: <tsc/mypy> exit 0
   Check 5: AC 逐条演示
+  Check 5.5: 前端专项（前端项目必检，纯后端 skip）：
+    Check 5.5a: 无障碍审计 → [[agent:csp-a11y-architect]]（WCAG 2.2 AA 合规）
+    Check 5.5b: 前端性能 → [[agent:csp-web-performance-auditor]]（CWV 不劣化）或 [[skill:csp-frontend-performance]]（bundle/缓存优化）
+    Check 5.5c: 跨层契约验证 → [[skill:csp-cross-layer-testing]]（前后端接口契约一致性，UI→API→DB 往返 traceable）
   （工具链不可用 = BLOCKED，不得用 grep/review 替代动态门控）
 - S7 审查无 CRITICAL → [[workflow:csp-code-review]] + [[pattern:csp-santa-method]]（关键模块双审）
 - 跨层集成验证 → [[pattern:csp-integration-review]]（11 场景全栈契约审查）
@@ -76,6 +80,8 @@ gate 即授权，全自动推进。打断条件（仅 5 类）：战略根本模
 | 全生命周期编排 | `[[workflow:csp-lifecycle-orchestrator]]` |
 | Roadmap 规划 | `[[workflow:csp-roadmap-planner]]` |
 | 架构收敛审查 | `[[csp-product-design-convergence]]` |
+| 产品管理（PM 视角） | `[[agent:csp-pm]]`（用户故事/验收标准/优先级） + `[[agent:csp-analyst]]`（商业模型/成本收益/SWOT） |
+| 产品透镜审查 | `[[agent:csp-product-lens-reviewer]]`（前提挑战/战略后果/目标-需求对齐） |
 | PRD 生成（PM 视角） | `[[workflow:csp-prd-generation]]` |
 | PRD（设计师视角） | `[[pattern:csp-prd]]` |
 | 需求拆解（S1） | `[[workflow:csp-requirement-decomposition]]` |
@@ -83,16 +89,23 @@ gate 即授权，全自动推进。打断条件（仅 5 类）：战略根本模
 | 技术方案设计（S2.5） | `[[workflow:csp-tech-solution-design]]` |
 | 设计评审（S2.6） | `[[workflow:csp-tech-design-review]]` |
 | 全栈 Spec（S3） | `[[workflow:csp-fullstack-spec-generator]]` |
+| 用户体验设计 | `[[agent:csp-ux-designer]]`（用户流/线框/可用性启发式） |
+| 前端设计 | `[[skill:csp-frontend-design]]`（设计语言库/Token/主题） + `[[skill:csp-flow-web]]`（16 场景多屏流程） |
 | 任务拆解（S3.5） | `[[workflow:csp-tech-task-breakdown]]` |
 | 实施规划（S4） | `[[workflow:csp-plan-phase]]` |
 | 设计→开发桥接 | `[[workflow:csp-design-to-workflow-bridge]]` |
 | 并行开发（S5） | `[[workflow:csp-implementation-phase]]` |
 | TDD | `[[meta:csp-tdd]]` |
+| 测试方法论 → 专项测试 skill 分派 | `[[meta:csp-test-methodology]]`（契约/属性/变异/模糊/混沌/差分/并发/无障碍/国际化/可观测/后端 mock/DB 迁移/Kotlin） |
 | 编码规范 | `[[pattern:csp-coding-standards]]` |
+| 前端开发模式 | `[[skill:csp-frontend-patterns]]`（组合/状态/性能/表单/数据获取/无障碍，框架无关） |
 | 质量门控（S6） | `[[workflow:csp-release-manager]]`（全流程）或 `[[workflow:csp-verify-phase]]`（单独验证） |
 | 审查（S7） | `[[workflow:csp-code-review]]` |
 | 双审对抗验证 | `[[pattern:csp-santa-method]]` |
 | 跨层集成审查 | `[[pattern:csp-integration-review]]` |
+| 无障碍审计 | `[[agent:csp-a11y-architect]]`（WCAG 2.2/语义化/焦点管理） |
+| 前端性能 | `[[agent:csp-web-performance-auditor]]`（CWV 审计）或 `[[skill:csp-frontend-performance]]`（bundle/缓存优化） |
+| 跨层契约测试 | `[[skill:csp-cross-layer-testing]]`（前后端契约验证/UI→API→DB 往返 traceable） |
 | 四声部决策 | `[[pattern:csp-council]]`（架构/怀疑/务实/批评） |
 | AI 盲点回归测试 | `[[pattern:csp-ai-regression-testing]]` |
 | 任务自评 | `[[pattern:csp-agent-self-evaluation]]`（5 轴结构性复盘） |
@@ -105,8 +118,8 @@ gate 即授权，全自动推进。打断条件（仅 5 类）：战略根本模
 | 文档生命周期 | `[[workflow:csp-doc-lifecycle-manager]]` |
 | 用户体系设计 | `[[pattern:csp-user-system-design]]`（账号/RBAC/认证/数据模型） |
 | GDPR 隐私合规 | `[[pattern:csp-privacy-compliance]]`（含 GDPR 工程参考） |
-| 前端开发 | prompts/frontend-development.md（零依赖独立 prompt） |
+| 前端开发 | `[[skill:csp-frontend-patterns]]`（CSP 原生前端模式入口）或 prompts/frontend-development.md（零依赖独立 prompt） |
 
 ---
 
-继续完成所有版本的任务开发，多agent并行，不用等我给你指令让你继续，你要自己规划任务和把控进度，没有完成就继续完成任务，直到所有任务完成。需要决策的你要能自我驱动给出最合理的决策，实在不敢自己定夺的时候要询问我。
+继续完成所有版本的任务开发，多agent并行（最多3个），不用等我给你指令让你继续，你要自己规划任务和把控进度，没有完成就继续完成任务，直到所有任务完成。需要决策的你要能自我驱动给出最合理的决策，实在不敢自己定夺的时候要询问我。先不用worktree的方式开发。
