@@ -261,7 +261,7 @@ trigger_index:
     skills: [csp-backend-patterns]
     weight: 45
   "backend":
-    skills: [csp-backend-patterns]
+    skills: [csp-backend-patterns, csp-backend-mock-strategies]
     weight: 45
   "simplify":
     skills: [csp-code-simplification]
@@ -416,7 +416,7 @@ trigger_index:
     skills: [csp-mock-strategies]
     weight: 50
   "contract test":
-    skills: [csp-mock-strategies]
+    skills: [csp-mock-strategies, csp-contract-testing]
     weight: 45
   "i18n":
     skills: [csp-i18n-frameworks]
@@ -4116,7 +4116,7 @@ trigger_index:
     skills: [csp-rust-test]
     weight: 40
   "santa":
-    skills: [csp-santa-loop]
+    skills: [csp-santa-loop, csp-santa-method]
     weight: 40
   "santa loop":
     skills: [csp-santa-loop]
@@ -4455,7 +4455,7 @@ trigger_index:
     skills: [csp-update-docs]
     weight: 40
   "user":
-    skills: [csp-user-profiler, csp-user-story-decomposition, csp-user-feedback-analysis]
+    skills: [csp-user-profiler, csp-user-story-decomposition, csp-user-feedback-analysis, csp-user-system-design]
     weight: 40
   "user profiler":
     skills: [csp-user-profiler]
@@ -5318,7 +5318,7 @@ trigger_index:
     skills: [csp-code-understanding]
     weight: 40
   "design":
-    skills: [csp-design-hub, csp-design-system-capture]
+    skills: [csp-design-hub, csp-design-system-capture, csp-design-to-workflow-bridge]
     weight: 40
   "design hub":
     skills: [csp-design-hub]
@@ -5826,6 +5826,301 @@ trigger_index:
     weight: 40
   "review correctness code":
     skills: [csp-correctness-reviewer]
+    weight: 40
+
+  # ─── auto-generated triggers (generate-triggers.mjs) ───
+  "agent":
+    skills: [csp-agent-governance, csp-agent-self-evaluation]
+    weight: 40
+  "agent governance":
+    skills: [csp-agent-governance]
+    weight: 40
+  "agent self evaluation":
+    skills: [csp-agent-self-evaluation]
+    weight: 40
+  "agent-governance":
+    skills: [csp-agent-governance]
+    weight: 40
+  "agent-self-evaluation":
+    skills: [csp-agent-self-evaluation]
+    weight: 40
+  "ai regression test":
+    skills: [csp-ai-regression-testing]
+    weight: 40
+  "ai regression testing":
+    skills: [csp-ai-regression-testing]
+    weight: 40
+  "ai regression 测试":
+    skills: [csp-ai-regression-testing]
+    weight: 40
+  "ai-regression-testing":
+    skills: [csp-ai-regression-testing]
+    weight: 40
+  "council":
+    skills: [csp-council]
+    weight: 40
+  "design to workflow bridge":
+    skills: [csp-design-to-workflow-bridge]
+    weight: 40
+  "design to workflow bridge 设计":
+    skills: [csp-design-to-workflow-bridge]
+    weight: 40
+  "design-to-workflow-bridge":
+    skills: [csp-design-to-workflow-bridge]
+    weight: 40
+  "documentation":
+    skills: [csp-documentation-governance]
+    weight: 40
+  "documentation governance":
+    skills: [csp-documentation-governance]
+    weight: 40
+  "documentation governance 文档":
+    skills: [csp-documentation-governance]
+    weight: 40
+  "documentation-governance":
+    skills: [csp-documentation-governance]
+    weight: 40
+  "fix agent governance":
+    skills: [csp-agent-governance]
+    weight: 40
+  "fix agent self evaluation":
+    skills: [csp-agent-self-evaluation]
+    weight: 40
+  "fix council":
+    skills: [csp-council]
+    weight: 40
+  "fix design to workflow bridge":
+    skills: [csp-design-to-workflow-bridge]
+    weight: 40
+  "fix documentation governance":
+    skills: [csp-documentation-governance]
+    weight: 40
+  "fix prompt optimizer":
+    skills: [csp-prompt-optimizer]
+    weight: 40
+  "fix release manager":
+    skills: [csp-release-manager]
+    weight: 40
+  "fix santa method":
+    skills: [csp-santa-method]
+    weight: 40
+  "fix user system design":
+    skills: [csp-user-system-design]
+    weight: 40
+  "integration code review":
+    skills: [csp-integration-review]
+    weight: 40
+  "integration review":
+    skills: [csp-integration-review]
+    weight: 40
+  "integration 审查":
+    skills: [csp-integration-review]
+    weight: 40
+  "integration-review":
+    skills: [csp-integration-review]
+    weight: 40
+  "prompt":
+    skills: [csp-prompt-optimizer]
+    weight: 40
+  "prompt optimizer":
+    skills: [csp-prompt-optimizer]
+    weight: 40
+  "prompt-optimizer":
+    skills: [csp-prompt-optimizer]
+    weight: 40
+  "release manager":
+    skills: [csp-release-manager]
+    weight: 40
+  "release-manager":
+    skills: [csp-release-manager]
+    weight: 40
+  "review agent governance":
+    skills: [csp-agent-governance]
+    weight: 40
+  "review agent self evaluation":
+    skills: [csp-agent-self-evaluation]
+    weight: 40
+  "review council":
+    skills: [csp-council]
+    weight: 40
+  "review design to workflow bridge":
+    skills: [csp-design-to-workflow-bridge]
+    weight: 40
+  "review documentation governance":
+    skills: [csp-documentation-governance]
+    weight: 40
+  "review integration code":
+    skills: [csp-integration-review]
+    weight: 40
+  "review prompt optimizer":
+    skills: [csp-prompt-optimizer]
+    weight: 40
+  "review release manager":
+    skills: [csp-release-manager]
+    weight: 40
+  "review santa method":
+    skills: [csp-santa-method]
+    weight: 40
+  "review user system design":
+    skills: [csp-user-system-design]
+    weight: 40
+  "santa method":
+    skills: [csp-santa-method]
+    weight: 40
+  "santa-method":
+    skills: [csp-santa-method]
+    weight: 40
+  "user system design":
+    skills: [csp-user-system-design]
+    weight: 40
+  "user-system-design":
+    skills: [csp-user-system-design]
+    weight: 40
+
+  # ─── auto-generated triggers (generate-triggers.mjs) ───
+  "a11y test":
+    skills: [csp-a11y-testing]
+    weight: 40
+  "a11y testing":
+    skills: [csp-a11y-testing]
+    weight: 40
+  "a11y 测试":
+    skills: [csp-a11y-testing]
+    weight: 40
+  "a11y-testing":
+    skills: [csp-a11y-testing]
+    weight: 40
+  "backend mock strategies":
+    skills: [csp-backend-mock-strategies]
+    weight: 40
+  "backend mock strategies 后端":
+    skills: [csp-backend-mock-strategies]
+    weight: 40
+  "backend-mock-strategies":
+    skills: [csp-backend-mock-strategies]
+    weight: 40
+  "chaos test":
+    skills: [csp-chaos-testing]
+    weight: 40
+  "chaos testing":
+    skills: [csp-chaos-testing]
+    weight: 40
+  "chaos 测试":
+    skills: [csp-chaos-testing]
+    weight: 40
+  "chaos-testing":
+    skills: [csp-chaos-testing]
+    weight: 40
+  "concurrency test":
+    skills: [csp-concurrency-testing]
+    weight: 40
+  "concurrency testing":
+    skills: [csp-concurrency-testing]
+    weight: 40
+  "concurrency 测试":
+    skills: [csp-concurrency-testing]
+    weight: 40
+  "concurrency-testing":
+    skills: [csp-concurrency-testing]
+    weight: 40
+  "contract testing":
+    skills: [csp-contract-testing]
+    weight: 40
+  "contract 测试":
+    skills: [csp-contract-testing]
+    weight: 40
+  "contract-testing":
+    skills: [csp-contract-testing]
+    weight: 40
+  "db migration test":
+    skills: [csp-db-migration-testing]
+    weight: 40
+  "db migration testing":
+    skills: [csp-db-migration-testing]
+    weight: 40
+  "db migration 测试":
+    skills: [csp-db-migration-testing]
+    weight: 40
+  "db-migration-testing":
+    skills: [csp-db-migration-testing]
+    weight: 40
+  "differential test":
+    skills: [csp-differential-testing]
+    weight: 40
+  "differential testing":
+    skills: [csp-differential-testing]
+    weight: 40
+  "differential 测试":
+    skills: [csp-differential-testing]
+    weight: 40
+  "differential-testing":
+    skills: [csp-differential-testing]
+    weight: 40
+  "fix backend mock strategies":
+    skills: [csp-backend-mock-strategies]
+    weight: 40
+  "fuzz test":
+    skills: [csp-fuzz-testing]
+    weight: 40
+  "fuzz testing":
+    skills: [csp-fuzz-testing]
+    weight: 40
+  "fuzz 测试":
+    skills: [csp-fuzz-testing]
+    weight: 40
+  "fuzz-testing":
+    skills: [csp-fuzz-testing]
+    weight: 40
+  "i18n test":
+    skills: [csp-i18n-testing]
+    weight: 40
+  "i18n testing":
+    skills: [csp-i18n-testing]
+    weight: 40
+  "i18n 测试":
+    skills: [csp-i18n-testing]
+    weight: 40
+  "i18n-testing":
+    skills: [csp-i18n-testing]
+    weight: 40
+  "mutation test":
+    skills: [csp-mutation-testing]
+    weight: 40
+  "mutation testing":
+    skills: [csp-mutation-testing]
+    weight: 40
+  "mutation 测试":
+    skills: [csp-mutation-testing]
+    weight: 40
+  "mutation-testing":
+    skills: [csp-mutation-testing]
+    weight: 40
+  "observability test":
+    skills: [csp-observability-testing]
+    weight: 40
+  "observability testing":
+    skills: [csp-observability-testing]
+    weight: 40
+  "observability 测试":
+    skills: [csp-observability-testing]
+    weight: 40
+  "observability-testing":
+    skills: [csp-observability-testing]
+    weight: 40
+  "property based test":
+    skills: [csp-property-based-testing]
+    weight: 40
+  "property based testing":
+    skills: [csp-property-based-testing]
+    weight: 40
+  "property based 测试":
+    skills: [csp-property-based-testing]
+    weight: 40
+  "property-based-testing":
+    skills: [csp-property-based-testing]
+    weight: 40
+  "review backend mock strategies":
+    skills: [csp-backend-mock-strategies]
     weight: 40
 stack_rules:
   python:
@@ -6885,7 +7180,7 @@ stack_rules:
     skills: [csp-ralph]
     weight: 40
   "release":
-    skills: [csp-release]
+    skills: [csp-release, csp-release-manager]
     weight: 40
   "记住":
     skills: [csp-remember]

@@ -351,15 +351,15 @@ a { color: var(--layer-1); text-decoration: none; }
 // ═══════════════════════════════════════════════════
 const CSP_DATA = {
   "stats": {
-    "total": 685,
+    "total": 708,
     "by_layer": {
       "Meta": {
-        "count": 26,
+        "count": 27,
         "layer": "L1",
         "color": "#3b82f6"
       },
       "Patterns": {
-        "count": 400,
+        "count": 418,
         "layer": "L3",
         "color": "#a855f7"
       },
@@ -374,19 +374,19 @@ const CSP_DATA = {
         "color": "#f97316"
       },
       "Workflow": {
-        "count": 201,
+        "count": 205,
         "layer": "L2",
         "color": "#22c55e"
       }
     },
     "by_category": {
-      "meta": 26,
-      "patterns": 400,
+      "meta": 27,
+      "patterns": 418,
       "router": 1,
       "runtime": 57,
-      "workflow": 201
+      "workflow": 205
     },
-    "reviewers": 74
+    "reviewers": 75
   },
   "skills": [
     {
@@ -561,6 +561,25 @@ const CSP_DATA = {
           "多角色协作",
           "多代理"
         ]
+      }
+    },
+    {
+      "name": "csp-prompt-optimizer",
+      "description": "提示词优化专家。将模糊、不完整或结构松散的提示词优化为高质量、结构化的专家级提示词。覆盖：系统提示词优化（通用/分析式/带输出格式）、用户提示词优化（基础/步骤化/专业）、上下文感知优化（多轮对话消息优化）、人格文件生成（SOUL.md）、迭代优化、评测驱动重写、评测框架（Analysis/Result/Compare/StructuredCompare）、变量提取与生成。触发词：优化提示词、优化prompt、prompt优化、提示词工程、改写提示词、prompt engineering、提示词迭代、prompt评测、提取变量、生成变量值、帮我改提示词、这个提示词不好用、生成AI人格、写SOU",
+      "category": "meta",
+      "layer": "L1",
+      "layer_name": "Meta",
+      "layer_color": "#3b82f6",
+      "triggers": {
+        "en": [
+          "csp-prompt-optimizer",
+          "fix prompt optimizer",
+          "prompt",
+          "prompt optimizer",
+          "prompt-optimizer",
+          "review prompt optimizer"
+        ],
+        "zh": []
       }
     },
     {
@@ -4107,6 +4126,25 @@ const CSP_DATA = {
       }
     },
     {
+      "name": "csp-a11y-testing",
+      "description": "Test-time accessibility assertions integrated into unit, component, and E2E suites. jest-axe / vitest-axe for component tests, @axe-core/playwright for E2E, Pa11y and Lighthouse CI for site-wide gates, eslint-plugin-jsx-a11y for lint-time prevention. WCAG 2.2 AA baseline. Unlike csp-access which per",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "csp-a11y-testing",
+          "a11y test",
+          "a11y testing",
+          "a11y-testing"
+        ],
+        "zh": [
+          "a11y 测试"
+        ]
+      }
+    },
+    {
       "name": "csp-access",
       "description": "Full frontend accessibility audit (WCAG 2.1 AA/AAA) plus a11y evidence review: interpret axe / Playwright / Lighthouse reports, check contrast, keyboard navigation, focus-visible, ARIA, form labels, alt text, headings, touch targets. Use when working on design tasks related to access.",
       "category": "patterns",
@@ -4157,6 +4195,25 @@ const CSP_DATA = {
       }
     },
     {
+      "name": "csp-agent-self-evaluation",
+      "description": "After completing any non-trivial task, self-rate output on 5 axes (accuracy, completeness, clarity, actionability, conciseness) with concrete evidence per criterion. Produces a structured 1-5 scorecard with specific improvement suggestions. Use after multi-file implementations, debugging sessions, d",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "csp-agent-self-evaluation",
+          "agent",
+          "agent self evaluation",
+          "agent-self-evaluation",
+          "fix agent self evaluation",
+          "review agent self evaluation"
+        ],
+        "zh": []
+      }
+    },
+    {
       "name": "csp-agent-sort",
       "description": "Build an evidence-backed CSP install plan for a specific repo by sorting skills, commands, rules, hooks, and extras into DAILY vs LIBRARY buckets using parallel repo-aware review passes. Use when CSP should be trimmed to what a project actually needs instead of loading the full bundle.",
       "category": "patterns",
@@ -4182,6 +4239,25 @@ const CSP_DATA = {
           "csp-agentic-engineering"
         ],
         "zh": []
+      }
+    },
+    {
+      "name": "csp-ai-regression-testing",
+      "description": "Regression testing strategies specifically for AI-assisted development. Identifies 5 systematic AI blind spots where the same model writes and reviews code. Sandbox-mode API testing without database dependencies, automated bug-check workflows, and patterns to catch AI-introduced regressions. Use whe",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "csp-ai-regression-testing",
+          "ai regression test",
+          "ai regression testing",
+          "ai-regression-testing"
+        ],
+        "zh": [
+          "ai regression 测试"
+        ]
       }
     },
     {
@@ -4276,6 +4352,27 @@ const CSP_DATA = {
           "review avatar"
         ],
         "zh": []
+      }
+    },
+    {
+      "name": "csp-backend-mock-strategies",
+      "description": "Server-side test doubles and dependency mocking: Testcontainers for real databases/brokers/cloud services in Docker, WireMock 3.x and MockServer for HTTP stubbing with fault injection, Hoverfly for record/replay, LocalStack for AWS, Azurite for Azure, GCS emulator, smtp4dev, bufconn for in-process g",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "csp-backend-mock-strategies",
+          "backend",
+          "backend mock strategies",
+          "backend-mock-strategies",
+          "fix backend mock strategies",
+          "review backend mock strategies"
+        ],
+        "zh": [
+          "backend mock strategies 后端"
+        ]
       }
     },
     {
@@ -4423,6 +4520,25 @@ const CSP_DATA = {
       }
     },
     {
+      "name": "csp-chaos-testing",
+      "description": "Chaos engineering: inject faults into a running system to validate that timeouts, retries, circuit breakers, and degradation paths actually work. Chaos Mesh and LitmusChaos for Kubernetes, AWS Fault Injection Service for cloud, Toxiproxy and Pumba for local/Docker. Use when you have SLAs and an on-c",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "csp-chaos-testing",
+          "chaos test",
+          "chaos testing",
+          "chaos-testing"
+        ],
+        "zh": [
+          "chaos 测试"
+        ]
+      }
+    },
+    {
       "name": "csp-chart",
       "description": "Data visualization design specification. Given a dashboard, report page, or data card requirement, Use when working on design tasks related to chart.",
       "category": "patterns",
@@ -4450,10 +4566,13 @@ const CSP_DATA = {
         "en": [
           "csp-check",
           "check",
+          "design feedback",
           "fix check",
           "review check"
         ],
-        "zh": []
+        "zh": [
+          "开发反馈设计"
+        ]
       }
     },
     {
@@ -4565,6 +4684,25 @@ const CSP_DATA = {
       }
     },
     {
+      "name": "csp-concurrency-testing",
+      "description": "Testing concurrent and parallel code: Go race detector (`go test -race`), jcstress for JVM memory model edge cases, ThreadSanitizer (TSan) for C/C++/Rust/Swift, Rust loom for exhaustive interleaving exploration of lock-free data structures, miri for undefined behavior and data race detection, pytest",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "csp-concurrency-testing",
+          "concurrency test",
+          "concurrency testing",
+          "concurrency-testing"
+        ],
+        "zh": [
+          "concurrency 测试"
+        ]
+      }
+    },
+    {
       "name": "csp-content-engine",
       "description": "Create platform-native content systems for X, LinkedIn, TikTok, YouTube, newsletters, and repurposed multi-platform campaigns. Use when the user wants social posts, threads, scripts, content calendars, or one source asset adapted cleanly across platforms.",
       "category": "patterns",
@@ -4588,6 +4726,42 @@ const CSP_DATA = {
       "triggers": {
         "en": [
           "csp-content-hash-cache-pattern"
+        ],
+        "zh": []
+      }
+    },
+    {
+      "name": "csp-contract-testing",
+      "description": "Consumer-driven contract testing across microservice boundaries. Pact v3/v4 for HTTP, Spring Cloud Contract for JVM, Schemathesis for OpenAPI property-based contract checks, buf breaking for gRPC/Protobuf compatibility gates. Use when two teams deploy independently, when E2E suites are too brittle t",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "csp-contract-testing",
+          "contract test",
+          "contract testing",
+          "contract-testing"
+        ],
+        "zh": [
+          "contract 测试"
+        ]
+      }
+    },
+    {
+      "name": "csp-council",
+      "description": "Convene a four-voice council (Architect, Skeptic, Pragmatist, Critic) for ambiguous decisions, tradeoffs, and go/no-go calls. Fresh subagents for anti-anchoring. Structured verdict with consensus, strongest dissent, premise check, and recommendation. Use when multiple valid paths exist and you need ",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "csp-council",
+          "council",
+          "fix council",
+          "review council"
         ],
         "zh": []
       }
@@ -4716,6 +4890,25 @@ const CSP_DATA = {
       }
     },
     {
+      "name": "csp-db-migration-testing",
+      "description": "Verification harness for database migrations: Testcontainers + Flyway/Liquibase for JVM, Alembic rehearsal for Python, Prisma migrate diff and Drizzle Kit for Node, squawk for Postgres migration linting, gh-ost/pt-online-schema-change rehearsal for zero-downtime MySQL, expand-contract verification, ",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "csp-db-migration-testing",
+          "db migration test",
+          "db migration testing",
+          "db-migration-testing"
+        ],
+        "zh": [
+          "db migration 测试"
+        ]
+      }
+    },
+    {
       "name": "csp-db-migration",
       "description": "Database migration best practices for schema changes, data migrations, rollbacks, and zero-downtime deployments across PostgreSQL and MySQL and common ORMs/tools (Prisma, Drizzle, Alembic, Flyway). Covers expand-contract patterns, online schema changes, and safe CI/CD integration.",
       "category": "patterns",
@@ -4831,6 +5024,25 @@ const CSP_DATA = {
         ],
         "zh": [
           "design system capture 设计"
+        ]
+      }
+    },
+    {
+      "name": "csp-differential-testing",
+      "description": "Differential testing: run the same input through two or more implementations and compare outputs. Shadow traffic (GoReplay, tcpcopy, Envoy mirror), regression against a pinned reference, metamorphic relations, database migration diff (fresh vs migrated schema), API version diff (openapi-diff, oasdif",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "csp-differential-testing",
+          "differential test",
+          "differential testing",
+          "differential-testing"
+        ],
+        "zh": [
+          "differential 测试"
         ]
       }
     },
@@ -5199,6 +5411,25 @@ const CSP_DATA = {
       }
     },
     {
+      "name": "csp-fuzz-testing",
+      "description": "Coverage-guided fuzzing to find crashes, memory bugs, and invariant violations in parsers, deserializers, protocol handlers, and anything accepting untrusted bytes. AFL++ and libFuzzer for C/C++, cargo-fuzz for Rust, native `go test -fuzz` for Go 1.18+, Atheris for Python, Jazzer for JVM, OSS-Fuzz/C",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "csp-fuzz-testing",
+          "fuzz test",
+          "fuzz testing",
+          "fuzz-testing"
+        ],
+        "zh": [
+          "fuzz 测试"
+        ]
+      }
+    },
+    {
       "name": "csp-git-conventions",
       "description": "Git workflow conventions agent. Enforces conventional commits, branch naming strategies, commit message quality, and PR hygiene. Use for commit messages, branch naming, and git workflow questions.",
       "category": "patterns",
@@ -5306,6 +5537,25 @@ const CSP_DATA = {
       }
     },
     {
+      "name": "csp-i18n-testing",
+      "description": "Testing internationalization and localization: FormatJS CLI extract-diff for translation completeness CI gates, eslint-plugin-formatjs for ICU MessageFormat validation, Playwright multi-locale context for locale/timezone/RTL rendering, pseudo-localization (qps-ploc) to surface hardcoded strings with",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "csp-i18n-testing",
+          "i18n test",
+          "i18n testing",
+          "i18n-testing"
+        ],
+        "zh": [
+          "i18n 测试"
+        ]
+      }
+    },
+    {
       "name": "csp-image-to-code",
       "description": "Convert a screenshot, mockup, Figma export, or design image into faithful, self-contained HTML/CSS. Fidelity tolerances, design-token extraction, and five-state prototypes. Use when the user supplies an image and asks for HTML, a page rebuild, or D2C conversion.",
       "category": "patterns",
@@ -5336,6 +5586,26 @@ const CSP_DATA = {
           "csp-infrastructure-as-code"
         ],
         "zh": []
+      }
+    },
+    {
+      "name": "csp-integration-review",
+      "description": "Full-stack integration review across 11 scenarios — API URL consistency, change impact analysis, API constant management, naming consistency, full-chain DB→API→FE alignment, OpenAPI vs implementation, error handling, cross-layer causality, API versioning, mock data consistency, auth/authorization ch",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "csp-integration-review",
+          "integration code review",
+          "integration review",
+          "integration-review",
+          "review integration code"
+        ],
+        "zh": [
+          "integration 审查"
+        ]
       }
     },
     {
@@ -5710,6 +5980,25 @@ const CSP_DATA = {
       }
     },
     {
+      "name": "csp-mutation-testing",
+      "description": "Mutation testing measures whether your tests actually *detect* bugs, not just whether they execute code. StrykerJS for JS/TS, PIT (pitest) for Java/Kotlin, mutmut/cosmic-ray for Python, cargo-mutants for Rust, go-mutesting for Go. Use when line coverage is high (>80%) but bugs still escape, when you",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "csp-mutation-testing",
+          "mutation test",
+          "mutation testing",
+          "mutation-testing"
+        ],
+        "zh": [
+          "mutation 测试"
+        ]
+      }
+    },
+    {
       "name": "csp-nestjs-patterns",
       "description": "NestJS architecture patterns for modules, controllers, providers, DTO validation, guards, interceptors, config, and production-grade TypeScript backends.",
       "category": "patterns",
@@ -5765,6 +6054,25 @@ const CSP_DATA = {
           "csp-observability-and-instrumentation"
         ],
         "zh": []
+      }
+    },
+    {
+      "name": "csp-observability-testing",
+      "description": "Assert that your telemetry (logs, metrics, traces) is correct, complete, and stable *inside the test suite* — not after an incident reveals it's missing. pytest caplog and pino/winston test sinks for structured log assertions, prom-client registry snapshots and Micrometer SimpleMeterRegistry for met",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "csp-observability-testing",
+          "observability test",
+          "observability testing",
+          "observability-testing"
+        ],
+        "zh": [
+          "observability 测试"
+        ]
       }
     },
     {
@@ -5949,11 +6257,15 @@ const CSP_DATA = {
       "triggers": {
         "en": [
           "csp-prd",
+          "design to dev",
+          "design handoff",
           "prd",
           "fix prd",
           "review prd"
         ],
-        "zh": []
+        "zh": [
+          "设计交付开发"
+        ]
       }
     },
     {
@@ -6034,6 +6346,25 @@ const CSP_DATA = {
           "csp-prompt-engineering"
         ],
         "zh": []
+      }
+    },
+    {
+      "name": "csp-property-based-testing",
+      "description": "Property-based testing (PBT) with Hypothesis (Python), fast-check (JS/TS), jqwik (Java), Kotest Property (Kotlin), proptest (Rust), gopter (Go). Generates random inputs, shrinks failures to minimal counterexamples, and supports stateful machine testing. Use when example-based tests miss edge cases, ",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "csp-property-based-testing",
+          "property based test",
+          "property based testing",
+          "property-based-testing"
+        ],
+        "zh": [
+          "property based 测试"
+        ]
       }
     },
     {
@@ -6329,6 +6660,25 @@ const CSP_DATA = {
       "triggers": {
         "en": [
           "csp-rust-testing"
+        ],
+        "zh": []
+      }
+    },
+    {
+      "name": "csp-santa-method",
+      "description": "Multi-agent adversarial verification: two independent reviewers with the same rubric must both pass before output ships. Fix-and-re-review convergence loop (3-iteration max) with human escalation cap. Use when gating publishing, production deploys, compliance or brand-sensitive content, or hallucina",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "csp-santa-method",
+          "santa",
+          "fix santa method",
+          "review santa method",
+          "santa method",
+          "santa-method"
         ],
         "zh": []
       }
@@ -6714,6 +7064,25 @@ const CSP_DATA = {
           "analytics",
           "PostHog",
           "Mixpanel"
+        ],
+        "zh": []
+      }
+    },
+    {
+      "name": "csp-user-system-design",
+      "description": "Comprehensive user system design methodology covering layered architecture, account model, identity & role design (RBAC), permission systems, authentication & security, user tier & growth, data modeling, system integration patterns, design principles, common pitfalls, and a reusable review checklist",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "csp-user-system-design",
+          "user",
+          "fix user system design",
+          "review user system design",
+          "user system design",
+          "user-system-design"
         ],
         "zh": []
       }
@@ -7590,7 +7959,7 @@ const CSP_DATA = {
     },
     {
       "name": "csp-kotlin-testing",
-      "description": "Kotlin testing patterns with Kotest, MockK, coroutine testing, property-based testing, and Kover coverage. Follows TDD methodology with idiomatic Kotlin practices.",
+      "description": "Kotlin testing patterns with Kotest 6.x, MockK 1.13, kotlinx-coroutines-test, Turbine Flow testing, Kover coverage, Spring Boot 3.4+ @MockitoBean, and Ktor testApplication. Follows TDD methodology with idiomatic Kotlin practices.",
       "category": "patterns",
       "layer": "L3",
       "layer_name": "Patterns",
@@ -10331,6 +10700,25 @@ const CSP_DATA = {
       }
     },
     {
+      "name": "csp-agent-governance",
+      "description": "Patterns and techniques for adding governance, safety, and trust controls to AI agents. Covers 6 governance patterns (policy composition, semantic intent classification, tool-level decorators, trust scoring, audit trails, framework integration) with full Python reference implementations and 4 govern",
+      "category": "workflow",
+      "layer": "L2",
+      "layer_name": "Workflow",
+      "layer_color": "#22c55e",
+      "triggers": {
+        "en": [
+          "csp-agent-governance",
+          "agent",
+          "agent governance",
+          "agent-governance",
+          "fix agent governance",
+          "review agent governance"
+        ],
+        "zh": []
+      }
+    },
+    {
       "name": "csp-change-impact-analysis",
       "description": "Engineering change-impact analysis for code and architecture changes: map forward dependents across six dimensions (code, contract, data, runtime, deployment, consumers), grade risk, derive the minimal regression set, and produce an impact report before the change is made.",
       "category": "workflow",
@@ -10530,6 +10918,27 @@ const CSP_DATA = {
       }
     },
     {
+      "name": "csp-design-to-workflow-bridge",
+      "description": "Bridge skill that translates design suite output (.csp/spark/context/*.json) into workflow-compatible format and seeds the development lifecycle. Use when design is complete and development should begin, or when transitioning between the design and engineering tracks.",
+      "category": "workflow",
+      "layer": "L2",
+      "layer_name": "Workflow",
+      "layer_color": "#22c55e",
+      "triggers": {
+        "en": [
+          "csp-design-to-workflow-bridge",
+          "design",
+          "design to workflow bridge",
+          "design-to-workflow-bridge",
+          "fix design to workflow bridge",
+          "review design to workflow bridge"
+        ],
+        "zh": [
+          "design to workflow bridge 设计"
+        ]
+      }
+    },
+    {
       "name": "csp-doc-lifecycle-manager",
       "description": "Manage project documentation lifecycle: categorize, archive, index, and prune documents. Use when organizing docs into folders, archiving obsolete docs, or doing documentation health checks. Triggers: 整理文档, doc cleanup, organize docs, 文档归类, archive docs.",
       "category": "workflow",
@@ -10541,6 +10950,27 @@ const CSP_DATA = {
           "csp-doc-lifecycle-manager"
         ],
         "zh": []
+      }
+    },
+    {
+      "name": "csp-documentation-governance",
+      "description": "Comprehensive documentation governance: defines internal vs external doc zones, content-type boundaries, update-trigger rules (when X changes, update Y), document lifecycle (create→maintain→archive), folder taxonomy enforcement, INDEX.md requirements, and cross-skill integration rules. Use when sett",
+      "category": "workflow",
+      "layer": "L2",
+      "layer_name": "Workflow",
+      "layer_color": "#22c55e",
+      "triggers": {
+        "en": [
+          "csp-documentation-governance",
+          "documentation",
+          "documentation governance",
+          "documentation-governance",
+          "fix documentation governance",
+          "review documentation governance"
+        ],
+        "zh": [
+          "documentation governance 文档"
+        ]
       }
     },
     {
@@ -10869,9 +11299,17 @@ const CSP_DATA = {
           "lifecycle",
           "lifecycle orchestrator",
           "lifecycle-orchestrator",
+          "end-to-end",
+          "end to end",
+          "full product lifecycle",
+          "complete lifecycle",
           "review lifecycle orchestrator"
         ],
-        "zh": []
+        "zh": [
+          "全链路",
+          "全生命周期",
+          "端到端"
+        ]
       }
     },
     {
@@ -11090,12 +11528,15 @@ const CSP_DATA = {
       "triggers": {
         "en": [
           "csp-product-discovery-orchestrator",
+          "product discovery",
           "fix product discovery orchestrator",
           "product discovery orchestrator",
           "product-discovery-orchestrator",
           "review product discovery orchestrator"
         ],
-        "zh": []
+        "zh": [
+          "产品发现"
+        ]
       }
     },
     {
@@ -11185,6 +11626,24 @@ const CSP_DATA = {
       }
     },
     {
+      "name": "csp-release-manager",
+      "description": "End-to-end release management: quality gate (S6) → review (S7) → ship (S8) → ops (S9). Orchestrates csp-verify-phase, csp-code-review, csp-ship into a single pipeline with exit code enforcement, batch evidence tracking, release recurrence checks, and version integrity validation. Use when preparing ",
+      "category": "workflow",
+      "layer": "L2",
+      "layer_name": "Workflow",
+      "layer_color": "#22c55e",
+      "triggers": {
+        "en": [
+          "csp-release-manager",
+          "fix release manager",
+          "release manager",
+          "release-manager",
+          "review release manager"
+        ],
+        "zh": []
+      }
+    },
+    {
       "name": "csp-requirement-decomposition",
       "description": "需求全维度拆解引擎。将模糊需求/PRD/想法彻底分解为原子级 Feature，每个 Feature 附带用户故事、验收标准、前后端边界、数据实体、技术维度和依赖关系。当用户给出产品需求、功能描述、或想从零构建系统时，第一步使用此 skill 进行结构化拆解。即使用户只说'帮我做一个XX系统'，也应先使用此 skill 完整拆解再进入后续阶段。",
       "category": "workflow",
@@ -11195,12 +11654,16 @@ const CSP_DATA = {
         "en": [
           "csp-requirement-decomposition",
           "fix requirement decomposition",
+          "design to dev",
+          "design handoff",
           "requirement",
           "requirement decomposition",
           "requirement-decomposition",
           "review requirement decomposition"
         ],
-        "zh": []
+        "zh": [
+          "设计交付开发"
+        ]
       }
     },
     {
@@ -11534,10 +11997,12 @@ const CSP_DATA = {
       "triggers": {
         "en": [
           "csp-verify-phase",
-          "verify"
+          "verify",
+          "design feedback"
         ],
         "zh": [
-          "验证"
+          "验证",
+          "开发反馈设计"
         ]
       }
     },

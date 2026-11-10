@@ -4,7 +4,7 @@
 # Regenerate: node scripts/build-skill-metadata.mjs
 
 version: 2.0
-generated_at: 2026-10-23T13:23:34.490Z
+generated_at: 2026-11-10T08:34:15.229Z
 skills:
   csp-agent-teams:
     phase: review
@@ -158,6 +158,18 @@ skills:
       - Edit
       - Glob
       - Grep
+  csp-prompt-optimizer:
+    phase: plan
+    domain: architecture
+    role: specialist
+    scope: design
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
   csp-receiving-code-review:
     phase: review
     domain: architecture
@@ -306,6 +318,19 @@ skills:
       - csp-brainstorming
       - csp-verification
       - csp-test-case-design
+      - csp-contract-testing
+      - csp-property-based-testing
+      - csp-mutation-testing
+      - csp-fuzz-testing
+      - csp-chaos-testing
+      - csp-differential-testing
+      - csp-concurrency-testing
+      - csp-a11y-testing
+      - csp-i18n-testing
+      - csp-observability-testing
+      - csp-backend-mock-strategies
+      - csp-db-migration-testing
+      - csp-kotlin-testing
     anti_rationalizations:
       单测过了功能就没问题: "单测只证明纯逻辑对；集成断链、跨层不一致、UI 退化它全看不见——必须按盲点互补再叠一层"
       E2E 覆盖了关键路径就够了: "E2E 慢且少，过不了边界数据/并发/错误路径；它有盲点，需 property/fuzz/negative 补位"
@@ -367,6 +392,26 @@ skills:
       - Edit
       - Glob
       - Grep
+  csp-agent-governance:
+    phase: build
+    domain: security
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
+    related_skills:
+      - [[csp-security-review]]
+      - [[csp-coding-standards]]
+      - [[csp-api-governance]]
+    anti_rationalizations:
+      Agents don't need governance, they're just tools: "Agents execute arbitrary code and access production data. Without governance, they're a security liability with a chat interface."
+      I'll add safety checks after the prototype works: "Safety retrofitting breaks the agent's behavioral model. Design governance into the agent from day one."
+      Rate limiting is enough: "Rate limiting prevents abuse, but it doesn't prevent data exfiltration, prompt injection, or privilege escalation."
   csp-change-impact-analysis:
     phase: plan
     domain: architecture
@@ -634,6 +679,27 @@ skills:
       重新生成会丢失之前的设计决策: "regenerate 模式会先备份旧版本到 .csp/tech-design/.archive/，再重新生成。不会丢失历史。"
       极速设计质量不够: "极速设计不是跳过思考，是用更高密度表达。一张架构图 + 3 个关键决策 = 对有经验的团队足够。"
       模式互切会引入不一致: "互切有明确规则——升级补全、降级提取摘要（不删原文）、regenerate 先备份。互切是受控的，不是随意改写。"
+  csp-design-to-workflow-bridge:
+    phase: plan
+    domain: architecture
+    role: specialist
+    scope: design
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
+      - Bash
+    dependencies: {}
+    related_skills:
+      - [[pattern:csp-brief]]
+      - [[pattern:csp-prd]]
+      - [[pattern:csp-flow-web]]
+      - [[pattern:csp-check]]
+      - [[workflow:csp-lifecycle-orchestrator]]
+      - [[workflow:csp-requirement-decomposition]]
+      - [[workflow:csp-product-discovery-orchestrator]]
   csp-doc-lifecycle-manager:
     phase: plan
     domain: patterns
@@ -645,6 +711,30 @@ skills:
       - Edit
       - Glob
       - Grep
+  csp-documentation-governance:
+    phase: plan
+    domain: architecture
+    role: specialist
+    scope: design
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
+    related_skills:
+      - [[workflow:csp-project-doc-architect]]
+      - [[workflow:csp-doc-lifecycle-manager]]
+      - [[workflow:csp-session-knowledge-extractor]]
+      - [[workflow:csp-knowledge-hub]]
+      - [[workflow:csp-lifecycle-orchestrator]]
+      - [[pattern:csp-living-docs-governance]]
+    anti_rationalizations:
+      I'll update the docs later: "Later never comes. If code changed behavior, the docs are stale RIGHT NOW. Stale docs are worse than no docs."
+      The README is enough: "README is a facade, not a knowledge base. Architecture decisions, design rationale, and runbooks need their own homes."
+      Internal docs are for the team, no need to structure them: "Unstructured internal docs are undiscoverable. Six months later, nobody remembers where the decision was recorded."
+      Just keep everything in docs/: "A flat docs/ with 20+ files is a dumping ground. Category folders + INDEX.md make things findable."
   csp-domain-driven-design:
     phase: define
     domain: architecture
@@ -747,6 +837,8 @@ skills:
       The feature is simple, no need for detailed spec: "Simple features have hidden edge cases. Spec them."
       I'll design the schema during implementation: "Schema changes cascade. Design first, implement second."
       API contract can be informal: "Informal contracts break frontend-backend integration. Formalize."
+      I only added one field, don't need migration: "Every field addition to any layer REQUIRES cross-layer updates: DB migration + ORM model + API schema + frontend types. Single-layer field change is a BLOCKING bug. See [[csp-coding-standards]] principle 8."
+      I'll update the other layers later: "Later never comes. Cross-layer field alignment is a hard gate — all four layers must be updated in the same feature cycle."
   csp-graph-architecture:
     phase: define
     domain: architecture
@@ -1010,22 +1102,27 @@ skills:
       - Bash
     dependencies:
       skills:
-        - csp-requirement-decomposition
-        - csp-tech-stack-advisor
-        - csp-tech-solution-design
-        - csp-tech-design-review
-        - csp-fullstack-spec-generator
-        - csp-tech-task-breakdown
+        - [[workflow:csp-requirement-decomposition]]
+        - [[workflow:csp-tech-stack-advisor]]
+        - [[workflow:csp-tech-solution-design]]
+        - [[workflow:csp-tech-design-review]]
+        - [[workflow:csp-fullstack-spec-generator]]
+        - [[workflow:csp-tech-task-breakdown]]
     related_skills:
-      - csp-full
-      - csp-implementation-phase
-      - csp-verify-phase
-      - csp-ship
-      - csp-plan-phase
-      - csp-tdd
-      - csp-code-review
-      - csp-product-discovery-orchestrator
-      - csp-effort-estimation
+      - [[workflow:csp-full]]
+      - [[workflow:csp-implementation-phase]]
+      - [[workflow:csp-verify-phase]]
+      - [[workflow:csp-ship]]
+      - [[workflow:csp-plan-phase]]
+      - [[meta:csp-tdd]]
+      - [[workflow:csp-code-review]]
+      - [[workflow:csp-product-discovery-orchestrator]]
+      - [[workflow:csp-effort-estimation]]
+      - [[workflow:csp-knowledge-hub]]
+      - [[workflow:csp-roadmap-update]]
+      - [[pattern:csp-product-capability]]
+      - [[meta:csp-mvp-scoping]]
+      - [[workflow:csp-design-to-workflow-bridge]]
       - csp-tech-risk-assessment
       - csp-product-spec
       - csp-code-spec
@@ -1190,13 +1287,14 @@ skills:
     dependencies:
       skills: []
     related_skills:
-      - csp-requirement-decomposition
-      - csp-user-story-decomposition
-      - csp-competitive-analysis
-      - csp-requirement-prioritization
-      - csp-mvp-scoping
-      - csp-brainstorming
-      - csp-product-discovery-orchestrator
+      - [[csp-requirement-decomposition]]
+      - [[csp-user-story-decomposition]]
+      - [[csp-competitive-analysis]]
+      - [[csp-requirement-prioritization]]
+      - [[csp-mvp-scoping]]
+      - [[csp-brainstorming]]
+      - [[csp-product-discovery-orchestrator]]
+      - [[pattern:csp-prd]]
     anti_rationalizations:
       PRD doesn't need to be detailed: "Vague PRDs create vague implementations. Detail prevents rework."
       I'll skip the background section: "Without 'why', the team cannot make trade-off decisions."
@@ -1462,6 +1560,28 @@ skills:
       代码看着没问题: 六维度逐一检查，不凭第一印象下结论
       diff 太小不需要深入: "小 diff 可能在 hub 函数上，影响范围可能很大"
       没有单元测试也行: 评估是否需要建议补充，而不是默认跳过
+  csp-release-manager:
+    phase: verify
+    domain: quality
+    role: specialist
+    scope: review
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
+    related_skills:
+      - [[workflow:csp-verify-phase]]
+      - [[workflow:csp-code-review]]
+      - [[workflow:csp-ship]]
+      - [[pattern:csp-santa-method]]
+      - [[pattern:csp-git-conventions]]
+    anti_rationalizations:
+      Tests passed, we can ship: "The S6 gate has 11 checks plus backend API tests. Tests passing is only Check 1. Ship only when ALL gates ran with exit 0."
+      The CI is green, skip manual verification: "CI tests ≠ backend API integration tests. R2b and v6.1.1 both regressed because backend API tests were skipped. Never skip Check 1.5."
+      I'll run version integrity later: "Version integrity (T1-T6) is a BLOCKING gate. Multi-tag or version drift discovered after push is a hard revert."
   csp-requirement-decomposition:
     phase: define
     domain: architecture
@@ -1924,6 +2044,31 @@ skills:
       - Edit
       - Glob
       - Grep
+  csp-a11y-testing:
+    phase: verify
+    domain: testing
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
+    related_skills:
+      - [[csp-access]]
+      - [[csp-react-testing]]
+      - [[csp-playwright-ui-test]]
+      - [[csp-e2e-testing]]
+      - [[csp-browser-testing-with-devtools]]
+      - [[csp-test-methodology]]
+      - [[csp-frontend-patterns]]
+      - [[csp-visual-regression]]
+    anti_rationalizations:
+      设计稿已经过 csp-access 审计了: "设计审计抓静态问题（对比度、语义结构）；测试时断言抓的是*实现退化*——组件重构后 aria-label 丢了、focus trap 坏了，审计看不见"
+      无障碍是少数用户需求: "WCAG 2.2 AA 在欧盟/美国/加拿大是法律要求；政府/医疗/金融项目有 VPAT/ACR 合规义务"
+      axe 跑一遍没违规就够了: "自动化只抓 ~40% 的 WCAG 违规（WebAIM Million 研究）；键盘陷阱、焦点顺序、屏读语义仍需人工 + E2E 补位"
   csp-access:
     phase: verify
     domain: patterns
@@ -1938,6 +2083,9 @@ skills:
       - Bash
       - WebFetch
       - WebSearch
+    related_skills:
+      - [[qa]]
+      - [[check]]
   csp-account-research:
     phase: define
     domain: patterns
@@ -2024,6 +2172,26 @@ skills:
       - Bash
       - Glob
       - Grep
+  csp-agent-self-evaluation:
+    phase: verify
+    domain: quality
+    role: reviewer
+    scope: review
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
+    related_skills:
+      - [[csp-code-review]]
+      - [[csp-verification]]
+      - [[csp-santa-method]]
+    anti_rationalizations:
+      Everything is a 5: "No evidence cited — self-congratulation, not evaluation. Cite specific gaps."
+      The task was simple, no need to evaluate: "Simple tasks benefit from crispness checks. A 3-line fix can legitimately score 5/5/5/5/5 — score it."
+      I don't need to check, the tests passed: "Tests passing doesn't mean the output is clear, concise, or complete. Evaluate all axes."
   csp-agent-sort:
     phase: plan
     domain: patterns
@@ -2047,6 +2215,27 @@ skills:
       - Bash
       - Glob
       - Grep
+  csp-ai-regression-testing:
+    phase: verify
+    domain: testing
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
+    related_skills:
+      - [[csp-code-review]]
+      - [[csp-test-case-design]]
+      - [[csp-e2e-testing]]
+      - [[csp-santa-method]]
+    anti_rationalizations:
+      The AI reviewed its own code, it's fine: "AI self-review is the exact failure mode this skill exists to prevent. Same model, same blind spots."
+      Tests passed, no need for regression tests: "Passing tests prove existing behavior is intact. They prove nothing about new behavior being correct."
+      I'll write the regression test later: "The bug you fix today will be re-introduced tomorrow. Regression tests are part of the fix, not a follow-up."
   csp-api-codegen:
     phase: build
     domain: api
@@ -2097,6 +2286,9 @@ skills:
       - Bash
       - WebFetch
       - WebSearch
+    related_skills:
+      - [[brief]]
+      - [[stories]]
   csp-autonomous-loops:
     phase: build
     domain: patterns
@@ -2121,6 +2313,36 @@ skills:
       - Glob
       - Grep
       - Bash
+    related_skills:
+      - [[flow-web]]
+      - [[flow-mobile]]
+      - [[pitch]]
+  csp-backend-mock-strategies:
+    phase: build
+    domain: testing
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
+    related_skills:
+      - [[csp-mock-strategies]]
+      - [[csp-docker-patterns]]
+      - [[csp-java-testing]]
+      - [[csp-golang-testing]]
+      - [[csp-python-testing]]
+      - [[csp-typescript-testing]]
+      - [[csp-api-tester]]
+      - [[csp-cross-layer-testing]]
+      - [[csp-chaos-testing]]
+    anti_rationalizations:
+      前端有 MSW 就够了: "MSW 拦截 fetch/XHR，测不到服务间 gRPC/Kafka/DB/云存储行为；后端要 Testcontainers + WireMock + LocalStack"
+      用 docker-compose 起依赖就行: "docker-compose 是手工编排、端口冲突、清理不干净；Testcontainers 给你生命周期管理 + 动态端口 + 自动清理"
+      mock 掉外部服务测不到真行为: "对——所以核心路径用 Testcontainers 起真依赖，边缘路径用 WireMock 注入故障；两层互补"
   csp-backend-patterns:
     phase: build
     domain: patterns
@@ -2159,6 +2381,9 @@ skills:
       - Bash
       - WebFetch
       - WebSearch
+    related_skills:
+      - [[brief]]
+      - [[probe]]
   csp-board:
     phase: plan
     domain: patterns
@@ -2171,6 +2396,10 @@ skills:
       - Glob
       - Grep
       - Bash
+    related_skills:
+      - [[flow-web]]
+      - [[motion-plan]]
+      - [[chart]]
   csp-brand-voice:
     phase: build
     domain: patterns
@@ -2195,6 +2424,11 @@ skills:
       - Glob
       - Grep
       - Bash
+    related_skills:
+      - [[journey]]
+      - [[stories]]
+      - [[pitch]]
+      - [[sitemap]]
   csp-browser-testing-with-devtools:
     phase: verify
     domain: patterns
@@ -2231,6 +2465,32 @@ skills:
       - Bash
       - Glob
       - Grep
+  csp-chaos-testing:
+    phase: verify
+    domain: testing
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
+    related_skills:
+      - [[csp-load-testing]]
+      - [[csp-observability-and-instrumentation]]
+      - [[csp-observability-testing]]
+      - [[csp-kubernetes-patterns]]
+      - [[csp-docker-patterns]]
+      - [[csp-test-methodology]]
+      - [[csp-cross-layer-testing]]
+      - [[csp-solo-oncall]]
+      - [[csp-monitoring-alerting]]
+    anti_rationalizations:
+      生产太重要不能炸: "先在 staging 镜像炸；不炸就永远不知道 timeout/retry/circuit-breaker 配置对不对——事故时才发现代价更大"
+      我们有监控就够了: "监控告诉你出事了；chaos 告诉你出事时系统*会怎样*——降级路径没跑过等于没有"
+      chaos 就是随机杀 pod: "没有 steady-state 假设和 blast radius 控制的随机杀 pod 是 chaos theatre，不是工程"
   csp-chart:
     phase: build
     domain: patterns
@@ -2243,6 +2503,10 @@ skills:
       - Glob
       - Grep
       - Bash
+    related_skills:
+      - [[flow-web]]
+      - [[edge]]
+      - [[check]]
   csp-check:
     phase: verify
     domain: patterns
@@ -2255,6 +2519,10 @@ skills:
       - Glob
       - Grep
       - Bash
+    related_skills:
+      - [[qa]]
+      - [[edge]]
+      - [[access]]
   csp-cicd-pipelines:
     phase: build
     domain: patterns
@@ -2300,6 +2568,9 @@ skills:
       This code looks fine: "Looks can deceive. Review for correctness, reuse, and efficiency."
       It works, let's move on: "Working code can still be wasteful or hard to maintain."
       The diff is small, skip impact analysis: "Small diffs in hub functions cascade widely. Check structural impact when graph is available."
+      I only fixed one instance, the rest is out of scope: "Fixing one instance while leaving 12 identical bugs is a false sense of security. Search and fix ALL occurrences (see dimension 7)."
+      I'll write the tests later: "Later never comes. If the PR adds behavior, it adds tests. A bug fix without a regression test is a time bomb."
+      The tests pass, I'm done: "Tests passing means existing behavior is intact. It proves nothing about new behavior being correct or edge cases being handled."
   csp-code-simplification:
     phase: build
     domain: patterns
@@ -2347,6 +2618,32 @@ skills:
       - Bash
       - Glob
       - Grep
+  csp-concurrency-testing:
+    phase: verify
+    domain: testing
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
+    related_skills:
+      - [[csp-golang-testing]]
+      - [[csp-rust-testing]]
+      - [[csp-java-testing]]
+      - [[csp-kotlin-testing]]
+      - [[csp-python-testing]]
+      - [[csp-load-testing]]
+      - [[csp-test-methodology]]
+      - [[csp-property-based-testing]]
+      - [[csp-cross-layer-testing]]
+    anti_rationalizations:
+      单测过了并发就没问题: "单测覆盖 ~0.001% 的交错；race detector + loom + jcstress 才能穷举 interleaving"
+      我们用了 mutex/atomic 就安全了: "用对了原语 ≠ 用对了地方；ABA、lost update、deadlock、memory ordering 仍需专项测试"
+      并发 bug 不可复现所以不测: "不可复现 = 没有工具；loom/miri/jcstress 把非确定性变确定性穷举"
   csp-content-engine:
     phase: build
     domain: patterns
@@ -2371,6 +2668,49 @@ skills:
       - Bash
       - Glob
       - Grep
+  csp-contract-testing:
+    phase: verify
+    domain: testing
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
+    related_skills:
+      - [[csp-api-tester]]
+      - [[csp-mock-strategies]]
+      - [[csp-cross-layer-testing]]
+      - [[csp-api-governance]]
+      - [[csp-e2e-testing]]
+      - [[csp-test-methodology]]
+    anti_rationalizations:
+      E2E 覆盖了就够了: "E2E 慢且脆，跑一次几分钟；契约测试在 consumer 侧秒级反馈版本漂移，且能在 CI 里做 can-i-deploy 门禁"
+      OpenAPI 就是契约: "OpenAPI 描述的是 provider 想暴露什么，契约描述的是 consumer 实际用什么；两者的差集正是线上事故来源"
+      我们服务少不需要: "只要有两个独立部署的服务 + 一个共享 API，契约漂移就是时间问题；越早建 broker 越便宜"
+  csp-council:
+    phase: plan
+    domain: architecture
+    role: specialist
+    scope: design
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
+    related_skills:
+      - [[csp-brainstorming]]
+      - [[csp-santa-method]]
+      - [[csp-writing-plans]]
+    anti_rationalizations:
+      I already know the right answer: "Confidence is not correctness. The council exists to find what you're missing."
+      This will slow things down: "One wrong architectural decision costs weeks. A 10-minute council is cheap insurance."
+      I'll just ask a single reviewer: "Single reviewers share your blind spots. Four independent voices with different lenses catch different failure modes."
   csp-cpp-coding-standards:
     phase: build
     domain: patterns
@@ -2492,6 +2832,31 @@ skills:
       - Bash
       - Glob
       - Grep
+  csp-db-migration-testing:
+    phase: verify
+    domain: testing
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
+    related_skills:
+      - [[csp-db-migration]]
+      - [[csp-db-state-assertion]]
+      - [[csp-postgres-patterns]]
+      - [[csp-differential-testing]]
+      - [[csp-test-methodology]]
+      - [[csp-cross-layer-testing]]
+      - [[csp-docker-patterns]]
+      - [[csp-backend-mock-strategies]]
+    anti_rationalizations:
+      迁移脚本跑过 dev 就行: "dev 数据量小锁不住；生产百万行表的 ACCESS EXCLUSIVE 锁、回滚路径、backfill 一致性必须在类生产环境测"
+      回滚脚本写了不用测: "没测过的回滚脚本 = 没有回滚脚本；生产事故时才发现 down 跑不通代价是灾难级的"
+      ORM 自动生成迁移不用审: "Prisma/Drizzle/Alembic autogenerate 会产出 ADD COLUMN NOT NULL DEFAULT（PG<11 重写全表）这类危险操作；必须 lint + 人审"
   csp-db-performance:
     phase: build
     domain: patterns
@@ -2585,6 +2950,31 @@ skills:
       - csp-frontend-design
       - csp-responsive-design
       - csp-design-hub
+  csp-differential-testing:
+    phase: verify
+    domain: testing
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
+    related_skills:
+      - [[csp-property-based-testing]]
+      - [[csp-db-migration]]
+      - [[csp-db-migration-testing]]
+      - [[csp-api-governance]]
+      - [[csp-test-methodology]]
+      - [[csp-cross-layer-testing]]
+      - [[csp-ai-regression-testing]]
+      - [[csp-db-state-assertion]]
+    anti_rationalizations:
+      重写后跑一遍 E2E 就够了: "E2E 只覆盖你想到的路径；差分测试用生产流量或 property 生成覆盖你想不到的输入空间"
+      新旧实现逻辑一样不需要对比: "'一样'是假设不是事实；差分测试把假设变成证据—— divergence 即 bug"
+      影子流量有 PII 风险: "用 redaction middleware 脱敏后再 replay；不脱敏直接 replay 才是风险"
   csp-django-patterns:
     phase: build
     domain: patterns
@@ -2706,6 +3096,9 @@ skills:
       - Glob
       - Grep
       - Bash
+    related_skills:
+      - [[check]]
+      - [[qa]]
   csp-email-systems:
     phase: build
     domain: patterns
@@ -2770,6 +3163,9 @@ skills:
       - Bash
       - WebFetch
       - WebSearch
+    related_skills:
+      - [[retro]]
+      - [[qa]]
   csp-fal-ai-media:
     phase: build
     domain: patterns
@@ -2818,6 +3214,10 @@ skills:
       - Glob
       - Grep
       - Bash
+    related_skills:
+      - [[check]]
+      - [[edge]]
+      - [[flow-web]]
   csp-flow-web:
     phase: build
     domain: patterns
@@ -2830,6 +3230,11 @@ skills:
       - Glob
       - Grep
       - Bash
+    related_skills:
+      - [[check]]
+      - [[edge]]
+      - [[flow-mobile]]
+      - [[chart]]
   csp-frame:
     phase: define
     domain: patterns
@@ -2842,6 +3247,10 @@ skills:
       - Glob
       - Grep
       - Bash
+    related_skills:
+      - [[brief]]
+      - [[probe]]
+      - [[bench]]
   csp-frontend-design:
     phase: plan
     domain: patterns
@@ -2890,6 +3299,31 @@ skills:
       - Bash
       - Glob
       - Grep
+  csp-fuzz-testing:
+    phase: verify
+    domain: testing
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
+    related_skills:
+      - [[csp-property-based-testing]]
+      - [[csp-security-review]]
+      - [[csp-test-methodology]]
+      - [[csp-cpp-testing]]
+      - [[csp-rust-testing]]
+      - [[csp-golang-testing]]
+      - [[csp-python-testing]]
+      - [[csp-cicd-pipelines]]
+    anti_rationalizations:
+      我们输入都校验过了: "校验逻辑本身就是攻击面；fuzz 找的是校验绕过、解析器崩溃、整数溢出——正是校验没覆盖的路径"
+      fuzz 太慢不能进 CI: "60s smoke fuzz 进 PR 门禁，24h deep fuzz 进 nightly/OSS-Fuzz；两层互补"
+      Rust/Go 内存安全不需要 fuzz: "内存安全 ≠ 逻辑安全；panic、unwrap、整数溢出、死循环、协议状态机错乱照 fuzz 不误"
   csp-git-conventions:
     phase: build
     domain: devops
@@ -2985,6 +3419,30 @@ skills:
       - Bash
       - Glob
       - Grep
+  csp-i18n-testing:
+    phase: verify
+    domain: testing
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
+    related_skills:
+      - [[csp-i18n-frameworks]]
+      - [[csp-locale-management]]
+      - [[csp-playwright-ui-test]]
+      - [[csp-e2e-testing]]
+      - [[csp-react-testing]]
+      - [[csp-test-methodology]]
+      - [[csp-visual-regression]]
+    anti_rationalizations:
+      我们只支持中文不需要 i18n 测试: "即使单语言，ICU 复数规则、日期/数字格式、RTL 预留位、字符串拼接都会出错；i18n 测试本质是*文案健壮性*测试"
+      翻译外包了不用测: "外包翻译质量不可控；completeness gate + pseudo-localization 能在翻译到位前就抓住硬编码字符串和截断问题"
+      跑一遍 en-US 就够了: "ICU 语法错误、CJK 截断、RTL 布局、复数规则差异只在非英语 locale 暴露；至少测 en/de/ja/ar/qps-ploc 五个"
   csp-image-to-code:
     phase: build
     domain: patterns
@@ -3015,6 +3473,27 @@ skills:
       - Bash
       - Glob
       - Grep
+  csp-integration-review:
+    phase: verify
+    domain: testing
+    role: reviewer
+    scope: review
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
+    related_skills:
+      - [[pattern:csp-cross-layer-testing]]
+      - [[workflow:csp-code-review]]
+      - [[pattern:csp-db-state-assertion]]
+      - [[pattern:csp-api-governance]]
+    anti_rationalizations:
+      The backend and frontend are separate repos, integration is their problem: "Integration is always your problem. A field rename on the backend silently breaks the frontend unless verified."
+      I'll check integration manually after deploy: "Manual integration checks after deploy find problems that should have been caught in review. Run the 11-scenario review BEFORE merge."
+      The API contract hasn't changed, no need to review: "Static contracts are not runtime truth. DB schema drifts, ORM aliases, and FE type staleness happen without contract changes."
   csp-investor-materials:
     phase: build
     domain: patterns
@@ -3075,6 +3554,10 @@ skills:
       - Glob
       - Grep
       - Bash
+    related_skills:
+      - [[stories]]
+      - [[sitemap]]
+      - [[flow-web]]
   csp-jpa-patterns:
     phase: build
     domain: patterns
@@ -3235,6 +3718,9 @@ skills:
       - Glob
       - Grep
       - Bash
+    related_skills:
+      - [[prd]]
+      - [[retro]]
   csp-mle-workflow:
     phase: build
     domain: patterns
@@ -3335,6 +3821,8 @@ skills:
       - Glob
       - Grep
       - Bash
+    related_skills:
+      - [[check]]
   csp-motion-plan:
     phase: build
     domain: patterns
@@ -3347,6 +3835,31 @@ skills:
       - Glob
       - Grep
       - Bash
+    related_skills:
+      - [[motion-apply]]
+  csp-mutation-testing:
+    phase: verify
+    domain: testing
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
+    related_skills:
+      - [[csp-test-methodology]]
+      - [[csp-verification]]
+      - [[csp-tdd]]
+      - [[csp-test-case-design]]
+      - [[csp-ai-regression-testing]]
+      - [[csp-cicd-pipelines]]
+    anti_rationalizations:
+      覆盖率 80% 就够了: "行覆盖只证明代码被执行，不证明断言有效；一个空 assert 也能 100% 覆盖——mutation 测的是测试本身"
+      mutation 太慢不能进 CI: "incremental 模式 + mutate glob 限定到核心模块，PR 门禁 < 5 分钟；全量跑放 nightly"
+      100% mutation score 才是目标: "等价变异体（语义不变的突变）永远杀不死；70-85% 是工程现实，追逐 100% 是浪费"
   csp-nestjs-patterns:
     phase: build
     domain: patterns
@@ -3395,6 +3908,31 @@ skills:
       - Bash
       - Glob
       - Grep
+  csp-observability-testing:
+    phase: verify
+    domain: testing
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
+    related_skills:
+      - [[csp-observability-and-instrumentation]]
+      - [[csp-monitoring-alerting]]
+      - [[csp-cross-layer-testing]]
+      - [[csp-test-methodology]]
+      - [[csp-python-testing]]
+      - [[csp-java-testing]]
+      - [[csp-typescript-testing]]
+      - [[csp-docker-patterns]]
+    anti_rationalizations:
+      上线后看 Grafana 就行: "上线后发现 telemetry 缺失 = 事故已经发生且无法诊断；测试时断言 log/metric/trace 形状是把可观测性左移"
+      日志是给人看的不用测: "结构化日志是给机器查的；字段名/类型/基数稳定性就是 API 契约，破坏它等于破坏下游告警和仪表盘"
+      trace 只要接了 OTel 就对了: "接了 ≠ 传播对了；parent/child 断链、span 命名漂移、属性缺失只有测试时断言才能抓"
   csp-package-publishing:
     phase: ship
     domain: patterns
@@ -3460,6 +3998,11 @@ skills:
       - Glob
       - Grep
       - Bash
+    related_skills:
+      - [[prd]]
+      - [[flow-web]]
+      - [[metric]]
+      - [[retro]]
   csp-platform-deploy:
     phase: ship
     domain: patterns
@@ -3545,6 +4088,10 @@ skills:
       - Glob
       - Grep
       - Bash
+    related_skills:
+      - [[extract]]
+      - [[qa]]
+      - [[metric]]
   csp-privacy-compliance:
     phase: build
     domain: patterns
@@ -3569,6 +4116,9 @@ skills:
       - Glob
       - Grep
       - Bash
+    related_skills:
+      - [[brief]]
+      - [[journey]]
   csp-product-capability:
     phase: plan
     domain: patterns
@@ -3622,6 +4172,31 @@ skills:
       - Bash
       - Glob
       - Grep
+  csp-property-based-testing:
+    phase: verify
+    domain: testing
+    role: specialist
+    scope: implementation
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
+    related_skills:
+      - [[csp-test-case-design]]
+      - [[csp-test-methodology]]
+      - [[csp-python-testing]]
+      - [[csp-typescript-testing]]
+      - [[csp-rust-testing]]
+      - [[csp-java-testing]]
+      - [[csp-fuzz-testing]]
+      - [[csp-differential-testing]]
+    anti_rationalizations:
+      例子测试已经够了: "例子只覆盖你想到的输入；property 生成你想不到的边界，并自动 shrink 到最小反例"
+      PBT 太慢不适合 CI: "默认 100 次迭代 < 1s；用 example database 缓存失败种子，CI 跑回归而非探索"
+      我们的代码没有不变量: roundtrip(encode∘decode=id)、幂等、单调、守恒——绝大多数纯函数都有可表达的不变量
   csp-python-coding-standards:
     phase: build
     domain: patterns
@@ -3691,6 +4266,10 @@ skills:
       - Bash
       - WebFetch
       - WebSearch
+    related_skills:
+      - [[retro]]
+      - [[metric]]
+      - [[prd]]
   csp-qa-test-engineering:
     phase: verify
     domain: quality
@@ -3855,6 +4434,7 @@ skills:
       - Glob
       - Grep
       - Bash
+    related_skills: []
   csp-ruff-fixer:
     phase: review
     domain: quality
@@ -3893,6 +4473,27 @@ skills:
       - Bash
       - Glob
       - Grep
+  csp-santa-method:
+    phase: verify
+    domain: quality
+    role: reviewer
+    scope: review
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
+    related_skills:
+      - [[csp-code-review]]
+      - [[csp-verification]]
+      - [[csp-agent-self-evaluation]]
+      - [[csp-council]]
+    anti_rationalizations:
+      One reviewer is enough: "A single agent reviewing its own output shares the same biases and systematic errors. Two independent reviewers break this failure mode."
+      This is too simple for dual review: "If it ships to users, it deserves verification. Rubric scales with complexity — simple output gets simple pass/fail checks."
+      Dual review costs too much: "A production bug costs far more. Batch sampling reduces cost to 15-20% while catching >90% of systematic issues."
   csp-scope:
     phase: define
     domain: patterns
@@ -3905,6 +4506,9 @@ skills:
       - Glob
       - Grep
       - Bash
+    related_skills:
+      - [[brief]]
+      - [[audit]]
   csp-search-first:
     phase: build
     domain: patterns
@@ -3954,6 +4558,9 @@ skills:
       - Glob
       - Grep
       - Bash
+    related_skills:
+      - [[brief]]
+      - [[journey]]
   csp-sitemap:
     phase: plan
     domain: patterns
@@ -3966,6 +4573,11 @@ skills:
       - Glob
       - Grep
       - Bash
+    related_skills:
+      - [[flow-web]]
+      - [[flow-mobile]]
+      - [[edge]]
+      - [[chart]]
   csp-spec-adr:
     phase: plan
     domain: architecture
@@ -4043,6 +4655,11 @@ skills:
       - Glob
       - Grep
       - Bash
+    related_skills:
+      - [[sitemap]]
+      - [[flow-web]]
+      - [[flow-mobile]]
+      - [[prd]]
   csp-strategic-compact:
     phase: build
     domain: patterns
@@ -4137,17 +4754,7 @@ skills:
       - Bash
     dependencies:
       skills: []
-    related_skills:
-      - csp-check
-      - csp-access
-      - csp-edge
-      - csp-flow-web
-      - csp-flow-mobile
-      - csp-metric
-      - csp-probe
-      - csp-qa
-      - csp-retro
-      - csp-pitch
+    related_skills: []
     anti_rationalizations:
       We don't have time for user testing: "Mode B heuristic review can run in hours, not weeks."
       We can't find users right now: "Mode B works without users — code review + Nielsen heuristics."
@@ -4228,6 +4835,25 @@ skills:
       - Bash
       - Glob
       - Grep
+  csp-user-system-design:
+    phase: plan
+    domain: architecture
+    role: specialist
+    scope: design
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
+    dependencies: {}
+    related_skills:
+      - csp-oauth-integration
+      - csp-subscription-management
+      - csp-privacy-compliance
+      - csp-backend-patterns
+      - csp-security-review
+      - csp-api-governance
   csp-video-editing:
     phase: build
     domain: patterns
@@ -4375,6 +5001,15 @@ skills:
       - Bash
       - Glob
       - Grep
+    related_skills:
+      - [[csp-java-testing]]
+      - [[csp-concurrency-testing]]
+      - [[csp-property-based-testing]]
+      - [[csp-mock-strategies]]
+      - [[csp-backend-mock-strategies]]
+      - [[csp-test-methodology]]
+      - [[csp-springboot-patterns]]
+      - [[csp-tdd]]
   python-patterns:
     phase: build
     domain: patterns
