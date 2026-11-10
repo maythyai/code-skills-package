@@ -1,6 +1,6 @@
 {
   "name": "code-skills-package",
-  "version": "0.11.1",
+  "version": "0.12.0",
   "description": "Unified AI programming skills for 18 coding platforms — auto-routing, lazy loading, spec-driven workflows",
   "bin": {
     "csp-install": "./install.sh",
@@ -39,14 +39,17 @@
     "build:edges": "node scripts/build-skpg-edges.mjs",
     "build:page": "node shared/scripts/build-page.mjs",
     "build:overview": "node shared/scripts/build-overview-svg.mjs",
-    "build:all": "npm run build:registry && npm run build:metadata && npm run gen:triggers && npm run fix:triggers && npm run build:graph && npm run build:page && npm run build:overview",
+    "build:all": "npm run build:registry && npm run build:metadata && npm run gen:triggers && npm run fix:triggers && npm run build:graph && npm run build:page && npm run build:overview && npm run version:sync",
     "count:skills": "node scripts/count-skills.mjs",
     "audit:coverage": "node scripts/audit-skill-coverage.mjs",
     "validate:skills": "node scripts/validate-skill-v2.mjs csp-patterns/skills && node scripts/validate-skill-v2.mjs csp-meta/skills && node scripts/validate-skill-v2.mjs csp-workflow/skills && node scripts/validate-skill-v2.mjs csp-runtime/skills && node scripts/count-skills.mjs",
     "validate:triggers": "node scripts/validate-triggers.mjs",
     "validate:registry": "node scripts/validate-registry.mjs",
     "validate:all": "npm run validate:skills && npm run validate:triggers && npm run validate:registry",
-    "test": "npm run validate:all && npm run build:graph && node --test 'test/*.test.mjs'"
+    "test": "npm run validate:all && npm run build:graph && node --test 'test/*.test.mjs'",
+    "version:sync": "node scripts/sync-version.mjs",
+    "preversion": "npm test",
+    "postversion": "node scripts/sync-version.mjs && git add VERSION CLAUDE.md install.sh README.md README_zh.md && git commit -m \"chore: sync version files to match package.json\" || echo \"postversion: version files already in sync\""
   },
   "keywords": [
     "ai",

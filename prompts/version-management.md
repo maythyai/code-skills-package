@@ -2,7 +2,7 @@
 
 > 本文件是版本号管理规则的**权威定义**，供 roadmap/06/05/README 引用。各提示词内仍保留各自相关内容；与本文件冲突时以本文件为准。
 >
-> ⚠️ **本文件出现的所有具体版本号（如 `v1.3.0`、`v1.105.269`、`vX.Y.Z`）与代号（`Mxx-codename`）均为 SemVer 规则的格式示例，不是本仓库的真实版本。** 本仓库真实版本以 `VERSION` 文件与 `git tag` 为准（当前 `0.11.1`）。切勿把示例版本号当作项目当前版本或历史 tag 来引用/对齐。
+> ⚠️ **本文件出现的所有具体版本号（如 `v1.3.0`、`v1.105.269`、`vX.Y.Z`）与代号（`Mxx-codename`）均为 SemVer 规则的格式示例，不是本仓库的真实版本。** 本仓库为纯 npm 包，**唯一真源 = `package.json.version`**；`VERSION` / `install.sh`（`readonly VERSION=`）/ `CLAUDE.md` 标题 / README×2 badge 均为派生，由 `scripts/sync-version.mjs` 从 package.json 同步（已接入 `npm run build:all` 末尾与 `npm version` 的 `postversion` 钩子）。发版一律用 `npm version <patch|minor|major>`，切勿手改派生文件；CI 的 `test/csp-invariants.test.mjs` 会拦截任何漂移。切勿把示例版本号当作项目当前版本或历史 tag 来引用/对齐。
 
 ## 一、默认 SemVer（X.Y.Z）
 

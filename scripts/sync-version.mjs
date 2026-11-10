@@ -1,9 +1,10 @@
 #!/usr/bin/env node
-// scripts/sync-version.js
-// 以 package.json.version 为唯一数据源，同步到所有文件。
+// scripts/sync-version.mjs
+// 唯一真源 = package.json.version；VERSION / CLAUDE.md / install.sh / README×2 均为派生产物。
+// 已接入 `npm run build:all` 末尾与 `npm version` 的 postversion 钩子，日常无需手动跑。
 // 用法:
-//   node scripts/sync-version.js              # 同步当前 package.json 版本
-//   node scripts/sync-version.js 0.8.0        # 先更新版本再同步
+//   node scripts/sync-version.mjs              # 以当前 package.json 版本同步所有派生文件
+//   node scripts/sync-version.mjs 0.13.0       # 先改 package.json 版本再同步（或直接用 npm version）
 
 import { readFileSync, writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';

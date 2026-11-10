@@ -15,6 +15,9 @@ on:
       - 'README_zh.md'
       - 'CLAUDE.md'
       - 'docs/SKILL-INDEX.md'
+      - 'package.json'
+      - 'install.sh'
+      - 'VERSION'
   pull_request:
     paths:
       - 'csp-router/**'
@@ -28,6 +31,9 @@ on:
       - 'README_zh.md'
       - 'CLAUDE.md'
       - 'docs/SKILL-INDEX.md'
+      - 'package.json'
+      - 'install.sh'
+      - 'VERSION'
   workflow_dispatch:
 
 jobs:
@@ -63,3 +69,6 @@ jobs:
 
       - name: Check documented skill counts match registry
         run: node scripts/count-skills.mjs
+
+      - name: Check key-path invariants (version sync, counts, registry/graph shape)
+        run: node --test test/csp-invariants.test.mjs
