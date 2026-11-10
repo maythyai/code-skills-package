@@ -23,7 +23,7 @@ triggers:
   - "mutation testing"
   - "property based"
   - "metamorphic testing"
-related_skills: [csp-cross-layer-testing, csp-tdd, csp-e2e-testing, csp-api-tester, csp-test-engineer, csp-webapp-testing, csp-brainstorming, csp-verification, csp-test-case-design]
+related_skills: [csp-cross-layer-testing, csp-tdd, csp-e2e-testing, csp-api-tester, csp-test-engineer, csp-webapp-testing, csp-brainstorming, csp-verification, csp-test-case-design, csp-contract-testing, csp-property-based-testing, csp-mutation-testing, csp-fuzz-testing, csp-chaos-testing, csp-differential-testing, csp-concurrency-testing, csp-a11y-testing, csp-i18n-testing, csp-observability-testing, csp-backend-mock-strategies, csp-db-migration-testing, csp-kotlin-testing]
 anti_rationalizations:
   "单测过了功能就没问题": "单测只证明纯逻辑对；集成断链、跨层不一致、UI 退化它全看不见——必须按盲点互补再叠一层"
   "E2E 覆盖了关键路径就够了": "E2E 慢且少，过不了边界数据/并发/错误路径；它有盲点，需 property/fuzz/negative 补位"
@@ -189,6 +189,26 @@ requirement ──maps──▶ [test method(s)]
 - 选了 E2E → 用 `csp-e2e-testing`；API → `csp-api-tester`；UI 退化 → `csp-visual-regression`
 - **选定方法后要枚举具体用例 → 用 `csp-test-case-design`**
 
+### 方法 → 落地 skill 分派表
+
+谱系(§2.2/§2.3)里点名的每种方法，现在都有对应的执行层 skill。选定方法后按下表落地：
+
+| 方法(§2 谱系) | 落地 skill | 补什么盲点 |
+|---------------|-----------|-----------|
+| Contract (CDC) | `csp-contract-testing` | 服务间版本兼容、字段漂移(Pact/Schemathesis/buf) |
+| Property-based | `csp-property-based-testing` | 边界/等价类、不变量(Hypothesis/fast-check/jqwik) |
+| Mutation | `csp-mutation-testing` | 测过≠测对——测试套件本身的质量(Stryker/PIT/mutmut) |
+| Fuzz | `csp-fuzz-testing` | 畸形输入致崩/安全(AFL++/libFuzzer/cargo-fuzz/Go fuzz) |
+| Chaos/fault-injection | `csp-chaos-testing` | 故障下行为、降级、恢复(Chaos Mesh/LitmusChaos/Toxiproxy) |
+| Differential | `csp-differential-testing` | 新旧实现/双跑一致性(GoReplay/oasdiff/Envoy mirror) |
+| 并发不变量 | `csp-concurrency-testing` | 竞态、线性一致性(Go race/jcstress/TSan/loom/Porcupine) |
+| a11y | `csp-a11y-testing` | 屏读、对比度、键盘(jest-axe/@axe-core/playwright/Pa11y) |
+| i18n/l10n | `csp-i18n-testing` | 文案长度、复数、locale(FormatJS/qps-ploc/多 locale E2E) |
+| telemetry/observability | `csp-observability-testing` | 能否诊断生产问题(caplog/prom-client/OTel exporter) |
+| 后端依赖隔离 | `csp-backend-mock-strategies` | 集成测试的真实依赖(Testcontainers/WireMock/LocalStack) |
+| 数据迁移 | `csp-db-migration-testing` | 迁移前后一致性、可回滚(Flyway/Alembic/squawk/gh-ost) |
+| Kotlin 深度 | `csp-kotlin-testing` | Kotest/MockK/coroutines-test/Turbine/Kover |
+
 ### 与 `csp-test-case-design` 的分工
 
 本技能回答"用哪种测试方法、盲点在哪、需求有没有被测过"；`csp-test-case-design` 回答
@@ -228,3 +248,16 @@ requirement ──maps──▶ [test method(s)]
 | `csp-test-engineer` | 用例设计、覆盖率分析 |
 | `csp-brainstorming` | 需求拆解 |
 | `csp-verification` | 验收门禁 |
+| `csp-contract-testing` | 消费者驱动契约、Pact/Schemathesis/buf |
+| `csp-property-based-testing` | 属性/不变量、生成器、shrinking |
+| `csp-mutation-testing` | 变异测试验测试质量、Stryker/PIT |
+| `csp-fuzz-testing` | 覆盖引导模糊、sanitizer、崩溃三分类 |
+| `csp-chaos-testing` | 稳态假设、爆炸半径、故障注入 |
+| `csp-differential-testing` | 流量回放、实现差分、规格 diff |
+| `csp-concurrency-testing` | 竞态检测、线性一致性、压力并发 |
+| `csp-a11y-testing` | WCAG 2.2 AA、axe-core、屏读/键盘 |
+| `csp-i18n-testing` | locale/复数/伪本地化、文案溢出 |
+| `csp-observability-testing` | 日志/指标/追踪的可诊断性断言 |
+| `csp-backend-mock-strategies` | Testcontainers/WireMock/LocalStack 后端隔离 |
+| `csp-db-migration-testing` | 迁移前后一致性、可回滚、squawk 门禁 |
+| `csp-kotlin-testing` | Kotest/MockK/coroutines-test/Turbine/Kover |
