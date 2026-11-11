@@ -20,6 +20,12 @@ Spec 验收门：PRD 含背景/目标/功能清单/Given-When-Then 验收标准�
 
 开发阶段（05）使用 [[workflow:csp-implementation-phase]]，遵循 TDD 流程 [[meta:csp-tdd]]，coding agent 遵守 [[pattern:csp-coding-standards]] 的全部命名/安全/跨层对齐规则。
 
+**全栈开发模式**（05 开发期间引导各层实现）：
+- 前端：`[[skill:csp-frontend-patterns]]`（组合/状态/性能/表单/数据获取，框架无关）
+- 后端：`[[skill:csp-backend-patterns]]`（API 设计/分层架构/错误处理/幂等/分页）
+- 数据库：`[[skill:csp-postgres-patterns]]`（Schema 设计/索引/查询优化）+ `[[skill:csp-db-migration]]`（Schema 变更/数据迁移/回滚/零停机）
+- API 治理：`[[skill:csp-api-governance]]`（契约/版本管理/限流/认证授权模式）
+
 自决策授权（默认自己拍板，不问我）：范围/优先级、Spec 歧义、Wave 排序、fix 路由（05 实现缺陷 / 03 Spec 缺口）、可逆整改（归档 re-point、版本漂移 bump）、CMS re-align、deferred 取舍——这些你自己定，定了记入 DEV-LOG 即可，不打断我。
 
 循环收敛：06 未过按根因回 05/03 修 delta 重验，循环到全绿；超 5 轮再报我。跨版本熔断：连续 3 个版本因同一根因失败，暂停并报我，附根因证据链。
@@ -36,6 +42,11 @@ Spec 验收门：PRD 含背景/目标/功能清单/Given-When-Then 验收标准�
     Check 5.5a: 无障碍审计 → [[agent:csp-a11y-architect]]（WCAG 2.2 AA 合规）
     Check 5.5b: 前端性能 → [[agent:csp-web-performance-auditor]]（CWV 不劣化）或 [[skill:csp-frontend-performance]]（bundle/缓存优化）
     Check 5.5c: 跨层契约验证 → [[skill:csp-cross-layer-testing]]（前后端接口契约一致性，UI→API→DB 往返 traceable）
+  Check 5.6: E2E 测试（有 UI 的项目必检）→ [[skill:csp-e2e-testing]]（全路由 sweep + 关键路径冒烟，Playwright/Cypress，exit 0）
+  Check 5.7: 视觉回归测试（有 UI 且改动了界面时必检）→ [[skill:csp-visual-regression]]（截图 vs 基线 diff，无意外变更）
+  Check 5.8: DB 迁移验证（有 DB schema 变更时必检）→ [[skill:csp-db-migration]]（正向/回滚 ran，数据完整性验证，exit 0）
+  Check 5.9: 安全审查 → [[skill:csp-security-review]]（鉴权/越权/注入/XSS/CSRF/敏感数据脱敏/依赖漏洞）
+  Check 5.10: 后端性能 → [[skill:csp-backend-performance]]（API P95/慢查询索引/N+1/缓存策略/连接池，有后端时选做）
   （工具链不可用 = BLOCKED，不得用 grep/review 替代动态门控）
 - S7 审查无 CRITICAL → [[workflow:csp-code-review]] + [[pattern:csp-santa-method]]（关键模块双审）
 - 跨层集成验证 → [[pattern:csp-integration-review]]（11 场景全栈契约审查）
@@ -57,6 +68,9 @@ Spec 验收门：PRD 含背景/目标/功能清单/Given-When-Then 验收标准�
 - tag（遵循 prompts/version-management.md §五 Tag 规则：v 前缀 + annotated + 不可变 + 一 commit 一 tag）
 - 六处版本同步 → `python3 prompts/scripts/version_integrity_check.py`
 - push origin → Release → 归档
+- CI/CD 管道验证 → [[skill:csp-cicd-pipelines]]（构建/测试/部署管道通过，GitHub Actions/Jenkins 绿）
+- 部署 → [[skill:csp-deployment]]（健康检查/回滚策略/灰度/蓝绿，无 downtime）
+- 可观测投产 → [[skill:csp-monitoring-alerting]] + [[skill:csp-observability-instrumentation]]（关键指标/日志/链路/告警规则已就绪）
 
 findings 回写契约：仅对"本版本真实修复且已验证"的 findings 回写；fixed_in 必须真实存在（tag/commit）+ verification 证据（file:line / ran+exit / 实机截图）。预关闭 → exit 1。
 
@@ -68,6 +82,10 @@ findings 回写契约：仅对"本版本真实修复且已验证"的 findings �
 每版本 checkpoint 落盘：更新 .csp/lifecycle-state.json + DEV-LOG 追加本轮决策摘要，保证会话中断可无损续跑。
 
 gate 即授权，全自动推进。打断条件（仅 5 类）：战略根本模糊 / PRD Rejected / 真破坏操作 / 多 tag 不明 / 无法 auto-resolve 的报错。07 复盘默认自动触发（[[pattern:csp-retro]]），lessons 并入下一版本 01 入口清单。质量自评可选用 [[pattern:csp-agent-self-evaluation]] 做 5 轴结构性复盘。
+
+迭代间代码健康维护（版本间隙或 07 复盘发现代码债时触发）：
+- 重构 → `[[skill:csp-refactoring-strategies]]`（Strangler Fig / Branch by Abstraction / 并行运行，大规模架构演进）
+- 代码整洁 → `[[skill:csp-code-simplification]]`（死代码清理/简化 AI 生成冗余/移除未使用依赖）
 
 完成每个版本按进度条格式播报，全部版本清空后输出总发布摘要再停。
 
@@ -99,21 +117,34 @@ gate 即授权，全自动推进。打断条件（仅 5 类）：战略根本模
 | 测试方法论 → 专项测试 skill 分派 | `[[meta:csp-test-methodology]]`（契约/属性/变异/模糊/混沌/差分/并发/无障碍/国际化/可观测/后端 mock/DB 迁移/Kotlin） |
 | 编码规范 | `[[pattern:csp-coding-standards]]` |
 | 前端开发模式 | `[[skill:csp-frontend-patterns]]`（组合/状态/性能/表单/数据获取/无障碍，框架无关） |
+| 后端开发模式 | `[[skill:csp-backend-patterns]]`（API 设计/分层架构/错误处理/幂等/分页）+ `[[skill:csp-postgres-patterns]]`（Schema 设计/索引/查询优化） |
+| 数据库迁移 | `[[skill:csp-db-migration]]`（Schema 变更/数据迁移/回滚/零停机） |
+| API 治理 | `[[skill:csp-api-governance]]`（契约/版本管理/限流/认证授权模式） |
 | 质量门控（S6） | `[[workflow:csp-release-manager]]`（全流程）或 `[[workflow:csp-verify-phase]]`（单独验证） |
 | 审查（S7） | `[[workflow:csp-code-review]]` |
 | 双审对抗验证 | `[[pattern:csp-santa-method]]` |
 | 跨层集成审查 | `[[pattern:csp-integration-review]]` |
+| 安全审查（S7 必检） | `[[skill:csp-security-review]]`（鉴权/越权/注入/XSS/CSRF/敏感数据脱敏/依赖漏洞） |
+| 后端性能 | `[[skill:csp-backend-performance]]`（API P95/慢查询索引/N+1/缓存策略/连接池） |
 | 无障碍审计 | `[[agent:csp-a11y-architect]]`（WCAG 2.2/语义化/焦点管理） |
 | 前端性能 | `[[agent:csp-web-performance-auditor]]`（CWV 审计）或 `[[skill:csp-frontend-performance]]`（bundle/缓存优化） |
 | 跨层契约测试 | `[[skill:csp-cross-layer-testing]]`（前后端契约验证/UI→API→DB 往返 traceable） |
+| E2E 测试 | `[[skill:csp-e2e-testing]]`（全路由 sweep/关键路径冒烟/浏览器自动化，Check 5.6） |
+| 视觉回归测试 | `[[skill:csp-visual-regression]]`（截图 vs 基线 diff，UI 意外变更检测，Check 5.7） |
+| 负载测试 | `[[skill:csp-load-testing]]`（k6/Locust，SLA 百分位/并发模型/瓶颈定位，选做） |
 | 四声部决策 | `[[pattern:csp-council]]`（架构/怀疑/务实/批评） |
 | AI 盲点回归测试 | `[[pattern:csp-ai-regression-testing]]` |
 | 任务自评 | `[[pattern:csp-agent-self-evaluation]]`（5 轴结构性复盘） |
 | Agent 治理 | `[[workflow:csp-agent-governance]]`（4 级安全护栏） |
 | 发布（S8） | `[[workflow:csp-ship]]` |
+| CI/CD 管道 | `[[skill:csp-cicd-pipelines]]`（构建/测试/部署管道，GitHub Actions） |
+| 部署策略 | `[[skill:csp-deployment]]`（健康检查/回滚/灰度/蓝绿/零 downtime） |
+| 可观测 | `[[skill:csp-monitoring-alerting]]` + `[[skill:csp-observability-instrumentation]]`（关键指标/日志/链路/告警） |
 | Git 规范 | `[[pattern:csp-git-conventions]]` |
 | 版本管理 | prompts/version-management.md（规则参考文档） |
 | 复盘（S10） | `[[pattern:csp-retro]]` |
+| 重构策略 | `[[skill:csp-refactoring-strategies]]`（Strangler Fig/Branch by Abstraction/并行运行，大规模架构演进） |
+| 代码整洁 | `[[skill:csp-code-simplification]]`（死代码清理/简化 AI 冗余/移除未使用依赖） |
 | 文档治理 | `[[workflow:csp-documentation-governance]]` |
 | 文档生命周期 | `[[workflow:csp-doc-lifecycle-manager]]` |
 | 用户体系设计 | `[[pattern:csp-user-system-design]]`（账号/RBAC/认证/数据模型） |
