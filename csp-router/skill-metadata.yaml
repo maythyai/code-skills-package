@@ -4,7 +4,7 @@
 # Regenerate: node scripts/build-skill-metadata.mjs
 
 version: 2.0
-generated_at: 2026-11-11T09:26:41.207Z
+generated_at: 2026-11-11T09:45:13.735Z
 skills:
   csp-agent-teams:
     phase: review
@@ -3051,6 +3051,25 @@ skills:
       经验库过期了删掉重跑: 先合并更新成功率加权，盲目删除会丢失稳定策略；页面结构确实变了才重新探测
       生成的脚本带调试日志也无所谓: "生产脚本必须移除 console.log/思考注释/尝试代码，只保留确定性操作"
       登录步骤也写进脚本: "登录由 auth.setup 统一处理，生成脚本时必须过滤掉登录相关步骤"
+  csp-e2e-deep-audit:
+    phase: verify
+    domain: quality
+    role: specialist
+    scope: testing
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
+    related_skills:
+      - csp-e2e-testing
+      - csp-codebase-audit
+      - csp-browser-testing-with-devtools
+      - csp-audit
+    anti_rationalizations:
+      E2E 太慢了不跑: "深度审计按需触发（发布前/大重构后），不进日常 PR CI"
   csp-e2e-testing:
     phase: build
     domain: patterns

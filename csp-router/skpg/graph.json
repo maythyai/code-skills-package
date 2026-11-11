@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generated_at": "2026-11-11T09:26:44.124Z",
+  "generated_at": "2026-11-11T09:45:16.562Z",
   "nodes": {
     "5b37ecd541b4": {
       "id": "5b37ecd541b4",
@@ -2987,6 +2987,19 @@
         "domain": "testing",
         "role": "expert",
         "path": "csp-patterns/skills/csp-e2e-case-automation/SKILL.md"
+      }
+    },
+    "bbca97876961": {
+      "id": "bbca97876961",
+      "kind": "skill",
+      "name": "csp-e2e-deep-audit",
+      "metadata": {
+        "layer": 3,
+        "category": "patterns",
+        "phase": "verify",
+        "domain": "quality",
+        "role": "specialist",
+        "path": "csp-patterns/skills/csp-e2e-deep-audit/SKILL.md"
       }
     },
     "254b9286a000": {
@@ -20300,6 +20313,30 @@
       "kind": "trigger",
       "name": "review integration necessity code",
       "metadata": {}
+    },
+    "336f8ccc8a18": {
+      "id": "336f8ccc8a18",
+      "kind": "trigger",
+      "name": "e2e deep audit",
+      "metadata": {}
+    },
+    "75b7945856c5": {
+      "id": "75b7945856c5",
+      "kind": "trigger",
+      "name": "e2e-deep-audit",
+      "metadata": {}
+    },
+    "16adaa08a341": {
+      "id": "16adaa08a341",
+      "kind": "trigger",
+      "name": "fix e2e deep audit",
+      "metadata": {}
+    },
+    "60d432507364": {
+      "id": "60d432507364",
+      "kind": "trigger",
+      "name": "review e2e deep audit",
+      "metadata": {}
     }
   },
   "edges": [
@@ -23330,6 +23367,12 @@
     {
       "source": "111abe928151",
       "target": "97b0ff5b96a9",
+      "kind": "triggers",
+      "metadata": {}
+    },
+    {
+      "source": "111abe928151",
+      "target": "bbca97876961",
       "kind": "triggers",
       "metadata": {}
     },
@@ -33738,6 +33781,30 @@
       "metadata": {}
     },
     {
+      "source": "336f8ccc8a18",
+      "target": "bbca97876961",
+      "kind": "triggers",
+      "metadata": {}
+    },
+    {
+      "source": "75b7945856c5",
+      "target": "bbca97876961",
+      "kind": "triggers",
+      "metadata": {}
+    },
+    {
+      "source": "16adaa08a341",
+      "target": "bbca97876961",
+      "kind": "triggers",
+      "metadata": {}
+    },
+    {
+      "source": "60d432507364",
+      "target": "bbca97876961",
+      "kind": "triggers",
+      "metadata": {}
+    },
+    {
       "source": "b2e754d45580",
       "target": "5b37ecd541b4",
       "kind": "contains",
@@ -35366,6 +35433,12 @@
     {
       "source": "e94f651cc1ba",
       "target": "97b0ff5b96a9",
+      "kind": "contains",
+      "metadata": {}
+    },
+    {
+      "source": "e94f651cc1ba",
+      "target": "bbca97876961",
       "kind": "contains",
       "metadata": {}
     },
@@ -38522,6 +38595,12 @@
     {
       "source": "207aa78c0c90",
       "target": "97b0ff5b96a9",
+      "kind": "contains",
+      "metadata": {}
+    },
+    {
+      "source": "207aa78c0c90",
+      "target": "bbca97876961",
       "kind": "contains",
       "metadata": {}
     },
@@ -42738,6 +42817,30 @@
       "metadata": {}
     },
     {
+      "source": "bbca97876961",
+      "target": "254b9286a000",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "bbca97876961",
+      "target": "1179b083c804",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "bbca97876961",
+      "target": "e580c3063a02",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "bbca97876961",
+      "target": "e70df71c4fdb",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
       "source": "f341ad4df4a6",
       "target": "247ff7f68d2e",
       "kind": "related_to",
@@ -45806,6 +45909,30 @@
     {
       "source": "97b0ff5b96a9",
       "target": "7695c0568b6e",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "bbca97876961",
+      "target": "254b9286a000",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "bbca97876961",
+      "target": "1179b083c804",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "bbca97876961",
+      "target": "e580c3063a02",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "bbca97876961",
+      "target": "e70df71c4fdb",
       "kind": "depends_on",
       "metadata": {}
     },
@@ -54552,6 +54679,12 @@
       "metadata": {}
     },
     {
+      "source": "97b0ff5b96a9",
+      "target": "bbca97876961",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
       "source": "254b9286a000",
       "target": "c026209eb059",
       "kind": "related_to",
@@ -57187,19 +57320,19 @@
     }
   ],
   "stats": {
-    "node_count": 2744,
-    "edge_count": 6147,
-    "skill_count": 709,
-    "trigger_count": 2025,
+    "node_count": 2749,
+    "edge_count": 6163,
+    "skill_count": 710,
+    "trigger_count": 2029,
     "phase_count": 6,
     "category_count": 5,
-    "depends_on_count": 1629,
-    "related_to_count": 1237,
+    "depends_on_count": 1633,
+    "related_to_count": 1242,
     "edge_types": {
-      "contains": 1042,
-      "triggers": 2239,
-      "depends_on": 1629,
-      "related_to": 1237
+      "contains": 1044,
+      "triggers": 2244,
+      "depends_on": 1633,
+      "related_to": 1242
     }
   }
 }

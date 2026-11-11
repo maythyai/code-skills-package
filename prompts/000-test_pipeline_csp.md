@@ -451,10 +451,27 @@ TQ 质量门控 ←── 测试证据 + 审计 findings ──→ 裁决报告
 
 | 审计类型 | CSP Skill | 适用场景 |
 |---------|-----------|---------|
-| 模块化审计 + 可用性审查 | `[[skill:csp-audit]]`（模块拆解/四层联动/Nielsen 10/裁决报告/版本 bump 建议） | 全面体检：里程碑后/大重构后 |
-| E2E 深度审计 | `[[skill:csp-e2e-deep-audit]]`（全路由 sweep/按钮级点击/孤儿路由/结构健康/IA 评审） | 发布前全量体检 |
-| 代码库审计 | `[[skill:csp-codebase-audit]]`（多维度并行扫描：安全/性能/可观测/架构） | 迭代间快速扫描 |
+| 模块化审计 + 可用性审查 | `[[skill:csp-audit]]`（模块拆解/四层联动/Nielsen 10/裁决报告/版本 bump） | 全面体检 |
+| E2E 深度审计 | `[[skill:csp-e2e-deep-audit]]`（全路由 sweep/按钮级点击/孤儿路由/结构健康/IA 评审） | 发布前全量 |
+| 代码库审计 | `[[skill:csp-codebase-audit]]`（多维度并行扫描：安全/性能/可观测/架构） | 迭代间 |
 | 结构审计（轻量） | `[[skill:csp-code-simplification]]`（死代码/重复/命名/类型漂移） | 每个版本 |
+| 可用性测试 | `[[skill:csp-test]]`（Nielsen 10 启发式评估/用户测试 Mode A/B） | 里程碑后 |
+| 无障碍审计 | `[[skill:csp-access]]`（WCAG 2.1 AA/axe/Playwright/Lighthouse 扫描） | 前端项目 |
+| 需求可追溯审计 | `[[skill:csp-prd-traceability]]`（AC→测试方法映射/缺口识别/孤儿用例检测） | 每个版本 |
+| 技术债评估 | `[[skill:csp-tech-debt-assessment]]`（债规模/利息/偿还优先级） | 里程碑后 |
+| 缺陷挖掘 | `[[skill:csp-defect-mining]]`（测试套件平台期→换方法挖掘/4 层递进） | 测试 plateau |
+| AI 盲点回归 | `[[skill:csp-ai-regression-testing]]`（AI 生成代码已知缺陷模式回归） | 每个版本 |
+| 跨层集成审查 | `[[skill:csp-integration-review]]`（11 场景全栈契约审查） | 每版本 |
+| UI 对齐审查 | `[[skill:csp-ui-alignment-review]]`（Figma/原型 vs 实现对齐） | 前端改动时 |
+| 设计还原审查 | `[[skill:csp-qa]]`（设计还原度/发布裁决 Pass/Warning/Fail） | 发布前 |
+| 代码审查（多审） | `[[skill:csp-multi-review]]`（分层评审/置信度门控/去重合并） | 每个 PR |
+| 代码审查（标准） | `[[skill:csp-code-review]]`（正确性/复用/简化/效率） | 每个 PR |
+| 安全审查 | `[[skill:csp-security-review]]`（鉴权/越权/注入/依赖 CVE） | 每个版本 |
+| 后端性能 | `[[skill:csp-backend-performance]]`（API P95/慢查询/N+1/缓存/连接池） | 有后端时 |
+| 前端性能审计 | `[[skill:csp-web-performance-auditor]]`（CWV 审计/加载/渲染/网络） | 前端项目 |
+| 前端性能优化 | `[[skill:csp-frontend-performance]]`（bundle 分析/代码分割/缓存策略） | 前端项目 |
+| 可观测审计 | `[[skill:csp-observability-and-instrumentation]]` + `[[skill:csp-monitoring-alerting]]`（日志/指标/链路/告警） | 每个版本 |
+| 重构策略 | `[[skill:csp-refactoring-strategies]]`（Strangler Fig/并行运行/分支抽象） | 需要时 |
 
 ---
 

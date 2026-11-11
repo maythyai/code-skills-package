@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "total_skills": 709,
+  "total_skills": 710,
   "shards": [],
   "skill_metadata": "skill-metadata.yaml",
   "skills": [
@@ -4085,6 +4085,21 @@
       },
       "stack_detection": false,
       "path": "csp-patterns/skills/csp-e2e-case-automation/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-e2e-deep-audit",
+      "description": "Deep E2E product audit — full route sweep, button-level click audit, orphan route detection, hidden backend functionality audit, structural health checks (schema drift, type check, mock debt), and IA rationality review. Use for pre-release comprehensive health check, not daily PR feedback (too heavy",
+      "layer": 3,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/csp-e2e-deep-audit/SKILL.md",
       "deps": [],
       "priority": 10
     },

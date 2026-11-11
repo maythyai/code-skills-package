@@ -1173,7 +1173,7 @@ trigger_index:
     skills: [csp-domain-researcher]
     weight: 40
   "e2e":
-    skills: [csp-e2e-runner, csp-e2e-case-automation]
+    skills: [csp-e2e-runner, csp-e2e-case-automation, csp-e2e-deep-audit]
     weight: 40
   "e2e runner":
     skills: [csp-e2e-runner]
@@ -6138,6 +6138,20 @@ trigger_index:
     weight: 40
   "review integration necessity code":
     skills: [csp-integration-necessity-review]
+    weight: 40
+
+  # ─── auto-generated triggers (generate-triggers.mjs) ───
+  "e2e deep audit":
+    skills: [csp-e2e-deep-audit]
+    weight: 40
+  "e2e-deep-audit":
+    skills: [csp-e2e-deep-audit]
+    weight: 40
+  "fix e2e deep audit":
+    skills: [csp-e2e-deep-audit]
+    weight: 40
+  "review e2e deep audit":
+    skills: [csp-e2e-deep-audit]
     weight: 40
 stack_rules:
   python:
