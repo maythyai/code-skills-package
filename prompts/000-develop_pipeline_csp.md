@@ -26,6 +26,8 @@ Spec 验收门：PRD 含背景/目标/功能清单/Given-When-Then 验收标准�
 - 数据库：`[[skill:csp-postgres-patterns]]`（Schema 设计/索引/查询优化）+ `[[skill:csp-db-migration]]`（Schema 变更/数据迁移/回滚/零停机）
 - API 治理：`[[skill:csp-api-governance]]`（契约/版本管理/限流/认证授权模式）
 
+**测试嵌入**：开发期间测试并行推进——`[[prompts/000-test_pipeline_csp.md]]` 从当前版本的 PRD SPEC 提取测试依据→设计用例→分层实施，产出测试证据直接嵌入 S6 质量门控。
+
 自决策授权（默认自己拍板，不问我）：范围/优先级、Spec 歧义、Wave 排序、fix 路由（05 实现缺陷 / 03 Spec 缺口）、可逆整改（归档 re-point、版本漂移 bump）、CMS re-align、deferred 取舍——这些你自己定，定了记入 DEV-LOG 即可，不打断我。
 
 循环收敛：06 未过按根因回 05/03 修 delta 重验，循环到全绿；超 5 轮再报我。跨版本熔断：连续 3 个版本因同一根因失败，暂停并报我，附根因证据链。
@@ -150,6 +152,31 @@ gate 即授权，全自动推进。打断条件（仅 5 类）：战略根本模
 | 用户体系设计 | `[[pattern:csp-user-system-design]]`（账号/RBAC/认证/数据模型） |
 | GDPR 隐私合规 | `[[pattern:csp-privacy-compliance]]`（含 GDPR 工程参考） |
 | 前端开发 | `[[skill:csp-frontend-patterns]]`（CSP 原生前端模式入口）或 prompts/frontend-development.md（零依赖独立 prompt） |
+
+---
+
+## 三文档协作关系
+
+本文件是 CSP 三件套之一（开发段），与另外两个文件配合使用：
+
+```
+000-product-planning_csp.md
+  │  产出：ROADMAP + PRD SPECs + FEATURES
+  │
+  └──→ 000-develop_pipeline_csp.md（本文件）
+          │  开发 Pipeline：01→02→03→04→05→06→07→08→10
+          │  每版本 01 从 PRD SPEC 升级模式启动
+          │
+          ├──← 06 质量门控消费测试证据
+          │       │
+000-test_pipeline_csp.md ←──┘
+  │  测试 Pipeline：TB→TD→TU→TI→TE→TV→TP→TSEC→TQ
+  │  从 PRD SPEC 提取测试依据 → 分层实施 → 嵌入 S6 门控
+```
+
+- **上游输入** = `000-product-planning_csp.md` 产出的 PRD SPECs + ROADMAP
+- **本文件职责** = 版本交付：Spec→开发→质量门控→发布→复盘
+- **测试嵌入** = `000-test_pipeline_csp.md` 提供测试依据/设计/实施/证据，嵌入 S6 门控
 
 ---
 

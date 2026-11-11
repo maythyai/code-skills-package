@@ -277,6 +277,8 @@ v1.0 = MVP：聚焦 3-5 核心功能验证问题假设；后续版本按投资�
 
 内环 01 跑到该版本时探测到同 `target_version` 的 `prd_depth: planning` Draft → **升级模式**：原文件上 delta 补全为工程级（穷举规则/完整 AC/异常流/埋点），不新建文件。
 
+PRD SPEC 产出后直接作为测试输入：`[[prompts/000-test_pipeline_csp.md]]` Phase TB 从本 SPEC 提取测试依据（AC→用例、业务规则→边界用例、关联维度→测试策略）。
+
 产物：每版本一份 SPEC + 登记 `docs/prd/PRD-INDEX.md`。
 
 ---
@@ -469,3 +471,26 @@ Phase 0 上下文探测
 **纯新项目（MVP 未上线）**：跳过 Phase A/I/G，从 Phase R 调研开始。
 
 每个阶段按进度条播报，全部完成后输出总摘要，交棒 pipeline 启动交付。
+
+---
+
+## 三文档协作关系
+
+本文件是 CSP 三件套之一，与另外两个文件配合使用：
+
+```
+000-product-planning_csp.md（本文件）
+  │  产品规划：调研 → 战略 → 路线图 → PRD SPEC
+  │
+  ├──→ 交棒 000-develop_pipeline_csp.md
+  │      开发 Pipeline：01 PRD → 02 拆解 → ... → 06 发布 → 07 复盘
+  │
+  └──→ 输入 000-test_pipeline_csp.md
+         测试 Pipeline：PRD SPEC → 测试依据 → 用例设计 → 分层实施 → 门控
+              │
+              └──→ 嵌入开发 Pipeline S6 质量门控
+```
+
+- **规划产出** = PRD SPECs + ROADMAP + FEATURES → 开发 Pipeline 的 01 输入 + 测试 Pipeline 的 TB 输入
+- **开发进行时** = 规划中的版本队列 → `000-develop_pipeline_csp.md` 逐版本推进
+- **测试嵌入** = `000-test_pipeline_csp.md` 产出测试证据 → 嵌入开发 Pipeline S6 的 Check 1-5.10

@@ -28,7 +28,7 @@ PRD Features + AC ──→ 测试依据提取 ──→ 用例设计（7 种技
 
 ### TB.1 从 PRD 提取测试基线
 
-调用 `[[workflow:csp-prd-generation]]` 或 `[[pattern:csp-prd]]` 读取 PRD 后，提取测试依据：
+读取 `[[prompts/000-product-planning_csp.md]]` 产出的 PRD SPEC（`docs/prd/PRD-{version-slug}.md`），提取测试依据：
 
 - **功能清单**（来自 PRD §3 详细功能设计）：每个功能模块即为一个测试单元
 - **AC 清单**（来自 PRD §6 验收标准）：每条 Given-When-Then 对应至少一条测试用例
@@ -69,7 +69,7 @@ PRD Features + AC ──→ 测试依据提取 ──→ 用例设计（7 种技
 
 > 从测试依据到可执行的用例，走 7 种黑盒技术系统化枚举——不靠记忆、不靠"想到的就写"。
 
-调用 `[[skill:csp-test-case-design]]`（等价类/边界值/判定表/状态迁移/因果图/Pairwise/场景法）+ `[[skill:csp-qa-test-engineering]]`（测试金字塔分层/策略/计划）。
+调用 `[[skill:csp-test-case-design]]`（等价类/边界值/判定表/状态迁移/因果图/Pairwise/场景法）+ `[[skill:csp-qa-test-engineering]]`（测试金字塔分层/策略/计划）+ `[[skill:csp-test-engineer]]`（测试策略/编写/覆盖率分析）+ `[[skill:csp-test-spec]]`（TMS 每模块测试基线，从需求生成测试说明书）。
 
 ### TD.1 用例设计路由
 
@@ -278,7 +278,7 @@ E2E 测试必须覆盖前端真实交互——不仅仅验证"页面打开展示
 
 > 所有测试跑完后，过门控——决定能不能上线。
 
-调用 `[[workflow:csp-verify-phase]]`（AC 验证/测试全绿）+ `[[workflow:csp-release-manager]]`（完整质量门控）。
+调用 `[[workflow:csp-verify-phase]]`（AC 验证/测试全绿）+ `[[workflow:csp-release-manager]]`（完整质量门控）+ `[[skill:csp-ultraqa]]`（QA 循环工作流：测试→验证→修复→重复直到目标达成）。
 
 ### TQ.1 质量门控矩阵
 
@@ -321,6 +321,8 @@ E2E 测试必须覆盖前端真实交互——不仅仅验证"页面打开展示
 |------|-----------|
 | 测试工程（全生命周期） | `[[skill:csp-qa-test-engineering]]`（需求分析→测试计划→策略→用例→执行→生产调查） |
 | 测试用例设计 | `[[skill:csp-test-case-design]]`（7 种黑盒技术/AC 双向追溯/优先级裁剪） |
+| 测试说明书（TMS） | `[[skill:csp-test-spec]]`（每模块测试基线，从需求生成 stock + 增量用例） |
+| 测试工程师 | `[[skill:csp-test-engineer]]`（测试策略/编写/覆盖率分析） |
 | TDD 方法论 | `[[meta:csp-tdd]]`（先写测试再写实现） |
 | 测试方法论（盲点互补） | `[[meta:csp-test-methodology]]`（方法谱系：契约/属性/变异/模糊/混沌/差分/并发/无障碍/国际化/可观测/后端 mock/DB 迁移/Kotlin） |
 | 缺陷挖掘 | `[[skill:csp-defect-mining]]`（测试套件平台期→换方法挖掘新缺陷） |
@@ -379,6 +381,7 @@ E2E 测试必须覆盖前端真实交互——不仅仅验证"页面打开展示
 | 阶段 | CSP Skill |
 |------|-----------|
 | 质量门控 | `[[workflow:csp-verify-phase]]`（AC 验证/测试全绿/门控过） |
+| QA 循环工作流 | `[[skill:csp-ultraqa]]`（测试→验证→修复→重复，直到目标达成） |
 | 发布管理 | `[[workflow:csp-release-manager]]`（完整质量门控+上线流程） |
 | 安全审查 | `[[skill:csp-security-review]]`（鉴权/越权/注入/XSS/CSRF/依赖漏洞） |
 | 设计还原审查 | `[[skill:csp-qa]]`（设计还原度/发布裁决 Pass/Warning/Fail） |
@@ -445,3 +448,29 @@ Check 5.10: 后端性能             ←───  Phase TP（backend-performanc
 ---
 
 按依据提取 → 用例设计 → 分层实施 → 质量门控 → 上线验证链执行，测试从 PRD 出发、到上线确认结束。AI 自主完成，每个阶段按进度条播报，全部完成后输出总测试报告，交棒 pipeline 06 门控。
+
+---
+
+## 三文档协作关系
+
+本文件是 CSP 三件套之一（测试段），与另外两个文件配合使用：
+
+```
+000-product-planning_csp.md
+  │  产出：PRD SPECs（含 AC/功能清单/业务规则）
+  │
+  ├──→ 000-test_pipeline_csp.md（本文件）
+  │       │  测试 Pipeline：TB→TD→TU→TI→TE→TV→TP→TSEC→TQ
+  │       │  TB 从 PRD SPEC 提取测试依据 → TD 设计用例 → 分层实施
+  │       │
+  │       └──→ 嵌入 000-develop_pipeline_csp.md
+  │              开发 Pipeline S6 质量门控（Check 1–5.10）
+  │              TQ 产出测试证据 → 消费 S6 各 Check
+  │
+  └──→ 000-develop_pipeline_csp.md
+         开发 Pipeline：01 PRD→02 拆解→...→06 门控→07 复盘
+```
+
+- **上游输入** = `000-product-planning_csp.md` 产出的 PRD SPECs（TB 提取测试依据）+ ROADMAP（确定测试版本范围）
+- **本文件职责** = 测试全链路：依据→设计→分层实施→门控→上线验证
+- **下游输出** = 测试证据嵌入 `000-develop_pipeline_csp.md` S6 质量门控各 Check
