@@ -91,6 +91,8 @@ findings 回写契约：仅对"本版本真实修复且已验证"的 findings �
 
 gate 即授权，全自动推进。打断条件（仅 5 类）：战略根本模糊 / PRD Rejected / 真破坏操作 / 多 tag 不明 / 无法 auto-resolve 的报错。07 复盘默认自动触发（[[pattern:csp-retro]]），lessons 并入下一版本 01 入口清单。质量自评可选用 [[pattern:csp-agent-self-evaluation]] 做 5 轴结构性复盘。
 
+**缺口报告**：执行过程中若发现本说明未覆盖的维度、或引用的 CSP skill 不包含所需方法论（功能缺失/深度不足），**立即指出缺口**——不跳过、不假装覆盖、不用「可以了」糊过。
+
 迭代间代码健康维护（版本间隙或 07 复盘发现代码债时触发）：
 - 重构 → `[[skill:csp-refactoring-strategies]]`（Strangler Fig / Branch by Abstraction / 并行运行，大规模架构演进）
 - 代码整洁 → `[[skill:csp-code-simplification]]`（死代码清理/简化 AI 生成冗余/移除未使用依赖）
