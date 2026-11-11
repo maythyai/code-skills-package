@@ -405,6 +405,83 @@ Conventional Commits 格式（遵循 `[[pattern:csp-git-conventions]]` §3）：
 
 ---
 
+## Phase G5：项目根目录卫生
+
+> 根目录是项目的门面。散落的临时产物、遗留的旧路径、未清理的缓存——这些不只是"不好看"，会导致新成员困惑、agent 误判项目结构、CI 误读配置。
+
+### G5.1 根目录合法文件清单
+
+以下文件/目录允许出现在项目根目录。**不在清单中的 → 按 G5.2 归类移动或清理**。
+
+| 类别 | 允许的文件/目录 | 说明 |
+|------|---------------|------|
+| **Git** | `.git/` `.github/` `.gitignore` `.gitattributes` | 版本控制 |
+| **编辑器/Agent** | `.claude/` `.cursor/` `.vscode/` `.qoder/` `.editorconfig` | 不污染仓库 |
+| **依赖** | `package.json` `pyproject.toml` `requirements.txt` `pnpm-lock.yaml` `uv.lock` `Cargo.toml` `go.mod` | 包管理 |
+| **构建/部署** | `Dockerfile` `Dockerfile.*` `docker-compose.yml` `docker-compose.*.yml` `Makefile` `turbo.json` `nginx.conf` | CI/CD |
+| **工具配置** | `.pre-commit-config.yaml` `alembic.ini` `playwright.config.ts` `playwright.*.config.ts` | 单文件，可接受 |
+| **环境变量** | `.env` `.env.example` `.env.production` `.env.production.example` | 不入库（`.env` 在 `.gitignore`） |
+| **标准文档** | `README.md` `CHANGELOG.md` `LICENSE` `CONTRIBUTING.md` `CODE_OF_CONDUCT.md` `SECURITY.md` | 项目门面 |
+| **Agent 指令** | `AGENTS.md` `CLAUDE.md` | Agent 路由 |
+| **源码** | `src/` `apps/` `backend/` `frontend/` `packages/` `public/` | 代码 |
+| **测试** | `tests/` — E2E 配置（`playwright.config.ts` 等）可放根 | 测试代码在 `tests/` 内 |
+| **文档** | `docs/` | 对外人类文档 |
+| **脚本** | `scripts/` | 工具脚本 |
+| **数据/配置** | `data/` `configs/` `tooling/` | 按项目需要 |
+| **运行时** | `logs/` `backups/` | 不入库（在 `.gitignore`） |
+| **CSP 产物** | `.csp/` `prompts/`（symlink） `verify/` | Agent 产物 |
+| **参考** | `开源项目参考/` | 外部参考（可接受，建议移到 `.csp/references/` 或 `docs/references/`） |
+| **工作区** | `node_modules/` `.venv/` `__pycache__/` | 不入库（在 `.gitignore`） |
+
+### G5.2 根目录整洁规则
+
+调用 `[[skill:csp-file-organizer]]` 按以下规则执行项目根目录卫生检查：
+
+**规则 1 — 测试产物归 `verify/`**：
+- `coverage.json` `coverage.xml` `.coverage` → `verify/coverage/`
+- `playwright-report/` → `verify/playwright-report/` 或 `.gitignore`
+- `pacts/`（契约测试产物）→ `verify/pacts/`
+- `test-results/` → `verify/test-results/`
+
+**规则 2 — 分析/调研报告归 `docs/analysis/`**：
+- 散落根目录的 `*调研报告*.md` `*竞品分析*.md` `*分析*.md` → `docs/analysis/`
+
+**规则 3 — 旧路径迁移到 `.csp/`**：
+- `spark-output/` → `.csp/spark/`
+- `output/` → `.csp/archive/output/` 或删除
+- `.planning/` → `.csp/planning/`
+- 裸 `evidence/` `.csp-*-test/` → 归入 `.csp/` 对应子目录
+
+**规则 4 — 缓存/构建产物归 `.gitignore`**：
+- `.hypothesis/` `.mypy_cache/` `.pytest_cache/` `.ruff_cache/` `.turbo/` `.playwright-cli/` — 工具缓存
+- `.DS_Store` — macOS 产物
+- `dist/` `build/` `*.egg-info/` — 构建输出
+- 以上全部加入 `.gitignore`，已提交的 `git rm --cached` 移除
+
+**规则 5 — 过期/重复文件清理**：
+- `*.bak` `*.tmp` `*.old` `*-old` `*-v2`（无意义后缀）→ 删除或归档
+- 同名不同后缀的冗余文件（如 `.env.production` + `.env.production.example` 两者合理保留；但 `coverage.json` + `coverage.xml` 同时存在是冗余——留一种）
+
+**规则 6 — 根目录单文件上限**：根目录非隐藏文件（不含目录）建议 ≤ 25 个（不含 node_modules/.venv 内容）。超过 → 审视是否有可归类的。
+
+### G5.3 根目录卫生检查清单
+
+每个版本发布后或规划启动前，执行：
+
+- [ ] `.gitignore` 排除了所有缓存目录（`.hypothesis/` `.mypy_cache/` `.pytest_cache/` `.ruff_cache/` `.turbo/` `.playwright-cli/`）
+- [ ] `.gitignore` 排除了 `.DS_Store` `.coverage` `coverage.*` `*.pyc` `__pycache__/` `dist/` `build/`
+- [ ] 测试产物已归入 `verify/`（非散落根目录）
+- [ ] 分析/调研文档已归入 `docs/analysis/`（非散落根目录或直接放 `docs/` 根）
+- [ ] 旧路径（`spark-output/` `output/` `.planning/`）已迁移到 `.csp/` 对应位置
+- [ ] 根目录无裸 `evidence/` `.csp-*-test/` 目录
+- [ ] 根目录无 `*.bak` `*.tmp` `*.old` 文件
+- [ ] 根目录非隐藏文件 ≤ 25 个
+- [ ] 根目录下无单文件过大（>1MB）的孤立文件（如 `coverage.json` 8MB）
+
+调用 `[[skill:csp-file-organizer]]` 执行清理 + `[[skill:csp-documentation-governance]]` 校验文档路径合规。
+
+---
+
 ## CSP Skill 路径速查
 
 ### 项目结构
@@ -442,7 +519,14 @@ Conventional Commits 格式（遵循 `[[pattern:csp-git-conventions]]` §3）：
 | 安全审计（依赖/漏洞） | `[[skill:csp-security-review]]`（鉴权/注入/依赖审计/密钥管理） |
 | 项目标准审查 | `[[skill:csp-project-standards-reviewer]]`（CLAUDE.md/AGENTS.md/CONTRIBUTING/SECURITY 合规） |
 | 文档架构设计 | `[[skill:csp-project-doc-architect]]`（CONTRIBUTING/SECURITY/CODE_OF_CONDUCT 模板） |
-| 文件整理 | `[[skill:csp-file-organizer]]`（.gitignore/.npmignore 清理） |
+| 文件整理 | `[[skill:csp-file-organizer]]`（.gitignore/.npmignore 清理/根目录卫生检查/过期文件归档） |
+
+### 项目根目录卫生（Phase G5）
+
+| 阶段 | CSP Skill |
+|------|-----------|
+| 根目录审计 | 本文件 G5.1-G5.3 规则 + `[[skill:csp-file-organizer]]`（执行移动/清理） |
+| 文档路径合规 | `[[skill:csp-documentation-governance]]`（校验 docs/ .csp/ verify/ 边界） |
 
 ---
 
@@ -480,9 +564,9 @@ Conventional Commits 格式（遵循 `[[pattern:csp-git-conventions]]` §3）：
 
 ---
 
-按 GB→GK→G0→G1→G2→G3→G4 执行项目治理初始化或审计。AI 自主完成，每个阶段按进度条播报。
+按 GB→GK→G0→G1→G2→G3→G4→G5 执行项目治理初始化或审计。AI 自主完成，每个阶段按进度条播报。
 
-**全新项目**：GK→G0→G1→G2→G4 完整初始化。
-**棕地项目**：GB（审计+迁移计划）→ GK（知识中枢棕地蒸馏）→ G0.2/G1/G2/G4 对齐现有
+**全新项目**：GK→G0→G1→G2→G4→G5 完整初始化。
+**棕地项目**：GB（审计+迁移计划）→ GK（知识中枢棕地蒸馏）→ G5（根目录卫生）→ G0.2/G1/G2/G4 对齐现有
 
 **缺口报告**：执行过程中若发现本说明未覆盖的治理维度（项目要素缺失/路径约定不完整），**立即指出缺口**——不跳过、不假装覆盖。AI 自主完成，每个阶段按进度条播报。
