@@ -177,6 +177,7 @@ gate 即授权，全自动推进。打断条件（仅 5 类）：战略根本模
 - **上游输入** = `000-product-planning_csp.md` 产出的 PRD SPECs + ROADMAP
 - **本文件职责** = 版本交付：Spec→开发→质量门控→发布→复盘
 - **测试嵌入** = `000-test_pipeline_csp.md` 提供测试依据/设计/实施/证据，嵌入 S6 门控
+- **项目治理** = `[[prompts/000-project-governance_csp.md]]` 定义产物路径/版本管理/文档边界——本文档产物落盘遵循 G2.1 约定
 
 ---
 

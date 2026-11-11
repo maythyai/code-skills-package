@@ -474,3 +474,4 @@ Check 5.10: 后端性能             ←───  Phase TP（backend-performanc
 - **上游输入** = `000-product-planning_csp.md` 产出的 PRD SPECs（TB 提取测试依据）+ ROADMAP（确定测试版本范围）
 - **本文件职责** = 测试全链路：依据→设计→分层实施→门控→上线验证
 - **下游输出** = 测试证据嵌入 `000-develop_pipeline_csp.md` S6 质量门控各 Check
+- **项目治理** = `[[prompts/000-project-governance_csp.md]]` 定义产物路径/版本管理/文档边界——本文档产物落盘遵循 G2.1 约定
