@@ -459,3 +459,70 @@ Documents folder.
 - Cleaning up before storage cleanup
 - Organizing shared team folders
 - Structuring new project directories
+
+## Project Repository Cleanup Mode
+
+> 当用户要求整理**项目仓库根目录**（非个人文件夹）时，激活此模式。
+
+### 触发信号
+
+- "整理项目根目录" / "清理项目文件" / "项目文件太乱了"
+- "根目录下这些文件该放哪" / "coverage 文件散落根目录"
+- 用户指定 `--project` 或工作目录是 git 仓库根目录
+
+### 项目根目录卫生规则
+
+> 权威规则来源：`[[prompts/000-project-governance_csp.md]]` Phase G5。本 skill 是执行端。
+
+**Step 1 — 根目录审计**：`ls -la` 根目录，对每个文件/目录按 G5.1 合法清单分类：
+
+| 类别 | 判定 | 动作 |
+|------|------|------|
+| 合法项 | 在 G5.1 清单中 | 保留原位 |
+| 测试产物 | `coverage.*` `.coverage` `playwright-report/` `pacts/` `test-results/` | 移入 `verify/` 对应子目录 |
+| 分析/调研文档 | 根目录 `*分析*.md` `*调研*.md` `*报告*.md` | 移入 `docs/analysis/` |
+| 旧 CSP 路径 | `spark-output/` `output/` `.planning/` 裸 `evidence/` | 移入 `.csp/` 对应位置 |
+| 缓存/系统产物 | `.hypothesis/` `.mypy_cache/` `.pytest_cache/` `.ruff_cache/` `.turbo/` `.playwright-cli/` `.DS_Store` `__pycache__/` | 加入 `.gitignore`；已提交的 `git rm --cached` |
+| 过期/重复 | `*.bak` `*.tmp` `*.old` `*-old` `*-v2` | 删除或归档到 `.csp/archive/` |
+| 未知 | 不在任何分类中 | **停下问用户**——不猜测、不擅自移动 |
+
+**Step 2 — 审计报告**：先出报告、等用户确认再执行：
+
+```markdown
+## 项目根目录卫生审计 — {project}
+
+### 当前状态
+- 根目录文件/目录：{N} 项
+- 合法项（保留）：{M} 项
+- 需移动：{X} 项
+- 需清理/归档：{Y} 项
+
+### 移动计划
+| 文件/目录 | 当前位置 | 目标位置 | 规则 |
+|-----------|---------|---------|------|
+| coverage.json (8MB) | ./ | verify/coverage/ | G5 规则 1 |
+| spark-output/ | ./ | .csp/spark/ | G5 规则 3 |
+| ... | | | |
+
+### 清理计划
+| 文件/目录 | 动作 | 规则 |
+|-----------|------|------|
+| .pytest_cache/ | 加入 .gitignore | G5 规则 4 |
+| .DS_Store | 加入 .gitignore + git rm --cached | G5 规则 4 |
+
+### 需要你确认
+- {未知项，如有}
+
+确认后执行？(yes/no/调整)
+```
+
+**Step 3 — 执行 + 验证**：用户确认后执行移动/清理。执行后跑 G5.3 检查清单逐项确认，列出未通过项。
+
+**Step 4 — 维护建议**：输出"下次如何避免散乱"的建议——哪个 CI step 应该产出到正确路径、哪个 `.gitignore` 规则缺失。不每次手动整理。
+
+### 红线
+
+- **不猜测分类**：不确定归属的停下问，不"感觉应该放这"
+- **移动不删除**（除非确认）：移动到目标位置，不是 `rm -rf`
+- **不破坏构建**：移动后 `npm run build` / `npm test` 验证通过
+- **先审计后执行**：不出审计报告不操作
