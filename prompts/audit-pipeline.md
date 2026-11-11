@@ -158,7 +158,7 @@ python scripts/validate_gates.py   # 人类可读摘要
 产出：`.csp/ui-review/UI-REVIEW-REPORT` + `UI-FINDINGS.json`（前缀 `UI-F-NN`）+ `CROSS-MODULE-UI` + `docs/analysis/UI-VERSION-PLAN` 版本迭代路线图。
 
 ### Step 4 — 产品总监批评性审查（主跑：重复/散乱/定位挑刺 + 跨模块聚合）
-调用 `prompts/product-critic-review.md`，逐模块过七镜头 A–G + 跨模块聚合。
+调用 `[[agent:csp-product-lens-reviewer]]`（前提挑战/战略后果/目标-需求对齐，七视角审查：定位/竞品/用户/商业/技术/体验/演进），逐模块过审查 + 跨模块聚合。
 去重契约（不重跑）：
 - 镜头 F/G 可用性违例 → 引用 Step 1 audit 的 `AUDIT-F`，不重跑 Nielsen；本流程专注重复/散乱/定位（audit 不做）
 - 镜头 C/D 视觉交互一致性 → 引用 Step 3 ui-review 的 `UI-F` 一致性 findings、不重跑逐模块视觉/交互审查；只做跨模块一致性批次聚合（若 Step 3 未跑则自行跑 M）
@@ -174,7 +174,7 @@ python scripts/validate_gates.py   # 人类可读摘要
 产出：`.csp/gap-analysis/GAP-REPORT-{slug}` + `GAP-FINDINGS-{slug}.json`（前缀 `GAP-F-NN`）+ `CROSS-MODULE-UI`。
 
 ### Step 6 — 产品演进交棒（聚合全部 findings → roadmap）
-调用 `prompts/product-audit-to-roadmap.md`，多角度审查 + 主题候选提炼 + 交棒 roadmap。
+调用 `[[workflow:csp-roadmap-planner]]`（多角度审查 + 主题候选提炼 + 集成必要性审视），输出交棒清单 → 过 Phase 2.5 审视 gate。
 输入：聚合 Step 1–5 全部 findings（`AUDIT-F` / `UI-F` / `CRITIC-F` / `GAP-F` 前缀不同，可并存去重，按前缀路由来源）。
 特别处理：Step 3 ui-review 产出的 `docs/analysis/UI-VERSION-PLAN-{date}.md` 版本迭代路线图直接作为本步骤的 UI 主题候选输入，其中的 P0/P1/P2 分级与版本批次建议供 roadmap 消费。
 产出：`docs/audit/PRODUCT-AUDIT` + `docs/analysis/AUDIT-TO-ROADMAP` 交棒清单 → `csp-roadmap-update` / `roadmap-planner`（过 Phase 2.5 集成必要性审视）。

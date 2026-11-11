@@ -242,7 +242,7 @@ Phase 2 的 F5/F7/F11 只触 UI 横切面；本节对界面做**产品级视觉 
 ## 十、Phase 6：交棒（出后续路径，不替下游代行）
 
 1. **P0 快速修复**：标 `快速修复=true` 的 findings → 交 orchestrator 直发 04 拆 fix task（conventional `fix(gap-F-NN)`）→ 05 fix → 06 verify。
-2. **P1/P2 主题候选**：同模块相关建议聚合成版本主题候选 → 交棒 roadmap（`csp-roadmap-update` 增量更新，或外环 `prompts/roadmap.md` 首次/大改）。每候选：主题名 / 来源 finding ids / 涉及模块 / 价值假设 / 优先级 / 预估 SemVer 性质（additive=MINOR / breaking=MAJOR / fix=PATCH）。UI 类主题单列"UI 优化/IA 重组"标签便于攒批。
+2. **P1/P2 主题候选**：同模块相关建议聚合成版本主题候选 → 交棒 `[[workflow:csp-roadmap-planner]]`。每候选：主题名 / 来源 finding ids / 涉及模块 / 价值假设 / 优先级 / 预估 SemVer 性质（additive=MINOR / breaking=MAJOR / fix=PATCH）。UI 类主题单列"UI 优化/IA 重组"标签便于攒批。
 3. **交棒清单**：`docs/analysis/GAP-TO-ROADMAP-{feature-slug}-{date}.md`。
 4. **声明**：本流程止于"缺口/增强 + 优先级 + 依据"；版本号/序列/SemVer 由 roadmap 按其规则定，PRD/spec/代码归 01/03/05，本流程不替下游代行。
 5. **回写**：报告 + findings + 交棒清单回写 `.csp/manifest.json`（`source_type=doc`、`build_status=built`、`content_hash`）。

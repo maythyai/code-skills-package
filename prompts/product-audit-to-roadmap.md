@@ -7,7 +7,7 @@
 
 **链路**：本流程（巡检→多维审查→交棒）→ 外环 `roadmap`（战略锚点 + 版本序列路径，跑一次/低频）→ 内环 `00` 知识中枢 → `01` PRD → … → `07` 复盘（findings 回流 roadmap / 本巡检）。
 
-**你产出**：`docs/audit/PRODUCT-AUDIT-{date}.md`（多角度审查报告）+ `REVIEW-FINDINGS-{audit-slug}.json`（结构化发现），并把"可纳入版本的主题候选"交棒给 `csp-roadmap-update`（或外环 `prompts/roadmap.md`）出后续路径。
+**你产出**：`docs/audit/PRODUCT-AUDIT-{date}.md`（多角度审查报告）+ `REVIEW-FINDINGS-{audit-slug}.json`（结构化发现），并把"可纳入版本的主题候选"交棒给 `[[workflow:csp-roadmap-planner]]` 出后续路径。
 
 ## 一、使命与硬边界（不可违背）
 
@@ -117,7 +117,7 @@
    docs/analysis/AUDIT-TO-ROADMAP-{date}.md
    | 主题候选 | 来源 finding | 涉及模块 | 价值假设 | 优先级 | SemVer 性质 | 建议版本批次 |
    ```
-3. **调用 roadmap agent**：把上述清单交给 `csp-roadmap-update`（增量更新既有 ROADMAP）或外环 `prompts/roadmap.md`（首次/大改规划）。交棒声明：roadmap 读本清单定位下一版本主题；**本巡检的主题候选进入 roadmap Phase 2 后，必经 Phase 2.5「版本功能集成必要性审视」再过一遍**（6 维 self-critique：定位契合/场景必要/现有重叠/集成成本vs价值/依赖可行/攒批合理），裁决纳入/降级/剔除/合并——本巡检给的是"实证输入 + 优先级 + 依据"，是否真集成进项目系统由 Phase 2.5 决定，本巡检不替它兜底。
+3. **调用 roadmap agent**：把上述清单交给 `[[workflow:csp-roadmap-planner]]`。交棒声明：roadmap 读本清单定位下一版本主题；**本巡检的主题候选进入 roadmap Phase 2 后，必经 Phase 2.5「版本功能集成必要性审视」再过一遍**（6 维 self-critique：定位契合/场景必要/现有重叠/集成成本vs价值/依赖可行/攒批合理），裁决纳入/降级/剔除/合并——本巡检给的是"实证输入 + 优先级 + 依据"，是否真集成进项目系统由 Phase 2.5 决定，本巡检不替它兜底。
 4. **回写**：审查报告 + findings + 交棒清单回写 `.csp/manifest.json`（`source_type=doc`、`build_status=built`、`content_hash`）；roadmap agent 接手后回写其产物。
 
 ## 八、产物路径规范（与 00-07 同构）
@@ -158,5 +158,5 @@
 ## 十、衔接声明
 
 - 上游：`07` 复盘 findings / `csp-product-pulse` 体验信号 / 用户反馈 → 本流程输入。
-- 下游：本流程产出 → `csp-roadmap-update` / `prompts/roadmap.md` → Phase 2 版本主题 → **Phase 2.5 集成必要性审视（self-critique，裁决是否真纳入项目系统）** → `01` PRD → …
+- 下游：本流程产出 → `[[workflow:csp-roadmap-planner]]` → Phase 2 版本主题 → **Phase 2.5 集成必要性审视（self-critique，裁决是否真纳入项目系统）** → `01` PRD → …
 - 同级：`csp-competitive-analysis` / `csp-product-research` 的外部对标可并入角度 J。
