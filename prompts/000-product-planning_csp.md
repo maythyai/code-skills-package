@@ -156,7 +156,7 @@ STRATEGY.md 短而硬——anchor，不扩成 feature list。下游 PRD 读它 g
 - **默认不用日期形式**：AI 产出节奏与日历无关，按年/季/月/日定版本无意义
 
 **攒批原则**（以模块为单位聚合）：
-- 同模块功能打包到一个版本（每版本 3-5 条摘要级功能是常态），不"一个 feature 开一个版本"
+- 同模块功能打包到一个版本（每版本功能数以模块内实际 feature 数量为准，不设硬上限——一个模块如果有 8 个相关 feature 就全打包进一个版本），不"一个 feature 开一个版本"
 - 不同模块/主题方向不同/体量过大 → 拆成下一版本
 - **feat/fix 分轨**：feat 批（MINOR+1）与 fix 批（PATCH+1）不混合；同迭代既有 feat 又有 fix → 拆两个 tag
 
@@ -164,7 +164,7 @@ STRATEGY.md 短而硬——anchor，不扩成 feature list。下游 PRD 读它 g
 ```
 vX.Y.Z — {主题名} — status: planned
 - 目标：一句话
-- 新增功能（3-5 条摘要）：不写详细 AC，只点明做什么；同步落 FEATURES.md
+- 新增功能（摘要列表，按模块内实际 feature 数量，不设硬上限）：不写详细 AC，只点明做什么；同步落 FEATURES.md
 - 优化项（从 Phase A+I 流入）：[来源 CURRENT-NN] 简要描述优化内容
 - 增长实验（从 Phase G 流入，如有）：[假设 X → 预期指标 Y 变化 Z%]
 - 用户场景/竞品差距：本版本对应解决什么（引 Phase R 调研节 / Phase A 痛点）
@@ -271,7 +271,7 @@ v1.0 = MVP：聚焦 3-5 核心功能验证问题假设；后续版本按投资�
 调用 `[[workflow:csp-prd-generation]]`（PM 视角）或 `[[pattern:csp-prd]]`（设计师视角）为净版序列每个版本产出规划级 PRD SPEC：
 
 - 路径：`docs/prd/PRD-{version-slug}.md`，`status: Draft`，`prd_depth: planning`
-- 结构：8 段大纲级填写——背景/目标/功能模块/用户故事/优先级（P0/P1/P2）/关键业务规则要点（3-5 条）/AC 骨架（每模块 1-2 条 Given-When-Then 锚点）/风险与依赖
+- 结构：8 段大纲级填写——背景/目标/功能模块/用户故事/优先级（P0/P1/P2）/关键业务规则要点（规划级只写大纲，不穷举展开）/AC 骨架（每模块至少 1 条 Given-When-Then 锚点，复杂模块可多写）/风险与依赖
 - 深度边界：规划级只写大纲级要点，不写工程级细节；功能清单以 `CONVERGED-FEATURE-PLAN.md` 为唯一事实源，SPEC 与 ROADMAP/FEATURES 三者功能清单一致
 - 红线：只为净版留存功能产 SPEC（剔除/降级不进），绝不写 HOW（技术选型/数据库/框架禁止），不确定处标 `[TBD]` 留给内环 01 升级
 
