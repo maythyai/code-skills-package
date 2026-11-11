@@ -26,6 +26,12 @@ Spec 验收门：PRD 含背景/目标/功能清单/Given-When-Then 验收标准�
 - 数据库：`[[skill:csp-postgres-patterns]]`（Schema 设计/索引/查询优化）+ `[[skill:csp-db-migration]]`（Schema 变更/数据迁移/回滚/零停机）
 - API 治理：`[[skill:csp-api-governance]]`（契约/版本管理/限流/认证授权模式）
 
+**代码质量保障**（05 开发期间并行）：
+- 编码规范：`[[pattern:csp-coding-standards]]`（通用跨语言规范）+ 语言专精（`[[skill:csp-python-coding-standards]]` / `[[skill:csp-java-coding-standards]]` / `[[skill:csp-cpp-coding-standards]]`）
+- 关键日志：`[[skill:csp-observability-and-instrumentation]]`（关键路径日志/结构化日志/trace_id，不遗漏也不冗余）
+- DRY 与复用：`[[skill:csp-code-simplification]]`（死代码清理/AI 冗余消除/重复逻辑合并）+ `[[skill:csp-refactoring-strategies]]`（重构路径规划）
+- 最小改动：`[[skill:csp-minimal-change-engineer]]`（只修该修的，拒绝 scope creep）
+
 **测试嵌入**：开发期间测试并行推进——`[[prompts/000-test_pipeline_csp.md]]` 从当前版本的 PRD SPEC 提取测试依据→设计用例→分层实施，产出测试证据直接嵌入 S6 质量门控。
 
 自决策授权（默认自己拍板，不问我）：范围/优先级、Spec 歧义、Wave 排序、fix 路由（05 实现缺陷 / 03 Spec 缺口）、可逆整改（归档 re-point、版本漂移 bump）、CMS re-align、deferred 取舍——这些你自己定，定了记入 DEV-LOG 即可，不打断我。
@@ -72,7 +78,7 @@ Spec 验收门：PRD 含背景/目标/功能清单/Given-When-Then 验收标准�
 - push origin → Release → 归档
 - CI/CD 管道验证 → [[skill:csp-cicd-pipelines]]（构建/测试/部署管道通过，GitHub Actions/Jenkins 绿）
 - 部署 → [[skill:csp-deployment]]（健康检查/回滚策略/灰度/蓝绿，无 downtime）
-- 可观测投产 → [[skill:csp-monitoring-alerting]] + [[skill:csp-observability-instrumentation]]（关键指标/日志/链路/告警规则已就绪）
+- 可观测投产 → [[skill:csp-monitoring-alerting]] + [[skill:csp-observability-and-instrumentation]]（关键指标/日志/链路/告警规则已就绪）
 
 findings 回写契约：仅对"本版本真实修复且已验证"的 findings 回写；fixed_in 必须真实存在（tag/commit）+ verification 证据（file:line / ran+exit / 实机截图）。预关闭 → exit 1。
 
@@ -122,6 +128,9 @@ gate 即授权，全自动推进。打断条件（仅 5 类）：战略根本模
 | 后端开发模式 | `[[skill:csp-backend-patterns]]`（API 设计/分层架构/错误处理/幂等/分页）+ `[[skill:csp-postgres-patterns]]`（Schema 设计/索引/查询优化） |
 | 数据库迁移 | `[[skill:csp-db-migration]]`（Schema 变更/数据迁移/回滚/零停机） |
 | API 治理 | `[[skill:csp-api-governance]]`（契约/版本管理/限流/认证授权模式） |
+| 代码整洁 | `[[skill:csp-code-simplification]]`（死代码清理/AI 冗余消除/重复合并）+ `[[skill:csp-refactoring-strategies]]`（大规模重构路径） |
+| 最小改动工程 | `[[skill:csp-minimal-change-engineer]]`（只修该修的，拒绝 scope creep） |
+| 可观测与日志 | `[[skill:csp-observability-and-instrumentation]]`（关键路径日志/结构化日志/trace_id/指标） |
 | 质量门控（S6） | `[[workflow:csp-release-manager]]`（全流程）或 `[[workflow:csp-verify-phase]]`（单独验证） |
 | 审查（S7） | `[[workflow:csp-code-review]]` |
 | 双审对抗验证 | `[[pattern:csp-santa-method]]` |
@@ -141,7 +150,7 @@ gate 即授权，全自动推进。打断条件（仅 5 类）：战略根本模
 | 发布（S8） | `[[workflow:csp-ship]]` |
 | CI/CD 管道 | `[[skill:csp-cicd-pipelines]]`（构建/测试/部署管道，GitHub Actions） |
 | 部署策略 | `[[skill:csp-deployment]]`（健康检查/回滚/灰度/蓝绿/零 downtime） |
-| 可观测 | `[[skill:csp-monitoring-alerting]]` + `[[skill:csp-observability-instrumentation]]`（关键指标/日志/链路/告警） |
+| 可观测 | `[[skill:csp-monitoring-alerting]]` + `[[skill:csp-observability-and-instrumentation]]`（关键指标/日志/链路/告警） |
 | Git 规范 | `[[pattern:csp-git-conventions]]` |
 | 版本管理 | prompts/version-management.md（规则参考文档） |
 | 复盘（S10） | `[[pattern:csp-retro]]` |

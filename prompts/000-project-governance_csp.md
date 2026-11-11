@@ -4,6 +4,42 @@
 
 ---
 
+## Phase GB：棕地项目适配（既有项目治理初始化）
+
+> **触发**：项目已存在（非全新初始化），`.csp/AGENTS.md` 或 `CLAUDE.md` 可能缺失或过期时执行。**不推倒重来，按版本迭代逐步对齐**。
+
+### GB.1 现状审计
+
+读清现有结构后再规划迁移：
+
+1. **目录扫描**：记录实际顶层 + `src/` + `tests/` + `docs/` 结构
+2. **文档资产盘点**：`README.md` / `CHANGELOG.md` / `docs/` / `.csp/` / `CLAUDE.md` — 存在/缺失/过期
+3. **版本管理现状**：`git tag --list 'v*'` — tag 序列是否规范？版本号是否连续？
+4. **旧路径识别**：扫描 `output/` `spark-output/` `.planning/` `spark-output/` 等旧路径，记录须迁移的产物
+
+调用 `[[skill:csp-project-doc-architect]]`（分析既有结构）+ `[[skill:csp-file-organizer]]`（扫描重复/过期文件）。
+
+### GB.2 增量迁移计划
+
+基于审计产出，按优先级渐进迁移（不推倒重来）：
+
+| 优先级 | 变更 | 时机 | 风险 |
+|--------|------|------|------|
+| P0 | 创建 `.csp/AGENTS.md` + `manifest.json`（缺失则 agent 无法路由） | 当前版本 | 无 |
+| P1 | `.csp/` 下既有 findings 按标准路径重组 | 下一版本 | 低 |
+| P1 | 旧路径产物迁移（`output/`→`.csp/`、`spark-output/`→`.csp/spark/`） | 下一版本 | 中 |
+| P2 | `src/` 结构调整（不影响构建前提下） | 后续版本 | 高 |
+| P2 | `tests/` 结构调整为分层 | 后续版本 | 中 |
+| P3 | README/CHANGELOG 格式标准化 | 各版本渐进 | 无 |
+
+**硬约束**：G0.1 是目标模板非强制命令，既有合理约定优先保留；`src/`/`tests/` 结构调整放 P2；迁移不能破坏 `npm run dev`/`npm test`/lint/build。
+
+### GB.3 知识中枢棕地蒸馏
+
+调用 `[[skill:csp-knowledge-hub]]`（完整初始化：扫项目根和 src/ → 识别既有模块 → 写入 PMS baseline → 蒸馏代码结构为 CMS baseline → 回写 manifest）。
+
+---
+
 ## Phase G0：项目结构初始化与维护
 
 > 适用于新项目初始化或既有项目结构整理。
