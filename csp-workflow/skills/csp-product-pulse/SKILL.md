@@ -86,13 +86,53 @@ If it shows an unresolved command string, read `.csp/config.local.yaml` from the
 - `pulse_metric_sources` -- comma-separated `metric=source` pairs giving per-strategy-metric source overrides (e.g., `retention_d7=posthog,nps=delighted`). Strategy metrics not listed fall back to `pulse_analytics_source` and are rendered with a `(default source)` marker so the implicit routing is visible.
 - `pulse_pending_metrics` -- comma-separated string of strategy-doc metric names awaiting instrumentation; rendered as `no data` in each pulse report until instrumentation lands
 - `pulse_excluded_metrics` -- comma-separated string of strategy-doc metric names intentionally excluded from the pulse; the metric stays in `STRATEGY.md` but is not surfaced in pulse reports
+- `pulse_data_mode` -- `live` (default), `static`, or `none`. Determines data source strategy. `live`: use analytics/tracing/payments sources as configured. `static`: product has no live data — use static code analysis as proxy (route scanning, git history, test coverage, file-change heatmaps). `none`: product has no observable data of any kind — skip Phase 2, output `[TBD-指标缺失]` markers + data acquisition path recommendations.
+
+**Data mode detection** (before routing):
+- If `pulse_data_mode` is unset, auto-detect: does the project have analytics/tracing/payments config? If yes → `live`. If no analytics config AND no user-facing deployment → `static`. If the project is a library/CLI with no runtime → `none`.
+- Explicit `data_mode` argument overrides config (e.g., `Skill("csp-product-pulse", "data_mode:static")`).
 
 **Routing:**
 
 - **`pulse_product_name` is unset (or config file missing)** -> First run. Go to Phase 1 (interview), then Phase 2.
-- **`pulse_product_name` is set** -> Skip to Phase 2.
+- **`pulse_product_name` is set AND `pulse_data_mode` is `live`** -> Skip to Phase 2 (existing live-data path).
+- **`pulse_data_mode` is `static`** -> Skip to Phase 2-static: use static code analysis as proxy for traditional pulse metrics.
+- **`pulse_data_mode` is `none`** -> Skip Phase 2 entirely. Output `[TBD-指标缺失]` report with data acquisition path recommendations.
 
 If the argument was `setup`, `reconfigure`, or `edit config`, go to Phase 1 regardless of config state.
+
+#### Phase 2-static: Static Code Proxy Pulse
+
+When `data_mode: static`, replace live data queries with static analysis:
+
+1. **Route scanning**: Count registered routes/pages/modules → proxy for "feature breadth"
+2. **Git history heatmap**: `git log --since=<window> --name-only --pretty=format:` → file change frequency → proxy for "development activity"
+3. **Test coverage**: `pytest --cov` or equivalent → proxy for "quality baseline"
+4. **Code complexity**: Cyclomatic complexity hotspots → proxy for "technical risk areas"
+5. **Dependency freshness**: Outdated dependencies → proxy for "maintenance health"
+
+Assemble a pulse-style report using these proxies. Every metric is labeled `[static proxy]` to indicate it's not from live user data. The report structure follows Phase 2.3 but replaces "Usage" with "Codebase Activity" and "System Performance" with "Code Quality Signals".
+
+#### Phase 2-none: No-Data Report
+
+When `data_mode: none`, output a minimal report:
+
+```markdown
+# Pulse: {product_name} — {window}
+
+## Headlines
+- [TBD-指标缺失] No live data sources configured
+- [TBD-指标缺失] No static data available for proxy analysis
+
+## Data Acquisition Recommendations
+- To enable live pulse: configure analytics/tracing via `csp-product-pulse setup`
+- To enable static proxy: install test coverage tools, enable git history analysis
+- For library/CLI products: consider download-count analytics or GitHub stars as proxy metrics
+
+## Followups
+- Instrument basic usage tracking (even for CLI: flag usage telemetry with opt-out)
+- Add test coverage measurement
+```
 
 ### Phase 1: First-Run Interview
 

@@ -73,8 +73,8 @@ Collect the following from the user. Mark missing optional fields as `[TBD]`:
 | Target users | No | Infer from feature description if not provided |
 | Business objectives | No | Expected metrics impact (DAU, conversion, revenue, etc.) |
 | Product type | No | B2C / B2B / internal-tool / platform; auto-infer if not specified |
-| Constraints | No | Technical limitations, timeline, resource constraints |
-| PRD depth | No | Summary (for review) or detailed (for engineering); default: detailed |
+| Constraints | No | Technical limitations, resource constraints |
+| PRD depth | No | `planning` (大纲级，供内环 01 升级) or `engineering` (工程级，完整 AC/异常/埋点); default: `engineering` |
 
 **Auto-inference rules for product type:**
 - Contains "user/member/points/mall/consumer" -> B2C
@@ -122,6 +122,39 @@ For each feature module, fill in:
 - **Business rules**: Exhaustive enumeration of all rules, no vague "etc." or "other cases"
 - **Interaction flow**: Entry -> Steps -> Success feedback -> Failure handling
 - **Exception handling**: Network timeout, data anomaly, insufficient permissions, and other edge cases
+
+### Step 3.5: Apply Depth-Specific Behavior
+
+Based on the `PRD depth` parameter, adjust output granularity:
+
+#### `planning` Mode (规划级)
+Used by the outer-ring roadmap planner (Phase 5 / Phase 4.5) to produce planning-level PRD SPECs
+that the inner-ring 01 PRD stage will upgrade to engineering-level.
+
+**Behavior**:
+- **§3 (Detailed Feature Design)**: Write key business rule highlights only (3-5 bullet points per module, not exhaustive)
+- **§4 (Non-Functional Requirements)**: Mark as `thin_section` — outline known constraints, defer detailed NFR to 01 upgrade
+- **§5 (Data Requirements)**: Mark as `thin_section` — outline known tracking needs, defer detailed event schema to 01 upgrade
+- **§6 (Acceptance Criteria)**: AC skeleton — 1-2 Given-When-Then anchor points per module (01 upgrades to ≥3)
+- **§7 (Scheduling)**: Always skip — agent development does not estimate time
+- **§8 (Risks and Dependencies)**: List known risks and dependencies at outline level
+- **Front-matter**: Set `status: Draft`, add `prd_depth: planning`, add `upstream_source` and `roadmap_ref` fields
+
+**Depth boundary**: Planning-level SPEC describes WHAT at outline level. Never write HOW
+(no tech stack, database, framework). Never write exhaustive rules or complete AC.
+Mark gaps as `[TBD]` or `thin_sections` for 01 to fill.
+
+#### `engineering` Mode (工程级)
+Used by the inner-ring 01 PRD stage for full engineering handoff.
+
+**Behavior**:
+- **§3**: Exhaustive business rules (every trigger condition, processing logic, boundary value)
+- **§4**: Complete NFR table with acceptance criteria
+- **§5**: Full event schema with trigger conditions, key properties, purpose
+- **§6**: ≥3 Given-When-Then ACs per module
+- **§7**: Skip (same as planning)
+- **§8**: Full risk matrix with probability/impact/mitigation
+- **Front-matter**: Set `prd_depth: engineering`, follow 01 lifecycle (Draft → Review → Approved)
 
 ### Step 4: Generate the Complete PRD
 
@@ -192,10 +225,11 @@ Each feature module needs at least 3 ACs in Given-When-Then format.
 | ID | Scenario | Given | When | Then |
 |----|----------|-------|------|------|
 
-## 7. Timeline Estimate
-| Phase | Estimated Effort | Dependencies | Risks |
-|-------|-----------------|-------------|-------|
-Split into: development / testing / integration / launch.
+## 7. Scheduling and Estimation (Not Applicable)
+> Agent-driven development does not use person-day estimation or calendar scheduling.
+> Agent velocity is unpredictable (a human's 3-day task may be minutes for an agent).
+> Version ordering is determined by dependency DAG + priority + batching, not calendar dates.
+> Time estimation is meaningless and gives false confidence — skip entirely.
 
 ## 8. Risks and Dependencies
 | Risk | Probability | Impact | Mitigation |
@@ -222,7 +256,7 @@ After generation, verify each item in the checklist. Mark failing items and prov
 | 7 | Data tracking is complete | Core operation paths all have tracking events |
 | 8 | No technical implementation | PRD describes WHAT, not HOW (no DB type, language, framework) |
 | 9 | Priorities are explicit | Feature modules are tagged P0/P1/P2 |
-| 10 | Timeline is grounded | Effort estimates cover dev/test/integration phases |
+| 10 | Depth-appropriate detail level | `planning`: AC skeleton with 1-2 GWT per module, no exhaustive rules/exception matrix/tracking. `engineering`: full AC ≥3, exhaustive rules, exception matrix, tracking events |
 
 ## Key Principles
 

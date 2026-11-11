@@ -62,6 +62,21 @@ report with sentiment analysis, pain point ranking, topic clustering, and improv
 
 ## Process
 
+### Step 0: Determine Data Mode
+
+Before ingesting data, check whether feedback data sources are available:
+
+| Mode | Condition | Behavior |
+|------|-----------|----------|
+| `live` (default) | Feedback data exists (CSV/Excel/JSON/text from app stores, support tickets, NPS surveys, etc.) | Execute Steps 1-8 (full analysis pipeline) |
+| `static` | No live feedback data, but prior analysis artifacts exist (previous FA reports, gap-analysis findings, critic reviews, audit findings) | Skip Steps 1-2. Extract pain points, sentiment signals, and topic clusters from existing `.csp/` and `docs/` artifacts. Use prior finding severity scores as proxy pain-point rankings. Label all outputs `[static proxy — derived from prior artifacts]`. |
+| `none` | No feedback data of any kind (self-hosted tool, library, CLI, early MVP with no feedback channels) | Skip Steps 1-7 entirely. Output `[TBD-反馈缺失]` report with: (1) recommended feedback channels to establish (in-app form, GitHub issues, email), (2) estimated setup effort for each channel, (3) minimum feedback volume threshold before analysis becomes meaningful (≥50 items). |
+
+**Auto-detection**: If `data_mode` is not explicitly set:
+- Check for data files: `docs/feedback-analysis/`, `.csp/gap-analysis/`, `.csp/critic/`, `.csp/audit/` → data exists → `live` or `static`
+- Check `git log` for user-facing channels (in-app feedback forms, support integrations, issue trackers) → channels exist but no data ingested → prompt user to provide data → `live`
+- No channels, no data, no prior analysis → `none`
+
 ### Step 1: Data Ingestion and Normalization
 
 Accept feedback data in any of these formats:

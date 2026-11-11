@@ -4,7 +4,7 @@
 # Regenerate: node scripts/build-skill-metadata.mjs
 
 version: 2.0
-generated_at: 2026-11-11T07:05:49.836Z
+generated_at: 2026-11-11T09:26:41.207Z
 skills:
   csp-agent-teams:
     phase: review
@@ -1011,6 +1011,30 @@ skills:
       两个系统直接调 API 就行: 直接调用没有容错、没有降级、没有重试。一旦下游挂了，上游也挂了。
       分布式事务用 2PC 就行: "2PC 在分布式系统中性能差、有单点故障。大多数场景 Saga 或最终一致性更合适。"
       灰度发布太复杂，直接全量上: "全量发布 = 出问题影响全部用户。灰度是降低发布风险的基本手段。"
+  csp-integration-necessity-review:
+    phase: review
+    domain: patterns
+    role: specialist
+    scope: analysis
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
+      - Bash
+    dependencies:
+      skills: []
+    related_skills:
+      - csp-roadmap-update
+      - csp-product-lens-reviewer
+      - csp-product-design-convergence
+      - csp-requirement-prioritization
+    anti_rationalizations:
+      It's already in the roadmap so it must be necessary: "Planned ≠ necessary. Every feature must survive the 7-dimension gauntlet independently."
+      We should keep it for completeness: "Completeness is not a goal — core-scenario focus is. Features that don't serve the anchor are dead weight."
+      Removing features silently is fine: "Every removal/downgrade must record the reason. Traceability is mandatory."
+      Strategic anchor is debatable here: "This review only filters features, it does not challenge strategy. Strategic disputes escalate separately."
   csp-issue-triage:
     phase: plan
     domain: patterns
@@ -2115,51 +2139,6 @@ skills:
       The competitor list is obvious: "Never hardcode competitor vendors. The user's product and competing vendors are collected in Phase 0 and stored in brief.json. Defaults are empty."
       I recall this company's signals: "Model memory is not a source. Every signal and conclusion must trace to a retrieved public source, or be marked [信息缺失]."
       The gate is a formality: "G1–G6 are mandatory. A gate is never skipped because 'it seems fine'. Run check.sh + check-structure before showing any gate."
-  deliverable:
-    phase: build
-    domain: patterns
-    role: specialist
-    scope: implementation
-    tools:
-      - Read
-      - Write
-      - Edit
-      - Bash
-      - Glob
-      - Grep
-      - WebFetch
-      - WebSearch
-      - Agent
-  depth-research:
-    phase: define
-    domain: patterns
-    role: specialist
-    scope: analysis
-    tools:
-      - Read
-      - Write
-      - Edit
-      - Bash
-      - Glob
-      - Grep
-      - WebFetch
-      - WebSearch
-      - Agent
-  signal-scan:
-    phase: define
-    domain: patterns
-    role: specialist
-    scope: analysis
-    tools:
-      - Read
-      - Write
-      - Edit
-      - Bash
-      - Glob
-      - Grep
-      - WebFetch
-      - WebSearch
-      - Agent
   csp-agent-introspection-debugging:
     phase: build
     domain: patterns

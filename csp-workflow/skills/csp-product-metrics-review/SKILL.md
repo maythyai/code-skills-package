@@ -74,6 +74,19 @@ Collect the following from the user:
 | Key metrics | No | If not provided, infer from North Star decomposition |
 | Comparison baseline | No | Previous period, same period last year, or target value |
 | Known events | No | Launches, campaigns, outages, or other events during the period |
+| Data mode | No | `live` (default, requires analytics/metrics data), `static` (use git history + test coverage as proxy), `none` (no data available — output `[TBD-指标缺失]` + instrumentation recommendations) |
+
+**Data mode routing:**
+- `live`: Execute Steps 2-10 (full 10-step process with live metrics data)
+- `static`: Replace Steps 3-8 with static code analysis proxies:
+  - Step 3 (Health) → Git commit frequency heatmap + test coverage trends
+  - Step 4 (Trends) → File-change hotspots over time
+  - Step 5 (Funnel) → Skip (no user flow data in static mode)
+  - Step 6 (Retention) → Skip (no user data in static mode)
+  - Step 7 (A/B) → Skip (no experiment data in static mode)
+  - Step 8 (Attribution) → Correlate code changes with git history anomalies
+  - Every output metric labeled `[static proxy]`
+- `none`: Skip Steps 2-8 entirely. Output `[TBD-指标缺失]` report with recommended instrumentation plan (what to track, where to add it, estimated effort).
 
 ### Step 2: North Star Metric Decomposition
 

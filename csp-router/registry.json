@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "total_skills": 708,
+  "total_skills": 709,
   "shards": [],
   "skill_metadata": "skill-metadata.yaml",
   "skills": [
@@ -9440,6 +9440,21 @@
       },
       "stack_detection": false,
       "path": "csp-workflow/skills/csp-integration-design/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-integration-necessity-review",
+      "description": "Phase 2.5 mandatory self-critique gate: 7-dimension per-function verdict table (include/downgrade/remove/merge) filtering roadmap features against STRATEGY anchor. Default posture is cut not keep. Use after roadmap version planning, before PRD SPEC generation.",
+      "layer": 2,
+      "category": "workflow",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-workflow/skills/csp-integration-necessity-review/SKILL.md",
       "deps": [],
       "priority": 10
     },

@@ -6122,6 +6122,23 @@ trigger_index:
   "review backend mock strategies":
     skills: [csp-backend-mock-strategies]
     weight: 40
+
+  # ─── auto-generated triggers (generate-triggers.mjs) ───
+  "integration necessity code review":
+    skills: [csp-integration-necessity-review]
+    weight: 40
+  "integration necessity review":
+    skills: [csp-integration-necessity-review]
+    weight: 40
+  "integration necessity 审查":
+    skills: [csp-integration-necessity-review]
+    weight: 40
+  "integration-necessity-review":
+    skills: [csp-integration-necessity-review]
+    weight: 40
+  "review integration necessity code":
+    skills: [csp-integration-necessity-review]
+    weight: 40
 stack_rules:
   python:
     files: ["pyproject.toml", "setup.py", "requirements.txt", "Pipfile"]

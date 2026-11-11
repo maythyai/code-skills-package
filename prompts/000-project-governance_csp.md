@@ -482,6 +482,134 @@ Conventional Commits 格式（遵循 `[[pattern:csp-git-conventions]]` §3）：
 
 ---
 
+## Phase G6：产物大小治理
+
+> 持续迭代的项目会积累大量产物——日志、changelog、ROADMAP、PRD、验证基线——这些文件天然持续增长，不加管理会导致 Agent 上下文超限、构建变慢、仓库体积膨胀。
+
+### G6.1 按产物类型的治理策略
+
+| 产物类型 | 增长模式 | 治理策略 | 工具 |
+|---------|---------|---------|------|
+| **日志** (`logs/*.log`) | 线性无限增长 | `.gitignore` 排除；日志轮转保留 7 天 | logrotate / 脚本清理 |
+| **缓存** (`.mypy_cache/` `.pytest_cache/` `.turbo/`) | 工具自动重建 | `.gitignore` 排除 | gitignore |
+| **数据库备份** (`data/backups/*.db`) | 每次备份产生新文件 | `.gitignore` 排除；保留最近 5 个，清理 >30 天 | cron / 脚本 |
+| **CHANGELOG** | 每个版本追加一段 | 按年拆分：`CHANGELOG-{year}.md` → `docs/archive/changelogs/` | 手动 / 发布脚本 |
+| **ROADMAP** | 每个版本追加一行 | shipped/deferred 版本保留 1 行摘要，详情移入 `ROADMAP-ARCHIVE.md` | Phase 2.5 审视时执行 |
+| **PRD** (>80KB) | 单个 PRD 逐渐膨胀 | 拆分为主文档 + `PRD-{slug}-appendix.md`；已交付 2 个版本的 PRD 移入 `docs/archive/prd/` | 01 PRD 评审后 |
+| **验证基线** (`.csp/artifacts/verify/`) | 每次回归产生一个目录 | 保留最近 3 个基线；更早的移入 `.csp/artifacts/archive/verify/` | 06 发布后 |
+| **manifest.json** | 每次产物落盘追加索引项 | Registry 自身管理；超过 1MB 自动分片到 `.csp/manifest-shards/` | 构建脚本 |
+| **第三方参考代码** (`docs/research/open-source-references/`) | git clone 包含完整 `.git/` 历史 | **禁止放入 docs 树**。使用独立 `references/` 目录或 submodule；用脚本同步，不入主仓库 | `.gitignore` + 脚本 |
+
+### G6.2 单文件大小阈值
+
+| 阈值 | 处理 |
+|------|------|
+| **50KB** — 通知阈值 | 新增/修改超过此值的 `.md` 文件，Agent 在下次操作时主动提示是否可拆分/归档 |
+| **100KB** — 警告阈值 | 超过此值的文件在下一轮规划/发布时必须拆分（主文件 + archive）或归档 |
+| **250KB** — 硬上限 | 除 registry.json / triggers.yaml（由构建系统托管）外，所有 `.md` 文件禁止超过此值 |
+| **1MB** — 分片阈值 | registry.json / manifest.json 目标：构建脚本在接近此值时自动启用分片 |
+
+### G6.3 定期归档节奏
+
+| 时机 | 动作 |
+|------|------|
+| **每次 Phase 2.5 审视后** | ROADMAP 检查 `shipped` 版本 >20 个 → 最早 10 个移入 `ROADMAP-ARCHIVE.md` |
+| **每次 06 发布后** | `.csp/artifacts/verify/` 保留最近 3 个基线，其余移入 archive |
+| **每季度** | 清理 `data/backups/` 中 >30 天的备份 |
+| **每年 1 月** | `CHANGELOG.md` 按年拆分，旧年移入 `docs/archive/changelogs/` |
+| **PRD 交付后** | status=Approved 且已发布 ≥2 个版本的 PRD → 移入 `docs/archive/prd/` |
+| **PRD 评审时** | >80KB 的 PRD → 拆分为主体 + appendix |
+
+### G6.4 归档目录结构
+
+```
+项目根/
+├── docs/archive/                  # 对外文档归档
+│   ├── changelogs/                # CHANGELOG-2025.md, CHANGELOG-2026.md ...
+│   ├── prd/                       # 已交付版本的 PRD
+│   └── ROADMAP-ARCHIVE.md         # shipped/deferred 版本的历史详情
+├── .csp/artifacts/archive/        # Agent 产物归档
+│   └── verify/                    # 历史验证基线
+└── references/                    # 外部参考项目（git submodule 或脚本同步）
+    └── open-source/               # 竞品/参考开源项目
+```
+
+### G6.5 大文件检查脚本
+
+`scripts/check-large-files.sh`：
+
+```bash
+#!/bin/bash
+# Check project files against size thresholds
+WARN_KB=50
+HARD_KB=200
+
+echo "=== Files > ${WARN_KB}KB (consider splitting) ==="
+find docs/ prompts/ -type f \( -name '*.md' -o -name '*.json' \) \
+  -size +${WARN_KB}k \
+  -not -path 'docs/archive/*' \
+  -not -path 'docs/research/*' \
+  -exec ls -lh {} \;
+
+echo ""
+echo "=== Files > ${HARD_KB}KB (MUST split or archive) ==="
+find docs/ -type f -name '*.md' -size +${HARD_KB}k \
+  -not -path 'docs/archive/*' \
+  -exec ls -lh {} \;
+```
+
+可作为 pre-commit hook 或 CI 检查项，建议集成到 `.github/workflows/` 中。
+
+### G6.6 `.gitignore` 基线
+
+项目生产环境应有的最小 `.gitignore` 条目：
+
+```gitignore
+# 日志
+logs/
+*.log
+
+# 运行时数据
+data/
+!data/.gitkeep
+
+# 缓存
+.mypy_cache/
+.pytest_cache/
+.turbo/
+.ruff_cache/
+.hypothesis/
+.mypy_cache/
+__pycache__/
+*.pyc
+*.pyo
+
+# 构建产物
+dist/
+build/
+*.egg-info/
+
+# 系统文件
+.DS_Store
+Thumbs.db
+
+# 环境变量（保密）
+.env
+.env.local
+.env.production.local
+
+# Agent 本地状态
+.csp/tmp/
+
+# 第三方参考代码（用 references/ + submodule 管理）
+docs/research/open-source-references/
+
+# 基线归档
+.csp/artifacts/archive/
+```
+
+---
+
 ## CSP Skill 路径速查
 
 ### 项目结构

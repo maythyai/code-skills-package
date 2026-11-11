@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generated_at": "2026-11-11T07:05:52.583Z",
+  "generated_at": "2026-11-11T09:26:44.124Z",
   "nodes": {
     "5b37ecd541b4": {
       "id": "5b37ecd541b4",
@@ -7157,6 +7157,19 @@
         "domain": "architecture",
         "role": "specialist",
         "path": "csp-workflow/skills/csp-integration-design/SKILL.md"
+      }
+    },
+    "ceb3e3cca3de": {
+      "id": "ceb3e3cca3de",
+      "kind": "skill",
+      "name": "csp-integration-necessity-review",
+      "metadata": {
+        "layer": 2,
+        "category": "workflow",
+        "phase": "review",
+        "domain": "patterns",
+        "role": "specialist",
+        "path": "csp-workflow/skills/csp-integration-necessity-review/SKILL.md"
       }
     },
     "af943ccb9320": {
@@ -20256,6 +20269,36 @@
       "id": "b3405449968f",
       "kind": "trigger",
       "name": "review backend mock strategies",
+      "metadata": {}
+    },
+    "d6c433a1327e": {
+      "id": "d6c433a1327e",
+      "kind": "trigger",
+      "name": "integration necessity code review",
+      "metadata": {}
+    },
+    "8055208af8cc": {
+      "id": "8055208af8cc",
+      "kind": "trigger",
+      "name": "integration necessity review",
+      "metadata": {}
+    },
+    "b956ed5a4e4b": {
+      "id": "b956ed5a4e4b",
+      "kind": "trigger",
+      "name": "integration necessity 审查",
+      "metadata": {}
+    },
+    "726fe063fe4f": {
+      "id": "726fe063fe4f",
+      "kind": "trigger",
+      "name": "integration-necessity-review",
+      "metadata": {}
+    },
+    "5e05a60ccd6b": {
+      "id": "5e05a60ccd6b",
+      "kind": "trigger",
+      "name": "review integration necessity code",
       "metadata": {}
     }
   },
@@ -33665,6 +33708,36 @@
       "metadata": {}
     },
     {
+      "source": "d6c433a1327e",
+      "target": "ceb3e3cca3de",
+      "kind": "triggers",
+      "metadata": {}
+    },
+    {
+      "source": "8055208af8cc",
+      "target": "ceb3e3cca3de",
+      "kind": "triggers",
+      "metadata": {}
+    },
+    {
+      "source": "b956ed5a4e4b",
+      "target": "ceb3e3cca3de",
+      "kind": "triggers",
+      "metadata": {}
+    },
+    {
+      "source": "726fe063fe4f",
+      "target": "ceb3e3cca3de",
+      "kind": "triggers",
+      "metadata": {}
+    },
+    {
+      "source": "5e05a60ccd6b",
+      "target": "ceb3e3cca3de",
+      "kind": "triggers",
+      "metadata": {}
+    },
+    {
       "source": "b2e754d45580",
       "target": "5b37ecd541b4",
       "kind": "contains",
@@ -37440,6 +37513,12 @@
     },
     {
       "source": "caa9d170319b",
+      "target": "ceb3e3cca3de",
+      "kind": "contains",
+      "metadata": {}
+    },
+    {
+      "source": "caa9d170319b",
       "target": "af943ccb9320",
       "kind": "contains",
       "metadata": {}
@@ -39647,6 +39726,12 @@
       "metadata": {}
     },
     {
+      "source": "f297e9873811",
+      "target": "ceb3e3cca3de",
+      "kind": "contains",
+      "metadata": {}
+    },
+    {
       "source": "b0245c519a34",
       "target": "af943ccb9320",
       "kind": "contains",
@@ -40879,6 +40964,24 @@
     {
       "source": "30df39654760",
       "target": "de3012021006",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "ceb3e3cca3de",
+      "target": "23c62050d68e",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "ceb3e3cca3de",
+      "target": "8f694e7ebe29",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "ceb3e3cca3de",
+      "target": "eec8af5a38d1",
       "kind": "related_to",
       "metadata": {}
     },
@@ -43591,6 +43694,12 @@
     {
       "source": "8e4815103a09",
       "target": "d8ddd7c38474",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "ceb3e3cca3de",
+      "target": "bd8529dfd53d",
       "kind": "depends_on",
       "metadata": {}
     },
@@ -50141,6 +50250,24 @@
       "metadata": {}
     },
     {
+      "source": "ceb3e3cca3de",
+      "target": "23c62050d68e",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "ceb3e3cca3de",
+      "target": "8f694e7ebe29",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "ceb3e3cca3de",
+      "target": "eec8af5a38d1",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
       "source": "af943ccb9320",
       "target": "480c8767f617",
       "kind": "depends_on",
@@ -56508,6 +56635,12 @@
     },
     {
       "source": "30df39654760",
+      "target": "ceb3e3cca3de",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "ceb3e3cca3de",
       "target": "af943ccb9320",
       "kind": "related_to",
       "metadata": {}
@@ -57054,19 +57187,19 @@
     }
   ],
   "stats": {
-    "node_count": 2738,
-    "edge_count": 6132,
-    "skill_count": 708,
-    "trigger_count": 2020,
+    "node_count": 2744,
+    "edge_count": 6147,
+    "skill_count": 709,
+    "trigger_count": 2025,
     "phase_count": 6,
     "category_count": 5,
-    "depends_on_count": 1625,
-    "related_to_count": 1233,
+    "depends_on_count": 1629,
+    "related_to_count": 1237,
     "edge_types": {
-      "contains": 1040,
-      "triggers": 2234,
-      "depends_on": 1625,
-      "related_to": 1233
+      "contains": 1042,
+      "triggers": 2239,
+      "depends_on": 1629,
+      "related_to": 1237
     }
   }
 }

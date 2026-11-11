@@ -12,7 +12,7 @@
 
 ## 一、使命与硬边界（红线）
 
-1. **Anchor, not plan**：战略 = 产品是什么/为什么/为谁（Rumelt kernel：诊断→指导方针→连贯行动）。**不是 feature list、不是排期**——功能细节归 01 PRD/spec，排期归任务管理。`ROADMAP.md` 只给"方向 + 版本主题 + 关键价值"；**PRD SPEC 是独立文件**（`docs/prd/`，Phase 4.5 产出，规划级深度），不写进 ROADMAP.md 正文。
+1. **Anchor, not plan**：战略 = 产品是什么/为什么/为谁（Rumelt kernel：诊断→指导方针→连贯行动）。**不是 feature list、不是排期**——功能细节归 01 PRD/spec。Agent 开发下不做估时/排期——人日估算无意义（人可能 3 天但 Agent 几分钟完成），版本顺序由依赖 DAG + 优先级 + 攒批决定，不按日历排。`ROADMAP.md` 只给"方向 + 版本主题 + 关键价值"；**PRD SPEC 是独立文件**（`docs/prd/`，Phase 4.5 产出，规划级深度），不写进 ROADMAP.md 正文。
 2. **版本号规则权威**：SemVer/CalVer 机制、对齐检查的权威定义在 `version-management.md`（独立参考文件）；本提示词产出物定义本项目的**版本-主题序列**；06 发布执行时 reference `version-management.md` 的规则，不另立。
 3. **短是特性**：模板受限，加节成本高；push back 扩张。ROADMAP 每版本只给关键信息 + 价值描述；规划级 PRD SPEC 也只写大纲级要点，工程级细节（业务规则穷举/异常矩阵/完整 AC/埋点明细）留到内环 01/03 升级补全。
 4. **Durable rerunnable**：可重跑——二次运行 in-place 更新，保留有效部分，只挑战 stale/weak 段；不推倒重来。
@@ -103,7 +103,7 @@
 - **不轻易跳 MAJOR**：MAJOR 只在**实际 breaking API 变更**时 +1。additive（新模块/新端点/新功能）永远 MINOR+1，哪怕 MINOR 已经是 105。
 
 **CalVer（日期形式 vYYYY.M.DD）仅显式 opt-in**：仅当用户明确要求日期版本（典型：每日构建的终端应用）才用；**默认不用日期形式**。即便用 CalVer，tag 取 **roadmap 规划的版本号**（按规划交付），不自动用今日日期打 tag——提前/延后交付不改 tag，tag 跟随 roadmap 规划的语义版本。
-- **AI 开发下时间形式版本号无意义**：AI 产出节奏与日历无关（可能几小时完成一个版本），按年/季/月/日定版本或估时毫无依据。默认 SemVer 增量续编，不引入日期维度。
+- **AI 开发下时间形式版本号无意义**：AI 产出节奏与日历无关（可能几小时完成一个版本），按年/季/月/日定版本或估时毫无依据。默认 SemVer 增量续编，不引入日期维度。**不做人日/工时估算**：Agent 开发速度方差极大（人 3 天的功能 Agent 几分钟完成），估时给虚假信心；版本顺序由依赖 DAG + 优先级 + 攒批原则决定。
 
 **版本号来源（战略主题号 ≠ SemVer 发布号）**：
 - roadmap 的 **战略主题**（如"平台化""生态开放"）是**叙事性愿景**，**不是 SemVer 发布号**——不能用战略主题号打版本的发布 tag。
@@ -262,7 +262,7 @@ see_also: docs/prd/PRD-INDEX.md | .csp/review/REVIEW-FINDINGS-*.json
 | 反模式 | 症状 | 正确做法 |
 |---|---|---|
 | 规划=feature list | 列一堆功能无战略 | Anchor not plan；战略是 what/why，功能归 01 |
-| 规划=排期 | Gantt 化、堆日期 | 路线图示方向不示日期；排期归任务管理 |
+| 规划=排期 | Gantt 化、堆日期、估人日、设截止 | 路线图示方向不示日期；Agent 开发下估时无意义（人 3 天的活 Agent 几分钟完成），版本序列按依赖+优先级排序，不做排期 |
 | 详细 PRD 写进 roadmap | 每版本写全 AC/字段 | ROADMAP 只给关键信息+价值；规划级 SPEC 落 `docs/prd/` 独立文件（Phase 4.5），工程级细节留 01/03 升级 |
 | 版本号规则散落 | 06 另立方案、与 roadmap 不一致 | 版本号规则权威在 `version-management.md`（06 reference）；ROADMAP 记版本-主题序列 |
 | 不回写 manifest | 规划产物无索引 | 产出即回写 manifest |
