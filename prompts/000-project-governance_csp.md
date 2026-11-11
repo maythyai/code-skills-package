@@ -40,6 +40,71 @@
 
 ---
 
+## Phase GK：知识中枢初始化与三基线管理
+
+> 知识中枢是整条交付链路的基座。本 Phase 不重复方法论细节、通过 `[[skill:csp-knowledge-hub]]` 承载完整初始化流程，此处只定义治理层的约定。
+
+### GK.1 知识中枢初始化
+
+调用 `[[skill:csp-knowledge-hub]]` 完成：
+
+- **AGENTS.md**：路由契约（6 节固定结构 + 操作路由表），电报体风格
+- **manifest.json**：唯一产物索引（`source_id`/`content_hash`/`build_status`/`raw_path`/`output_path`），所有阶段产出即回写
+- **lifecycle-state.json**：8 阶段状态机（00→01→...→07），每阶段读/写推进
+- **既有文档整改**（Phase 1.5）：版本对齐/散落归位/重复清理/front-matter 补全，只动治理层不动业务内容
+- **棕地 CMS 蒸馏**（Phase 1.7）：代码已存在时自动蒸馏入口点→调用链→模块边界→生成 CMS baseline
+
+### GK.2 三基线体系
+
+| 基线 | 全称 | 目录 | 生产者 | 消费者 |
+|------|------|------|--------|--------|
+| **PMS** | Product Module Spec | `.csp/product-spec/` | Planning Phase 5 + 01 PRD | 02 拆解 / 03 技术方案 / 07 复盘 |
+| **CMS** | Code Module Spec | `.csp/code-spec/{app}/` | 00 棕地蒸馏 / 05 增量对齐 | 03 技术方案 ground / 05 开发 / CR |
+| **TMS** | Test Module Spec | `.csp/test-spec/{module}/` | Testing Phase TD + 03 Spec | TU/TI/TE 测试实施 / 门控 |
+
+**三基线闭环**：PMS 定义"要做什么"→ CMS 定义"代码怎么做"→ TMS 定义"怎么验证做得对"→ 07 复盘 findings 回流更新 PMS。
+
+### GK.3 manifest 回写约定
+
+每阶段产出实质页必须回写 manifest（`content_hash` 用 git blob，禁 mtime；`source_type` 按阶段标 `pms/cms/tms/doc/archive`；`build_status=built` 才被视为有效产物）：
+
+| 阶段 | 产物 | source_type |
+|------|------|------------|
+| Planning | STRATEGY.md / ROADMAP.md / PRD SPEC | `doc` / `pms` |
+| Development 02-04 | decomposition / specs / tasks | `doc` |
+| Development 05 | CMS 基线 | `cms` |
+| Development 06-08 | 门控证据 / 发布记录 / 里程碑 | `doc` / `archive` |
+| Testing TD | TMS 基线 + 用例集 | `tms` / `doc` |
+
+### GK.4 frontmatter 约定
+
+全链路实质页必须内联 YAML frontmatter（禁 `.meta.json` 侧车）：
+
+```yaml
+---
+type: concept|entity|faq|howto|module-spec|feature-spec|test-spec
+confidence: high|medium|low
+sources: ["[[raw/xxx.md@hash]]"]
+seeAlso: ["[[code-spec/app/CODE-MODULE-SPEC]]"]
+created: "YYYY-MM-DD"
+updated: "YYYY-MM-DD"
+---
+```
+
+### GK.5 Git 分支策略
+
+调用 `[[pattern:csp-git-conventions]]` 管理两类产物不同策略：
+
+| 产物类型 | 分支策略 | 原因 |
+|---------|---------|------|
+| `.csp/` 知识产物（AGENTS/manifest/lifecycle-state/specs/tasks/PMS/CMS/TMS） | **主干**（master/main） | 全链路共享基础设施，必须各阶段可见 |
+| `src/` 代码 | **feat 分支** → PR → 主干 | 05 实施走 worktree 隔离，PR 合回 |
+| `docs/` 文档 | **主干** | 人类文档随版本演进 |
+
+红线：知识产物禁止滞留未合并 side branch——下游阶段读不到 AGENTS.md 会导致路由死循环。
+
+---
+
 ## Phase G0：项目结构初始化与维护
 
 > 适用于新项目初始化或既有项目结构整理。
@@ -272,6 +337,56 @@ Conventional Commits 格式（遵循 `[[pattern:csp-git-conventions]]` §3）：
 
 ---
 
+## Phase G4：项目生产要素管理
+
+> 项目不止代码和文档——还有协作者、安全策略、环境配置、CI/CD、依赖管理等生产要素。
+
+### G4.1 项目元文件清单
+
+| 文件 | 角色 | 维护时机 | CSP Skill |
+|------|------|---------|-----------|
+| `CONTRIBUTING.md` | 贡献指南（提交流程/分支策略/PR 流程） | 流程变更时 | `[[skill:csp-project-doc-architect]]` |
+| `CODE_OF_CONDUCT.md` | 社区行为准则（Contributor Covenant） | 极少（创建后不变） | — |
+| `SECURITY.md` | 安全策略（支持版本/漏洞上报/响应 SLA） | 策略变更时 | `[[skill:csp-security-review]]` |
+| `.gitignore` | 忽略规则（临时产物/构建产物/凭证/`.csp/tmp`） | 按需 | `[[skill:csp-file-organizer]]` |
+| `.npmignore` / `.dockerignore` | 发布/镜像忽略规则 | 按需 | — |
+
+### G4.2 环境与配置管理
+
+| 关注点 | 约定 | CSP Skill |
+|--------|------|-----------|
+| 环境分层 | dev / staging / prod 三套配置，通过环境变量注入（非硬编码文件） | `[[skill:csp-deployment]]` |
+| 配置文件 | `.env.example`（模板，入库） + `.env`（实际值，不入库，.gitignore 排除） | — |
+| 密钥管理 | 密钥/token 不入仓库；CI 通过 secrets 注入；本地通过 `.env` 或 secret manager | `[[skill:csp-security-review]]` |
+| 依赖管理 | `package.json`/`requirements.txt`/`Cargo.toml` 锁定版本（lock 文件入库）；定期 `npm audit`/`pip audit` | `[[skill:csp-security-review]]`（依赖审计） |
+
+### G4.3 CI/CD 治理
+
+| 关注点 | 约定 | CSP Skill |
+|--------|------|-----------|
+| CI 管道定义 | `.github/workflows/` 或等效 CI 配置入库 | `[[skill:csp-cicd-pipelines]]` |
+| 门控集成 | CI 中集成 Lint/TypeCheck/Build/Test/Security Audit（对齐 Pipeline S6） | `[[skill:csp-cicd-pipelines]]` |
+| 部署管道 | 构建→测试→部署→冒烟→上线，每步可观测 | `[[skill:csp-deployment]]` |
+| 回滚策略 | 每次部署可回滚（数据库迁移有 down 脚本，部署有上一版本 tag） | `[[skill:csp-deployment]]` |
+
+### G4.4 发布检查清单
+
+每个版本发布前（06 done），按以下清单逐项确认：
+
+- [ ] `VERSION` + `package.json` + tag 三处一致
+- [ ] `CHANGELOG.md` 已追加（Added/Changed/Fixed 分类完整）
+- [ ] `README.md` 快速开始步骤可运行（clone → install → run → 核心流程走通）
+- [ ] `CONTRIBUTING.md` 与实际流程一致（如有）
+- [ ] `SECURITY.md` 漏洞上报渠道有效（如有）
+- [ ] `.gitignore` 排除了临时产物/凭证/构建输出
+- [ ] CI 管道全绿（lint/build/test/security audit）
+- [ ] 依赖审计无 CRITICAL 漏洞
+- [ ] 部署回滚方案已就绪
+
+调用 `[[skill:csp-release]]` 辅助生成 release notes + `[[skill:csp-project-standards-reviewer]]` 审查项目标准文件合规。
+
+---
+
 ## CSP Skill 路径速查
 
 ### 项目结构
@@ -299,6 +414,17 @@ Conventional Commits 格式（遵循 `[[pattern:csp-git-conventions]]` §3）：
 |------|-----------|
 | 项目标准审查 | `[[skill:csp-project-standards-reviewer]]`（CLAUDE.md/AGENTS.md 合规/frontmatter 规则） |
 | 发布辅助 | `[[skill:csp-release]]`（分析 release 规则/生成 release notes） |
+
+### 项目生产要素（Phase G4）
+
+| 阶段 | CSP Skill |
+|------|-----------|
+| CI/CD 管道 | `[[skill:csp-cicd-pipelines]]`（构建/测试/部署管道，GitHub Actions） |
+| 部署策略 | `[[skill:csp-deployment]]`（健康检查/回滚/灰度/蓝绿） |
+| 安全审计（依赖/漏洞） | `[[skill:csp-security-review]]`（鉴权/注入/依赖审计/密钥管理） |
+| 项目标准审查 | `[[skill:csp-project-standards-reviewer]]`（CLAUDE.md/AGENTS.md/CONTRIBUTING/SECURITY 合规） |
+| 文档架构设计 | `[[skill:csp-project-doc-architect]]`（CONTRIBUTING/SECURITY/CODE_OF_CONDUCT 模板） |
+| 文件整理 | `[[skill:csp-file-organizer]]`（.gitignore/.npmignore 清理） |
 
 ---
 
@@ -336,4 +462,7 @@ Conventional Commits 格式（遵循 `[[pattern:csp-git-conventions]]` §3）：
 
 ---
 
-按 G0→G1→G2→G3 执行项目治理初始化或审计。AI 自主完成，每个阶段按进度条播报。
+按 GB→GK→G0→G1→G2→G3→G4 执行项目治理初始化或审计。AI 自主完成，每个阶段按进度条播报。
+
+**全新项目**：GK→G0→G1→G2→G4 完整初始化。
+**棕地项目**：GB（审计+迁移计划）→ GK（知识中枢棕地蒸馏）→ G0.2/G1/G2/G4 对齐现有
