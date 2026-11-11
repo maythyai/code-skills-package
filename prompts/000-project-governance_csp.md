@@ -226,11 +226,29 @@ updated: "YYYY-MM-DD"
 调用 `[[skill:csp-git-conventions]]`（Conventional Commits/原子提交/Tag 纪律）+ `[[skill:csp-changelog-management]]`（CHANGELOG 追加/分类/格式）：
 
 - **SemVer X.Y.Z**：MAJOR=breaking / MINOR=additive / PATCH=fix
+
+> **MINOR (Y) 是攒批发布，不是一个功能一个版本**：同一模块的多个功能打包成一个 MINOR+1 版本（每版本 3-5 条功能是常态，可更多），不逐功能 bump。只有不同模块/主题方向不同/体量过大才拆到下一版本。"一个版本一个功能"是模块内恰好只剩一个功能时的特例，不是默认形态。
+
+- **feat/fix 分轨**：feat 批打 MINOR+1 tag，fix 批打 PATCH+1 tag；同迭代两者兼有 → 拆两个发布，不混合
 - **Tag 格式**：`v` 前缀 + annotated（`-a`）+ 不可变（已推送不移动）
 - **一 commit 一 tag**，禁多 tag 同 commit
 - **纯文档 commit 禁打版本 tag**
-- **六处版本同步**：根 `package.json` / 各 app `package.json` / `VERSION` / `pyproject.toml`（如有）/ GitHub Release tag_name + title → 脚本校验，禁人工同步
 - 详细版本号规则见 `prompts/version-management.md`
+
+**多文件版本同步**：版本号是一个事实，但各生态工具各认各的文件。原则：**一处定义、多处派生、脚本校验、禁手填**。
+
+| 文件 | 角色 | 同步方式 |
+|------|------|---------|
+| `VERSION` | 单一真相源（开发期 canonical） | 手改（唯一可手改的文件） |
+| `git tag` | 发布锚点（发布后 canonical，不可变） | `git tag -a vX.Y.Z -m "..."` |
+| `package.json` | 打包消费 | 从 VERSION 同步（`scripts/sync-version.mjs`） |
+| `pyproject.toml`（如有） | 打包消费 | `dynamic = ["version"]` 或 sync 写入 |
+| GitHub Release tag_name + title | 发布元数据 | 从 tag 自动创建 |
+| `CHANGELOG.md` 最新条目 | 发布历史 | 发布时校验 == tag |
+
+**同步校验**：发布前必须跑 `python3 prompts/scripts/version_integrity_check.py`——全源字符串完全一致，任一不一致 `exit 1` 阻断发布（T3 gate）。
+
+**冲突消解**：若 `package.json`/`VERSION` 与已发布 `git tag` 不一致 → 以 tag 为 canonical，自动 bump 文件到 tag 版本，不问（仅多 tag 冲突/canonical 不明才人工）。开发期间（tag 未打）→ 以 `VERSION` 为 canonical，所有文件从它派生。
 
 ### G1.2 Commit 规范
 
