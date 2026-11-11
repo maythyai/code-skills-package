@@ -356,19 +356,6 @@ node bin/csp-sdk.mjs init-skill csp-my-skill --layer 3 --phase build
 | [docs/analysis/](./docs/analysis/project-review-2026-08.md) | Audit reports and cross-layer testing case study |
 | [README_zh.md](./README_zh.md) | Chinese Documentation |
 
-## Pipeline Instruction Documents (`prompts/000-*_csp.md`)
-
-Four end-to-end pipeline documents that orchestrate CSP skills across the full development lifecycle. Each is a standalone "instruction manual" for AI agents — tell the agent to load the document and it will execute the workflow autonomously.
-
-| Document | Scope | Phases |
-|----------|-------|--------|
-| [000-product-planning_csp.md](./prompts/000-product-planning_csp.md) | Product Planning | Context → Current State → Research → Strategy → Roadmap → Review → Convergence → Iteration → Design → PRD SPEC → Growth |
-| [000-develop_pipeline_csp.md](./prompts/000-develop_pipeline_csp.md) | Full-Stack Development | 01 PRD → 02 Decomposition → 03 Tech Design → 04 Task Breakdown → 05 Implementation → 06 Quality Gates → 07 Review → 08 Release → 10 Retro |
-| [000-test_pipeline_csp.md](./prompts/000-test_pipeline_csp.md) | Testing & Audit | Test Basis → Case Design → Unit → API/Integration → E2E → Visual → Audit → Performance → Security → Quality Gates |
-| [000-project-governance_csp.md](./prompts/000-project-governance_csp.md) | Project Governance | Brownfield Adapter → Knowledge Hub → Structure → Version → Artifacts → Lifecycle → Production Elements → Root Hygiene |
-
-**How to use**: In any CSP-installed project, say `按 000-product-planning_csp.md 做产品规划` or `用 000-test_pipeline_csp.md 对当前版本做测试`.
-
 ## License
 
 [MIT License](./LICENSE)
