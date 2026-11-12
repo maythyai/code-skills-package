@@ -90,6 +90,7 @@ Spec 验收门：PRD 含背景/目标/功能清单/Given-When-Then 验收标准�
   Check 5.12: 命名规范 → [[skill:csp-project-standards-reviewer]] — 文件名/类名/函数名是否符合项目约定。**禁止项**（无存量豁免——git 已是版本控制）：文件名含版本号后缀（`_v1` `_v2` `_v61`）、milestone 前缀（`m10_` `m2_`）、revision hash（`a9b0c1d2_`）；各语言遵循社区惯例（Python snake_case 类 PascalCase，JS/TS camelCase 类 PascalCase，Go MixedCaps 包 lowercase）
   Check 5.13: 审计 findings 闭合 → P0 audit finding = 0（全部 closed，附 fix commit 证据）；P1 > 3 条同 P0 阻断
   （工具链不可用 = BLOCKED，不得用 grep/review 替代动态门控）
+- 环境依赖自解：visual regression/API doc 同步/性能测试等需运行中 app 的检查 → 先尝试 `docker-compose up -d` 或 `npm run dev &` + wait 探活。3 次重试失败才标 BLOCKED（附已试手段+缺什么）。禁止"需运行中 app，未跑"直接跳过
 - S7 审查无 CRITICAL → [[workflow:csp-code-review]] + [[pattern:csp-santa-method]]（关键模块双审）
 - 跨层集成验证 → [[pattern:csp-integration-review]]（11 场景全栈契约审查）
 - 7.6 对账 reconciled=true（含 findings 闭合闸门 exit 0）
