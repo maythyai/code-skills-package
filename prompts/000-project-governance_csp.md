@@ -213,10 +213,19 @@ updated: "YYYY-MM-DD"
 ├── turbo.json                        # Turborepo pipeline
 │
 ├── apps/                             # 应用（独立部署单元）
-│   └── web/                          # 前端应用
-│       ├── package.json
+│   ├── web/                          # 前端应用（Next.js）
+│   │   ├── package.json
+│   │   ├── src/
+│   │   ├── tests/                    # 前端测试（unit/integration/e2e）
+│   │   └── next.config.ts
+│   └── api/                          # 后端应用（FastAPI）
+│       ├── pyproject.toml            # 或 package.json / go.mod
 │       ├── src/
-│       └── tests/                    # 单应用测试（unit/integration/e2e 按需）
+│       │   ├── routes/               # API 路由层
+│       │   ├── services/             # 业务逻辑层
+│       │   ├── models/               # 数据模型
+│       │   └── middleware/           # 中间件
+│       └── tests/                    # 后端测试（unit/integration）
 │
 ├── packages/                         # 共享包（被 apps/ 引用）
 │   ├── shared/                       # 共享工具/类型
@@ -232,6 +241,11 @@ updated: "YYYY-MM-DD"
 │
 ├── docs/                             # 📖 对外人类文档（项目级共享，同 G0.1）
 ├── verify/                           # 🔍 测试证据（项目级共享）
+│
+├── docker-compose.yml                # 本地开发环境（web + api + redis + db）
+├── docker-compose.prod.yml           # 生产环境
+├── .env.example                      # 环境变量模板（入库）
+│
 └── .csp/                             # 🤖 Agent 产物库（项目级共享——PMS/CMS/TMS 跨 package 统一）
 ```
 
@@ -239,11 +253,13 @@ updated: "YYYY-MM-DD"
 
 | 维度 | 单仓库 (G0.1) | Monorepo (G0.1-M) |
 |------|--------------|-------------------|
-| 源码 | `src/` 单入口 | `apps/*/src/` + `packages/*/src/` 多入口 |
-| 测试 | `tests/` 单层 | 各 package 自含 `tests/`；E2E 放在被测 app 内 |
+| 源码 | `src/` 单入口 | `apps/web/src/` + `apps/api/src/` + `packages/*/src/` 多入口 |
+| 测试 | `tests/` 单层 | 各 package 自含 `tests/`；前端 E2E `apps/web/tests/e2e/`；后端 API 测试 `apps/api/tests/` |
 | 版本 | 一个 `VERSION` | 统一 `VERSION`（推荐）或各 package 独立 `package.json.version` |
 | `.csp/` | 项目根 | 项目根（跨 package 共享 PMS/CMS/TMS） |
-| CMS 基线 | `.csp/code-spec/{app}/` | `.csp/code-spec/{package-name}/` 每 package 独立 CMS |
+| CMS 基线 | `.csp/code-spec/{app}/` | `.csp/code-spec/web/` + `.csp/code-spec/api/` + `{package-name}/` 每入口独立 CMS |
+| 本地开发 | 单服务启动 | `docker-compose up`（web + api + redis + db）多服务编排 |
+| CI | 单语言 | 多语言并行（前端 Node.js + 后端 Python）或矩阵构建 |
 | Pipeline | 整个项目一条 pipeline | 整个项目一条 pipeline（跨 package 协同交付）；单 package 独立 pipeline 按需 |
 | Tag | `vX.Y.Z` | 统一 `vX.Y.Z`（推荐）；独立版本用 `{package}@vX.Y.Z` 或 changesets |
 
@@ -409,6 +425,12 @@ Conventional Commits 格式（遵循 `[[pattern:csp-git-conventions]]` §3）：
 - 共享测试 fixtures：`packages/shared/tests/fixtures/`
 - `verify/` 仍在项目根——跨 package 共享的测试证据集中管理
 
+**多服务本地开发约定**（适用 Monorepo + 多端口项目）：
+- `docker-compose.yml` 定义全部本地依赖（web:3000 + api:12300 + redis:6379 + db）
+- 各服务端口在 `.env.example` 中声明（`WEB_PORT=3000` `API_PORT=12300` `REDIS_PORT=6379`）
+- Agent 通过 `docker-compose ps` 或 `curl localhost:{port}/health` 探活，不凭端口号猜测
+- 前端 `package.json` 的 `proxy` 或 `next.config.ts` 的 `rewrites` 指向 `http://localhost:${API_PORT}`
+
 ### G2.3 红线
 
 - **`.csp/` 不进对外发布**：`.csp/` 下的所有内容（PMS/CMS/TMS/specs/tasks/verification）是 agent 内部产物，不进 GitHub Pages 部署
@@ -509,7 +531,7 @@ Conventional Commits 格式（遵循 `[[pattern:csp-git-conventions]]` §3）：
 | **Git** | `.git/` `.github/` `.gitignore` `.gitattributes` | 版本控制 |
 | **编辑器/Agent** | `.claude/` `.cursor/` `.vscode/` `.qoder/` `.editorconfig` | 不污染仓库 |
 | **依赖** | `package.json` `pyproject.toml` `requirements.txt` `pnpm-lock.yaml` `uv.lock` `Cargo.toml` `go.mod` | 包管理 |
-| **构建/部署** | `Dockerfile` `Dockerfile.*` `docker-compose.yml` `docker-compose.*.yml` `Makefile` `turbo.json` `nginx.conf` | CI/CD |
+| **构建/部署** | `Dockerfile` `Dockerfile.*` `docker-compose.yml` `docker-compose.*.yml` `Makefile` `turbo.json` `nginx.conf` | CI/CD + 本地多服务编排 |
 | **工具配置** | `.pre-commit-config.yaml` `alembic.ini` `playwright.config.ts` `playwright.*.config.ts` | 单文件，可接受 |
 | **环境变量** | `.env` `.env.example` `.env.production` `.env.production.example` | 不入库（`.env` 在 `.gitignore`） |
 | **标准文档** | `README.md` `CHANGELOG.md` `LICENSE` `CONTRIBUTING.md` `CODE_OF_CONDUCT.md` `SECURITY.md` | 项目门面 |
