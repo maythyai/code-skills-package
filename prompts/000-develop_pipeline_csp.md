@@ -88,6 +88,7 @@ Spec 验收门：PRD 含背景/目标/功能清单/Given-When-Then 验收标准�
   Check 5.10: 后端性能 → [[skill:csp-backend-performance]]（API P95/慢查询索引/N+1/缓存策略/连接池，有后端时选做）
   Check 5.11: 前后端接线验证 → grep 后端全部路由注册 × 前端全部 import/调用点交叉——无消费者（前端未接线的端点）报 WARNING，无生产者（前端调用但后端无路由）报 BLOCKED
   Check 5.12: 命名规范 → [[skill:csp-project-standards-reviewer]] — 新增文件/类/函数的命名是否符合项目约定（驼峰/蛇形/前缀/后缀），域名/路径名断言
+  Check 5.13: 审计 findings 闭合 → P0 audit finding = 0（全部 closed，附 fix commit 证据）；P1 > 3 条同 P0 阻断
   （工具链不可用 = BLOCKED，不得用 grep/review 替代动态门控）
 - S7 审查无 CRITICAL → [[workflow:csp-code-review]] + [[pattern:csp-santa-method]]（关键模块双审）
 - 跨层集成验证 → [[pattern:csp-integration-review]]（11 场景全栈契约审查）

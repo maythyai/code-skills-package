@@ -282,7 +282,15 @@ TQ 质量门控 ←── 测试证据 + 审计 findings ──→ 裁决报告
 - **审计找结构/可用性/健康问题** → TA 多维度扫描
 - **06 门控消费两者**：测试 exit 0 + 审计无 CRITICAL → 放行
 
-产出：审计 findings 前缀 `AUDIT-F-NN`，与测试 findings 前缀不同（`GAP-F`/`UI-F`/`CRITIC-F`），可并存去重。P0 findings 标 `快速修复=true` 直发 04→05→06，P1/P2 走 roadmap 正常路径。
+产出：审计 findings 前缀 `AUDIT-F-NN`，与测试 findings 前缀不同。P0 findings 标 `快速修复=true` 直发 04→05→06。
+
+**审计强制覆盖**（非可选——按条件全选必查）：
+- 有 DB 变更 → DB schema 对齐 + migration chain + 性能影响评估
+- 有新 API 端点 → 每端点鉴权/越权 + 前端消费者检查 + OpenAPI 同步
+- 有 UI 变更 → visual regression + 设计系统一致性 + 响应式断点
+- 有新增依赖 → 依赖审计 + license 检查
+- 有测试代码变更 → conftest/fixture 加载验证
+- **findings 闭合门控**：P0 finding 必须 closed（附 fix commit），不得 open/deferred 进 release。3 条以上 P1 同 P0 阻断。新端点无前端消费者 → P1 或标注"有意开放供外部调用"
 
 ---
 
