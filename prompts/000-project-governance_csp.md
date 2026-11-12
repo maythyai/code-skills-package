@@ -197,7 +197,60 @@ updated: "YYYY-MM-DD"
 > - `verify/` = 测试证据（机器产出，给人审阅——截图/log/diff）
 > - `.csp/` = Agent 产物库（agent 读/写——PMS/CMS/TMS + specs/tasks/artifacts）
 
-### G0.2 文档边界公约
+### G0.1-M：Monorepo 项目适配
+
+> 项目使用 `packages/` 或 `apps/` 结构（pnpm workspaces / Turborepo / Nx / Lerna）时，以下模板替换 G0.1 的单仓库模板。调用 `[[skill:csp-monorepo-tooling]]` 辅助 monorepo 工具链配置。
+
+```
+项目根/
+├── README.md                         # 项目门面
+├── CHANGELOG.md                      # 统一变更记录
+├── CLAUDE.md                         # Agent 路由契约
+├── LICENSE                           # 开源许可
+├── VERSION                           # 统一版本号源（或各 package 独立版本号）
+├── package.json                      # workspace root（private: true）
+├── pnpm-workspace.yaml               # monorepo workspace 定义
+├── turbo.json                        # Turborepo pipeline
+│
+├── apps/                             # 应用（独立部署单元）
+│   └── web/                          # 前端应用
+│       ├── package.json
+│       ├── src/
+│       └── tests/                    # 单应用测试（unit/integration/e2e 按需）
+│
+├── packages/                         # 共享包（被 apps/ 引用）
+│   ├── shared/                       # 共享工具/类型
+│   │   ├── package.json
+│   │   ├── src/
+│   │   └── tests/
+│   ├── ui/                           # 共享 UI 组件
+│   │   ├── package.json
+│   │   ├── src/
+│   │   └── tests/
+│   └── config/                       # 共享配置（eslint/tsconfig）
+│       └── package.json
+│
+├── docs/                             # 📖 对外人类文档（项目级共享，同 G0.1）
+├── verify/                           # 🔍 测试证据（项目级共享）
+└── .csp/                             # 🤖 Agent 产物库（项目级共享——PMS/CMS/TMS 跨 package 统一）
+```
+
+**Monorepo 关键差异**：
+
+| 维度 | 单仓库 (G0.1) | Monorepo (G0.1-M) |
+|------|--------------|-------------------|
+| 源码 | `src/` 单入口 | `apps/*/src/` + `packages/*/src/` 多入口 |
+| 测试 | `tests/` 单层 | 各 package 自含 `tests/`；E2E 放在被测 app 内 |
+| 版本 | 一个 `VERSION` | 统一 `VERSION`（推荐）或各 package 独立 `package.json.version` |
+| `.csp/` | 项目根 | 项目根（跨 package 共享 PMS/CMS/TMS） |
+| CMS 基线 | `.csp/code-spec/{app}/` | `.csp/code-spec/{package-name}/` 每 package 独立 CMS |
+| Pipeline | 整个项目一条 pipeline | 整个项目一条 pipeline（跨 package 协同交付）；单 package 独立 pipeline 按需 |
+| Tag | `vX.Y.Z` | 统一 `vX.Y.Z`（推荐）；独立版本用 `{package}@vX.Y.Z` 或 changesets |
+
+**Monorepo 版本策略**：
+- **统一版本（推荐）**：根 `VERSION` 驱动所有 package 版本——一次发布 bump 一个号，所有 package 同步
+- **独立版本**：各 package 独立 SemVer，用 changesets 管理——适合 packages 生命周期差异大的项目
+- 无论哪种，`.csp/` 知识产物走统一版本（PMS/CMS/TMS 是跨 package 的共享基线）
 
 调用 `[[skill:csp-documentation-governance]]`（对外/对内文档分界 + 更新触发规则）维护文档边界：
 
@@ -230,6 +283,7 @@ updated: "YYYY-MM-DD"
 > **MINOR (Y) 是攒批发布，不是一个功能一个版本**：同一模块的多个功能打包成一个 MINOR+1 版本（不设硬上限——模块内有几个相关 feature 就打包几个），不逐功能 bump。只有不同模块/主题方向不同/体量过大才拆到下一版本。"一个版本一个功能"是模块内恰好只剩一个功能时的特例，不是默认形态。
 
 - **feat/fix 分轨**：feat 批打 MINOR+1 tag，fix 批打 PATCH+1 tag；同迭代两者兼有 → 拆两个发布，不混合
+- **Monorepo 版本**：统一版本（推荐，根 VERSION 驱动全部 package）或独立版本（changesets，各 package 独立 SemVer）→ 见 G0.1-M
 - **Tag 格式**：`v` 前缀 + annotated（`-a`）+ 不可变（已推送不移动）
 - **一 commit 一 tag**，禁多 tag 同 commit
 - **纯文档 commit 禁打版本 tag**
@@ -347,6 +401,13 @@ Conventional Commits 格式（遵循 `[[pattern:csp-git-conventions]]` §3）：
 - 测试代码与源码混放（`src/` 下不允许 `*.test.ts` `*.spec.ts`——统一在 `tests/` 下）
 - 覆盖率/契约/playwright 报告入 Git（大文件污染仓库——放 `verify/` 并 `.gitignore`）
 - 散落根目录：`coverage.json` `coverage.xml` `.coverage` `pacts/` `playwright-report/` → G5.2 规则 1
+
+**Monorepo 测试结构**（适用 G0.1-M 模板）：
+- 各 package 自含 `tests/`（`apps/web/tests/` `packages/shared/tests/`）
+- E2E 测试放在被测 app 内（`apps/web/tests/e2e/`）
+- 跨 package 集成测试：放在依赖方的 tests/integration/
+- 共享测试 fixtures：`packages/shared/tests/fixtures/`
+- `verify/` 仍在项目根——跨 package 共享的测试证据集中管理
 
 ### G2.3 红线
 
@@ -677,6 +738,7 @@ docs/research/open-source-references/
 | 安全审计（依赖/漏洞） | `[[skill:csp-security-review]]`（鉴权/注入/依赖审计/密钥管理） |
 | 项目标准审查 | `[[skill:csp-project-standards-reviewer]]`（CLAUDE.md/AGENTS.md/CONTRIBUTING/SECURITY 合规） |
 | 文档架构设计 | `[[skill:csp-project-doc-architect]]`（CONTRIBUTING/SECURITY/CODE_OF_CONDUCT 模板） |
+| Monorepo 工具链 | `[[skill:csp-monorepo-tooling]]`（workspace/pipeline/版本策略/跨 package 治理） |
 | 文件整理 | `[[skill:csp-file-organizer]]`（.gitignore/.npmignore 清理/根目录卫生检查/过期文件归档/verify 清理） |
 
 ### 全阶段产物路径（Phase G2）
