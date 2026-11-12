@@ -19,6 +19,11 @@
 
 Spec 验收门：PRD 含背景/目标/功能清单/Given-When-Then 验收标准；Spec 含技术方案/接口契约/测试计划/风险，关键改动带 file:line 证据。quick-fix 类版本走轻量 Spec 一页纸（改动点+证据+验证方式），主题版本走完整 Spec。
 
+**Spec 深度门控**（01 启动前强制，防规划级 SPEC 直接进开发）：
+- 探测版本对应 PRD SPEC 的 `prd_depth` — 若为 `planning`（规划级）→ 必须先升级为 `engineering`（工程级），补全业务规则穷举/完整 AC/异常流
+- 未升级的 planning 级 SPEC 不进 05 开发 — **不拿空白版本填充、不打 tag**。仅 CHANGELOG+tag 无代码变更的版本 = 虚假交付
+- 连续交付模式下，planning 级 SPEC 的版本自动跳过（标 `skipped: prd_depth=planning`），待全部有工程 SPEC 的版本清空后再人工确认
+
 **Spec 产出可测试性点**（S3 Spec 生成时同步产出，供 Test Pipeline TD 用例设计消费）：
 - **接口契约** → 每个端点/请求-响应对 → 对应 ≥1 条 API 测试用例
 - **数据模型** → 每个 entity/字段/约束 → 对应用例；同步产出 DDL，逐字段与 PRD 功能需求对齐
@@ -30,6 +35,7 @@ Spec 验收门：PRD 含背景/目标/功能清单/Given-When-Then 验收标准�
 开发阶段（05）使用 [[workflow:csp-implementation-phase]]，遵循 TDD 流程 [[meta:csp-tdd]]，coding agent 遵守 [[pattern:csp-coding-standards]] 的全部命名/安全/跨层对齐规则。
 
 **TDD 执行纪律**（05 开发期）：先写测试 → 实现 → 重构，测试与源码同 commit 提交：
+- **测试基建健康检查**（05 首个 task 前必跑）：`pytest --collect-only` / `vitest run --reporter=json` 确认测试框架可正常加载。conftest/fixture/mock 引用路径断裂 → BLOCKED（先修基建再写新代码，不阻塞新测试）
 - **单元测试**：与源码同目录 co-locate（`src/xxx.ts` ↔ `tests/unit/xxx.test.ts`），05 agent 在写实现代码前先写测试
 - **API 测试**：在 `tests/integration/` 下，与 API 实现同步产出
 - **E2E 测试**：核心路径用例在 05 开发期同步编写（非等 06 门控前补）
@@ -80,6 +86,8 @@ Spec 验收门：PRD 含背景/目标/功能清单/Given-When-Then 验收标准�
   Check 5.8b: DB 状态断言 → [[skill:csp-db-state-assertion]]（写操作前后 DB 状态验证，字段完整性）
   Check 5.9: 安全审查 → [[skill:csp-security-review]]（鉴权/越权/注入/XSS/CSRF/敏感数据脱敏/依赖漏洞）
   Check 5.10: 后端性能 → [[skill:csp-backend-performance]]（API P95/慢查询索引/N+1/缓存策略/连接池，有后端时选做）
+  Check 5.11: 前后端接线验证 → grep 后端全部路由注册 × 前端全部 import/调用点交叉——无消费者（前端未接线的端点）报 WARNING，无生产者（前端调用但后端无路由）报 BLOCKED
+  Check 5.12: 命名规范 → [[skill:csp-project-standards-reviewer]] — 新增文件/类/函数的命名是否符合项目约定（驼峰/蛇形/前缀/后缀），域名/路径名断言
   （工具链不可用 = BLOCKED，不得用 grep/review 替代动态门控）
 - S7 审查无 CRITICAL → [[workflow:csp-code-review]] + [[pattern:csp-santa-method]]（关键模块双审）
 - 跨层集成验证 → [[pattern:csp-integration-review]]（11 场景全栈契约审查）

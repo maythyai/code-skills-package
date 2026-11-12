@@ -478,6 +478,7 @@ TQ 质量门控 ←── 测试证据 + 审计 findings ──→ 裁决报告
 | 前端性能审计 | `[[skill:csp-web-performance-auditor]]`（CWV 审计/加载/渲染/网络） | 前端项目 |
 | 前端性能优化 | `[[skill:csp-frontend-performance]]`（bundle 分析/代码分割/缓存策略） | 前端项目 |
 | 可观测审计 | `[[skill:csp-observability-and-instrumentation]]` + `[[skill:csp-monitoring-alerting]]`（日志/指标/链路/告警） | 每个版本 |
+| 全栈集成审计 | `[[skill:csp-e2e-deep-audit]]` + `[[skill:csp-cross-layer-testing]]`：跨前端/后端/DB 三层一致性扫描——端点→消费者映射、接口→实现对齐、DB schema→代码 model 对齐 | 里程碑后 |
 | 重构策略 | `[[skill:csp-refactoring-strategies]]`（Strangler Fig/并行运行/分支抽象） | 需要时 |
 
 ---
