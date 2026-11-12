@@ -168,7 +168,8 @@ vX.Y.Z — {主题名} — status: planned
 - 新增功能（摘要列表，按模块内实际 feature 数量，不设硬上限）：不写详细 AC，只点明做什么；同步落 FEATURES.md
 - 优化项（从 Phase A+I 流入）：[来源 CURRENT-NN] 简要描述优化内容
 - 增长实验（从 Phase G 流入，如有）：[假设 X → 预期指标 Y 变化 Z%]
-- 用户场景/竞品差距：本版本对应解决什么（引 Phase R 调研节 / Phase A 痛点）
+- 数据需求：涉及的核心数据实体/字段（概念级，DDL 归 S3 Spec）
+- 上下文/竞品差距：本版本对应解决什么（引 Phase R 调研节）
 - 价值：用户价值 + 业务价值
 - 前置依赖：依赖版本/外部能力
 - PRD SPEC：docs/prd/PRD-{slug}.md（Phase 5 产出）
@@ -274,7 +275,7 @@ v1.0 = MVP：聚焦 3-5 核心功能验证问题假设；后续版本按投资�
 - 路径：`docs/prd/PRD-{version-slug}.md`，`status: Draft`，`prd_depth: planning`
 - 结构：8 段大纲级填写——背景/目标/功能模块/用户故事/优先级（P0/P1/P2）/关键业务规则要点（规划级只写大纲，不穷举展开）/AC 骨架（每模块至少 1 条 Given-When-Then 锚点，复杂模块可多写）/风险与依赖
 - 深度边界：规划级只写大纲级要点，不写工程级细节；功能清单以 `CONVERGED-FEATURE-PLAN.md` 为唯一事实源，SPEC 与 ROADMAP/FEATURES 三者功能清单一致
-- 红线：只为净版留存功能产 SPEC（剔除/降级不进），绝不写 HOW（技术选型/数据库/框架禁止），不确定处标 `[TBD]` 留给内环 01 升级
+- 红线：只为净版留存功能产 SPEC（剔除/降级不进），不写实现细节（技术选型/DDL/代码禁止），但需标注数据需求（涉及哪些实体/字段的 WHAT）。不确定处标 `[TBD]` 留给内环 01 升级
 
 内环 01 跑到该版本时探测到同 `target_version` 的 `prd_depth: planning` Draft → **升级模式**：原文件上 delta 补全为工程级（穷举规则/完整 AC/异常流/埋点），不新建文件。
 

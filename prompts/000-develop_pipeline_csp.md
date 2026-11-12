@@ -10,7 +10,7 @@
 - PRD：[[workflow:csp-prd-generation]]（PM 视角）或 [[pattern:csp-prd]]（设计师视角）
 - 需求拆解：[[workflow:csp-requirement-decomposition]]（S1）
 - 技术选型：[[workflow:csp-tech-stack-advisor]]（S2）
-- **数据库选型**（S2 重点）：`[[workflow:csp-tech-stack-advisor]]` 覆盖存储层决策（PostgreSQL/MySQL/SQLite/NoSQL），选型依据：数据模型复杂度/一致性要求/扩展需求/团队经验。产出 ADR
+- 数据库选型：`[[workflow:csp-tech-stack-advisor]]` 覆盖存储层决策（PostgreSQL/MySQL/SQLite/NoSQL），产出 ADR
 - 技术方案设计：[[workflow:csp-tech-solution-design]]（S2.5）
 - 设计评审：[[workflow:csp-tech-design-review]]（S2.6）
 - 全栈 Spec：[[workflow:csp-fullstack-spec-generator]]（S3）
@@ -21,11 +21,11 @@ Spec 验收门：PRD 含背景/目标/功能清单/Given-When-Then 验收标准�
 
 **Spec 产出可测试性点**（S3 Spec 生成时同步产出，供 Test Pipeline TD 用例设计消费）：
 - **接口契约** → 每个端点/请求-响应对 → 对应 ≥1 条 API 测试用例
-- **数据模型** → 每个 entity/字段/约束 → 对应边界值/等价类用例；同步产出 DDL（CREATE TABLE/ALTER TABLE 语句），**逐字段与 PRD 功能需求对齐——每个 PRD feature 涉及的数据字段在 DB 中必须有对应列**
+- **数据模型** → 每个 entity/字段/约束 → 对应用例；同步产出 DDL，逐字段与 PRD 功能需求对齐
 - **业务规则** → 每条规则 → 对应正常+异常+边界用例
 - **错误场景** → 每个错误码/异常路径 → 对应 negative 用例
 - **状态机** → 每个合法/非法迁移 → 对应状态迁移用例
-- S3 Spec 产出后，`[[prompts/000-test_pipeline_csp.md]]` Phase TD 直接从 Spec 提取可测试性点设计用例——**不等到 05 开发完才开始想怎么测**
+- S3 Spec 产出后，`[[prompts/000-test_pipeline_csp.md]]` Phase TD 从 Spec 提取可测试性点设计用例
 
 开发阶段（05）使用 [[workflow:csp-implementation-phase]]，遵循 TDD 流程 [[meta:csp-tdd]]，coding agent 遵守 [[pattern:csp-coding-standards]] 的全部命名/安全/跨层对齐规则。
 
@@ -42,11 +42,11 @@ Spec 验收门：PRD 含背景/目标/功能清单/Given-When-Then 验收标准�
 - 后端：`[[skill:csp-backend-patterns]]`（API 设计/分层架构/错误处理/幂等/分页）
 - 数据库：`[[skill:csp-postgres-patterns]]`（Schema 设计/索引/查询优化）+ `[[skill:csp-db-migration]]`（Schema 变更/数据迁移/回滚/零停机）
 
-**数据库开发保障**（05 开发期间同步执行）：
-- Schema 设计：从 Spec 数据模型生成 DDL——字段类型/长度/默认值/约束/索引，与 PRD 功能需求逐字段对齐
-- SQL 审查：`[[skill:csp-sql-reviewer]]`（查询性能/索引使用/安全/注入防护）——每条 SQL 过审
-- DB 性能：`[[skill:csp-db-performance]]`（慢查询/索引优化/连接池/锁竞争）——热路径 SQL 必审
-- 数据完整性：每个写操作的 DB 前后状态通过 `[[skill:csp-db-state-assertion]]` 验证——落库落表正确、字段不遗漏
+**数据库开发保障**（05 开发期间）：
+- Schema 设计：从 Spec 数据模型生成 DDL，与 PRD 功能需求逐字段对齐
+- SQL 审查：`[[skill:csp-sql-reviewer]]` — 每条新增/变更 SQL 过审
+- DB 性能：`[[skill:csp-db-performance]]` — 热路径 SQL 索引/查询优化
+- 数据完整性：`[[skill:csp-db-state-assertion]]` — 写操作前后 DB 状态验证
 - API 治理：`[[skill:csp-api-governance]]`（契约/版本管理/限流/认证授权模式）
 
 **代码质量保障**（05 开发期间并行）：
