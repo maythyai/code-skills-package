@@ -50,7 +50,7 @@ Spec 验收门：PRD 含背景/目标/功能清单/Given-When-Then 验收标准�
 
 **测试嵌入**：开发期间测试并行推进——`[[prompts/000-test_pipeline_csp.md]]` 从当前版本的 PRD SPEC 提取测试依据→设计用例→分层实施，产出测试证据直接嵌入 S6 质量门控。
 
-自决策授权（默认自己拍板，不问我）：范围/优先级、Spec 歧义、Wave 排序、fix 路由（05 实现缺陷 / 03 Spec 缺口）、可逆整改（归档 re-point、版本漂移 bump）、CMS re-align、deferred 取舍——这些你自己定，定了记入 DEV-LOG 即可，不打断我。
+自决策授权（默认自己拍板，不问我）：范围/优先级、Spec 歧义、Wave 排序、fix 路由（05 实现缺陷 / 03 Spec 缺口）、可逆整改（归档 re-point、版本漂移 bump）、CMS re-align——这些你自己定，定了记入 DEV-LOG 即可，不打断我。**deferred 禁止自决策**：任何 deferred 项必须在 DEV-LOG 中注明解除条件 + 预期版本——不是"下轮再说"的万能兜底。
 
 循环收敛：06 未过按根因回 05/03 修 delta 重验，循环到全绿；超 5 轮再报我。跨版本熔断：连续 3 个版本因同一根因失败，暂停并报我，附根因证据链。
 
@@ -83,8 +83,20 @@ Spec 验收门：PRD 含背景/目标/功能清单/Given-When-Then 验收标准�
 - 文档结构维护 → [[workflow:csp-documentation-governance]]（对外/对内文档分界 + 更新触发规则）
 - C-01 批量交付 S6 完整性格栅：batch_evidence_map 不得缺失
 - Phase 0.6 发布复发检测：WARNING/BLOCKED 按阈值处理
+- deferred 审视 gate：06 done 前逐条审视 deferred 列表——不可 deferred 的升为 done/BLOCKED，可 deferred 的确认解除条件有效，超 3 条或跨版本 deferred 减速报用户
 
 留尾纪律：剩余项只能 done / BLOCKED（附阻塞+谁解除）/ deferred（附解除条件并计入 Release notes），禁止"下轮再补/gate 全绿就交差"。deferred 项不阻塞当前版本发布，但要自动并入下一版本 01 的入口清单。
+
+**deferred 纪律（防积压）**：
+- **不可 deferred**：本版本 Spec 明确列出的功能点、AC 覆盖的验收项、已发现的 P0/P1 缺陷——这些是本版本的"已承诺范围"，要么 done 要么 BLOCKED，不准 deferred
+- **可 deferred**：本版本 Spec 未列入的非承诺项、用户口头提到的"顺便看看"、发现但 P2/P3 的问题——这些可 deferred，但必须附解除条件（触发版本/依赖就绪/用户确认）
+- **deferred 上限**：每个版本 deferred 项不超过 3 条（超过 → Agent 必须在 06 done 前 review 并合并/升级/eliminate，减速报用户）
+- **deferred 不得跨版本：同一项连续 2 个版本出现在 deferred 列表中 → 必须升级为 BLOCKED（标注阻塞原因）或降级为 WONTFIX（明确不做）——禁止"永远 deferred"项
+- **06 done 前 deferred 审视**：发布前逐条过——这个真的本版本做不了？还是"懒得做/忘了做/没规划好"？
+  - "本版本做不了" → 保留 deferred + 明确的解除条件
+  - "懒得做" → 升为 done（立即做，不拖延）
+  - "忘了做" → 升为 BLOCKED（标注阻塞原因）
+  - "没规划好" → 回 01/03 补 Spec
 
 收尾必做：
 - commit（Conventional Commits、原子提交；遵循 [[pattern:csp-git-conventions]] §3 Commit Workflow）
@@ -105,7 +117,7 @@ findings 回写契约：仅对"本版本真实修复且已验证"的 findings �
 
 每版本 checkpoint 落盘：更新 .csp/lifecycle-state.json + DEV-LOG 追加本轮决策摘要，保证会话中断可无损续跑。
 
-gate 即授权，全自动推进。打断条件（仅 5 类）：战略根本模糊 / PRD Rejected / 真破坏操作 / 多 tag 不明 / 无法 auto-resolve 的报错。07 复盘默认自动触发（[[pattern:csp-retro]]），lessons 并入下一版本 01 入口清单。质量自评可选用 [[pattern:csp-agent-self-evaluation]] 做 5 轴结构性复盘。
+gate 即授权，全自动推进。打断条件（仅 6 类）：战略根本模糊 / PRD Rejected / 真破坏操作 / 多 tag 不明 / 无法 auto-resolve 的报错 / deferred 堆积（单版本 >3 条或同项跨 2 版本 deferred）。07 复盘默认自动触发（[[pattern:csp-retro]]），lessons 并入下一版本 01 入口清单。质量自评可选用 [[pattern:csp-agent-self-evaluation]] 做 5 轴结构性复盘。
 
 **缺口报告**：执行过程中若发现本说明未覆盖的维度、或引用的 CSP skill 不包含所需方法论（功能缺失/深度不足），**立即指出缺口**——不跳过、不假装覆盖、不用「可以了」糊过。
 
