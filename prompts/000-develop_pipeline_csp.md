@@ -76,8 +76,8 @@ Spec 验收门：PRD 含背景/目标/功能清单/Given-When-Then 验收标准�
   Check 5.6: E2E 测试（有 UI 的项目必检）→ [[skill:csp-e2e-testing]]（全路由 sweep + 关键路径冒烟，Playwright/Cypress，exit 0）
   Check 5.7: 视觉回归测试（有 UI 且改动了界面时必检）→ [[skill:csp-visual-regression]]（截图 vs 基线 diff，无意外变更）
   Check 5.8: DB 迁移验证（有 DB schema 变更时必检）→ [[skill:csp-db-migration]]（正向/回滚 ran，数据完整性验证，exit 0）
-  Check 5.8a: SQL 审查（有 DB 时必检）→ [[skill:csp-sql-reviewer]]（新增/变更 SQL 全量过审——性能/索引/安全）
-  Check 5.8b: DB 状态断言（有 DB 写操作时必检）→ [[skill:csp-db-state-assertion]]（写前后 DB 行数/字段/关联正确，无遗漏字段）
+  Check 5.8a: SQL 审查 → [[skill:csp-sql-reviewer]]（新增/变更 SQL 全量过审）
+  Check 5.8b: DB 状态断言 → [[skill:csp-db-state-assertion]]（写操作前后 DB 状态验证，字段完整性）
   Check 5.9: 安全审查 → [[skill:csp-security-review]]（鉴权/越权/注入/XSS/CSRF/敏感数据脱敏/依赖漏洞）
   Check 5.10: 后端性能 → [[skill:csp-backend-performance]]（API P95/慢查询索引/N+1/缓存策略/连接池，有后端时选做）
   （工具链不可用 = BLOCKED，不得用 grep/review 替代动态门控）
@@ -232,4 +232,4 @@ gate 即授权，全自动推进。打断条件（仅 6 类）：战略根本模
 
 ---
 
-继续完成所有版本的任务开发，多agent并行（限制最多4个并发），在你的自决授权范围内，要自己定方案并解决，你要自己规划任务，充分思考方案细节不能偏差出错，没有完成就继续完成任务，直到所有任务完成。需要决策的你要能自我驱动给出最合理的决策，实在不敢自己定夺的时候要询问我。先不用worktree的方式开发。
+继续完成所有版本的任务开发，多agent并行（独立任务数不限制），在你的自决授权范围内，要自己定方案并解决，你要自己规划任务，充分思考方案细节不能偏差出错，没有完成就继续完成任务，直到所有任务完成。需要决策的你要能自我驱动给出最合理的决策，实在不敢自己定夺的时候要询问我。先不用worktree的方式开发。
