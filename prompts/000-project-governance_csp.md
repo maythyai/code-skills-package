@@ -320,7 +320,35 @@ Conventional Commits 格式（遵循 `[[pattern:csp-git-conventions]]` §3）：
 | **E2E 测试** | Testing TE | `verify/ui-test-report.md` | ❌ |
 | **测试复盘** | Testing TQ | `docs/analysis/test-retro-{version}.md` | ✅ |
 
-### G2.2 红线
+### G2.2 测试产物分层约定
+
+> 测试产物散落是项目混乱的头号来源——coverage 文件、截图、JSON 报告、契约文件各有归属。
+
+| 测试产物 | 落点 | 受众 | 入 Git |
+|---------|------|------|--------|
+| **测试代码** | `tests/unit/` `tests/integration/` `tests/e2e/` | 开发者 | ✅ co-locate 源码 |
+| **测试 fixtures/数据** | `tests/fixtures/` | 开发者 | ✅ |
+| **测试依据 + 用例 + 追溯** | `docs/analysis/test-{basis\|cases\|retro}-*.md` `docs/analysis/traceability-*.md` | 人审阅 | ✅ |
+| **E2E 报告** | `verify/ui-test-report.md` | 人审阅 | ✅ |
+| **视觉 diff** | `verify/visual-diff/` | 人审阅 | ✅ |
+| **覆盖率报告** | `verify/coverage/` | 人审阅 | ❌ `.gitignore` |
+| **契约测试产物** | `verify/pacts/` | 人审阅 | ❌ `.gitignore` |
+| **Playwright report** | `verify/playwright-report/` | 人审阅 | ❌ `.gitignore` |
+| **审计 findings** | `.csp/audit/AUDIT-FINDINGS-*.json` `.csp/review/REVIEW-FINDINGS-*.json` `.csp/critic/CRITIC-FINDINGS-*.json` `.csp/gap-analysis/GAP-FINDINGS-*.json` | Agent 消费 | ✅ |
+| **TMS 基线** | `.csp/test-spec/{module}/` | Agent 消费 | ✅ |
+
+**测试代码命名约定**：
+- 单元测试：`{source-name}.test.{ext}`（如 `auth.service.test.ts`），与源文件同目录结构的 `tests/unit/` 下
+- 集成测试：`{api-scope}.test.{ext}`（如 `orders-api.test.ts`），在 `tests/integration/` 下
+- E2E 测试：`{journey}.spec.{ext}`（如 `checkout.spec.ts`），在 `tests/e2e/` 下
+- Fixtures：`{entity}.fixture.{ext}`（如 `users.fixture.ts`），在 `tests/fixtures/` 下
+
+**禁止**：
+- 测试代码与源码混放（`src/` 下不允许 `*.test.ts` `*.spec.ts`——统一在 `tests/` 下）
+- 覆盖率/契约/playwright 报告入 Git（大文件污染仓库——放 `verify/` 并 `.gitignore`）
+- 散落根目录：`coverage.json` `coverage.xml` `.coverage` `pacts/` `playwright-report/` → G5.2 规则 1
+
+### G2.3 红线
 
 - **`.csp/` 不进对外发布**：`.csp/` 下的所有内容（PMS/CMS/TMS/specs/tasks/verification）是 agent 内部产物，不进 GitHub Pages 部署
 - **`docs/` 是唯一对外的分析/规划内容**：所有给人读的分析报告、PRD、路线图都放 `docs/`
@@ -352,6 +380,8 @@ Conventional Commits 格式（遵循 `[[pattern:csp-git-conventions]]` §3）：
 - 更新 `docs/prd/PRD-INDEX.md`（标版本 status：Draft→Approved→Released）
 - 更新 `docs/FEATURES.md`（标功能 status：规划中→已发布→已下线）
 - 调用 `[[skill:csp-knowledge-hub]]` 做知识中枢初始化/更新（`.csp/AGENTS.md` + `manifest.json` 回写）
+- 调用 `[[skill:csp-file-organizer]]` 清理 `verify/` 下过期覆盖率/playwright 报告（保留最新一份）
+- 归档上个版本的审计/审查 findings（`.csp/audit/` `.csp/review/` `.csp/critic/` `.csp/gap-analysis/` → `.csp/archive/`）
 
 ---
 
@@ -647,7 +677,14 @@ docs/research/open-source-references/
 | 安全审计（依赖/漏洞） | `[[skill:csp-security-review]]`（鉴权/注入/依赖审计/密钥管理） |
 | 项目标准审查 | `[[skill:csp-project-standards-reviewer]]`（CLAUDE.md/AGENTS.md/CONTRIBUTING/SECURITY 合规） |
 | 文档架构设计 | `[[skill:csp-project-doc-architect]]`（CONTRIBUTING/SECURITY/CODE_OF_CONDUCT 模板） |
-| 文件整理 | `[[skill:csp-file-organizer]]`（.gitignore/.npmignore 清理/根目录卫生检查/过期文件归档） |
+| 文件整理 | `[[skill:csp-file-organizer]]`（.gitignore/.npmignore 清理/根目录卫生检查/过期文件归档/verify 清理） |
+
+### 全阶段产物路径（Phase G2）
+
+| 阶段 | CSP Skill |
+|------|-----------|
+| 产物路径约定 | 本文件 G2.1-G2.3 规则表——所有阶段产物落盘统一 |
+| 测试产物分层 | G2.2 测试产物分层表（代码/文档/证据/审计 findings 各有归属） |
 
 ### 项目根目录卫生（Phase G5）
 
