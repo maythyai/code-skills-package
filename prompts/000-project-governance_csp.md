@@ -286,6 +286,12 @@ updated: "YYYY-MM-DD"
 - **幂等覆盖**：重跑同 slug 直接覆盖，不留 `-v2` 后缀
 - **禁止散落根目录**：无 feature/version 后缀的裸文件名（如 `test-cases.md`）禁止出现在根目录
 
+**文件名反模式**（以下命名方式不论存量/新增均禁止，无豁免——git 已是版本控制，不需要文件名承载版本信息）：
+- `_v1` `_v2` `_v61` 等版本号后缀 → 用 git tag/branch，文件名不留版本号（`autonomous.py` 非 `autonomous_v2.py`）
+- `m10_` `m2_` 等 milestone 前缀 → 里程碑归 roadmap/CHANGELOG，不进文件名
+- `a9b0c1d2_` 等 revision hash 前缀/后缀 → git commit hash 已是唯一标识，文件名不需要重复
+- `_old` `_new` `_bak` `_tmp` `-final` `-copy` → 删除或归档到 `.csp/archive/`
+
 ---
 
 ## Phase G1：版本与变更管理

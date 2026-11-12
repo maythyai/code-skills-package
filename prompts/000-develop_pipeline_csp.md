@@ -87,7 +87,7 @@ Spec 验收门：PRD 含背景/目标/功能清单/Given-When-Then 验收标准�
   Check 5.9: 安全审查 → [[skill:csp-security-review]]（鉴权/越权/注入/XSS/CSRF/敏感数据脱敏/依赖漏洞）
   Check 5.10: 后端性能 → [[skill:csp-backend-performance]]（API P95/慢查询索引/N+1/缓存策略/连接池，有后端时选做）
   Check 5.11: 前后端接线验证 → grep 后端全部路由注册 × 前端全部 import/调用点交叉——无消费者（前端未接线的端点）报 WARNING，无生产者（前端调用但后端无路由）报 BLOCKED
-  Check 5.12: 命名规范 → [[skill:csp-project-standards-reviewer]] — 新增文件/类/函数的命名是否符合项目约定（驼峰/蛇形/前缀/后缀），域名/路径名断言
+  Check 5.12: 命名规范 → [[skill:csp-project-standards-reviewer]] — 文件名/类名/函数名是否符合项目约定。**禁止项**（无存量豁免——git 已是版本控制）：文件名含版本号后缀（`_v1` `_v2` `_v61`）、milestone 前缀（`m10_` `m2_`）、revision hash（`a9b0c1d2_`）；各语言遵循社区惯例（Python snake_case 类 PascalCase，JS/TS camelCase 类 PascalCase，Go MixedCaps 包 lowercase）
   Check 5.13: 审计 findings 闭合 → P0 audit finding = 0（全部 closed，附 fix commit 证据）；P1 > 3 条同 P0 阻断
   （工具链不可用 = BLOCKED，不得用 grep/review 替代动态门控）
 - S7 审查无 CRITICAL → [[workflow:csp-code-review]] + [[pattern:csp-santa-method]]（关键模块双审）
