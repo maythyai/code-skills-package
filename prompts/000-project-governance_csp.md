@@ -378,7 +378,10 @@ Conventional Commits 格式（遵循 `[[pattern:csp-git-conventions]]` §3）：
 | **需求拆解** | Development 02 | `.csp/decomposition/` | ❌ |
 | **技术方案** | Development 03 | `.csp/tech-design/` + `.csp/specs/` | ❌ |
 | **任务拆解** | Development 04 | `.csp/tasks/` | ❌ |
-| **开发实施** | Development 05 | `src/`(代码) + 测试代码(co-locate) | ✅(代码) |
+| **开发实施** | Development 05 | `src/`(代码) + 测试代码(co-locate) + DB migration 文件（`migrations/versions/`） | ✅(代码) |
+| **数据模型 Spec** | Development S3 | `.csp/specs/` + DDL 语句（随 Spec 产出） | ❌ |
+| **数据库迁移** | Development 05 | `migrations/`（Alembic/Flyway/Prisma 等迁移工具生成） | ✅(代码) |
+| **SQL 审查** | Development 05/06 | `.csp/verification/sql-review-{version}.md` | ❌ |
 | **质量门控** | Development 06 | `.csp/verification/`(证据) + `.csp/ship/`(发布记录) | ❌ |
 | **代码审查** | Development 07 | `.csp/review/REVIEW-FINDINGS-*.json` | ❌ |
 | **发布** | Development 08 | `CHANGELOG.md` + `VERSION` + Git tag + Release | ✅ |
