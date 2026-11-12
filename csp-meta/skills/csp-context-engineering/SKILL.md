@@ -19,6 +19,10 @@ tools: [Read, Write, Edit, Glob, Grep]
 | **Filesystem** | Project file access and search |
 | **GitHub** | Issue, PR, and repository context |
 
+## Project Context Loading
+
+When a CSP hub is installed, follow `csp-workflow/skills/csp-knowledge-hub/references/project-entry-contract.md` (relative to the installed CSP bundle): load the host's root instructions, read the active lifecycle state, use `.csp/AGENTS.md` to route the task, then load only the relevant spec/code/test evidence. A previous metrics snapshot is a dated observation, not proof that the current commit passes; rerun gates before claiming success. `findings-baseline.json` is a legacy violation allowance, not the current OPEN-findings list. If the project has no hub, discover its existing paths once before proposing an index—do not assume a template directory exists.
+
 ## Confusion Management
 
 Even with good context, you will encounter ambiguity. How you handle it determines outcome quality.

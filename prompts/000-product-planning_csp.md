@@ -3,7 +3,7 @@
 ## 规划流程
 
 ### Phase 0：项目上下文探测（强制前置）
-规划前先读清现状，读到即停：
+先按 `[[workflow:csp-knowledge-hub]]` 的四层入口读取根指令→当前阶段→`.csp/AGENTS.md` 路由→本任务的 PRD/PMS；不把 manifest/历史门禁或大日志全文装入上下文。先读清现状：
 1. 既有规划：`docs/strategy/STRATEGY.md` + `ROADMAP.md` 是否存在 → 决定首次/增量更新
 2. 已发布版本：`git tag --list 'v*'` → 基线，规划续编
 3. 07 复盘 findings：`.csp/review/REVIEW-FINDINGS-*.json`（open/deferred）→ 回流输入
@@ -279,7 +279,7 @@ v1.0 = MVP：聚焦 3-5 核心功能验证问题假设；后续版本按投资�
 
 内环 01 跑到该版本时探测到同 `target_version` 的 `prd_depth: planning` Draft → **升级模式**：原文件上 delta 补全为工程级（穷举规则/完整 AC/异常流/埋点），不新建文件。
 
-PRD SPEC 产出后直接作为测试输入：`[[prompts/000-test_pipeline_csp.md]]` Phase TB 从本 SPEC 提取测试依据（AC→用例、业务规则→边界用例、关联维度→测试策略）。
+规划级 PRD SPEC 可供 `[[prompts/000-test_pipeline_csp.md]]` 初步列出待验证场景；完整 TB/TD 测试基线须等 01 在原文上升级至 `prd_depth: engineering`，并与 S3 全栈 Spec 对齐后再定稿。交接时记录 `target_version`、PRD 原文路径、PMS/Spec/TMS 入口及缺失项，不能把规划骨架当已批准 AC。
 
 产物：每版本一份 SPEC + 登记 `docs/prd/PRD-INDEX.md`。
 

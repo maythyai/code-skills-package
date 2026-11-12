@@ -27,6 +27,7 @@ if (!existsSync(registryPath)) {
 }
 const registry = JSON.parse(readFileSync(registryPath, 'utf8'));
 const canonical = registry.skills.length;
+const skillCount = registry.skills.filter(({ path }) => path?.endsWith('SKILL.md')).length;
 
 if (registry.total_skills !== canonical) {
   console.error(`❌ registry.json internal mismatch: total_skills=${registry.total_skills} but skills[]=${canonical}. Run \`npm run build:registry\`.`);
@@ -34,16 +35,19 @@ if (registry.total_skills !== canonical) {
 }
 
 // --- 2. Files that hard-code the count, and how to find stale numbers ---
-// Each entry: file path + a regex whose every match's captured group must equal `canonical`.
+// Each entry: file path + regex; Skills labels count SKILL.md entries, entries labels count all registry entries.
 const checks = [
-  { file: 'CLAUDE.md',                 re: /Total:\s*(\d+)\s+skills/g },
+  { file: 'CLAUDE.md',                 re: /Total:\s*(\d+)\s+(?:skills|entries)/g },
   { file: 'README.md',                 re: /badge\/skills-(\d+)-/g },
-  { file: 'README.md',                 re: /·\s*(\d+)\s+Skills?\b/g },
+  { file: 'README.md',                 re: /·\s*(\d+)\s+Skills?\b/g, expected: skillCount },
+  { file: 'README.md',                 re: /badge\/entries-(\d+)-/g },
   { file: 'README.md',                 re: /^(\d+)\s+skills distributed/gm },
   { file: 'README.md',                 re: /Total:\s*(\d+)\s+skills/g },
   { file: 'README.md',                 re: /all\s+(\d+)\s+skills\b/g },
   { file: 'README_zh.md',              re: /badge\/skills-(\d+)-/g },
-  { file: 'README_zh.md',              re: /·\s*(\d+)\s*个技能/g },
+  { file: 'README_zh.md',              re: /·\s*(\d+)\s*个技能/g, expected: skillCount },
+  { file: 'README_zh.md',              re: /·\s*(\d+)\s+Skills?\b/g, expected: skillCount },
+  { file: 'README_zh.md',              re: /badge\/entries-(\d+)-/g },
   { file: 'README_zh.md',              re: /^(\d+)\s*个技能分布/gm },
   { file: 'README_zh.md',              re: /全部\s*(\d+)\s*个/g },
   { file: 'README_zh.md',              re: /总计：(\d+)\s*个技能/g },
@@ -54,7 +58,7 @@ const checks = [
 ];
 
 const mismatches = [];
-for (const { file, re } of checks) {
+for (const { file, re, expected = canonical } of checks) {
   const p = join(ROOT, file);
   if (!existsSync(p)) continue;
   const text = readFileSync(p, 'utf8');
@@ -62,8 +66,8 @@ for (const { file, re } of checks) {
   re.lastIndex = 0;
   while ((m = re.exec(text)) !== null) {
     const found = Number(m[1]);
-    if (found !== canonical) {
-      mismatches.push({ file, found, expected: canonical, snippet: m[0] });
+    if (found !== expected) {
+      mismatches.push({ file, found, expected, snippet: m[0] });
     }
   }
 }

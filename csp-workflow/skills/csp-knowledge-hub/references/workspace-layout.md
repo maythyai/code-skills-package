@@ -28,7 +28,8 @@ The hub roots at `.csp/` and unifies existing CSP artifacts **without moving the
 │   └── log.md
 ├── code-wiki/{system}/            # source-grounded code Q&A wiki (csp-code-wiki)
 ├── specs/                         # full-stack feature specs (csp-fullstack-spec-generator)
-├── decomposition/ tech-decisions/ tech-design/ tasks/ plan/ traceability/ prd-ir/
+├── decomposition/ tech-decisions/ tech-design/ tasks/ planning/ traceability/ prd-ir/
+├── artifacts/verify/evidence/     # machine verification evidence (if no valid mapped path exists)
 ├── intel/                         # session knowledge (csp-session-knowledge-extractor)
 ├── milestones/v{N}/                # milestone archive
 └── .hub-run/<run-id>/             # run workspace (NOT committed)
@@ -37,13 +38,13 @@ The hub roots at `.csp/` and unifies existing CSP artifacts **without moving the
 ## Authority & dependency direction
 
 ```
-raw/docs (read-only truth) ──▶ spec/wiki (AI-maintained) ──▶ derived (tasks/plan/trace)
+raw snapshot / active docs original ──▶ spec/wiki (AI-maintained) ──▶ derived (tasks/planning/trace)
 ```
 
-- `raw/` (or `docs/`) is the **read-only** source snapshot after fetch; no skill modifies it post-download.
+- A fetched `raw/` snapshot is read-only. An active `docs/prd/` or `docs/strategy/` original is maintained by its owning workflow (e.g. 01 upgrades a planning PRD in place); do not delete it after deriving a PMS/CMS/TMS view.
 - `schema.md` (when used) is the confirmed compile rule; `auto` mode only an AI schema-builder writes.
 - `manifest.json` is the **sole** index; `wiki/`/`spec/` dirs never store a manifest or symlink to it.
-- Dependency is **one-way**: raw → spec/wiki → derived. Never reverse.
+- Data dependency is one-way from owned originals to engineering derivatives; repository-only human docs may cite internal evidence for traceability. Published pages require accessibility/security checks for such links.
 
 ## Naming conventions
 

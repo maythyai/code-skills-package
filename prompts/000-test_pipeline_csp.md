@@ -24,11 +24,11 @@ PRD Features + AC + Spec 可测试性点 ──→ 测试依据提取 ──→ 
 
 ## Phase TB：测试依据提取（Test Basis）
 
-> **强制前置**：在写任何测试用例之前，先明确"测什么"和"凭什么判过"。
+> **强制前置**：按 `[[workflow:csp-knowledge-hub]]` 四层入口定位项目真实的 PRD/Spec/TMS/测试根；在写用例前明确"测什么"和"凭什么判过"。读取 `.csp/findings-baseline.json` 只为理解历史违规豁免，不把它当 OPEN finding 总账。缓存指标只供参考，本次门禁须重新运行。
 
 ### TB.1 从 Spec 提取测试基线
 
-读取 `[[prompts/000-product-planning_csp.md]]` 产出的 PRD SPEC（`docs/prd/PRD-{version-slug}.md`）+ `[[prompts/000-develop_pipeline_csp.md]]` S3 产出的全栈 Spec（`.csp/specs/`），提取测试依据：
+读取 `[[prompts/000-product-planning_csp.md]]` 的活跃 PRD 原文与 `[[prompts/000-develop_pipeline_csp.md]]` 01 升级后的 `prd_depth: engineering`、S3 `.csp/specs/` 全栈 Spec。只有规划级 Draft 时可先列风险/测试设想，不能把 AC 骨架当最终测试基线；缺 S3 Spec 则先回开发侧补全。按 `.csp/AGENTS.md` 与 manifest 定位本项目实际路径，不假定硬编码目录：
 
 - **功能清单**（来自 PRD §3 详细功能设计）：每个功能模块即为一个测试单元
 - **AC 清单**（来自 PRD §6 验收标准）：每条 Given-When-Then 对应至少一条测试用例
@@ -203,7 +203,7 @@ E2E 测试必须覆盖前端真实交互——不仅仅验证"页面打开展示
 - **状态流转可见**：loading→success→data display 或 loading→error→retry→success，用户在每个状态都有明确反馈
 - **边界交互**：快速双击提交（防重复）、后退/前进（表单状态保留）、窗口失焦再回来
 
-产物：`verify/ui-test-report.md`（E2E 测试报告，含截图/网络日志/console 日志）。
+产物：`.csp/artifacts/verify/ui-test-report.md`（执行摘要）与 `.csp/artifacts/verify/evidence/`（截图/网络/console 证据）。项目已有 `verify/` 且 runner/CI 仍消费时先保留并登记映射，不在测试期间自动迁移。
 
 ---
 
@@ -246,7 +246,7 @@ E2E 测试必须覆盖前端真实交互——不仅仅验证"页面打开展示
 | 审计类型 | 触发场景 | CSP Skill | 输出 |
 |---------|---------|-----------|------|
 | **模块化审计 + 可用性审查** | 全面体检：模块健康/联动/Nielsen 10/裁决报告 | `[[skill:csp-audit]]` | `.csp/audit/AUDIT-VERDICT + AUDIT-FINDINGS.json` |
-| **E2E 深度审计** | 发布前全量体检：全路由 sweep/按钮级点击/孤儿路由/结构健康 | `[[skill:csp-e2e-deep-audit]]` | `verify/ui-test-report.md + gap-analysis/GAP-REPORT` |
+| **E2E 深度审计** | 发布前全量体检：全路由 sweep/按钮级点击/孤儿路由/结构健康 | `[[skill:csp-e2e-deep-audit]]` | `.csp/artifacts/verify/ui-test-report.md` + `.csp/gap-analysis/`（或已映射既有位置） |
 | **代码库审计** | 多维度代码扫描：安全/性能/可观测/架构 | `[[skill:csp-codebase-audit]]` | 各维度 finding 清单 |
 | **结构审计**（轻量） | 迭代间快速扫描：死代码/重复/命名/依赖性 | `[[skill:csp-code-simplification]]` | 清理建议 |
 
@@ -521,13 +521,12 @@ TQ 质量门控 ←── 测试证据 + 审计 findings ──→ 裁决报告
 │   ├── test-cases-{feature}.md            # 完整用例集
 │   ├── traceability-{feature}.md          # AC 双向追溯矩阵
 │   └── test-retro-{version}.md            # 测试复盘（覆盖率/漏测分析）
-├── verify/
-│   ├── ui-test-report.md                  # E2E 测试报告
-│   └── visual-diff/                       # 视觉回归截图对比
 └── .csp/
-    ├── TMS/                               # Test Module Spec 产物
-    ├── test-spec/
-    └── manifest.json                       # 回写测试产物索引
+    ├── test-spec/{module}/                # TMS 基线（无第二份 .csp/TMS）
+    ├── artifacts/verify/
+    │   ├── ui-test-report.md             # E2E 执行摘要
+    │   └── evidence/                     # 截图/网络/视觉 diff/动态证据
+    └── manifest.json                      # 产物索引；写入者负责登记
 ```
 
 ---
@@ -578,7 +577,7 @@ AI 自主完成，每个阶段按进度条播报，全部完成后输出总测�
   │
   ├──→ 000-test_pipeline_csp.md（本文件）
   │       │  测试 Pipeline：TB→TD→TU→TI→TE→TV→TP→TSEC→TQ
-  │       │  TB 从 PRD SPEC 提取测试依据 → TD 设计用例 → 分层实施
+  │       │  规划级 PRD 只生成测试设想；工程级 PRD + S3 Spec → TB/TD 用例 → 分层实施
   │       │
   │       └──→ 嵌入 000-develop_pipeline_csp.md
   │              开发 Pipeline S6 质量门控（Check 1–5.10）
@@ -588,7 +587,7 @@ AI 自主完成，每个阶段按进度条播报，全部完成后输出总测�
          开发 Pipeline：01 PRD→02 拆解→...→06 门控→07 复盘
 ```
 
-- **上游输入** = `000-product-planning_csp.md` 产出的 PRD SPECs（TB 提取测试依据）+ ROADMAP（确定测试版本范围）
+- **上游输入** = 规划阶段的 PRD/ROADMAP 用于预选测试范围；正式 TB 依据是经 01 升级后的工程级 PRD + S3 Spec + TMS 既有基线
 - **本文件职责** = 测试全链路：依据→设计→分层实施→门控→上线验证
 - **下游输出** = 测试证据嵌入 `000-develop_pipeline_csp.md` S6 质量门控各 Check
 - **项目治理** = `[[prompts/000-project-governance_csp.md]]` 定义产物路径/版本管理/文档边界——本文档产物落盘遵循 G2.1 约定

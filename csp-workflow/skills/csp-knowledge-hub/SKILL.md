@@ -76,13 +76,17 @@ anti_rationalizations:
 - 个人事实记忆（用 `csp-remember`）
 - 只读既有 spec 不需 hub 路由（直接 Read）
 
+## Project Entry Contract
+
+**REQUIRED REFERENCE:** `references/project-entry-contract.md` — L0 身份 → L1 当前状态 → L2 意图路由 → L3 任务详情；区分最近观测与发布门禁、findings 来源与存量违规基线。入场时按意图读，不把整个 manifest 或历史日志注入上下文。项目原有可运行路径优先于下面的示例布局。
+
 ## Workspace Layout
 
 详见 `references/workspace-layout.md`。核心结构（统一在 `.csp/` 下，不移动既有产物）：
 
 ```
 .csp/                              # hub 根
-├── AGENTS.md                      # 路由契约（5 节）—— 见 references/agents-md-route-contract.md
+├── AGENTS.md                      # 路由契约（6 节）—— 见 references/agents-md-route-contract.md
 ├── manifest.json                  # 唯一 source index（跨 spec/wiki/memory）—— 见 references/manifest-frontmatter-spec.md
 ├── product-spec/                  # PMS（既有，不移动）
 ├── code-spec/{app}/               # CMS（既有）
@@ -106,7 +110,8 @@ anti_rationalizations:
   "manifest_id": "<project>-hub",
   "version": 1,
   "generated_at": "...",
-  "repo_url": "git@github:org/repo",
+  "adapter": "csp-knowledge-hub",
+  "repo_url": "<configured git remote>",
   "items": [
     {
       "source_id": "pms:MOD-AUTH-1",
@@ -126,7 +131,7 @@ anti_rationalizations:
 }
 ```
 
-- **增量判据：** 用稳定 `source_id` + `content_hash`(git blob) 判 added/changed/removed；**禁止 mtime/文件大小**。
+- **增量判据：** 写入者用稳定 `source_id` + `content_hash`(git blob) 判 added/changed/removed；**禁止 mtime/文件大小**。现有 `hub_manifest.sh diff` 只比较 manifest 已列 `output_path` 的哈希/缺失，不自动发现新来源或回写索引。
 - raw 下载成功 → 更新 hash/path/`status=ready`；失败 → 保留 item 标 `blocked`/`degraded`。
 - 删除来源 → 二次确认后从 `items` 移除。
 
@@ -172,13 +177,16 @@ updated: "2026-08-28"
 
 ## 快速 Spec 定位/读取/生成
 
+从已安装的 `csp-knowledge-hub` 技能目录定位兄弟脚本 `scripts/hub_manifest.sh`；在 CSP 源码仓库中其路径为 `csp-workflow/skills/csp-knowledge-hub/scripts/hub_manifest.sh`。设置 `CSP_PROJECT_ROOT=<目标项目根>` 后运行：
+
 ```bash
-SCRIPT=scripts/hub_manifest.sh
-bash $SCRIPT status                 # hub 健康度：manifest items / built / pending / failed
-bash $SCRIPT locate <query>         # 跨 spec/wiki/memory 关键词定位 → output_path + frontmatter
-bash $SCRIPT diff                   # 自上次同步的 added/changed/removed（content_hash）
-bash $SCRIPT list --type cms        # 按 source_type 列项
+CSP_PROJECT_ROOT=<目标项目根> bash <技能目录>/scripts/hub_manifest.sh status
+CSP_PROJECT_ROOT=<目标项目根> bash <技能目录>/scripts/hub_manifest.sh locate <query>
+CSP_PROJECT_ROOT=<目标项目根> bash <技能目录>/scripts/hub_manifest.sh list --type cms
+CSP_PROJECT_ROOT=<目标项目根> bash <技能目录>/scripts/hub_manifest.sh diff
 ```
+
+`diff` 仅报告已索引输出的内容哈希变化/缺失，不查新来源、不写 manifest。`doctor` 仅做六节数、选定目录首行 frontmatter 和 sidecar 的基础检查；完整 schema/路由/阶段一致性仍需单独验证。
 
 - **定位:** `locate` grep manifest `title`/`source_id`/`output_path` → 返回页面路径 + frontmatter 摘要。
 - **读取:** 拿到 `output_path` 后 Read 该 `.md`（自包含 frontmatter，无需侧车）。
@@ -245,6 +253,7 @@ completion_signal:
 
 | 文件 | 内容 |
 |------|------|
+| `references/project-entry-contract.md` | 四层入场、文件责任、新鲜度、体积与保留规则（入场/治理必读） |
 | `references/workspace-layout.md` | 目录结构、权威文件、依赖方向、命名规范 |
 | `references/manifest-frontmatter-spec.md` | manifest.json 字段 + 内联 frontmatter 规范 + type 枚举 |
 | `references/agents-md-route-contract.md` | AGENTS.md 6 节结构 + 操作路由表 + 模板 |

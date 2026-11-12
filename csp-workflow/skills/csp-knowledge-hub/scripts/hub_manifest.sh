@@ -6,7 +6,7 @@
 #   status                  — hub health: item count / built / pending / failed / orphan pages
 #   list [--type <t>]       — list manifest items (optionally filtered by source_type)
 #   locate <query>          — keyword-locate across spec/wiki/memory → output_path + frontmatter
-#   diff                    — added/changed/removed since last manifest content_hash snapshot
+#   diff                    — compare already-indexed output paths with manifest hashes
 #   doctor                  — validate AGENTS.md 6 sections + frontmatter presence + no sidecar
 #
 # Project root: CSP_PROJECT_ROOT (default: cwd). Hub root: <root>/.csp
@@ -64,7 +64,14 @@ cmd_status() {
 
 cmd_list() {
   require_hub
-  local filt="${1:-}"
+  local filt=""
+  if [ "${1:-}" = '--type' ]; then
+    [ -n "${2:-}" ] && [ "$#" -eq 2 ] || { err 'usage: hub_manifest.sh list [--type <source_type>]'; exit 1; }
+    filt="$2"
+  elif [ "$#" -gt 0 ]; then
+    err 'usage: hub_manifest.sh list [--type <source_type>]'
+    exit 1
+  fi
   # crude line-based extraction: per item, print source_id | source_type | title | output_path | build_status
   awk '
     /"items"[[:space:]]*:/ { in_items=1 }

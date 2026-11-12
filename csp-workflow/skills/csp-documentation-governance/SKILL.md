@@ -40,27 +40,27 @@ Every project has two documentation zones. Confusing them is the root cause of d
 
 | Zone | Audience | Content | Update Trigger | Storage |
 |------|----------|---------|---------------|---------|
-| **External** (`docs/`) | Humans: users, contributors, new team members | Architecture, install guides, usage, API reference, ADRs, runbooks, feature docs, analysis reports | Code merge, breaking change, new feature, API change, dep bump | `docs/{category}/` + INDEX.md |
+| **Human** (`docs/` or established equivalent) | Users, contributors, team members | Architecture, guides, API reference, ADRs, analysis, active PRD originals | Relevant product/code/process change | Existing documented category layout + navigable entry (`README.md` or `INDEX.md`) |
 | **Internal** (`.csp/`) | Agents, CI/CD, engineering pipeline | AGENTS.md, manifest, lifecycle state, PMS/CMS/TMS, specs, tasks, tech-design, traceability, artifacts, ship, audit | Every stage gate completion, every commit that changes behavior | `.csp/{subsystem}/` + manifest.json |
 
-**Hard rule**: External docs NEVER reference `.csp/` paths. Internal `.csp/` artifacts MAY reference `docs/` as source material with `original_ref` anchors.
+**Publication boundary:** A page actually published outside the repository must not link to inaccessible `.csp/` artifacts or disclose internal findings. A human-readable document kept inside the project may cite `.csp/` for engineering traceability. `docs/` is not automatically public: determine what is published from the project's deployment configuration and access rules. Read `csp-knowledge-hub/references/project-entry-contract.md` before changing source/derived paths.
 
 ---
 
 ## Folder Taxonomy
 
-Apply the 8-category taxonomy under `docs/`:
+Use these categories as defaults **where the project has no established equivalent**. In brownfield and monorepo projects, map the existing taxonomy first; preserve working links and active PRDs rather than moving them to match a template:
 
-| Folder | For | Update Trigger | INDEX.md Required? |
-|--------|-----|---------------|-------------------|
-| `docs/architecture/` | ADRs, system design, data models, security architecture | New ADR, architecture change, breaking change | Yes |
-| `docs/design/` | UI/UX specs, design briefs, wireframe docs, design decisions | Design iteration, UI change, new component | Yes |
-| `docs/guides/` | Install guides, user guides, contributing, onboarding, runbooks | New feature, dep change, process change | Yes |
-| `docs/reference/` | API reference, SKILL.md spec, versioning rules, coding standards | API change, spec change, standard update | Yes |
-| `docs/reports/` | Project reviews, audit reports, case studies, post-mortems | After audit, after review, after incident | Yes |
-| `docs/analysis/` | Gap analysis, capability maps, alignment checklists | After analysis run, after capability review | Yes |
-| `docs/prototypes/` | HTML prototypes, design mockups, interactive demos | After prototype creation/update | If 3+ files |
-| `docs/archive/` | Completed/retired docs organized by version | After milestone archive, after deprecation | By version |
+| Folder | For | Update Trigger | Navigation |
+|--------|-----|---------------|------------|
+| `docs/architecture/` | ADRs, system design, data models, security architecture | New ADR, architecture change, breaking change | Link from the docs entry |
+| `docs/design/` | UI/UX specs, design briefs, wireframe docs, design decisions | Design iteration, UI change, new component | Link from the docs entry |
+| `docs/guides/` | Install guides, user guides, contributing, onboarding, runbooks | New feature, dep change, process change | Link from the docs entry |
+| `docs/reference/` | API reference, SKILL.md spec, versioning rules, coding standards | API change, spec change, standard update | Link from the docs entry |
+| `docs/reports/` | Project reviews, audit reports, case studies, post-mortems | After audit, after review, after incident | Link from the docs entry |
+| `docs/analysis/` | Gap analysis, capability maps, alignment checklists | After analysis run, after capability review | Link from the docs entry |
+| `docs/prototypes/` | HTML prototypes, design mockups, interactive demos | After prototype creation/update | Local index when needed |
+| `docs/archive/` | Superseded material retained by project policy | After consumers are repointed | Retain version and provenance |
 
 ---
 
@@ -73,10 +73,10 @@ Draft → Active → Stable → Archived → Retired
 | State | Location | Meaning | Move Trigger |
 |-------|----------|---------|-------------|
 | **Draft** | `docs/{category}/` with `[DRAFT]` prefix or YAML `status: draft` | Work in progress, may change significantly | N/A |
-| **Active** | Root of `docs/{category}/` | Current, authoritative, maintained | N/A |
-| **Stable** | Root of `docs/{category}/` | Current, rarely changes (e.g., v1.0 architecture overview) | N/A |
-| **Archived** | `docs/archive/{version}/` | Superseded by newer version, kept for history | After new version supersedes it |
-| **Retired** | Deleted (or `docs/archive/_retired/`) | No longer relevant, no historical value | After confirming zero inbound links and zero value |
+| **Active** | Existing canonical path (often `docs/{category}/`) | Current, authoritative, maintained; keep inbound links working | N/A |
+| **Stable** | Existing canonical path | Current, rarely changes (e.g., architecture overview) | N/A |
+| **Archived** | Project's archive zone (e.g. `docs/archive/{version}/`) | Superseded source retained with a back-reference | Only after confirming its consumers no longer require the active path, updating inbound links and any manifest pointer |
+| **Retired** | Explicitly approved deletion | No longer needed or referenced, subject to project retention policy | After checking inbound links, unresolved findings and evidence retention; obtain authorization before deleting |
 
 ---
 
@@ -103,9 +103,9 @@ These are HARD rules. Violating them means docs are stale.
 
 | Planning Change | Must Update Doc | Location |
 |----------------|---------------|----------|
-| New milestone/version | CHANGELOG + roadmap + FEATURES | Root + `docs/analysis/` |
-| Feature added to roadmap | Roadmap | `docs/strategy/ROADMAP.md` |
-| Feature cut from roadmap | Roadmap + feature doc (archive) | Root + `docs/archive/` |
+| New planned milestone/version | Roadmap + feature inventory (if maintained) | `docs/strategy/ROADMAP.md` + project feature index; CHANGELOG updates on actual release, not planning |
+| Feature added to roadmap | Roadmap | `docs/strategy/ROADMAP.md` or the project's established equivalent |
+| Feature cut from roadmap | Roadmap + affected PRD/feature inventory | Update or mark as superseded; archive only after checking active readers |
 | Architecture decision | ADR + architecture overview | `docs/architecture/` |
 | Team/process change | Contributing guide + onboarding | `docs/guides/` |
 
@@ -113,8 +113,8 @@ These are HARD rules. Violating them means docs are stale.
 
 | Health Check | Must Update Doc | Location |
 |-------------|----------------|----------|
-| Quarterly doc audit | INDEX.md freshness + broken links + archive | `docs/INDEX.md` + `docs/archive/` |
-| After milestone complete | Archive milestone artifacts, update version registry | `docs/archive/{version}/` |
+| Periodic doc audit | Docs entry freshness, broken links, eligibility for archive | Existing `docs/README.md` or `docs/INDEX.md`; preserve active consumers |
+| After milestone complete | Review superseded artifacts for archival; update version registry | Existing archive path, only after references and retention checks |
 | New team member onboarded | Onboarding guide (if gaps found) | `docs/guides/` |
 
 ---
@@ -154,7 +154,7 @@ Certain documents MUST be updated AFTER code is written and verified. These are 
 
 ## INDEX.md Requirements
 
-Every directory with 3+ files MUST have an INDEX.md:
+For a folder with several human-facing documents and no usable index, add or update its existing navigation page (`INDEX.md` or project-standard `README.md`). Three files is an **index-review trigger**, not a reason to rename functional README files or create empty indexes:
 
 ```markdown
 # {Directory Name}
@@ -169,7 +169,7 @@ One-line description of what lives here.
 - `../other-category/` — Why it's related
 ```
 
-Root `docs/INDEX.md` provides the master navigation hub:
+For a new project **without** an existing docs entry, `docs/INDEX.md` can serve as the navigation hub (keep a working `docs/README.md` in brownfield projects):
 
 ```markdown
 # Documentation Index
@@ -203,10 +203,11 @@ This skill is the documentation governance authority. Other doc skills implement
 
 ### Integration Rules
 
-1. When `csp-project-doc-architect` sets up docs: it MUST reference this governance skill's folder taxonomy and INDEX.md template — no ad-hoc structures.
+1. When `csp-project-doc-architect` sets up docs: use these categories as defaults, first map the project's existing folders and navigation entry; only introduce an `INDEX.md` where it improves discoverability.
 2. When `csp-doc-lifecycle-manager` archives docs: it MUST follow the lifecycle state transitions defined here (Active→Archived, not arbitrary moves).
 3. When `csp-session-knowledge-extractor` routes knowledge: it MUST use the internal vs external zone decision tree to pick the right destination.
-4. All three skills MUST read `docs/README.md` for zone definitions before operating.
+4. Check the target project's own `docs/README.md` or `docs/INDEX.md` **if present**, plus its root instructions and `.csp/AGENTS.md` route card. If absent, use this skill's zone rules and the knowledge-hub project-entry contract; never assume a consumer project has this package's `docs/README.md`.
+5. A document-size warning requests an ownership/consumer review, not an automatic move or deletion. Preserve active PRDs, referenced screenshots, and unresolved findings; check references and manifest before any migration.
 
 ---
 
@@ -214,11 +215,11 @@ This skill is the documentation governance authority. Other doc skills implement
 
 Run quarterly (or after every major milestone):
 
-- [ ] Root `docs/INDEX.md` exists and links to all category INDEX.md files
-- [ ] Every category folder with 3+ files has an INDEX.md
+- [ ] The project's existing docs entry page (`INDEX.md` or `README.md`) links to active documentation
+- [ ] Folders with 3+ human-facing files have navigable links from that entry page or an appropriate local index
 - [ ] No broken links between docs (scan with `scripts/validate-skill-refs.py` extended to docs)
 - [ ] `docs/archive/` is organized by version, not by date
-- [ ] No internal `.csp/` paths appear in external-facing docs
+- [ ] Published pages do not link to inaccessible internal paths or expose sensitive artifacts
 - [ ] All ADRs are numbered sequentially, no gaps
 - [ ] No duplicate content across files (one canonical owner per fact)
 - [ ] Update-trigger rules have been followed for recent code changes
@@ -232,9 +233,9 @@ Run quarterly (or after every major milestone):
 | Flat `docs/` with 20+ files | Undiscoverable, no navigation | Categorize into folders + INDEX.md |
 | Docs describing the old version | Misleads users, causes errors | Archive old, mark superseded with `→ replaced by [link]` |
 | README trying to be everything | README is a facade, not a knowledge base | Split into category docs, README links to them |
-| No INDEX.md | New team members can't find anything | Create INDEX.md at root and per category |
-| `.csp/` paths in `docs/` | External readers can't follow internal links | Rewrite as human-readable descriptions |
-| Versioned filenames (`ARCHITECTURE-v2.md`) | Confusion about which is canonical | Use folders: `archive/v1/ARCHITECTURE.md` + `architecture/ARCHITECTURE.md` |
+| No working docs entry | New team members can't find anything | Maintain the project's `INDEX.md` or `README.md` and link active categories |
+| Published page points to inaccessible `.csp/` evidence | External readers can't follow private links | Keep internal trace links in nonpublished docs; publish a self-contained explanation |
+| Duplicate active documents with `-final-v2` names | Unclear canonical source | Keep the active document at its linked path; if superseded, archive with backlink after consumers switch |
 | "We'll document it later" | Never happens | Document in the same PR as the code change |
 | Stale docs with no "last updated" | Readers can't trust anything | Every doc has `> 最后更新: YYYY-MM-DD` in header or frontmatter |
 

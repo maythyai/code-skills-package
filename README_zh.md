@@ -7,10 +7,10 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
 [![npm](https://img.shields.io/npm/v/code-skills-package)](https://www.npmjs.com/package/code-skills-package)
 [![v0.12.0](https://img.shields.io/badge/version-0.12.0-green)](./CHANGELOG.md)
-[![Registry: 709](https://img.shields.io/badge/entries-709-orange)](./docs/reference/SKILL-INDEX.md)
+[![Registry: 710](https://img.shields.io/badge/entries-710-orange)](./docs/reference/SKILL-INDEX.md)
 [![Platforms: 22+](https://img.shields.io/badge/platforms-22+-brightgreen)](./docs/guides/INSTALL.md)
 
-**统一 AI 编程技能 · 22+ 个平台 · 15+ 语言 · 340 Skills + 132 Agents + 154 Commands + 36 Workflows**
+**统一 AI 编程技能 · 22+ 个平台 · 15+ 语言 · 358 Skills + 116 Agents + 154 Commands + 36 Workflows**
 
 整合多个开源 AI 编程项目为分层自动路由框架，以极低的 token 成本完成复杂开发任务。
 
@@ -24,11 +24,11 @@
 
 <a href="https://maythyai.github.io/code-skills-package/"><img src="./assets/dashboard-overview.svg" alt="CSP 技能仪表盘总览 — 五层架构与技能统计，由 registry 自动生成" width="640" /></a>
 
-**🔗 [在线交互式仪表盘](https://maythyai.github.io/code-skills-package/)** — 按层级、分类、触发词浏览全部 709 个条目
+**🔗 [在线交互式仪表盘](https://maythyai.github.io/code-skills-package/)** — 按层级、分类、触发词浏览全部 710 个条目
 
 </div>
 
-CSP（Code Skills Package）将多个开源 AI 编程项目的精华整合为一体化解决方案。它通过五层架构按需加载技能，配合置信度评分路由器和技能知识图谱，让 AI 编程助手在每次会话中只加载任务所需的最小 skill 集合。同时，CSP 会记忆用户的使用习惯和项目上下文，随着项目演进提供越来越精准的服务。709 个条目覆盖全栈开发、DevOps、安全审计等领域，并专为独立开发者提供部署运维、商业化运营、性能调优、国际化、Monorepo 管理等专项技能包，支持从 idea 到 production 的完整旅程。
+CSP（Code Skills Package）将多个开源 AI 编程项目的精华整合为一体化解决方案。它通过五层架构按需加载技能，配合置信度评分路由器和技能知识图谱，让 AI 编程助手在每次会话中只加载任务所需的最小 skill 集合。同时，CSP 会记忆用户的使用习惯和项目上下文，随着项目演进提供越来越精准的服务。710 个条目覆盖全栈开发、DevOps、安全审计等领域，并专为独立开发者提供部署运维、商业化运营、性能调优、国际化、Monorepo 管理等专项技能包，支持从 idea 到 production 的完整旅程。
 
 ## 核心亮点
 
@@ -38,7 +38,7 @@ CSP（Code Skills Package）将多个开源 AI 编程项目的精华整合为一
 | **Token 节约** | 五层按需加载 + 索引分片，单次任务 ~500–1,500 tokens | 全量加载 ~12,000+ tokens |
 | **技能编排** | 静态 Recipe + 动态 DAG，支持分支 / 并行 / 回退 / 自动合并 | 固定流水线 / 无编排 |
 | **持续学习** | 5 维度知识提取，越用越懂项目和开发者 | 无状态，每次从零开始 |
-| **全栈覆盖** | 709 条目 · 5 层级 · 15+ 语言 · 22+ 平台 | 单一语言 / 有限场景 |
+| **全栈覆盖** | 710 条目 · 5 层级 · 15+ 语言 · 22+ 平台 | 单一语言 / 有限场景 |
 | **开放扩展** | 自定义 Skill + Recipe + 创作向导 | 封闭生态 / 无扩展 |
 
 ### 状态驱动智能路由
@@ -95,7 +95,7 @@ CSP 积极自动化但从失控收手：审批门控在拆解确认、技术栈�
 
 ### 全开发生命周期覆盖
 
-709 个条目（340 个技能、132 个 Agent、154 条命令、36 个工作流、39 条 Cursor 规则、4 个审查工具、3 个文档工具）分布在 5 个层级，覆盖需求规划、代码实现、审查、调试、测试、发布全流程，并延伸至 AI 工程（RAG/LLM/vLLM）、DevOps（CI/CD/IaC/K8s）、移动端（React Native/跨平台）、安全审计（STRIDE-A/CodeQL/事件响应）等专业领域。此外，31 个技能专为独立开发者设计，覆盖部署运维（Vercel/Railway/VPS）、商业化运营（Stripe/订阅/SEO/分析）、性能调优、API 集成（Webhook/OAuth）、测试工程（E2E/视觉回归）、国际化和 Monorepo 管理。每个技能遵循 SKILL.md v2 规范，含 phase/domain/role 等结构化字段。
+710 个条目（358 个技能、116 个 Agent、154 条命令、36 个工作流、39 条 Cursor 规则、4 个审查工具、3 个文档工具）分布在 5 个层级，覆盖需求规划、代码实现、审查、调试、测试、发布全流程，并延伸至 AI 工程（RAG/LLM/vLLM）、DevOps（CI/CD/IaC/K8s）、移动端（React Native/跨平台）、安全审计（STRIDE-A/CodeQL/事件响应）等专业领域。此外，31 个技能专为独立开发者设计，覆盖部署运维（Vercel/Railway/VPS）、商业化运营（Stripe/订阅/SEO/分析）、性能调优、API 集成（Webhook/OAuth）、测试工程（E2E/视觉回归）、国际化和 Monorepo 管理。每个技能遵循 SKILL.md v2 规范，含 phase/domain/role 等结构化字段。
 
 **三说明书治理层**（PMS 产品说明书 / CMS 代码说明书 / TMS 测试说明书）作为 living baseline 与生命周期并行运行：每个阶段先读对应说明书再产出，发布后写回 delta 增量——无需额外工具即可让 PRD、代码、测试相互可追溯。
 
@@ -222,7 +222,7 @@ CSP 采用五层分层架构。仅路由器（L0）在会话启动时加载，�
 │  L4  csp-runtime     运行时（~300 tokens/skill · 58 个）     │
 │      持续学习 · 自主执行 · 知识管理 · Token 预算 · 文件整理 · 并行编排│
 └──────────────────────────────────────────────────────────────┘
-                    总计：709 个条目（340 Skills + 132 Agents + 154 Commands + 36 Workflows）
+                    总计：710 个条目（358 Skills + 116 Agents + 154 Commands + 36 Workflows）
 ```
 
 ### 路由流程
@@ -339,7 +339,7 @@ node bin/csp-sdk.mjs init-skill csp-my-skill --layer 3 --phase build
 | 文档 | 说明 |
 |------|------|
 | [ARCHITECTURE_zh.md](./docs/architecture/ARCHITECTURE_zh.md) | 完整架构设计（14 章 · DAG 编排 · SKPG · Token 策略） |
-| [SKILL-INDEX.md](./docs/reference/SKILL-INDEX.md) | 全部 709 个条目索引 |
+| [SKILL-INDEX.md](./docs/reference/SKILL-INDEX.md) | 全部 710 个条目索引 |
 | [INSTALL.md](./docs/guides/INSTALL.md) / [INSTALL_zh.md](./docs/guides/INSTALL_zh.md) | 完整安装指南（22+ 平台） |
 | [UPDATE.md](./docs/guides/UPDATE.md) | 如何为已安装的技能包获取更新 |
 | [SKILL-AUTHORING_zh.md](./docs/guides/SKILL-AUTHORING_zh.md) | Skill 编写最佳实践 |

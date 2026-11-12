@@ -24,64 +24,52 @@ A structured workflow for keeping project documentation organized, current, and 
 
 ## Document Categories
 
-8-folder taxonomy. Adapt names to the project's language but keep the semantics.
-
-| Folder | Purpose |
-|--------|---------|
-| `design/` | UI/UX specs, wireframes, visual guidelines |
-| `plan/` | Sprint plans, roadmaps, milestone trackers (active only) |
-| `architecture/` | System design, ADRs, technical decisions |
-| `prototypes/` | HTML/interactive prototypes, mockups |
-| `reference/` | Persistent reference knowledge (constraints, decisions, context) |
-| `reports/` | Analysis reports, audit findings, deep dives |
-| `guides/` | User-facing how-to docs (quickstart, deployment) |
-| `archive/` | Completed/obsolete docs, organized by version |
+Use the existing project taxonomy first. For greenfield projects, use `csp-documentation-governance` categories as defaults (architecture, design, guides, reference, reports, analysis, prototypes, archive); add `docs/strategy/` for a human-readable ROADMAP and `docs/prd/` for active PRD originals when the project uses them. `.csp/planning/` is the internal workflow area, not a replacement for an active roadmap. `plan/` can remain a project's established human-doc path; no mandatory rename is implied.
 
 **Reference vs Plan**: Plan is time-bound (expires after sprint). Reference persists across versions. Ask: "Will this be useful in 6 months?" Yes → reference. No → plan (and eventually archive).
 
 ## Lifecycle Rules
 
-1. Active docs stay at the root of their category
-2. Completed docs move to `archive/{version}/`
-3. Every category folder gets an `INDEX.md` or `README.md`
-4. Root `INDEX.md` links to all category indexes
-5. Archive subdirectories named by version (`v0.4.0/`, `v0.7.0/`) or theme (`intel/`, `diagnostics/`)
+1. Active source documents remain at their canonical paths while any planned/ongoing consumer still needs them.
+2. Completion of a milestone alone does not make a PRD, verification baseline or open finding archiveable. Check supersession, inbound references and retention first.
+3. Maintain the project's existing `docs/README.md` or `docs/INDEX.md`; add local indexes only where navigation needs them.
+4. For approved archives, record the version or domain in the destination and update the manifest pointer, inbound references and route card before declaring a move done.
+5. Never delete referenced evidence or a source finding to meet a size/count quota. Get authorization for destructive cleanup.
 
 ## Process: 5-Step Workflow
 
 ### 1. Audit
-Scan all docs, classify each as: Active (still relevant), Completed (milestone done), Obsolete (superseded), or Duplicate (same content elsewhere).
+Read the project entry contract; inventory canonical sources, current consumers, manifest links, unresolved finding/evidence references and project retention rules. Classify each as Active, Superseded, Duplicate or Unknown. Milestone completion is not proof of supersession.
 
 ### 2. Categorize
-Move each doc to its category folder. Use `git mv` to preserve history.
+Map the project's valid paths to the taxonomy. Propose a move only if it improves navigation without breaking a consumer; don't move documents simply to satisfy a template or size limit.
 
 ### 3. Archive
-Move completed docs to `archive/{version}/`. Add a brief `README.md` noting what was delivered.
+After authorization for the proposed migration, relocate only superseded files to the project's archive zone, leaving a findable reference; update affected readers, route card and manifest output_path. Verify no live references point at the former path.
 
 ### 4. Prune
-Delete true duplicates and zero-value stubs. Never delete without checking inbound links first.
+Delete only confirmed duplicates/ephemeral files after checking inbound links and user authorization. Preserve evidence referenced by an OPEN finding and a PRD still needed by 01/TB.
 
 ### 5. Index
-Create or update `INDEX.md` at root and each category level. Keep indexes short — a map, not a catalog.
+Update the existing `README.md` or `INDEX.md` entry page and any local indexes; rerun the link/route checks. Keep an index a map, not another fact source.
 
 ## Documentation Health Check
 
-- [ ] STATE.md reflects current version
-- [ ] ROADMAP.md has completed versions archived
-- [ ] INDEX.md links are all valid
-- [ ] No duplicate content across locations
-- [ ] Archive organized by version, not a flat dump
-- [ ] Reference docs separated from active plans
-- [ ] Every category folder has an INDEX.md or README.md
+- [ ] Lifecycle state comes from the current runtime file, not a stale human STATE.md
+- [ ] Active ROADMAP and PRDs retain working consumers; only superseded copies enter archive
+- [ ] The existing docs entry and any category indexes link to actual files
+- [ ] No competing canonical copies exist
+- [ ] Archived files remain referenced where necessary; OPEN findings retain their evidence
+- [ ] Project retention/access policy is respected
 
 ## Common Anti-Patterns
 
 | Anti-Pattern | Do This Instead |
 |---|---|
 | "I'll organize later" | Organize at each milestone boundary |
-| "Everything is in `.csp/planning/`" | Split into plan (active) + archive (completed) |
-| "The INDEX.md is comprehensive" | Run link checks after every file move |
-| "Archive is a flat dump" | Group by version or theme |
+| "ROADMAP belongs in `.csp/planning/`" | Keep the human roadmap's active path (`docs/strategy/ROADMAP.md` by default); internal plans can live under `.csp/planning/` |
+| "The INDEX.md is comprehensive" | Run link checks after every approved file move |
+| "Archive the last milestone automatically" | Check supersession, readers and retention; then re-point and verify |
 | "Reference and plans mixed" | Separate plan (expires) from reference (persistent) |
 
 ## Related Skills

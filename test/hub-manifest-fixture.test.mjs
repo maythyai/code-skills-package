@@ -84,6 +84,16 @@ test('happy: list emits items; locate finds by title via manifest', () => {
   } finally { rmSync(root, { recursive: true, force: true }); }
 });
 
+test('list --type cms filters to CMS items instead of returning an empty list', () => {
+  const root = makeHubFixture();
+  try {
+    const { code, out } = run(['list', '--type', 'cms'], { root });
+    assert.equal(code, 0);
+    assert.match(out, /cms:app-1/);
+    assert.doesNotMatch(out, /pms:MOD-AUTH-1/);
+  } finally { rmSync(root, { recursive: true, force: true }); }
+});
+
 test('happy: doctor PASS on clean hub, exit 0', () => {
   const root = makeHubFixture();
   try {

@@ -20,38 +20,44 @@ tools: [Read, Write, Edit, Glob, Grep]
 - Creating documentation standards/conventions for a team
 - Migrating docs between tools or reorganizing after a pivot
 
-## Standard Documentation Tree
+## Project-Adapted Documentation Tree
+
+First read the project's root instructions and existing docs entry page. `csp-documentation-governance` owns the human/internal boundary; `csp-knowledge-hub/references/project-entry-contract.md` owns the L0–L3 entry pattern. This is a **greenfield example**, not a directory migration instruction for brownfield or monorepo projects:
 
 ```
 docs/
-  INDEX.md              # Master navigation hub
-  architecture/         # System design, ADRs, tech decisions
-  design/               # UI/UX specs, wireframes, visual guidelines
-  guides/               # User-facing how-to (quickstart, deployment)
-  reference/            # Persistent reference knowledge
-  reports/              # Analysis reports, audits, deep dives
-  prototypes/           # Interactive prototypes, mockups
-.csp/planning/
-  INDEX.md              # Planning entry point
-  STATE.md              # Current project status (always latest version)
-  ROADMAP.md            # Milestone tracker (completed + next)
-  reference/            # Persistent planning reference
-  archive/              # Historical records by version
-    {version}/          # e.g., v0.4.0/, v1.0.0/
+  README.md             # Human navigation; INDEX.md is also valid
+  strategy/ROADMAP.md   # Human-readable version themes and active PRD handoff
+  prd/                  # Active PRD originals read by 01 and testing
+  architecture/         # Architecture/ADR
+  design/               # Design docs
+  guides/               # User-facing how-to
+  reference/            # Long-lived reference
+  analysis/             # Analysis summaries
+.csp/
+  AGENTS.md             # Agent operation route card
+  manifest.json         # Sole indexed artifact inventory
+  lifecycle-state.json  # Runtime stage state (schema set by actual driver)
+  planning/             # Agent-internal planning artifacts, not ROADMAP's canonical copy
+  product-spec/          # Derived PMS
+  code-spec/             # Derived CMS
+  test-spec/             # Derived TMS
 ```
+
+Check each source file's readers before moving it: a live `docs/prd/` file cannot be archived while the next release still consumes it. If the project already has a functional taxonomy, preserve it and record its routes instead of creating another tree.
 
 ## Naming Conventions
 
-- `INDEX.md` for navigation hubs (always uppercase)
-- `STATE.md` for status dashboards
-- `README.md` only for git repo roots and sub-packages
+- `INDEX.md` or existing `README.md` for navigation; prefer a single entry per scope
+- `STATE.md` only for a project-maintained human summary; `.csp/lifecycle-state.json` is runtime state, not a duplicate dashboard
+- Keep a root or sub-package `README.md` if it is the documented entry point
 - `ADR-{NNN}-{slug}.md` for architecture decision records
 - kebab-case for multi-word filenames
 - Date-prefix for time-sensitive docs: `YYYY-MM-DD-{topic}.md`
 
 ## Index File Requirements
 
-Every `INDEX.md` must include:
+A navigation page (`INDEX.md` or project-standard `README.md`) should include:
 1. One-line description of what this index covers
 2. Table of all docs (file | purpose | status)
 3. Links to sub-directory indexes
@@ -59,35 +65,35 @@ Every `INDEX.md` must include:
 
 ## Documentation Hygiene Rules
 
-1. **Root cap**: Max 5 files at root (STATE, ROADMAP, INDEX, plus 1-2 active plans)
-2. **Single source**: No doc in 2+ locations
-3. **Version archive**: Archive by version, not date (`archive/v1.0.0/` not `archive/2026-06/`)
-4. **Reference persists**: Reference docs never go to archive
-5. **Auto-index**: Every folder with 3+ files needs an INDEX.md
+1. **Root navigability**: Review root clutter by purpose, not an arbitrary file-count cap; legitimate build/workspace configs stay in place.
+2. **Single canonical source**: Avoid competing copies; derived views identify their inputs and generation time.
+3. **Evidence-aware archive**: Move only superseded material after readers, inbound links, retention and manifest pointers have been checked.
+4. **Reference persists**: An active reference is not archived because it is old or large.
+5. **Index on demand**: Three or more human-facing files trigger a navigation review; use the project's existing docs entry or add an index when it improves discovery.
 
 ## Process: Setting Up New Project Docs
 
-1. Identify doc types needed (pick from 8 categories)
-2. Create folder structure matching the standard tree
-3. Create INDEX.md at each level
-4. Add documentation hygiene check to CI or pre-commit
+1. Identify doc types and existing conventions; use governance's taxonomy as a default, not a mandatory eight-folder scaffold.
+2. Create only folders with actual owners/content; retain active PRD and ROADMAP routes.
+3. Make the docs entry page point to the new material; add local indexes where navigation needs them.
+4. Offer a read-only hygiene check; claim CI enforcement only if the project actually wires it.
 
 ## Process: Restructuring Existing Docs
 
-1. **Audit**: List all docs with status (active/completed/obsolete/duplicate)
-2. **Classify**: Assign each to a category
-3. **Move**: Restructure into the standard tree
-4. **Archive**: Move completed to `archive/{version}/`
-5. **Index**: Create/update all INDEX.md files
+1. **Audit**: List documents, current readers, inbound links, manifest paths and retention requirements.
+2. **Classify**: Mark active originals, derived artifacts, superseded documents and copies.
+3. **Propose**: Keep existing valid paths; for necessary moves list old→new route and affected consumers.
+4. **Migrate only after approval**: Update every reader, manifest pointer and test; never archive an active handoff.
+5. **Index**: Update the existing navigation entry and verify links.
 
 ## Anti-Patterns
 
 | Anti-Pattern | Fix |
 |---|---|
-| Flat directory with 30+ files | Group by category, max 10 per folder |
-| README.md everywhere | INDEX.md for navigation, README.md only for repos |
-| Archive is a dumping ground | Organize by version with brief context |
-| No cross-references | Every INDEX.md links to sub-indexes and key docs |
+| Flat directory with no task-oriented entry | Link active documents by intent; group when it improves retrieval |
+| Duplicate README and INDEX in one folder | Keep one authoritative navigation entry |
+| Archive used to meet a file-count cap | Archive only after supersession and reference checks |
+| No cross-references | Route entry links to active source and records its owner |
 
 ## Related Skills
 

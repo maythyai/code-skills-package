@@ -1,6 +1,6 @@
 使用 CSP 项目治理能力管理项目级规范：目录结构、产物路径、版本管理、文档边界。本文件是三件套（产品规划/开发/测试）的第四份——项目治理横切面。
 
-> 项目治理 ≠ 开发流程。治理关注"东西放哪、叫什么名、谁来维护、什么时候更新"——是所有阶段共享的底层约定。
+> 项目治理 ≠ 开发流程。治理关注权威、路径、更新责任、新鲜度、引用和保留。跨项目的四层入口与产物规则由 `[[workflow:csp-knowledge-hub]]` 的 `references/project-entry-contract.md` 承载；本文只指引何时调用对应技能。先识别项目现有约定；下文单仓/monorepo 树是示例，不是强制迁移目标。
 
 ---
 
@@ -12,10 +12,10 @@
 
 读清现有结构后再规划迁移：
 
-1. **目录扫描**：记录实际顶层 + `src/` + `tests/` + `docs/` 结构
-2. **文档资产盘点**：`README.md` / `CHANGELOG.md` / `docs/` / `.csp/` / `CLAUDE.md` — 存在/缺失/过期
-3. **版本管理现状**：`git tag --list 'v*'` — tag 序列是否规范？版本号是否连续？
-4. **旧路径识别**：扫描 `output/` `spark-output/` `.planning/` `spark-output/` 等旧路径，记录须迁移的产物
+1. **目录扫描**：记录现有顶层、`apps/*`/`packages/*`/`backend/`/`src/` 的实际源码与测试根；识别各自的构建入口。
+2. **文档资产盘点**：`README.md` / `CHANGELOG.md` / `docs/` / `.csp/` / `CLAUDE.md`，标识谁写、谁读、哪些实际发布。
+3. **版本管理现状**：读现有版本真源、tag 及包版本，标出单源派生关系，不假定每仓都有根 `VERSION`。
+4. **候选旧路径**：若有 `output/`、`spark-output/`、`.planning/`，先查生产者配置和入站引用；仍在使用就保留，不将文件名视作迁移依据。
 
 调用 `[[skill:csp-project-doc-architect]]`（分析既有结构）+ `[[skill:csp-file-organizer]]`（扫描重复/过期文件）。
 
@@ -25,18 +25,17 @@
 
 | 优先级 | 变更 | 时机 | 风险 |
 |--------|------|------|------|
-| P0 | 创建 `.csp/AGENTS.md` + `manifest.json`（缺失则 agent 无法路由） | 当前版本 | 无 |
-| P1 | `.csp/` 下既有 findings 按标准路径重组 | 下一版本 | 低 |
-| P1 | 旧路径产物迁移（`output/`→`.csp/`、`spark-output/`→`.csp/spark/`） | 下一版本 | 中 |
-| P2 | `src/` 结构调整（不影响构建前提下） | 后续版本 | 高 |
-| P2 | `tests/` 结构调整为分层 | 后续版本 | 中 |
-| P3 | README/CHANGELOG 格式标准化 | 各版本渐进 | 无 |
+| 优先 | 候选工作 | 执行前证据 | 处置 |
+|------|----------|------------|------|
+| 必要入口 | 初始化或修复 `.csp/AGENTS.md` + `manifest.json` | 既有 hub/驱动器、权威文档清单 | 原路径没有等价路由时由 `csp-knowledge-hub` 建立 |
+| 实际漂移 | 修复已证实的失效索引、路径和阅读入口 | 读写者、引用、manifest、构建/测试命令 | 先给 old→new 映射和回退方案；另行批准迁移 |
+| 可选整洁 | README/CHANGELOG 导航、目录分层 | 真实查找困难或维护成本 | 不因文件数、年代、模板不同而强制重排 |
 
-**硬约束**：G0.1 是目标模板非强制命令，既有合理约定优先保留；`src/`/`tests/` 结构调整放 P2；迁移不能破坏 `npm run dev`/`npm test`/lint/build。
+**约束**：棕地已运行的 `src/`、`tests/`、monorepo 目录、构建与 CI 路径优先保留。仅凭缺少默认目录不能断言路由失效；迁移需检查消费者和项目实际的构建/测试，不能自动删文件。
 
 ### GB.3 知识中枢棕地蒸馏
 
-调用 `[[skill:csp-knowledge-hub]]`（完整初始化：扫项目根和 src/ → 识别既有模块 → 写入 PMS baseline → 蒸馏代码结构为 CMS baseline → 回写 manifest）。
+调用 `[[workflow:csp-knowledge-hub]]`：沿项目实际入口识别模块，蒸馏已有代码的 CMS，并以 source_id/hash 登记产物；没有自动回写器时由产物写入者显式回写并核对 manifest。
 
 ---
 
@@ -50,8 +49,8 @@
 
 - **AGENTS.md**：路由契约（6 节固定结构 + 操作路由表），电报体风格
 - **manifest.json**：唯一产物索引（`source_id`/`content_hash`/`build_status`/`raw_path`/`output_path`），所有阶段产出即回写
-- **lifecycle-state.json**：8 阶段状态机（00→01→...→07），每阶段读/写推进
-- **既有文档整改**（Phase 1.5）：版本对齐/散落归位/重复清理/front-matter 补全，只动治理层不动业务内容
+- **lifecycle-state.json**：运行态索引；先识别当前驱动器实际使用的阶段 schema（提示词 00–07 或 SDK S-stage），按它读写，不混用数组与对象、不把长 `dev_log` 和测试输出塞进去。
+- **既有文档整改**：只给出冲突清单和受影响读者；路径/版本/frontmatter 的更改先确定权威与回滚，不自动移动活跃原文。
 - **棕地 CMS 蒸馏**（Phase 1.7）：代码已存在时自动蒸馏入口点→调用链→模块边界→生成 CMS baseline
 
 ### GK.2 三基线体系
@@ -66,15 +65,20 @@
 
 ### GK.3 manifest 回写约定
 
-每阶段产出实质页必须回写 manifest（`content_hash` 用 git blob，禁 mtime；`source_type` 按阶段标 `pms/cms/tms/doc/archive`；`build_status=built` 才被视为有效产物）：
+产物写入者负责把实质页登记至 manifest（`content_hash` 用 git blob，禁 mtime；`source_type` 用现有枚举 `pms/cms/tms/wiki/codewiki/memory/doc`，归档页仍可用 `doc`，归档形态用 frontmatter `type: archive` 或项目登记状态表达；`build_status=built` 需产物存在并校验）。当前 `hub_manifest.sh` 提供只读定位和已索引 output 的 hash 对账，不自动回写或分片：
 
 | 阶段 | 产物 | source_type |
 |------|------|------------|
 | Planning | STRATEGY.md / ROADMAP.md / PRD SPEC | `doc` / `pms` |
 | Development 02-04 | decomposition / specs / tasks | `doc` |
 | Development 05 | CMS 基线 | `cms` |
-| Development 06-08 | 门控证据 / 发布记录 / 里程碑 | `doc` / `archive` |
+| Development 06 发布、07 复盘 | 门控证据 / 发布记录 / 里程碑 | `doc`（归档内容用页面 `type: archive`） |
 | Testing TD | TMS 基线 + 用例集 | `tms` / `doc` |
+
+**入场信息边界**（细则见 `csp-knowledge-hub/references/project-entry-contract.md`）：
+- 最近指标只作为带 `observed_at/source_commit/environment/command/exit_code/evidence_path` 的历史观测摘要；发布前重新运行当前门禁。不要把 100 条历史日志或全量报告内联生命周期状态。
+- `findings-baseline.json` 是旧版闭合规则违规的豁免记录，不是所有 OPEN finding 的清单；OPEN 项从原始 `*FINDINGS*.json` 派生可重建导航，不扩充豁免基线。
+- `manifest.json` 是索引真源；最近变更可按已索引 output 的哈希查询并注明范围。未实现全新源发现、自动写回、自动分片时不宣称已自动化。
 
 ### GK.4 frontmatter 约定
 
@@ -97,11 +101,11 @@ updated: "YYYY-MM-DD"
 
 | 产物类型 | 分支策略 | 原因 |
 |---------|---------|------|
-| `.csp/` 知识产物（AGENTS/manifest/lifecycle-state/specs/tasks/PMS/CMS/TMS） | **主干**（master/main） | 全链路共享基础设施，必须各阶段可见 |
-| `src/` 代码 | **feat 分支** → PR → 主干 | 05 实施走 worktree 隔离，PR 合回 |
-| `docs/` 文档 | **主干** | 人类文档随版本演进 |
+| `.csp/` 知识产物（AGENTS/manifest/lifecycle-state/specs/tasks/PMS/CMS/TMS） | 与本项目实际工作的版本分支同读同写；合并时一起集成 | 避免代码分支与其 Spec/测试基线不同步 |
+| `apps/`/`packages/`/`src/` 代码 | 按项目既有 PR/分支策略 | 测试和规格应与同一变更一起被审阅 |
+| `docs/` 活跃原文 | 与对应需求/代码变更同步评审 | 保证读者在工作分支上看到一致的 PRD |
 
-红线：知识产物禁止滞留未合并 side branch——下游阶段读不到 AGENTS.md 会导致路由死循环。
+规则：工作分支上的阶段不得声称主干已就绪；需要切换分支或发布前检查文件与运行态是否存在于目标分支。是否使用 worktree 由用户和项目策略决定。
 
 ---
 
@@ -119,7 +123,7 @@ updated: "YYYY-MM-DD"
 ├── CHANGELOG.md                      # 版本变更记录
 ├── CLAUDE.md                         # Agent 路由契约
 ├── LICENSE                           # 开源许可
-├── VERSION                           # 单一版本号源
+├── VERSION                           # 仅项目采用它为版本真源时存在；也可由 package.json/pyproject.toml 管理
 │
 ├── src/                              # 源代码
 │   ├── app/                          # 前端应用（如有）
@@ -163,10 +167,6 @@ updated: "YYYY-MM-DD"
 │   ├── architecture/                 #   架构文档
 │   └── guides/                       #   使用指南/开发指南
 │
-├── verify/                           # 🔍 测试证据（机器产出，给人审阅）
-│   ├── ui-test-report.md             #   E2E 测试报告
-│   └── visual-diff/                  #   视觉回归截图对比
-│
 └── .csp/                             # 🤖 Agent 产物库（agent 读/写，人不直接读）
     ├── AGENTS.md                     #   路由契约
     ├── manifest.json                 #   产物索引
@@ -175,6 +175,7 @@ updated: "YYYY-MM-DD"
     ├── code-spec/                    #   CMS 代码基线
     ├── product-spec/                 #   PMS 模块基线
     ├── test-spec/                    #   TMS 测试基线
+    ├── artifacts/verify/evidence/    #   运行证据；已有其他有效目录先登记映射
     ├── specs/                        #   Spec 产物
     ├── tasks/                        #   任务拆解
     ├── tech-design/                  #   技术方案
@@ -192,10 +193,7 @@ updated: "YYYY-MM-DD"
     └── ship/                         #   发布记录
 ```
 
-> **三层定位**（按 CSP 文档边界约定）：
-> - `docs/` = 对外人类文档（给人读，GitHub Pages/外部访问者可见）
-> - `verify/` = 测试证据（机器产出，给人审阅——截图/log/diff）
-> - `.csp/` = Agent 产物库（agent 读/写——PMS/CMS/TMS + specs/tasks/artifacts）
+> **文档边界**：根入口（README/Agent 指令）→ `docs/`（人读原文，是否发布由项目配置决定）→ `.csp/`（Agent 工程产物与引用证据）。运行证据默认 `.csp/artifacts/verify/evidence/`；项目已有 `verify/` 时登记读写者映射并保留有效引用，不在初始化时强制搬迁。源码与测试目录仅是示例，monorepo 和语言原生结构依既有配置。
 
 ### G0.1-M：Monorepo 项目适配
 
@@ -207,7 +205,7 @@ updated: "YYYY-MM-DD"
 ├── CHANGELOG.md                      # 统一变更记录
 ├── CLAUDE.md                         # Agent 路由契约
 ├── LICENSE                           # 开源许可
-├── VERSION                           # 统一版本号源（或各 package 独立版本号）
+├── VERSION                           # 可选：只在本项目用其作为版本真源时创建
 ├── package.json                      # workspace root（private: true）
 ├── pnpm-workspace.yaml               # monorepo workspace 定义
 ├── turbo.json                        # Turborepo pipeline
@@ -240,7 +238,6 @@ updated: "YYYY-MM-DD"
 │       └── package.json
 │
 ├── docs/                             # 📖 对外人类文档（项目级共享，同 G0.1）
-├── verify/                           # 🔍 测试证据（项目级共享）
 │
 ├── docker-compose.yml                # 本地开发环境（web + api + redis + db）
 ├── docker-compose.prod.yml           # 生产环境
@@ -264,18 +261,21 @@ updated: "YYYY-MM-DD"
 | Tag | `vX.Y.Z` | 统一 `vX.Y.Z`（推荐）；独立版本用 `{package}@vX.Y.Z` 或 changesets |
 
 **Monorepo 版本策略**：
-- **统一版本（推荐）**：根 `VERSION` 驱动所有 package 版本——一次发布 bump 一个号，所有 package 同步
-- **独立版本**：各 package 独立 SemVer，用 changesets 管理——适合 packages 生命周期差异大的项目
-- 无论哪种，`.csp/` 知识产物走统一版本（PMS/CMS/TMS 是跨 package 的共享基线）
+- **统一版本**：若各包同批发布，由项目已有的唯一真源（可为根 `package.json` 或 `VERSION`）及其同步工具驱动；不能默认创建第二份版本真源。
+- **独立版本**：各包独立发布时沿用现有 changesets/包管理器及 tag 约定，审查每个包的真源和版本关系。
+- `.csp/` PMS/CMS/TMS 使用独立的 schema/产物更新信息与索引，不把它们误当所有 package 的发布号。
 
-调用 `[[skill:csp-documentation-governance]]`（对外/对内文档分界 + 更新触发规则）维护文档边界：
+### G0.2 文档边界与发布范围
 
-| 目录 | 受众 | 写入者 | 更新触发 | 对外发布 |
-|------|------|--------|---------|---------|
-| `README.md` / `CHANGELOG.md` / `LICENSE` | 外部用户/贡献者 | 发布时（06） | 每个版本发布 | ✅ |
-| `docs/` | 外部用户 + 内部团队 | 各阶段产出 | 内容变化时 | ✅（Pages 部署） |
-| `verify/` | 内部审阅 | 测试 Pipeline | 每次测试执行 | ❌ |
-| `.csp/` | Agent 内部 | Agent 自动 | 每个 phase 结束 | ❌ |
+调用 `[[workflow:csp-documentation-governance]]` 确定各文件的真实读者和发布配置：
+
+| 区域 | 主要内容 | 更新触发 | 发布范围 |
+|------|----------|----------|----------|
+| 根入口（README/AGENTS/CLAUDE） | 快速上手、工具与不可违背规则 | 行为、工具或入口路径改变 | 按项目访问控制 |
+| `docs/` 或现有人读目录 | 战略、活跃 PRD 原文、指南/报告 | 需求与产品变更 | 由站点/仓库访问配置决定，不能一律宣称公开 |
+| `.csp/` 或已映射的工程区域 | PMS/CMS/TMS、manifest、运行态、证据、findings | 各阶段真实产物与门控 | 默认不发布；内部文档可引用 |
+
+若已有 `verify/` 运行目录，先登记输出者和读者，不为匹配示例而重排。
 
 ### G0.3 文件命名约定
 
@@ -286,11 +286,7 @@ updated: "YYYY-MM-DD"
 - **幂等覆盖**：重跑同 slug 直接覆盖，不留 `-v2` 后缀
 - **禁止散落根目录**：无 feature/version 后缀的裸文件名（如 `test-cases.md`）禁止出现在根目录
 
-**文件名反模式**（以下命名方式不论存量/新增均禁止，无豁免——git 已是版本控制，不需要文件名承载版本信息）：
-- `_v1` `_v2` `_v61` 等版本号后缀 → 用 git tag/branch，文件名不留版本号（`autonomous.py` 非 `autonomous_v2.py`）
-- `m10_` `m2_` 等 milestone 前缀 → 里程碑归 roadmap/CHANGELOG，不进文件名
-- `a9b0c1d2_` 等 revision hash 前缀/后缀 → git commit hash 已是唯一标识，文件名不需要重复
-- `_old` `_new` `_bak` `_tmp` `-final` `-copy` → 删除或归档到 `.csp/archive/`
+**命名审查**：新增业务实现避免 `_v2`、`-final`、milestone 前缀等无语义副本；用功能职责命名并以 Git 跟踪版本。存量命名要查 import、路由、迁移链与外部协议后提出增量重命名方案，不因匹配模式就直接改动。数据库迁移 revision、按版本发布的 API/Schema 文件等可能依赖精确标识；这些属于工具/协议的稳定主键而非任意豁免，必须保留或完成受控迁移。
 
 ---
 
@@ -305,7 +301,7 @@ updated: "YYYY-MM-DD"
 > **MINOR (Y) 是攒批发布，不是一个功能一个版本**：同一模块的多个功能打包成一个 MINOR+1 版本（不设硬上限——模块内有几个相关 feature 就打包几个），不逐功能 bump。只有不同模块/主题方向不同/体量过大才拆到下一版本。"一个版本一个功能"是模块内恰好只剩一个功能时的特例，不是默认形态。
 
 - **feat/fix 分轨**：feat 批打 MINOR+1 tag，fix 批打 PATCH+1 tag；同迭代两者兼有 → 拆两个发布，不混合
-- **Monorepo 版本**：统一版本（推荐，根 VERSION 驱动全部 package）或独立版本（changesets，各 package 独立 SemVer）→ 见 G0.1-M
+- **Monorepo 版本**：识别项目实际的统一/独立发布策略与唯一真源，不凭模板创建 `VERSION` → 见 G0.1-M
 - **Tag 格式**：`v` 前缀 + annotated（`-a`）+ 不可变（已推送不移动）
 - **一 commit 一 tag**，禁多 tag 同 commit
 - **纯文档 commit 禁打版本 tag**
@@ -315,16 +311,13 @@ updated: "YYYY-MM-DD"
 
 | 文件 | 角色 | 同步方式 |
 |------|------|---------|
-| `VERSION` | 单一真相源（开发期 canonical） | 手改（唯一可手改的文件） |
-| `git tag` | 发布锚点（发布后 canonical，不可变） | `git tag -a vX.Y.Z -m "..."` |
-| `package.json` | 打包消费 | 从 VERSION 同步（`scripts/sync-version.mjs`） |
-| `pyproject.toml`（如有） | 打包消费 | `dynamic = ["version"]` 或 sync 写入 |
-| GitHub Release tag_name + title | 发布元数据 | 从 tag 自动创建 |
-| `CHANGELOG.md` 最新条目 | 发布历史 | 发布时校验 == tag |
+| 项目选定的真源（`package.json.version`、`VERSION` 或语言原生版本字段） | 仅一个可编辑定义点，记录在项目规则中；**本 CSP 仓库实际用 `package.json.version`** | 使用项目现有的 version/sync 工具更新 |
+| `git tag` | 发布锚点（不可变） | 由发布流程基于已验证版本创建，不因文件漂移改动既有 tag |
+| 其他包元数据、代码常量、Release/CHANGELOG | 派生/发布元数据 | 依据真实的构建与发布工具同步或校验；独立发布的包需独立对照 |
 
-**同步校验**：发布前必须跑 `python3 prompts/scripts/version_integrity_check.py`——全源字符串完全一致，任一不一致 `exit 1` 阻断发布（T3 gate）。
+**同步校验**：先看项目真源/包版本方案，再传入实际存在的版本文件运行 `python3 prompts/scripts/version_integrity_check.py --files <冒号分隔的相应文件>`；检查器当前只实现 T1–T4，无法识别的文件或缺失项会产生 WARNING，不能声称已验证全源、T5/T6 或 CI enforcement。同步工具由项目提供；本仓库使用 `npm run version:sync`，不是强制从根 `VERSION` 派生。
 
-**冲突消解**：若 `package.json`/`VERSION` 与已发布 `git tag` 不一致 → 以 tag 为 canonical，自动 bump 文件到 tag 版本，不问（仅多 tag 冲突/canonical 不明才人工）。开发期间（tag 未打）→ 以 `VERSION` 为 canonical，所有文件从它派生。
+**冲突消解**：先确定是"在已发布 tag 之后的新工作版本"还是意外漂移，并核对 Git 历史与项目真源；不要把新版本盲目回退到旧 tag，也不移动已发布 tag。规则不明时停止自动更改并报告冲突。
 
 ### G1.2 Commit 规范
 
@@ -364,7 +357,7 @@ Conventional Commits 格式（遵循 `[[pattern:csp-git-conventions]]` §3）：
 
 ## Phase G2：全阶段产物路径约定
 
-> 以下约定确保三份 pipeline 文档的产物落盘一致——不会出现"规划写到 docs/analysis/、开发写到 .csp/planning/、测试写到 verify/"的混乱。
+> 下表是 CSP 默认路径与角色的**示例映射**，目标项目已有可用路径先记录在 `.csp/AGENTS.md`，不得按表强制搬迁。表中“✅”仅表示人读/可能对外，**不表示自动公开或发布**；实际发布范围由 G0.2 与访问控制决定。
 
 ### G2.1 按阶段汇总
 
@@ -377,26 +370,24 @@ Conventional Commits 格式（遵循 `[[pattern:csp-git-conventions]]` §3）：
 | **版本序列** | Planning Phase 2 | `docs/strategy/ROADMAP.md`(更新) + `docs/FEATURES.md` | ✅ |
 | **集成审视** | Planning Phase 2.5 | `docs/analysis/INTEGRATION-NECESSITY-{date}.md` | ✅ |
 | **架构收敛** | Planning Phase 3 | `.csp/convergence/CONVERGED-FEATURE-PLAN.md` | ❌ |
-| **设计衔接** | Planning Phase 4 | 各设计 skill 自身产物 | 按需 |
+| **设计衔接** | Planning Phase 4 | `.csp/spark/` 工程设计链；需人读的成品在项目现有 docs 目录 | 按项目发布设置 |
 | **PRD SPEC** | Planning Phase 5 | `docs/prd/PRD-{version-slug}.md` + `PRD-INDEX.md` | ✅ |
 | **增长规划** | Planning Phase G | `docs/analysis/GROWTH-PLAN-{date}.md` | ✅ |
 | **PRD 工程升级** | Development 01 | `docs/prd/PRD-{slug}.md`(升级) | ✅ |
 | **需求拆解** | Development 02 | `.csp/decomposition/` | ❌ |
 | **技术方案** | Development 03 | `.csp/tech-design/` + `.csp/specs/` | ❌ |
 | **任务拆解** | Development 04 | `.csp/tasks/` | ❌ |
-| **开发实施** | Development 05 | `src/`(代码) + 测试代码(co-locate) + DB migration 文件（`migrations/versions/`） | ✅(代码) |
-| **数据模型 Spec** | Development S3 | `.csp/specs/` + DDL 语句（随 Spec 产出） | ❌ |
-| **数据库迁移** | Development 05 | `migrations/`（Alembic/Flyway/Prisma 等迁移工具生成） | ✅(代码) |
-| **SQL 审查** | Development 05/06 | `.csp/verification/sql-review-{version}.md` | ❌ |
-| **质量门控** | Development 06 | `.csp/verification/`(证据) + `.csp/ship/`(发布记录) | ❌ |
-| **代码审查** | Development 07 | `.csp/review/REVIEW-FINDINGS-*.json` | ❌ |
-| **发布** | Development 08 | `CHANGELOG.md` + `VERSION` + Git tag + Release | ✅ |
-| **复盘** | Development 10 | `.csp/review/REVIEW-FINDINGS-*.json`(更新) | ❌ |
+| **开发实施** | Development 05 | 项目实际源码根（`src/`、`apps/*`、`backend/`）与既有测试/迁移目录 | 代码依项目策略 |
+| **数据模型 Spec** | Development S3 | `.csp/specs/`（DDL 设计与数据契约） | 内部 |
+| **数据库迁移** | Development 05 | 项目实际的 Alembic/Flyway/Prisma 迁移目录 | 代码依项目策略 |
+| **SQL 审查** | Development 05/06 | `.csp/verification/sql-review-{version}.md` 或既有记录 | 内部 |
+| **质量门控与发布** | Development 06（含 S6/S7/S8） | `.csp/artifacts/verify/evidence/` + `.csp/ship/`，发布元数据按项目配置 | 证据内部、Release 按项目策略 |
+| **复盘** | Development 07（S10 是别名） | `.csp/review/REVIEW-FINDINGS-*.json` | 内部 |
 | **测试依据** | Testing TB | `docs/analysis/test-basis-{version}.md` | ✅ |
 | **用例设计** | Testing TD | `docs/analysis/test-cases-{feature}.md` + `traceability-{feature}.md` | ✅ |
-| **测试实施** | Testing TU/TI/TE | 项目既有 `tests/` 目录（不新建顶层） | ✅(代码) |
-| **视觉测试** | Testing TV | `verify/visual-diff/` | ❌ |
-| **E2E 测试** | Testing TE | `verify/ui-test-report.md` | ❌ |
+| **测试实施** | Testing TU/TI/TE | 项目既有测试根（可与 package 同层或紧邻源码） | 代码依项目策略 |
+| **视觉测试** | Testing TV | `.csp/artifacts/verify/evidence/visual-diff/`（或登记既有位置） | 内部 |
+| **E2E 测试** | Testing TE | `.csp/artifacts/verify/ui-test-report.md`（或登记既有位置） | 内部 |
 | **测试复盘** | Testing TQ | `docs/analysis/test-retro-{version}.md` | ✅ |
 
 ### G2.2 测试产物分层约定
@@ -405,47 +396,25 @@ Conventional Commits 格式（遵循 `[[pattern:csp-git-conventions]]` §3）：
 
 | 测试产物 | 落点 | 受众 | 入 Git |
 |---------|------|------|--------|
-| **测试代码** | `tests/unit/` `tests/integration/` `tests/e2e/` | 开发者 | ✅ co-locate 源码 |
-| **测试 fixtures/数据** | `tests/fixtures/` | 开发者 | ✅ |
-| **测试依据 + 用例 + 追溯** | `docs/analysis/test-{basis\|cases\|retro}-*.md` `docs/analysis/traceability-*.md` | 人审阅 | ✅ |
-| **E2E 报告** | `verify/ui-test-report.md` | 人审阅 | ✅ |
-| **视觉 diff** | `verify/visual-diff/` | 人审阅 | ✅ |
-| **覆盖率报告** | `verify/coverage/` | 人审阅 | ❌ `.gitignore` |
-| **契约测试产物** | `verify/pacts/` | 人审阅 | ❌ `.gitignore` |
-| **Playwright report** | `verify/playwright-report/` | 人审阅 | ❌ `.gitignore` |
-| **审计 findings** | `.csp/audit/AUDIT-FINDINGS-*.json` `.csp/review/REVIEW-FINDINGS-*.json` `.csp/critic/CRITIC-FINDINGS-*.json` `.csp/gap-analysis/GAP-FINDINGS-*.json` | Agent 消费 | ✅ |
-| **TMS 基线** | `.csp/test-spec/{module}/` | Agent 消费 | ✅ |
+| **测试代码** | 项目既有测试目录（如 `tests/`、`apps/web/tests/`、`src/**/*.test.ts`） | 开发者 | 依代码策略提交，与被测模块可追溯 |
+| **固定 fixtures/契约源** | 项目既有 fixtures/pacts 源目录 | 开发者与 CI | 可复现、为验证所需时提交，不把全部 pacts 当临时垃圾 |
+| **测试依据、用例、追溯** | 项目人读 docs 的 `test-basis-*`、`test-cases-*`、`traceability-*` | 人审阅 | 依项目文档策略提交，发布范围另判定 |
+| **TMS 基线** | `.csp/test-spec/{module}/` | Agent 消费 | 随模块维护，manifest 索引 |
+| **E2E/视觉/覆盖率等运行结果** | `.csp/artifacts/verify/evidence/` 默认；已存在的 `verify/` 可映射 | 内部验证 | 可重建输出按项目策略忽略或 CI 留存；被 findings/发布引用的证据须保留 |
+| **审计 findings** | `.csp/audit/`、`.csp/review/` 等现有注册来源 | Agent 消费 | 未关闭项与引用证据不得按日期或大小清除 |
 
-**测试代码命名约定**：
-- 单元测试：`{source-name}.test.{ext}`（如 `auth.service.test.ts`），与源文件同目录结构的 `tests/unit/` 下
-- 集成测试：`{api-scope}.test.{ext}`（如 `orders-api.test.ts`），在 `tests/integration/` 下
-- E2E 测试：`{journey}.spec.{ext}`（如 `checkout.spec.ts`），在 `tests/e2e/` 下
-- Fixtures：`{entity}.fixture.{ext}`（如 `users.fixture.ts`），在 `tests/fixtures/` 下
+**测试代码组织**：沿用语言与仓库约定；`tests/unit/auth.service.test.ts`、`apps/web/src/Auth.test.tsx`、`backend/tests/test_auth.py` 都可能合理。要求测试 runner 能发现、每个变更可定位到被测模块和 AC，新增测试随代码一起提交。E2E 放在可访问的应用或项目级测试根，跨包测试放在有消费责任的套件；共享 fixtures 要明确所有者，避免把运行输出当源 fixture。
 
-**禁止**：
-- 测试代码与源码混放（`src/` 下不允许 `*.test.ts` `*.spec.ts`——统一在 `tests/` 下）
-- 覆盖率/契约/playwright 报告入 Git（大文件污染仓库——放 `verify/` 并 `.gitignore`）
-- 散落根目录：`coverage.json` `coverage.xml` `.coverage` `pacts/` `playwright-report/` → G5.2 规则 1
+**运行产物**：配置测试/覆盖率/浏览器工具直接写到登记的证据目录；先修改 CI 和消费者，再提迁移建议。是否提交契约、视觉基线或报告依可复现性/追溯要求决定；不得因大文件或两个格式共存就认定冗余。
 
-**Monorepo 测试结构**（适用 G0.1-M 模板）：
-- 各 package 自含 `tests/`（`apps/web/tests/` `packages/shared/tests/`）
-- E2E 测试放在被测 app 内（`apps/web/tests/e2e/`）
-- 跨 package 集成测试：放在依赖方的 tests/integration/
-- 共享测试 fixtures：`packages/shared/tests/fixtures/`
-- `verify/` 仍在项目根——跨 package 共享的测试证据集中管理
-
-**多服务本地开发约定**（适用 Monorepo + 多端口项目）：
-- `docker-compose.yml` 定义全部本地依赖（web:3000 + api:12300 + redis:6379 + db）
-- 各服务端口在 `.env.example` 中声明（`WEB_PORT=3000` `API_PORT=12300` `REDIS_PORT=6379`）
-- Agent 通过 `docker-compose ps` 或 `curl localhost:{port}/health` 探活，不凭端口号猜测
-- 前端 `package.json` 的 `proxy` 或 `next.config.ts` 的 `rewrites` 指向 `http://localhost:${API_PORT}`
+**多服务本地开发约定**：从本项目的启动配置、环境模板和健康端点探测实际服务与端口，登记前端、API、队列/缓存和数据库的依赖及启动顺序。若项目使用 Compose 则读其服务映射；否则沿项目原生命令启动。不要在通用规则中默认端口、`docker-compose.yml`、代理配置或一定存在 `/health`。真实探活须核对响应身份，不凭端口开放即认定正确服务。
 
 ### G2.3 红线
 
 - **`.csp/` 不进对外发布**：`.csp/` 下的所有内容（PMS/CMS/TMS/specs/tasks/verification）是 agent 内部产物，不进 GitHub Pages 部署
-- **`docs/` 是唯一对外的分析/规划内容**：所有给人读的分析报告、PRD、路线图都放 `docs/`
-- **`verify/` 是测试证据中间层**：机器产出（截图/log/diff）供人审阅，但不对外发布
-- **测试代码与源代码 co-locate**：`tests/` 目录 mirror `src/` 结构，不新建顶层目录
+- **人读原文**：活跃战略/PRD/指南优先放项目已有的人读区（默认 `docs/`）；是否对外发布按实际访问配置判断。
+- **机器证据**：默认 `.csp/artifacts/verify/evidence/`；既有 `verify/` 可登记映射，迁移须先修改运行工具与消费者。
+- **测试代码**：沿用项目实际语言/框架与 monorepo 规则，可紧邻源码或镜像目录；有 runner 发现与需求追溯，不强制另建根 `tests/`。
 - **产物命名带 scope 标识**：`{function}-{scope}.md`，避免 `test-cases.md` 这类无 scope 的文件散落
 
 ---
@@ -467,13 +436,13 @@ Conventional Commits 格式（遵循 `[[pattern:csp-git-conventions]]` §3）：
 
 每个版本发布后（06 done）或规划启动前（Planning Phase 0）：
 
-- 归档上一个已发布版本的中间产物（specs/tasks/decomposition → `.csp/archive/`）
-- 清理过期的 analysis 报告（保留最新一份，旧版标 `superseded_by`）
+- 检查上一版 specs/tasks/decomposition 是否已被取代且无人引用；有读者或下版仍依赖则继续保留，符合项目留存条件后才提出归档并更新索引。
+- 检查 analysis 报告权威和入站引用；新版本不等于旧报告无价值，不按最新一份自动清理。
 - 更新 `docs/prd/PRD-INDEX.md`（标版本 status：Draft→Approved→Released）
 - 更新 `docs/FEATURES.md`（标功能 status：规划中→已发布→已下线）
 - 调用 `[[skill:csp-knowledge-hub]]` 做知识中枢初始化/更新（`.csp/AGENTS.md` + `manifest.json` 回写）
-- 调用 `[[skill:csp-file-organizer]]` 清理 `verify/` 下过期覆盖率/playwright 报告（保留最新一份）
-- 归档上个版本的审计/审查 findings（`.csp/audit/` `.csp/review/` `.csp/critic/` `.csp/gap-analysis/` → `.csp/archive/`）
+- 调用 `[[skill:csp-file-organizer]]` 审计可重建的覆盖率/playwright 输出；执行前确认 CI 和未关闭 findings 是否仍依赖原文件。
+- OPEN/BLOCKED findings 保留在各来源目录；只有关闭且不再被门禁/版本索引消费的材料才按项目保留策略提出归档。`findings-baseline.json` 不作开放问题清单使用。
 
 ---
 
@@ -495,8 +464,8 @@ Conventional Commits 格式（遵循 `[[pattern:csp-git-conventions]]` §3）：
 
 | 关注点 | 约定 | CSP Skill |
 |--------|------|-----------|
-| 环境分层 | dev / staging / prod 三套配置，通过环境变量注入（非硬编码文件） | `[[skill:csp-deployment]]` |
-| 配置文件 | `.env.example`（模板，入库） + `.env`（实际值，不入库，.gitignore 排除） | — |
+| 环境分层 | 识别项目实际的开发/预发/生产环境与配置来源；只给存在的环境配置约定 | `[[skill:csp-deployment]]` |
+| 配置文件 | 示例模板可入库；包含实际凭据的配置不入库，按项目已采用的密钥机制传递 | — |
 | 密钥管理 | 密钥/token 不入仓库；CI 通过 secrets 注入；本地通过 `.env` 或 secret manager | `[[skill:csp-security-review]]` |
 | 依赖管理 | `package.json`/`requirements.txt`/`Cargo.toml` 锁定版本（lock 文件入库）；定期 `npm audit`/`pip audit` | `[[skill:csp-security-review]]`（依赖审计） |
 
@@ -507,13 +476,13 @@ Conventional Commits 格式（遵循 `[[pattern:csp-git-conventions]]` §3）：
 | CI 管道定义 | `.github/workflows/` 或等效 CI 配置入库 | `[[skill:csp-cicd-pipelines]]` |
 | 门控集成 | CI 中集成 Lint/TypeCheck/Build/Test/Security Audit（对齐 Pipeline S6） | `[[skill:csp-cicd-pipelines]]` |
 | 部署管道 | 构建→测试→部署→冒烟→上线，每步可观测 | `[[skill:csp-deployment]]` |
-| 回滚策略 | 每次部署可回滚（数据库迁移有 down 脚本，部署有上一版本 tag） | `[[skill:csp-deployment]]` |
+| 回滚策略 | 按实际部署与数据库迁移工具说明可验证的恢复/回退路径；不假定每个迁移都有安全的 down 脚本 | `[[skill:csp-deployment]]` |
 
 ### G4.4 发布检查清单
 
 每个版本发布前（06 done），按以下清单逐项确认：
 
-- [ ] `VERSION` + `package.json` + tag 三处一致
+- [ ] 检查该项目选定的版本真源、派生文件和发布 tag 一致；未发布的新工作版本与最近 tag 不强行相等
 - [ ] `CHANGELOG.md` 已追加（Added/Changed/Fixed 分类完整）
 - [ ] `README.md` 快速开始步骤可运行（clone → install → run → 核心流程走通）
 - [ ] `CONTRIBUTING.md` 与实际流程一致（如有）
@@ -531,9 +500,9 @@ Conventional Commits 格式（遵循 `[[pattern:csp-git-conventions]]` §3）：
 
 > 根目录是项目的门面。散落的临时产物、遗留的旧路径、未清理的缓存——这些不只是"不好看"，会导致新成员困惑、agent 误判项目结构、CI 误读配置。
 
-### G5.1 根目录合法文件清单
+### G5.1 根目录候选分类（非白名单）
 
-以下文件/目录允许出现在项目根目录。**不在清单中的 → 按 G5.2 归类移动或清理**。
+以下是常见根目录用途，不是所有项目必须采用的名称。清单外的文件不自动归类或移动；先查包管理器、构建脚本、CI、运行态以及入站引用。源代码、迁移链、可复现契约等可能有工具规定的特殊文件名。
 
 | 类别 | 允许的文件/目录 | 说明 |
 |------|---------------|------|
@@ -542,65 +511,42 @@ Conventional Commits 格式（遵循 `[[pattern:csp-git-conventions]]` §3）：
 | **依赖** | `package.json` `pyproject.toml` `requirements.txt` `pnpm-lock.yaml` `uv.lock` `Cargo.toml` `go.mod` | 包管理 |
 | **构建/部署** | `Dockerfile` `Dockerfile.*` `docker-compose.yml` `docker-compose.*.yml` `Makefile` `turbo.json` `nginx.conf` | CI/CD + 本地多服务编排 |
 | **工具配置** | `.pre-commit-config.yaml` `alembic.ini` `playwright.config.ts` `playwright.*.config.ts` | 单文件，可接受 |
-| **环境变量** | `.env` `.env.example` `.env.production` `.env.production.example` | 不入库（`.env` 在 `.gitignore`） |
+| **环境变量** | `.env` `.env.example` `.env.production` `.env.production.example` | 真实密钥不入库；示例模板可入库，按项目策略检查 |
 | **标准文档** | `README.md` `CHANGELOG.md` `LICENSE` `CONTRIBUTING.md` `CODE_OF_CONDUCT.md` `SECURITY.md` | 项目门面 |
 | **Agent 指令** | `AGENTS.md` `CLAUDE.md` | Agent 路由 |
 | **源码** | `src/` `apps/` `backend/` `frontend/` `packages/` `public/` | 代码 |
-| **测试** | `tests/` — E2E 配置（`playwright.config.ts` 等）可放根 | 测试代码在 `tests/` 内 |
+| **测试** | `tests/`、`src/**/*.test.ts`、`apps/*/tests/` 等 | 按语言/构建系统约定组织 |
 | **文档** | `docs/` | 对外人类文档 |
 | **脚本** | `scripts/` | 工具脚本 |
 | **数据/配置** | `data/` `configs/` `tooling/` | 按项目需要 |
 | **运行时** | `logs/` `backups/` | 不入库（在 `.gitignore`） |
-| **CSP 产物** | `.csp/` `prompts/`（symlink） `verify/` | Agent 产物 |
-| **参考** | `开源项目参考/` | 外部参考（可接受，建议移到 `.csp/references/` 或 `docs/references/`） |
+| **CSP 产物** | `.csp/`、项目按需保留的 `prompts/`/`verify/` | 索引与证据；真实读写者决定路径 |
+| **参考** | 项目已有的外部参考目录/submodule | 确认许可证、读写者与是否入包；不按中文目录名强制迁移 |
 | **工作区** | `node_modules/` `.venv/` `__pycache__/` | 不入库（在 `.gitignore`） |
 
-### G5.2 根目录整洁规则
+### G5.2 根目录卫生审查
 
-调用 `[[skill:csp-file-organizer]]` 按以下规则执行项目根目录卫生检查：
+调用 `[[skill:csp-file-organizer]]` 的项目模式做**只读候选分类**；规范制定或审计任务不操作目标仓库：
 
-**规则 1 — 测试产物归 `verify/`**：
-- `coverage.json` `coverage.xml` `.coverage` → `verify/coverage/`
-- `playwright-report/` → `verify/playwright-report/` 或 `.gitignore`
-- `pacts/`（契约测试产物）→ `verify/pacts/`
-- `test-results/` → `verify/test-results/`
+| 信号 | 先查 | 处置 |
+|------|------|------|
+| 根目录覆盖率/浏览器报告 | CI/测试 runner 的输出路径与后续消费；是否被 release/finding 引用 | 可重建输出优先修改生产者配置再迁移，引用中的证据保持可访问 |
+| 人读报告或旧 `.planning/`/`spark-output/` | 原文是否活跃；工具是否仍写此处；入站链接和 manifest | 给出 old→new 计划和回滚方法，未经授权不移动 |
+| 缓存、备份或版本样式文件名 | Git 跟踪、内容及工具协议（迁移 revision/契约版本等） | 不凭文件名或大小认定冗余；明确可重建性和保留期 |
 
-**规则 2 — 分析/调研报告归 `docs/analysis/`**：
-- 散落根目录的 `*调研报告*.md` `*竞品分析*.md` `*分析*.md` → `docs/analysis/`
-
-**规则 3 — 旧路径迁移到 `.csp/`**：
-- `spark-output/` → `.csp/spark/`
-- `output/` → `.csp/archive/output/` 或删除
-- `.planning/` → `.csp/planning/`
-- 裸 `evidence/` `.csp-*-test/` → 归入 `.csp/` 对应子目录
-
-**规则 4 — 缓存/构建产物归 `.gitignore`**：
-- `.hypothesis/` `.mypy_cache/` `.pytest_cache/` `.ruff_cache/` `.turbo/` `.playwright-cli/` — 工具缓存
-- `.DS_Store` — macOS 产物
-- `dist/` `build/` `*.egg-info/` — 构建输出
-- 以上全部加入 `.gitignore`，已提交的 `git rm --cached` 移除
-
-**规则 5 — 过期/重复文件清理**：
-- `*.bak` `*.tmp` `*.old` `*-old` `*-v2`（无意义后缀）→ 删除或归档
-- 同名不同后缀的冗余文件（如 `.env.production` + `.env.production.example` 两者合理保留；但 `coverage.json` + `coverage.xml` 同时存在是冗余——留一种）
-
-**规则 6 — 根目录单文件上限**：根目录非隐藏文件（不含目录）建议 ≤ 25 个（不含 node_modules/.venv 内容）。超过 → 审视是否有可归类的。
+根目录条目数量只是导航信号，没有统一的 25 文件上限。`coverage.json` 与 `coverage.xml` 可以服务不同消费者；不能直接删一种。忽略规则按项目精确配置，不能用宽泛 `data/` 或 `.csp/` 忽略仍需追溯的源文件。
 
 ### G5.3 根目录卫生检查清单
 
-每个版本发布后或规划启动前，执行：
+每次规划/发布前只审查受影响范围：
 
-- [ ] `.gitignore` 排除了所有缓存目录（`.hypothesis/` `.mypy_cache/` `.pytest_cache/` `.ruff_cache/` `.turbo/` `.playwright-cli/`）
-- [ ] `.gitignore` 排除了 `.DS_Store` `.coverage` `coverage.*` `*.pyc` `__pycache__/` `dist/` `build/`
-- [ ] 测试产物已归入 `verify/`（非散落根目录）
-- [ ] 分析/调研文档已归入 `docs/analysis/`（非散落根目录或直接放 `docs/` 根）
-- [ ] 旧路径（`spark-output/` `output/` `.planning/`）已迁移到 `.csp/` 对应位置
-- [ ] 根目录无裸 `evidence/` `.csp-*-test/` 目录
-- [ ] 根目录无 `*.bak` `*.tmp` `*.old` 文件
-- [ ] 根目录非隐藏文件 ≤ 25 个
-- [ ] 根目录下无单文件过大（>1MB）的孤立文件（如 `coverage.json` 8MB）
+- [ ] 快速上手、源码/测试入口与现有构建工具配置相符；monorepo 不被强迫迁回根 `src/`。
+- [ ] 已识别无意生成/可重建的缓存和凭据，并检查 `.gitignore` 是否不会误伤源码、fixture、契约与发布证据。
+- [ ] 测试报告或旧目录若要迁移，已有生产者配置修改、消费者/CI 更新、manifest re-point 与回退方案。
+- [ ] 活跃 PRD、未关闭 findings、被引用的基线不因文件名、体积或日期被移走。
+- [ ] 人读 docs 与 Agent 路由卡都能定位当前权威文件；异常项附具体路径和拥有者。
 
-调用 `[[skill:csp-file-organizer]]` 执行清理 + `[[skill:csp-documentation-governance]]` 校验文档路径合规。
+仅执行文档约定检查；文件移动/清理由用户另行授权。
 
 ---
 
@@ -608,127 +554,37 @@ Conventional Commits 格式（遵循 `[[pattern:csp-git-conventions]]` §3）：
 
 > 持续迭代的项目会积累大量产物——日志、changelog、ROADMAP、PRD、验证基线——这些文件天然持续增长，不加管理会导致 Agent 上下文超限、构建变慢、仓库体积膨胀。
 
-### G6.1 按产物类型的治理策略
+### G6.1 按用途治理体积
 
-| 产物类型 | 增长模式 | 治理策略 | 工具 |
-|---------|---------|---------|------|
-| **日志** (`logs/*.log`) | 线性无限增长 | `.gitignore` 排除；日志轮转保留 7 天 | logrotate / 脚本清理 |
-| **缓存** (`.mypy_cache/` `.pytest_cache/` `.turbo/`) | 工具自动重建 | `.gitignore` 排除 | gitignore |
-| **数据库备份** (`data/backups/*.db`) | 每次备份产生新文件 | `.gitignore` 排除；保留最近 5 个，清理 >30 天 | cron / 脚本 |
-| **CHANGELOG** | 每个版本追加一段 | 按年拆分：`CHANGELOG-{year}.md` → `docs/archive/changelogs/` | 手动 / 发布脚本 |
-| **ROADMAP** | 每个版本追加一行 | shipped/deferred 版本保留 1 行摘要，详情移入 `ROADMAP-ARCHIVE.md` | Phase 2.5 审视时执行 |
-| **PRD** (>80KB) | 单个 PRD 逐渐膨胀 | 拆分为主文档 + `PRD-{slug}-appendix.md`；已交付 2 个版本的 PRD 移入 `docs/archive/prd/` | 01 PRD 评审后 |
-| **验证基线** (`.csp/artifacts/verify/`) | 每次回归产生一个目录 | 保留最近 3 个基线；更早的移入 `.csp/artifacts/archive/verify/` | 06 发布后 |
-| **manifest.json** | 每次产物落盘追加索引项 | Registry 自身管理；超过 1MB 自动分片到 `.csp/manifest-shards/` | 构建脚本 |
-| **第三方参考代码** (`docs/research/open-source-references/`) | git clone 包含完整 `.git/` 历史 | **禁止放入 docs 树**。使用独立 `references/` 目录或 submodule；用脚本同步，不入主仓库 | `.gitignore` + 脚本 |
+| 对象 | 体积增大时的动作 | 保留条件 |
+|------|----------------|----------|
+| 自动加载的根 Agent 指令 / `.csp/AGENTS.md` | 将背景和详细步骤移至有稳定链接的参考页，保留硬约定、当前入口与路由 | 不能挪走平台必须自动加载的约束；先验证读取行为 |
+| lifecycle 运行态 | 长历史与测试详情留在原始日志/证据文件，运行态存阶段、短摘要及指针 | `last_known_metrics` 如存在必须有时间、commit、环境、命令、退出码与证据路径；不替代本次门禁 |
+| manifest / findings | 选择性 locate/list；OPEN 导航仅从原始 findings 派生，存量违规基线独立 | 大 JSON 不是 Markdown 体积门禁；未实现自动分片、OPEN 汇总或写回前不可宣称已生效 |
+| 活跃 PRD/ROADMAP/Spec 与验证基线 | 按章节或索引改善检索，不强制移动原文 | 仍被 01/TB/未关闭 finding 消费时保持原路径和证据可用 |
+| 可重建缓存/日志/备份 | 按项目保留、安全、恢复策略配置输出及清理 | 不按固定天数/份数清除，不把实际备份或契约视作普通缓存 |
 
-### G6.2 单文件大小阈值
+### G6.2 可验证大小策略
 
-| 阈值 | 处理 |
-|------|------|
-| **50KB** — 通知阈值 | 新增/修改超过此值的 `.md` 文件，Agent 在下次操作时主动提示是否可拆分/归档 |
-| **100KB** — 警告阈值 | 超过此值的文件在下一轮规划/发布时必须拆分（主文件 + archive）或归档 |
-| **250KB** — 硬上限 | 除 registry.json / triggers.yaml（由构建系统托管）外，所有 `.md` 文件禁止超过此值 |
-| **1MB** — 分片阈值 | registry.json / manifest.json 目标：构建脚本在接近此值时自动启用分片 |
+`bash scripts/check-large-files.sh <项目根>` 是**只读 Markdown 警告**，默认 `--warn-kb 50`、退出码 0；只有该项目明确配置 `--fail-kb <KiB>` 才在超过阈值时 exit 1。脚本打印实际扫描目录、缺失目录及统计；不扫描完整 `.csp/` 或 JSON manifest，也不修改文件。接入 CI 前不可称“强制大小门禁”。
 
-### G6.3 定期归档节奏
+Agent 依功能审阅：根指令/路由卡应便于快速装载；长 PRD/CHANGELOG 可按主题导航但不能截断；索引需支持选择性查询。不存在通用的 10/100/250 KiB 禁令，大小不是文档失效的证据。
 
-| 时机 | 动作 |
-|------|------|
-| **每次 Phase 2.5 审视后** | ROADMAP 检查 `shipped` 版本 >20 个 → 最早 10 个移入 `ROADMAP-ARCHIVE.md` |
-| **每次 06 发布后** | `.csp/artifacts/verify/` 保留最近 3 个基线，其余移入 archive |
-| **每季度** | 清理 `data/backups/` 中 >30 天的备份 |
-| **每年 1 月** | `CHANGELOG.md` 按年拆分，旧年移入 `docs/archive/changelogs/` |
-| **PRD 交付后** | status=Approved 且已发布 ≥2 个版本的 PRD → 移入 `docs/archive/prd/` |
-| **PRD 评审时** | >80KB 的 PRD → 拆分为主体 + appendix |
+### G6.3 归档时机
 
-### G6.4 归档目录结构
+每次规划/发布后**评估**候选而非定期自动搬迁：先确认已有替代物、活跃读者、入站链接、未关闭 findings 引用、法定/项目留存要求；若具备迁移理由，由 `[[workflow:csp-doc-lifecycle-manager]]` 给出源→目标、manifest re-point、断链检查和回退方案，获授权后才执行。CHANGELOG、PRD、截图、备份均不因年份、体积或“最近 N 份”自动转移。
 
-```
-项目根/
-├── docs/archive/                  # 对外文档归档
-│   ├── changelogs/                # CHANGELOG-2025.md, CHANGELOG-2026.md ...
-│   ├── prd/                       # 已交付版本的 PRD
-│   └── ROADMAP-ARCHIVE.md         # shipped/deferred 版本的历史详情
-├── .csp/artifacts/archive/        # Agent 产物归档
-│   └── verify/                    # 历史验证基线
-└── references/                    # 外部参考项目（git submodule 或脚本同步）
-    └── open-source/               # 竞品/参考开源项目
-```
+### G6.4 归档路径
 
-### G6.5 大文件检查脚本
+优先使用目标项目已有 archive 结构。新项目可按来源将**已确认被取代**的人读文档置于 `docs/archive/`，工程证据置于 `.csp/milestones/` 或已有归档区；保留源文件的可定位入口、被引用证据与版本记录。第三方参考项目是否在独立目录、submodule 或项目已有路径，取决于许可证、打包范围与实际使用者，不一概强制移动。
 
-`scripts/check-large-files.sh`：
+### G6.5 本地审阅命令
 
-```bash
-#!/bin/bash
-# Check project files against size thresholds
-WARN_KB=50
-HARD_KB=200
+`bash scripts/check-large-files.sh <项目根> [--warn-kb N] [--fail-kb N]`。默认只报告 Markdown 告警；项目自行选择是否显式设置 `--fail-kb` 并接入 CI。检查器不会整理文件、不扫描 JSON、不自动处理 manifest；发现大文件后由 `[[workflow:csp-project-doc-architect]]` 先确认索引、读者与信息密度。
 
-echo "=== Files > ${WARN_KB}KB (consider splitting) ==="
-find docs/ prompts/ -type f \( -name '*.md' -o -name '*.json' \) \
-  -size +${WARN_KB}k \
-  -not -path 'docs/archive/*' \
-  -not -path 'docs/research/*' \
-  -exec ls -lh {} \;
+### G6.6 忽略规则
 
-echo ""
-echo "=== Files > ${HARD_KB}KB (MUST split or archive) ==="
-find docs/ -type f -name '*.md' -size +${HARD_KB}k \
-  -not -path 'docs/archive/*' \
-  -exec ls -lh {} \;
-```
-
-可作为 pre-commit hook 或 CI 检查项，建议集成到 `.github/workflows/` 中。
-
-### G6.6 `.gitignore` 基线
-
-项目生产环境应有的最小 `.gitignore` 条目：
-
-```gitignore
-# 日志
-logs/
-*.log
-
-# 运行时数据
-data/
-!data/.gitkeep
-
-# 缓存
-.mypy_cache/
-.pytest_cache/
-.turbo/
-.ruff_cache/
-.hypothesis/
-.mypy_cache/
-__pycache__/
-*.pyc
-*.pyo
-
-# 构建产物
-dist/
-build/
-*.egg-info/
-
-# 系统文件
-.DS_Store
-Thumbs.db
-
-# 环境变量（保密）
-.env
-.env.local
-.env.production.local
-
-# Agent 本地状态
-.csp/tmp/
-
-# 第三方参考代码（用 references/ + submodule 管理）
-docs/research/open-source-references/
-
-# 基线归档
-.csp/artifacts/archive/
-```
+用 `[[skill:csp-file-organizer]]` 对照该项目实际输出与打包配置制定精确 `.gitignore`：真实密钥、可重建缓存应忽略；源码、固定测试 fixture、存量契约、manifest、仍被引用的视觉/发布基线不得被通配规则误伤。特别避免未核实就忽略整个 `data/`、`docs/`、`.csp/` 或归档区。已跟踪文件不会因加入 `.gitignore` 自动消失；变更跟踪前确认保留/发布责任并获取授权。
 
 ---
 
@@ -793,12 +649,13 @@ docs/research/open-source-references/
 | 反模式 | 症状 | 正确做法 |
 |--------|------|---------|
 | 产物散落根目录 | `test-cases.md`、`report.md` 直接放根 | 按约定路径落盘：docs/或 .csp/ |
-| docs/ 与 .csp/ 混用 | 给人读的 PRD 放进 .csp/，agent 产物放进 docs/ | 三层定位：docs/对外 → verify/证据 → .csp/agent |
-| 无 scope 命名 | `test-cases.md` 没有 feature/version 标识 | `{function}-{scope}.md` 格式 |
-| 产物多版本并存 | `PRD-v1.0.md` + `PRD-v1.0-v2.md` + `PRD-v1.0-final.md` | 幂等覆盖，不留版本后缀 |
-| 路径不统一 | 规划写 `docs/analysis/`，开发写 `.csp/planning/`，测试写 `verify/` | 全阶段统一：产物路径按 G2.1 表 |
-| 文档无人维护 | README 过期/CHANGELOG 断更/docs/ 堆积 | G3.2 每个版本发布后做定期维护 |
-| 项目结构混乱 | src/ 下混杂测试/文档/配置文件 | G0.1 标准目录结构，测试 co-locate |
+| 原文/工程蒸馏竞争 | PRD 与 PMS 都宣称独立权威 | 人读原文在项目既定位置；PMS 指向原文及版本 |
+| 无可定位入口 | 无 feature/scope 标识的产物难查 | 稳定名称或 manifest/source_id 索引，按项目命名标准落盘 |
+| 旧文档原地覆盖 | 活跃 PRD 被新 PRD 或归档写入覆盖 | 核对读者和版本，保留可追溯的原文与引用 |
+| 强制搬迁路径 | 为追 G2.1 示例把已运行的 `verify/` 移走 | 先映射写入者/读者，升级工具后再考虑移动 |
+| 状态文件膨胀 | lifecycle 内联历史日志、把旧指标当本次 gate | 只留阶段与证据指针，最新指标标观测元数据、发布时重跑 |
+| 文档无人维护 | README 过期/CHANGELOG 断更/docs 入口失效 | G3.2 按真实变化更新读者依赖 |
+| 模板替代项目约定 | 假设每仓都有根 `src/tests`、根 `VERSION` 或 Compose | 探测项目结构再设计，示例不是迁移命令 |
 
 ---
 
@@ -822,9 +679,6 @@ docs/research/open-source-references/
 
 ---
 
-按 GB→GK→G0→G1→G2→G3→G4→G5 执行项目治理初始化或审计。AI 自主完成，每个阶段按进度条播报。
-
-**全新项目**：GK→G0→G1→G2→G4→G5 完整初始化。
-**棕地项目**：GB（审计+迁移计划）→ GK（知识中枢棕地蒸馏）→ G5（根目录卫生）→ G0.2/G1/G2/G4 对齐现有
+按任务路由：新项目走 GK/G0/G1/G2/G4，棕地先 GB 再按需补 GK；文件卫生走 G5，文档生命周期/体积走 G3/G6。各阶段只审所需范围，不以全跑流程替代判断；审计不等于取得文件迁移、删除或发布授权。
 
 **缺口报告**：执行过程中若发现本说明未覆盖的治理维度（项目要素缺失/路径约定不完整），**立即指出缺口**——不跳过、不假装覆盖。AI 自主完成，每个阶段按进度条播报。

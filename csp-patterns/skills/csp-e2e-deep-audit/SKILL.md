@@ -55,16 +55,16 @@ Enumerate all visible buttons per route, click each, record: NET(method+path+sta
 ### L5 — 结构健康核查
 - **Schema drift**: ORM metadata × information_schema full diff
 - **Type check**: `tsc --noEmit` full scan
-- **Mock debt**: Proxy fallback for stale mocks
+- **Mock debt**: detect fixtures/mocks that no longer match real exports; repair tests without a fallback that hides missing symbols
 
 ## Outputs
 
-- `verify/ui-test-report.md` — audit report
-- `verify/evidence/` — screenshots/network logs
-- `gap-analysis/GAP-REPORT-*.md` — structural gaps (orphan routes, hidden backends)
+- `.csp/artifacts/verify/ui-test-report.md` — execution summary (or the project's mapped existing report path)
+- `.csp/artifacts/verify/evidence/` — screenshots/network logs referenced by the summary
+- `.csp/gap-analysis/GAP-REPORT-*.md` — structural gaps; preserve finding ID and links to evidence
 
 ## Execution Constraints
 
 - Real execution only: `ran: <cmd> exit 0`, no not-run/grep substitution
 - Button audit is heavy — default NOT in CI smoke, nightly or on-demand
-- Destroy ops (delete/reset/logout/pay) auto-skipped, logged as SKIPPED
+- Destructive or externally visible actions are not clicked merely because a label is absent from a deny-list; inspect the action's effect and require explicit authorization or use an isolated test environment. Record untested paths as not-run, not passing.
