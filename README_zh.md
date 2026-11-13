@@ -24,7 +24,7 @@
 
 <a href="https://maythyai.github.io/code-skills-package/"><img src="./assets/dashboard-overview.svg" alt="CSP 技能仪表盘总览 — 五层架构与技能统计，由 registry 自动生成" width="640" /></a>
 
-**🔗 [在线交互式仪表盘](https://maythyai.github.io/code-skills-package/)** — 按层级、分类、触发词浏览全部 710 个条目
+**🔗 [在线交互式仪表盘](https://maythyai.github.io/code-skills-package/)** — 按层级、分类、触发词浏览全部 712 个条目
 
 </div>
 
@@ -339,7 +339,7 @@ node bin/csp-sdk.mjs init-skill csp-my-skill --layer 3 --phase build
 | 文档 | 说明 |
 |------|------|
 | [ARCHITECTURE_zh.md](./docs/architecture/ARCHITECTURE_zh.md) | 完整架构设计（14 章 · DAG 编排 · SKPG · Token 策略） |
-| [SKILL-INDEX.md](./docs/reference/SKILL-INDEX.md) | 全部 710 个条目索引 |
+| [SKILL-INDEX.md](./docs/reference/SKILL-INDEX.md) | 全部 712 个条目索引 |
 | [INSTALL.md](./docs/guides/INSTALL.md) / [INSTALL_zh.md](./docs/guides/INSTALL_zh.md) | 完整安装指南（22+ 平台） |
 | [UPDATE.md](./docs/guides/UPDATE.md) | 如何为已安装的技能包获取更新 |
 | [SKILL-AUTHORING_zh.md](./docs/guides/SKILL-AUTHORING_zh.md) | Skill 编写最佳实践 |
