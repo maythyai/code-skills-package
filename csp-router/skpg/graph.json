@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generated_at": "2026-11-13T01:41:09.066Z",
+  "generated_at": "2026-11-13T07:48:43.734Z",
   "nodes": {
     "5b37ecd541b4": {
       "id": "5b37ecd541b4",
@@ -7521,6 +7521,19 @@
         "domain": "patterns",
         "role": "specialist",
         "path": "csp-workflow/skills/csp-requirement-prioritization/SKILL.md"
+      }
+    },
+    "301731c260d2": {
+      "id": "301731c260d2",
+      "kind": "skill",
+      "name": "csp-roadmap-planner",
+      "metadata": {
+        "layer": 2,
+        "category": "workflow",
+        "phase": "plan",
+        "domain": "architecture",
+        "role": "architect",
+        "path": "csp-workflow/skills/csp-roadmap-planner/SKILL.md"
       }
     },
     "23c62050d68e": {
@@ -20423,6 +20436,30 @@
       "kind": "trigger",
       "name": "schema-drift-detection",
       "metadata": {}
+    },
+    "b550ce8e2fd9": {
+      "id": "b550ce8e2fd9",
+      "kind": "trigger",
+      "name": "fix roadmap planner",
+      "metadata": {}
+    },
+    "01c1a987b81e": {
+      "id": "01c1a987b81e",
+      "kind": "trigger",
+      "name": "review roadmap planner",
+      "metadata": {}
+    },
+    "0154742e4b71": {
+      "id": "0154742e4b71",
+      "kind": "trigger",
+      "name": "roadmap planner",
+      "metadata": {}
+    },
+    "f353a0a7e187": {
+      "id": "f353a0a7e187",
+      "kind": "trigger",
+      "name": "roadmap-planner",
+      "metadata": {}
     }
   },
   "edges": [
@@ -31161,6 +31198,12 @@
       "metadata": {}
     },
     {
+      "source": "2d61b2a064a0",
+      "target": "301731c260d2",
+      "kind": "triggers",
+      "metadata": {}
+    },
+    {
       "source": "aad7a7746dca",
       "target": "23c62050d68e",
       "kind": "triggers",
@@ -33947,6 +33990,30 @@
     {
       "source": "3e9369ce50bc",
       "target": "423ab518691d",
+      "kind": "triggers",
+      "metadata": {}
+    },
+    {
+      "source": "b550ce8e2fd9",
+      "target": "301731c260d2",
+      "kind": "triggers",
+      "metadata": {}
+    },
+    {
+      "source": "01c1a987b81e",
+      "target": "301731c260d2",
+      "kind": "triggers",
+      "metadata": {}
+    },
+    {
+      "source": "0154742e4b71",
+      "target": "301731c260d2",
+      "kind": "triggers",
+      "metadata": {}
+    },
+    {
+      "source": "f353a0a7e187",
+      "target": "301731c260d2",
       "kind": "triggers",
       "metadata": {}
     },
@@ -37894,6 +37961,12 @@
     },
     {
       "source": "caa9d170319b",
+      "target": "301731c260d2",
+      "kind": "contains",
+      "metadata": {}
+    },
+    {
+      "source": "caa9d170319b",
       "target": "23c62050d68e",
       "kind": "contains",
       "metadata": {}
@@ -40125,6 +40198,12 @@
       "metadata": {}
     },
     {
+      "source": "b0245c519a34",
+      "target": "301731c260d2",
+      "kind": "contains",
+      "metadata": {}
+    },
+    {
       "source": "f297e9873811",
       "target": "23c62050d68e",
       "kind": "contains",
@@ -42189,6 +42268,24 @@
       "metadata": {}
     },
     {
+      "source": "301731c260d2",
+      "target": "d90eb85a4a0a",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "301731c260d2",
+      "target": "001c580ef5d0",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "301731c260d2",
+      "target": "eec8af5a38d1",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
       "source": "23c62050d68e",
       "target": "2237d75bb913",
       "kind": "related_to",
@@ -44045,6 +44142,12 @@
     {
       "source": "63227189de83",
       "target": "bd8529dfd53d",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "301731c260d2",
+      "target": "e767641de27d",
       "kind": "depends_on",
       "metadata": {}
     },
@@ -51867,6 +51970,24 @@
       "metadata": {}
     },
     {
+      "source": "301731c260d2",
+      "target": "d90eb85a4a0a",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "301731c260d2",
+      "target": "a6eb0b1439d6",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "301731c260d2",
+      "target": "eec8af5a38d1",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
       "source": "23c62050d68e",
       "target": "2237d75bb913",
       "kind": "depends_on",
@@ -57171,6 +57292,18 @@
       "metadata": {}
     },
     {
+      "source": "eec8af5a38d1",
+      "target": "301731c260d2",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "301731c260d2",
+      "target": "23c62050d68e",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
       "source": "23c62050d68e",
       "target": "bbd85c33cf13",
       "kind": "related_to",
@@ -57598,19 +57731,19 @@
     }
   ],
   "stats": {
-    "node_count": 2761,
-    "edge_count": 6195,
-    "skill_count": 712,
-    "trigger_count": 2039,
+    "node_count": 2766,
+    "edge_count": 6211,
+    "skill_count": 713,
+    "trigger_count": 2043,
     "phase_count": 6,
     "category_count": 5,
-    "depends_on_count": 1643,
-    "related_to_count": 1250,
+    "depends_on_count": 1647,
+    "related_to_count": 1255,
     "edge_types": {
-      "contains": 1048,
-      "triggers": 2254,
-      "depends_on": 1643,
-      "related_to": 1250
+      "contains": 1050,
+      "triggers": 2259,
+      "depends_on": 1647,
+      "related_to": 1255
     }
   }
 }

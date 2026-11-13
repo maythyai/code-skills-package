@@ -4753,7 +4753,7 @@ trigger_index:
     skills: [csp-user-feedback-analysis]
     weight: 40
   "roadmap":
-    skills: [csp-roadmap-update]
+    skills: [csp-roadmap-update, csp-roadmap-planner]
     weight: 40
   "roadmap update":
     skills: [csp-roadmap-update]
@@ -6184,6 +6184,20 @@ trigger_index:
     weight: 40
   "schema-drift-detection":
     skills: [csp-schema-drift-detection]
+    weight: 40
+
+  # ─── auto-generated triggers (generate-triggers.mjs) ───
+  "fix roadmap planner":
+    skills: [csp-roadmap-planner]
+    weight: 40
+  "review roadmap planner":
+    skills: [csp-roadmap-planner]
+    weight: 40
+  "roadmap planner":
+    skills: [csp-roadmap-planner]
+    weight: 40
+  "roadmap-planner":
+    skills: [csp-roadmap-planner]
     weight: 40
 stack_rules:
   python:

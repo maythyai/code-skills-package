@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "total_skills": 712,
+  "total_skills": 713,
   "shards": [],
   "skill_metadata": "skill-metadata.yaml",
   "skills": [
@@ -9860,6 +9860,21 @@
       },
       "stack_detection": false,
       "path": "csp-workflow/skills/csp-requirement-prioritization/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-roadmap-planner",
+      "description": "Product long-term planner — direction research + version numbering rules + version sequence paths + integration necessity self-critique gate + per-version planning-level PRD SPECs. Runs once per project (outer ring), 07 retro findings trigger incremental updates. Triggers: 路线图, roadmap, 产品规划, versio",
+      "layer": 2,
+      "category": "workflow",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-workflow/skills/csp-roadmap-planner/SKILL.md",
       "deps": [],
       "priority": 10
     },
