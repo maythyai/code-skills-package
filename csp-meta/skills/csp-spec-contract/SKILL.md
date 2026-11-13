@@ -165,3 +165,42 @@ Before handing off the spec, run this checklist:
 - [ ] 粒度 litmus test：换技术栈实现，每条需求仍成立（无 HOW 入侵 WHAT）
 - [ ] 六要素齐备：Problem / Success Metrics / User Stories / AC / Non-Goals / Constraints
 - [ ] Constraints 未重复 `.csp/CONSTITUTION.md` 基线（或显式记录宪法例外）
+
+## Planning Gate Check（强制 — Spec 是规划阶段第四层）
+
+> **Spec 是规划阶段四层 gate 的最后一层。** 在上游三层（ROADMAP → Planning PRD → Engineering PRD）全部完成后才能产出有效 Spec。
+
+生成 Spec 前，强制执行上游检查：
+
+```yaml
+planning_gate_upstream_check:
+  required_layers:
+    - layer: 1
+      path: docs/strategy/ROADMAP.md
+      source: csp-roadmap-planner
+      check: 文件存在 + 版本序列非空
+    - layer: 2
+      path: docs/prd/PRD-*.md (prd_depth: planning)
+      source: csp-prd-generation (planning mode)
+      check: AC skeleton 存在 + status: Draft
+    - layer: 3
+      path: docs/prd/PRD-*.md (prd_depth: engineering)
+      source: csp-prd-generation (engineering mode)
+      check: ≥3 AC/模块 + 异常矩阵非空 + status: Review|Approved
+  on_missing:
+    action: BLOCK  # 缺任一层 → 禁止生成 Spec，退回补齐
+    message: "Spec 是规划阶段第四层。上游 {missing_layer} 缺失，请先完成 {missing_layer} 后再生成 Spec。"
+  current_layer:
+    - layer: 4
+      output: .csp/planning/spec.md + .csp/tech-design/TECH-DESIGN-SUMMARY.md
+      check: 每 FR ≥1 AC + 边界完整 + NFR 可测量
+  completion_signal:
+    all_four_layers_done: true
+    ready_for: csp-lifecycle-orchestrator S5 (execution)
+    handoff: "规划阶段四层全部完成 → 交棒 lifecycle-orchestrator 进入执行阶段"
+```
+
+**红线：**
+- Spec 生成前必须检查上游三层全部存在——缺一层即 **BLOCK**，不能生成
+- Spec 完成后输出 `all_four_layers_done: true` 信号——这是 lifecycle-orchestrator 进入 S5 的唯一通行证
+- "先写代码，Spec 后面补" → **禁止**。Spec 是代码的前置契约，不是事后文档

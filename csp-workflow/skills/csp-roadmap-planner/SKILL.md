@@ -99,6 +99,69 @@ Phase 0 (项目探测) → 首次 or 增量?
 - Strategic theme numbers (v2.0="platformization") are NOT SemVer release tags.
 - No fabricated metrics — mark unknown as [TBD].
 
+## Planning Phase Completion Gate（强制四层完成门禁）
+
+> **这是整个需求链最硬的 gate。** 规划阶段不是产出 ROADMAP 就算完——四个深度层级 **全部完成** 才算规划阶段通过。任一未完成，禁止进入执行阶段（S5 并行开发）。
+
+### 门禁规则
+
+规划阶段必须产出以下四层产物，缺一不可：
+
+| # | 层级 | 产出物 | 负责 Skill | 完成判据 |
+|---|------|--------|-----------|---------|
+| 1 | ROADMAP | `docs/strategy/ROADMAP.md` | 本 Skill | 版本序列 + 每个版本的主题一句话 + 集成审视完成 |
+| 2 | PRD SPEC (planning) | `docs/prd/PRD-{version-slug}.md` | 本 Skill → Phase 4.5 | `prd_depth: planning`，AC skeleton (1-2 GWT/模块)，`status: Draft` |
+| 3 | Engineering PRD | `docs/prd/PRD-{feature}.md` | `csp-prd-generation` (engineering 级) | `prd_depth: engineering`，≥3 AC/模块，完整异常矩阵，`status: Review` 或 `Approved` |
+| 4 | Spec (technical contract) | `.csp/planning/spec.md` + `.csp/tech-design/` | `csp-spec-contract` + `csp-tech-solution-design` | 每 FR ≥1 AC，边界非空，NFR 可测量，关键技术难点有攻克方案 |
+
+### 门禁执行
+
+```
+本 Skill 完成 (ROADMAP + Planning PRD SPEC)
+    │
+    ├─ 产出 ROADMAP.md (Layer 1)         ← gate 1/4
+    └─ 产出 PRD-{version}.md (Layer 2a)  ← gate 2/4
+    │
+    ▼  // 01 PRD 阶段：planning → engineering 升级
+csp-prd-generation (engineering 级)
+    │  产出: PRD-{feature}.md, prd_depth: engineering  ← gate 3/4
+    │
+    ▼  // 03 Spec 阶段：product → technical
+csp-spec-contract + csp-tech-solution-design
+    │  产出: .csp/planning/spec.md + .csp/tech-design/   ← gate 4/4
+    │
+    ▼  // 四层全部完成 → 门禁通过
+csp-lifecycle-orchestrator 进入 S5 (执行阶段)
+```
+
+### 门禁红线
+
+- **任一层未完成 → 禁止进入 S5 (并行开发)**。这不是建议，是 hard block。
+- 跳过 engineering PRD 直接写 Spec → **无效 Spec**，必须回头补齐 PRD 后再生成 Spec。
+- 跳过 planning PRD SPEC 直接写 engineering PRD → **PRD 缺 roadmap 锚点**，必须回头补齐 planning PRD。
+- "先写代码，PRD 后面补" → **禁止**。PRD 是 baseline，不是事后追认。
+- 所有四层产物的 `status` 必须至少达到：ROADMAP=Active, Planning PRD=Draft, Engineering PRD=Review, Spec=Active。
+
+### 下游消费
+
+`csp-lifecycle-orchestrator` 在进入 S5 前检查四层产物：
+```yaml
+planning_gate:
+  required:
+    - path: docs/strategy/ROADMAP.md
+      status: Active
+    - path: docs/prd/PRD-*.md
+      prd_depth: planning
+      status: Draft
+    - path: docs/prd/PRD-*.md
+      prd_depth: engineering
+      status: Review|Approved
+    - path: .csp/planning/spec.md
+      status: Active
+    - path: .csp/tech-design/TECH-DESIGN-SUMMARY.md
+      status: Active
+  on_failure: return_to_planning  # 缺哪层补哪层，不是重跑全部
+
 ## Depth Pipeline（信息密度递进链）
 
 本 Skill 产出的 ROADMAP 和 planning-level PRD SPEC 是整条需求链的**第一层**。

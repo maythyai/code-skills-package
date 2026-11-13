@@ -57,6 +57,9 @@ anti_rationalizations:
   "Let's skip the spec phase and just code": "Skipping specs causes rework. The spec phase pays for itself."
   "We can do tech selection during implementation": "Mid-implementation tech changes are 10x more expensive."
   "This is too small for the full lifecycle": "Scale the lifecycle down, don't skip stages. Even a 1-feature module benefits from structured spec."
+  "ROADMAP 写完就可以开发了，不用补齐 PRD 和 Spec": "ROADMAP 只是 Layer 1——规划阶段必须四层全部完成才能进入执行。缺一层即硬阻塞。"
+  "Planning PRD 已经有了，engineering PRD 边写代码边补": "Engineering PRD 在代码开始前必须是完整态。事后补 = 代码没有契约基线。"
+  "Spec 太复杂了，先写代码后面再补文档": "Spec 是代码的前置契约。没有 Spec 的代码 = 没有验收标准的实现。代码写完再写 Spec = 文档追认代码，不是设计先行。"
 role: specialist
 ---
 
@@ -518,6 +521,10 @@ routing_rules:
 
   # 门控失败 → 回退
   gate_failure:
+    planning_gate_incomplete:      # ★ 四层规划 gate 未通过
+      action: return_to_planning   # 缺哪层补哪层，不重跑全部
+      max_retries: 3
+      blocking: true               # HARD BLOCK — 四层不全 → 禁止进入 S5
     decomposition_incomplete:
       action: retry_S1
       max_retries: 2
@@ -588,6 +595,41 @@ routing_rules:
     handoff: csp-roadmap-update       # 聚合全部 findings 交棒 roadmap
 
   # Module Spec 治理旁路（与 S1–S9 并行，不是额外阶段）
+
+  # ★ 规划阶段四层 Gate（强制 — S4 与 S5 之间的硬门禁）★
+  # ROADMAP → Planning PRD → Engineering PRD → Spec 全部完成才允许进入执行阶段
+  planning_depth_gate:
+    trigger: pre_S5                     # S4 完成后、S5 执行前自动触发
+    blocking: true                      # HARD BLOCK — 不通过即禁止进入 S5
+    layers:
+      - layer: 1
+        name: ROADMAP
+        path: docs/strategy/ROADMAP.md
+        source: csp-roadmap-planner
+        check: 文件存在 + 版本序列非空 + 集成审视完成
+      - layer: 2
+        name: PRD SPEC (planning)
+        path: docs/prd/PRD-*.md
+        source: csp-prd-generation (planning mode)
+        check: prd_depth: planning + AC skeleton (1-2 GWT/模块) + status: Draft
+      - layer: 3
+        name: Engineering PRD
+        path: docs/prd/PRD-*.md
+        source: csp-prd-generation (engineering mode)
+        check: prd_depth: engineering + ≥3 AC/模块 + 异常矩阵完整 + status: Review|Approved
+      - layer: 4
+        name: Spec (technical contract)
+        path: .csp/planning/spec.md + .csp/tech-design/TECH-DESIGN-SUMMARY.md
+        source: csp-spec-contract + csp-tech-solution-design
+        check: 每 FR ≥1 AC + 边界完整 + NFR 可测量 + 技术方案完整
+    on_failure:
+      action: return_to_planning
+      guidance: "缺 layer {N}，需先完成 {layer_name}。逐个补齐，不重跑已完成的层。"
+      max_retries: 3
+    on_pass:
+      signal: planning_depth_gate_passed
+      handoff: S5                                        # 允许进入执行阶段
+    skip_if: mode == lightweight                         # 轻量模式无规划阶段
   # 三个 living baseline 说明书：每个阶段读对应说明书再产出，ship/变更后写回 delta。
   # 详见 csp-workflow/references/module-spec-lifecycle-norms.md
   module_spec_governance:

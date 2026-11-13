@@ -258,6 +258,31 @@ After generation, verify each item in the checklist. Mark failing items and prov
 | 9 | Priorities are explicit | Feature modules are tagged P0/P1/P2 |
 | 10 | Depth-appropriate detail level | `planning`: AC skeleton with 1-2 GWT per module, no exhaustive rules/exception matrix/tracking. `engineering`: full AC ≥3, exhaustive rules, exception matrix, tracking events |
 
+### Step 6: Planning Gate Check（强制 — engineering PRD 完成后执行）
+
+> **engineering PRD 是规划阶段四层 gate 的第三层。** 完成 engineering PRD 不是终点——必须确认上游两层已完成、本层达标，才能交棒给下游 Spec。
+
+```yaml
+planning_gate_self_check:
+  upstream:
+    - [ ] ROADMAP.md 存在 (Layer 1) — csp-roadmap-planner 产出
+    - [ ] Planning PRD SPEC 存在 (Layer 2) — 本 Skill planning 模式产出，prd_depth: planning, status: Draft
+  current:
+    - [ ] 本 engineering PRD 覆盖了 planning PRD 的全部模块（无遗漏升级）
+    - [ ] planning PRD 的 thin_section 已全部填满（NFR thin → 完整 NFR 表；埋点 outline → 完整 event schema）
+    - [ ] 每模块 ≥3 AC（planning 的 AC skeleton 已全部展开）
+    - [ ] 异常矩阵完整：每模块 ≥2 异常场景
+    - [ ] 埋点事件完整：核心操作路径全部有 tracking event
+    - [ ] prd_depth: engineering, status: Review
+  downstream_required:
+    - [ ] ⚠️ 本 PRD 完成后，必须继续执行 csp-spec-contract + csp-tech-solution-design（Layer 4）—— 四层全部完成才能进入执行阶段
+```
+
+**红线：**
+- 上游 ROADMAP + Planning PRD 缺任一 → **禁止开始 engineering PRD**，退回补齐
+- 本层检查任一项未通过 → **不能交棒 Spec**，必须在本层修完
+- engineering PRD 完成后 → **自动提示执行 Spec 生成**，不是"建议" |
+
 ## Key Principles
 
 - **PRD does not specify technical implementation**: Never name database types, programming languages, or framework choices. Only describe performance requirements (e.g., "< 2 seconds").
