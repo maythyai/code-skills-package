@@ -283,3 +283,39 @@ After generation, verify each item in the checklist. Mark failing items and prov
 - [[csp-requirement-prioritization]] - prioritize multiple requirements before PRD scoping
 - [[csp-mvp-scoping]] - define MVP scope when requirements are too large for one PRD
 - [[csp-brainstorming]] - generate creative solutions before formalizing into PRD
+
+## Depth Pipeline（信息密度递进链）
+
+本 Skill 是整条需求链中**唯一承载两个深度层级的 Skill**。深度升级不是新建文档，是同一份 PRD 的信息密度从 outline → exhaustive：
+
+```
+csp-roadmap-planner
+    │  产出: planning PRD SPEC (一句话+大纲, prd_depth: planning)
+    │  特征: AC skeleton (1-2 GWT) · NFR thin_section · 埋点 outline
+    │
+    ▼  // 加载 planning PRD → 设置 prd_depth: engineering → 逐模块穷举
+本 Skill (engineering 级)
+    │  升级动作:
+    │    AC skeleton → ≥3 GWT/模块
+    │    NFR thin_section → 完整 NFR 表 + 验收标准
+    │    埋点 outline → 完整 event schema（trigger/properties/purpose）
+    │    业务规则高亮(3-5 bullet) → 穷举矩阵（每条规则的触发条件、处理逻辑、边界值）
+    │  产出: 同一份 PRD, prd_depth 变为 engineering, status 变为 Review
+    │
+    ▼  // engineering PRD 的 AC 被 Spec 消费
+csp-spec-contract
+    │  转译: AC(GWT) → FR  |  业务规则 → 边界条件  |  异常矩阵 → 错误场景  |  埋点 → 数据约束
+    │  产出: .csp/planning/spec.md
+    │
+    ▼
+csp-tech-solution-design → csp-fullstack-spec-generator → 代码
+```
+
+**升级触发语：**
+- `planning` → `engineering`：「把这个 PRD 升级到工程级」「01 upgrade this PRD」「展开所有 AC」
+- `engineering` → Spec：「为这个 PRD 生成 Spec」「generate technical contract」「写接口定义」
+
+**升级纪律：**
+- 升级时**必须读取上游产物**（planning PRD 的源文件），不得凭记忆重写
+- 上游已有的内容**不动**（read-only baseline），只展开和补齐
+- 上游标了 `[TBD]` 或 `thin_section` 的字段，在 engineering 级必须补齐 —— 补不齐的保持 `[TBD]` 并说明原因

@@ -98,3 +98,39 @@ Phase 0 (项目探测) → 首次 or 增量?
 - Planned ≠ necessary. Phase 2.5 must filter every version's features.
 - Strategic theme numbers (v2.0="platformization") are NOT SemVer release tags.
 - No fabricated metrics — mark unknown as [TBD].
+
+## Depth Pipeline（信息密度递进链）
+
+本 Skill 产出的 ROADMAP 和 planning-level PRD SPEC 是整条需求链的**第一层**。
+下游按信息密度逐级升级，每一层只承载它职责范围内需要的信息量：
+
+```
+本 Skill (ROADMAP + PRD SPEC, planning 级)
+    │  一句话：哪些版本、以什么顺序、每个版本的核心主题
+    │  产出: ROADMAP.md + PRD-{version-slug}.md (prd_depth: planning)
+    │
+    ▼  // 01 PRD 阶段升级：planning → engineering
+csp-prd-generation (engineering 级)
+    │  穷举：每个功能的完整业务规则、≥3 AC/模块、异常矩阵、埋点事件
+    │  入口：加载 planning PRD → 设置 prd_depth: engineering → 逐模块穷举
+    │  产出: PRD-{feature}.md (prd_depth: engineering)
+    │
+    ▼  // 03 Spec 阶段：product → technical
+csp-spec-contract + csp-tech-solution-design
+    │  技术契约：接口定义、数据模型、错误场景、NFR 可测量标准
+    │  入口：消费 engineering PRD 的 AC 和业务规则 → 转译为技术契约
+    │  产出: .csp/planning/spec.md + .csp/tech-design/
+    │
+    ▼  // 05 实现阶段
+csp-fullstack-spec-generator → csp-tech-task-breakdown → 代码
+```
+
+**升级规则：**
+- Planning PRD → Engineering PRD：由 01 PRD 阶段触发。planning PRD 的 AC skeleton 被升级为完整 GWT，业务规则高亮被展开为穷举矩阵，thin_section 被补齐。**这是同一个 skill 的深度参数切换，不是新文档。**
+- Engineering PRD → Spec：由 03 Spec 阶段触发。PRD 的 AC 中的用户可观察行为被转译为 FR（Functional Requirement），业务规则被转译为边界条件，埋点事件被转译为数据约束。
+- 每一层的升级都是**精炼而非重写**：下游读取上游，展开细节，添加本层独有信息。上游被标记为 read-only baseline。
+
+**何时本层就够了（不需要下游升级）：**
+- 只需要战略对齐（"下两个版本做什么"）→ ROADMAP 就够了
+- 只需要和 stakeholders 确认范围（"这个版本包含什么"）→ planning PRD SPEC 就够了
+- 需要开发团队开始 coding → 必须 engineering PRD + Spec

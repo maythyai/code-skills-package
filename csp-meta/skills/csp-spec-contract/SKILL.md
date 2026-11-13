@@ -63,11 +63,37 @@ falsification pass 之外，对每条需求追加一道粒度检验——**防 H
 ## Integration
 
 - **Router triggers:** `spec`, `specification`, `contract`, `formalize`
+- **From PRD (深度升级):** 读取 engineering PRD (`docs/prd/PRD-*.md`) → 转译 AC 为 FR → 转译业务规则为边界 → 转译异常为错误场景
 - **Downstream:** `/csp-spec-phase` → `/csp-discuss-phase` → `/csp-plan-phase`
 - **Review:** `csp-party-mode`, `csp-review-adversarial`, `csp-review-edge-case`
 - **Inherits:** `.csp/CONSTITUTION.md`（项目宪法基线，不重复声明）
 - **Deep reference:** `csp-workflow/references/spec-driven-playbook.md`（四阶段模型、
   Spec↔Plan 精炼循环、五大陷阱、L1/L2/L3 光谱）
+
+## Depth Pipeline Position
+
+本 Skill 处于信息密度递进链的**第三层**（最深）：
+
+```
+Layer 1: ROADMAP            — csp-roadmap-planner         (一句话: 哪些版本、什么顺序)
+Layer 2: PRD (planning)     — csp-prd-generation/planning (大纲: 这个版本包含什么)
+Layer 2: PRD (engineering)  — csp-prd-generation/engineer (穷举: 完整业务规则+AC+异常+埋点)
+Layer 3: Spec (technical)   — 本 Skill                    (技术契约: FR+边界+NFR+错误场景)
+Layer 4: Implementation     — csp-tech-solution-design → 代码
+```
+
+**从 PRD 到 Spec 的转译规则：**
+
+| PRD 字段 (engineering) | Spec 转译 |
+|------------------------|----------|
+| Acceptance Criteria (GWT) | Functional Requirements (FR-1, FR-2...) |
+| Business Rules (穷举) | FR 的 Boundaries (in scope / out of scope) |
+| Exception Handling matrix | Error scenarios + 每个 FR 的边缘条件 |
+| NFR table (performance/security) | Non-Functional Constraints (可测量目标: P95 < 200ms) |
+| Data Requirements (tracking events) | 不计入 Spec（数据埋点归 PRD，不归技术契约） |
+| Personas / User Stories | 不计入 Spec（用户视角归 PRD，不归技术契约） |
+
+**升级触发：**「为这个 PRD 生成 Spec」「generate technical contract」「写技术契约」
 
 ## Red Flags
 
