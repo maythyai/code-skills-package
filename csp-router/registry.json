@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "total_skills": 710,
+  "total_skills": 712,
   "shards": [],
   "skill_metadata": "skill-metadata.yaml",
   "skills": [
@@ -4374,6 +4374,21 @@
       "priority": 10
     },
     {
+      "name": "csp-gate-compliance",
+      "description": "Audit whether prior quality gates were actually passed before the current release. Detects gate-skipping patterns: shipped versions despite BLOCKED audit/verify/finding gates, reusing old metrics as current proof, silently skipping mandatory checks. Use before every release or when version history s",
+      "layer": 3,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/csp-gate-compliance/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
       "name": "csp-git-conventions",
       "description": "Git workflow conventions agent. Enforces conventional commits, branch naming strategies, commit message quality, and PR hygiene. Use for commit messages, branch naming, and git workflow questions.",
       "layer": 3,
@@ -5510,6 +5525,21 @@
       },
       "stack_detection": false,
       "path": "csp-patterns/skills/csp-santa-method/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-schema-drift-detection",
+      "description": "Detect schema drift between migration claims and actual database state. Catches the 'alembic current==head but column missing' pattern — when migration tools say schema is applied but physical columns differ. Use whenever DB schema changes are made, before release, or when 500 errors suggest missing",
+      "layer": 3,
+      "category": "patterns",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-patterns/skills/csp-schema-drift-detection/SKILL.md",
       "deps": [],
       "priority": 10
     },

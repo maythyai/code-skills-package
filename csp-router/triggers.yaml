@@ -6153,6 +6153,38 @@ trigger_index:
   "review e2e deep audit":
     skills: [csp-e2e-deep-audit]
     weight: 40
+
+  # ─── auto-generated triggers (generate-triggers.mjs) ───
+  "fix gate compliance":
+    skills: [csp-gate-compliance]
+    weight: 40
+  "fix schema drift detection":
+    skills: [csp-schema-drift-detection]
+    weight: 40
+  "gate":
+    skills: [csp-gate-compliance]
+    weight: 40
+  "gate compliance":
+    skills: [csp-gate-compliance]
+    weight: 40
+  "gate-compliance":
+    skills: [csp-gate-compliance]
+    weight: 40
+  "review gate compliance":
+    skills: [csp-gate-compliance]
+    weight: 40
+  "review schema drift detection":
+    skills: [csp-schema-drift-detection]
+    weight: 40
+  "schema":
+    skills: [csp-schema-drift-detection]
+    weight: 40
+  "schema drift detection":
+    skills: [csp-schema-drift-detection]
+    weight: 40
+  "schema-drift-detection":
+    skills: [csp-schema-drift-detection]
+    weight: 40
 stack_rules:
   python:
     files: ["pyproject.toml", "setup.py", "requirements.txt", "Pipfile"]

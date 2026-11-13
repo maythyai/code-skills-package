@@ -4,7 +4,7 @@
 # Regenerate: node scripts/build-skill-metadata.mjs
 
 version: 2.0
-generated_at: 2026-11-12T12:11:18.779Z
+generated_at: 2026-11-13T01:41:06.014Z
 skills:
   csp-agent-teams:
     phase: review
@@ -3322,6 +3322,23 @@ skills:
       我们输入都校验过了: "校验逻辑本身就是攻击面；fuzz 找的是校验绕过、解析器崩溃、整数溢出——正是校验没覆盖的路径"
       fuzz 太慢不能进 CI: "60s smoke fuzz 进 PR 门禁，24h deep fuzz 进 nightly/OSS-Fuzz；两层互补"
       Rust/Go 内存安全不需要 fuzz: "内存安全 ≠ 逻辑安全；panic、unwrap、整数溢出、死循环、协议状态机错乱照 fuzz 不误"
+  csp-gate-compliance:
+    phase: verify
+    domain: quality
+    role: specialist
+    scope: testing
+    tools:
+      - Read
+      - Grep
+      - Glob
+      - Bash
+    related_skills:
+      - csp-verify-phase
+      - csp-release-manager
+      - csp-security-review
+    anti_rationalizations:
+      上个门控报告说 BLOCKED 但是已经修复了: "修复记录必须存在且带 fix commit/tag 和时间证据。无记录的修复 = 未修复。"
+      只是测试没覆盖到，功能是好的: "绿测试 ≠ 覆盖需求。门控 fail 必须有显式 override 记录。"
   csp-git-conventions:
     phase: build
     domain: devops
@@ -4492,6 +4509,23 @@ skills:
       One reviewer is enough: "A single agent reviewing its own output shares the same biases and systematic errors. Two independent reviewers break this failure mode."
       This is too simple for dual review: "If it ships to users, it deserves verification. Rubric scales with complexity — simple output gets simple pass/fail checks."
       Dual review costs too much: "A production bug costs far more. Batch sampling reduces cost to 15-20% while catching >90% of systematic issues."
+  csp-schema-drift-detection:
+    phase: verify
+    domain: quality
+    role: specialist
+    scope: testing
+    tools:
+      - Read
+      - Bash
+      - Glob
+      - Grep
+    related_skills:
+      - csp-db-migration
+      - csp-db-migration-testing
+      - csp-postgres-patterns
+    anti_rationalizations:
+      alembic current==head 所以没问题: "迁移工具只说 stamp 存在——不代表 DDL 真的执行了。已 applied 的迁移中插入增量列是最常见的漂移根因。"
+      之前能跑现在也能跑: "回溯补交的迁移插入已 applied 链 = 新库有列、旧库没有 = 漂移。迁移链完整性 ≠ 物理 schema 一致性。"
   csp-scope:
     phase: define
     domain: patterns

@@ -351,7 +351,7 @@ a { color: var(--layer-1); text-decoration: none; }
 // ═══════════════════════════════════════════════════
 const CSP_DATA = {
   "stats": {
-    "total": 710,
+    "total": 712,
     "by_layer": {
       "Meta": {
         "count": 27,
@@ -359,7 +359,7 @@ const CSP_DATA = {
         "color": "#3b82f6"
       },
       "Patterns": {
-        "count": 419,
+        "count": 421,
         "layer": "L3",
         "color": "#a855f7"
       },
@@ -381,7 +381,7 @@ const CSP_DATA = {
     },
     "by_category": {
       "meta": 27,
-      "patterns": 419,
+      "patterns": 421,
       "router": 1,
       "runtime": 57,
       "workflow": 206
@@ -5449,6 +5449,25 @@ const CSP_DATA = {
       }
     },
     {
+      "name": "csp-gate-compliance",
+      "description": "Audit whether prior quality gates were actually passed before the current release. Detects gate-skipping patterns: shipped versions despite BLOCKED audit/verify/finding gates, reusing old metrics as current proof, silently skipping mandatory checks. Use before every release or when version history s",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "csp-gate-compliance",
+          "fix gate compliance",
+          "gate",
+          "gate compliance",
+          "gate-compliance",
+          "review gate compliance"
+        ],
+        "zh": []
+      }
+    },
+    {
       "name": "csp-git-conventions",
       "description": "Git workflow conventions agent. Enforces conventional commits, branch naming strategies, commit message quality, and PR hygiene. Use for commit messages, branch naming, and git workflow questions.",
       "category": "patterns",
@@ -6698,6 +6717,25 @@ const CSP_DATA = {
           "review santa method",
           "santa method",
           "santa-method"
+        ],
+        "zh": []
+      }
+    },
+    {
+      "name": "csp-schema-drift-detection",
+      "description": "Detect schema drift between migration claims and actual database state. Catches the 'alembic current==head but column missing' pattern — when migration tools say schema is applied but physical columns differ. Use whenever DB schema changes are made, before release, or when 500 errors suggest missing",
+      "category": "patterns",
+      "layer": "L3",
+      "layer_name": "Patterns",
+      "layer_color": "#a855f7",
+      "triggers": {
+        "en": [
+          "csp-schema-drift-detection",
+          "fix schema drift detection",
+          "review schema drift detection",
+          "schema",
+          "schema drift detection",
+          "schema-drift-detection"
         ],
         "zh": []
       }

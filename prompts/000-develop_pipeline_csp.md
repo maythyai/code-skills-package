@@ -33,6 +33,8 @@ Spec 验收门：PRD 含背景/目标/功能清单/Given-When-Then 验收标准�
 
 **TDD 执行纪律**（05 开发期）：先写测试 → 实现 → 重构，测试与源码同 commit 提交：
 - **测试基建健康检查**（05 首个 task 前必跑）：`pytest --collect-only` / `vitest run --reporter=json` 确认测试框架可正常加载。conftest/fixture/mock 引用路径断裂 → BLOCKED（先修基建再写新代码，不阻塞新测试）
+
+**并发 Agent 安全**（多 Agent 并行开发时）：同一工作树同时仅一个会话修改代码；manifest/状态文件写前检查 `DIRTY_HASH` 未变；冲突时后者回滚并报告，不静默覆盖
 - **单元测试**：按项目已有 runner 约定紧邻源码或镜像模块目录（如 `src/xxx.ts` ↔ `tests/unit/xxx.test.ts`），在实现前先写可运行断言
 - **API/集成测试**：与受影响端点同步产出，使用实际测试根（monorepo 可在应用目录），不要求仓库根 `tests/integration/`
 - **E2E 测试**：核心路径随开发构建可运行用例，发布门禁再实测；单有脚本骨架不等于通过
@@ -81,11 +83,13 @@ Spec 验收门：PRD 含背景/目标/功能清单/Given-When-Then 验收标准�
   Check 5.8: DB 迁移验证（有 DB schema 变更时必检）→ [[skill:csp-db-migration]]（正向/回滚 ran，数据完整性验证，exit 0）
   Check 5.8a: SQL 审查 → [[skill:csp-sql-reviewer]]（新增/变更 SQL 全量过审）
   Check 5.8b: DB 状态断言 → [[skill:csp-db-state-assertion]]（写操作前后 DB 状态验证，字段完整性）
+  Check 5.8c: Schema 漂移检测 → [[skill:csp-schema-drift-detection]]（ORM 声明 vs information_schema 物理列 diff——迁移工具说 head≠真实 schema 时阻断发布）
   Check 5.9: 安全审查 → [[skill:csp-security-review]]（鉴权/越权/注入/XSS/CSRF/敏感数据脱敏/依赖漏洞）
   Check 5.10: 后端性能 → [[skill:csp-backend-performance]]（API P95/慢查询索引/N+1/缓存策略/连接池，有后端时选做）
   Check 5.11: 前后端接线验证 → 基于实际路由/消费者、运行证据核对；静态搜索只能给候选，不能称机器接线门禁。无消费者先区分公开 API/后台任务与 UI 必需能力，按本版 Spec 裁决
   Check 5.12: 命名规范 → [[agent:csp-project-standards-reviewer]] 检查项目及语言约定，发现无语义版本/milestone 副本提出重命名；迁移 revision、稳定公开协议标识等要验证使用方，不能按正则盲改并称通过
   Check 5.13: 审计 findings 闭合 → P0 audit finding = 0（全部 closed，附 fix commit 证据）；P1 > 3 条同 P0 阻断
+  Check 5.14: 门控合规审计 → [[skill:csp-gate-compliance]] — 上一版 gate snapshot 是否 BLOCKED 且无修复记录即 shipped？gate 证据是否来自当前 commit？中间版本是否缺 gate 记录？有违规 → 不打 tag，先闭合
   （工具链不可用 = BLOCKED，不得用 grep/review 替代动态门控）
 - 运行环境先探测实际服务/启动命令、端口身份和可用凭据；按项目授权启动并探活，不默认 Compose、npm 或固定重试次数。视觉/性能/API 文档动态检查工具不可用时标未执行及解除条件，不能用静态 grep 冒充动态验证。
 - S7 审查无 CRITICAL → [[workflow:csp-code-review]] + [[pattern:csp-santa-method]]（关键模块双审）
@@ -174,6 +178,7 @@ gate 即授权，全自动推进。打断条件（仅 6 类）：战略根本模
 | SQL 审查 | `[[skill:csp-sql-reviewer]]`（查询性能/索引使用/安全/注入防护） |
 | DB 性能 | `[[skill:csp-db-performance]]`（慢查询/索引优化/连接池/锁竞争） |
 | DB 状态断言 | `[[skill:csp-db-state-assertion]]`（写操作前后 DB 状态验证/字段完整性） |
+| Schema 漂移检测 | `[[skill:csp-schema-drift-detection]]`（ORM 声明 vs information_schema 物理列 diff——Check 5.8c） |
 | API 治理 | `[[skill:csp-api-governance]]`（契约/版本管理/限流/认证授权模式） |
 | 代码整洁 | `[[skill:csp-code-simplification]]`（死代码清理/AI 冗余消除/重复合并）+ `[[skill:csp-refactoring-strategies]]`（大规模重构路径） |
 | 最小改动工程 | `[[skill:csp-minimal-change-engineer]]`（只修该修的，拒绝 scope creep） |
@@ -183,6 +188,7 @@ gate 即授权，全自动推进。打断条件（仅 6 类）：战略根本模
 | 双审对抗验证 | `[[pattern:csp-santa-method]]` |
 | 跨层集成审查 | `[[pattern:csp-integration-review]]` |
 | 安全审查（S7 必检） | `[[skill:csp-security-review]]`（鉴权/越权/注入/XSS/CSRF/敏感数据脱敏/依赖漏洞） |
+| 门控合规审计 | `[[skill:csp-gate-compliance]]`（发布前检查：上一版 gate 是否真的 PASS + 中间版本是否缺 gate 记录——Check 5.14） |
 | 后端性能 | `[[skill:csp-backend-performance]]`（API P95/慢查询索引/N+1/缓存策略/连接池） |
 | 无障碍审计 | `[[agent:csp-a11y-architect]]`（WCAG 2.2/语义化/焦点管理） |
 | 前端性能 | `[[agent:csp-web-performance-auditor]]`（CWV 审计）或 `[[skill:csp-frontend-performance]]`（bundle/缓存优化） |
