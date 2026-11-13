@@ -18,6 +18,9 @@ This chapter is primarily based on **PEP 8 -- Style Guide for Python Code** (htt
 - [1.12 Naming conventions](#112-naming-conventions) (rules 47-61)
 - [1.13 Formatting rules for function annotations and variable annotations](#113-formatting-rules-for-function-annotations-and-variable-annotations) (rules 62-63)
 - [1.14 Designing for inheritance and public/internal interfaces](#114-designing-for-inheritance-and-publicinternal-interfaces-audit-supplement) (rules 64-66, audit supplement)
+- [1.15 File naming — version numbers](#115-file-naming--anti-pattern-version-numbers-in-filenames-critical-organizational-rule) (rules 67-69)
+- [1.16 File naming — timestamp prefix](#116-file-naming--anti-pattern-timestamp--date-prefix-critical-organizational-rule) (rules 70-73)
+- [1.17 File naming — general principles](#117-file-naming--general-principles-for-elegant-python) (rules 74-75)
 
 ### 1.1 Indentation
 
@@ -435,4 +438,90 @@ This chapter is primarily based on **PEP 8 -- Style Guide for Python Code** (htt
     - **历史不改**：Existing files already named with version patterns (e.g., `handler_v1.py`) have established import/reference chains; bulk renaming is forbidden due to uncontrollable breakage risk. These files are grandfathered.
     - **新增禁用**：Any new file (in any module, any project) MUST NOT embed a version number in its filename or directory name. During code review, such naming is a **BLOCKING** finding — the file MUST be renamed before merge.
 
-> **Why this matters**: Versioned filenames are a fragile anti-pattern. They encode development timeline into code structure, create false "version divergence" when the file content outgrows its name suffix, and encourage copy-paste instead of proper version management. Put version info where versioning tools can manage it — Git tags, API path prefixes, and schema `$id` URIs.
+### 1.16 File Naming — Anti-Pattern: Timestamp / Date Prefix (CRITICAL, organizational rule)
+
+> **Rationale**: Timestamp-prefixed filenames (e.g., `20261113_174837_rename_tables.py`) are a pervasive anti-pattern that encodes development chronology — the developer's local time of creation — directly into the source tree. This is the filename equivalent of commenting `# Added on Nov 13 2026` above every function. Git already records *when* every file was created and modified; the filename's job is to describe *what* the file does. A Python module starting with digits is also non-importable (`import 20261113_*` is a syntax error), defeating the language's module system.
+
+70. **MUST** Python module filenames must NOT start with digits, timestamps, or dates. Module names must be valid Python identifiers (letters and underscores only, starting with a letter) so they remain importable.
+
+    Correct ✅:
+    ```
+    rename_version_prefixed_tables.py
+    migrate_schema_v2.py
+    backfill_user_roles.py
+    ```
+
+    Incorrect ❌:
+    ```
+    20261113_174837_rename_version_prefixed_tables.py   # timestamp prefix, non-importable
+    20260115_add_user_table.py                           # date prefix, non-importable
+    0115_migration.py                                    # number prefix
+    v20260115_migration.py                               # version+date hybrid
+    ```
+
+71. **MUST** One-off scripts, data migration scripts, and utility scripts follow the same naming rules as library modules. The "it's just a script" excuse is invalid — scripts are modules too, and every script that lives in the repo becomes part of the codebase's discoverability surface. A file named `20261113_174837_*.py` communicates zero semantic intent; `rename_version_prefixed_tables.py` tells you exactly what it does.
+
+    | Context | Wrong ❌ | Right ✅ |
+    |---------|---------|---------|
+    | Migration script | `20261113_add_user_roles.py` | `add_user_roles.py` |
+    | Data backfill | `20260115_backfill_orders.py` | `backfill_orders.py` |
+    | One-off utility | `0115_cleanup_logs.py` | `cleanup_logs.py` |
+    | Alembic migration | (auto-generated `a1b2c3_add_col.py` is correct — Alembic's revision ID is a content hash, not a timestamp) | — |
+
+72. **MUST** Sequencing belongs in a directory or an ordered manifest, not in the filename:
+
+    Correct ✅:
+    ```
+    migrations/
+    ├── 001_add_user_roles.py     # explicit sequence number, readable
+    ├── 002_add_orders.py
+    └── 003_backfill_data.py
+    ```
+
+    Or use a runner script with an ordered list:
+    ```python
+    # run_migrations.py
+    MIGRATIONS = [
+        "add_user_roles",
+        "add_orders",
+        "backfill_data",
+    ]
+    ```
+
+    Incorrect ❌:
+    ```
+    # Timestamps masquerading as sequence — unreadable, unsortable by eye
+    20261113_174837_rename_tables.py
+    20261113_180201_add_roles.py
+    20261114_091503_backfill.py
+    ```
+
+73. **MUST** Organization-wide policy: 「时间归 Git，语义归文件名」
+    - Git records when every file was created (`git log --diff-filter=A --follow -- <file>`), when it was last modified, and by whom. Duplicating this information in the filename is redundant noise.
+    - The filename must describe **what** the file does (its semantic intent), not **when** it was written (its chronological artifact).
+    - During code review, any new file with a timestamp/date prefix is a **BLOCKING** finding — the file MUST be renamed before merge.
+    - Existing timestamp-prefixed files are grandfathered but should be renamed opportunistically during the next refactoring touch-point.
+
+> **Why this matters**: Timestamp-prefixed filenames are a symptom of treating the filesystem as a chronological journal rather than a semantic namespace. A codebase with 50 files named `2026*_*.py` forces every developer to read each filename in full to understand what the file does — the timestamp (always the first 15 characters) carries zero information about the code's purpose. Worse, it kills tab-completion: `import 2026<tab>` is a syntax error in Python, and `python 2026<tab>` requires escaping or quoting. The filename is the primary discovery mechanism for every developer who opens the repo; make it count.
+
+### 1.17 File Naming — General Principles for Elegant Python
+
+74. **SHOULD** A filename should answer "what does this module do?" in one glance. It should be:
+    - **Semantic** — describes purpose, not chronology: `payment_processor.py`, not `friday_fix.py`
+    - **Importable** — a valid Python identifier: `data_utils.py`, not `data-utils.py` or `2026_data.py`
+    - **Searchable** — discoverable by `grep -r "payment"` or IDE symbol search
+    - **Consistent** — follows the same conventions as sibling modules in the same package
+
+75. **SHOULD** When a file's purpose is genuinely chronological (e.g., a dated report, a daily log), use a semantic directory name instead:
+    ```
+    reports/
+    ├── 2026/
+    │   ├── 11/
+    │   │   └── revenue_analysis.py    # 正确：时间在目录结构，文件描述语义
+    ```
+
+    Never:
+    ```
+    reports/
+    ├── 20261113_revenue_analysis.py   # 错误：时间侵入了文件名
+    ```

@@ -389,6 +389,44 @@ types/market.types.ts         # camelCase with .types suffix
 - **历史不改**：存量系统中已存在按版本命名的文件，已有 import/reference 依赖链；不强制批量重命名（风险不可控）
 - **新增禁用**：任何新建文件（含新模块、新项目）绝对禁止在文件名或目录名中嵌入版本号；Code Review 时此类命名视为 **BLOCKING 级发现**，必须改名后才能合并
 
+### File Naming — Anti-Pattern: Timestamp / Date Prefix (CRITICAL)
+
+**文件绝对禁止以时间戳、日期开头。** 时间信息属于 Git，不属于文件名。
+
+| 错误 ❌ | 正确 ✅ |
+|---------|--------|
+| `20261113_174837_rename_tables.py` | `rename_version_prefixed_tables.py` |
+| `20260115_add_user_table.py` | `add_user_table.py` |
+| `0115_migration.py` | `migration_add_user.py` |
+| `v20260115_migration.py` | `migration.py` |
+
+**核心原则：「时间归 Git，语义归文件名」**
+- Git 记录了每个文件的创建时间 (`git log --diff-filter=A --follow -- <file>`)、最后修改时间和修改人
+- 文件名必须描述**这个文件做什么**（语义意图），而不是**什么时候写的**（时间产物）
+- 以 `20261113_174837_` 开头的文件名，前 15 个字符不包含任何语义信息
+- Python 中以数字开头的模块无法被 `import`（语法错误）
+
+**脚本也不例外：** "这只是个一次性脚本"不是借口。脚本也是代码库的一部分，同样需要可发现、可搜索。
+
+**Code Review：** 任何包含时间戳/日期前缀的新文件，属于 **BLOCKING 级发现**，必须改名后才能合并。
+
+**需要有序执行时：**
+```bash
+# 正确：用显式序号或有序 manifest
+migrations/
+├── 001_add_user_roles.py      # 序号清晰，一眼可知顺序
+├── 002_add_orders.py
+└── 003_backfill_data.py
+
+# 或者
+# run_all.py
+scripts = [
+    "add_user_roles",           # 按执行顺序排列
+    "add_orders",
+    "backfill_data",
+]
+```
+
 ### 8. Cross-Layer Field Alignment — 跨层字段对齐（CRITICAL）
 
 **当你在任意一层新增一个字段时，必须同步更新所有关联层。单层字段新增而忽略其他层是 BLOCKING 级缺陷。**
