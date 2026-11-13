@@ -4,7 +4,7 @@
 # ─── 触发词倒排索引 ───
 trigger_index:
   "review":
-    skills: [csp-code-review, csp-requesting-code-review, csp-review, csp-review-backlog, csp-review-pr]
+    skills: [csp-code-review, csp-requesting-code-review, csp-review, csp-review-backlog, csp-review-pr, csp-review-retro]
     weight: 50
   "审查":
     skills: [csp-code-review]
@@ -4998,7 +4998,7 @@ trigger_index:
     skills: [csp-qa]
     weight: 40
   "review retro":
-    skills: [csp-retro]
+    skills: [csp-retro, csp-review-retro]
     weight: 40
   "review scope":
     skills: [csp-scope]
@@ -6199,6 +6199,50 @@ trigger_index:
   "roadmap-planner":
     skills: [csp-roadmap-planner]
     weight: 40
+
+  # ─── auto-generated triggers (generate-triggers.mjs) ───
+  "fix":
+    skills: [csp-fix-loop]
+    weight: 40
+  "fix fix loop":
+    skills: [csp-fix-loop]
+    weight: 40
+  "fix loop":
+    skills: [csp-fix-loop]
+    weight: 40
+  "fix loop 修复":
+    skills: [csp-fix-loop]
+    weight: 40
+  "fix product design convergence":
+    skills: [csp-product-design-convergence]
+    weight: 40
+  "fix review retro":
+    skills: [csp-review-retro]
+    weight: 40
+  "fix-loop":
+    skills: [csp-fix-loop]
+    weight: 40
+  "product design convergence":
+    skills: [csp-product-design-convergence]
+    weight: 40
+  "product-design-convergence":
+    skills: [csp-product-design-convergence]
+    weight: 40
+  "review fix loop":
+    skills: [csp-fix-loop]
+    weight: 40
+  "review product design convergence":
+    skills: [csp-product-design-convergence]
+    weight: 40
+  "review retro 审查":
+    skills: [csp-review-retro]
+    weight: 40
+  "review review retro":
+    skills: [csp-review-retro]
+    weight: 40
+  "review-retro":
+    skills: [csp-review-retro]
+    weight: 40
 stack_rules:
   python:
     files: ["pyproject.toml", "setup.py", "requirements.txt", "Pipfile"]
@@ -6435,7 +6479,7 @@ stack_rules:
     skills: [csp-product-pulse]
     weight: 40
   "product":
-    skills: [csp-product-pulse, csp-product-discovery-orchestrator, csp-product-spec, csp-product-research]
+    skills: [csp-product-pulse, csp-product-discovery-orchestrator, csp-product-spec, csp-product-research, csp-product-design-convergence]
     weight: 40
   "上线":
     skills: [csp-shipping-and-launch]

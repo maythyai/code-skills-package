@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generated_at": "2026-11-13T07:48:43.734Z",
+  "generated_at": "2026-11-13T07:57:38.255Z",
   "nodes": {
     "5b37ecd541b4": {
       "id": "5b37ecd541b4",
@@ -7055,6 +7055,19 @@
         "path": "csp-workflow/skills/csp-explore/SKILL.md"
       }
     },
+    "39312af6d53e": {
+      "id": "39312af6d53e",
+      "kind": "skill",
+      "name": "csp-fix-loop",
+      "metadata": {
+        "layer": 2,
+        "category": "workflow",
+        "phase": "verify",
+        "domain": "quality",
+        "role": "specialist",
+        "path": "csp-workflow/skills/csp-fix-loop/SKILL.md"
+      }
+    },
     "40489dfdce58": {
       "id": "40489dfdce58",
       "kind": "skill",
@@ -7406,6 +7419,19 @@
         "path": "csp-workflow/skills/csp-pricing-strategy/SKILL.md"
       }
     },
+    "c27fca36dd06": {
+      "id": "c27fca36dd06",
+      "kind": "skill",
+      "name": "csp-product-design-convergence",
+      "metadata": {
+        "layer": 2,
+        "category": "workflow",
+        "phase": "plan",
+        "domain": "architecture",
+        "role": "architect",
+        "path": "csp-workflow/skills/csp-product-design-convergence/SKILL.md"
+      }
+    },
     "d90eb85a4a0a": {
       "id": "d90eb85a4a0a",
       "kind": "skill",
@@ -7521,6 +7547,19 @@
         "domain": "patterns",
         "role": "specialist",
         "path": "csp-workflow/skills/csp-requirement-prioritization/SKILL.md"
+      }
+    },
+    "993d54c30cba": {
+      "id": "993d54c30cba",
+      "kind": "skill",
+      "name": "csp-review-retro",
+      "metadata": {
+        "layer": 2,
+        "category": "workflow",
+        "phase": "review",
+        "domain": "quality",
+        "role": "reviewer",
+        "path": "csp-workflow/skills/csp-review-retro/SKILL.md"
       }
     },
     "301731c260d2": {
@@ -20460,6 +20499,90 @@
       "kind": "trigger",
       "name": "roadmap-planner",
       "metadata": {}
+    },
+    "bd8058549a2d": {
+      "id": "bd8058549a2d",
+      "kind": "trigger",
+      "name": "fix",
+      "metadata": {}
+    },
+    "4d2cd30b8cb4": {
+      "id": "4d2cd30b8cb4",
+      "kind": "trigger",
+      "name": "fix fix loop",
+      "metadata": {}
+    },
+    "46d54ef2eee3": {
+      "id": "46d54ef2eee3",
+      "kind": "trigger",
+      "name": "fix loop",
+      "metadata": {}
+    },
+    "0fd0f8144d17": {
+      "id": "0fd0f8144d17",
+      "kind": "trigger",
+      "name": "fix loop 修复",
+      "metadata": {}
+    },
+    "53239f60a197": {
+      "id": "53239f60a197",
+      "kind": "trigger",
+      "name": "fix product design convergence",
+      "metadata": {}
+    },
+    "4f32c5ef75e2": {
+      "id": "4f32c5ef75e2",
+      "kind": "trigger",
+      "name": "fix review retro",
+      "metadata": {}
+    },
+    "542d70d3cca8": {
+      "id": "542d70d3cca8",
+      "kind": "trigger",
+      "name": "fix-loop",
+      "metadata": {}
+    },
+    "6ab6076079b0": {
+      "id": "6ab6076079b0",
+      "kind": "trigger",
+      "name": "product design convergence",
+      "metadata": {}
+    },
+    "2cd1005b8118": {
+      "id": "2cd1005b8118",
+      "kind": "trigger",
+      "name": "product-design-convergence",
+      "metadata": {}
+    },
+    "a9216c517b22": {
+      "id": "a9216c517b22",
+      "kind": "trigger",
+      "name": "review fix loop",
+      "metadata": {}
+    },
+    "b7c03f8f4624": {
+      "id": "b7c03f8f4624",
+      "kind": "trigger",
+      "name": "review product design convergence",
+      "metadata": {}
+    },
+    "184ea5f9a0b5": {
+      "id": "184ea5f9a0b5",
+      "kind": "trigger",
+      "name": "review retro 审查",
+      "metadata": {}
+    },
+    "91f99b1b3be9": {
+      "id": "91f99b1b3be9",
+      "kind": "trigger",
+      "name": "review review retro",
+      "metadata": {}
+    },
+    "485d56f3b4ca": {
+      "id": "485d56f3b4ca",
+      "kind": "trigger",
+      "name": "review-retro",
+      "metadata": {}
     }
   },
   "edges": [
@@ -20490,6 +20613,12 @@
     {
       "source": "ce3df73ef606",
       "target": "a9576b441866",
+      "kind": "triggers",
+      "metadata": {}
+    },
+    {
+      "source": "ce3df73ef606",
+      "target": "993d54c30cba",
       "kind": "triggers",
       "metadata": {}
     },
@@ -31702,6 +31831,12 @@
       "metadata": {}
     },
     {
+      "source": "4900161c756f",
+      "target": "993d54c30cba",
+      "kind": "triggers",
+      "metadata": {}
+    },
+    {
       "source": "5e1b8343d1ff",
       "target": "efafbe3f9523",
       "kind": "triggers",
@@ -34014,6 +34149,90 @@
     {
       "source": "f353a0a7e187",
       "target": "301731c260d2",
+      "kind": "triggers",
+      "metadata": {}
+    },
+    {
+      "source": "bd8058549a2d",
+      "target": "39312af6d53e",
+      "kind": "triggers",
+      "metadata": {}
+    },
+    {
+      "source": "4d2cd30b8cb4",
+      "target": "39312af6d53e",
+      "kind": "triggers",
+      "metadata": {}
+    },
+    {
+      "source": "46d54ef2eee3",
+      "target": "39312af6d53e",
+      "kind": "triggers",
+      "metadata": {}
+    },
+    {
+      "source": "0fd0f8144d17",
+      "target": "39312af6d53e",
+      "kind": "triggers",
+      "metadata": {}
+    },
+    {
+      "source": "53239f60a197",
+      "target": "c27fca36dd06",
+      "kind": "triggers",
+      "metadata": {}
+    },
+    {
+      "source": "4f32c5ef75e2",
+      "target": "993d54c30cba",
+      "kind": "triggers",
+      "metadata": {}
+    },
+    {
+      "source": "542d70d3cca8",
+      "target": "39312af6d53e",
+      "kind": "triggers",
+      "metadata": {}
+    },
+    {
+      "source": "6ab6076079b0",
+      "target": "c27fca36dd06",
+      "kind": "triggers",
+      "metadata": {}
+    },
+    {
+      "source": "2cd1005b8118",
+      "target": "c27fca36dd06",
+      "kind": "triggers",
+      "metadata": {}
+    },
+    {
+      "source": "a9216c517b22",
+      "target": "39312af6d53e",
+      "kind": "triggers",
+      "metadata": {}
+    },
+    {
+      "source": "b7c03f8f4624",
+      "target": "c27fca36dd06",
+      "kind": "triggers",
+      "metadata": {}
+    },
+    {
+      "source": "184ea5f9a0b5",
+      "target": "993d54c30cba",
+      "kind": "triggers",
+      "metadata": {}
+    },
+    {
+      "source": "91f99b1b3be9",
+      "target": "993d54c30cba",
+      "kind": "triggers",
+      "metadata": {}
+    },
+    {
+      "source": "485d56f3b4ca",
+      "target": "993d54c30cba",
       "kind": "triggers",
       "metadata": {}
     },
@@ -37745,6 +37964,12 @@
     },
     {
       "source": "caa9d170319b",
+      "target": "39312af6d53e",
+      "kind": "contains",
+      "metadata": {}
+    },
+    {
+      "source": "caa9d170319b",
       "target": "40489dfdce58",
       "kind": "contains",
       "metadata": {}
@@ -37907,6 +38132,12 @@
     },
     {
       "source": "caa9d170319b",
+      "target": "c27fca36dd06",
+      "kind": "contains",
+      "metadata": {}
+    },
+    {
+      "source": "caa9d170319b",
       "target": "d90eb85a4a0a",
       "kind": "contains",
       "metadata": {}
@@ -37956,6 +38187,12 @@
     {
       "source": "caa9d170319b",
       "target": "eec8af5a38d1",
+      "kind": "contains",
+      "metadata": {}
+    },
+    {
+      "source": "caa9d170319b",
+      "target": "993d54c30cba",
       "kind": "contains",
       "metadata": {}
     },
@@ -39982,6 +40219,12 @@
       "metadata": {}
     },
     {
+      "source": "207aa78c0c90",
+      "target": "39312af6d53e",
+      "kind": "contains",
+      "metadata": {}
+    },
+    {
       "source": "4df9fd7d77be",
       "target": "40489dfdce58",
       "kind": "contains",
@@ -40144,6 +40387,12 @@
       "metadata": {}
     },
     {
+      "source": "b0245c519a34",
+      "target": "c27fca36dd06",
+      "kind": "contains",
+      "metadata": {}
+    },
+    {
       "source": "ea5a4594970a",
       "target": "d90eb85a4a0a",
       "kind": "contains",
@@ -40194,6 +40443,12 @@
     {
       "source": "b0245c519a34",
       "target": "eec8af5a38d1",
+      "kind": "contains",
+      "metadata": {}
+    },
+    {
+      "source": "f297e9873811",
+      "target": "993d54c30cba",
       "kind": "contains",
       "metadata": {}
     },
@@ -41032,6 +41287,24 @@
       "metadata": {}
     },
     {
+      "source": "39312af6d53e",
+      "target": "14c63e108d67",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "39312af6d53e",
+      "target": "588a555fdbc4",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "39312af6d53e",
+      "target": "d8ddd7c38474",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
       "source": "cc5790b1164b",
       "target": "d2240e68c7ed",
       "kind": "depends_on",
@@ -41304,6 +41577,12 @@
     {
       "source": "ceb3e3cca3de",
       "target": "8f694e7ebe29",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "ceb3e3cca3de",
+      "target": "c27fca36dd06",
       "kind": "related_to",
       "metadata": {}
     },
@@ -41836,6 +42115,24 @@
       "metadata": {}
     },
     {
+      "source": "c27fca36dd06",
+      "target": "301731c260d2",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "c27fca36dd06",
+      "target": "001c580ef5d0",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "c27fca36dd06",
+      "target": "8f694e7ebe29",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
       "source": "d90eb85a4a0a",
       "target": "9d7c6add109b",
       "kind": "depends_on",
@@ -42268,6 +42565,24 @@
       "metadata": {}
     },
     {
+      "source": "993d54c30cba",
+      "target": "8e6ab4658286",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "993d54c30cba",
+      "target": "e202ec790b13",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "993d54c30cba",
+      "target": "9ba4012993c5",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
       "source": "301731c260d2",
       "target": "d90eb85a4a0a",
       "kind": "related_to",
@@ -42276,6 +42591,12 @@
     {
       "source": "301731c260d2",
       "target": "001c580ef5d0",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "301731c260d2",
+      "target": "c27fca36dd06",
       "kind": "related_to",
       "metadata": {}
     },
@@ -44086,6 +44407,12 @@
       "metadata": {}
     },
     {
+      "source": "39312af6d53e",
+      "target": "d8ddd7c38474",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
       "source": "cc5790b1164b",
       "target": "e767641de27d",
       "kind": "depends_on",
@@ -44141,6 +44468,12 @@
     },
     {
       "source": "63227189de83",
+      "target": "bd8529dfd53d",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "993d54c30cba",
       "target": "bd8529dfd53d",
       "kind": "depends_on",
       "metadata": {}
@@ -50464,6 +50797,18 @@
       "metadata": {}
     },
     {
+      "source": "39312af6d53e",
+      "target": "9fad9094ab76",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "39312af6d53e",
+      "target": "fb24b8a5ca61",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
       "source": "40489dfdce58",
       "target": "6fccb1bf47c8",
       "kind": "depends_on",
@@ -50748,6 +51093,12 @@
     {
       "source": "ceb3e3cca3de",
       "target": "8f694e7ebe29",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "ceb3e3cca3de",
+      "target": "c27fca36dd06",
       "kind": "depends_on",
       "metadata": {}
     },
@@ -51538,6 +51889,24 @@
       "metadata": {}
     },
     {
+      "source": "c27fca36dd06",
+      "target": "301731c260d2",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "c27fca36dd06",
+      "target": "a6eb0b1439d6",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "c27fca36dd06",
+      "target": "8f694e7ebe29",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
       "source": "d90eb85a4a0a",
       "target": "493125e0cd98",
       "kind": "depends_on",
@@ -51970,6 +52339,30 @@
       "metadata": {}
     },
     {
+      "source": "993d54c30cba",
+      "target": "699f5b2122fa",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "993d54c30cba",
+      "target": "8e6ab4658286",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "993d54c30cba",
+      "target": "e202ec790b13",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "993d54c30cba",
+      "target": "9ba4012993c5",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
       "source": "301731c260d2",
       "target": "d90eb85a4a0a",
       "kind": "depends_on",
@@ -51978,6 +52371,12 @@
     {
       "source": "301731c260d2",
       "target": "a6eb0b1439d6",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "301731c260d2",
+      "target": "c27fca36dd06",
       "kind": "depends_on",
       "metadata": {}
     },
@@ -57107,6 +57506,12 @@
     },
     {
       "source": "c70c4a875502",
+      "target": "39312af6d53e",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "39312af6d53e",
       "target": "40489dfdce58",
       "kind": "related_to",
       "metadata": {}
@@ -57251,6 +57656,12 @@
     },
     {
       "source": "6080e0fc1fa2",
+      "target": "c27fca36dd06",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "c27fca36dd06",
       "target": "d90eb85a4a0a",
       "kind": "related_to",
       "metadata": {}
@@ -57293,6 +57704,12 @@
     },
     {
       "source": "eec8af5a38d1",
+      "target": "993d54c30cba",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "993d54c30cba",
       "target": "301731c260d2",
       "kind": "related_to",
       "metadata": {}
@@ -57731,19 +58148,19 @@
     }
   ],
   "stats": {
-    "node_count": 2766,
-    "edge_count": 6211,
-    "skill_count": 713,
-    "trigger_count": 2043,
+    "node_count": 2783,
+    "edge_count": 6260,
+    "skill_count": 716,
+    "trigger_count": 2057,
     "phase_count": 6,
     "category_count": 5,
-    "depends_on_count": 1647,
-    "related_to_count": 1255,
+    "depends_on_count": 1660,
+    "related_to_count": 1269,
     "edge_types": {
-      "contains": 1050,
-      "triggers": 2259,
-      "depends_on": 1647,
-      "related_to": 1255
+      "contains": 1056,
+      "triggers": 2275,
+      "depends_on": 1660,
+      "related_to": 1269
     }
   }
 }

@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "total_skills": 713,
+  "total_skills": 716,
   "shards": [],
   "skill_metadata": "skill-metadata.yaml",
   "skills": [
@@ -9324,6 +9324,21 @@
       "priority": 10
     },
     {
+      "name": "csp-fix-loop",
+      "description": "Quality gate fix loop — when 06 S6/S7 gates fail, route the failure to the correct fix stage (05 implementation defect / 03 Spec gap / 01 PRD issue), apply minimal delta fix, re-verify affected gates, and iterate until all gates green. Circuit-break after 3 rounds. Triggers: gate failed, 门控失败, fix l",
+      "layer": 2,
+      "category": "workflow",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-workflow/skills/csp-fix-loop/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
       "name": "csp-full",
       "description": "CSP Full — 全链路产品交付工作流，从想法到生产部署的端到端自动化。覆盖：需求澄清 → PRD → 技术设计 → 并行开发 → 测试 → 代码审查 → 发布 → 运维监控。支持企业协作模式（多角色、审批门控）和独立开发者模式，支持多轮里程碑迭代（MVP → v1 → v2）。当用户描述产品想法、想从零构建应用、或需要端到端全流程交付时使用。即使用户只说模糊想法（如'帮我做一个习惯打卡 app'），只要涉及从零构建完整产品就应使用；纯代码审查、bug 修复、单文件修改不要用。",
       "layer": 2,
@@ -9729,6 +9744,21 @@
       "priority": 10
     },
     {
+      "name": "csp-product-design-convergence",
+      "description": "Architecture convergence gate between roadmap and development — validates feature architecture alignment, core/secondary trade-offs, IA/navigation admission, iteration priority, positioning alignment, and system hygiene before allowing 01 PRD to start. Mandatory gate after every roadmap update. Trig",
+      "layer": 2,
+      "category": "workflow",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-workflow/skills/csp-product-design-convergence/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
       "name": "csp-product-discovery-orchestrator",
       "description": "产品发现与交付前编排引擎。串联市场调研/竞品分析/用户反馈 → 产品策略与路线图 → 需求拆解与优先级 → PRD/用户故事/Spec 契约 → 交付桥接（capability contract）的完整链路，管理阶段间产物流转、门控检查、动态路由与迭代推进。是 14 个产品管理 skill 的上层编排器；在交付边界把 capability contract 交给 csp-lifecycle-orchestrator。当用户需要'从调研到开发''产品发现全流程''PM 端到端'时使用。",
       "layer": 2,
@@ -9860,6 +9890,21 @@
       },
       "stack_detection": false,
       "path": "csp-workflow/skills/csp-requirement-prioritization/SKILL.md",
+      "deps": [],
+      "priority": 10
+    },
+    {
+      "name": "csp-review-retro",
+      "description": "Post-release review and retrospective — dual-stack analysis (product defects + architecture issues), findings triage (open/deferred), ROADMAP reflow of adopted findings, and closed-loop traceability from finding → PRD → Spec → Task → commit. Use after each version release (06 done). Triggers: 复盘, 回顾",
+      "layer": 2,
+      "category": "workflow",
+      "triggers": {
+        "keywords": [],
+        "file_patterns": [],
+        "context": []
+      },
+      "stack_detection": false,
+      "path": "csp-workflow/skills/csp-review-retro/SKILL.md",
       "deps": [],
       "priority": 10
     },

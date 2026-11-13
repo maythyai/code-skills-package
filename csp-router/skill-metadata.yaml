@@ -4,7 +4,7 @@
 # Regenerate: node scripts/build-skill-metadata.mjs
 
 version: 2.0
-generated_at: 2026-11-13T07:48:40.914Z
+generated_at: 2026-11-13T07:57:35.310Z
 skills:
   csp-agent-teams:
     phase: review
@@ -796,6 +796,25 @@ skills:
       - Grep
       - WebFetch
       - WebSearch
+  csp-fix-loop:
+    phase: verify
+    domain: quality
+    role: specialist
+    scope: testing
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - Glob
+      - Grep
+    related_skills:
+      - csp-verify-phase
+      - csp-release-manager
+      - csp-systematic-debugging
+    anti_rationalizations:
+      小小一个问题，不用走完整 fix loop: "跳过 fix loop 静默修复 = 无追溯。每个 gate 失败必须有路由→修复→重验记录。"
+      修了 3 次还不行，再试一次: "3 次同根因失败 = 架构问题。停止修补，质疑设计。"
   csp-full:
     phase: build
     domain: patterns
@@ -1427,6 +1446,23 @@ skills:
       We'll launch cheap and raise prices later: "Early adopters are the segment most willing to pay for uncertainty. Underpricing them trains the market that your product is cheap, and every later increase reads as a betrayal."
       Discounts will drive adoption: "A discount changes who buys, not how many. It permanently lowers the reference price and attracts the segment most likely to churn."
       Nobody reads the pricing page: "The pricing page is the highest-intent page on the site. Confusion there converts directly into lost revenue."
+  csp-product-design-convergence:
+    phase: plan
+    domain: architecture
+    role: architect
+    scope: design
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
+    related_skills:
+      - csp-roadmap-planner
+      - csp-prd-generation
+      - csp-product-lens-reviewer
+    anti_rationalizations:
+      规划通过了就不需要收敛审查: "收敛闸门是外环→内环的硬 gate——不通过不进 01。定位漂移/架构混乱/边界模糊都在这里拦截。"
   csp-product-discovery-orchestrator:
     phase: define
     domain: architecture
@@ -1663,6 +1699,24 @@ skills:
       We don't have data for RICE: "Use ICE or MoSCoW which work with less data. Absence of data is itself information."
       Let's score all 50 ideas with RICE: "Effort and reach estimates for ideas that should never have been evaluated are invention. Run the funnel's cheap binary gates first."
       The weighting came out wrong, let's adjust it: "Changing a threshold after seeing which ideas it killed is reverse-engineering the answer. Record the reason or leave it."
+  csp-review-retro:
+    phase: review
+    domain: quality
+    role: reviewer
+    scope: review
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
+    related_skills:
+      - csp-retro
+      - csp-agent-self-evaluation
+      - csp-code-review
+    anti_rationalizations:
+      复盘不重要，下个版本直接开始: "不复盘 = 同一个坑踩两次。07 findings 是下一轮 01 的事实输入。"
+      问题太多，挑几个重要的说: "全部记录——open/deferred 的都有去处。漏记的 finding 不会自己消失。"
   csp-roadmap-planner:
     phase: plan
     domain: architecture
