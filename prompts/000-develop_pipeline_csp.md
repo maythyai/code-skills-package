@@ -23,7 +23,7 @@ Spec 验收门：PRD 含背景/目标/功能清单/Given-When-Then 验收标准�
 
 **Spec 产出可测试性点**（S3 Spec 生成时同步产出，供 Test Pipeline TD 用例设计消费）：
 - **接口契约** → 每个端点/请求-响应对 → 对应 ≥1 条 API 测试用例
-- **数据模型** → 每个 entity/字段/约束 → 对应用例；同步产出 DDL，逐字段与 PRD 功能需求对齐
+- **数据模型** → 每个 entity/字段/约束 → 对应用例；同步产出 DDL，逐字段与 PRD 功能需求对齐。Spec 中的字段名是**唯一真相源**——API 响应、代码 model、DB 列三者从此派生。开发中新发现的字段必须回写 Spec（Spec 是活的，不是写完就归档的）
 - **业务规则** → 每条规则 → 对应正常+异常+边界用例
 - **错误场景** → 每个错误码/异常路径 → 对应 negative 用例
 - **状态机** → 每个合法/非法迁移 → 对应状态迁移用例
@@ -84,6 +84,7 @@ Spec 验收门：PRD 含背景/目标/功能清单/Given-When-Then 验收标准�
   Check 5.8a: SQL 审查 → [[skill:csp-sql-reviewer]]（新增/变更 SQL 全量过审）
   Check 5.8b: DB 状态断言 → [[skill:csp-db-state-assertion]]（写操作前后 DB 状态验证，字段完整性）
   Check 5.8c: Schema 漂移检测 → [[skill:csp-schema-drift-detection]]（ORM 声明 vs information_schema 物理列 diff——迁移工具说 head≠真实 schema 时阻断发布）
+  Check 5.8d: 字段名一致性 → Spec 数据模型定义的字段名 vs 代码 model/API 响应/DB 列名三者对齐——Spec 写 `user_id` 但 API 返回 `id` → BLOCKED。Spec 是字段名的唯一真相源
   Check 5.9: 安全审查 → [[skill:csp-security-review]]（鉴权/越权/注入/XSS/CSRF/敏感数据脱敏/依赖漏洞）
   Check 5.10: 后端性能 → [[skill:csp-backend-performance]]（API P95/慢查询索引/N+1/缓存策略/连接池，有后端时选做）
   Check 5.11: 前后端接线验证 → 基于实际路由/消费者、运行证据核对；静态搜索只能给候选，不能称机器接线门禁。无消费者先区分公开 API/后台任务与 UI 必需能力，按本版 Spec 裁决
@@ -179,6 +180,7 @@ gate 即授权，全自动推进。打断条件（仅 6 类）：战略根本模
 | DB 性能 | `[[skill:csp-db-performance]]`（慢查询/索引优化/连接池/锁竞争） |
 | DB 状态断言 | `[[skill:csp-db-state-assertion]]`（写操作前后 DB 状态验证/字段完整性） |
 | Schema 漂移检测 | `[[skill:csp-schema-drift-detection]]`（ORM 声明 vs information_schema 物理列 diff——Check 5.8c） |
+| 字段名一致性 | Spec 数据模型字段名 vs 代码/API/DB 对齐——Check 5.8d。Spec 是字段名唯一真相源，开发中新字段回写 Spec |
 | API 治理 | `[[skill:csp-api-governance]]`（契约/版本管理/限流/认证授权模式） |
 | 代码整洁 | `[[skill:csp-code-simplification]]`（死代码清理/AI 冗余消除/重复合并）+ `[[skill:csp-refactoring-strategies]]`（大规模重构路径） |
 | 最小改动工程 | `[[skill:csp-minimal-change-engineer]]`（只修该修的，拒绝 scope creep） |
