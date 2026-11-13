@@ -41,3 +41,16 @@ origin: <original source if migrated, otherwise omit>
 
 - [[<related-skill-1>]] — when <scenario>
 - [[<related-skill-2>]] — when <scenario>
+
+---
+
+> **📢 New v3 template available!**
+> This is the legacy v2 template. For new skills, use `shared/templates/SKILL-TEMPLATE-v3.md`
+> which includes:
+> - Quality tiers (A/B/C) and section requirements by skill type
+> - Frontmatter type field (technique/pattern/reference/workflow/guardian)
+> - Structured sections: Routing Logic, Anti-Patterns, Rationalization Defense, Completion Signal
+> - Token budget guidance and CSO optimization tips
+> - Good/bad examples for each section
+>
+> See [SKILL-SPEC.md](../docs/reference/SKILL-SPEC.md) for the complete v3 specification.

@@ -1,24 +1,28 @@
 ---
 name: csp-tdd
 description: >
-  Test-Driven Development: write failing test first, minimal code to pass, then refactor.
-  Enforces Red-Green-Refactor cycle with 80%+ coverage across unit, integration, and E2E tests.
-  Use when implementing any feature, fixing bugs, or refactoring code.
+  Use when implementing any feature or bugfix, before writing implementation code.
+  Enforces Red-Green-Refactor cycle with 80%+ coverage across unit, integration,
+  and E2E tests. Triggers on "TDD", "test first", "test driven", "write tests".
+  Keywords: TDD, test first, test driven, red green refactor, 测试驱动, 单元测试.
+version: "1.1.0"
 layer: 1
 category: meta
+type: guardian
 phase: build
 domain: testing
+role: guardian
 scope: implementation
 tools: [Read, Write, Edit, Bash, Glob, Grep]
 dependencies:
   skills: [csp-spec-contract]
-related_skills: [csp-verification, csp-code-review]
+related_skills: [csp-verification, csp-code-review, csp-systematic-debugging]
 anti_rationalizations:
   "I'll add tests later": "Later never comes. Write tests first."
   "This is too simple to test": "Simple code has bugs too. Tests are cheap."
   "Tests slow me down": "Tests prevent debugging sessions that take longer."
-version: "1.0.0"
-role: specialist
+  "Need to explore first": "Fine. Throw away exploration, start with TDD."
+  "Test hard = design unclear": "Hard to test = hard to use. Simplify interface."
 ---
 
 | Test Layer | Scope | When to Write |

@@ -4,7 +4,7 @@
 # Regenerate: node scripts/build-skill-metadata.mjs
 
 version: 2.0
-generated_at: 2026-11-13T08:22:18.294Z
+generated_at: 2026-11-13T09:44:46.918Z
 skills:
   csp-agent-teams:
     phase: review
@@ -392,6 +392,15 @@ skills:
       - Edit
       - Glob
       - Grep
+    related_skills:
+      - csp-tdd
+      - csp-scope-guard
+      - csp-prompt-optimizer
+    anti_rationalizations:
+      This skill is too simple to need a full template: "Simple skills still need When to Use, Process, and Verification. The template scales down — skip sections, don't skip structure."
+      I'll add examples later: "Examples define the contract. Without them, every user interprets the process differently. Later never comes."
+      I know this domain well enough to skip the checklist: "Expertise is where blind spots live. The checklist catches what intuition misses."
+      Batching multiple skills is more efficient: "Each skill needs its own RED-GREEN-REFACTOR cycle. Batch-testing dilutes the signal — you won't know which skill fixed which failure."
   csp-agent-governance:
     phase: build
     domain: security

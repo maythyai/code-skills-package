@@ -10,7 +10,7 @@ L1  csp-meta      — methodology: brainstorming, TDD, debugging, spec-driven (2
 L2  csp-workflow  — project lifecycle: plan → execute → verify → ship (206 entries)
 L3  csp-patterns  — language/framework patterns, reviewers, build-resolvers (419 entries)
 L4  csp-runtime   — autopilot, ralph, wiki, remember, self-improve (57 entries)
-Total: 710 entries across 5 layers (2 deprecated, carry redirect targets)
+Total: 716 entries across 5 layers (2 deprecated, carry redirect targets)
 ```
 
 ## Skill 内容规范（强制，所有新增/移植技能必须遵守）
@@ -54,7 +54,9 @@ npm test               # validate:all + build:graph + node --test test/ (20 inva
 - [INSTALL.md](./docs/INSTALL.md) — installation guide
 - [UPDATE.md](./docs/UPDATE.md) — update guide
 - [VERSIONING.md](./docs/VERSIONING.md) — version management (X=arch/system-refactor, Y=module/feature, Z=fix)
-- [CONTRIBUTING.md](./CONTRIBUTING.md) — how to contribute a skill or fix
+- [CONTRIBUTING.md](./CONTRIBUTING.md) — how to contribute a skill or fix (quality tiers, AI usage policy, skill review process)
+- [SKILL-TEMPLATE-v3.md](./shared/templates/SKILL-TEMPLATE-v3.md) — v3 增强版模板（quality tiers, type classification, CSO, token budgets）
+- [SKILL-SPEC.md](./docs/reference/SKILL-SPEC.md) — v3 规范（frontmatter + body structure requirements）
 - [scripts/README.md](./scripts/README.md) — build/validate/maintenance tooling reference
 - [docs/analysis/](./docs/analysis/project-review-2026-08.md) — audit reports + upgrade plans (project-review-2026-08, REVIEW-PROGRAMMING-SKILLS, cross-layer-testing-case-study)
 
@@ -106,6 +108,12 @@ npm test               # validate:all + build:graph + node --test test/ (20 inva
 3. **测试先于实现** — 写代码前先写测试（TDD）
 4. **验证先于完成** — 声称完成前必须运行验证命令
 
+## 技能质量（v3 规范）
+
+新增/编辑 skill 请使用 v3 模板 (`shared/templates/SKILL-TEMPLATE-v3.md`)，按技能类型（technique/pattern/reference/workflow/guardian）选择 Required Sections，目标 Tier B 以上。
+编写前加载 `csp-writing-skills` 获取结构化质量指南。
+验证：`node scripts/validate-skill-v3.mjs <skill-path> --strict`
+
 ## 可用 Skills
 
 Skills 位于 `.claude/skills/` 目录，按五层架构组织。
@@ -127,7 +135,7 @@ Skills 位于 `.claude/skills/` 目录，按五层架构组织。
 - **csp-using-git-worktrees**: Use when starting feature work that needs isolation from current workspace or be
 - **csp-requesting-code-review**: Use when completing tasks, implementing major features, or before merging to ver
 - **csp-systematic-debugging**: Use when encountering any bug, test failure, or unexpected behavior, before prop
-- **csp-writing-skills**: Use when creating new skills, editing existing skills, or verifying skills work 
+- **csp-writing-skills**: Use when creating new CSP skills, editing existing skills, or verifying skills meet quality standards before release. Covers frontmatter, body structure (v3 quality tiers A/B/C), skill type classification (technique/pattern/reference/workflow/guardian), CSO optimization, token budgets, and RED-GREEN-REFACTOR testing. Keywords: write skill, create skill, edit skill, skill quality, 编写技能, 创建技能, 技能模板. 
 - **csp-tdd**: >
 - **csp-party-mode**: Multi-agent collaboration for complex problem-solving with specialized AI agents
 - **csp-spec-driven-development**: CSP-native spec-driven methodology integrated with CSP phase workflows. Use when

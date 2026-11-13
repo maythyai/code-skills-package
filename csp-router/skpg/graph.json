@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generated_at": "2026-11-13T08:22:21.311Z",
+  "generated_at": "2026-11-13T09:44:49.733Z",
   "nodes": {
     "5b37ecd541b4": {
       "id": "5b37ecd541b4",
@@ -40837,6 +40837,24 @@
       "metadata": {}
     },
     {
+      "source": "3e6c5a67a97b",
+      "target": "3c187c080b19",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "3e6c5a67a97b",
+      "target": "a3d764f93a45",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
+      "source": "3e6c5a67a97b",
+      "target": "09d2dd4a494a",
+      "kind": "related_to",
+      "metadata": {}
+    },
+    {
       "source": "96d3776d9c7e",
       "target": "ea95f2f2efaa",
       "kind": "related_to",
@@ -45057,6 +45075,36 @@
     {
       "source": "3e6c5a67a97b",
       "target": "3c187c080b19",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "3e6c5a67a97b",
+      "target": "a3d764f93a45",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "3e6c5a67a97b",
+      "target": "09d2dd4a494a",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "3e6c5a67a97b",
+      "target": "6e52183d1edb",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "3e6c5a67a97b",
+      "target": "7648612eadf8",
+      "kind": "depends_on",
+      "metadata": {}
+    },
+    {
+      "source": "3e6c5a67a97b",
+      "target": "7aaf943687fc",
       "kind": "depends_on",
       "metadata": {}
     },
@@ -58149,18 +58197,18 @@
   ],
   "stats": {
     "node_count": 2783,
-    "edge_count": 6260,
+    "edge_count": 6268,
     "skill_count": 716,
     "trigger_count": 2057,
     "phase_count": 6,
     "category_count": 5,
-    "depends_on_count": 1660,
-    "related_to_count": 1269,
+    "depends_on_count": 1665,
+    "related_to_count": 1272,
     "edge_types": {
       "contains": 1056,
       "triggers": 2275,
-      "depends_on": 1660,
-      "related_to": 1269
+      "depends_on": 1665,
+      "related_to": 1272
     }
   }
 }

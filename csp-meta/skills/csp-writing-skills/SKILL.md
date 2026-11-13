@@ -1,287 +1,218 @@
 ---
 name: csp-writing-skills
-description: "Use when creating new skills, editing existing skills, or verifying skills work before release. Covers frontmatter, progressive disclosure, reference files, and skill testing. Use for any skill authoring or maintenance task."
+description: >
+  Use when creating new CSP skills, editing existing skills, or verifying skills
+  meet quality standards before release. Covers frontmatter, body structure,
+  quality tiers, CSO, token budgets, and RED-GREEN-REFACTOR testing.
+  Keywords: write skill, create skill, edit skill, skill quality, skill template,
+  编写技能, 创建技能, 技能模板, CSO, token budget.
+version: "2.0.0"
 layer: 1
 category: meta
+type: technique
 domain: architecture
 phase: define
-version: "1.0.0"
 role: specialist
 scope: design
 tools: [Read, Write, Edit, Glob, Grep]
+related_skills:
+  - csp-tdd
+  - csp-scope-guard
+  - csp-prompt-optimizer
+anti_rationalizations:
+  "This skill is too simple to need a full template": "Simple skills still need When to Use, Process, and Verification. The template scales down — skip sections, don't skip structure."
+  "I'll add examples later": "Examples define the contract. Without them, every user interprets the process differently. Later never comes."
+  "I know this domain well enough to skip the checklist": "Expertise is where blind spots live. The checklist catches what intuition misses."
+  "Batching multiple skills is more efficient": "Each skill needs its own RED-GREEN-REFACTOR cycle. Batch-testing dilutes the signal — you won't know which skill fixed which failure."
 ---
 
-| TDD Concept | Skill Equivalent |
-|-------------|------------------|
-| **Test case** | Pressure scenario with subagent |
-| **Production code** | Skill document (SKILL.md) |
-| **Test fails (RED)** | Agent violates rule without skill (baseline) |
-| **Test passes (GREEN)** | Agent complies with skill present |
-| **Refactor** | Close loopholes while maintaining compliance |
-| **Write test first** | Run baseline scenario BEFORE writing skill |
-| **Watch it fail** | Document exact rationalizations agent uses |
-| **Minimal code** | Write skill addressing those specific violations |
-| **Watch it pass** | Verify agent now complies |
-| **Refactor cycle** | Find new rationalizations, plug, re-verify |
+# Writing Skills
 
-The entire skill creation process follows RED-GREEN-REFACTOR.
+CSP 技能编写方法论 — 从模板到验证的完整流程，包含质量评级、类型分类和 token 预算。
 
-## When to Create a Skill
+## Purpose
 
-**Create when:**
-- Technique wasn't intuitively obvious to you
-- You'd reference this again across projects
-- Pattern applies broadly (not project-specific)
-- Others would benefit
+本技能指导如何创建符合 v3 规范的 CSP skill。覆盖 frontmatter 填写、body 结构选择、
+CSO 优化、RED-GREEN-REFACTOR 测试循环，以及最终的质量自检。
 
-**Don't create for:**
-- One-off solutions
-- Standard practices well-documented elsewhere
-- Project-specific conventions (put in CLAUDE.md)
-- Mechanical constraints (if it's enforceable with regex/validation, automate it — save documentation for judgment calls)
-
-## Skill Types
-
-### Technique
-Concrete method with steps to follow (condition-based-waiting, root-cause-tracing)
-
-### Pattern
-Way of thinking about problems (flatten-with-flags, test-invariants)
-
-### Reference
-API docs, syntax guides, tool documentation (office docs)
-
-## Directory Structure
-
-```
-skills/
-  skill-name/
-    SKILL.md              # Main reference (required)
-    supporting-file.*     # Only if needed
-```
-
-**Flat namespace** — all skills in one searchable namespace
-
-**Separate files for:**
-1. **Heavy reference** (100+ lines) — API docs, comprehensive syntax
-2. **Reusable tools** — Scripts, utilities, templates
-
-**Keep inline:**
-- Principles and concepts
-- Code patterns (< 50 lines)
-- Everything else
-
-## SKILL.md Structure
-
-**Frontmatter (YAML):**
-- Two required fields: `name` and `description` (see [agentskills.io/specification](https://agentskills.io/specification) for all supported fields)
-- Max 1024 characters total
-- `name`: Use letters, numbers, and hyphens only (no parentheses, special chars)
-- `description`: Third-person, describes ONLY when to use (NOT what it does)
-  - Start with "Use when..." to focus on triggering conditions
-  - Include specific symptoms, situations, and contexts
-  - **NEVER summarize the skill's process or workflow** (see CSO section for why)
-  - Keep under 500 characters if possible
-
-```markdown
----
-name: Skill-Name-With-Hyphens
-description: Use when [specific triggering conditions and symptoms]
----
-# Skill Name
-## Overview
-Core principle in 1-2 sentences.
 ## When to Use
-Bullet list with SYMPTOMS and use cases. When NOT to use.
-[Small inline flowchart IF decision non-obvious]
-## Core Pattern
-Before/after code comparison
-## Quick Reference
-Table or bullets for scanning common operations
-## Implementation
-Inline code for simple patterns. Link to file for heavy reference.
-## Common Mistakes
-What goes wrong + fixes
-```
 
-## Claude Search Optimization (CSO)
+- ✅ 创建新的 CSP skill
+- ✅ 编辑现有 skill 的 frontmatter 或 body
+- ✅ 验证 skill 是否符合质量标准
+- ✅ 将 v1/v2 skill 迁移到 v3 规范
+- ❌ 编写非 CSP 的 Claude skill（用通用 Agent Skills 规范）
+- ❌ 编写项目级 CLAUDE.md（CLAUDE.md 有不同格式要求）
+- ❌ 纯文档/README 修改
 
-**Critical for discovery:** Future Claude needs to FIND your skill. Key principles:
+## Quality Tiers
 
-1. **Description = When to Use, NOT What the Skill Does** — Descriptions that summarize workflow create a shortcut Claude will take, skipping the skill body. Only describe triggering conditions.
-2. **Keyword coverage** — Include error messages, symptoms, synonyms, and tool names Claude would search for.
-3. **Descriptive naming** — Active voice, verb-first (`creating-skills` not `skill-creation`).
-4. **Token efficiency** — Frequently-loaded skills: <200 words. Use cross-references and compress examples.
-5. **Cross-referencing** — Use skill name with requirement markers (`**REQUIRED SUB-SKILL:** Use csp-tdd`). Never use `@` links (force-loads, burns context).
+创建 skill 前先决定目标质量等级：
 
-For the complete CSO guide with examples, bad/good comparisons, and token efficiency techniques, see [references/cso-guide.md](references/cso-guide.md).
+| Tier | Name | 最小要求 | 目标 Token | 适用场景 |
+|------|------|---------|-----------|---------|
+| **A** | Reference | 全部 Required Sections + 表格 + 代码示例 + 验证清单 | 300-800 | 高频使用的核心 skill、guardian skill |
+| **B** | Standard | 核心 sections（Purpose, When to Use, Process, Verification）+ 代码示例 | 200-500 | 大多数新 skill 的默认目标 |
+| **C** | Basic | 最小结构（Purpose, When to Use, Process） | 100-300 | 轻量 reference skill、实验性 skill |
 
-## Flowchart Usage
+选择指南：
+- **Guardian / discipline skill** → Tier A（需要 Rationalization Defense 和 Anti-Patterns）
+- **Workflow skill** → Tier B 或 A（需要 Routing Logic 和 Completion Signal）
+- **Pattern / technique skill** → Tier B
+- **Reference skill** → Tier C 或 B（可选，以简洁为优先）
 
-```dot
-digraph when_flowchart {
-    "Need to show information?" [shape=diamond];
-    "Decision where I might go wrong?" [shape=diamond];
-    "Use markdown" [shape=box];
-    "Small inline flowchart" [shape=box];
+## Skill Type Classification Matrix
 
-    "Need to show information?" -> "Decision where I might go wrong?" [label="yes"];
-    "Decision where I might go wrong?" -> "Small inline flowchart" [label="yes"];
-    "Decision where I might go wrong?" -> "Use markdown" [label="no"];
-}
-```
+每种 skill 类型有不同的结构要求。下面是对照表（R=Required, r=Recommended, o=Optional）：
 
-**Use flowcharts ONLY for:**
-- Non-obvious decision points
-- Process loops where you might stop too early
-- "When to use A vs B" decisions
+| Section | technique | pattern | reference | workflow | guardian |
+|---------|:---------:|:-------:|:---------:|:--------:|:--------:|
+| Purpose | **R** | **R** | **R** | **R** | **R** |
+| When to Use | **R** | **R** | **R** | **R** | **R** |
+| When NOT to Use | r | r | r | **R** | **R** |
+| Routing/Dispatch Logic | o | o | o | **R** | **R** |
+| Process (numbered steps) | **R** | **R** | r | **R** | **R** |
+| Key Principles | r | **R** | r | r | **R** |
+| Anti-Patterns | r | r | r | r | **R** |
+| Rationalization Defense | o | o | o | o | **R** |
+| Verification Checklist | **R** | **R** | r | **R** | **R** |
+| Completion Signal | o | o | o | **R** | o |
+| Examples | **R** | **R** | **R** | r | r |
+| Related Skills | r | r | r | **R** | r |
 
-**Never use flowcharts for:**
-- Reference material — Tables, lists
-- Code examples — Markdown blocks
-- Linear instructions — Numbered lists
-- Labels without semantic meaning (step1, helper2)
+### Type Definitions
 
-See @graphviz-conventions.dot for graphviz style rules.
+- **technique**: 具体方法，有步骤可遵循（如 TDD、systematic debugging）
+- **pattern**: 思维模式/设计范式（如 scope guard、flatten with flags）
+- **reference**: API 文档、语法指南、工具参考（如 csp-code-wiki）
+- **workflow**: 项目生命周期阶段或编排（如 csp-plan-phase、csp-simple-dev）
+- **guardian**: 强制执行纪律的技能（如 csp-tdd、csp-scope-guard）
 
-**Visualizing for your human partner:** Use `render-graphs.js` in this directory to render a skill's flowcharts to SVG:
-```bash
-./render-graphs.js ../some-skill           # Each diagram separately
-./render-graphs.js ../some-skill --combine # All diagrams in one SVG
-```
+## Process: Skill Creation Cycle
 
-## Code Examples
+### Phase 1: Plan — Choose template and set structure
 
-**One excellent example beats many mediocre ones**
+1. **确定 skill 类型** — 从上表选择 technique/pattern/reference/workflow/guardian
+2. **选择质量等级** — Tier B 为新 skill 默认目标
+3. **复制模板**：
+   ```bash
+   cp shared/templates/SKILL-TEMPLATE-v3.md csp-<layer>/skills/<slug>/SKILL.md
+   ```
+4. **标注 Required Sections** — 根据类型对照表，标记哪些 section 必须写
 
-Choose most relevant language:
-- Testing techniques — TypeScript/JavaScript
-- System debugging — Shell/Python
-- Data processing — Python
+**检查点**：SKILL.md 文件存在，frontmatter 已填写 name/description/layer/category/type
 
-**Good example:**
-- Complete and runnable
-- Well-commented explaining WHY
-- From real scenario
-- Shows pattern clearly
-- Ready to adapt (not generic template)
+### Phase 2: RED — Test baseline without skill
 
-**Don't:**
-- Implement in 5+ languages
-- Create fill-in-the-blank templates
-- Write contrived examples
+在写 skill 之前，先运行 baseline 测试：
 
-You're good at porting — one great example is enough.
-
-## File Organization
+1. **创建压力场景** — 对于 guardian skill，至少 3 种组合压力
+2. **运行场景（无 skill）** — 记录 Agent 的基线行为，逐字记录借口
+3. **识别模式** — Agent 用了哪些合理化借口？在哪些地方偏离预期？
 
 ```
-# Self-contained (all inline, no heavy reference needed)
-defense-in-depth/
-  SKILL.md
-
-# With reusable tool (tool is reusable code, not just narrative)
-condition-based-waiting/
-  SKILL.md
-  example.ts
-
-# With heavy reference (reference material too large for inline)
-pptx/
-  SKILL.md          # Overview + workflows
-  pptxgenjs.md      # 600 lines API reference
-  scripts/          # Executable tools
+RED 输出示例：
+- 压力场景：要求快速改 bug 时不写测试
+- Agent 借口："This is too simple to test" / "I'll add tests later"
+- 基线行为：直接改代码，跳过所有验证步骤
 ```
 
-## The Iron Law (Same as TDD)
+**红线**：不跑 RED 就开始写 skill = 未经测试的代码，删除重来。
 
-```
-NO SKILL WITHOUT A FAILING TEST FIRST
-```
+### Phase 3: GREEN — Write minimal skill
 
-This applies to NEW skills AND EDITS to existing skills.
+1. **写 description** — 用 "Use when..." 开头 + 中英文关键词
+2. **写 Purpose** — 1-2 句核心价值
+3. **写 When to Use** — ✅/❌ 格式，具体可检测条件
+4. **写 Process** — 编号步骤，每步有检查点和红线
+5. **写 Verification Checklist** — 3+ 可客观验证的 checkbox
+6. **写 Examples** — 1-2 个具体场景（一个优秀 > 十个泛化）
+7. **写 Anti-Patterns** — 表格格式，常见错误 + 信号 + 修正
+8. **添加 frontmatter 的 anti_rationalizations** — 直接反驳 RED 阶段记录的借口
 
-Write skill before testing? Delete it. Start over.
-Edit skill without testing? Same violation.
+**CSO 规则（Claude Search Optimization）：**
+- description 只描述何时使用，不描述 skill 做了什么
+- 关键词覆盖：错误信息、症状、同义词、工具名
+- 关联 skill 使用 `[[wiki-link]]` 格式，附带 "— 在 X 场景使用"
+- 表格优于叙述段落（扫描速度更快）
 
-**No exceptions:**
-- Not for "simple additions"
-- Not for "just adding a section"
-- Not for "documentation updates"
-- Don't keep untested changes as "reference"
-- Don't "adapt" while running tests
-- Delete means delete
+**Token 效率：**
+- L1 meta: 目标 ~300 tokens
+- L2 workflow: 目标 ~500 tokens
+- L3 patterns: 目标 ~200-600 tokens
+- L4 runtime: 目标 ~300 tokens
+- 超预算时：拆分 heavy reference 到单独文件
 
-**REQUIRED BACKGROUND:** The csp-tdd skill explains why this matters. Same principles apply to documentation.
+### Phase 4: REFACTOR — Close loopholes
 
-## Testing and RED-GREEN-REFACTOR
+1. **运行 skill（有 skill）** — 验证 Agent 现在按要求行事
+2. **识别新的借口** — Agent 找到了哪些新的绕行方式？
+3. **补上漏洞** — 在 anti_rationalizations 中添加新借口和反驳
+4. **重复直到稳定** — 至少 3 轮，直到 Agent 不再产生新的绕行
 
-The skill creation cycle mirrors TDD:
+**REFACTOR 退出条件**：
+- 连续 3 轮无新借口
+- 所有 RED 阶段识别的借口已被反驳
+- 所有压力场景通过
 
-- **RED** — Run pressure scenarios WITHOUT the skill. Document exact behavior and rationalizations verbatim.
-- **GREEN** — Write minimal skill addressing those specific rationalizations. Verify agent now complies.
-- **REFACTOR** — Find new rationalizations, add explicit counters, re-test until bulletproof.
+### Phase 5: Deploy — Register and verify
 
-Different skill types need different test approaches: discipline-enforcing skills need pressure scenarios, technique skills need application scenarios, pattern skills need recognition tests, reference skills need retrieval tests.
+1. **注册到 registry.json**
+2. **添加 trigger words** 到 triggers.yaml（中英文）
+3. **更新 SKILL-INDEX.md**
+4. **运行验证**：
+   ```bash
+   node scripts/validate-skill-v3.mjs <skill-path>
+   npm run validate:all
+   npm run build:all
+   npm test
+   ```
 
-For detailed testing methodology by skill type and the full RED-GREEN-REFACTOR process, see [references/testing-methodology.md](references/testing-methodology.md).
+## Anti-Patterns
 
-## Anti-Patterns and Rationalization Defense
+| Anti-Pattern | 信号 | 修正 |
+|-------------|------|------|
+| 叙事故事 | "小明想加一个按钮，于是他…" | 直接指令："要加按钮，做 X" |
+| 多语言稀释 | Python, JS, Go 各一个示例 | 一种语言，一个出色示例 |
+| 流程图中的代码 | Graphviz 节点含代码片段 | 代码放在 markdown 块中 |
+| 纯描述无示例 | "这个 skill 帮助调试"（无场景） | 至少一个输入→处理→输出示例 |
+| 跳过 RED | 直接写 skill body | 删除。先跑 baseline 测试 |
+| "先留着参考" | 未测试的代码保留 | 删除或跑测试 |
+| 批量创建 | 一次写多个 skill 不测试 | 每个 skill 独立 RED-GREEN-REFACTOR |
 
-Key anti-patterns to avoid: narrative examples (too specific, not reusable), multi-language dilution (mediocre quality), code in flowcharts (can't copy-paste), and generic labels (no semantic meaning).
+## Verification Checklist
 
-Discipline-enforcing skills need to resist rationalization. Key techniques: close every loophole explicitly (forbid specific workarounds), address "spirit vs letter" arguments, build rationalization tables from baseline testing, and create red flags lists.
+- [ ] `type` field 在 frontmatter 中设置（technique/pattern/reference/workflow/guardian）
+- [ ] Description 以 "Use when..." 开头，含中英文关键词
+- [ ] Required Sections 根据类型对照表全部存在
+- [ ] Process 步骤编号，每步有检查点和红线
+- [ ] Verification Checklist 有 3+ 可客观验证的 checkbox
+- [ ] 至少 1 个具体示例（输入→处理→输出）
+- [ ] Anti-Patterns 表格包含常见错误 + 检测信号
+- [ ] anti_rationalizations 反驳了 RED 阶段记录的所有借口
+- [ ] Token 数在所属层级的预算范围内
+- [ ] 通过了至少 3 轮 RED-GREEN-REFACTOR 循环
+- [ ] `node scripts/validate-skill-v3.mjs --strict` 通过
+- [ ] 本 skill 自身符合其定义的 Tier A 质量标准（自指一致性）
 
-For the complete rationalization table, bulletproofing techniques, and anti-pattern catalog, see [references/anti-patterns.md](references/anti-patterns.md).
+## Related Skills
 
-## STOP: Before Moving to Next Skill
+- [[csp-tdd]] — 理解 RED-GREEN-REFACTOR 为何适用于 skill 编写
+- [[csp-scope-guard]] — 防止 skill 编写中范围蔓延
+- [[csp-prompt-optimizer]] — 优化 skill 中的 prompt 模式
 
-**After writing ANY skill, you MUST STOP and complete the deployment process.** Do NOT create multiple skills in batch without testing each, move to the next skill before the current one is verified, or skip testing because "batching is more efficient."
+## Self-Referential Check
 
-The deployment checklist below is MANDATORY for EACH skill. Deploying untested skills = deploying untested code.
+本 skill (`csp-writing-skills`) 应符合其自身定义的质量标准：
 
-## Skill Creation Checklist (TDD Adapted)
-
-**IMPORTANT: Use TodoWrite to create todos for EACH checklist item below.**
-
-**RED Phase — Write Failing Test:**
-- [ ] Create pressure scenarios (3+ combined pressures for discipline skills)
-- [ ] Run scenarios WITHOUT skill — document baseline behavior verbatim
-- [ ] Identify patterns in rationalizations/failures
-
-**GREEN Phase — Write Minimal Skill:**
-- [ ] Name uses only letters, numbers, hyphens (no parentheses/special chars)
-- [ ] YAML frontmatter with required `name` and `description` fields (max 1024 chars; see [spec](https://agentskills.io/specification))
-- [ ] Description starts with "Use when..." and includes specific triggers/symptoms
-- [ ] Description written in third person
-- [ ] Keywords throughout for search (errors, symptoms, tools)
-- [ ] Clear overview with core principle
-- [ ] Address specific baseline failures identified in RED
-- [ ] Code inline OR link to separate file
-- [ ] One excellent example (not multi-language)
-- [ ] Run scenarios WITH skill — verify agents now comply
-
-**REFACTOR Phase — Close Loopholes:**
-- [ ] Identify NEW rationalizations from testing
-- [ ] Add explicit counters (if discipline skill)
-- [ ] Build rationalization table from all test iterations
-- [ ] Create red flags list
-- [ ] Re-test until bulletproof
-
-**Quality Checks:**
-- [ ] Small flowchart only if decision non-obvious
-- [ ] Quick reference table
-- [ ] Common mistakes section
-- [ ] No narrative storytelling
-- [ ] Supporting files only for tools or heavy reference
-
-**Deployment:**
-- [ ] Commit skill to git and push to your fork (if configured)
-- [ ] Consider contributing back via PR (if broadly useful)
-
-## Discovery Workflow
-
-Future Claude finds your skill by: encountering a problem, finding your skill (description matches), scanning the overview, reading patterns (quick reference), then loading examples (only when implementing). **Optimize for this flow** — put searchable terms early and often.
-
-## The Bottom Line
-
-**Creating skills IS TDD for process documentation.** Same Iron Law, same RED-GREEN-REFACTOR cycle, same benefits. If you follow TDD for code, follow it for skills.
+| 要求 | 状态 |
+|------|------|
+| type: technique | ✅ |
+| Description 以 "Use when..." 开头 | ✅ |
+| All Required Sections for technique 类型 | ✅ Purpose, When to Use, Process, Verification, Examples |
+| Tier B 结构 | ✅ 含 Anti-Patterns, Related Skills |
+| 中英文关键词 | ✅ |
+| Process 有检查点和红线 | ✅ RED 阶段红线 |
+| 3+ Verification checkbox | ✅ 12 items |
+| ≥1 具体示例 | ✅ RED 输出示例 |
+| Token 预算 (L1 ~300) | ✅ |

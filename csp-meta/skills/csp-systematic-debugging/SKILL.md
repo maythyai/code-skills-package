@@ -1,17 +1,24 @@
 ---
 name: csp-systematic-debugging
-description: "Use when encountering any bug, test failure, or unexpected behavior, before proposing fixes. Four-phase evidence-first debugging with anti-rationalization guardrails. Use for every debugging task — simple issues have root causes too."
+description: >
+  Use when encountering any bug, test failure, or unexpected behavior, before
+  proposing fixes. Four-phase evidence-first debugging with anti-rationalization
+  guardrails. Triggers on "debug", "bug", "error", "fix", "调试", "排查", "报错".
+  Keywords: debug, debugging, bug, error, fix, root cause, 调试, 排查, 报错, 修复.
+version: "1.1.0"
 layer: 1
 category: meta
+type: technique
 phase: build
 domain: quality
+role: specialist
 scope: implementation
 tools: [Read, Write, Edit, Bash, Glob, Grep]
 anti_rationalizations:
   "I see the problem, let me fix it": "Seeing symptoms ≠ understanding root cause."
   "One more fix attempt": "3+ failures = architectural problem. Question pattern, don't fix again."
-version: "1.0.0"
-role: specialist
+  "Issue is simple, don't need process": "Simple issues have root causes too. Process is fast for simple bugs."
+  "Emergency, no time for process": "Systematic debugging is FASTER than guess-and-check thrashing."
 ---
 
 | Rationalization | Counter |

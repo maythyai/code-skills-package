@@ -1,23 +1,25 @@
 ---
 name: csp-scope-guard
 description: >
-  Detect and resist scope creep during development. Use when a feature request
-  triggers unplanned work, when "while I'm here" changes pile up, or when the
-  current sprint/task is at risk of expanding beyond its original boundary.
+  Use when a feature request triggers unplanned work, when "while I'm here" changes
+  pile up, or when the current task is at risk of expanding beyond its original boundary.
+  Detects and resists scope creep with boundary definition and parking-lot capture.
+  Keywords: scope creep, scope guard, 范围蔓延, 需求蔓延, while I'm here, parking lot.
+version: "1.1.0"
 layer: 1
 category: meta
+type: guardian
 phase: plan
 domain: quality
+role: guardian
 scope: design
 tools: [Read, Glob, Grep]
-related_skills: [csp-mvp-scoping, csp-strategy, csp-brainstorming]
+related_skills: [csp-mvp-scoping, csp-strategy, csp-brainstorming, csp-hotfix]
 anti_rationalizations:
   "It's just one more small thing": "Small things compound. Ten 'small things' delay a release by a week."
   "I'm already in this file, might as well fix it": "Drive-by fixes bypass review and introduce regressions."
   "The user asked for it": "The user asked for a solution, not every possible feature."
   "It'll be harder to do later": "If it's not critical now, it might never need doing."
-version: "1.0.0"
-role: specialist
 ---
 
 # Scope Guard

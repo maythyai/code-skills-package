@@ -396,7 +396,7 @@
     },
     {
       "name": "csp-writing-skills",
-      "description": "Use when creating new skills, editing existing skills, or verifying skills work before release. Covers frontmatter, progressive disclosure, reference files, and skill testing. Use for any skill authoring or maintenance task.",
+      "description": "Use when creating new CSP skills, editing existing skills, or verifying skills meet quality standards before release. Covers frontmatter, body structure, quality tiers, CSO, token budgets, and RED-GREEN-REFACTOR testing. Keywords: write skill, create skill, edit skill, skill quality, skill template,",
       "layer": 1,
       "category": "meta",
       "triggers": {
