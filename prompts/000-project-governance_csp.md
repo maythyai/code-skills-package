@@ -53,6 +53,8 @@
 - **既有文档整改**：只给出冲突清单和受影响读者；路径/版本/frontmatter 的更改先确定权威与回滚，不自动移动活跃原文。
 - **棕地 CMS 蒸馏**（Phase 1.7）：代码已存在时自动蒸馏入口点→调用链→模块边界→生成 CMS baseline
 
+> 数据字典是项目的**统一表字段文档**——所有表/字段/类型/约束/所属 feature 的唯一真相源。Spec 定义单个 feature 的数据模型，数据字典聚合全项目视角。
+
 ### GK.2 三基线体系
 
 | 基线 | 全称 | 目录 | 生产者 | 消费者 |
@@ -60,8 +62,38 @@
 | **PMS** | Product Module Spec | `.csp/product-spec/` | Planning Phase 5 + 01 PRD | 02 拆解 / 03 技术方案 / 07 复盘 |
 | **CMS** | Code Module Spec | `.csp/code-spec/{app}/` | 00 棕地蒸馏 / 05 增量对齐 | 03 技术方案 ground / 05 开发 / CR |
 | **TMS** | Test Module Spec | `.csp/test-spec/{module}/` | Testing Phase TD + 03 Spec | TU/TI/TE 测试实施 / 门控 |
+| **DDS** | Data Dictionary Spec | `docs/architecture/DATA-SCHEMA.md` | S3 Spec 产出时同步更新 / 05 开发新字段时增量更新 | 全阶段——字段名唯一真相源 |
 
-**三基线闭环**：PMS 定义"要做什么"→ CMS 定义"代码怎么做"→ TMS 定义"怎么验证做得对"→ 07 复盘 findings 回流更新 PMS。
+**三基线闭环**：PMS 定义"要做什么"→ CMS 定义"代码怎么做"→ TMS 定义"怎么验证做得对"→ 07 复盘 findings 回流更新 PMS。DDS 是跨三基线的字段级真相源——PMS 提需求时说"需要用户表"、Spec 设计时说"user_id 是 UUID"、代码/Migration/API 回应时全部从这里取字段名。
+
+**DDS 格式**（`docs/architecture/DATA-SCHEMA.md`）：
+
+```markdown
+# 数据字典 — {project}
+
+> 所有表/字段/类型/约束的唯一真相源。Spec 定义单 feature 数据模型，本文档聚合全项目视角。
+> 更新触发：S3 Spec 产出时 + 05 开发新增字段时 + DB migration 变更时。
+
+## 枚举与常量
+| 名称 | 值 | 含义 | 所属 feature |
+|------|-----|------|-------------|
+| UserRole | admin/editor/viewer | 用户角色 | F-001 用户管理 |
+
+## 表
+### users
+| 字段 | 类型 | 约束 | 默认值 | 说明 | 所属 feature |
+|------|------|------|--------|------|-------------|
+| id | UUID | PK | gen_random_uuid() | 用户唯一标识 | F-001 |
+| email | VARCHAR(255) | UNIQUE NOT NULL | — | 登录邮箱 | F-001 |
+| created_at | TIMESTAMPTZ | NOT NULL | now() | 创建时间 | F-001 |
+| updated_at | TIMESTAMPTZ | NOT NULL | now() | 更新时间 | F-003 审计日志 |
+```
+
+**更新规则**：
+- S3 Spec 产出时，新增 entity → 在 DDS 中建表/加字段行，标注所属 feature
+- 05 开发中新发现需要字段 → **先改 DDS，再改 Spec，再写代码**（DDS 驱动 Spec 驱动代码，不要反过来）
+- DB migration 变更时 → 同步更新 DDS 对应字段行
+- 字段重命名/删字段 → DDS 中标记 `→ renamed to xxx` / `DEPRECATED vX.Y.Z`，保留历史记录
 
 ### GK.3 manifest 回写约定
 
