@@ -64,6 +64,8 @@
 | **TMS** | Test Module Spec | `.csp/test-spec/{module}/` | Testing Phase TD + 03 Spec | TU/TI/TE 测试实施 / 门控 |
 | **DDS** | Data Dictionary Spec | `docs/architecture/DATA-SCHEMA.md` | S3 Spec 产出时同步更新 / 05 开发新字段时增量更新 | 全阶段——字段名唯一真相源 |
 
+**DDS 表命名规则**：表名按业务域命名，禁版本前缀（`v329_` `v328_` 等属于 migration chain，不属于表名）。已有违规表名记录技术债，下一轮架构迭代重命名。
+
 **三基线闭环**：PMS 定义"要做什么"→ CMS 定义"代码怎么做"→ TMS 定义"怎么验证做得对"→ 07 复盘 findings 回流更新 PMS。DDS 是跨三基线的字段级真相源——PMS 提需求时说"需要用户表"、Spec 设计时说"user_id 是 UUID"、代码/Migration/API 回应时全部从这里取字段名。
 
 **DDS 格式**（`docs/architecture/DATA-SCHEMA.md`）：
@@ -319,6 +321,8 @@ updated: "YYYY-MM-DD"
 - **禁止散落根目录**：无 feature/version 后缀的裸文件名（如 `test-cases.md`）禁止出现在根目录
 
 **命名审查**：新增业务实现避免 `_v2`、`-final`、milestone 前缀等无语义副本；用功能职责命名并以 Git 跟踪版本。存量命名要查 import、路由、迁移链与外部协议后提出增量重命名方案，不因匹配模式就直接改动。数据库迁移 revision、按版本发布的 API/Schema 文件等可能依赖精确标识；这些属于工具/协议的稳定主键而非任意豁免，必须保留或完成受控迁移。
+
+**DB 表命名**（文件名的反模式同样适用于数据库）：表名按业务域命名——`crm_followups` 不是 `v329_crm_followups`。版本号属于 migration chain（`alembic history`），不属于表名。`v328_` `v329_` `v332_` `v5559_` 等前缀是 migration batch 标识，禁用于表名——它回答"何时创建"而非"存什么数据"。已有版本号前缀的表 → 记录技术债，下一轮架构迭代中统一重命名（ORM 模型/代码引用/索引/外键同步改）
 
 ---
 

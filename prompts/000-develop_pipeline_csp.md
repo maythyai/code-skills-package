@@ -85,6 +85,7 @@ Spec 验收门：PRD 含背景/目标/功能清单/Given-When-Then 验收标准�
   Check 5.8b: DB 状态断言 → [[skill:csp-db-state-assertion]]（写操作前后 DB 状态验证，字段完整性）
   Check 5.8c: Schema 漂移检测 → [[skill:csp-schema-drift-detection]]（ORM 声明 vs information_schema 物理列 diff——迁移工具说 head≠真实 schema 时阻断发布）
   Check 5.8d: 字段名一致性 → `docs/architecture/DATA-SCHEMA.md`（数据字典）vs 代码 model/API 响应/DB 列名三者对齐——数据字典写 `user_id` 但 API 返回 `id` → BLOCKED
+  Check 5.8e: DB 表命名 → 新增表名禁版本前缀（`v329_` `v328_` 等）。版本号属于 migration chain，不属于表名。违规表名记录技术债，不阻塞发布但必须登记
   Check 5.9: 安全审查 → [[skill:csp-security-review]]（鉴权/越权/注入/XSS/CSRF/敏感数据脱敏/依赖漏洞）
   Check 5.10: 后端性能 → [[skill:csp-backend-performance]]（API P95/慢查询索引/N+1/缓存策略/连接池，有后端时选做）
   Check 5.11: 前后端接线验证 → 基于实际路由/消费者、运行证据核对；静态搜索只能给候选，不能称机器接线门禁。无消费者先区分公开 API/后台任务与 UI 必需能力，按本版 Spec 裁决
