@@ -573,18 +573,21 @@ AI 自主完成，每个阶段按进度条播报，全部完成后输出总测�
 
 ```
 000-product-planning_csp.md
-  │  产出：PRD SPECs（含 AC/功能清单/业务规则）
+  │  产出: ROADMAP (Layer 1) + PRD SPECs (Layer 2, prd_depth: planning)
   │
   ├──→ 000-test_pipeline_csp.md（本文件）
-  │       │  测试 Pipeline：TB→TD→TU→TI→TE→TV→TP→TSEC→TQ
-  │       │  规划级 PRD 只生成测试设想；工程级 PRD + S3 Spec → TB/TD 用例 → 分层实施
-  │       │
-  │       └──→ 嵌入 000-develop_pipeline_csp.md
-  │              开发 Pipeline S6 质量门控（Check 1–5.10）
-  │              TQ 产出测试证据 → 消费 S6 各 Check
+  │      │  测试 Pipeline: TB→TD→TU→TI→TE→TV→TP→TSEC→TQ
+  │      │  planning PRD 只生成测试设想
+  │      │  engineering PRD (Layer 3) + Spec (Layer 4) → TB 正式依据 → TD 用例 → 分层实施
+  │      │
+  │      └──→ 嵌入 000-develop_pipeline_csp.md
+  │             开发 Pipeline S6 质量门控（Check 1–5.14）
+  │             TQ 产出测试证据 → 消费 S6 各 Check
+  │             深度门控: Layer 1-4 全部完成才进 S5
   │
   └──→ 000-develop_pipeline_csp.md
-         开发 Pipeline：01 PRD→02 拆解→...→06 门控→07 复盘
+         开发 Pipeline: Layer 3 (01 engineering 升级) → Layer 4 (03 Spec)
+         → 04 拆解 → 05 实施 → 06 门控+发布 → 07 复盘
 ```
 
 - **上游输入** = 规划阶段的 PRD/ROADMAP 用于预选测试范围；正式 TB 依据是经 01 升级后的工程级 PRD + S3 Spec + TMS 既有基线

@@ -704,13 +704,14 @@ Agent 依功能审阅：根指令/路由卡应便于快速装载；长 PRD/CHANG
   │  项目结构/产物路径/版本管理/文档生命周期
   │
   ├──→ 被 000-product-planning_csp.md 引用
-  │      Planning 产物按 G2.1 表落盘
+  │      Planning 产物按 G2.1 表落盘 (Layer 1: ROADMAP + Layer 2: PRD SPEC)
   │
   ├──→ 被 000-develop_pipeline_csp.md 引用
-  │      Development 产物按 G2.1 表落盘，版本按 G1 管理
+  │      Development 产物按 G2.1 表落盘 (Layer 3: Eng PRD + Layer 4: Spec)
+  │      深度门控: 四层全部完成 → planning_depth_gate_passed → 进 S5
   │
   └──→ 被 000-test_pipeline_csp.md 引用
-         Testing 产物按 G2.1 表落盘，测试代码按 G0.1 co-locate
+         Testing 产物按 G2.1 表落盘，TB 从 Layer 3+4 提取测试依据
 ```
 
 ---

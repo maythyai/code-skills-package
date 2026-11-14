@@ -493,15 +493,17 @@ Phase 0 上下文探测
 
 ```
 000-product-planning_csp.md（本文件）
-  │  产品规划：调研 → 战略 → 路线图 → PRD SPEC
+  │  产出: ROADMAP (Layer 1) + PRD SPECs (Layer 2, prd_depth: planning)
+  │  门控: Phase 2.5 集成审视 + Phase 3 收敛审查
   │
   ├──→ 交棒 000-develop_pipeline_csp.md
-  │      开发 Pipeline：01 PRD → 02 拆解 → ... → 06 发布 → 07 复盘
+  │      Layer 3: 01 升级 (planning→engineering, 同一文件 delta 补全)
+  │      Layer 4: 03 Spec (.csp/planning/spec.md + .csp/tech-design/)
+  │      深度门控: 四层全部完成才允许进 05 执行
+  │      (参见 lifecycle-orchestrator planning_depth_gate)
   │
   └──→ 输入 000-test_pipeline_csp.md
-         测试 Pipeline：PRD SPEC → 测试依据 → 用例设计 → 分层实施 → 门控
-              │
-              └──→ 嵌入开发 Pipeline S6 质量门控
+         测试 Pipeline: engineering PRD (Layer 3) + Spec (Layer 4) → TB→TD→分层实施→门控
 ```
 
 - **规划产出** = PRD SPECs + ROADMAP + FEATURES → 开发 Pipeline 的 01 输入 + 测试 Pipeline 的 TB 输入
