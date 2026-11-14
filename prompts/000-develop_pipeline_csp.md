@@ -19,7 +19,16 @@
 
 Spec 验收门：PRD 含背景/目标/功能清单/Given-When-Then 验收标准；Spec 含技术方案/接口契约/测试计划/风险，关键改动带 file:line 证据。quick-fix 类版本走轻量 Spec 一页纸（改动点+证据+验证方式），主题版本走完整 Spec。
 
-**01→03 深度门控**：01 读 `prd_depth: planning` Draft 时，在同一 PRD 原文上补全工程级业务规则/AC/异常流并评审为 `engineering`，之后 03 产出可执行全栈 Spec。未完成不得进 05，不得以 CHANGELOG/tag 代替实现；失败则记录真实 blocker 并修复或报告，不把 planned 版本自动标 skipped/deferred。运行阶段名以当前 lifecycle 驱动器实际 schema 为准。
+**01→03 深度门控（四层强制完成 gate）**：规划阶段必须四层全部完成才允许进 05 执行（参见 [[workflow:csp-lifecycle-orchestrator]] `planning_depth_gate` 和 [[workflow:csp-roadmap-planner]] Planning Phase Completion Gate）：
+
+```
+Layer 1: ROADMAP.md          ← [[workflow:csp-roadmap-planner]] 产出
+Layer 2: PRD (planning)      ← 同上 Phase 4.5（prd_depth: planning, AC skeleton, thin_sections）
+Layer 3: PRD (engineering)   ← 01 升级: planning → engineering delta 补全（同一文件，≥3 AC/模块，异常矩阵完整）
+Layer 4: Spec (technical)    ← 03 产出: .csp/planning/spec.md + .csp/tech-design/
+```
+
+01 读 `prd_depth: planning` Draft 时，在同一 PRD 原文上补全工程级业务规则/AC/异常流并评审为 `engineering`，之后 03 产出可执行全栈 Spec。缺任一层 → **硬阻塞，禁止进 05**，不得以 CHANGELOG/tag 代替实现；失败则记录真实 blocker 并修复或报告，不把 planned 版本自动标 skipped/deferred。四层全部完成后 lifecycle-orchestrator `planning_depth_gate_passed` 信号通过，方可进入 S5 执行。
 
 **Spec 产出可测试性点**（S3 Spec 生成时同步产出，供 Test Pipeline TD 用例设计消费）：
 - **接口契约** → 每个端点/请求-响应对 → 对应 ≥1 条 API 测试用例
@@ -226,22 +235,27 @@ gate 即授权，全自动推进。打断条件（仅 6 类）：战略根本模
 
 ```
 000-product-planning_csp.md
-  │  产出：ROADMAP + PRD SPECs + FEATURES
+  │  产出: ROADMAP + PRD SPECs (prd_depth: planning, Layer 1+2)
+  │  门控: 集成必要性审视(Phase 2.5) + 收敛审查(product-design-convergence)
   │
   └──→ 000-develop_pipeline_csp.md（本文件）
-          │  开发 Pipeline：01→02→03→04→05→06→07→08→10
-          │  每版本 01 从 PRD SPEC 升级模式启动
+          │  开发 Pipeline: 01(planning→engineering 升级, Layer 3)
+          │                → 03(Spec, Layer 4) → 04(任务拆解)
+          │                → 05(实施) → 06(发布) → 07(复盘)
+          │
+          │  深度门控: 四层全部完成(ROADMAP+Planning PRD+Eng PRD+Spec)
+          │           才允许进 05。缺任一层 = HARD BLOCK。
           │
           ├──← 06 质量门控消费测试证据
           │       │
 000-test_pipeline_csp.md ←──┘
-  │  测试 Pipeline：TB→TD→TU→TI→TE→TV→TP→TSEC→TQ
-  │  工程级 PRD + S3 Spec → 测试依据/用例 → 分层实施 → 嵌入 06 门控
+  │  测试 Pipeline: TB→TD→TU→TI→TE→TV→TP→TSEC→TQ
+  │  engineering PRD (Layer 3) + Spec (Layer 4) → 测试依据/用例 → 分层实施 → 嵌入 06 门控
 ```
 
-- **上游输入** = `000-product-planning_csp.md` 产出的 PRD SPECs + ROADMAP
-- **本文件职责** = 版本交付：Spec→开发→质量门控→发布→复盘
-- **测试嵌入** = `000-test_pipeline_csp.md` 在工程级 PRD 和 S3 Spec 后建立测试基线并实跑，证据供 06 门控使用
+- **上游输入** = `000-product-planning_csp.md` 产出的 ROADMAP + PRD SPECs (Layer 1+2)
+- **本文件职责** = 版本交付: planning→engineering 升级(Layer 3) → Spec(Layer 4) → 拆解 → 开发 → 质量门控 → 发布 → 复盘
+- **测试嵌入** = `000-test_pipeline_csp.md` 在 engineering PRD (Layer 3) 和 Spec (Layer 4) 后建立测试基线并实跑，证据供 06 门控使用
 - **项目治理** = `[[prompts/000-project-governance_csp.md]]` 定义产物路径/版本管理/文档边界——本文档产物落盘遵循 G2.1 约定
 
 ---
