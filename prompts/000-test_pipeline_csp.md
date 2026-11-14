@@ -264,7 +264,7 @@ E2E 测试必须覆盖前端真实交互——不仅仅验证"页面打开展示
 | **安全** | OWASP Top 10/依赖 CVE/权限矩阵 | 注入/越权/敏感数据泄漏/无速率限制 |
 | **性能** | N+1 查询/慢 SQL/缓存缺失/首屏 | 热路径无索引/无连接池/首屏 >3s |
 | **可观测** | 日志/指标/链路/告警 | 无结构化日志/无 trace_id/无告警 |
-| **结构健康** | schema drift/类型检查/mock 债务/孤儿路由 | migration 说 head≠物理 schema / 类型检查失败 |
+| **结构健康** | schema drift/类型检查/mock 债务/孤儿路由/**AI 生成文件的 import 路径解析**/**CSS 样式构建验证** | migration 说 head≠物理 schema / 类型检查失败 / import resolution 失败 / CSS parse error |
 
 ### TA.4 审计与测试的协作
 
@@ -290,6 +290,8 @@ TQ 质量门控 ←── 测试证据 + 审计 findings ──→ 裁决报告
 - 有 UI 变更 → visual regression + 设计系统一致性 + 响应式断点
 - 有新增依赖 → 依赖审计 + license 检查
 - 有测试代码变更 → conftest/fixture 加载验证
+- **Agent 生成新文件（.tsx/.ts/.py/.css）→ 逐文件 import 路径 resolve + 运行 type-check/build**
+- **样式文件（.css/.scss/tailwind 配置）变更 → 跑一次完整 build（CSS parse error/build 失败 = BLOCKED）**
 - **findings 闭合门控**：P0 finding 必须 closed（附 fix commit），不得 open/deferred 进 release。3 条以上 P1 同 P0 阻断。新端点无前端消费者 → P1 或标注"有意开放供外部调用"
 - **审计发现不能降级为"已知"**：一个 finding 发现了就是发现了——"已知问题/之前就这样/任务级非 bug"不是继续遗留的理由。要么 06 前修了（closed），要么标 BLOCKED（附具体阻塞点+谁解除+预期版本），要么 deferred（附解除条件）。**禁止"📋 已知"作为 status**——那不是状态，是把问题晾着
 - **审计发现路由**：审计 finding 反映的若是规划级缺口（如"需要前端页面建设"）→ 不作为 audit deferred 积压，而是升为 Planning Phase 2.5 审视候选——由产品规划决定要不要做、排哪个版本。审计不替规划做决策，但审计必须把发现推给规划
@@ -362,7 +364,7 @@ TQ 质量门控 ←── 测试证据 + 审计 findings ──→ 裁决报告
 
 | Gate | 条件 | 不通过→ |
 |------|------|---------|
-| **代码门控** | Lint + TypeCheck + Build exit 0 | 阻塞 merge，回 05 |
+| **代码门控** | Lint + TypeCheck + Build exit 0（**HARD BLOCK — 不得跳过**） | 阻塞 merge，回 05。Agent 写文件后已执行写后验证（见 develop pipeline 05 写后纪律），此处是最终确认 |
 | **单元测试门控** | 业务逻辑 ≥80%，工具函数 ≥90%，exit 0 | 阻塞 merge，补测 |
 | **API 测试门控** | 全部端点覆盖 + 边界/错误码/幂等 exit 0 | 阻塞 merge |
 | **E2E 测试门控** | 核心路径 all-pass + 新 feature 关联路径 all-pass | 阻塞 merge |
@@ -509,6 +511,8 @@ TQ 质量门控 ←── 测试证据 + 审计 findings ──→ 裁决报告
 | 漏测不补回归 | 线上 bug 修完不加回归测试 | 每个线上 bug → 至少 1 条回归用例 |
 | 只测不审 | 功能测试全绿就当系统没问题 | 审计（TA）独立于测试——结构健康/可用性/模块化/可追溯缺一不可 |
 | 📋 已知但不修 | finding 标"已知/之前就这样/任务级非 bug"然后留着 | 要么 closed（修了）、要么 BLOCKED（附阻塞点+解除人）、要么 deferred（附解除条件）。没有"📋 已知"这个状态 |
+| grep 当验证 | 写完代码 grep 到 import 行就算通过 | grep 只能确认写了，不能确认 build 通过/import resolve/CSS parser 能消费。必须跑 type-check + build |
+| Build 后补 | "CI 挂了下次再修" / "先 push，CI 会告诉我哪里错了" | Agent 写文件时就该跑 build——本地验证成本远低于 CI 反馈延迟 |
 
 ---
 

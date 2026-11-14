@@ -51,6 +51,32 @@ Layer 4: Spec (technical)    ← 03 产出: .csp/planning/spec.md + .csp/tech-de
 
 **05 完成**：源码 + 按变更风险配置的单元/API/组件/跨层测试 + 本阶段实跑证据；E2E 关键路径至少有可执行断言。项目无对应层时标不适用依据，未执行则不能称通过。
 
+**05 Agent 写后验证纪律**（HARD BLOCK — 每文件写完后立即执行，不等到 06 gate）：
+> grep 只能确认"文本写入了"，不能确认代码能编译/TPU。以下三项是 Agent 写文件后的**最低验证门槛**，缺一项即 05 未完成。
+
+| 验证项 | 触发条件 | 命令 | 通过标准 |
+|--------|---------|------|---------|
+| **Build 验证** | 每次写文件后 | 项目实际构建命令（`pnpm build` / `npm run build` / `make build`） | exit 0，无 error |
+| **Type-Check 验证** | 写 .ts/.tsx/.py（有类型注解）后 | `tsc --noEmit` / `mypy <file>` / `pyright` | exit 0，新增 import 全部 resolve |
+| **CSS/样式构建验证** | 写 .css/.scss 或改 tailwind 配置后 | `tailwindcss` 编译 / PostCSS 处理 / 至少跑一次 build | 无 CSS parse error / `@import` 全部 resolve |
+
+**写后验证红线**：
+- **Build exit ≠ 0 → BLOCKED**。不允许"build 挂了但 commit 先 push，下次再修"。必须本 commit 修到 build 通过。
+- **grep 断言 ≠ 编译验证**。grep 只能确认写出去了，不能确认 import 路径正确、CSS parser 能消费、模块能 resolve。Agent 写文件后必须跑对应语言的 type-check 或 build。
+- **新建文件必跑 type-check**。Agent 新建 .tsx/.ts/.py 文件时，至少对新文件的 import 做 resolve 验证。`@/components/ui/button` 能 resolve 才算通过——grep 到 import 行不算通过。
+- **CSS/样式文件必跑 build**。Agent 写 .css/.scss 或改 tailwind 配置时，必须跑一次完整 build（或至少 `tailwindcss` 编译验证）。CSS parse error 在 build 阶段就会暴露，不等到 E2E/视觉回归才抓。
+- **增量验证优先**：仅对受影响的文件跑 type-check/build，不强制全量。但"受影响"的定义是 import 链上的文件——新建文件 import 了 A，A 的调用方也要覆盖。
+- **写后验证证据落盘**：每次验证的命令 + exit code 写入 DEV-LOG 或 `.csp/artifacts/verify/evidence/post-write-{commit-short}.log`
+
+**反模式**：
+
+| 反模式 | 正确做法 |
+|--------|---------|
+| 写完多个文件后一起 build | 每文件写后立即验证——批量 build 的报错无法定位是哪个文件引入的 |
+| 用 grep 代替 type-check | `grep "import.*Button"` 返回 match 不代表 `@/components/ui/button` 能 resolve |
+| "build 失败是 CI 的事，我先把代码提交了" | CI 抓到不如本地抓到——Agent 写文件时就能验证，延迟到 CI 是浪费一次 push |
+| CSS 只跑 lint 不跑 build | `stylelint` 通过不代表 PostCSS/tailwindcss 能编译——`@import url("tailwindcss")` 不会报 lint 错但 build 必挂 |
+
 **全栈开发模式**（05 开发期间引导各层实现）：
 - 前端：`[[skill:csp-frontend-patterns]]`（组合/状态/性能/表单/数据获取，框架无关）
 - 后端：`[[skill:csp-backend-patterns]]`（API 设计/分层架构/错误处理/幂等/分页）
